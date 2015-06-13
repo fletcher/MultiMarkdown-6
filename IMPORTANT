@@ -1,0 +1,46 @@
+This project is designed for use with cmake.
+
+The Makefile controls the overall build:
+
+	make
+	make release
+
+Build a version optimized for performance.
+
+	make debug
+
+Faster compile, but not as high performance.
+
+	make xcode
+
+Create an Xcode project for use on OS X.
+
+	make windows
+
+Used for cross-compiling for Windows using MinGW.
+
+	make clean
+
+Clean up the `build` directory.
+
+These commands control the `build` directory.  Everything in this directory is
+auto-generated.  You should not manually change these files or put anything
+else in there.
+
+
+The setup is designed to support unit testing with CuTest.  Functions along
+the lines of `void Test*` will be located automatically and used to create the
+test suite, which is run by:
+
+	./run_tests
+
+Or
+
+	make test
+
+(The `run_tests` approach will probably give more useful feedback if a test fails.)
+
+
+Integration testing must be handled separately.
+
+You can configure the `CMakeLists.txt` to support creating installers.

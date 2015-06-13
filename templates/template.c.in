@@ -1,0 +1,24 @@
+/*
+
+	file.c -- @My_Project_Title@
+
+	@My_Project_Copyright@
+
+
+	@My_Project_License_Indent@
+
+*/
+
+#include "file.h"
+
+int void_function(void) {
+	return 0;
+}
+
+#ifdef TEST
+void Test_void_function(CuTest* tc) {
+	int test = void_function();
+
+	CuAssertIntEquals(tc, 0, test);
+}
+#endif

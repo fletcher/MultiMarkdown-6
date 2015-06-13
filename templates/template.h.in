@@ -1,0 +1,20 @@
+/*
+
+	file.h -- @My_Project_Title@
+
+	@My_Project_Copyright@
+
+
+	@My_Project_License_Indent@
+
+*/
+
+#ifndef FILE_@My_Project_Title_Caps@_H
+#define FILE_@My_Project_Title_Caps@_H
+
+#ifdef TEST
+#include "CuTest.h"
+#endif
+
+
+#endif
