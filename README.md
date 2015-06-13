@@ -75,6 +75,9 @@ framework to get you started.  In all likelihood, all but the most basic
 projects will need some customization.
 
 
+[github]:	https://github.com/fletcher/c-template
+
+
 # License #
 
 ## The MIT License ##
