@@ -1,8 +1,3 @@
-Title:	Some Project  
-Author:	Fletcher T. Penney  
-Date:	2015-06-05  
-Copyright:	Copyright © 2015 Fletcher T. Penney.  
-Version:	1.0.0  
 
 # Introduction #
 
