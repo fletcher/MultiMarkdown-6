@@ -86,7 +86,7 @@ projects will need some customization.
 
 # License #
 
-The `new-project` project is released under the MIT License.
+The `c-template` project is released under the MIT License.
 
 GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
 
