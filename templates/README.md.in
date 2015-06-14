@@ -1,6 +1,3 @@
-Main Page {#mainpage}
-=========
-
 ## About ##
 
 |            |                           |

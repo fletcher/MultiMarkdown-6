@@ -779,7 +779,7 @@ FILTER_SOURCE_PATTERNS =
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE = @PROJECT_BINARY_DIR@/README.md
+USE_MDFILE_AS_MAINPAGE = README.md
 
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
