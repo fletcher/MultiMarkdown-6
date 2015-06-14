@@ -86,6 +86,19 @@ projects will need some customization.
 
 # License #
 
+The `new-project` project is released under the MIT License.
+
+GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
+
+	https://github.com/fletcher/MultiMarkdown-4/
+
+MMD 4 is released under both the MIT License and GPL.
+
+
+CuTest is released under the zlib/libpng license. See CuTest.c for the text
+of the license.
+
+
 ## The MIT License ##
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -105,4 +118,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
