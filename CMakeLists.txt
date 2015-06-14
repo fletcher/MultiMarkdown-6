@@ -128,6 +128,8 @@ if (DEFINED TEST)
 		${test_files}
 		${src_files}
 		${header_files}
+		${src_utility_files}
+		${header_utility_files}
 	)
 
 	# Process source files to look for tests to run
