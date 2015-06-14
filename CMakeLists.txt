@@ -88,8 +88,8 @@ set(header_files
 
 
 # Generate doxygen configuration file
-string(REGEX REPLACE ";" " " src_files ${doxygen_src_files} )
-string(REGEX REPLACE ";" " " header_files ${doxygen_header_files} )
+string(REPLACE ";" " " doxygen_src_files "${src_files}" )
+string(REPLACE ";" " " doxygen_header_files "${header_files}" )
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/templates/doxygen.conf.in"
