@@ -58,18 +58,30 @@ configure_file (
 # Build Targets
 # =============
 
+# src_files are the primary files, and will be included in doxygen documentation
 set(src_files
+#	src/foo.c
+)
+
+# primary header files
+set(header_files
+)
+
+# Utility source files will not be included in doxygen
+set(src_utility_files
 #	src/GLibFacade.c
 )
 
-set(header_files
+set(header_utility_files
 #	src/GLibFacade.h
 )
 
 # Create a library?
 # add_library(libFOO STATIC
 #	${src_files}
+#	${src_utility_files}
 #	${header_files}
+#	${header_utility_files}
 # )
 
 # remove the extra "lib" from "liblibFOO"
