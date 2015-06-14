@@ -19,6 +19,11 @@ Create an Xcode project for use on OS X.
 
 Used for cross-compiling for Windows using MinGW.
 
+	make documentation
+
+Setup a `doxygen` configuration file based on project information, and then
+generate HTML and LaTeX documentation.
+
 	make clean
 
 Clean up the `build` directory.

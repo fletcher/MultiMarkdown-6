@@ -28,11 +28,17 @@ Additionally, I wanted to try to start encouraging some "better practices"
 	`cmake` to combine those elements to ensure consistency across source
 	code and README files.
 
+4.	Documentation -- some default setup to allow for [doxygen]-generated
+	documentation.  The generated `README.md` file is used as the main 
+	page, and the source c/header files are included.  Naturally, doxygen
+	is a complex system, so you're responsible for figuring out how to 
+	properly document your code.
 
 
 [tdd]:	https://en.wikipedia.org/wiki/Test-driven_development
 [cmake]:	http://www.cmake.org/
 [CuTest]:	http://cutest.sourceforge.net
+[doxygen]:	http://www.stack.nl/~dimitri/doxygen/
 
 
 # How do I use it? #
