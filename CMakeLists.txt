@@ -13,6 +13,8 @@ set (My_Project_Version_Major 1)
 set (My_Project_Version_Minor 0)
 set (My_Project_Version_Patch 0)
 
+set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
+
 set (My_Project_Copyright_Date "2015")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 

@@ -1,13 +1,21 @@
-Title:	@My_Project_Title@  
-Author:	@My_Project_Author@  
-Date:	@My_Project_Revised_Date@  
-Copyright:	@My_Project_Copyright@  
-Version:	@My_Project_Version_Major@.@My_Project_Version_Minor@.@My_Project_Version_Patch@  
+Main Page
+=========
 
-# Introduction #
+## About ##
+
+|            |                           |
+| ---------- | ------------------------- |
+| Title:     | @My_Project_Title@        |
+| Author:    | @My_Project_Author@       |
+| Date:      | @My_Project_Revised_Date@ |
+| Copyright: | @My_Project_Copyright@    |
+| Version:   | @My_Project_Version@      |
+
+
+## Introduction ##
 
 
 
-# License #
+## License ##
 
 @My_Project_License@
