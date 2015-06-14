@@ -24,6 +24,12 @@ windows: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release ..
 
+# Build the documentation using doxygen
+documentation: $(BUILD_DIR)
+	cd $(BUILD_DIR); \
+	cmake -DDOCUMENTATION=1 ..; cd ..; \
+	doxygen build/doxygen.conf
+
 # Clean out the build directory
 clean:
 	rm -rf $(BUILD_DIR)/*

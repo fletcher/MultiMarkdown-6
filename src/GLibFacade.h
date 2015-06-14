@@ -26,7 +26,10 @@ typedef char gchar;
 #define FALSE false
 #define TRUE true
 
-/* WE implement minimal mirror implementations of GLib's GString and GSList 
+/** @brief Minimal replacement for GLib's GString class.
+ *  
+ *
+ * WE implement minimal mirror implementations of GLib's GString and GSList 
  * sufficient to cover the functionality required by MultiMarkdown.
  *
  * NOTE: THese are 100% clean, from-scratch implementations using only the 

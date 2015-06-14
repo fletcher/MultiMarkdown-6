@@ -6,6 +6,7 @@ cmake_minimum_required (VERSION 2.6)
 # ==================
 
 set (My_Project_Title "Some Project")
+set (My_Project_Description "A project built using the c-template system.")
 set (My_Project_Author "Somebody")
 set (My_Project_Revised_Date "2015-06-05")
 set (My_Project_Version_Major 1)
@@ -56,11 +57,11 @@ configure_file (
 # =============
 
 set(src_files
-#	src/file.c
+#	src/GLibFacade.c
 )
 
 set(header_files
-#	src/file.h
+#	src/GLibFacade.h
 )
 
 # Create a library?
@@ -84,6 +85,13 @@ set(header_files
 #	Link the library to the app?
 #	target_link_libraries(main libFOO)
 # endif()
+
+
+# Generate doxygen configuration file
+configure_file (
+	"${PROJECT_SOURCE_DIR}/templates/doxygen.conf.in"
+	"${PROJECT_BINARY_DIR}/doxygen.conf"
+)
 
 
 # ===========================================
