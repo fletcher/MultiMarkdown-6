@@ -34,7 +34,7 @@ PROJECT_NAME           = "@My_Project_Title@"
 # This could be handy for archiving the generated documentation or
 # if some version control system is used.
 
-PROJECT_NUMBER         = @My_Project_Version_Major@.@My_Project_Version_Minor@.@My_Project_Version_Patch@
+PROJECT_NUMBER         = @My_Project_Version@
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer
@@ -654,7 +654,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = @doxygen_src_files@ @doxygen_header_files@
+INPUT                  = @PROJECT_BINARY_DIR@/README.md @doxygen_src_files@ @doxygen_header_files@
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -779,7 +779,7 @@ FILTER_SOURCE_PATTERNS =
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = @PROJECT_BINARY_DIR@/README.md
 
 #---------------------------------------------------------------------------
 # configuration options related to source browsing
