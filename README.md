@@ -34,6 +34,19 @@ Additionally, I wanted to try to start encouraging some "better practices"
 	is a complex system, so you're responsible for figuring out how to 
 	properly document your code.
 
+5.	Simplify `git` a touch -- In my larger projects, I make heavy use of
+	git modules.  One project may make use of 20-30 modules, which are
+	designed to be re-usable across other projects.  I found that I was
+	spending too much time making sure that I had the latest version
+	of a module checked out, so I created two scripts to help me keep
+	my modules in line: `link_git_modules` and `update_git_modules`.
+	You run the `link` script once to ensure that your modules are properly
+	set up, and can then run the `update` script at any time to be sure
+	you've pulled the latest version.  One advantage of this is that your
+	modules are set to a branch, rather than just a detached commit. It
+	may or may not work for your needs, but it saves me a bunch of time
+	and headache.
+
 
 [tdd]:	https://en.wikipedia.org/wiki/Test-driven_development
 [cmake]:	http://www.cmake.org/
