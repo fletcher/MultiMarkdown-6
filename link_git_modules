@@ -1,0 +1,11 @@
+#!/bin/sh
+
+git submodule foreach git branch --set-upstream master origin/master
+
+git submodule foreach git checkout master
+
+# If one module needs to follow a different branch:
+# cd some_module
+# git branch --set-upstream our-branch origin/some-branch
+# git checkout our-branch
+# cd ..
