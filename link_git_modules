@@ -1,5 +1,9 @@
 #!/bin/sh
 
+git submodule init
+
+git submodule update
+
 git submodule foreach git branch --set-upstream master origin/master
 
 git submodule foreach git checkout master
