@@ -5,6 +5,8 @@
 # Prints to stdout.
 # Author: Asim Jalis
 # Date: 01/08/2003
+#
+# Modified by Fletcher T. Penney for proper error codes
 
 if test $# -eq 0 ; then FILES=*.c ; else FILES=$* ; fi
 
@@ -30,6 +32,7 @@ void RunAllTests(void)
 {
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
+    int failCount = 0;
 
 '
 cat $FILES | grep '^void Test' | 
@@ -45,7 +48,12 @@ echo \
     CuSuiteDetails(suite, output);
     printf("%s\\n", output->buffer);
     CuStringDelete(output);
+
+    failCount = suite->failCount;
     CuSuiteDelete(suite);
+
+    if (failCount != 0)
+        exit(EXIT_FAILURE);
 }
 
 int main(void)

@@ -174,6 +174,12 @@ if (DEFINED TEST)
 
 	add_test( test ${PROJECT_BINARY_DIR}/run_tests)
 
+	# valgrind memory testing
+	find_program (MEMORYCHECK_COMMAND valgrind)
+	SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
+
+	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
+
 endif()
 
 
