@@ -54,6 +54,8 @@ echo \
 
     if (failCount != 0)
         exit(EXIT_FAILURE);
+
+    exit(EXIT_SUCCESS);
 }
 
 int main(void)
