@@ -59,9 +59,9 @@ configure_file (
 )
 
 
-# =============
-# Build Targets
-# =============
+# ============
+# Source Files
+# ============
 
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
@@ -81,31 +81,6 @@ set(header_utility_files
 #	src/GLibFacade.h
 	${PROJECT_BINARY_DIR}/version.h
 )
-
-# Create a library?
-# add_library(libFOO STATIC
-#	${src_files}
-#	${src_utility_files}
-#	${header_files}
-#	${header_utility_files}
-# )
-
-# remove the extra "lib" from "liblibFOO"
-# SET_TARGET_PROPERTIES(libFOO PROPERTIES PREFIX "")
-
-# Create a command-line app?
-# if (NOT DEFINED TEST)
-# 	add_executable(main
-# 		src/main.c
-# 		src/GLibFacade.c
-# 		src/GLibFacade.h
-# 		${header_files}
-# 	)
-# 
-#	Link the library to the app?
-#	target_link_libraries(main libFOO)
-# endif()
-
 
 # Generate doxygen configuration file
 string(REPLACE ";" " " doxygen_src_files "${src_files}" )
@@ -161,11 +136,11 @@ endif()
 # Configure for Target OS
 # =======================
 
-# OS X Machines
+# OS X Builds
 if (APPLE)
 
 	# Configure backwards-compatible support (if your project allows it)
-	# SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
+	SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
 
 	# Compile for x86_64 and i386.  ppc no longer supported
 	if(CMAKE_BUILD_TYPE MATCHES "Release")
@@ -173,20 +148,25 @@ if (APPLE)
 	endif(CMAKE_BUILD_TYPE MATCHES "Release")
 
 	# Use PackageMaker for installers?
-	# set (CPACK_GENERATOR PackageMaker)
-	set (CPACK_GENERATOR ZIP)
-
+	if (DEFINED ZIP)
+		set (CPACK_GENERATOR ZIP)
+	else (DEFINED ZIP)
+		set (CPACK_GENERATOR PackageMaker)
+	endif (DEFINED ZIP)
 
 endif (APPLE)
 
-# Windows Machines
+# Windows Builds
 if (WIN32)
 
 	# Use NSIS to generate installers?
-	# set (CPACK_GENERATOR NSIS)
-	set (CPACK_GENERATOR ZIP)
+	if (DEFINED ZIP)
+		set (CPACK_GENERATOR ZIP)
+	else (DEFINED ZIP)
+		set (CPACK_GENERATOR NSIS)
+	endif (DEFINED ZIP)
 
-# Linux (but not cross-compiling for Windows)
+# Linux Builds (not cross-compiling for Windows)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 	# Create zip archive
@@ -198,6 +178,35 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	endif (DEFINED TEST)
 
 endif (WIN32)
+
+
+# ==============
+# Define targets
+# ==============
+
+# Create a library?
+# add_library(libFOO STATIC
+#	${src_files}
+#	${src_utility_files}
+#	${header_files}
+#	${header_utility_files}
+# )
+
+# remove the extra "lib" from "liblibFOO"
+# SET_TARGET_PROPERTIES(libFOO PROPERTIES PREFIX "")
+
+# Create a command-line app?
+# if (NOT DEFINED TEST)
+# 	add_executable(main
+# 		src/main.c
+# 		src/GLibFacade.c
+# 		src/GLibFacade.h
+# 		${header_files}
+# 	)
+# 
+#	Link the library to the app?
+#	target_link_libraries(main libFOO)
+# endif()
 
 
 # ==========================
@@ -216,6 +225,23 @@ set (CPACK_PACKAGE_VERSION "${My_Project_Version_Major}.${My_Project_Version_Min
 set (CPACK_PACKAGE_VERSION_MAJOR "${My_Project_Version_Major}")
 set (CPACK_PACKAGE_VERSION_MINOR "${My_Project_Version_Minor}")
 set (CPACK_PACKAGE_VERSION_PATCH "My_Project_Version_Patch")
-	
+
+set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
+
+if (APPLE)
+	set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-Mac-${CPACK_PACKAGE_VERSION}")
+else (APPLE)
+	set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CMAKE_SYSTEM_NAME}-${CPACK_PACKAGE_VERSION}")
+endif (APPLE)
+
+# Use some default install locations (if appropriate)
+if (WIN32)
+	set (CPACK_INSTALL_PREFIX "")
+	set (CPACK_NSIS_MODIFY_PATH ON)
+else (WIN32)
+	set (CPACK_INSTALL_PREFIX /usr/local)
+endif (WIN32)
+
+set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT})
 
 include (CPack)
