@@ -208,6 +208,10 @@ endif (WIN32)
 #	target_link_libraries(main libFOO)
 # endif()
 
+# Xcode settings for fat binaries
+# set_target_properties(libFOO PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+# set_target_properties(main PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+
 
 # ==========================
 # Build Installer with CPack
