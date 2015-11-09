@@ -53,6 +53,11 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/README.md"
 )
 
+configure_file (
+	"${PROJECT_SOURCE_DIR}/templates/version.h.in"
+	"${PROJECT_BINARY_DIR}/version.h"
+)
+
 
 # =============
 # Build Targets
@@ -74,6 +79,7 @@ set(src_utility_files
 
 set(header_utility_files
 #	src/GLibFacade.h
+	${PROJECT_BINARY_DIR}/version.h
 )
 
 # Create a library?

@@ -1,0 +1,26 @@
+/*
+
+	version.h -- @My_Project_Title@
+
+	@My_Project_Copyright@
+
+
+	@My_Project_License_Indent@
+
+*/
+
+/**
+
+@file
+
+@brief @My_Project_Description@ - project version header
+
+**/
+
+
+#ifndef FILE_@My_Project_Title_Caps@_VERSION_H
+#define FILE_@My_Project_Title_Caps@_VERSION_H
+
+#define @My_Project_Title_Caps@_VERSION "@My_Project_Version@"
+
+#endif
