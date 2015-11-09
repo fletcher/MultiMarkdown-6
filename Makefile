@@ -10,23 +10,47 @@ release: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -DCMAKE_BUILD_TYPE=Release ..
 
-# Enables CuTest unit testing
+# Build zip file package
+.PHONY : zip
+zip: $(BUILD_DIR)
+	cd $(BUILD_DIR); touch README.html; \
+	cmake -DCMAKE_BUILD_TYPE=Release -DZIP=1 ..
+
+# debug target enables CuTest unit testing
 .PHONY : debug
 debug: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -DTEST=1 ..
 
-# For Mac only
+# Create xcode project
 .PHONY : xcode
 xcode: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -G Xcode ..
 
-# Cross-compile for Windows
+# Cross-compile for Windows using MinGW on *nix
 .PHONY : windows
 windows: $(BUILD_DIR)
-	cd $(BUILD_DIR); \
+	cd $(BUILD_DIR); touch README.html; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw64.cmake -DCMAKE_BUILD_TYPE=Release ..
+
+# Build Windows zip file using MinGW on *nix
+.PHONY : windows-zip
+windows-zip: $(BUILD_DIR)
+	cd $(BUILD_DIR); touch README.html; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw64.cmake -DCMAKE_BUILD_TYPE=Release -DZIP=1 ..
+
+# Cross-compile for Windows using MinGW on *nix (32-bit)
+.PHONY : windows-32
+windows-32: $(BUILD_DIR)
+	cd $(BUILD_DIR); touch README.html; \
 	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release ..
+
+# Build Windows zip file using MinGW on *nix (32-bit)
+.PHONY : windows-zip-32
+windows-zip-32: $(BUILD_DIR)
+	cd $(BUILD_DIR); touch README.html; \
+	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release -DZIP=1 ..
 
 # Build the documentation using doxygen
 .PHONY : documentation
