@@ -20,6 +20,8 @@ debug: $(BUILD_DIR)
 
 # analyze target enables use of clang's scan-build (if installed)
 # will then need to run 'scan-build make' to compile and analyze
+# 'scan-build -V make' will show the results graphically in your
+# web browser
 .PHONY : analyze
 analyze: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
