@@ -1,9 +1,5 @@
 BUILD_DIR = build
 
-$(BUILD_DIR_):
-	-mkdir $(BUILD_DIR_) 2>/dev/null
-	-cd $(BUILD_DIR); rm -rf *
-
 # The release target will perform additional optimization
 .PHONY : release
 release: $(BUILD_DIR)
@@ -21,6 +17,13 @@ zip: $(BUILD_DIR)
 debug: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -DTEST=1 ..
+
+# analyze target enables use of clang's scan-build (if installed)
+# will then need to run 'scan-build make' to compile and analyze
+.PHONY : analyze
+analyze: $(BUILD_DIR)
+	cd $(BUILD_DIR); \
+	scan-build cmake -DTEST=1 ..
 
 # Create xcode project
 .PHONY : xcode
@@ -63,3 +66,9 @@ documentation: $(BUILD_DIR)
 .PHONY : clean
 clean:
 	rm -rf $(BUILD_DIR)/*
+
+# Create build directory if it doesn't exist
+$(BUILD_DIR):
+	-mkdir $(BUILD_DIR) 2>/dev/null
+	-cd $(BUILD_DIR); rm -rf *
+
