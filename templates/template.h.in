@@ -1,6 +1,18 @@
-/*
+/**
 
-	file.h -- @My_Project_Title@
+	@My_Project_Title@
+
+	@file file.h
+
+	@brief @My_Project_Description@
+
+
+	@author	@My_Project_Author@
+	@bug	
+
+**/
+
+/*
 
 	@My_Project_Copyright@
 
@@ -8,14 +20,6 @@
 	@My_Project_License_Indent@
 
 */
-
-/**
-
-@file
-
-@brief @My_Project_Description@
-
-**/
 
 
 #ifndef FILE_@My_Project_Title_Caps@_H

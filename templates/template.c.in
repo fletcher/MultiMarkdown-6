@@ -1,6 +1,18 @@
-/*
+/**
 
-	file.c -- @My_Project_Title@
+	@My_Project_Title@
+
+	@file file.c
+
+	@brief @My_Project_Description@
+
+
+	@author	@My_Project_Author@
+	@bug	
+
+**/
+
+/*
 
 	@My_Project_Copyright@
 
@@ -8,6 +20,7 @@
 	@My_Project_License_Indent@
 
 */
+
 
 #include "file.h"
 
