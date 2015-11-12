@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# This command sets up any git submodules in the project.
+# Generally, this only needs to be run once on a freshly cloned
+# project, but won't harm anything if run later, provided
+# you modify it to accomodate any submodules that should *NOT*
+# be on the `master` branch.
+
 git submodule init
 
 git submodule update
