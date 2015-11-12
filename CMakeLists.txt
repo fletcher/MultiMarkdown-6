@@ -48,9 +48,10 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/template.h"
 )
 
+# Update the project README, to pull in new version #, etc.
 configure_file (
 	"${PROJECT_SOURCE_DIR}/templates/README.md.in"
-	"${PROJECT_BINARY_DIR}/README.md"
+	"${CMAKE_CURRENT_LIST_DIR}/README.md"
 )
 
 configure_file (
@@ -219,7 +220,7 @@ endif (WIN32)
 
 # You're largely on your own here
 
-install (FILES ${CMAKE_CURRENT_BINARY_DIR}/README.md ${PROJECT_SOURCE_DIR}/LICENSE.txt
+install (FILES ${CMAKE_CURRENT_LIST_DIR}/README.md ${PROJECT_SOURCE_DIR}/LICENSE.txt
 	DESTINATION .
 )
 

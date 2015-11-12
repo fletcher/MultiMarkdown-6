@@ -1,5 +1,15 @@
+## About ##
 
-# Introduction #
+|            |                           |  
+| ---------- | ------------------------- |  
+| Title:     | Some Project        |  
+| Author:    | Somebody       |  
+| Date:      | 2015-06-05 |  
+| Copyright: | Copyright © 2015 Somebody.    |  
+| Version:   | 1.0.1      |  
+
+
+## Introduction ##
 
 This template was created out of a desire to simplify some of the setup and
 configuration that I was doing over and over each time I started a new project.
@@ -28,9 +38,9 @@ Additionally, I wanted to try to start encouraging some "better practices"
 	`cmake` to combine those elements to ensure consistency across source
 	code and README files.
 
-4.	Documentation -- some default setup to allow for [doxygen]-generated
+4.	Documentation -- some default setup to allow for [Doxygen]-generated
 	documentation.  The generated `README.md` file is used as the main 
-	page, and the source c/header files are included.  Naturally, doxygen
+	page, and the source c/header files are included.  Naturally, Doxygen
 	is a complex system, so you're responsible for figuring out how to 
 	properly document your code.
 
@@ -51,10 +61,10 @@ Additionally, I wanted to try to start encouraging some "better practices"
 [tdd]:	https://en.wikipedia.org/wiki/Test-driven_development
 [cmake]:	http://www.cmake.org/
 [CuTest]:	http://cutest.sourceforge.net
-[doxygen]:	http://www.stack.nl/~dimitri/doxygen/
+[Doxygen]:	http://www.stack.nl/~dimitri/doxygen/
 
 
-# How do I use it? #
+## How do I use it? ##
 
 You can download the source from [github] and get to work. The file "IMPORTANT"
 contains instructions on the various build commands you can use.
@@ -62,7 +72,7 @@ contains instructions on the various build commands you can use.
 
 I recommend using the following script to automatically create a new git repo,
 pull in the default project template, and configure git-flow.  You simply have
-to rename your project from `new-project` to whatever you desire:
+to rename your project directory from `new-project` to whatever you desire:
 
 
 	#!/bin/sh
@@ -80,8 +90,8 @@ to rename your project from `new-project` to whatever you desire:
 	git checkout develop
 
 
-Using this approach, you can define your own "origin" remote if you like, but
-the "template" remote can be used to update the core project files should any
+Using this approach, you can define your own `origin` remote if you like, but
+the `template` remote can be used to update the core project files should any
 improvements come about:
 
 	git checkout develop
@@ -97,7 +107,105 @@ projects will need some customization.
 [github]:	https://github.com/fletcher/c-template
 
 
-# License #
+## Configuration ##
+
+
+### CMakeLists.txt File ###
+
+First, you should update the project information under the "Define Our Project"
+section, including the title, description, etc.  This information will be used
+to update the README, as well as to create the `version.h` file so that the 
+project can have access to its own version number.
+
+You will then need to update the various groups in the "Source Files" section
+so that Cmake will be able to determine which files are used to build your
+project.  For reasons that will become clear later, try to follow the
+suggestions for the different groups of files.
+
+You then need to define your targets, such as a library, or executable, etc.
+Obviously, this will depend on the needs of your project.  You can also add
+custom steps based on the Target OS (OS X, Windows, *nix, etc.).
+
+You can use CPack to generate installers for your software.  This can be
+complex, and you will need to modify this section heavily.
+
+CuTest is used by default to provide unit testing (see below), but you
+can also use CMake/CTest to provide integration testing.  Again, this will
+be up to you to configure.
+
+
+### CuTest ###
+
+[CuTest] provides a means to integrate unit testing with your C source code.
+Once you get the hang of it, it's easy to use.
+
+
+### Doxygen ###
+
+[Doxygen] is used to generate documentation from the source code itself. 
+Properly configuring your source for this is up to you.  You can modify the
+`doxygen.conf.in` template with your desired settings as desired, but most
+of the basics are handled for you based on your CMake configuration.
+
+
+### Makefile ###
+
+The overall build process is controlled by the master `Makefile`.  It provides
+the following commands:
+
+	make
+	make release
+
+Generate the CMake build files for use or distribution.  Once complete you will
+need to change to the `build` directory and run `make`, `make test`, and
+`cpack` as desired.
+
+	make zip
+
+Direct CPack to create a zip installer rather than a graphical installer.
+
+	make debug
+
+Generate build files for [CuTest] unit testing.  In the `build` directory, 
+run `make`, then `make test`.
+
+	make analyze
+
+If you have `clang` installed, this will generate debug build files with the
+`scan-build` command.  In the `build` directory, run `scan-build -V make`
+to compile the software and view the static analysis results.
+
+	make xcode
+
+Build a project file for Xcode on OS X.
+
+	make windows
+	make windows-zip
+	make windows-32
+	make windows-zip-32
+
+Use the MinGW software to cross-compile for Windows on a *nix machine.  You can
+specify the 32 bit option, and also the zip option as indicated.
+
+	make documentation
+
+Build the [Doxygen]-generated documentation.
+
+	make clean
+
+Clean out the `build` directory.  Be sure to run this before running another
+command.
+
+
+## Source File Templates ##
+
+In the `templates` directory are two files, `template.c.in` and
+`template.h.in`.  These are used to create default source files that include
+the project title, copyright, license, etc. They are also set up to include
+some example information for [Doxygen] and [CuTest].
+
+
+## License ##
 
 The `c-template` project is released under the MIT License.
 
