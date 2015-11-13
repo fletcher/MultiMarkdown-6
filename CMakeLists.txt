@@ -175,6 +175,10 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 	# Statically link libraries -- might make the binary slightly more
 	# compatible across Linux distributions, for example
+	#
+	# You may wish to disable this.
+	#
+	
 	set (CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 	set (BUILD_SHARED_LIBRARIES OFF)
 	set (CMAKE_EXE_LINKER_FLAGS "-static")
