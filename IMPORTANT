@@ -9,7 +9,7 @@ Build a version optimized for performance.
 
 	make debug
 
-Faster compile, but not as high performance.
+Faster compile, but not as high performance.  Enables test suite support.
 
 	make xcode
 
