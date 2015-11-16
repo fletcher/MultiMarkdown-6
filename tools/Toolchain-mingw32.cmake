@@ -1,4 +1,7 @@
-# Settings for compiling under MinGW32
+# Settings for compiling for Windows 32-bit machines
+
+set (IS_CROSSCOMPILING "YES")
+set (IS_32_BIT "32-")
 
 set (CMAKE_SYSTEM_NAME Windows)
 
