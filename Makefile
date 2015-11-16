@@ -73,7 +73,12 @@ clean:
 	rm -rf $(BUILD_DIR)/*
 
 # Create build directory if it doesn't exist
-$(BUILD_DIR):
+$(BUILD_DIR): CHANGELOG
 	-mkdir $(BUILD_DIR) 2>/dev/null
 	-cd $(BUILD_DIR); rm -rf *
+
+# Generate a list of changes since last commit to 'master' branch
+.PHONY : CHANGELOG
+CHANGELOG:
+	git log master..develop --format="*    %s" | sort | uniq > CHANGELOG-UNRELEASED
 
