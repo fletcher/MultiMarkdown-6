@@ -71,6 +71,18 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 		XCODE_ATTRIBUTE_PRIVATE_HEADERS_FOLDER_PATH
 		"$(PUBLIC_HEADERS_FOLDER_PATH)/Private"
 	)
+	
+	# Set Xcode target to include settings for OS X and iOS
+	
+	SET_TARGET_PROPERTIES(${target} PROPERTIES
+		XCODE_ATTRIBUTE_SUPPORTED_PLATFORMS
+		"macos iphonesimulator iphoneos"
+	)
+
+	SET_TARGET_PROPERTIES(${target} PROPERTIES
+		XCODE_ATTRIBUTE_VALID_ARCHITECTURES
+		"x86_64 i386 armv6 armv7 armv7s arm64"
+	)
 
 ENDMACRO(ADD_PUBLIC_HEADER)
 
