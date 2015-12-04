@@ -301,14 +301,14 @@ endif (WIN32)
 
 # You're largely on your own here
 
-install (FILES ${CMAKE_CURRENT_LIST_DIR}/README.md ${PROJECT_SOURCE_DIR}/LICENSE.txt
-	DESTINATION .
-)
+# install (FILES ${CMAKE_CURRENT_LIST_DIR}/README.md ${PROJECT_SOURCE_DIR}/LICENSE.txt
+# 	DESTINATION .
+# )
 
 # Use something like this to install public header files (after adding them
 # with the ADD_PUBLIC_HEADER() macro)
 
-# install (FILES ${public_header_files} DESTINATION /usr/local/include/libFoo) 
+# install (FILES ${public_header_files} DESTINATION local/include/libFoo) 
 
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${My_Project_Description}")
 set (CPACK_PACKAGE_VENDOR "${My_Project_Author}")
