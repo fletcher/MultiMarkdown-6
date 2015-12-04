@@ -30,6 +30,72 @@ string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
 string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
 
 
+# =================
+# Macro Definitions
+# =================
+
+MACRO(ADD_PUBLIC_HEADER target filename)
+	# Add filename to public_header_files list, flag it as 
+	# public header for libraries and OS X Frameworks
+
+	# This will work for creating one library/framework with public headers
+	# per project. If you need more than one, you will need to customize
+	# the workflow as appropriate, since there is only one 
+	# public_header_files list.
+
+	SET_TARGET_PROPERTIES(${target} PROPERTIES PUBLIC_HEADER ${filename})
+
+	LIST(APPEND public_header_files ${filename})
+
+	SET_SOURCE_FILES_PROPERTIES(
+		${filename}
+		PROPERTIES
+		MACOSX_PACKAGE_LOCATION
+		PUBLIC_HEADER
+	)
+
+	# Set Xcode project to configure public header location to allow
+	# use when this project is used in another workspace.
+	# NOTE: You must manually add a "Headers" build phase and add
+	# the desired public headers to that list for Xcode to use them.
+	#
+	# TODO: If anyone knows how to automate that in Cmake, I would be very
+	# greatful!!
+
+	SET_TARGET_PROPERTIES(${target} PROPERTIES
+		XCODE_ATTRIBUTE_PUBLIC_HEADERS_FOLDER_PATH
+		"include/$(TARGET_NAME)"
+	)
+
+	SET_TARGET_PROPERTIES(${target} PROPERTIES
+		XCODE_ATTRIBUTE_PRIVATE_HEADERS_FOLDER_PATH
+		"$(PUBLIC_HEADERS_FOLDER_PATH)/Private"
+	)
+
+ENDMACRO(ADD_PUBLIC_HEADER)
+
+
+# The target should be an OS X Bundle with a PList
+
+MACRO(MAKE_TARGET_BUNDLE targetname)
+
+	set_target_properties(
+		${targetname}
+		PROPERTIES
+		MACOSX_BUNDLE_INFO_PLIST
+		${PROJECT_SOURCE_DIR}/templates/plist.in
+	)
+
+ENDMACRO(MAKE_TARGET_BUNDLE)
+
+
+MACRO(ADD_LINKED_FRAMEWORK frame)
+
+	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGES} -framework ${frame}")
+
+ENDMACRO(ADD_LINKED_FRAMEWORK)
+
+
 # ======================
 # Process Template Files
 # ======================
@@ -69,8 +135,13 @@ set(src_files
 #	src/foo.c
 )
 
-# primary header files
+# Primary header files, also for doxygen documentation
 set(header_files
+)
+
+# Public headers, will be installed in 'include'
+# Do not manually add files here, use the ADD_PUBLIC_HEADER() macro
+set(public_header_files
 )
 
 # Utility source files will not be included in doxygen
@@ -233,6 +304,11 @@ endif (WIN32)
 install (FILES ${CMAKE_CURRENT_LIST_DIR}/README.md ${PROJECT_SOURCE_DIR}/LICENSE.txt
 	DESTINATION .
 )
+
+# Use something like this to install public header files (after adding them
+# with the ADD_PUBLIC_HEADER() macro)
+
+# install (FILES ${public_header_files} DESTINATION /usr/local/include/libFoo) 
 
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${My_Project_Description}")
 set (CPACK_PACKAGE_VENDOR "${My_Project_Author}")
