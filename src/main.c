@@ -2,7 +2,7 @@
 
 	main.c -- Template main()
 
-	Copyright © 2015 Fletcher T. Penney.
+	Copyright © 2015-2016 Fletcher T. Penney.
 
 
 	This program is free software you can redistribute it and/or modify

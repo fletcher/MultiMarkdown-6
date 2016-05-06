@@ -5,7 +5,7 @@
  *		https://github.com/fletcher/MultiMarkdown-4/
  *
  *	Created by Daniel Jalkut on 7/26/11.
- *  Modified by Fletcher T. Penney on 9/15/11.
+ *  Modified by Fletcher T. Penney 9/15/11 - 5/6/16.
  *  Modified by Dan Lowe on 1/3/12.
  *	Copyright 2011 __MyCompanyName__. All rights reserved.
  */

@@ -6,6 +6,9 @@
  *
  *	Created by Daniel Jalkut on 7/26/11.
  *	Copyright 2011 __MyCompanyName__. All rights reserved.
+ *
+ *	Modified by Fletcher T. Penney
+ *	Changes Copyright 2011-2016
  */
 
 #ifndef __MARKDOWN_GLIB_FACADE__
