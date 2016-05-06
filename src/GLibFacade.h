@@ -51,6 +51,7 @@ GString* g_string_new(char *startingString);
 char* g_string_free(GString* ripString, bool freeCharacterData);
 
 void g_string_append_c(GString* baseString, char appendedCharacter);
+void g_string_append_c_array(GString *baseString, char * appendedChars, size_t bytes);
 void g_string_append(GString* baseString, char *appendedString);
 
 void g_string_prepend(GString* baseString, char* prependedString);

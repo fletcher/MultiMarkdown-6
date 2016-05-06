@@ -137,6 +137,17 @@ void g_string_append_c(GString* baseString, char appendedCharacter)
 	baseString->str[baseString->currentStringLength] = '\0';
 }
 
+void g_string_append_c_array(GString *baseString, char * appendedChars, size_t bytes)
+{
+	size_t newSizeNeeded = baseString->currentStringLength + bytes;
+	ensureStringBufferCanHold(baseString, newSizeNeeded);
+
+	memcpy(baseString->str + baseString->currentStringLength,appendedChars, bytes);
+
+	baseString->currentStringLength = newSizeNeeded;
+	baseString->str[baseString->currentStringLength] = '\0';
+}
+
 void g_string_append_printf(GString* baseString, char* format, ...)
 {
 	va_list args;
