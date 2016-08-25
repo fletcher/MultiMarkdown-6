@@ -18,16 +18,27 @@ set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}
 set (My_Project_Copyright_Date "2015")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 
+string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
+string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
+
 project (${My_Project_Title})
 
+
+# =========================
+# Build Submodules (if any)
+# =========================
+
+# add_subdirectory(submodules/foo)
+
+
+# =================
+# Configure Project
+# =================
 
 # Search for included files here
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
-
-string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
-string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
 
 
 # =================
