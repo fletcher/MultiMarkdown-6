@@ -148,6 +148,14 @@ Properly configuring your source for this is up to you.  You can modify the
 of the basics are handled for you based on your CMake configuration.
 
 
+### GitHub Pages Support ###
+
+The `configure-gh-pages` script sets up a `documentation` directory that is 
+linked to a `gh-pages` branch of the project.  You can then run `make gh-pages` 
+to update the documentation in this directory.  Commit and push to your origin,
+and your projects gh-page is updated.
+
+
 ### Makefile ###
 
 The overall build process is controlled by the master `Makefile`.  It provides

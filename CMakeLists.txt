@@ -5,13 +5,13 @@ cmake_minimum_required (VERSION 2.6)
 # Define Our Project
 # ==================
 
-set (My_Project_Title "Some Project")
-set (My_Project_Description "A project built using the c-template system.")
+set (My_Project_Title "C-Template")
+set (My_Project_Description "Boilerplate c project with cmake support, CuTest unit testing, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2016-05-06")
+set (My_Project_Revised_Date "2016-08-24")
 set (My_Project_Version_Major 1)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 2)
+set (My_Project_Version_Patch 3)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 

@@ -67,6 +67,10 @@ documentation: $(BUILD_DIR)
 	cmake -DDOCUMENTATION=1 ..; cd ..; \
 	doxygen build/doxygen.conf
 
+.PHONY : gh-pages
+gh-pages: documentation
+	cp -r $(BUILD_DIR)/documentation/html/* documentation/
+
 # Clean out the build directory
 .PHONY : clean
 clean:

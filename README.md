@@ -2,11 +2,11 @@
 
 |            |                           |  
 | ---------- | ------------------------- |  
-| Title:     | Some Project        |  
-| Author:    | Somebody       |  
-| Date:      | 2015-06-05 |  
-| Copyright: | Copyright © 2015 Somebody.    |  
-| Version:   | 1.0.1      |  
+| Title:     | C-Template        |  
+| Author:    | Fletcher T. Penney       |  
+| Date:      | 2016-08-24 |  
+| Copyright: | Copyright © 2015-2016 Fletcher T. Penney.    |  
+| Version:   | 1.0.3      |  
 
 
 ## Introduction ##
@@ -146,6 +146,14 @@ Once you get the hang of it, it's easy to use.
 Properly configuring your source for this is up to you.  You can modify the
 `doxygen.conf.in` template with your desired settings as desired, but most
 of the basics are handled for you based on your CMake configuration.
+
+
+### GitHub Pages Support ###
+
+The `configure-gh-pages` script sets up a `documentation` directory that is 
+linked to a `gh-pages` branch of the project.  You can then run `make gh-pages` 
+to update the documentation in this directory.  Commit and push to your origin,
+and your projects gh-page is updated.
 
 
 ### Makefile ###

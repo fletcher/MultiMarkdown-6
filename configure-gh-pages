@@ -1,0 +1,11 @@
+#!/bin/sh
+
+mkdir documentation
+
+cd documentation
+
+git clone .. .
+
+git checkout --orphan gh-pages
+
+git rm -rf .
