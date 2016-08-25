@@ -5,7 +5,7 @@
  *		https://github.com/fletcher/MultiMarkdown-4/
  *
  *	Created by Daniel Jalkut on 7/26/11.
- *  Modified by Fletcher T. Penney on 9/15/11.
+ *  Modified by Fletcher T. Penney 9/15/11 - 5/6/16.
  *  Modified by Dan Lowe on 1/3/12.
  *	Copyright 2011 __MyCompanyName__. All rights reserved.
  */
@@ -134,6 +134,17 @@ void g_string_append_c(GString* baseString, char appendedCharacter)
 	
 	baseString->str[baseString->currentStringLength] = appendedCharacter;
 	baseString->currentStringLength++;	
+	baseString->str[baseString->currentStringLength] = '\0';
+}
+
+void g_string_append_c_array(GString *baseString, char * appendedChars, size_t bytes)
+{
+	size_t newSizeNeeded = baseString->currentStringLength + bytes;
+	ensureStringBufferCanHold(baseString, newSizeNeeded);
+
+	memcpy(baseString->str + baseString->currentStringLength,appendedChars, bytes);
+
+	baseString->currentStringLength = newSizeNeeded;
 	baseString->str[baseString->currentStringLength] = '\0';
 }
 

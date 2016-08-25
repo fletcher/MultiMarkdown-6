@@ -2,7 +2,7 @@
 
 	main.c -- Template main()
 
-	Copyright © 2015 Fletcher T. Penney.
+	Copyright © 2015-2016 Fletcher T. Penney.
 
 
 	This program is free software you can redistribute it and/or modify
@@ -26,24 +26,48 @@
 
 #include "GLibFacade.h"
 
-char * stdin_buffer() {
-	/* Read from stdin and return a char *
-		`result` will need to be freed elsewhere */
+#define kBUFFERSIZE 4096	// How many bytes to read at a time
+
+GString * stdin_buffer() {
+	/* Read from stdin and return a GString *
+		`buffer` will need to be freed elsewhere */
+
+	char chunk[kBUFFERSIZE];
+	size_t bytes;
 
 	GString * buffer = g_string_new("");
-	char curchar;
-	char * result;
 
-	while ((curchar = fgetc(stdin)) != EOF)
-		g_string_append_c(buffer, curchar);
+    while ((bytes = fread(chunk, 1, kBUFFERSIZE, stdin)) > 0) {
+    	g_string_append_c_array(buffer, chunk, bytes);
+    }
 
 	fclose(stdin);
 
-	result = buffer->str;
+	return buffer;
+}
 
-	g_string_free(buffer, false);
+GString * scan_file(char * fname) {
+	/* Read from stdin and return a GString *
+		`buffer` will need to be freed elsewhere */
 
-	return result;
+	char chunk[kBUFFERSIZE];
+	size_t bytes;
+
+	FILE * file;
+
+	if ((file = fopen(fname, "r")) == NULL ) {
+		return NULL;
+	}
+
+	GString * buffer = g_string_new("");
+
+    while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
+    	g_string_append_c_array(buffer, chunk, bytes);
+    }
+
+	fclose(file);
+
+	return buffer;
 }
 
 int main( int argc, char** argv ) {

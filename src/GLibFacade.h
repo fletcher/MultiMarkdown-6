@@ -6,6 +6,9 @@
  *
  *	Created by Daniel Jalkut on 7/26/11.
  *	Copyright 2011 __MyCompanyName__. All rights reserved.
+ *
+ *	Modified by Fletcher T. Penney
+ *	Changes Copyright 2011-2016
  */
 
 #ifndef __MARKDOWN_GLIB_FACADE__
@@ -51,6 +54,7 @@ GString* g_string_new(char *startingString);
 char* g_string_free(GString* ripString, bool freeCharacterData);
 
 void g_string_append_c(GString* baseString, char appendedCharacter);
+void g_string_append_c_array(GString *baseString, char * appendedChars, size_t bytes);
 void g_string_append(GString* baseString, char *appendedString);
 
 void g_string_prepend(GString* baseString, char* prependedString);
