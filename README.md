@@ -205,6 +205,32 @@ Clean out the `build` directory.  Be sure to run this before running another
 command.
 
 
+## Git Submodules ##
+
+Apparently, submodules are a rather controversial feature in git.  For me,
+however, they have proven invaluable.  My most active projects depend on each
+other, and the submodule feature allows me to easily keep everything up to
+date.  That said, however, I quickly realized that submodules don't work very
+well using default commands.
+
+The problem is that I want to always use the latest version of my submodules.
+This is more easily accomplished when the submodule is set to the `master`
+branch of the original repository, rather than a detached commit as happens
+by default.  In order to easily keep all submodules updated, there are two 
+scripts:
+
+1. `link_git_modules` -- this script is generally only run when the master
+repository is first cloned, but can also be run after a new submodule is 
+added.  It causes the submodules to automatically track the master branch.
+If you need to modify this, there are instructions in the script itself 
+explaining how to modify it on a per submodule basis.  Running this script 
+more than one time will not hurt anything.
+
+2. `update_git_modules` -- this script simply causes each submodule to be
+updated to the latest commit in the original repository.  Again, running it
+multiple times doesn't hurt anything.
+
+
 ## Source File Templates ##
 
 In the `templates` directory are two files, `template.c.in` and
