@@ -24,21 +24,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "GLibFacade.h"
+#include "d_string.h"
 
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
-GString * stdin_buffer() {
+DString * stdin_buffer() {
 	/* Read from stdin and return a GString *
 		`buffer` will need to be freed elsewhere */
 
 	char chunk[kBUFFERSIZE];
 	size_t bytes;
 
-	GString * buffer = g_string_new("");
+	DString * buffer = d_string_new("");
 
     while ((bytes = fread(chunk, 1, kBUFFERSIZE, stdin)) > 0) {
-    	g_string_append_c_array(buffer, chunk, bytes);
+    	d_string_append_c_array(buffer, chunk, bytes);
     }
 
 	fclose(stdin);
@@ -46,7 +46,7 @@ GString * stdin_buffer() {
 	return buffer;
 }
 
-GString * scan_file(char * fname) {
+DString * scan_file(char * fname) {
 	/* Read from stdin and return a GString *
 		`buffer` will need to be freed elsewhere */
 
@@ -59,10 +59,10 @@ GString * scan_file(char * fname) {
 		return NULL;
 	}
 
-	GString * buffer = g_string_new("");
+	DString * buffer = d_string_new("");
 
     while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
-    	g_string_append_c_array(buffer, chunk, bytes);
+    	d_string_append_c_array(buffer, chunk, bytes);
     }
 
 	fclose(file);

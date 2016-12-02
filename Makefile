@@ -1,4 +1,6 @@
 BUILD_DIR = build
+XCODE_BUILD_DIR = build-xcode
+XCODE_DEBUG_BUILD_DIR = build-xcode-debug
 
 # The release target will perform additional optimization
 .PHONY : release
@@ -32,9 +34,14 @@ analyze: $(BUILD_DIR)
 #	xcodebuild -configuration Debug
 #	xcodebuild -configuration Release
 .PHONY : xcode
-xcode: $(BUILD_DIR)
-	cd $(BUILD_DIR); \
+xcode: $(XCOD_BUILD_DIR)
+	cd $(XCOD_BUILD_DIR); \
 	cmake -G Xcode ..
+
+.PHONY : xcode-debug
+xcode-debug: $(XCODE_DEBUG_BUILD_DIR)
+	cd $(XCODE_DEBUG_BUILD_DIR); \
+	cmake -G Xcode -DTEST=1 ..
 
 # Cross-compile for Windows using MinGW on *nix
 .PHONY : windows
@@ -80,6 +87,15 @@ clean:
 $(BUILD_DIR): CHANGELOG
 	-mkdir $(BUILD_DIR) 2>/dev/null
 	-cd $(BUILD_DIR); rm -rf *
+
+# Build xcode directories if they don't exist
+$(XCODE_BUILD_DIR):
+	-mkdir $(XCODE_BUILD_DIR) 2>/dev/null
+	-cd $(XCODE_BUILD_DIR); rm -rf *
+
+$(XCODE_DEBUG_BUILD_DIR):
+	-mkdir $(XCODE_DEBUG_BUILD_DIR) 2>/dev/null
+	-cd $(XCODE_DEBUG_BUILD_DIR); rm -rf *
 
 # Generate a list of changes since last commit to 'master' branch
 .PHONY : CHANGELOG

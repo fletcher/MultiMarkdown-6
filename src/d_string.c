@@ -1,41 +1,66 @@
-/*
- *	GLibFacade.c
- *	MultiMarkdown
- *	
- *	Created by Daniel Jalkut on 7/26/11.
- *  Modified by Fletcher T. Penney 9/15/11 - 5/6/16.
- *		Changes Copyright 2011-2016
- *  Modified by Dan Lowe on 1/3/12.
- *
- *	License for original code by Daniel Jalkut:
- *	
- *	Copyright 2011 Daniel Jalkut. All rights reserved.
- *	
- *	Permission is hereby granted, free of charge, to any person obtaining a copy of
- *	this software and associated documentation files (the “Software”), to deal in
- *	the Software without restriction, including without limitation the rights to
- *	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- *	of the Software, and to permit persons to whom the Software is furnished to do
- *	so, subject to the following conditions:
- *	
- *	The above copyright notice and this permission notice shall be included in all
- *	copies or substantial portions of the Software.
- *	
- *	THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *	SOFTWARE.
- */
+/**
 
-#include "GLibFacade.h"
+	Smart String -- Library to abstract smart typing features from MMD Composer
+
+	@file d_string.c
+
+	@brief Dynamic string -- refactoring of old GLibFacade
+
+
+	@author	Daniel Jalkut, modified by Fletcher T. Penney and Dan Lowe
+	@bug	
+
+**/
+
+/*
+
+	Copyright © 2011 Daniel Jalkut.
+	Modifications by Fletcher T. Penney, Copyright © 2011-2016 Fletcher T. Penney.
+	Modifications by Dan Lowe, Copyright © 2011 Dan Lowe.
+
+
+	The `c-template` project is released under the MIT License.
+	
+	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
+	
+		https://github.com/fletcher/MultiMarkdown-4/
+	
+	MMD 4 is released under both the MIT License and GPL.
+	
+	
+	CuTest is released under the zlib/libpng license. See CuTest.c for the text
+	of the license.
+	
+	
+	## The MIT License ##
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+
+#include "d_string.h"
+
 
 /*
  * The following section came from:
@@ -72,14 +97,14 @@ int asprintf( char **sptr, char *fmt, ... )
 #endif
 
 
-/* GString */
+/* DString */
 
 #define kStringBufferStartingSize 1024
 #define kStringBufferGrowthMultiplier 2
 
-GString* g_string_new(const char *startingString)
+DString* d_string_new(const char *startingString)
 {
-	GString* newString = malloc(sizeof(GString));
+	DString* newString = malloc(sizeof(DString));
 
 	if (startingString == NULL) startingString = "";
 
@@ -99,7 +124,7 @@ GString* g_string_new(const char *startingString)
 	return newString;
 }
 
-char* g_string_free(GString* ripString, bool freeCharacterData)
+char* d_string_free(DString* ripString, bool freeCharacterData)
 {	
 	if (ripString == NULL)
 		return NULL;
@@ -119,7 +144,7 @@ char* g_string_free(GString* ripString, bool freeCharacterData)
 	return returnedString;
 }
 
-static void ensureStringBufferCanHold(GString* baseString, size_t newStringSize)
+static void ensureStringBufferCanHold(DString* baseString, size_t newStringSize)
 {
 	size_t newBufferSizeNeeded = newStringSize + 1;
 	if (newBufferSizeNeeded > baseString->currentStringBufferSize)
@@ -145,7 +170,7 @@ static void ensureStringBufferCanHold(GString* baseString, size_t newStringSize)
 	}
 }
 
-void g_string_append(GString* baseString, char* appendedString)
+void d_string_append(DString* baseString, char* appendedString)
 {
 	if ((appendedString != NULL) && (strlen(appendedString) > 0))
 	{
@@ -159,7 +184,7 @@ void g_string_append(GString* baseString, char* appendedString)
 	}
 }
 
-void g_string_append_c(GString* baseString, char appendedCharacter)
+void d_string_append_c(DString* baseString, char appendedCharacter)
 {	
 	size_t newSizeNeeded = baseString->currentStringLength + 1;
 	ensureStringBufferCanHold(baseString, newSizeNeeded);
@@ -169,7 +194,7 @@ void g_string_append_c(GString* baseString, char appendedCharacter)
 	baseString->str[baseString->currentStringLength] = '\0';
 }
 
-void g_string_append_c_array(GString *baseString, char * appendedChars, size_t bytes)
+void d_string_append_c_array(DString *baseString, const char * appendedChars, size_t bytes)
 {
 	size_t newSizeNeeded = baseString->currentStringLength + bytes;
 	ensureStringBufferCanHold(baseString, newSizeNeeded);
@@ -180,7 +205,7 @@ void g_string_append_c_array(GString *baseString, char * appendedChars, size_t b
 	baseString->str[baseString->currentStringLength] = '\0';
 }
 
-void g_string_append_printf(GString* baseString, char* format, ...)
+void d_string_append_printf(DString* baseString, char* format, ...)
 {
 	va_list args;
 	va_start(args, format);
@@ -189,13 +214,13 @@ void g_string_append_printf(GString* baseString, char* format, ...)
 	vasprintf(&formattedString, format, args);
 	if (formattedString != NULL)
 	{
-		g_string_append(baseString, formattedString);
+		d_string_append(baseString, formattedString);
 		free(formattedString);
 	}
 	va_end(args);
 } 
 
-void g_string_prepend(GString* baseString, char* prependedString)
+void d_string_prepend(DString* baseString, char* prependedString)
 {
 	if ((prependedString != NULL) && (strlen(prependedString) > 0))
 	{
@@ -210,7 +235,7 @@ void g_string_prepend(GString* baseString, char* prependedString)
 	}
 }
 
-void g_string_insert(GString* baseString, size_t pos, char * insertedString)
+void d_string_insert(DString* baseString, size_t pos, const char * insertedString)
 {
 	if ((insertedString != NULL) && (strlen(insertedString) > 0))
 	{
@@ -229,7 +254,7 @@ void g_string_insert(GString* baseString, size_t pos, char * insertedString)
 	}
 }
 
-void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
+void d_string_insert_c(DString* baseString, size_t pos, char insertedCharacter)
 {	
 	if (pos > baseString->currentStringLength)
 		pos = baseString->currentStringLength;
@@ -246,7 +271,7 @@ void g_string_insert_c(GString* baseString, size_t pos, char insertedCharacter)
 }
 
 
-void g_string_insert_printf(GString* baseString, size_t pos, char* format, ...)
+void d_string_insert_printf(DString* baseString, size_t pos, char* format, ...)
 {
 	va_list args;
 	va_start(args, format);
@@ -255,13 +280,13 @@ void g_string_insert_printf(GString* baseString, size_t pos, char* format, ...)
 	vasprintf(&formattedString, format, args);
 	if (formattedString != NULL)
 	{
-		g_string_insert(baseString, pos, formattedString);
+		d_string_insert(baseString, pos, formattedString);
 		free(formattedString);
 	}
 	va_end(args);
 }
 
-void g_string_erase(GString* baseString, size_t pos, size_t len)
+void d_string_erase(DString* baseString, size_t pos, size_t len)
 {
 	if ((pos > baseString->currentStringLength) || (len <= 0))
 		return;
@@ -277,46 +302,3 @@ void g_string_erase(GString* baseString, size_t pos, size_t len)
 	}
 	baseString->str[baseString->currentStringLength] = '\0';
 }
-
-/* GSList */
-
-void g_slist_free(GSList* ripList)
-{
-	GSList* thisListItem = ripList;
-	while (thisListItem != NULL)
-	{
-		GSList* nextItem = thisListItem->next;
-		
-		/* I guess we don't release the data? Non-retained memory management is hard... let's figure it out later. */
-		free(thisListItem);
-		
-		thisListItem = nextItem;
-	}
-}
-
-/* Currently only used for markdown_output.c endnotes printing */
-GSList* g_slist_reverse(GSList* theList)
-{	
-	GSList* lastNodeSeen = NULL;
-	
-	/* Iterate the list items, tacking them on to our new reversed List as we find them */
-	GSList* listWalker = theList;
-	while (listWalker != NULL)
-	{
-		GSList* nextNode = listWalker->next;
-		listWalker->next = lastNodeSeen;
-		lastNodeSeen = listWalker;
-		listWalker = nextNode;
-	}
-	
-	return lastNodeSeen;
-}
-
-GSList* g_slist_prepend(GSList* targetElement, void* newElementData)
-{
-	GSList* newElement = malloc(sizeof(GSList));
-	newElement->data = newElementData;
-	newElement->next = targetElement;
-	return newElement;
-}
-
