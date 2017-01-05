@@ -191,39 +191,46 @@ configure_file (
 # Build Test Suite with CuTest (unit testing)
 # ===========================================
 
-set(test_files
-	test/CuTest.c
-	test/CuTest.h
-	${PROJECT_BINARY_DIR}/AllTests.c
-)
+# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
+get_directory_property(hasParent PARENT_DIRECTORY)
 
-if (DEFINED TEST)
-	add_definitions(-DTEST)
-
-	add_executable(run_tests
-		${test_files}
-		${src_files}
-		${header_files}
-		${src_utility_files}
-		${header_utility_files}
+if(hasParent)
+	# Don't create "run_tests" when we're a sub-project for something else
+else()
+	set(test_files
+		test/CuTest.c
+		test/CuTest.h
+		${PROJECT_BINARY_DIR}/AllTests.c
 	)
 
-	# Process source files to look for tests to run
-	add_custom_command (
-		OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
-		COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/src/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
-	)
+	if (DEFINED TEST)
+		add_definitions(-DTEST)
 
-	enable_testing()
+		add_executable(run_tests
+			${test_files}
+			${src_files}
+			${header_files}
+			${src_utility_files}
+			${header_utility_files}
+		)
 
-	add_test( test ${PROJECT_BINARY_DIR}/run_tests)
+		# Process source files to look for tests to run
+		add_custom_command (
+			OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
+			COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/src/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
+		)
 
-	# valgrind memory testing
-	find_program (MEMORYCHECK_COMMAND valgrind)
-	SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
+		enable_testing()
 
-	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
+		add_test( test ${PROJECT_BINARY_DIR}/run_tests)
 
+		# valgrind memory testing
+		find_program (MEMORYCHECK_COMMAND valgrind)
+		SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
+
+		add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
+
+	endif()
 endif()
 
 
