@@ -1,0 +1,13 @@
+#!/bin/sh
+
+FILE=$1
+
+
+cp build/template.c src/$FILE.c
+
+perl -pi -e "s/file\.c/$FILE\.c/;" -e "s/file\.h/$FILE\.h/;" src/$FILE.c
+
+
+cp build/template.h src/$FILE.h
+
+perl -pi -e "s/file\.c/$FILE\.c/;" -e "s/file\.h/$FILE\.h/;" -e "s/FILE\_/\U$FILE\_/;" src/$FILE.h

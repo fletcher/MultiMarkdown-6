@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "C-Template")
 set (My_Project_Description "Boilerplate c project with cmake support, CuTest unit testing, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2016-08-24")
+set (My_Project_Revised_Date "2016-12-02")
 set (My_Project_Version_Major 1)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 3)
+set (My_Project_Version_Patch 4)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -169,11 +169,11 @@ set(public_header_files
 
 # Utility source files will not be included in doxygen
 set(src_utility_files
-#	src/GLibFacade.c
+#	src/d_string.c
 )
 
 set(header_utility_files
-#	src/GLibFacade.h
+#	src/d_string.h
 	${PROJECT_BINARY_DIR}/version.h
 )
 
@@ -311,8 +311,8 @@ endif (WIN32)
 # if (NOT DEFINED TEST)
 # 	add_executable(main
 # 		src/main.c
-# 		src/GLibFacade.c
-# 		src/GLibFacade.h
+# 		src/d_string.c
+# 		src/d_string.h
 # 		${header_files}
 # 	)
 # 
