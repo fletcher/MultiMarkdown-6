@@ -8,14 +8,14 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "C-Template")
 set (My_Project_Description "Boilerplate c project with cmake support, CuTest unit testing, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2016-12-02")
+set (My_Project_Revised_Date "2017-01-16")
 set (My_Project_Version_Major 1)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 4)
+set (My_Project_Version_Patch 5)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
-set (My_Project_Copyright_Date "2015-2016")
+set (My_Project_Copyright_Date "2015-2017")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
@@ -126,6 +126,11 @@ ENDMACRO(ADD_LINKED_FRAMEWORK)
 file(READ ${PROJECT_SOURCE_DIR}/LICENSE.txt My_Project_License)
 
 string(REGEX REPLACE "\n" "\n\t" My_Project_License_Indent ${My_Project_License})
+
+string(REGEX REPLACE "\"" "\\\\\"" My_Project_License_Escaped ${My_Project_License_Indent})
+
+string(REGEX REPLACE "\n" "\\\\n\"\\\\\n\"" My_Project_License_Literal ${My_Project_License_Escaped})
+
 
 configure_file (
 	"${PROJECT_SOURCE_DIR}/templates/template.c.in"

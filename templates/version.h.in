@@ -18,9 +18,14 @@
 **/
 
 
-#ifndef FILE_@My_Project_Title_Caps@_VERSION_H
-#define FILE_@My_Project_Title_Caps@_VERSION_H
+#ifndef FILE_@My_Project_Title_Caps@_H
+#define FILE_@My_Project_Title_Caps@_H
+
+#define @My_Project_Title_Caps@_NAME "@My_Project_Title@"
 
 #define @My_Project_Title_Caps@_VERSION "@My_Project_Version@"
+#define @My_Project_Title_Caps@_COPYRIGHT "@My_Project_Copyright@"
+
+#define @My_Project_Title_Caps@_LICENSE "\t@My_Project_License_Literal@"
 
 #endif
