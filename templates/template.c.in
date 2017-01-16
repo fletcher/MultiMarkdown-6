@@ -24,12 +24,12 @@
 
 #include "file.h"
 
-int void_function(void) {
+static int void_function(void) {
 	return 0;
 }
 
 #ifdef TEST
-void Test_void_function(CuTest* tc) {
+static void Test_void_function(CuTest* tc) {
 	int test = void_function();
 
 	CuAssertIntEquals(tc, 0, test);
