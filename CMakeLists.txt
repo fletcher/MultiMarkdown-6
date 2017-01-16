@@ -71,7 +71,7 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 	# the desired public headers to that list for Xcode to use them.
 	#
 	# TODO: If anyone knows how to automate that in Cmake, I would be very
-	# greatful!!
+	# grateful!!
 
 	SET_TARGET_PROPERTIES(${target} PROPERTIES
 		XCODE_ATTRIBUTE_PUBLIC_HEADERS_FOLDER_PATH
