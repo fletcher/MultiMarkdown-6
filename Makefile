@@ -1,4 +1,5 @@
 BUILD_DIR = build
+DOC_DIR = documentation
 XCODE_BUILD_DIR = build-xcode
 XCODE_DEBUG_BUILD_DIR = build-xcode-debug
 
@@ -18,7 +19,7 @@ zip: $(BUILD_DIR)
 .PHONY : debug
 debug: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
-	cmake -DTEST=1 ..
+	cmake -DTEST=1 DCMAKE_BUILD_TYPE=DEBUG ..
 
 # analyze target enables use of clang's scan-build (if installed)
 # will then need to run 'scan-build make' to compile and analyze
@@ -27,15 +28,20 @@ debug: $(BUILD_DIR)
 .PHONY : analyze
 analyze: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
-	scan-build cmake -DTEST=1 ..
+	scan-build cmake -DTEST=1 DCMAKE_BUILD_TYPE=DEBUG ..
+
+.PHONY : map
+map:
+	cd $(BUILD_DIR); \
+	../tools/enumsToPerl.pl ../src/libMultiMarkdown.h enumMap.txt;
 
 # Create xcode project
 # You can then build within XCode, or using the commands:
 #	xcodebuild -configuration Debug
 #	xcodebuild -configuration Release
 .PHONY : xcode
-xcode: $(XCOD_BUILD_DIR)
-	cd $(XCOD_BUILD_DIR); \
+xcode: $(XCODE_BUILD_DIR)
+	cd $(XCODE_BUILD_DIR); \
 	cmake -G Xcode ..
 
 .PHONY : xcode-debug
@@ -69,10 +75,11 @@ windows-zip-32: $(BUILD_DIR)
 
 # Build the documentation using doxygen
 .PHONY : documentation
-documentation: $(BUILD_DIR)
-	cd $(BUILD_DIR); \
+documentation:
+	-mkdir $(DOC_DIR) 2>/dev/null; \
+	cd $(DOC_DIR); \
 	cmake -DDOCUMENTATION=1 ..; cd ..; \
-	doxygen build/doxygen.conf
+	doxygen $(DOC_DIR)/doxygen.conf
 
 .PHONY : gh-pages
 gh-pages: documentation

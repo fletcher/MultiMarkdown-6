@@ -1,0 +1,32 @@
+<p><a href="http://test.1/file.txt"><em>foo</em></a>.</p>
+
+<p><a href="http://test.1/file.txt"><em>foo</em></a>.</p>
+
+<p><a href="http://test.3/file.txt" title="title"><em>foo</em></a>.</p>
+
+<p><a href="http://test.4/"><em>foo</em></a>.</p>
+
+<p><a href="http://test.4/"><em>foo</em></a>.</p>
+
+<p>5</p>
+
+<p><a href="http://test.6/" title="title"><em>foo</em></a>.</p>
+
+<p><a href="http://test.0/">foo</a>.</p>
+
+<p><a href="http://test.0/">foo</a>.</p>
+
+<p><a href="http://test.1/file.txt"><a href="http://test.0/">foo</a></a></p>
+
+<p><a href="http://test.0/"><a href="http://test.0/">foo</a></a></p>
+
+<p>10</p>
+
+<p><a href="http://test.3/file.txt" title="title"><a href="http://test.1/file.txt">foo</a></a></p>
+
+<p><a href="http://test.1/file.txt">foo</a></p>
+
+<p><a href="http://test.0/">foo</a> <a href="http://test.1/file.txt">bar</a></p>
+
+<p><a href="http://test.0/">foo</a>
+<a href="http://test.1/file.txt">bar</a></p>

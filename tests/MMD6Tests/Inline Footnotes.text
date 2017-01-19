@@ -1,0 +1,5 @@
+Inline.[^foo *bar*]
+
+Inline.[^foo *bar*
+[foo](/bar)
+**foo**.]

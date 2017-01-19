@@ -1,0 +1,5 @@
+<p>Inline.[^foo <em>bar</em>]</p>
+
+<p>Inline.[^foo <em>bar</em>
+<a href="/bar">foo</a>
+<strong>foo</strong>.]</p>

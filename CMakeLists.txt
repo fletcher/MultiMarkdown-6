@@ -5,23 +5,27 @@ cmake_minimum_required (VERSION 2.6)
 # Define Our Project
 # ==================
 
-set (My_Project_Title "C-Template")
-set (My_Project_Description "Boilerplate c project with cmake support, CuTest unit testing, and more.")
+set (My_Project_Title "MultiMarkdown 6")
+set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-01-16")
-set (My_Project_Version_Major 1)
-set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 5)
+set (My_Project_Revised_Date "2017-01-18")
+set (My_Project_Version_Major 0)
+set (My_Project_Version_Minor 1)
+set (My_Project_Version_Patch 0a)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
-set (My_Project_Copyright_Date "2015-2017")
+set (My_Project_Copyright_Date "2016 - 2017")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
 string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
 
 project (${My_Project_Title})
+
+
+# Enable this if you want to be warned about struct alignment
+# add_definitions ("-Wpadded")
 
 
 # =========================
@@ -71,7 +75,7 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 	# the desired public headers to that list for Xcode to use them.
 	#
 	# TODO: If anyone knows how to automate that in Cmake, I would be very
-	# greatful!!
+	# grateful!!
 
 	SET_TARGET_PROPERTIES(${target} PROPERTIES
 		XCODE_ATTRIBUTE_PUBLIC_HEADERS_FOLDER_PATH
@@ -125,9 +129,9 @@ ENDMACRO(ADD_LINKED_FRAMEWORK)
 
 file(READ ${PROJECT_SOURCE_DIR}/LICENSE.txt My_Project_License)
 
-string(REGEX REPLACE "\n" "\n\t" My_Project_License_Indent ${My_Project_License})
+string(REGEX REPLACE "\n" "\n\t" My_Project_License_Indented ${My_Project_License})
 
-string(REGEX REPLACE "\"" "\\\\\"" My_Project_License_Escaped ${My_Project_License_Indent})
+string(REGEX REPLACE "\"" "\\\\\"" My_Project_License_Escaped ${My_Project_License_Indented})
 
 string(REGEX REPLACE "\n" "\\\\n\"\\\\\n\"" My_Project_License_Literal ${My_Project_License_Escaped})
 
@@ -160,11 +164,38 @@ configure_file (
 
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
-#	src/foo.c
+	src/argtable3.c
+	src/char.c
+	src/d_string.c
+	src/html.c
+	src/lexer.c
+	src/mmd.c
+	src/object_pool.c
+	src/parser.c
+	src/rng.c
+	src/scanners.c
+	src/stack.c
+	src/token.c
+	src/token_pairs.c
+	src/writer.c
 )
 
 # Primary header files, also for doxygen documentation
 set(header_files
+	src/argtable3.h
+	src/d_string.h
+	src/char.h
+	src/html.h
+	src/lexer.h
+	src/libMultiMarkdown.h
+	src/mmd.h
+	src/object_pool.h
+	src/scanners.h
+	src/stack.h
+	src/token.h
+	src/token_pairs.h
+	src/uthash.h
+	src/writer.h
 )
 
 # Public headers, will be installed in 'include'
@@ -174,11 +205,9 @@ set(public_header_files
 
 # Utility source files will not be included in doxygen
 set(src_utility_files
-#	src/d_string.c
 )
 
 set(header_utility_files
-#	src/d_string.h
 	${PROJECT_BINARY_DIR}/version.h
 )
 
@@ -230,10 +259,10 @@ else()
 		add_test( test ${PROJECT_BINARY_DIR}/run_tests)
 
 		# valgrind memory testing
-		find_program (MEMORYCHECK_COMMAND valgrind)
-		SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
-
-		add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
+	#	find_program (MEMORYCHECK_COMMAND valgrind)
+	#	SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
+	#
+	#	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
 
 	endif()
 endif()
@@ -302,32 +331,33 @@ endif (WIN32)
 # ==============
 
 # Create a library?
-# add_library(libFOO STATIC
-#	${src_files}
-#	${src_utility_files}
-#	${header_files}
-#	${header_utility_files}
-# )
+add_library(libMultiMarkdown STATIC
+	${src_files}
+	${src_utility_files}
+	${header_files}
+	${header_utility_files}
+)
+
+ADD_PUBLIC_HEADER(libMultiMarkdown src/libMultiMarkdown.h)
+ADD_PUBLIC_HEADER(libMultiMarkdown src/d_string.h)
 
 # remove the extra "lib" from "liblibFOO"
-# SET_TARGET_PROPERTIES(libFOO PROPERTIES PREFIX "")
+SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
 
 # Create a command-line app?
 # if (NOT DEFINED TEST)
-# 	add_executable(main
-# 		src/main.c
-# 		src/d_string.c
-# 		src/d_string.h
-# 		${header_files}
-# 	)
+	add_executable(multimarkdown
+		src/d_string.c
+		src/main.c
+	)
 # 
 #	Link the library to the app?
-#	target_link_libraries(main libFOO)
+	target_link_libraries(multimarkdown libMultiMarkdown)
 # endif()
 
 # Xcode settings for fat binaries
-# set_target_properties(libFOO PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
-# set_target_properties(main PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+set_target_properties(libMultiMarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 
 
 # ==========================
@@ -371,3 +401,27 @@ endif (WIN32)
 set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT})
 
 include (CPack)
+
+
+# ======================
+# Integration Test Suite
+# ======================
+
+enable_testing()
+
+function(ADD_MMD_TEST NAME FLAGS FOLDER EXTENSION)
+	add_test ( ${NAME}
+		${PROJECT_SOURCE_DIR}/tests/MarkdownTest.pl
+		--Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown
+		--testdir=${PROJECT_SOURCE_DIR}/tests/${FOLDER}
+		"--Flags=${FLAGS}"
+		--ext=${EXTENSION}
+	)
+
+endfunction(ADD_MMD_TEST)
+
+
+# MMD 6
+ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
+
+ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)

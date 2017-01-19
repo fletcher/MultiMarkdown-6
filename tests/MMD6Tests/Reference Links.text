@@ -1,0 +1,42 @@
+[*foo*][bar].
+
+[*foo*][BAR].
+
+[*foo*][foobar].
+
+[*foo*][foo bar].
+
+[*foo*][foo  bar].
+
+5
+
+[*foo*][long].
+
+[foo][].
+
+[foo].
+
+[[foo]][bar]
+
+[[foo]][]
+
+10
+
+[[foo][bar]][]
+
+[foo][bar]
+
+[foo] [bar]
+
+[foo]
+[bar]
+
+
+[foo]: http://test.0/
+[bar]:	http://test.1/file.txt
+[BAR]:      http://test.2/
+[foobar]: http://test.3/file.txt	"title"
+[foo bar]: http://test.4/
+[foo  bar]: http://test.5/	""
+[long]: http://test.6/
+"title"

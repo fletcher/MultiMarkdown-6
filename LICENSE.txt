@@ -1,4 +1,4 @@
-The `c-template` project is released under the MIT License.
+The `MultiMarkdown 6` project is released under the MIT License..
 
 GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
 

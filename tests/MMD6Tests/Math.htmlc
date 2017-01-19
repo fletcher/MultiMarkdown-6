@@ -1,0 +1,51 @@
+<p>foo \({e}^{i\pi }+1=0\) bar</p>
+
+<p>\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</p>
+
+<p>foo ${e}^{i\pi }+1=0$ bar</p>
+
+<p>foo ${e}^{i\pi }+1=0$, bar</p>
+
+<p>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</p>
+
+<p>5</p>
+
+<p>foo $ {e}^{i\pi }+1=0$ bar</p>
+
+<p>$$ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</p>
+
+<p>foo ${e}^{i\pi }+1=0 $ bar</p>
+
+<p>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} $$</p>
+
+<p>foo a${e}^{i\pi }+1=0$ bar</p>
+
+<p>10</p>
+
+<p>a$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</p>
+
+<p>foo ${e}^{i\pi }+1=0$b bar</p>
+
+<p>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$b</p>
+
+<p>$\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}$</p>
+
+<p>$$\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}$$</p>
+
+<p>15</p>
+
+<p>\(\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\)</p>
+
+<p>\[\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\]</p>
+
+<p>$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}$</p>
+
+<p>$$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}$$</p>
+
+<p>\(\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\)</p>
+
+<p>20</p>
+
+<p>\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\]</p>
+
+<p><code>\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</code></p>
