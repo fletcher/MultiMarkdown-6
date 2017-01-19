@@ -1,0 +1,32 @@
+<p>Just a <a href="http://url/file.txt">URL</a>.</p>
+
+<p><a href="/url/file.txt" title="title">URL and title</a>.</p>
+
+<p><a href="/url/file.txt" title="title preceded by two spaces">URL and title</a>.</p>
+
+<p><a href="/url/file.txt" title="title preceded by a tab">URL and title</a>.</p>
+
+<p><a href="/url/file.txt" title="title has spaces afterward">URL and title</a>.</p>
+
+<p>5</p>
+
+<p><a href="">Empty</a>.</p>
+
+<p><a href="/url/file.txt" title="title"><strong>URL</strong> and <em>title</em></a>.</p>
+
+<p><a href="/url/file.txt" title="title">URL and title</a>.</p>
+
+<p><a href="/url/file.txt" title="title">URL and title</a>.</p>
+
+<p><a href="/url/file.txt" title="title">URL and title</a>.</p>
+
+<p>10</p>
+
+<p><a href="/url/file.txt">URL and title</a>.</p>
+
+<p><a href="/url/file.txt" title="*title*">URL and title</a>.</p>
+
+<p>[URL and title] (/url/file.txt &quot;<em>title</em>&quot;).</p>
+
+<p>[URL and title]
+(/url/file.txt &quot;<em>title</em>&quot;).</p>

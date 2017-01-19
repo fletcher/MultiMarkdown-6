@@ -1,0 +1,20 @@
+foo ![image][]
+
+foo [link][]
+
+foo [link2][]
+
+foo [link3][]
+
+![test](http://foo.bar/ "title" width="40px" height=400px)
+
+5
+
+
+[image]:	http://foo.bar/	"title"	width="40px"	height=400px
+[link]:		<http://foo.bar/1> class=external
+			style="border: solid black 1px;"
+[link2]:	http://foo.bar/2 class=external
+			style="border: solid black 1px;"
+[link3]:	http://foo.bar/3	class=external
+			style="border: solid black 1px;"

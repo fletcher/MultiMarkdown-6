@@ -1,0 +1,9 @@
+<p>[#first]</p>
+
+<p>[p. 123][#first]</p>
+
+<p>[][#first]</p>
+
+<p>[Not Cited][#first]</p>
+
+<p>[#first]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>

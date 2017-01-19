@@ -1,0 +1,193 @@
+_foo_
+
+__foo_
+
+_foo__
+
+_foo bar_
+
+_foo_ bar
+
+5
+
+foo _bar_
+
+__foo__
+
+__foo bar__
+
+__foo__ bar
+
+foo __bar__
+
+10
+
+_foo _bar_ foo_
+
+_foo __bar__ foo_
+
+_foo ___bar___ foo_
+
+__foo _bar_ foo__
+
+__foo __bar__ foo__
+
+15
+
+__foo ___bar___ foo__
+
+___foo _bar_ foo___
+
+___foo __bar__ foo___
+
+___foo ___bar___ foo___
+
+___foo___
+
+20
+
+___foo__ bar_
+
+___foo_ bar__
+
+_foo __bar___
+
+__foo _bar___
+
+_foo_bar_
+
+25
+
+_foo _bar _foo _bar____
+
+____foo_ bar_ foo_ bar_
+
+_foo bar_bar
+
+__foo bar__bar
+
+___foo bar___bar
+
+30
+
+foo_bar_foo
+
+foo__bar__foo
+
+foo___bar___foo
+
+foo_bar_foo
+
+__foo _foobarfoo_ foo__
+
+35
+
+foo__`_bar_`__
+
+_(_foo_)
+
+_foo_:
+
+__foo__:
+
+___foo___:
+
+40
+
+foo_bar
+
+foo_bar foo_bar
+
+foo__bar
+
+foo__bar foo__bar
+
+foo___bar
+
+45
+
+foo___bar foo___bar
+
+foo __- bar__
+
+foo __1. bar__
+
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo
+_foo_

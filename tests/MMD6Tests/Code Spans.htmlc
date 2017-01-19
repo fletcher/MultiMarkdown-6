@@ -1,0 +1,34 @@
+<p><code>foo</code></p>
+
+<p><code>foo ` bar</code></p>
+
+<p><code>``</code></p>
+
+<p><code>foo``bar</code></p>
+
+<p>``foo`</p>
+
+<p>5</p>
+
+<p>`foo``</p>
+
+<p><code>foo</code></p>
+
+<p><code>foo   bar
+baz</code></p>
+
+<p><code>foo `` bar</code></p>
+
+<p><code>foo</code></p>
+
+<p>10</p>
+
+<p><code>foo   bar</code></p>
+
+<p><code>*foo*</code></p>
+
+<p><code>[foo]</code></p>
+
+<p><code>-&lt;&gt;--&amp;\&amp;---...</code></p>
+
+<p><code>`foo`</code></p>

@@ -1,0 +1,27 @@
+<p>Just a <img src="/url/" alt="URL" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title preceded by two spaces" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title preceded by a tab" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title has spaces afterward" />.</p>
+
+<p>5</p>
+
+<p><a href="">Empty</a>.</p>
+
+<p><img src="/url/" alt="URL and title" title="title" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="title" />.</p>
+
+<p>10</p>
+
+<p><img src="/url/" alt="URL and title" />.</p>
+
+<p><img src="/url/" alt="URL and title" title="*title*" />.</p>

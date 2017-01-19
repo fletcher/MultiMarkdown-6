@@ -1,0 +1,74 @@
+* foo
+bar
+
+foo
+* bar
+
+foo
+1. bar
+
+foo
+2. bar
+
+foo
+> bar
+
+5
+
+foo
+# bar
+
+foo
+	bar
+
+The ***quick*** brown ***fox*** jumped
+
+The ***quick*** brown fox jumped
+
+The ***quick** brown fox* jumped
+
+10
+
+The ***quick* brown fox** jumped
+
+The ***quick* brown *fox*** jumped
+
+The ***quick** brown **fox*** jumped
+
+This *should* be parsed --  fo***o
+
+*test this*thing
+
+15
+
+_test this_thing
+
+**test this**thing
+
+__test this__thing
+
+***test this***thing
+
+___test this___thing
+
+20
+
+This is ***another* test** of *italics* and **bold**.
+
+This is ***another* test** of **bold** and *italics*.
+
+This is ***another** test* of **bold** and *italics*.
+
+This is ***another** test* of *italics* and **bold**.
+
+This is ___another_ test__ of _italics_ and __bold__.
+
+25
+
+This is ___another_ test__ of __bold__ and _italics_.
+
+This is ___another__ test_ of __bold__ and _italics_.
+
+This is ___another__ test_ of _italics_ and __bold__.
+
+*a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a 

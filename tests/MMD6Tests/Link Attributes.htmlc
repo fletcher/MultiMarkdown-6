@@ -1,0 +1,19 @@
+<p>foo ![image][]</p>
+
+<p>foo [link][]</p>
+
+<p>foo [link2][]</p>
+
+<p>foo [link3][]</p>
+
+<p>![test](http://foo.bar/ &quot;title&quot; width=&quot;40px&quot; height=400px)</p>
+
+<p>5</p>
+
+<p>[image]:	http://foo.bar/	&quot;title&quot;	width=&quot;40px&quot;	height=400px
+[link]:		<a href="http://foo.bar/1">http://foo.bar/1</a> class=external
+style=&quot;border: solid black 1px;&quot;
+[link2]:	http://foo.bar/2 class=external
+style=&quot;border: solid black 1px;&quot;
+[link3]:	http://foo.bar/3	class=external
+style=&quot;border: solid black 1px;&quot;</p>

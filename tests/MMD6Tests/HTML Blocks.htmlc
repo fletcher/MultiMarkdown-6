@@ -1,0 +1,58 @@
+<p><del><em>bar</em></del></p>
+
+<del>
+*bar*
+</del>
+
+<p>foo
+<del>
+<em>bar</em>
+</del></p>
+
+<del>
+*bar*
+
+</del>
+
+<del>
+
+<p><em>bar</em></p>
+
+</del>
+
+<p>5</p>
+
+<div>*bar*</div>
+
+<div>
+*bar*
+</div>
+
+<p>foo</p>
+
+<div>
+*bar*
+</div>
+
+<div>
+*bar*
+
+</div>
+
+<div>
+
+<p><em>bar</em></p>
+
+</div>
+
+<p>10</p>
+
+<!-- This is a *comment* -->
+
+<!-- This is a
+longer
+ *comment* -->
+
+<!-- This is not a
+
+<p><em>comment</em> --&gt;</p>

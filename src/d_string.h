@@ -1,13 +1,15 @@
 /**
 
-	Smart String -- Library to abstract smart typing features from MMD Composer
+	MultiMarkdown 6 -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
 	@file d_string.h
 
-	@brief Dynamic string -- refactoring of old GLibFacade
+	@brief Dynamic string -- refactoring of old GLibFacade.  Provides a string
+	"object" that can grow to accomodate any size content that is appended.
 
 
 	@author	Daniel Jalkut, modified by Fletcher T. Penney and Dan Lowe
+
 	@bug	
 
 **/
@@ -15,11 +17,11 @@
 /*
 
 	Copyright © 2011 Daniel Jalkut.
-	Modifications by Fletcher T. Penney, Copyright © 2011-2016 Fletcher T. Penney.
+	Modifications by Fletcher T. Penney, Copyright © 2011-2017 Fletcher T. Penney.
 	Modifications by Dan Lowe, Copyright © 2011 Dan Lowe.
 
 
-	The `c-template` project is released under the MIT License.
+	The `MultiMarkdown 6` project is released under the MIT License..
 	
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
 	
@@ -59,6 +61,7 @@
 #define D_STRING_SMART_STRING_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 /* WE implement minimal mirror implementations of GLib's GString  
  * sufficient to cover the functionality required by MultiMarkdown.
@@ -67,34 +70,104 @@
  * GLib function prototype as guide for behavior.
  */
 
+
+/// Structure for dynamic string
 typedef struct 
 {	
-	/* Current UTF8 byte stream this string represents */
-	char* str;
-
-	/* Where in the str buffer will we add new characters */
-	/* or append new strings? */
-	unsigned long currentStringBufferSize;
-	unsigned long currentStringLength;
+	char * str;								//!< Pointer to UTF-8 byte stream for string
+	unsigned long currentStringBufferSize;	//!< Size of buffer currently allocated
+	unsigned long currentStringLength;		//!< Size of current string
 } DString;
 
-DString* d_string_new(const char *startingString);
 
-char* d_string_free(DString* ripString, bool freeCharacterData);
+/// Create a new dynamic string
+DString * d_string_new(
+	const char * startingString				//!< Initial contents for string		
+);
 
-void d_string_append_c(DString* baseString, char appendedCharacter);
-void d_string_append_c_array(DString *baseString, const char * appendedChars, size_t bytes);
-void d_string_append(DString* baseString, char *appendedString);
 
-void d_string_prepend(DString* baseString, char* prependedString);
+/// Free dynamic string
+char * d_string_free(
+	DString * ripString,					//!< DString to be freed
+	bool freeCharacterData					//!< Should the underlying str be freed as well?
+);
 
-void d_string_append_printf(DString* baseString, char* format, ...);
 
-void d_string_insert(DString* baseString, size_t pos, const char * insertedString);
-void d_string_insert_c(DString* baseString, size_t pos, char insertedCharacter);
-void d_string_insert_printf(DString* baseString, size_t pos, char* format, ...);
+/// Append null-terminated string to end of dynamic string
+void d_string_append(
+	DString * baseString,					//!< DString to be appended
+	const char * appendedString				//!< String to be appended
+);
 
-void d_string_erase(DString* baseString, size_t pos, size_t len);
+
+/// Append single character to end of dynamic string
+void d_string_append_c(
+	DString * baseString,					//!< DString to be appended
+	char appendedCharacter					//!< Character to append
+);
+
+
+/// Append array of characters to end of dynamic string
+void d_string_append_c_array(
+	DString * baseString,					//!< DString to be appended
+	const char * appendedChars,				//!< String to be appended
+	size_t bytes							//!< Number of bytes to append
+);
+
+
+/// Append to end of dynamic string using format specifier
+void d_string_append_printf(
+	DString * baseString,					//!< DString to be appended
+	const char * format,					//!< Format specifier for appending
+	...										//!< Arguments for format specifier
+);
+
+
+/// Prepend null-terminated string to end of dynamic string
+void d_string_prepend(
+	DString * baseString,					//!< DString to be appended
+	const char * prependedString			//!< String to be prepended
+);
+
+
+/// Insert null-terminated string inside dynamic string
+void d_string_insert(
+	DString * baseString,					//!< DString to be appended
+	size_t pos,								//!< Offset at which to insert string
+	const char * insertedString				//!< String to be inserted
+);
+
+
+/// Insert single character inside dynamic string
+void d_string_insert_c(
+	DString * baseString,					//!< DString to be appended
+	size_t pos,								//!< Offset at which to insert string
+	char insertedCharacter					//!< Character to insert
+);
+
+
+/// Insert inside dynamic string using format specifier
+void d_string_insert_printf(
+	DString * baseString,					//!< DString to be appended
+	size_t pos,								//!< Offset at which to insert string
+	const char * format,					//!< Format specifier for appending
+	...										//!< Arguments for format specifier
+);
+
+
+/// Erase portion of dynamic string
+void d_string_erase(
+	DString * baseString,					//!< DString to be appended
+	size_t pos,								//!< Offset at which to erase portion of string
+	size_t len								//!< Character to append
+);
+
+/// Copy a portion of dynamic string
+char * d_string_copy_substring(
+	DString * d,							//!< DString to copy
+	size_t start,							//!< Start position for copy
+	size_t len								//!< How many characters(bytes) to copy
+);
 
 
 #endif

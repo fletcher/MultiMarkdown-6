@@ -9,236 +9,478 @@
 | Version:   | @My_Project_Version@      |  
 
 
-## Introduction ##
+## An Announcement! ##
 
-This template was created out of a desire to simplify some of the setup and
-configuration that I was doing over and over each time I started a new project.
-Additionally, I wanted to try to start encouraging some "better practices"
-(though not necessarily "best practices"):
+I would like to officially announce that MultiMarkdown version 6 is in public
+alpha.  It's finally at a point where it is usable, but there are quite a few
+caveats.
 
-1. [Test-driven development][tdd] -- My development of MultiMarkdown
-	focused on integration testing, but really had no unit testing to
-	speak of.  Some newer projects I began working on were a bit math-
-	heavy, and ensuring that each piece works properly became even more
-	important.  It was also nice to be able to actually develop code that
-	could do *something* (via the test suite), even though the project as
-	a whole was nowhere near complete.)  To accomplish this, I include the
-	[CuTest] project to support writing tests for your code.
+This post is a way for me to organize some of my thoughts, provide some
+history for those who are interested, and to provide some tips and tricks from
+my experiences for those who are working on their own products.
 
-2.  Use of the [cmake] build system.  `cmake` is not perfect by any
-	means, but it does offer some very useful features and a means for
-	better integrating the compilation and packaging/installation aspects
-	of development.  Rather than reinventing the wheel each time, this
-	setup incorporates basic `cmake` functionality to make it easy to 
-	control how your project is compiled, and includes automated generation
-	of the test command.
+But first, some background...
 
-3.	Templates -- `cmake` has a reasonable templating system, so that you
-	can define basic variables (e.g. author, project name, etc.) and allow
-	`cmake` to combine those elements to ensure consistency across source
-	code and README files.
 
-4.	Documentation -- some default setup to allow for [Doxygen]-generated
-	documentation.  The generated `README.md` file is used as the main 
-	page, and the source c/header files are included.  Naturally, Doxygen
-	is a complex system, so you're responsible for figuring out how to 
-	properly document your code.
+### Why a New Version? ###
 
-5.	Simplify `git` a touch -- In my larger projects, I make heavy use of
-	git modules.  One project may make use of 20-30 modules, which are
-	designed to be re-usable across other projects.  I found that I was
-	spending too much time making sure that I had the latest version
-	of a module checked out, so I created two scripts to help me keep
-	my modules in line: `link_git_modules` and `update_git_modules`.
-	You run the `link` script once to ensure that your modules are properly
-	set up, and can then run the `update` script at any time to be sure
-	you've pulled the latest version.  One advantage of this is that your
-	modules are set to a branch, rather than just a detached commit. It
-	may or may not work for your needs, but it saves me a bunch of time
-	and headache.
+MultiMarkdown version 5 was released in November of 2015, but the codebase was
+essentially the same as that of v4 -- and that was released in beta in April
+of 2013.  A few key things prompted work on a new version:
 
+* Accuracy -- MMD v4 and v5 were the most accurate versions yet, and a lot of
+effort went into finding and resolving various edge cases.  However, it began
+to feel like a game of whack-a-mole where new bugs would creep in every time I
+fixed an old one.  The PEG began to feel rather convoluted in spots, even
+though it did allow for a precise (if not always accurate) specification of
+the grammar.
 
-[tdd]:	https://en.wikipedia.org/wiki/Test-driven_development
-[cmake]:	http://www.cmake.org/
-[CuTest]:	http://cutest.sourceforge.net
-[Doxygen]:	http://www.stack.nl/~dimitri/doxygen/
+* Performance -- "Back in the day" [peg-markdown] was one of the fastest
+Markdown parsers around.  MMD v3 was based on peg-markdown, and would leap-
+frog with it in terms of performance.  Then [CommonMark] was released, which
+was a bit faster. Then a couple of years went by and CommonMark became *much*
+faster -- in one of my test suites, MMD v 5.4.0 takes about 25 times longer to
+process  a long document than CommonMark 0.27.0.
 
+[peg-markdown]:	https://github.com/jgm/peg-markdown
+[CommonMark]:	http://commonmark.org/
 
-## How do I use it? ##
+Last spring, I decided I wanted to rewrite MultiMarkdown from scratch,
+building the parser myself rather than relying on a pre-rolled solution.  (I
+had been using [greg](https://github.com/ooc-lang/greg) to compile the PEG
+into parser code.  It worked well overall, but lacked some features I needed,
+requiring a lot of workarounds.)
 
-You can download the source from [github] and get to work. The file "IMPORTANT"
-contains instructions on the various build commands you can use.
 
+## First Attempt ##
 
-I recommend using the following script to automatically create a new git repo,
-pull in the default project template, and configure git-flow.  You simply have
-to rename your project directory from `new-project` to whatever you desire:
+My first attempt  started by hand-crafting a parser that scanned through the
+document a line at a time, deciding what to do with each line as it found
+them.  I used regex parsers made with [re2c](http://re2c.org/index.html) to
+help classify each line, and then a separate parser layer to process groups of
+lines into blocks.  Initially this approach worked well, and was really
+efficient.  But I quickly began to code my way into a dead-end -- the strategy
+was not elegant enough to handle things like nested lists, etc.
 
+One thing that did turn out well from the first attempt, however, was an
+approach for handling `<emph>` and `<strong>` parsing.  I've learned over the
+years that this can be one of the hardest parts of coding accurately for
+Markdown.  There are many examples that are obvious to a person, but difficult
+to properly "explain" how to parse to a computer.
 
-	#!/bin/sh
+No solution is perfect, but I developed an approach that seems to accurately
+handle a wide range of situations without a great deal of complexity:
+
+1.  Scan the documents for asterisks (`*`).  Each one will be handled one at a
+time.
 
-	git init new-project
+2.  Unlike brackets (`[` and `]`), an asterisk is "ambidextrous", in that it
+may be able to open a matched pair of asterisks, close a pair, or both.  For
+example, in `foo *bar* foo`:
 
-	cd new-project
+	1.	The first asterisk can open a pair, but not close one.
+
+	2.	The second asterisk can close a pair, but not open one.
 
-	git remote add "template" https://github.com/fletcher/c-template.git
+3.  So, once the asterisks have been identified, each has to be examined to
+determine whether it can open/close/both.  The algorithm is not that complex,
+but I'll describe it in general terms.  Check the code for more specifics.
+This approach seems to work, but might still need some slight tweaking.  In
+the future, I'll codify this better in language rather than just in code.
 
-	git pull template master
+	1.	If there is whitespace to the left of an asterisk, it can't close.
 
-	git flow init -d
+	2.	If there is whitespace or punctuation to the right it can't open.
 
-	git checkout develop
+	3.	"Runs" of asterisks, e.g. `**bar` are treated as a unit in terms of
+	looking left/right.
+
+	4.	Asterisks inside a word are a bit trickier -- we look at the number of
+	asterisks before the word, the number in the current run, and the number
+	of asterisks after the word to determine which combinations, if any, are
+	permitted.
+
+4.  Once all asterisks have been tagged as able to open/close/both, we proceed
+through them in order:
+
+	1.	When we encounter a tag that can close, we look to see if there is a
+	previous opener that has not been paired off.  If so, pair the two and
+	remove the opener from the list of available asterisks.
+
+	2.	When we encounter an opener, add it to the stack of available openers.
+
+	3.	When encounter an asterisk that can do both, see if it can close an
+	existing opener.  If not, then add it to the stack.
+
+5.  After all tokens in the block have been paired, then we look for nesting
+pairs of asterisks in order to create `<emph>` and `<strong>` sets.  For
+example, assume we have six asterisks wrapped around a word, three in front,
+and three after.  The asterisks are indicated with numbers: `123foo456`. We
+proceed in the following manner:
+
+	1.	Based on the pairing algorithm above, these asterisks would be paired as
+	follows, with matching asterisks sharing numbers -- `123foo321`.
+
+	2.	Moving forwards, we come to asterisk "1".  It is followed by an
+	asterisk, so we check to see if they should be grouped as a `<strong>`.
+	Since the "1" asterisks are wrapped immediately outside the "2" asterisks,
+	they are joined together.  More than two pairs can't be joined, so we now
+	get the following -- `112foo211`, where the "11" represents the opening
+	and closing of a `<strong>`, and the "2" represents a `<emph>`.
+
+6.  When matching a pair, any unclosed openers that are on the stack are
+removed, preventing pairs from "crossing" or "intersecting".  Pairs can wrap
+around each other, e.g. `[(foo)]`, but not intersect like `[(foo])`.  In the
+second case, the brackets would close, removing the `(` from the stack.
+
+7.  This same approach is used in all tokens that are matched in pairs--
+`[foo]`, `(foo)`, `_foo_`, etc.  There's slightly more to it, but once you
+figure out how to assign opening/closing ability, the rest is easy.  By using
+a stack to track available openers, it can be performed efficiently.
+
+In my testing, this approach has worked quite well.  It handles all the basic
+scenarios I've thrown at it, and all of the "basic" and "devious" edge cases I
+have thought of (some of these don't necessarily have a "right" answer -- but
+v6 gives consistency answers that seem as reasonable as any others to me).
+There are also three more edge cases I've come up can still stump it, and
+ironically they are handled correctly by most implementations.  They just
+don't follow the rules above.  I'll continue to work on this.
+
+In the end, I scrapped this effort, but kept the lessons learned in the token
+pairing algorithm.
+
+
+## Second Attempt ##
+
+I tried again this past Fall.  This time, I approached the problem with lots
+of reading.  *Lots and lots* of reading -- tons of websites, computer science
+journal articles, PhD theses, etc.  Learned a lot about lexers, and a lot
+about parsers, including hand-crafting vs using parser generators.  In brief:
+
+1. I learned about the [Aho–Corasick algorithm], which is a great way to
+efficiently search a string for multiple target strings at once.  I used this
+to create a custom lexer to identify tokens in a MultiMarkdown text document
+(e.g. `*`, `[ `, `{++`, etc.).  I learned a lot, and had a good time working
+out the implementation.  This code efficiently allowed me to break a string of
+text into the tokens that mattered for Markdown parsing.
+
+2. However, in a few instances I really needed some features of regular
+expressions to simplify more complex structures. After a quick bit of testing,
+using re2c to create a tokenizer was just as efficient, and allowed me to
+incorporate some regex functionality that simplified later parsing.  I'll keep
+the Aho-Corasick stuff around, and will probably experiment more with it
+later.  But I didn't need it for MMD now.  `lexer.re` contains the source for
+the tokenizer.
+
+[Aho–Corasick algorithm]: https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm
+
+I looked long and hard for a way to simplify the parsing algorithm to try and
+"touch" each token only once.  Ideally, the program could step through each
+token, and decide when to create a new block, when to pair things together,
+etc.  But I'm not convinced it's possible.  Since Markdown's grammar varies
+based on context, it seems to work best when handled in distinct phases:
+
+1. Tokenize the string to identify key sections of text.  This includes line
+breaks, allowing the text to be examined one line at time.
+
+2. Join series of lines together into blocks, such as paragraphs, code blocks,
+lists, etc.
+
+3. The tokens inside each block can then be paired together to create more
+complex syntax such as links, strong, emphasis, etc.
+
+To handle the block parsing, I started off using the [Aho-Corasick] code to
+handle my first attempt.  I had actually implemented some basic regex
+functionality, and used that to group lines together to create blocks.  But
+this quickly fell apart in the face of more complex structures such as
+recursive lists.   After a lot of searching, and *tons* more reading, I
+ultimately decided to use a parser generator to handle the task of group lines
+into blocks.  `parser.y` has the source for this, and it is processed by the
+[lemon](http://www.hwaci.com/sw/lemon/) parser generator to create the actual
+code.
+
+I chose to do this because hand-crafting the block parser would be complex.
+The end result would likely be difficult to read and understand, which would
+make it difficult to update later on.  Using the parser generator allows me to
+write things out in a way that can more easily be understood by a person.  In
+all likelihood, the performance is probably as good as anything I could do
+anyway, if not better.
+
+Because lemon is a LALR(1) parser, it does require a bit of thinking ahead
+about how to create the grammar used.  But so far, it has been able to handle
+everything I have thrown at it.
+
+
+## Optimization ##
+
+One of my goals for MMD 6 was performance.  So I've paid attention to speed
+along the way, and have tried to use a few tricks to keep things fast.  Here
+are some things I've learned along the way.  In no particular order:
+
+
+### Memory Allocation ###
+
+When parsing a long document, a *lot* of token structures are created.  Each
+one requires a small bit of memory to be allocated.  In aggregate, that time
+added up and slowed down performance.
+
+After reading for a bit, I ended up coming up with an approach that uses
+larger chunks of memory.  I allocate pools of of memory in large slabs for
+smaller "objects"".  For example, I allocate memory for 1024 tokens at a
+single time, and then dole that memory out as needed.  When the slab is empty,
+a new one is allocated.  This dramatically improved performance.
+
+When pairing tokens, I created a new stack for each block.  I realized that an
+empty stack didn't have any "leftover" cruft to interfere with re-use, so I
+just used one for the entire document.  Again a sizeable improvement in
+performance from only allocating one object instead of many.  When recursing
+to a deeper level, the stack just gets deeper, but earlier levels aren't
+modified.
+
+Speaking of tokens, I realized that the average document contains a lot of
+single spaces (there's one between every two words I have written, for
+example.)  The vast majority of the time, these single spaces have no effect
+on the output of Markdown documents.  I changed my whitespace token search to
+only flag runs of 2 or more spaces, dramatically reducing the number of
+tokens.  This gives the benefit of needing fewer memory allocations, and also
+reduces the number of tokens that need to be processed later on.  The only
+downside is remember to check for a single space character in a few instances
+where it matters.
+
+
+### Proper input buffering ###
+
+When I first began last spring, I was amazed to see how much time was being
+spent by MultiMarkdown simply reading the input file.  Then I discovered it
+was because I was reading it one character at a time.  I switched to using a
+buffered read approach and the time to read the file went to almost nothing. I
+experimented with different buffer sizes, but they did not seem to make a
+measurable difference.
+
+
+### Output Buffering ###
+
+I experimented with different approaches to creating the output after parsing.
+I tried printing directly to `stdout`, and even played with different
+buffering settings.  None of those seemed to work well, and all were slower
+than using the `d_string` approach (formerly call `GString` in MMD 5).
+
+
+### Fast Searches ###
+
+After getting basic Markdown functionality complete, I discovered during
+testing that the time required to parse a document grew exponentially as the
+document grew longer.  Performance was on par with CommonMark for shorter
+documents, but fell increasingly behind in larger tests.  Time profiling found
+that the culprit was searching for link definitions when they didn't exist.
+My first approach was to keep a stack of used link definitions, and to iterate
+through them when necessary.  In long documents, this performs very poorly.
+More research and I ended up using
+[uthash](http://troydhanson.github.io/uthash/).  This allows me to search for
+a link (or footnote, etc.) by "name" rather than searching through an array.
+This allowed me to get MMD's performance back to O(n), taking roughly twice as
+much time to process a document that is twice as long.
+
+
+### Efficient Utility Functions ###
+
+It is frequently necessary when parsing Markdown to check what sort of
+character we are dealing with at a certain position -- a letter, whitespace,
+punctuation, etc.  I created a lookup table for this via `char_lookup.c` and
+hard-coded it in `char.c`.  These routines allow me to quickly, and
+consistently, classify any byte within a document. This saved a lot of
+programming time, and saved time tracking down bugs from handling things
+slightly differently under different circumstances.  I also suspect it
+improved performance, but don't have the data to back it up.
 
 
-Using this approach, you can define your own `origin` remote if you like, but
-the `template` remote can be used to update the core project files should any
-improvements come about:
+### Testing While Writing ###
 
-	git checkout develop
-	git merge template master
+I developed several chunks of code in parallel while creating MMD 6.  The vast
+majority of it was developed largely in a [test-driven development] approach.
+The other code was largely created with extensive unit testing to accomplish
+this.
 
-**NOTE**: `cmake` is a complex suite of utilities, and if you have trouble you
-will need to get support elsewhere.  If you find errors in this template, by
-all means I want to hear about them and fix them, but this is just a basic 
-framework to get you started.  In all likelihood, all but the most basic
-projects will need some customization.
+[test-driven development]: https://en.wikipedia.org/wiki/Test-driven_development
+
+MMD isn't particularly amenable to this approach at the small level, but
+instead I relied more on integration testing with an ever-growing collection
+of text files and the corresponding HTML files in the MMD 6 test suite.  This
+allowed me to ensure new features work properly and that old features aren't
+broken.  At this time, there are 29 text files in the test suite, and many
+more to come.
 
 
-[github]:	https://github.com/fletcher/c-template
+### Other Lessons ###
 
+Some things that didn't do me any good....
+
+I considered differences between using `malloc` and `calloc` when initializing
+tokens.  The time saved  by using `malloc` was basically exactly offset by the
+initial time required to initialize the token to default null values as
+compared to using `calloc`.  When trying `calloc` failed to help me out
+(thinking that clearing a single slab in the object pool would be faster), I
+stuck with `malloc` as it makes more sense to me in my workflow.
 
-## Configuration ##
+I read a bit about [struct padding] and reordered some of my structs.  It was
+until later that I discovered the `-Wpadded` option, and it's not clear
+whether my changes modified anything.  Since the structs were being padded
+automatically, there was no noticeable performance change, and I didn't have
+the tools to measure whether I could have improved memory usage at all.  Not
+sure this would be worth the effort -- much lower hanging fruit available.
+
+[struct padding]: http://www.catb.org/esr/structure-packing/
 
 
-### CMakeLists.txt File ###
+## Differences in MultiMarkdown Itself ##
 
-First, you should update the project information under the "Define Our Project"
-section, including the title, description, etc.  This information will be used
-to update the README, as well as to create the `version.h` file so that the 
-project can have access to its own version number.
+MultiMarkdown v6 is mostly about making a better MMD parser, but it will
+likely involve a few changes to the MultiMarkdown language itself.
 
-You will then need to update the various groups in the "Source Files" section
-so that Cmake will be able to determine which files are used to build your
-project.  For reasons that will become clear later, try to follow the
-suggestions for the different groups of files.
 
-You then need to define your targets, such as a library, or executable, etc.
-Obviously, this will depend on the needs of your project.  You can also add
-custom steps based on the Target OS (OS X, Windows, *nix, etc.).
+1. I am thinking about removing Setext headers from the language.  I almost
+never use them, much preferring to use ATX style headers (`# foo #`).
+Additionally, I have never liked the fact that Setext headers allow the
+meaning of a line to be completely changed by the following line.  It makes
+the parsing slightly more difficult on a technical level (requiring some
+backtracking at times).  I'm not 100% certain on this, but right now I believe
+it's the only Markdown feature that doesn't exist in MMD 6 yet.
 
-You can use CPack to generate installers for your software.  This can be
-complex, and you will need to modify this section heavily.
+2. Whitespace is not allowed between the text brackets and label brackets in
+reference links, images, footnotes, etc.  For example `[foo] [bar]` will no
+longer be the same as `[foo][bar]`.
 
-CuTest is used by default to provide unit testing (see below), but you
-can also use CMake/CTest to provide integration testing.  Again, this will
-be up to you to configure.
+3. Link and image titles can be quoted with `'foo'`, `"foo"`, or `(foo)`.
 
+4. HTML elements are handled slightly differently.  There is no longer a
+`markdown="1"` feature.  Instead, HTML elements that are on a line by
+themselves will open an HTML block that will cause the rest of the "paragraph"
+to be treated as HTML such that Markdown will not be parsed in side of it.
+HTML block-level tags are even "stronger" at starting an HTML block.  It is
+not quite as complex as the approach used in CommonMark, but is similar under
+most circumstances.
 
-### CuTest ###
+	For example, this would not be parsed:
 
-[CuTest] provides a means to integrate unit testing with your C source code.
-Once you get the hang of it, it's easy to use.
+		<div>
+		*foo*
+		</div>
 
+	But this would be:
 
-### Doxygen ###
+		<div>
 
-[Doxygen] is used to generate documentation from the source code itself. 
-Properly configuring your source for this is up to you.  You can modify the
-`doxygen.conf.in` template with your desired settings as desired, but most
-of the basics are handled for you based on your CMake configuration.
-
-
-### GitHub Pages Support ###
-
-The `configure-gh-pages` script sets up a `documentation` directory that is 
-linked to a `gh-pages` branch of the project.  You can then run `make gh-pages` 
-to update the documentation in this directory.  Commit and push to your origin,
-and your projects gh-page is updated.
-
-
-### Makefile ###
-
-The overall build process is controlled by the master `Makefile`.  It provides
-the following commands:
-
-	make
-	make release
-
-Generate the CMake build files for use or distribution.  Once complete you will
-need to change to the `build` directory and run `make`, `make test`, and
-`cpack` as desired.
-
-	make zip
-
-Direct CPack to create a zip installer rather than a graphical installer.
-
-	make debug
-
-Generate build files for [CuTest] unit testing.  In the `build` directory, 
-run `make`, then `make test`.
-
-	make analyze
-
-If you have `clang` installed, this will generate debug build files with the
-`scan-build` command.  In the `build` directory, run `scan-build -V make`
-to compile the software and view the static analysis results.
-
-	make xcode
-
-Build a project file for Xcode on OS X.
-
-	make windows
-	make windows-zip
-	make windows-32
-	make windows-zip-32
-
-Use the MinGW software to cross-compile for Windows on a *nix machine.  You can
-specify the 32 bit option, and also the zip option as indicated.
-
-	make documentation
-
-Build the [Doxygen]-generated documentation.
-
-	make clean
-
-Clean out the `build` directory.  Be sure to run this before running another
-command.
-
-
-## Git Submodules ##
-
-Apparently, submodules are a rather controversial feature in git.  For me,
-however, they have proven invaluable.  My most active projects depend on each
-other, and the submodule feature allows me to easily keep everything up to
-date.  That said, however, I quickly realized that submodules don't work very
-well using default commands.
-
-The problem is that I want to always use the latest version of my submodules.
-This is more easily accomplished when the submodule is set to the `master`
-branch of the original repository, rather than a detached commit as happens
-by default.  In order to easily keep all submodules updated, there are two 
-scripts:
-
-1. `link_git_modules` -- this script is generally only run when the master
-repository is first cloned, but can also be run after a new submodule is 
-added.  It causes the submodules to automatically track the master branch.
-If you need to modify this, there are instructions in the script itself 
-explaining how to modify it on a per submodule basis.  Running this script 
-more than one time will not hurt anything.
-
-2. `update_git_modules` -- this script simply causes each submodule to be
-updated to the latest commit in the original repository.  Again, running it
-multiple times doesn't hurt anything.
-
-
-## Source File Templates ##
-
-In the `templates` directory are two files, `template.c.in` and
-`template.h.in`.  These are used to create default source files that include
-the project title, copyright, license, etc. They are also set up to include
-some example information for [Doxygen] and [CuTest].
+		*foo*
+
+		</div>
+
+5. I haven't worked a lot yet on the MMD-specific features, so there may be
+more changes to come.  One thing I do anticipate is that if fenced code blocks
+stay, they will work slightly differently.  Currently, an opening fence
+doesn't mean anything unless there is a closing fence that follows it.  Again,
+this requires backtracking in the parser.  I suspect that an opening fence
+will definitely open a code block.  If there is no closing fence, then the
+rest of the document will remain inside the code block.  This is the approach
+used by CommonMark and it's a reasonable one, IMO.
+
+
+## Where Does MultiMarkdown 6 Stand? ##
+
+
+### Features ###
+
+I *think* that all basic Markdown features have been implemented, except for
+Setext headers, as mentioned above.  Additionally, the following MultiMarkdown
+features have been implemented:
+
+* Automatic cross-reference targets
+* Basic Citation support
+* CriticMarkup support
+* Inline and reference footnotes
+* Image and Link attributes (attributes can now be used with inline links as
+	well as reference links)
+* Math support
+* Smart quotes (support for languages other than english is not fully
+	implemented yet)
+* Superscripts/subscripts
+
+
+Things that are partially completed:
+
+* Citations -- still need:
+	* Syntax for "not cited" entries
+	* Output format
+	* HTML --> separate footnotes and citations?
+	* Locators required?
+* CriticMarkup -- need to decide:
+	* How to handle CM stretches that include blank lines
+* Fenced code blocks
+
+
+Things yet to be completed:
+
+* Multiple blocks inside of reference footnotes
+* Manually specified labels for headers
+* Definition lists
+* Abbreviations
+* Metadata
+* Glossaries
+* Tables
+* Table of Contents
+* File Transclusion
+
+
+### Accuracy ###
+
+MultiMarkdown v6 successfully parses the Markdown [syntax page], except for
+the Setext header at the top.  It passes the 29 test files currently in place.
+There are a few ad
+
+[syntax page]: https://daringfireball.net/projects/markdown/syntax
+
+
+### Performance ###
+
+Basic tests show that currently MMD 6 takes about 20-25% longer the CommonMark
+0.27.0 to process long files (e.g. 0.2 MB).  However, it is around 5% *faster*
+than CommonMark when parsing a shorter file (27 kB) (measured by parsing the
+same file 200 times over).  This test suite is performed by using the Markdown
+[syntax page], modified to avoid the use of the Setext header at the top.  The
+longer files tested are created by copying the same syntax page onto itself,
+thereby doubling the length of the file with each iteration.
+
+The largest file I test is approximately 108 MB (4096 copies of the syntax
+page).  On my machine (2012 Mac mini with 2.3 GHz Intel Core i7, 16 GB RAM),
+it takes approximately 4.4 seconds to parse with MMD 6 and 3.7 seconds with
+CommonMark.  MMD 6 processes approximately 25 MB/s on this test file.
+CommonMark 0.27.0 gets about 29 MB/s on the same machine.
+
+There are some slight variations with the smaller test files (8-32 copies),
+but overall the performance of both programs (MMD 6 and CommonMark) are
+roughly linear as the test file gets bigger (double the file size and it takes
+twice as long to parse, aka O(n)).
+
+Out of curiosity, I ran the same tests on the original Markdown.pl by Gruber
+(v 1.0.2b8).  It took approximately 178 seconds to parse 128 copies of the
+file (3.4 MB) and was demonstrating quadratic performance characteristics
+(double the file size and it takes 2^2 or 4 times longer to process, aka
+O(n^2)). I didn't bother running it on larger versions of the test file.  For
+comparison, MMD 6 can process 128 copies in approximately 140 msec.
+
+Of note, the throughput speed drops when testing more complicated files
+containing more advanced MultiMarkdown features, though it still seems to
+maintain linear performance characteristics.  A second test file is created by
+concatenating all of the test suite files (including the Markdown syntax
+file).  In this case, MMD gets about 13 MB/s.  CommonMark doesn't support
+these additional features, so testing it with that file is not relevant.  I
+will work to see whether there are certain features in particular that are
+more challenging and see whether they can be reworked to improve performance.
+
+As above, I have done some high level optimization of the parse strategy, but
+I'm sure there's still a lot of room for further improvement to be made.
+Suggestions welcome!
 
 
 ## License ##
 
-@My_Project_License@
+	@My_Project_License_Indented@

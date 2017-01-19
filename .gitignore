@@ -19,5 +19,7 @@ profile
 DerivedData
 .idea/
 
+lemon/build
+
 build-xcode
 build-xcode-debug

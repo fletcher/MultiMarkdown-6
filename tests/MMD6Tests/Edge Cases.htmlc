@@ -1,0 +1,89 @@
+<ul>
+<li>foo
+bar</li>
+</ul>
+
+<p>foo</p>
+
+<ul>
+<li>bar</li>
+</ul>
+
+<p>foo</p>
+
+<ol>
+<li>bar</li>
+</ol>
+
+<p>foo</p>
+
+<ol>
+<li>bar</li>
+</ol>
+
+<p>foo</p>
+
+<blockquote>
+<p>bar</p>
+</blockquote>
+
+<p>5</p>
+
+<p>foo</p>
+
+<h1>bar</h1>
+
+<p>foo
+bar</p>
+
+<p>The <strong><em>quick</em></strong> brown <strong><em>fox</em></strong> jumped</p>
+
+<p>The <strong><em>quick</em></strong> brown fox jumped</p>
+
+<p>The <em><strong>quick</strong> brown fox</em> jumped</p>
+
+<p>10</p>
+
+<p>The <strong><em>quick</em> brown fox</strong> jumped</p>
+
+<p>The <strong><em>quick</em> brown <em>fox</em></strong> jumped</p>
+
+<p>The <em><strong>quick</strong> brown <strong>fox</strong></em> jumped</p>
+
+<p>This <em>should</em> be parsed -- fo***o</p>
+
+<p><em>test this</em>thing</p>
+
+<p>15</p>
+
+<p>_test this_thing</p>
+
+<p><strong>test this</strong>thing</p>
+
+<p>__test this__thing</p>
+
+<p><strong><em>test this</em></strong>thing</p>
+
+<p>___test this___thing</p>
+
+<p>20</p>
+
+<p>This is <strong><em>another</em> test</strong> of <em>italics</em> and <strong>bold</strong>.</p>
+
+<p>This is <strong><em>another</em> test</strong> of <strong>bold</strong> and <em>italics</em>.</p>
+
+<p>This is <em><strong>another</strong> test</em> of <strong>bold</strong> and <em>italics</em>.</p>
+
+<p>This is <em><strong>another</strong> test</em> of <em>italics</em> and <strong>bold</strong>.</p>
+
+<p>This is <strong><em>another</em> test</strong> of <em>italics</em> and <strong>bold</strong>.</p>
+
+<p>25</p>
+
+<p>This is <strong><em>another</em> test</strong> of <strong>bold</strong> and <em>italics</em>.</p>
+
+<p>This is <em><strong>another</strong> test</em> of <strong>bold</strong> and <em>italics</em>.</p>
+
+<p>This is <em><strong>another</strong> test</em> of <em>italics</em> and <strong>bold</strong>.</p>
+
+<p>*a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a </p>

@@ -1,0 +1,7 @@
+<p>Reference.[^foo]</p>
+
+<p>Reference.[^foo2]</p>
+
+<p>[^foo]: This is a <em>short</em> footnote.
+[^foo2]: This is a longer footnote.
+With two lines.</p>

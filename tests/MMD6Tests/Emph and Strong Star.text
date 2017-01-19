@@ -1,0 +1,195 @@
+*foo*
+
+**foo*
+
+*foo**
+
+*foo bar*
+
+*foo* bar
+
+5
+
+foo *bar*
+
+**foo**
+
+**foo bar**
+
+**foo** bar
+
+foo **bar**
+
+10
+
+*foo *bar* foo*
+
+*foo **bar** foo*
+
+*foo ***bar*** foo*
+
+**foo *bar* foo**
+
+**foo **bar** foo**
+
+15
+
+**foo ***bar*** foo**
+
+***foo *bar* foo***
+
+***foo **bar** foo***
+
+***foo ***bar*** foo***
+
+***foo***
+
+20
+
+***foo** bar*
+
+***foo* bar**
+
+*foo **bar***
+
+**foo *bar***
+
+*foo*bar*
+
+25
+
+*foo *bar *foo *bar****
+
+****foo* bar* foo* bar*
+
+*foo bar*bar
+
+**foo bar**bar
+
+***foo bar***bar
+
+30
+
+foo*bar*foo
+
+foo**bar**foo
+
+foo***bar***foo
+
+foo*bar*foo
+
+**foo *foobarfoo* foo**
+
+35
+
+foo**`*bar*`**
+
+*(*foo*)
+
+*foo*:
+
+**foo**:
+
+***foo***:
+
+40
+
+foo*bar
+
+foo*bar foo*bar
+
+foo**bar
+
+foo**bar foo**bar
+
+foo***bar
+
+45
+
+foo***bar foo***bar
+
+foo **- bar**
+
+foo **1. bar**
+
+**foo:** bar
+
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo
+*foo*

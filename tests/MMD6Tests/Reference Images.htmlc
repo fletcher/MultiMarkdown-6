@@ -1,0 +1,17 @@
+<p>Test <img src="http://test.1/" alt="foo" />.</p>
+
+<p>Test <img src="http://test.1/" alt="foo" />.</p>
+
+<p>Test <img src="http://test.3/" alt="foo" title="title" />.</p>
+
+<p>Test <img src="http://test.4/" alt="foo" />.</p>
+
+<p>Test <img src="http://test.4/" alt="foo" />.</p>
+
+<p>5</p>
+
+<p>Test <img src="http://test.6/" alt="foo" title="title" />.</p>
+
+<p>Test <img src="http://test.0/" alt="foo" />.</p>
+
+<p>Test <img src="http://test.0/" alt="foo" />.</p>

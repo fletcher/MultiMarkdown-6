@@ -1,0 +1,32 @@
+Just a [URL](http://url/file.txt).
+
+[URL and title](/url/file.txt "title").
+
+[URL and title](/url/file.txt  "title preceded by two spaces").
+
+[URL and title](/url/file.txt	"title preceded by a tab").
+
+[URL and title](/url/file.txt "title has spaces afterward"  ).
+
+5
+
+[Empty]().
+
+[**URL** and *title*](/url/file.txt "title").
+
+[URL and title](/url/file.txt "title").
+
+[URL and title](/url/file.txt 'title').
+
+[URL and title](/url/file.txt (title)).
+
+10
+
+[URL and title](/url/file.txt "").
+
+[URL and title](/url/file.txt "*title*").
+
+[URL and title] (/url/file.txt "*title*").
+
+[URL and title]
+(/url/file.txt "*title*").

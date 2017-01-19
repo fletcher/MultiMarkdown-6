@@ -1,0 +1,8 @@
+Reference.[^foo]
+
+Reference.[^foo2]
+
+
+[^foo]: This is a *short* footnote.
+[^foo2]: This is a longer footnote.
+With two lines.

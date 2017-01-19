@@ -1,0 +1,59 @@
+<p>{++foo++}</p>
+
+<p>{--bar--}</p>
+
+<p>{~~foo~&gt;bar~~}</p>
+
+<p>{&gt;&gt;foo&lt;&lt;}</p>
+
+<p>{==bar==}</p>
+
+<p>5</p>
+
+<p>foo{++ bar++}</p>
+
+<p>foo{-- bar--}</p>
+
+<p>foo {~~foo~&gt;bar~~}</p>
+
+<p>foo {&gt;&gt;bar&lt;&lt;}</p>
+
+<p>foo {==bar==}</p>
+
+<p>10</p>
+
+<p>foo{++ <strong>bar</strong>++}</p>
+
+<p>foo{-- <strong>bar</strong>--}</p>
+
+<p>foo {~~<strong>bar</strong>~&gt;<strong>bar</strong>~~}</p>
+
+<p>foo {&gt;&gt;<strong>bar</strong>&lt;&lt;}</p>
+
+<p>foo {==<strong>bar</strong>==}</p>
+
+<p>15</p>
+
+<p>foo <strong>{++bar++}</strong></p>
+
+<p>foo <strong>{--bar--}</strong></p>
+
+<p>foo <strong>{~~foo~&gt;bar~~}</strong></p>
+
+<p>foo <strong>{&gt;&gt;bar&lt;&lt;}</strong></p>
+
+<p>foo <strong>{==bar==}</strong></p>
+
+<p>20</p>
+
+<p>foo <strong>{++bar</strong>++}</p>
+
+<p>foo <strong>{--bar</strong>--}</p>
+
+<p>foo <strong>{~~foo</strong>~&gt;bar**~~}</p>
+
+<p>foo <strong>{&gt;&gt;bar</strong>&lt;&lt;}</p>
+
+<p>foo <strong>{==bar</strong>==}</p>
+
+<p>25</p>

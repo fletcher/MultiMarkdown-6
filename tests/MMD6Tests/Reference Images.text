@@ -1,0 +1,27 @@
+Test ![*foo*][bar].
+
+Test ![*foo*][BAR].
+
+Test ![*foo*][foobar].
+
+Test ![*foo*][foo bar].
+
+Test ![*foo*][foo  bar].
+
+5
+
+Test ![*foo*][long].
+
+Test ![foo][].
+
+Test ![foo].
+
+
+[foo]: http://test.0/
+[bar]: http://test.1/
+[BAR]: http://test.2/
+[foobar]: http://test.3/	"title"
+[foo bar]: http://test.4/
+[foo  bar]: http://test.5/	""
+[long]: http://test.6/
+"title"
