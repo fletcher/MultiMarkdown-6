@@ -60,7 +60,7 @@
 #include "d_string.h"
 #include "html.h"
 #include "libMultiMarkdown.h"
-#include "localization.h"
+#include "i18n.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"

@@ -2,9 +2,9 @@
 
 	MultiMarkdown 6 -- MultiMarkdown - lightweight markup processor.
 
-	@file localization.h
+	@file i18n.h
 
-	@brief 
+	@brief Provide rudimentary ability to provide translation string functionality.
 
 
 	@author	Fletcher T. Penney
@@ -19,8 +19,8 @@
 */
 
 
-#ifndef LOCALIZATION_MULTIMARKDOWN_6_H
-#define LOCALIZATION_MULTIMARKDOWN_6_H
+#ifndef I18N_MULTIMARKDOWN_6_H
+#define I18N_MULTIMARKDOWN_6_H
 
 
 #include <string.h>
@@ -33,14 +33,14 @@
 #define kNumberOfStrings 3
 #define kLanguage 0
 
-//#define LOCALIZATION_DISABLED
+//#define I18N_DISABLED
 
 
 // Hash function from http://lolengine.net/blog/2011/12/20/cpp-constant-string-hash
 // via http://stackoverflow.com/questions/2826559/compile-time-preprocessor-hashing-of-string
 
 
-#ifdef LOCALIZATION_DISABLED
+#ifdef I18N_DISABLED
 	#define LC(x) x
 #else
 	#define H1(s,i,x)   (x*65599u+(uint8_t)s[(i)<strlen(s)?strlen(s)-1-(i):strlen(s)])
@@ -56,14 +56,14 @@
 	//#define LC(x) TranslateTest(__COUNTER__, __FILE__, __LINE__, __FUNCTION__ , x)
 
 static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
-	"return to body",
-	"return to body",
+	"return to body",				// English
+	"return to body",				// Spanish
 
-	"see footnote",
-	"Ver nota de pie",
+	"see footnote",					// English
+	"Ver nota de pie",				// Spanish
 
-	"see citation",
-	"see citation",
+	"see citation",					// English
+	"see citation",					// Spanish
 };
 
 
