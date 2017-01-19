@@ -60,13 +60,11 @@
 #include "d_string.h"
 #include "html.h"
 #include "libMultiMarkdown.h"
+#include "localization.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"
 #include "writer.h"
-
-
-#define LC(x) x
 
 
 #define print(x) d_string_append(out, x)

@@ -44,6 +44,9 @@ include_directories( ${PROJECT_SOURCE_DIR}/src )
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
 
+# Default is 256 -- needed for localization hash function
+add_definitions("-fbracket-depth=264")	
+
 
 # =================
 # Macro Definitions
