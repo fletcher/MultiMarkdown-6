@@ -16,9 +16,6 @@
 
 	Copyright © 2016 - 2017 Fletcher T. Penney.
 
-
-	
-
 */
 
 
@@ -32,8 +29,7 @@
 #include <stdlib.h>
 
 
-
-#define kNumberOfLanguages 4
+#define kNumberOfLanguages 2
 #define kNumberOfStrings 3
 #define kLanguage 0
 
@@ -62,18 +58,12 @@
 static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"return to body",
 	"return to body",
-	"return to body",
-	"return to le body",
 
-	"see footnote",
-	"see footnote",
 	"see footnote",
 	"Ver nota de pie",
 
 	"see citation",
 	"see citation",
-	"see citation",
-	"ver citation",
 };
 
 
@@ -103,8 +93,6 @@ static inline const char * Translate(unsigned long x, int l) {
 // https://en.wikipedia.org/wiki/ISO_639-1
 enum lc_languages {
 	LC_EN = 0,			//!< English is default
-	LC_FR,
-	LC_DE,
 	LC_ES,
 };
 
