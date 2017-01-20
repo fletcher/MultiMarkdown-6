@@ -86,7 +86,11 @@ typedef struct {
 	struct fn_holder *	citation_hash;
 	short				citation_being_printed;
 
-	char 				_PADDING[6];	//!< pad struct for alignment
+	short				language;
+	short				quotes_lang;
+	
+	char 				_PADDING[4];	//!< pad struct for alignment
+
 } scratch_pad;
 
 

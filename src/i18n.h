@@ -29,7 +29,7 @@
 #include <stdlib.h>
 
 
-#define kNumberOfLanguages 2
+#define kNumberOfLanguages 3
 #define kNumberOfStrings 3
 #define kLanguage 0
 
@@ -42,6 +42,7 @@
 
 #ifdef I18N_DISABLED
 	#define LC(x) x
+	#define LANG_FROM_STR(x) 0
 #else
 	#define H1(s,i,x)   (x*65599u+(uint8_t)s[(i)<strlen(s)?strlen(s)-1-(i):strlen(s)])
 	#define H4(s,i,x)   H1(s,i,H1(s,i+1,H1(s,i+2,H1(s,i+3,x))))
@@ -51,19 +52,24 @@
 
 	#define HASH(s)    ((uint32_t)(H256(s,0,0)^(H256(s,0,0)>>16)))
 
-	#define LC(x) Translate(HASH(x), kLanguage)
+	#define LC(x) Translate(HASH(x), scratch->language)
 
 	//#define LC(x) TranslateTest(__COUNTER__, __FILE__, __LINE__, __FUNCTION__ , x)
 
+	#define LANG_FROM_STR(x) i18n_language_from_string(x)
+	
 static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"return to body",				// English
-	"return to body",				// Spanish
+	"return to body",				// Español
+	"zum Haupttext",				// Deutsch
 
 	"see footnote",					// English
-	"Ver nota de pie",				// Spanish
+	"Ver nota de pie",				// Español
+	"siehe Fußnote",				// Deutsch
 
 	"see citation",					// English
-	"see citation",					// Spanish
+	"see citation",					// Español
+	"siehe Zitat",					// Deutsch
 };
 
 
@@ -93,8 +99,20 @@ static inline const char * Translate(unsigned long x, int l) {
 // https://en.wikipedia.org/wiki/ISO_639-1
 enum lc_languages {
 	LC_EN = 0,			//!< English is default
-	LC_ES,
+	LC_ES,				//!< Español
+	LC_DE,				//!< Deutsch
 };
+
+
+static inline short i18n_language_from_string(const char * l) { 
+	if (strcmp(l, "de") == 0) {
+		return LC_DE;
+	} else if (strcmp(l, "es") == 0) {
+		return LC_ES;
+	}
+
+	return 0;
+}
 
 
 #endif

@@ -76,6 +76,9 @@ struct mmd_engine {
 	stack *					header_stack;
 	stack *					footnote_stack;
 	stack *					link_stack;
+
+	short					language;
+	short					quotes_lang;
 };
 
 
