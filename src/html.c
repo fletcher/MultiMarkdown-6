@@ -116,7 +116,6 @@ void mmd_print_string_html(DString * out, const char * str, bool obfuscate) {
 
 
 void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_pad * scratch) {
-	// TODO: Is smart typography enabled?  Which language?
 	int language = 0;
 
 	switch (type) {

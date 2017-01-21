@@ -58,7 +58,6 @@
 
 #include "char.h"
 #include "d_string.h"
-#include "html.h"	/// \todo: Remove this for production
 #include "lexer.h"
 #include "libMultiMarkdown.h"
 #include "mmd.h"
@@ -750,9 +749,6 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 	if (block == NULL || e == NULL)
 		return;
 
-	// Pair tokens (if appropriate)
-	// \todo: Check for leaf node.  Also, might need to put this somewhere else
-
 	switch (block->type) {
 		case BLOCK_BLOCKQUOTE:
 		case BLOCK_DEF_CITATION:
@@ -779,19 +775,17 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 			token_pairs_match_pairs_inside_token(block, e, s);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
-		case BLOCK_EMPTY:
-		case BLOCK_CODE_INDENTED:
-		case BLOCK_CODE_FENCED:
-			// No need to pair tokens in these blocks
-			break;
 		case LINE_TABLE:
-		case BLOCK_TABLE:	// \TODO: Need to handle tables differently and isolate by cell?
+		case BLOCK_TABLE:
+			// TODO: Need to parse into cells first
 			token_pairs_match_pairs_inside_token(block, e, s);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
+		case BLOCK_EMPTY:
+		case BLOCK_CODE_INDENTED:
+		case BLOCK_CODE_FENCED:
 		default:
 			// Nothing to do here
-			//fprintf(stderr, "What to do for %d\n", block->type);
 			return;
 	}
 }
