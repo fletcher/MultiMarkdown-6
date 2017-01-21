@@ -58,6 +58,7 @@
 
 #include "char.h"
 #include "d_string.h"
+#include "i18n.h"
 #include "lexer.h"
 #include "libMultiMarkdown.h"
 #include "mmd.h"
@@ -67,6 +68,7 @@
 #include "stack.h"
 #include "token.h"
 #include "token_pairs.h"
+#include "writer.h"
 
 
 // Basic parser function declarations
