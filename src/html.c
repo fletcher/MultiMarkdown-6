@@ -60,13 +60,11 @@
 #include "d_string.h"
 #include "html.h"
 #include "libMultiMarkdown.h"
+#include "i18n.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"
 #include "writer.h"
-
-
-#define LC(x) x
 
 
 #define print(x) d_string_append(out, x)
@@ -116,8 +114,6 @@ void mmd_print_string_html(DString * out, const char * str, bool obfuscate) {
 
 
 void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_pad * scratch) {
-	int language = 0;
-
 	switch (type) {
 		case DASH_N:
 			print("&#8211;");
@@ -132,7 +128,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 			print("&#8217;");
 			break;
 		case QUOTE_LEFT_SINGLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case SWEDISH:
 					print( "&#8217;");
 					break;
@@ -150,7 +146,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 				}
 			break;
 		case QUOTE_RIGHT_SINGLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case GERMAN:
 					print("&#8216;");
 					break;
@@ -162,7 +158,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 				}
 			break;
 		case QUOTE_LEFT_DOUBLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case DUTCH:
 				case GERMAN:
 					print("&#8222;");
@@ -181,7 +177,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 				}
 			break;
 		case QUOTE_RIGHT_DOUBLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case GERMAN:
 					print("&#8220;");
 					break;

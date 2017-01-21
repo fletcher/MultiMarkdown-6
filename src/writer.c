@@ -125,8 +125,9 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 		}
 
 
-
 		p->extensions = e->extensions;
+		p->quotes_lang = e->quotes_lang;
+		p->language = e->language;
 	}
 
 	return p;

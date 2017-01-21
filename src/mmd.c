@@ -89,6 +89,9 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		e->extensions = extensions;
 
+		e->language = LC_EN;
+		e->quotes_lang = ENGLISH;
+
 		e->citation_stack = stack_new(0);
 		e->definition_stack = stack_new(0);
 		e->footnote_stack = stack_new(0);
@@ -161,6 +164,26 @@ mmd_engine * mmd_engine_create_with_string(const char * str, unsigned long exten
 	DString * d = d_string_new(str);
 
 	return mmd_engine_create(d, extensions);
+}
+
+
+/// Set language and smart quotes language
+void mmd_engine_set_language(mmd_engine * e, short language) {
+	e->language = language;
+
+	switch (language) {
+		case LC_EN:
+			e->quotes_lang = ENGLISH;
+			break;
+		case LC_DE:
+			e->quotes_lang = GERMAN;
+			break;
+		case LC_ES:
+			e->quotes_lang = ENGLISH;
+			break;
+		default:
+			e->quotes_lang = ENGLISH;
+	}
 }
 
 
