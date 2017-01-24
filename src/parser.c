@@ -188,64 +188,64 @@ typedef union {
 **  yy_default[]       Default action for each state.
 **
 *********** Begin parsing tables **********************************************/
-#define YY_ACTTAB_COUNT (162)
+#define YY_ACTTAB_COUNT (163)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */   173,  153,   20,  147,  148,   93,   94,   95,   96,   97,
- /*    10 */    98,  104,  153,   14,    5,    4,  162,    3,    2,   15,
- /*    20 */    13,   12,   11,   20,  147,  148,   93,   94,   95,   96,
- /*    30 */    97,   98,  104,  153,   14,    5,    4,  162,    3,    2,
- /*    40 */    15,   13,   12,   11,  259,    1,   90,   91,   10,   37,
+ /*     0 */   173,  153,   20,  147,  148,   13,   93,   94,   95,   96,
+ /*    10 */    97,   98,  104,   14,    5,    4,  162,    3,    2,   15,
+ /*    20 */    12,   11,  153,   20,  147,  148,   13,   93,   94,   95,
+ /*    30 */    96,   97,   98,  104,   14,    5,    4,  162,    3,    2,
+ /*    40 */    15,   12,   11,  153,  259,    1,   90,   91,   10,   37,
  /*    50 */    35,   33,  102,   36,  105,  106,  107,  108,  109,  112,
- /*    60 */   112,   26,   26,   27,   27,   35,  168,   33,   89,   91,
+ /*    60 */   112,  171,   26,   26,   28,   35,  146,   33,   89,   91,
  /*    70 */    10,   37,   35,   33,  102,   36,  105,  106,  107,  108,
- /*    80 */   109,   28,  146,  146,   28,  169,   28,   35,  143,   33,
- /*    90 */    25,    6,    6,  153,    7,    7,  138,   28,   16,  111,
- /*   100 */    16,   18,   28,   18,  171,  126,   28,    8,    8,   28,
- /*   110 */    29,   29,    9,    9,   21,  172,   21,  111,  171,   23,
- /*   120 */   111,   23,   28,   17,  141,   17,   19,   28,   19,  172,
- /*   130 */   115,  151,  152,  111,  171,  157,    4,  121,  111,   22,
- /*   140 */   150,   22,  151,  152,   24,  172,   24,  156,   30,   30,
- /*   150 */     5,  113,   31,   31,  139,   32,   32,   34,   34,  116,
- /*   160 */   129,  113,
+ /*    80 */   109,   28,  172,  126,   28,  151,  152,   35,  143,   33,
+ /*    90 */    25,    6,    6,  157,    7,    7,  138,   28,   16,  111,
+ /*   100 */    16,   18,   28,   18,  150,  156,   28,    8,    8,   28,
+ /*   110 */   171,  171,    9,    9,   21,  146,   21,  111,  115,   23,
+ /*   120 */   111,   23,   28,   17,  116,   17,   19,   28,   19,  141,
+ /*   130 */   139,  172,  172,  111,  151,  152,  153,    4,  111,   22,
+ /*   140 */     5,   22,   30,   30,   24,  129,   24,   27,   27,  113,
+ /*   150 */   168,   29,   29,  113,  169,   31,   31,   32,   32,   34,
+ /*   160 */    34,  175,  121,
 };
 static const YYCODETYPE yy_lookahead[] = {
- /*     0 */     0,   12,    2,    3,    4,    5,    6,    7,    8,    9,
+ /*     0 */     0,   22,    2,    3,    4,    5,    6,    7,    8,    9,
  /*    10 */    10,   11,   12,   13,   14,   15,   16,   17,   18,   19,
  /*    20 */    20,   21,   22,    2,    3,    4,    5,    6,    7,    8,
  /*    30 */     9,   10,   11,   12,   13,   14,   15,   16,   17,   18,
  /*    40 */    19,   20,   21,   22,   24,   25,   26,   27,   28,   29,
  /*    50 */    30,   31,   32,   33,   34,   35,   36,   37,   38,   41,
- /*    60 */    42,   51,   52,   51,   52,   45,    1,   47,   26,   27,
+ /*    60 */    42,    1,   51,   52,   29,   45,    1,   47,   26,   27,
  /*    70 */    28,   29,   30,   31,   32,   33,   34,   35,   36,   37,
- /*    80 */    38,   29,    1,    1,   29,   20,   29,   45,   52,   47,
- /*    90 */    42,   39,   40,   12,   39,   40,   50,   29,   46,   40,
- /*   100 */    48,   46,   29,   48,    1,   48,   29,   39,   40,   29,
- /*   110 */    49,   50,   39,   40,   46,   12,   48,   40,    1,   46,
- /*   120 */    40,   48,   29,   46,   21,   48,   46,   29,   48,   12,
- /*   130 */    44,    3,    4,   40,    1,    1,   15,   47,   40,   46,
- /*   140 */    12,   48,    3,    4,   46,   12,   48,   13,   43,   44,
- /*   150 */    14,   12,   39,   40,   21,   39,   40,   39,   40,   45,
- /*   160 */    16,   12,
+ /*    80 */    38,   29,   22,   48,   29,    3,    4,   45,   52,   47,
+ /*    90 */    42,   39,   40,    1,   39,   40,   50,   29,   46,   40,
+ /*   100 */    48,   46,   29,   48,   22,   13,   29,   39,   40,   29,
+ /*   110 */     1,    1,   39,   40,   46,    1,   48,   40,   44,   46,
+ /*   120 */    40,   48,   29,   46,   45,   48,   46,   29,   48,   20,
+ /*   130 */    20,   22,   22,   40,    3,    4,   22,   15,   40,   46,
+ /*   140 */    14,   48,   43,   44,   46,   16,   48,   51,   52,   22,
+ /*   150 */     1,   49,   50,   22,    5,   39,   40,   39,   40,   39,
+ /*   160 */    40,   53,   47,
 };
-#define YY_SHIFT_USE_DFLT (162)
+#define YY_SHIFT_USE_DFLT (163)
 #define YY_SHIFT_COUNT    (37)
-#define YY_SHIFT_MIN      (-11)
+#define YY_SHIFT_MIN      (-21)
 #define YY_SHIFT_MAX      (149)
 static const short yy_shift_ofst[] = {
- /*     0 */    21,    0,   81,   81,   81,   81,   81,   81,   81,   81,
- /*    10 */   128,  117,  117,   65,  134,   82,  -11,  -11,  -11,  -11,
- /*    20 */    82,  -11,  -11,  -11,  -11,   82,  103,  133,  139,   65,
- /*    30 */   134,   82,   82,  121,   82,  136,  144,  149,
+ /*     0 */    21,    0,  114,  114,  114,  114,  114,  114,  114,  114,
+ /*    10 */    82,   60,   60,  149,   92,   65,  -21,  -21,  -21,  -21,
+ /*    20 */    65,  -21,  -21,  -21,  -21,   65,  109,  110,  131,  149,
+ /*    30 */    92,   65,   65,  122,   65,  126,  129,  127,
 };
 #define YY_REDUCE_USE_DFLT (-1)
 #define YY_REDUCE_COUNT (35)
 #define YY_REDUCE_MIN   (0)
-#define YY_REDUCE_MAX   (118)
+#define YY_REDUCE_MAX   (120)
 static const signed char yy_reduce_ofst[] = {
  /*     0 */    20,   42,   52,   55,   68,   73,   77,   80,   93,   98,
- /*    10 */    18,   10,   12,   61,  105,  113,   57,   57,   57,   57,
- /*    20 */   116,   57,   57,   57,   57,  118,   36,   36,   48,   46,
- /*    30 */    86,   59,   59,   90,   59,  114,
+ /*    10 */    18,   11,   96,  102,   99,  116,   35,   35,   35,   35,
+ /*    20 */   118,   35,   35,   35,   35,  120,   36,   36,   48,   46,
+ /*    30 */    74,   59,   59,  115,   59,   79,
 };
 static const YYACTIONTYPE yy_default[] = {
  /*     0 */   258,  258,  249,  248,  210,  205,  219,  216,  208,  203,
@@ -276,6 +276,23 @@ static const YYCODETYPE yyFallback[] = {
     1,  /* LINE_PLAIN => LINE_CONTINUATION */
     1,  /* LINE_INDENTED_TAB => LINE_CONTINUATION */
     1,  /* LINE_INDENTED_SPACE => LINE_CONTINUATION */
+    0,  /*  LINE_HTML => nothing */
+    5,  /* LINE_ATX_1 => LINE_HTML */
+    5,  /* LINE_ATX_2 => LINE_HTML */
+    5,  /* LINE_ATX_3 => LINE_HTML */
+    5,  /* LINE_ATX_4 => LINE_HTML */
+    5,  /* LINE_ATX_5 => LINE_HTML */
+    5,  /* LINE_ATX_6 => LINE_HTML */
+    5,  /*    LINE_HR => LINE_HTML */
+    5,  /* LINE_BLOCKQUOTE => LINE_HTML */
+    5,  /* LINE_LIST_BULLETED => LINE_HTML */
+    5,  /* LINE_LIST_ENUMERATED => LINE_HTML */
+    5,  /* LINE_TABLE => LINE_HTML */
+    5,  /* LINE_DEF_CITATION => LINE_HTML */
+    5,  /* LINE_DEF_FOOTNOTE => LINE_HTML */
+    5,  /* LINE_DEF_LINK => LINE_HTML */
+    5,  /* LINE_FENCE_BACKTICK => LINE_HTML */
+    5,  /* LINE_FENCE_BACKTICK_START => LINE_HTML */
 };
 #endif /* YYFALLBACK */
 
@@ -362,11 +379,11 @@ void ParseTrace(FILE *TraceFILE, char *zTracePrompt){
 ** are required.  The following table supplies these names */
 static const char *const yyTokenName[] = { 
   "$",             "LINE_CONTINUATION",  "LINE_PLAIN",    "LINE_INDENTED_TAB",
-  "LINE_INDENTED_SPACE",  "LINE_ATX_1",    "LINE_ATX_2",    "LINE_ATX_3",  
-  "LINE_ATX_4",    "LINE_ATX_5",    "LINE_ATX_6",    "LINE_HR",     
-  "LINE_EMPTY",    "LINE_BLOCKQUOTE",  "LINE_LIST_BULLETED",  "LINE_LIST_ENUMERATED",
+  "LINE_INDENTED_SPACE",  "LINE_HTML",     "LINE_ATX_1",    "LINE_ATX_2",  
+  "LINE_ATX_3",    "LINE_ATX_4",    "LINE_ATX_5",    "LINE_ATX_6",  
+  "LINE_HR",       "LINE_BLOCKQUOTE",  "LINE_LIST_BULLETED",  "LINE_LIST_ENUMERATED",
   "LINE_TABLE",    "LINE_DEF_CITATION",  "LINE_DEF_FOOTNOTE",  "LINE_DEF_LINK",
-  "LINE_HTML",     "LINE_FENCE_BACKTICK",  "LINE_FENCE_BACKTICK_START",  "error",       
+  "LINE_FENCE_BACKTICK",  "LINE_FENCE_BACKTICK_START",  "LINE_EMPTY",    "error",       
   "doc",           "blocks",        "block",         "para",        
   "indented_code",  "empty",         "list_bulleted",  "list_enumerated",
   "blockquote",    "table",         "def_citation",  "def_footnote",

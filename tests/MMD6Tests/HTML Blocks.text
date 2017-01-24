@@ -48,6 +48,11 @@ foo
 
 10
 
+<div>
+# foo #
+[foo][foo]
+</div>
+
 <!-- This is a *comment* -->
 
 <!-- This is a

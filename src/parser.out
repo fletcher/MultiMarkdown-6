@@ -64,6 +64,7 @@ State 0:
                     LINE_PLAIN shift        20     
              LINE_INDENTED_TAB shift-reduce 59     indented_code ::= LINE_INDENTED_TAB
            LINE_INDENTED_SPACE shift-reduce 60     indented_code ::= LINE_INDENTED_SPACE
+                     LINE_HTML shift        13     
                     LINE_ATX_1 shift-reduce 5      block ::= LINE_ATX_1
                     LINE_ATX_2 shift-reduce 6      block ::= LINE_ATX_2
                     LINE_ATX_3 shift-reduce 7      block ::= LINE_ATX_3
@@ -71,7 +72,6 @@ State 0:
                     LINE_ATX_5 shift-reduce 9      block ::= LINE_ATX_5
                     LINE_ATX_6 shift-reduce 10     block ::= LINE_ATX_6
                        LINE_HR shift-reduce 16     block ::= LINE_HR
-                    LINE_EMPTY shift-reduce 65     empty ::= LINE_EMPTY
                LINE_BLOCKQUOTE shift        14     
             LINE_LIST_BULLETED shift        5      
           LINE_LIST_ENUMERATED shift        4      
@@ -79,9 +79,9 @@ State 0:
              LINE_DEF_CITATION shift        3      
              LINE_DEF_FOOTNOTE shift        2      
                  LINE_DEF_LINK shift        15     
-                     LINE_HTML shift        13     
            LINE_FENCE_BACKTICK shift        12     
      LINE_FENCE_BACKTICK_START shift        11     
+                    LINE_EMPTY shift-reduce 65     empty ::= LINE_EMPTY
                            doc accept
                         blocks shift        1      
                          block shift-reduce 2      blocks ::= block
@@ -166,6 +166,7 @@ State 1:
                     LINE_PLAIN shift        20     
              LINE_INDENTED_TAB shift-reduce 59     indented_code ::= LINE_INDENTED_TAB
            LINE_INDENTED_SPACE shift-reduce 60     indented_code ::= LINE_INDENTED_SPACE
+                     LINE_HTML shift        13     
                     LINE_ATX_1 shift-reduce 5      block ::= LINE_ATX_1
                     LINE_ATX_2 shift-reduce 6      block ::= LINE_ATX_2
                     LINE_ATX_3 shift-reduce 7      block ::= LINE_ATX_3
@@ -173,7 +174,6 @@ State 1:
                     LINE_ATX_5 shift-reduce 9      block ::= LINE_ATX_5
                     LINE_ATX_6 shift-reduce 10     block ::= LINE_ATX_6
                        LINE_HR shift-reduce 16     block ::= LINE_HR
-                    LINE_EMPTY shift-reduce 65     empty ::= LINE_EMPTY
                LINE_BLOCKQUOTE shift        14     
             LINE_LIST_BULLETED shift        5      
           LINE_LIST_ENUMERATED shift        4      
@@ -181,9 +181,9 @@ State 1:
              LINE_DEF_CITATION shift        3      
              LINE_DEF_FOOTNOTE shift        2      
                  LINE_DEF_LINK shift        15     
-                     LINE_HTML shift        13     
            LINE_FENCE_BACKTICK shift        12     
      LINE_FENCE_BACKTICK_START shift        11     
+                    LINE_EMPTY shift-reduce 65     empty ::= LINE_EMPTY
                          block shift-reduce 1      blocks ::= blocks block
                           para shift-reduce 3      block ::= para
                  indented_code shift        10     
@@ -630,10 +630,10 @@ State 26:
           fenced_line ::= * LINE_EMPTY
 
              LINE_CONTINUATION shift-reduce 83     fenced_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 84     fenced_line ::= LINE_EMPTY
-                    LINE_EMPTY reduce       54      ** Parsing conflict **
            LINE_FENCE_BACKTICK shift-reduce 53     fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines LINE_FENCE_BACKTICK
            LINE_FENCE_BACKTICK reduce       54      ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 84     fenced_line ::= LINE_EMPTY
+                    LINE_EMPTY reduce       54      ** Parsing conflict **
                    fenced_line shift-reduce 55     fenced_lines ::= fenced_lines fenced_line
                      {default} reduce       54     fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines
 
@@ -645,10 +645,10 @@ State 27:
           fenced_line ::= * LINE_EMPTY
 
              LINE_CONTINUATION shift-reduce 83     fenced_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 84     fenced_line ::= LINE_EMPTY
-                    LINE_EMPTY reduce       52      ** Parsing conflict **
            LINE_FENCE_BACKTICK shift-reduce 51     fenced_block ::= LINE_FENCE_BACKTICK fenced_lines LINE_FENCE_BACKTICK
            LINE_FENCE_BACKTICK reduce       52      ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 84     fenced_line ::= LINE_EMPTY
+                    LINE_EMPTY reduce       52      ** Parsing conflict **
                    fenced_line shift-reduce 55     fenced_lines ::= fenced_lines fenced_line
                      {default} reduce       52     fenced_block ::= LINE_FENCE_BACKTICK fenced_lines
 
@@ -769,14 +769,14 @@ Symbols:
     2: LINE_PLAIN
     3: LINE_INDENTED_TAB
     4: LINE_INDENTED_SPACE
-    5: LINE_ATX_1
-    6: LINE_ATX_2
-    7: LINE_ATX_3
-    8: LINE_ATX_4
-    9: LINE_ATX_5
-   10: LINE_ATX_6
-   11: LINE_HR
-   12: LINE_EMPTY
+    5: LINE_HTML
+    6: LINE_ATX_1
+    7: LINE_ATX_2
+    8: LINE_ATX_3
+    9: LINE_ATX_4
+   10: LINE_ATX_5
+   11: LINE_ATX_6
+   12: LINE_HR
    13: LINE_BLOCKQUOTE
    14: LINE_LIST_BULLETED
    15: LINE_LIST_ENUMERATED
@@ -784,13 +784,13 @@ Symbols:
    17: LINE_DEF_CITATION
    18: LINE_DEF_FOOTNOTE
    19: LINE_DEF_LINK
-   20: LINE_HTML
-   21: LINE_FENCE_BACKTICK
-   22: LINE_FENCE_BACKTICK_START
+   20: LINE_FENCE_BACKTICK
+   21: LINE_FENCE_BACKTICK_START
+   22: LINE_EMPTY
    23: error:
-   24: doc: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_EMPTY LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_HTML LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START
-   25: blocks: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_EMPTY LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_HTML LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START
-   26: block: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_EMPTY LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_HTML LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START
+   24: doc: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_EMPTY
+   25: blocks: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_EMPTY
+   26: block: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_EMPTY
    27: para: LINE_PLAIN
    28: indented_code: LINE_INDENTED_TAB LINE_INDENTED_SPACE
    29: empty: LINE_EMPTY

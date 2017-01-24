@@ -47,6 +47,11 @@
 
 <p>10</p>
 
+<div>
+# foo #
+[foo][foo]
+</div>
+
 <!-- This is a *comment* -->
 
 <!-- This is a
