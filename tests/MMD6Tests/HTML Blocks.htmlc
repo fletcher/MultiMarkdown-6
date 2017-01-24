@@ -52,6 +52,14 @@
 [foo][foo]
 </div>
 
+<div>
+
+<h1>foo </h1>
+
+<p>[foo][foo]</p>
+
+</div>
+
 <!-- This is a *comment* -->
 
 <!-- This is a
