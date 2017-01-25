@@ -95,6 +95,9 @@ static inline const char * Translate(unsigned long x, int l) {
 }
 
 
+#endif
+
+
 // Based on ISO 639-1 names
 // https://en.wikipedia.org/wiki/ISO_639-1
 enum lc_languages {
@@ -113,8 +116,5 @@ static inline short i18n_language_from_string(const char * l) {
 
 	return 0;
 }
-
-
-#endif
 
 #endif
