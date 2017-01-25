@@ -422,6 +422,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("</li>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_META:
+			print("<meta>\n");
+			//token_tree_describe(t, source);
+			print("</meta>\n");
+			break;
 		case BLOCK_PARA:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:

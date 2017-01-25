@@ -107,7 +107,7 @@ block(A)			::= def_footnote(B).						{ A = token_new_parent(B, BLOCK_DEF_FOOTNOT
 block(A)			::= def_link(B).							{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
 block(A)			::= html_block(B).							{ A = token_new_parent(B, BLOCK_HTML); }
 block(A)			::= fenced_block(B).						{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
-
+block(A)			::= meta_block(B).							{ A = token_new_parent(B, BLOCK_META); }
 
 para(A)				::= LINE_PLAIN(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
 para				::= LINE_PLAIN.
@@ -199,6 +199,18 @@ fenced_lines		::= fenced_line.
 
 fenced_line			::= LINE_CONTINUATION.
 fenced_line			::= LINE_EMPTY.
+
+
+meta_block(A)		::= LINE_META(B) meta_lines(C).				{ A = B; token_chain_append(B, C); }
+meta_block			::= LINE_META.
+
+meta_lines(A)		::= meta_lines(B) meta_line(C).				{ A = B; token_chain_append(B, C); }
+meta_lines			::= meta_line.
+
+meta_line 			::= LINE_META.
+meta_line 			::= LINE_CONTINUATION.
+
+
 
 //
 // Additional Configuration

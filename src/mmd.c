@@ -91,6 +91,8 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		e->extensions = extensions;
 
+		e->allow_meta = (extensions & EXT_COMPATIBILITY) ? false : true;
+
 		e->language = LC_EN;
 		e->quotes_lang = ENGLISH;
 
@@ -276,15 +278,17 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 	
 	switch (line->child->type) {
 		case INDENT_TAB:
-			if (line_is_empty(line->child))
+			if (line_is_empty(line->child)) {
 				line->type = LINE_EMPTY;
-			else
+				e->allow_meta = false;
+			} else
 				line->type = LINE_INDENTED_TAB;
 			break;
 		case INDENT_SPACE:
-			if (line_is_empty(line->child))
+			if (line_is_empty(line->child)) {
 				line->type = LINE_EMPTY;
-			else
+				e->allow_meta = false;
+			} else
 				line->type = LINE_INDENTED_SPACE;
 			break;
 		case ANGLE_LEFT:
@@ -490,6 +494,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			break;
 		case TEXT_LINEBREAK:
 		case TEXT_NL:
+			e->allow_meta = false;
 			line->type = LINE_EMPTY;
 			break;
 		case BRACKET_LEFT:
@@ -518,6 +523,14 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			}
 			break;
 		case TEXT_PLAIN:
+			if (e->allow_meta && !(e->extensions & EXT_COMPATIBILITY)) {
+				scan_len = scan_url(&source[line->start]);
+				if (scan_len == 0) {
+					scan_len = scan_meta_line(&source[line->start]);
+					line->type = (scan_len) ? LINE_META : LINE_PLAIN;
+					break;
+				}
+			}
 		default:
 			line->type = LINE_PLAIN;
 			break;
@@ -847,6 +860,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_LIST_ENUMERATED_LOOSE:
 			case BLOCK_LIST_ITEM:
 			case BLOCK_LIST_ITEM_TIGHT:
+			case BLOCK_META:
 			case BLOCK_PARA:
 			case BLOCK_TABLE:
 				// Assign child tokens of blocks
@@ -1312,6 +1326,7 @@ void strip_line_tokens_from_block(token * block) {
 			case LINE_EMPTY:
 			case LINE_LIST_BULLETED:
 			case LINE_LIST_ENUMERATED:
+			case LINE_META:
 			case LINE_PLAIN:
 				// Remove leading non-indent space from line
 				if (l->child && l->child->type == NON_INDENT_SPACE)

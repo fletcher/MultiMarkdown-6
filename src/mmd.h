@@ -67,6 +67,8 @@ struct mmd_engine {
 	token *					root;
 	unsigned long			extensions;
 
+	bool					allow_meta;
+
 	token_pair_engine *		pairings1;
 	token_pair_engine *		pairings2;
 	token_pair_engine *		pairings3;

@@ -20,3 +20,4 @@
 #define LINE_FENCE_BACKTICK             20
 #define LINE_FENCE_BACKTICK_START       21
 #define LINE_EMPTY                      22
+#define LINE_META                       23
