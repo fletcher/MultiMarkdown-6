@@ -69,6 +69,7 @@
 
 typedef struct {
 	struct link *		link_hash;
+	struct meta *		meta_hash;
 
 	unsigned long		extensions;
 	short				padded;			//!< How many empty lines at end output buffer
@@ -134,6 +135,14 @@ struct fn_holder {
 
 typedef struct fn_holder fn_holder;
 
+struct meta {
+	char *				key;
+	char *				value;
+	UT_hash_handle		hh;
+};
+
+typedef struct meta meta;
+
 
 /// Temporary storage while exporting parse tree to output format
 scratch_pad * scratch_pad_new(mmd_engine * e);
@@ -168,6 +177,9 @@ char * url_accept(const char * source, token ** remainder, bool validate);
 void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void citation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 
+meta * meta_new(const char * source, size_t start, size_t len);
+void meta_set_value(meta * m, const char * value);
+void meta_free(meta * m);
 
 #endif
 

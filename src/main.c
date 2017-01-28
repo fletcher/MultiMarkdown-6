@@ -71,7 +71,7 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
-struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch, *a_accept, *a_reject;
+struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch, *a_accept, *a_reject, *a_full, *a_snippet;
 struct arg_str *a_format, *a_lang;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -192,6 +192,8 @@ int main(int argc, char** argv) {
 
 		a_batch			= arg_lit0("b", "batch", "process each file separately"),
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
+		a_full			= arg_lit0("f", "full", "force a complete document"),
+		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
 
 		a_rem2			= arg_rem("", ""),
 
@@ -271,6 +273,16 @@ int main(int argc, char** argv) {
 	if (a_reject->count && a_accept->count) {
 		// Old options that don't apply now, so change them
 		extensions &= ~(EXT_CRITIC_REJECT | EXT_CRITIC_ACCEPT);
+	}
+
+	if (a_full->count > 0) {
+		// Force complete document
+		extensions |= EXT_COMPLETE;
+	}
+
+	if (a_snippet->count > 0) {
+		// Force snippet
+		extensions |= EXT_SNIPPET;
 	}
 
 	if (a_format->count > 0) {

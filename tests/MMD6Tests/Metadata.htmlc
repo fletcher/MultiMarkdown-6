@@ -1,0 +1,8 @@
+<p>title:	<em>foo</em> &quot;bar&quot;
+css:	http://foo.com/bar.css
+foo:	bar
+foo bar
+foo bar
+foo:	<em>bar</em></p>
+
+<p>foo:	bar</p>

@@ -70,7 +70,7 @@ doc					::= blocks(B).								{ engine->root = B; }
 
 blocks(A)			::= blocks(B) block(C).
 	{
-		strip_line_tokens_from_block(C);
+		strip_line_tokens_from_block(engine, C);
 		if (B == NULL) { B = C; C = NULL;}
 		A = B;
 		token_chain_append(A, C);
@@ -80,7 +80,7 @@ blocks(A)			::= blocks(B) block(C).
 	}
 blocks(A)			::= block(B).
 	{
-		strip_line_tokens_from_block(B);
+		strip_line_tokens_from_block(engine, B);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", B->type);
 		#endif

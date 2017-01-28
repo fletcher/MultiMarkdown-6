@@ -70,5 +70,8 @@ void mmd_export_token_tree_html_raw(DString * out, const char * source, token * 
 void mmd_export_citation_list_html(DString * out, const char * source, scratch_pad * scratch);
 void mmd_export_footnote_list_html(DString * out, const char * source, scratch_pad * scratch);
 
+void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch);
+void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch);
+
 
 #endif

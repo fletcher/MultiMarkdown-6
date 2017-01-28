@@ -78,6 +78,7 @@ struct mmd_engine {
 	stack *					header_stack;
 	stack *					footnote_stack;
 	stack *					link_stack;
+	stack *					metadata_stack;
 
 	short					language;
 	short					quotes_lang;
@@ -87,7 +88,7 @@ struct mmd_engine {
 /// Expose routines to lemon parser
 void recursive_parse_list_item(mmd_engine * e, token * block);
 void recursive_parse_blockquote(mmd_engine * e, token * block);
-void strip_line_tokens_from_block(token * block);
+void strip_line_tokens_from_block(mmd_engine * e, token * block);
 void is_para_html(mmd_engine * e, token * block);
 
 

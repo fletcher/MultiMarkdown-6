@@ -1002,7 +1002,7 @@ static void yy_reduce(
         break;
       case 1: /* blocks ::= blocks block */
 {
-		strip_line_tokens_from_block(yymsp[0].minor.yy0);
+		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
 		if (yymsp[-1].minor.yy0 == NULL) { yymsp[-1].minor.yy0 = yymsp[0].minor.yy0; yymsp[0].minor.yy0 = NULL;}
 		yylhsminor.yy0 = yymsp[-1].minor.yy0;
 		token_chain_append(yylhsminor.yy0, yymsp[0].minor.yy0);
@@ -1014,7 +1014,7 @@ static void yy_reduce(
         break;
       case 2: /* blocks ::= block */
 {
-		strip_line_tokens_from_block(yymsp[0].minor.yy0);
+		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", yymsp[0].minor.yy0->type);
 		#endif

@@ -423,9 +423,6 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			scratch->padded = 0;
 			break;
 		case BLOCK_META:
-			print("<meta>\n");
-			//token_tree_describe(t, source);
-			print("</meta>\n");
 			break;
 		case BLOCK_PARA:
 		case BLOCK_DEF_CITATION:
@@ -744,6 +741,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			}
 			break;
+		case PAIR_BRACKET_VARIABLE:
+			print_token(t);
+			break;
 		case PAIR_CRITIC_ADD:
 			// Ignore if we're rejecting
 			if (scratch->extensions & EXT_CRITIC_REJECT)
@@ -1000,6 +1000,54 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, si
 				print_token(t);
 			break;
 	}
+}
+
+
+void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch) {
+	print("<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+
+	// Iterate over metadata keys
+	meta * m;
+
+	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
+		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibtex") == 0) {
+		} else if (strcmp(m->key, "css") == 0) {
+			print("\t<link type=\"text/css\" rel=\"stylesheet\" href=\"");
+			mmd_print_string_html(out, m->value, false);
+			print("\"/>\n");
+		} else if (strcmp(m->key, "htmlfooter") == 0) {
+		} else if (strcmp(m->key, "htmlheader") == 0) {
+		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
+		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexmode") == 0) {
+		} else if (strcmp(m->key, "mmdfooter") == 0) {
+		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+		} else if (strcmp(m->key, "title") == 0) {
+			print("\t<title>");
+			mmd_print_string_html(out, m->value, false);
+			print("</title>\n");
+		} else if (strcmp(m->key, "transcludebase") == 0) {
+		} else if (strcmp(m->key, "xhtmlheader") == 0) {
+		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
+		} else {
+			print("\t<meta name=\"");
+			mmd_print_string_html(out, m->key, false);
+			print("\" content=\"");
+			mmd_print_string_html(out, m->value, false);
+			print("\"/>\n");
+		}
+	}
+
+	print("</head>\n<body>\n\n");
+}
+
+
+void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch) {
+	print("\n\n</body>\n</html>\n");
 }
 
 

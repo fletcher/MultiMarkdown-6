@@ -324,6 +324,16 @@ size_t scan_meta_line(const char * c) {
 }
 
 
+size_t scan_meta_key(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	meta_key	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
 
 #ifdef TEST
 void Test_scan_url(CuTest* tc) {

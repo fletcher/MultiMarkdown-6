@@ -101,6 +101,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->footnote_stack = stack_new(0);
 		e->header_stack = stack_new(0);
 		e->link_stack = stack_new(0);
+		e->metadata_stack = stack_new(0);
 
 		e->pairings1 = token_pair_engine_new();
 		e->pairings2 = token_pair_engine_new();
@@ -222,7 +223,13 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 		footnote_free(stack_pop(e->footnote_stack));
 	}
 	stack_free(e->footnote_stack);
-	
+
+	// Metadata needs to be freed
+	while (e->metadata_stack->size) {
+		meta_free(stack_pop(e->metadata_stack));
+	}
+	stack_free(e->metadata_stack);
+
 	free(e);
 }
 
@@ -846,6 +853,13 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 
 	while (t != NULL) {
 		switch (t->type) {
+			case BLOCK_META:
+				// Do we treat this like metadata?
+				if (!(e->extensions & EXT_COMPATIBILITY) &&
+					!(e->extensions & EXT_NO_METADATA))
+					return;
+				// This is not metadata
+				t->type = BLOCK_PARA;
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
 			case BLOCK_H1:
@@ -860,7 +874,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_LIST_ENUMERATED_LOOSE:
 			case BLOCK_LIST_ITEM:
 			case BLOCK_LIST_ITEM_TIGHT:
-			case BLOCK_META:
 			case BLOCK_PARA:
 			case BLOCK_TABLE:
 				// Assign child tokens of blocks
@@ -1278,6 +1291,7 @@ void is_para_html(mmd_engine * e, token * block) {
 	}
 }
 
+
 void recursive_parse_blockquote(mmd_engine * e, token * block) {
 	// Strip blockquote markers (if present)
 	strip_quote_markers_from_block(e, block);
@@ -1286,7 +1300,69 @@ void recursive_parse_blockquote(mmd_engine * e, token * block) {
 }
 
 
-void strip_line_tokens_from_block(token * block) {
+void metadata_stack_describe(mmd_engine * e) {
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+		fprintf(stderr, "'%s': '%s'\n", m->key, m->value);
+	}
+}
+
+
+void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
+	token * l = metadata->child;
+	char * source = e->dstr->str;
+
+	meta * m = NULL;
+	size_t start, len;
+
+	DString * d = d_string_new("");
+
+	while (l) {
+		switch (l->type) {
+			case LINE_META:
+				if (m) {
+					meta_set_value(m, d->str);
+					d_string_erase(d, 0, -1);
+				}
+				len = scan_meta_key(&source[l->start]);
+				m = meta_new(source, l->start, len);
+				start = l->start + len + 1;
+				len = l->start + l->len - start - 1;
+				d_string_append_c_array(d, &source[start], len);
+				stack_push(e->metadata_stack, m);
+				break;
+			case LINE_INDENTED_TAB:
+			case LINE_INDENTED_SPACE:
+				while (l->len && char_is_whitespace(source[l->start])) {
+					l->start++;
+					l->len--;
+				}
+			case LINE_PLAIN:
+				d_string_append_c(d, '\n');
+				d_string_append_c_array(d, &source[l->start], l->len);
+				break;
+			default:
+				fprintf(stderr, "ERROR!\n");
+				token_describe(l, NULL);
+				break;
+		}
+
+		l = l->next;
+	}
+
+	// Finish last line
+	if (m) {
+		meta_set_value(m, d->str);
+	}
+
+	d_string_free(d, true);
+}
+
+
+void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	if ((block == NULL) || (block->child == NULL))
 		return;
 
@@ -1297,17 +1373,22 @@ void strip_line_tokens_from_block(token * block) {
 
 	token * l = block->child;
 
-	// Strip trailing empty lines from indented code blocks
-	if (block->type == BLOCK_CODE_INDENTED) {
-		while (l->tail->type == LINE_EMPTY)
-			token_remove_last_child(block);
+	// Custom actions
+	switch (block->type) {
+		case BLOCK_META:
+			// Handle metadata differently
+			return strip_line_tokens_from_metadata(e, block);
+		case BLOCK_CODE_INDENTED:
+			// Strip trailing empty lines from indented code blocks
+			while (l->tail->type == LINE_EMPTY)
+				token_remove_last_child(block);
+			break;
 	}
 
 	token * children = NULL;
 	block->child = NULL;
 
 	token * temp;
-
 
 	// Move contents of line directly into the parent block
 	while (l != NULL) {

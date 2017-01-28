@@ -1,0 +1,8 @@
+title:	*foo* "bar"
+css:	http://foo.com/bar.css
+foo:	bar
+foo bar
+	foo bar
+foo:	*bar*
+
+foo:	bar
