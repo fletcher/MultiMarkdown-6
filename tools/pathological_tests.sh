@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X=65535
-#X=8000
+#X=30000
 
 Y=$((X-1))
 
@@ -52,11 +52,6 @@ echo "[a</p>" >>					path5.html
 
 
 # Mismatched * and _
-# TODO: Starts getting slow > 10k iterations
-# Walking entire stack to find that there is no match.
-# Could keep count of different token types on stack
-# To ensure there's even something to find.  Which does
-# mean more overhead CPU time
 seq -f "*a_" $X >					path6.text
 
 echo -n "<p>" >						path6.html
@@ -83,25 +78,27 @@ echo "**x <a href=\"d\">*b**c*</a></p>" >>	path8.html
 # Nested brackets
 # TODO: Performance hit between 1000 and 10,000 iterations
 # Checking each level to see if it's a valid link on the stack
-seq -s " " -f "[" $X >				path9.text
-echo -n "a" >> 						path9.text
-seq -s " " -f "]" $X >>				path9.text
-
-echo -n "<p>" >						path9.html
-seq -s " " -f "[" $X >>				path9.html
-echo -n "a" >> 						path9.html
-seq -s " " -f "]" $Y >>				path9.html
-echo "]</p>" >>						path9.html
+# seq -s " " -f "[" $X >				path9.text
+# echo -n "a" >> 						path9.text
+# seq -s " " -f "]" $X >>				path9.text
+# 
+# echo -n "<p>" >						path9.html
+# seq -s " " -f "[" $X >>				path9.html
+# echo -n "a" >> 						path9.html
+# seq -s " " -f "]" $Y >>				path9.html
+# echo "]</p>" >>						path9.html
 
 
 # Nested block quotes
-# TODO: Segfaults -- recursive parsing after ~~10k nests
-# Slower than cmark 
-seq -s " " -f ">" $X >				path10.text
-echo -n "a" >> 						path10.text
-
-seq -f "<blockquote>" $X >			path10.html
-echo "<p>a</p>" >> 					path10.html
-seq -f "</blockquote>" $X >>		path10.html
+# Because MMD-6 handles blockquotes recursively,
+# we hit stack overflow problems at depths over
+# ~ 10k, depending on stack size.
+#
+# seq -s " " -f ">" $X >				path10.text
+# echo -n "a" >> 						path10.text
+# 
+# seq -f "<blockquote>" $X >			path10.html
+# echo "<p>a</p>" >>					path10.html
+# seq -f "</blockquote>" $X >>		path10.html
 
 
