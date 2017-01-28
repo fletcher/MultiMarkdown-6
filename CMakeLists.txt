@@ -430,3 +430,5 @@ ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
 ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 
 ADD_MMD_TEST(pathologic "" ../build html)
+
+ADD_MMD_TEST(pathologic-compat "-c" ../build html)
