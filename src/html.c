@@ -1018,6 +1018,8 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 			print("\"/>\n");
 		} else if (strcmp(m->key, "htmlfooter") == 0) {
 		} else if (strcmp(m->key, "htmlheader") == 0) {
+			print(m->value);
+			print_char('\n');
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 		} else if (strcmp(m->key, "lang") == 0) {
 		} else if (strcmp(m->key, "latexfooter") == 0) {
@@ -1032,6 +1034,8 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 			print("</title>\n");
 		} else if (strcmp(m->key, "transcludebase") == 0) {
 		} else if (strcmp(m->key, "xhtmlheader") == 0) {
+			print(m->value);
+			print_char('\n');
 		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
 		} else {
 			print("\t<meta name=\"");

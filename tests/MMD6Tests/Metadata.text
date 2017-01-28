@@ -1,5 +1,8 @@
 title:	*foo* "bar"
 css:	http://foo.com/bar.css
+HTML header:	<script type="text/javascript"
+	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
 foo:	bar
 foo bar
 	foo bar
