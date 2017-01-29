@@ -501,7 +501,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					continue;
 				}
 
-				temp_char = label_from_token(scratch->source, temp_token);
+				temp_char = label_from_token(source, temp_token);
 
 				printf("<li><a href=\"#%s\">", temp_char);
 				mmd_export_token_tree_html(out, source, temp_token->child, offset, scratch);
