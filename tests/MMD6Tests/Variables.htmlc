@@ -1,8 +1,6 @@
-<p>title:	<em>foo</em> &quot;bar&quot;
-foo:	bar
+<p>foo:	bar
 foo bar
 foo bar
-foo:	<em>bar</em>
 bat:	<strong>foo</strong></p>
 
 <p>foo:	bar</p>

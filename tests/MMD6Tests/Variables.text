@@ -1,8 +1,6 @@
-title:	*foo* "bar"
 foo:	bar
 foo bar
 	foo bar
-foo:	*bar*
 bat:	**foo**
 
 foo:	bar
