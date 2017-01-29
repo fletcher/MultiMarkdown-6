@@ -128,7 +128,11 @@ void token_pair_mate(token * a, token * b) {
 
 
 /// Search a token's childen for matching pairs
-void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e, stack * s) {
+void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e, stack * s, unsigned short depth) {
+
+	// Avoid stack overflow in "pathologic" input
+	if (depth == kMaxPairRecursiveDepth)
+		return;
 
 	// Walk the child chain
 	token * walker = parent->child;
@@ -145,7 +149,7 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 	while (walker != NULL) {
 
 		if (walker->child) {
-			token_pairs_match_pairs_inside_token(walker, e, s);
+			token_pairs_match_pairs_inside_token(walker, e, s, depth + 1);
 		}
 
 		// Is this a closer?

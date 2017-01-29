@@ -67,6 +67,9 @@
 #include "uthash.h"
 
 
+#define kMaxExportRecursiveDepth 1000		//!< Maximum recursion depth when exporting token tree -- to prevent stack overflow with "pathologic" input
+
+
 typedef struct {
 	struct link *		link_hash;
 	struct meta *		meta_hash;
@@ -91,6 +94,8 @@ typedef struct {
 	short				quotes_lang;
 
 	stack *				header_stack;
+
+	short				recurse_depth;
 	
 	char 				_PADDING[4];	//!< pad struct for alignment
 

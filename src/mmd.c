@@ -91,6 +91,8 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		e->extensions = extensions;
 
+		e->recurse_depth = 0;
+
 		e->allow_meta = (extensions & EXT_COMPATIBILITY) ? false : true;
 
 		e->language = LC_EN;
@@ -748,6 +750,11 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len) {
 /// Parse token tree
 void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 
+	if (e->recurse_depth == kMaxParseRecursiveDepth)
+		return;
+
+	e->recurse_depth++;
+
 	void* pParser = ParseAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
@@ -779,6 +786,8 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	e->root = NULL;
 
 	ParseFree(pParser, free);
+
+	e->recurse_depth--;
 }
 
 
@@ -809,7 +818,7 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_H5:
 		case BLOCK_H6:
 		case BLOCK_PARA:
-			token_pairs_match_pairs_inside_token(block, e, s);
+			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			break;
 		case DOC_START_TOKEN:
 		case BLOCK_LIST_BULLETED:
@@ -820,13 +829,13 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 			break;
 		case BLOCK_LIST_ITEM:
 		case BLOCK_LIST_ITEM_TIGHT:
-			token_pairs_match_pairs_inside_token(block, e, s);
+			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
 		case LINE_TABLE:
 		case BLOCK_TABLE:
 			// TODO: Need to parse into cells first
-			token_pairs_match_pairs_inside_token(block, e, s);
+			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
 		case BLOCK_EMPTY:
@@ -1486,6 +1495,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		// Prepare stack to be used for token pairing
 		// This avoids allocating/freeing one for each iteration.
 		stack * pair_stack = stack_new(0);
+
 
 		mmd_pair_tokens_in_block(doc, e->pairings1, pair_stack);
 		mmd_pair_tokens_in_block(doc, e->pairings2, pair_stack);

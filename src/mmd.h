@@ -62,10 +62,14 @@
 #include "token.h"
 #include "token_pairs.h"
 
+#define kMaxParseRecursiveDepth 1000		//!< Maximum recursion depth when parsing -- to prevent stack overflow with "pathologic" input
+
+
 struct mmd_engine {
 	DString *				dstr;
 	token *					root;
 	unsigned long			extensions;
+	unsigned short			recurse_depth;
 
 	bool					allow_meta;
 

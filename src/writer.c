@@ -92,6 +92,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 
 		p->header_stack = e->header_stack;
 
+		p->recurse_depth = 0;
+
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
 		link * l;

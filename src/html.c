@@ -59,8 +59,8 @@
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
-#include "libMultiMarkdown.h"
 #include "i18n.h"
+#include "libMultiMarkdown.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"
@@ -1026,6 +1026,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 
 
 void mmd_export_token_tree_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
+
+	// Prevent stack overflow with "dangerous" input causing extreme recursion
+	if (scratch->recurse_depth == kMaxExportRecursiveDepth) {
+		return;
+	}
+
+	scratch->recurse_depth++;
+
 	while (t != NULL) {
 		if (scratch->skip_token) {
 			scratch->skip_token--;
@@ -1035,6 +1043,8 @@ void mmd_export_token_tree_html(DString * out, const char * source, token * t, s
 
 		t = t->next;
 	}
+
+	scratch->recurse_depth--;
 }
 
 
