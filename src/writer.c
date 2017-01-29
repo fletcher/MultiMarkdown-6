@@ -1160,11 +1160,29 @@ void parse_brackets(const char * source, scratch_pad * scratch, token * bracket,
 		temp_char = text_inside_pair(source, next);
 
 		if (temp_char[0] == '\0') {
-			// Empty label, use first bracket
+			// Empty label, use first bracket (e.g. implicit link `[foo][]`)
 			free(temp_char);
 			temp_char = text_inside_pair(source, bracket);
 		}
 	} else {
+		// This may be a simplified implicit link, e.g. `[foo]`
+
+		// But not if it's nested brackets, since it would not
+		// end up being a valid reference
+		token * walker = bracket->child;
+		while (walker) {
+			switch (walker->type) {
+				case PAIR_BRACKET:
+				case PAIR_BRACKET_CITATION:
+				case PAIR_BRACKET_FOOTNOTE:
+				case PAIR_BRACKET_VARIABLE:
+					*final_link = NULL;
+					return;
+			}
+
+			walker = walker->next;
+		}
+
 		temp_char = text_inside_pair(source, bracket);
 		// Don't skip tokens
 		temp_short = 0;
