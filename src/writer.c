@@ -90,6 +90,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 		p->quotes_lang = e->quotes_lang;
 		p->language = e->language;
 
+		p->header_stack = e->header_stack;
+
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
 		link * l;

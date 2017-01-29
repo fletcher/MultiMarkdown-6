@@ -108,6 +108,7 @@ block(A)			::= def_link(B).							{ A = token_new_parent(B, BLOCK_DEF_LINK); sta
 block(A)			::= html_block(B).							{ A = token_new_parent(B, BLOCK_HTML); }
 block(A)			::= fenced_block(B).						{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
 block(A)			::= meta_block(B).							{ A = token_new_parent(B, BLOCK_META); }
+block(A)			::= LINE_TOC(B).							{ A = token_new_parent(B, BLOCK_TOC); }
 
 para(A)				::= LINE_PLAIN(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
 para				::= LINE_PLAIN.

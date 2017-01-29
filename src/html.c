@@ -272,6 +272,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		return;
 
 	short	temp_short;
+	short	temp_short2;
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
@@ -453,6 +454,70 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 
 			if (!scratch->list_is_tight)
 				print("</p>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_TOC:
+			temp_short = 0;
+			temp_short2 = 0;
+			pad(out, 2, scratch);
+			print("<div class=\"TOC\">");
+
+			for (int i = 0; i < scratch->header_stack->size; ++i)
+			{
+				temp_token = stack_peek_index(scratch->header_stack, i);
+
+				if (temp_token->type == temp_short2) {
+					// Same level -- close list item
+					print("</li>\n");
+				}
+
+				if (temp_short == 0) {
+					// First item
+					print("\n<ul>\n");
+					temp_short = temp_token->type;
+					temp_short2 = temp_short;
+				}
+
+				// Indent?
+				if (temp_token->type == temp_short2) {
+					// Same level -- NTD
+				} else if (temp_token->type == temp_short2 + 1) {
+					// Indent
+					print("\n\n<ul>\n");
+					temp_short2++;
+				} else if (temp_token->type < temp_short2) {
+					// Outdent
+					print("</li>\n");
+					while (temp_short2 > temp_token->type) {
+						if (temp_short2 > temp_short)
+							print("</ul></li>\n");
+						else
+							temp_short = temp_short2 - 1;
+
+						temp_short2--;
+					}
+				} else {
+					// Skipped more than one level -- ignore
+					continue;
+				}
+
+				temp_char = label_from_token(scratch->source, temp_token);
+
+				printf("<li><a href=\"#%s\">", temp_char);
+				mmd_export_token_tree_html(out, source, temp_token->child, offset, scratch);
+				print("</a>");
+				free(temp_char);
+			}
+
+			while (temp_short2 > (temp_short)) {
+				print("</ul>\n");
+				temp_short2--;
+			}
+			
+			if (temp_short)
+				print("</li>\n</ul>\n");
+
+			print("</div>");
 			scratch->padded = 0;
 			break;
 		case BRACE_DOUBLE_LEFT:
@@ -947,6 +1012,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
+		case TOC:
 			print_token(t);
 			break;
 		case UL:

@@ -419,6 +419,7 @@ features have been implemented:
 * Smart quotes (support for languages other than english is not fully
 	implemented yet)
 * Superscripts/subscripts
+* Table of Contents
 
 
 Things that are partially completed:
@@ -431,6 +432,8 @@ Things that are partially completed:
 * CriticMarkup -- need to decide:
 	* How to handle CM stretches that include blank lines
 * Fenced code blocks
+* Metadata
+* Full/Snippet modes
 
 
 Things yet to be completed:
@@ -439,11 +442,10 @@ Things yet to be completed:
 * Manually specified labels for headers
 * Definition lists
 * Abbreviations
-* Metadata
 * Glossaries
 * Tables
-* Table of Contents
 * File Transclusion
+
 
 
 ### Accuracy ###

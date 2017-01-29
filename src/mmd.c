@@ -504,6 +504,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			e->allow_meta = false;
 			line->type = LINE_EMPTY;
 			break;
+		case TOC:
+			line->type = (e->extensions & EXT_COMPATIBILITY) ? LINE_PLAIN : LINE_TOC;
+			break;
 		case BRACKET_LEFT:
 			if (e->extensions & EXT_COMPATIBILITY) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);

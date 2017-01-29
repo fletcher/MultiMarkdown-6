@@ -92,6 +92,8 @@ int scan(Scanner * s, const char * stop) {
 
 		// The order of these seems to matter
 
+		"{{TOC}}"						{ return TOC; }
+
 		"{++"							{ return CRITIC_ADD_OPEN; }
 		"++}"							{ return CRITIC_ADD_CLOSE; }
 

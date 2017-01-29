@@ -89,6 +89,8 @@ typedef struct {
 
 	short				language;
 	short				quotes_lang;
+
+	stack *				header_stack;
 	
 	char 				_PADDING[4];	//!< pad struct for alignment
 
