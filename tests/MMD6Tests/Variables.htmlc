@@ -1,0 +1,14 @@
+<p>title:	<em>foo</em> &quot;bar&quot;
+foo:	bar
+foo bar
+foo bar
+foo:	<em>bar</em>
+bat:	<strong>foo</strong></p>
+
+<p>foo:	bar</p>
+
+<p>[%foo]</p>
+
+<p>[%bar]</p>
+
+<p>[%bat]</p>

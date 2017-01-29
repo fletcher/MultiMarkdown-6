@@ -271,11 +271,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 	if (t == NULL)
 		return;
 
-	short temp_short;
-	link * temp_link = NULL;
-	char * temp_char = NULL;
-	bool temp_bool = 0;
-	token * temp_token = NULL;
+	short	temp_short;
+	link *	temp_link	= NULL;
+	char *	temp_char	= NULL;
+	char *	temp_char2	= NULL;
+	bool	temp_bool	= 0;
+	token *	temp_token	= NULL;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -742,7 +743,16 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 			break;
 		case PAIR_BRACKET_VARIABLE:
-			print_token(t);
+			temp_char = text_inside_pair(source, t);
+			temp_char2 = extract_metadata(scratch, temp_char);
+
+			if (temp_char2)
+				mmd_print_string_html(out, temp_char2, false);
+			else
+				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+
+			// Don't free temp_char2 (it belongs to meta *)
+			free(temp_char);
 			break;
 		case PAIR_CRITIC_ADD:
 			// Ignore if we're rejecting

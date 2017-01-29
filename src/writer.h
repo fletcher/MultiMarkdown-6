@@ -180,6 +180,7 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 meta * meta_new(const char * source, size_t start, size_t len);
 void meta_set_value(meta * m, const char * value);
 void meta_free(meta * m);
+char * extract_metadata(scratch_pad * scratch, const char * target);
 
 #endif
 

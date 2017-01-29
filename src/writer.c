@@ -844,6 +844,18 @@ meta * extract_meta_from_stack(scratch_pad * scratch, const char * target) {
 }
 
 
+char * extract_metadata(scratch_pad * scratch, const char * target) {
+	char * clean = label_from_string(target);
+
+	meta * m = extract_meta_from_stack(scratch, clean);
+	free(clean);
+	if (m)
+		return m->value;
+
+	return NULL;
+}
+
+
 bool definition_extract(mmd_engine * e, token ** remainder) {
 	char * source = e->dstr->str;
 	token * label = NULL;
