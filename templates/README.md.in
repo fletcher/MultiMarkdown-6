@@ -9,6 +9,22 @@
 | Version:   | @My_Project_Version@      |  
 
 
+## Updates ##
+
+* 2017-01-28 -- v 0.1.1a includes a few updates:
+
+	* Metadata support
+	* Metadata variables support
+	* Extended ASCII range character checking
+	* Rudimentary language translations, including German
+	* Improved performance
+	* Additional testing:
+		* CriticMarkup
+		* HTML Blokcs
+		* Metadata/Variables
+		* "pathologic" test cases from CommonMark
+
+
 ## An Announcement! ##
 
 I would like to officially announce that MultiMarkdown version 6 is in public
