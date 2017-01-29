@@ -101,6 +101,10 @@ void mmd_engine_parse_string(mmd_engine * e);
 void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
 
 
+/// Set language and smart quotes language
+void mmd_engine_set_language(mmd_engine * e, short language);
+
+
 /// Token types for parse tree
 enum token_types {
 	DOC_START_TOKEN = 0,	//!< DOC_START_TOKEN must be type 0
@@ -127,6 +131,7 @@ enum token_types {
 	BLOCK_LIST_ENUMERATED_LOOSE,
 	BLOCK_LIST_ITEM,
 	BLOCK_LIST_ITEM_TIGHT,
+	BLOCK_META,
 	BLOCK_PARA,
 	BLOCK_TABLE,
 	ROW_TABLE,
@@ -255,8 +260,8 @@ enum token_types {
 
 
 /// Define smart typography languages -- first in list is default
-enum smart_language {
-	ENGLISH,
+enum smart_quotes_language {
+	ENGLISH = 0,
 	DUTCH,
 	FRENCH,
 	GERMAN,

@@ -129,11 +129,6 @@ void token_pair_mate(token * a, token * b) {
 
 /// Search a token's childen for matching pairs
 void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e, stack * s) {
-//	if ((parent == NULL) || 
-//		(parent->child == NULL) ||
-//		(e == NULL)) {
-//		return;
-//	}
 
 	// Walk the child chain
 	token * walker = parent->child;
@@ -145,6 +140,8 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 	token * peek;
 	unsigned short pair_type;
 
+	unsigned int opener_count[kMaxTokenTypes] = {0};	// Keep track of which token types are on the stack
+
 	while (walker != NULL) {
 
 		if (walker->child) {
@@ -152,10 +149,26 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 		}
 
 		// Is this a closer?
-		if (e->can_close_pair[walker->type] && walker->can_close && walker->unmatched ) {
-			// Do we have a valid opener in the stack?
+		if (walker->can_close && e->can_close_pair[walker->type] && walker->unmatched ) {
 			i = s->size;
 
+			// Do we even have a valid opener in the stack?
+			// It's only worth checking if the stack is beyond a certain size
+			if (i > start_counter + kLargeStackThreshold) {
+				for (int j = 0; j < kMaxTokenTypes; ++j)
+				{
+					if (opener_count[j]) {
+						if (e->pair_type[j][walker->type])
+							goto close;
+					}
+				}
+
+				// No opener available for this as closer
+				goto open;
+			}
+
+			close:
+			// Find matching opener for this closer
 			while (i > start_counter) {
 				peek = stack_peek_index(s, i - 1);
 
@@ -182,8 +195,12 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 
 					token_pair_mate(peek, walker);
 
+
 					// Clear portion of stack between opener and closer as they are now unavailable for mating
-					s->size = i - 1;
+					while (s->size > (i - 1)) {
+						peek = stack_pop(s);
+						opener_count[peek->type]--;
+					}
 #ifndef NDEBUG
 					fprintf(stderr, "stack now sized %lu\n", s->size);
 #endif
@@ -209,10 +226,11 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 			}
 		}
 
+		open:
 		// Is this an opener?
-		// \todo: Need to verify that token->type is a valid opening token for some pairing
-		if (e->can_open_pair[walker->type] && walker->can_open && walker->unmatched) {
+		if (walker->can_open && e->can_open_pair[walker->type] && walker->unmatched) {
 			stack_push(s, walker);
+			opener_count[walker->type]++;
 #ifndef NDEBUG
 		fprintf(stderr, "push token type %d to stack (%lu elements)\n", walker->type, s->size);
 #endif

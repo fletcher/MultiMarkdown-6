@@ -74,6 +74,8 @@ void store_footnote(scratch_pad * scratch, footnote * f);
 
 void store_link(scratch_pad * scratch, link * l);
 
+void store_metadata(scratch_pad * scratch, meta * m);
+
 
 /// Temporary storage while exporting parse tree to output format
 scratch_pad * scratch_pad_new(mmd_engine * e) {
@@ -84,8 +86,12 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 		p->list_is_tight = false;				// Tight vs Loose list
 		p->skip_token = 0;						// Skip over next n tokens
 
-		p->link_hash = NULL;					// Store defined links in a hash
+		p->extensions = e->extensions;
+		p->quotes_lang = e->quotes_lang;
+		p->language = e->language;
 
+		// Store links in a hash for rapid retrieval when exporting
+		p->link_hash = NULL;
 		link * l;
 
 		for (int i = 0; i < e->link_stack->size; ++i)
@@ -95,6 +101,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 			store_link(p, l);
 		}
 
+		// Store footnotes in a hash for rapid retrieval when exporting
 		p->used_footnotes = stack_new(0);				// Store footnotes as we use them
 		p->inline_footnotes_to_free = stack_new(0);		// Inline footnotes need to be freed
 		p->footnote_being_printed = 0;
@@ -111,6 +118,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 			store_footnote(p, f);
 		}
 
+		// Store citations in a hash for rapid retrieval when exporting
 		p->used_citations = stack_new(0);
 		p->inline_citations_to_free = stack_new(0);
 		p->citation_being_printed = 0;
@@ -124,9 +132,16 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 			store_citation(p, f);
 		}
 
+		// Store links in a hash for rapid retrieval when exporting
+		p->meta_hash = NULL;
+		meta * m;
 
+		for (int i = 0; i < e->metadata_stack->size; ++i)
+		{
+			m = stack_peek_index(e->metadata_stack, i);
 
-		p->extensions = e->extensions;
+			store_metadata(p, m);
+		}
 	}
 
 	return p;
@@ -175,6 +190,14 @@ void scratch_pad_free(scratch_pad * scratch) {
 	}
 	stack_free(scratch->inline_citations_to_free);
 
+	// Free metadata hash
+	meta * m, * m_tmp;
+	
+	HASH_ITER(hh, scratch->meta_hash, m, m_tmp) {
+		HASH_DEL(scratch->meta_hash, m); 	// Remove item from hash
+		// Don't free meta pointer since it is freed with the mmd_engine
+		//meta_free(m);
+	}
 
 	free(scratch);
 }
@@ -548,6 +571,18 @@ void store_citation(scratch_pad * scratch, footnote * f) {
 }
 
 
+void store_metadata(scratch_pad * scratch, meta * m) {
+	meta * temp;
+
+	// Store by `key`
+	HASH_FIND_STR(scratch->meta_hash, m->key, temp);
+
+	if (!temp) {
+		HASH_ADD_KEYPTR(hh, scratch->meta_hash, m->key, strlen(m->key), m);
+	}
+}
+
+
 void link_free(link * l) {
 	free(l->label_text);
 	free(l->clean_text);
@@ -762,6 +797,65 @@ void footnote_free(footnote * f) {
 }
 
 
+meta * meta_new(const char * source, size_t key_start, size_t len) {
+	meta * m = malloc(sizeof(meta));
+	char * key;
+
+	if (m) {
+		key = strndup(&source[key_start], len);
+		m->key = label_from_string(key);
+		free(key);
+		m->value = NULL;
+	}
+
+	return m;
+}
+
+
+void meta_set_value(meta * m, const char * value) {
+	if (value) {
+		if (m->value)
+			free(m->value);
+
+		m->value = clean_string(value, false);
+	}
+}
+
+
+void meta_free(meta * m) {
+	free(m->key);
+	free(m->value);
+
+	free(m);
+}
+
+
+/// Find metadata based on key
+meta * extract_meta_from_stack(scratch_pad * scratch, const char * target) {
+	char * key = clean_string(target, true);
+
+	meta * temp = NULL;
+
+	HASH_FIND_STR(scratch->meta_hash, key, temp);
+
+	free(key);
+
+	return temp;
+}
+
+
+char * extract_metadata(scratch_pad * scratch, const char * target) {
+	char * clean = label_from_string(target);
+
+	meta * m = extract_meta_from_stack(scratch, clean);
+	free(clean);
+	if (m)
+		return m->value;
+
+	return NULL;
+}
+
+
 bool definition_extract(mmd_engine * e, token ** remainder) {
 	char * source = e->dstr->str;
 	token * label = NULL;
@@ -955,6 +1049,40 @@ void process_header_stack(mmd_engine * e) {
 	}
 }
 
+
+/// Parse metadata
+void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
+	if ((scratch->extensions & EXT_NO_METADATA) ||
+		(scratch->extensions & EXT_COMPATIBILITY))
+		return;
+
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		// Check for certain metadata keys
+		m = stack_peek_index(e->metadata_stack, i);
+
+		// Certain keys do not force complete documents
+		if (!(scratch->extensions & EXT_COMPLETE) &&
+			!(scratch->extensions & EXT_SNIPPET)) {
+			if ((strcmp(m->key, "baseheaderlevel")	!= 0) &&
+				(strcmp(m->key, "xhtmlheaderlevel")	!= 0) &&
+				(strcmp(m->key, "htmlheaderlevel")	!= 0) &&
+				(strcmp(m->key, "latexheaderlevel")	!= 0) &&
+				(strcmp(m->key, "odfheaderlevel")	!= 0) &&
+				(strcmp(m->key, "xhtmlheader")		!= 0) &&
+				(strcmp(m->key, "htmlheader")		!= 0) &&
+				(strcmp(m->key, "quoteslanguage")	!= 0)) {
+				// We found a key that is not in the list, so
+				// Force a complete document
+				scratch->extensions |= EXT_COMPLETE;
+			}
+		}
+	}
+}
+
+
 void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 	// Process potential reference definitions
@@ -966,11 +1094,22 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	// Create scratch pad
 	scratch_pad * scratch = scratch_pad_new(e);
 
+	// Process metadata
+	process_metadata_stack(e, scratch);
+
+
 	switch (format) {
 		case FORMAT_HTML:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_html(out, e->dstr->str, scratch);
+
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, 0, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
 			mmd_export_citation_list_html(out, e->dstr->str, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_html(out, e->dstr->str, scratch);
+
 			break;
 	}
 

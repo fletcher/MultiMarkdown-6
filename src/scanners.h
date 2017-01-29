@@ -70,6 +70,8 @@ size_t scan_html(const char * c);
 size_t scan_html_block(const char * c);
 size_t scan_html_line(const char * c);
 size_t scan_key(const char * c);
+size_t scan_meta_key(const char * c);
+size_t scan_meta_line(const char * c);
 size_t scan_ref_citation(const char * c);
 size_t scan_ref_foot(const char * c);
 size_t scan_ref_link(const char * c);

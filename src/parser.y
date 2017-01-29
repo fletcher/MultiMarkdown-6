@@ -64,12 +64,13 @@
 
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE.
 
+%fallback LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START.
 
 doc					::= blocks(B).								{ engine->root = B; }
 
 blocks(A)			::= blocks(B) block(C).
 	{
-		strip_line_tokens_from_block(C);
+		strip_line_tokens_from_block(engine, C);
 		if (B == NULL) { B = C; C = NULL;}
 		A = B;
 		token_chain_append(A, C);
@@ -79,7 +80,7 @@ blocks(A)			::= blocks(B) block(C).
 	}
 blocks(A)			::= block(B).
 	{
-		strip_line_tokens_from_block(B);
+		strip_line_tokens_from_block(engine, B);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", B->type);
 		#endif
@@ -106,7 +107,7 @@ block(A)			::= def_footnote(B).						{ A = token_new_parent(B, BLOCK_DEF_FOOTNOT
 block(A)			::= def_link(B).							{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
 block(A)			::= html_block(B).							{ A = token_new_parent(B, BLOCK_HTML); }
 block(A)			::= fenced_block(B).						{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
-
+block(A)			::= meta_block(B).							{ A = token_new_parent(B, BLOCK_META); }
 
 para(A)				::= LINE_PLAIN(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
 para				::= LINE_PLAIN.
@@ -198,6 +199,18 @@ fenced_lines		::= fenced_line.
 
 fenced_line			::= LINE_CONTINUATION.
 fenced_line			::= LINE_EMPTY.
+
+
+meta_block(A)		::= LINE_META(B) meta_lines(C).				{ A = B; token_chain_append(B, C); }
+meta_block			::= LINE_META.
+
+meta_lines(A)		::= meta_lines(B) meta_line(C).				{ A = B; token_chain_append(B, C); }
+meta_lines			::= meta_line.
+
+meta_line 			::= LINE_META.
+meta_line 			::= LINE_CONTINUATION.
+
+
 
 //
 // Additional Configuration

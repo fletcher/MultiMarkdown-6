@@ -130,6 +130,12 @@
 	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00] nl;
 
 	fence_end	= non_indent [`~]{3,} sp nl;
+
+	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ -\.]*;
+
+	meta_value	= [^\n\r\x00]+;
+
+	meta_line	= meta_key sp ':' meta_value nl;	// meta_line can't match url above
 */
 
 
@@ -302,6 +308,28 @@ size_t scan_fence_end(const char * c) {
 
 /*!re2c
 	fence_end	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_meta_line(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	meta_line	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_meta_key(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	meta_key	{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	
 }

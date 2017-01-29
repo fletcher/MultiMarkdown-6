@@ -48,6 +48,19 @@ foo
 
 10
 
+<div>
+# foo #
+[foo][foo]
+</div>
+
+<div>
+
+# foo #
+
+[foo][foo]
+
+</div>
+
 <!-- This is a *comment* -->
 
 <!-- This is a
@@ -58,3 +71,50 @@ longer
 <!-- This is not a
 
  *comment* -->
+
+15
+
+<div>
+<div>
+**foo**
+</div>
+</div>
+
+
+<div>
+
+<div>
+**foo**
+</div>
+
+</div>
+
+
+<div>
+
+<div>
+
+**foo**
+
+</div>
+
+</div>
+
+
+<div>
+
+<div>
+**foo**
+</div>
+
+</div>
+
+
+<div>
+<div>
+
+**foo**
+</div>
+</div>
+
+20

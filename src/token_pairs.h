@@ -65,7 +65,9 @@
 #include "CuTest.h"
 #endif
 
-#define kMaxTokenTypes	200		// This needs to be larger than the largest token type being used
+#define kMaxTokenTypes	200			// This needs to be larger than the largest token type being used
+#define kLargeStackThreshold 1000	// Avoid unnecessary searches of large stacks
+
 
 /// Store information about which tokens can be paired, and what actions to take when 
 /// pairing them.

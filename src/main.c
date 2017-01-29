@@ -61,6 +61,7 @@
 
 #include "argtable3.h"
 #include "d_string.h"
+#include "i18n.h"
 #include "libMultiMarkdown.h"
 #include "html.h"
 #include "mmd.h"
@@ -70,11 +71,11 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
-struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch, *a_accept, *a_reject;
-struct arg_str *a_format;
+struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch, *a_accept, *a_reject, *a_full, *a_snippet;
+struct arg_str *a_format, *a_lang;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
-struct arg_rem *a_rem1, *a_rem2, *a_rem3;
+struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4;
 
 
 DString * stdin_buffer() {
@@ -151,10 +152,12 @@ char * filename_with_extension(const char * original, const char * new_extension
 }
 
 
-char * mmd_process(DString * buffer, unsigned long extensions, short format) {
+char * mmd_process(DString * buffer, unsigned long extensions, short format, short language) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(buffer, extensions);
+
+	mmd_engine_set_language(e, language);
 
 	mmd_engine_parse_string(e);
 
@@ -175,6 +178,7 @@ int main(int argc, char** argv) {
 	int exitcode = EXIT_SUCCESS;
 	char * binname = "multimarkdown";
 	short format = 0;
+	short language = LC_EN;
 
 	// Initialize argtable structs
 	void *argtable[] = {
@@ -188,6 +192,8 @@ int main(int argc, char** argv) {
 
 		a_batch			= arg_lit0("b", "batch", "process each file separately"),
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
+		a_full			= arg_lit0("f", "full", "force a complete document"),
+		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
 
 		a_rem2			= arg_rem("", ""),
 
@@ -199,6 +205,10 @@ int main(int argc, char** argv) {
 		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
 		
 		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc+2, "read input from file(s)"),
+
+		a_rem4			= arg_rem("", ""),
+
+		a_lang			= arg_str0("l", "lang", "LANG", "language localization, LANG = en|es|de"),
 		a_end 			= arg_end(20),
 	};
 
@@ -265,6 +275,16 @@ int main(int argc, char** argv) {
 		extensions &= ~(EXT_CRITIC_REJECT | EXT_CRITIC_ACCEPT);
 	}
 
+	if (a_full->count > 0) {
+		// Force complete document
+		extensions |= EXT_COMPLETE;
+	}
+
+	if (a_snippet->count > 0) {
+		// Force snippet
+		extensions |= EXT_SNIPPET;
+	}
+
 	if (a_format->count > 0) {
 		if (strcmp(a_format->sval[0], "html") == 0)
 			format = FORMAT_HTML;
@@ -274,6 +294,10 @@ int main(int argc, char** argv) {
 			exitcode = 1;
 			goto exit;
 		}
+	}
+
+	if (a_lang->count > 0) {
+		language = LANG_FROM_STR(a_lang->sval[0]);
 	}
 
 	// Determine input
@@ -314,7 +338,7 @@ int main(int argc, char** argv) {
 					break;
 			}
 
-			result = mmd_process(buffer, extensions, format);
+			result = mmd_process(buffer, extensions, format, language);
 
 			if (!(output_stream = fopen(output_filename, "w"))) {
 				// Failed to open file
@@ -354,7 +378,7 @@ int main(int argc, char** argv) {
 			buffer = stdin_buffer();
 		}
 
-		result = mmd_process(buffer, extensions, format);
+		result = mmd_process(buffer, extensions, format, language);
 
 		// Where does output go?
 		if (strcmp(a_o->filename[0], "-") == 0) {

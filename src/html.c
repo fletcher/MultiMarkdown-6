@@ -60,13 +60,11 @@
 #include "d_string.h"
 #include "html.h"
 #include "libMultiMarkdown.h"
+#include "i18n.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"
 #include "writer.h"
-
-
-#define LC(x) x
 
 
 #define print(x) d_string_append(out, x)
@@ -116,9 +114,6 @@ void mmd_print_string_html(DString * out, const char * str, bool obfuscate) {
 
 
 void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_pad * scratch) {
-	// TODO: Is smart typography enabled?  Which language?
-	int language = 0;
-
 	switch (type) {
 		case DASH_N:
 			print("&#8211;");
@@ -133,7 +128,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 			print("&#8217;");
 			break;
 		case QUOTE_LEFT_SINGLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case SWEDISH:
 					print( "&#8217;");
 					break;
@@ -151,7 +146,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 				}
 			break;
 		case QUOTE_RIGHT_SINGLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case GERMAN:
 					print("&#8216;");
 					break;
@@ -163,7 +158,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 				}
 			break;
 		case QUOTE_LEFT_DOUBLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case DUTCH:
 				case GERMAN:
 					print("&#8222;");
@@ -182,7 +177,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 				}
 			break;
 		case QUOTE_RIGHT_DOUBLE:
-			switch (language) {
+			switch (scratch->quotes_lang) {
 				case GERMAN:
 					print("&#8220;");
 					break;
@@ -276,11 +271,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 	if (t == NULL)
 		return;
 
-	short temp_short;
-	link * temp_link = NULL;
-	char * temp_char = NULL;
-	bool temp_bool = 0;
-	token * temp_token = NULL;
+	short	temp_short;
+	link *	temp_link	= NULL;
+	char *	temp_char	= NULL;
+	char *	temp_char2	= NULL;
+	bool	temp_bool	= 0;
+	token *	temp_token	= NULL;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -426,6 +422,8 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 
 			print("</li>");
 			scratch->padded = 0;
+			break;
+		case BLOCK_META:
 			break;
 		case BLOCK_PARA:
 		case BLOCK_DEF_CITATION:
@@ -744,6 +742,18 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			}
 			break;
+		case PAIR_BRACKET_VARIABLE:
+			temp_char = text_inside_pair(source, t);
+			temp_char2 = extract_metadata(scratch, temp_char);
+
+			if (temp_char2)
+				mmd_print_string_html(out, temp_char2, false);
+			else
+				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+
+			// Don't free temp_char2 (it belongs to meta *)
+			free(temp_char);
+			break;
 		case PAIR_CRITIC_ADD:
 			// Ignore if we're rejecting
 			if (scratch->extensions & EXT_CRITIC_REJECT)
@@ -1000,6 +1010,58 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, si
 				print_token(t);
 			break;
 	}
+}
+
+
+void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch) {
+	print("<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+
+	// Iterate over metadata keys
+	meta * m;
+
+	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
+		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibtex") == 0) {
+		} else if (strcmp(m->key, "css") == 0) {
+			print("\t<link type=\"text/css\" rel=\"stylesheet\" href=\"");
+			mmd_print_string_html(out, m->value, false);
+			print("\"/>\n");
+		} else if (strcmp(m->key, "htmlfooter") == 0) {
+		} else if (strcmp(m->key, "htmlheader") == 0) {
+			print(m->value);
+			print_char('\n');
+		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
+		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexmode") == 0) {
+		} else if (strcmp(m->key, "mmdfooter") == 0) {
+		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+		} else if (strcmp(m->key, "title") == 0) {
+			print("\t<title>");
+			mmd_print_string_html(out, m->value, false);
+			print("</title>\n");
+		} else if (strcmp(m->key, "transcludebase") == 0) {
+		} else if (strcmp(m->key, "xhtmlheader") == 0) {
+			print(m->value);
+			print_char('\n');
+		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
+		} else {
+			print("\t<meta name=\"");
+			mmd_print_string_html(out, m->key, false);
+			print("\" content=\"");
+			mmd_print_string_html(out, m->value, false);
+			print("\"/>\n");
+		}
+	}
+
+	print("</head>\n<body>\n\n");
+}
+
+
+void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch) {
+	print("\n\n</body>\n</html>\n");
 }
 
 

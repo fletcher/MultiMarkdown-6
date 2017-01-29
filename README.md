@@ -4,9 +4,25 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown 6        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-01-18 |  
+| Date:      | 2017-01-28 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.1.0a      |  
+| Version:   | 0.1.1a      |  
+
+
+## Updates ##
+
+* 2017-01-28 -- v 0.1.1a includes a few updates:
+
+	* Metadata support
+	* Metadata variables support
+	* Extended ASCII range character checking
+	* Rudimentary language translations, including German
+	* Improved performance
+	* Additional testing:
+		* CriticMarkup
+		* HTML Blokcs
+		* Metadata/Variables
+		* "pathologic" test cases from CommonMark
 
 
 ## An Announcement! ##

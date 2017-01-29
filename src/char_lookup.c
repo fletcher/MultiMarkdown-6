@@ -70,8 +70,6 @@ int main( int argc, char** argv ) {
 	unsigned char table[256] = {0};
 
 	// Define punctuation
-	// TODO: Need to go through extended ASCII codes for 
-	// additional whitespace characters
 	punctuation('.');
 	punctuation('!');
 	punctuation('?');
@@ -114,8 +112,6 @@ int main( int argc, char** argv ) {
 
 
 	// Define whitespace
-	// TODO: Need to go through extended ASCII codes for 
-	// additional whitespace characters
 	whitespace(' ');
 	whitespace('\t');
 
@@ -133,8 +129,6 @@ int main( int argc, char** argv ) {
 	}
 
 	// Define alpha
-	// TODO: Need to go through extended ASCII codes for 
-	// additional alpha characters
 	for (char i = 'a'; i <= 'z'; ++i)
 	{
 		alpha(i);
@@ -143,6 +137,65 @@ int main( int argc, char** argv ) {
 	{
 		alpha(i);
 	}
+
+
+	// Extended ASCII
+
+	// Punctuation ranges
+	for (int i = 132; i < 138; ++i) {
+		punctuation(i);
+	}
+
+	for (int i = 145; i < 156; ++i) {
+		punctuation(i);
+	}
+
+	for (int i = 161; i < 192; ++i) {
+		punctuation(i);
+	}
+
+
+	// Alphanumeric ranges
+	for (int i = 192; i < 215; ++i) {
+		alpha(i);
+	}
+
+	for (int i = 216; i < 247; ++i) {
+		alpha(i);
+	}
+
+	for (int i = 248; i < 256; ++i) {
+		alpha(i);
+	}
+
+	// Isolated extended ASCII characters
+	for (int i = 128; i < 256; ++i) {
+		switch (i) {
+			case 128:
+			case 130:
+			case 139:
+			case 215:
+			case 247:
+				punctuation(i);
+				break;
+			case 160:
+				whitespace(i);
+				break;
+			case 131:
+			case 138:
+			case 140:
+			case 142:
+			case 156:
+			case 158:
+			case 159:
+				alpha(i);
+				break;
+			default:
+				break;
+		}
+	}
+
+
 
 	// Print output as 16 x 16 table
 	for (int i = 0; i < 16; ++i)

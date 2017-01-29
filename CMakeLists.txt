@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown 6")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-01-18")
+set (My_Project_Revised_Date "2017-01-28")
 set (My_Project_Version_Major 0)
 set (My_Project_Version_Minor 1)
-set (My_Project_Version_Patch 0a)
+set (My_Project_Version_Patch 1a)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -43,6 +43,9 @@ project (${My_Project_Title})
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
+
+# Default is 256 -- needed for localization hash function
+add_definitions("-fbracket-depth=264")	
 
 
 # =================
@@ -425,3 +428,7 @@ endfunction(ADD_MMD_TEST)
 ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
 
 ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
+
+ADD_MMD_TEST(pathologic "" ../build html)
+
+ADD_MMD_TEST(pathologic-compat "-c" ../build html)

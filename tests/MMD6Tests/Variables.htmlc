@@ -1,0 +1,12 @@
+<p>foo:	bar
+foo bar
+foo bar
+bat:	<strong>foo</strong></p>
+
+<p>foo:	bar</p>
+
+<p>[%foo]</p>
+
+<p>[%bar]</p>
+
+<p>[%bat]</p>

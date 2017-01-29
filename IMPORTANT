@@ -1,3 +1,11 @@
+# Short Version #
+
+Run `make` command from top directory, then change to the build directory and
+run `make` again.
+
+
+# Detailed Version #
+
 This project is designed for use with cmake.
 
 The Makefile controls the overall build:
@@ -32,6 +40,8 @@ These commands control the `build` directory.  Everything in this directory is
 auto-generated.  You should not manually change these files or put anything
 else in there.
 
+From within the `build` directory, you can run `make` again to actually
+compile the softeare.
 
 The setup is designed to support unit testing with CuTest.  Functions along
 the lines of `void Test*` will be located automatically and used to create the
