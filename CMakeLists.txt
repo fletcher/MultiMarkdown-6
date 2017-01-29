@@ -334,12 +334,23 @@ endif (WIN32)
 # ==============
 
 # Create a library?
-add_library(libMultiMarkdown STATIC
-	${src_files}
-	${src_utility_files}
-	${header_files}
-	${header_utility_files}
-)
+if (NOT DEFINED TEST)
+	add_library(libMultiMarkdown STATIC
+		${src_files}
+		${src_utility_files}
+		${header_files}
+		${header_utility_files}
+	)
+else ()
+	add_library(libMultiMarkdown STATIC
+		${src_files}
+		${src_utility_files}
+		${header_files}
+		${header_utility_files}
+		${test_files}
+	)
+endif ()
+
 
 ADD_PUBLIC_HEADER(libMultiMarkdown src/libMultiMarkdown.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown src/d_string.h)
