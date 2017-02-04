@@ -136,6 +136,8 @@
 	meta_value	= [^\n\r\x00]+;
 
 	meta_line	= meta_key sp ':' meta_value nl;	// meta_line can't match url above
+
+	definition	= non_indent ':' sp [^\n\r\x00];
 */
 
 
@@ -330,6 +332,17 @@ size_t scan_meta_key(const char * c) {
 
 /*!re2c
 	meta_key	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_definition(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	definition	{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	
 }

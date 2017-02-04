@@ -24,6 +24,11 @@
 		* Metadata/Variables
 		* "pathologic" test cases from CommonMark
 
+* 2017-?? --  v 0.1.2a:
+
+	* "pathologic" test suite -- fix handling of nested brackets, e.g.
+	`[[[[foo]]]]` to avoid bogging down checking for reference links that
+	don't exist.  
 
 ## An Announcement! ##
 
@@ -412,6 +417,7 @@ features have been implemented:
 * Automatic cross-reference targets
 * Basic Citation support
 * CriticMarkup support
+* Definition lists
 * Inline and reference footnotes
 * Image and Link attributes (attributes can now be used with inline links as
 	well as reference links)
@@ -440,7 +446,6 @@ Things yet to be completed:
 
 * Multiple blocks inside of reference footnotes
 * Manually specified labels for headers
-* Definition lists
 * Abbreviations
 * Glossaries
 * Tables
@@ -452,7 +457,7 @@ Things yet to be completed:
 
 MultiMarkdown v6 successfully parses the Markdown [syntax page], except for
 the Setext header at the top.  It passes the 29 test files currently in place.
-There are a few ad
+There are a few at
 
 [syntax page]: https://daringfireball.net/projects/markdown/syntax
 

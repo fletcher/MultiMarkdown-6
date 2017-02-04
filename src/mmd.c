@@ -75,6 +75,7 @@
 void * ParseAlloc();
 void Parse();
 void ParseFree();
+void ParseTrace();
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
@@ -327,6 +328,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				}
 			}
 			line->type = LINE_PLAIN;
+			break;
+		case COLON:
+			line->type = LINE_PLAIN;
+			if (e->extensions & EXT_COMPATIBILITY) {
+				break;
+			}
+			if (scan_definition(&source[line->child->start])) {
+				line->type = LINE_DEFINITION;
+			}
 			break;
 		case HASH1:
 		case HASH2:
@@ -759,6 +769,8 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
+//	ParseTrace(stderr, "parser >>");
+
 	// Remove existing token tree
 	e->root = NULL;
 
@@ -771,6 +783,8 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 
 		if (remainder)
 			remainder->prev = NULL;
+
+//		fprintf(stderr, "\nNew line\n");
 
 		Parse(pParser, walker->type, walker, e);
 
@@ -808,6 +822,9 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 
 	switch (block->type) {
 		case BLOCK_BLOCKQUOTE:
+		case BLOCK_DEFLIST:
+		case BLOCK_DEFINITION:
+		case BLOCK_DEFINITION_GROUP:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
 		case BLOCK_DEF_LINK:
@@ -818,6 +835,7 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_H5:
 		case BLOCK_H6:
 		case BLOCK_PARA:
+		case BLOCK_TERM:
 			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			break;
 		case DOC_START_TOKEN:
@@ -874,6 +892,9 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 				t->type = BLOCK_PARA;
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
+			case BLOCK_DEFLIST:
+			case BLOCK_DEFINITION:
+			case BLOCK_DEFINITION_GROUP:
 			case BLOCK_H1:
 			case BLOCK_H2:
 			case BLOCK_H3:
@@ -888,6 +909,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_LIST_ITEM_TIGHT:
 			case BLOCK_PARA:
 			case BLOCK_TABLE:
+			case BLOCK_TERM:
 				// Assign child tokens of blocks
 				mmd_assign_ambidextrous_tokens_in_block(e, t, str, start_offset);
 				break;
@@ -1374,6 +1396,41 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 }
 
 
+void strip_line_tokens_from_defgroup(mmd_engine * e, token * group) {
+	token * walker = group->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case LINE_PLAIN:
+				walker->type = BLOCK_TERM;
+			case BLOCK_TERM:
+				break;
+			case BLOCK_DEFINITION:
+				strip_line_tokens_from_block(e, walker);
+				break;
+		}
+		walker = walker->next;
+	}
+}
+
+
+void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
+	token * walker = deflist->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case LINE_EMPTY:
+				walker->type = TEXT_EMPTY;
+				break;
+			case BLOCK_DEFINITION_GROUP:
+				strip_line_tokens_from_defgroup(e, walker);
+				break;
+		}
+		walker = walker->next;
+	}
+}
+
+
 void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	if ((block == NULL) || (block->child == NULL))
 		return;
@@ -1395,6 +1452,9 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			while (l->tail->type == LINE_EMPTY)
 				token_remove_last_child(block);
 			break;
+		case BLOCK_DEFLIST:
+			// Handle definition lists
+			return strip_line_tokens_from_deflist(e, block);
 	}
 
 	token * children = NULL;
@@ -1405,6 +1465,11 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	// Move contents of line directly into the parent block
 	while (l != NULL) {
 		switch (l->type) {
+			case LINE_DEFINITION:
+				if (block->type == BLOCK_DEFINITION) {
+					// Remove leading colon
+					token_remove_first_child(l);
+				}
 			case LINE_ATX_1:
 			case LINE_ATX_2:
 			case LINE_ATX_3:
@@ -1454,6 +1519,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				l->type = ROW_TABLE;
 				break;
 			default:
+				//fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
 				// This is a block, need to remove it from chain and
 				// Add to parent
 				temp = l->next;

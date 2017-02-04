@@ -22,3 +22,4 @@
 #define LINE_TOC                        22
 #define LINE_EMPTY                      23
 #define LINE_META                       24
+#define LINE_DEFINITION                 25

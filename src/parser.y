@@ -109,6 +109,7 @@ block(A)			::= html_block(B).							{ A = token_new_parent(B, BLOCK_HTML); }
 block(A)			::= fenced_block(B).						{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
 block(A)			::= meta_block(B).							{ A = token_new_parent(B, BLOCK_META); }
 block(A)			::= LINE_TOC(B).							{ A = token_new_parent(B, BLOCK_TOC); }
+block(A)			::= definition_block(B).					{ A = token_new_parent(B, BLOCK_DEFLIST); }
 
 para(A)				::= LINE_PLAIN(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
 para				::= LINE_PLAIN.
@@ -119,8 +120,7 @@ para_lines			::= para_line.
 para_line 			::= LINE_CONTINUATION.
 
 indented_code(A)	::= indented_code(B) code_line(C).			{ A = B; token_chain_append(B, C); }
-indented_code		::= LINE_INDENTED_TAB.
-indented_code		::= LINE_INDENTED_SPACE.
+indented_code		::= indented_line.
 
 code_line			::= indented_line.
 code_line			::= LINE_EMPTY.
@@ -211,6 +211,20 @@ meta_lines			::= meta_line.
 meta_line 			::= LINE_META.
 meta_line 			::= LINE_CONTINUATION.
 
+definition_block(A)	::= definition_block(B) empty(C) definition(D).		{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
+definition_block(A)	::= definition_block(B) empty(C).				{ A = B; token_chain_append(B, C); }
+definition_block	::= definition.
+
+definition(A)		::= para(B) defs(C).						{ A = token_new_parent(B, BLOCK_DEFINITION_GROUP); token_chain_append(B, C); B->type = BLOCK_TERM; }
+
+defs(A)				::= defs(B) def(C).							{ A = B; token_chain_append(B, C); }
+defs				::= def.
+
+def(A)				::= LINE_DEFINITION(B) def_lines(C).		{ A = token_new_parent(B, BLOCK_DEFINITION); token_chain_append(B, C); }
+def(A)				::= LINE_DEFINITION(B).						{ A = token_new_parent(B, BLOCK_DEFINITION); }
+
+def_lines(A)		::= def_lines(B) LINE_CONTINUATION(C).		{ A = B; token_chain_append(B, C); }
+def_lines			::= LINE_CONTINUATION.
 
 
 //

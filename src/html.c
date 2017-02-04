@@ -321,6 +321,26 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("</blockquote>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_DEFINITION:
+			pad(out, 2, scratch);
+			print("<dd>");
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</dd>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_DEFINITION_GROUP:
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			break;			
+		case BLOCK_DEFLIST:
+			pad(out, 2, scratch);
+			print("<dl>\n");
+			scratch->padded = 2;
+
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			pad(out, 1, scratch);
+			print("</dl>");
+			scratch->padded = 0;
+			break;
 		case BLOCK_CODE_FENCED:
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
@@ -455,6 +475,13 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (!scratch->list_is_tight)
 				print("</p>");
 			scratch->padded = 0;
+			break;
+		case BLOCK_TERM:
+			pad(out, 2, scratch);
+			print("<dt>");
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</dt>\n");
+			scratch->padded = 2;
 			break;
 		case BLOCK_TOC:
 			temp_short = 0;
@@ -1020,6 +1047,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		default:
 			fprintf(stderr, "Unknown token type: %d\n", t->type);
+			token_describe(t, source);
 			break;
 	}
 }

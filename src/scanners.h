@@ -63,6 +63,7 @@
 
 size_t scan_attr(const char * c);
 size_t scan_attributes(const char * c);
+size_t scan_definition(const char * c);
 size_t scan_email(const char * c);
 size_t scan_fence_start(const char * c);
 size_t scan_fence_end(const char * c);
