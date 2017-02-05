@@ -62,6 +62,8 @@
 
 %extra_argument { mmd_engine * engine }
 
+%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
+
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE.
 
 %fallback LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_TABLE LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START.
@@ -163,8 +165,16 @@ cont_block(A)		::= empty(B) indented_line(C) para_lines(D).{ A = B; token_chain_
 cont_block(A)		::= empty(B) indented_line(C).				{ A = B; token_chain_append(B, C); C->type = LINE_CONTINUATION; }
 cont_block			::= empty.
 
-table(A)			::= table(B) LINE_TABLE(C).					{ A = B; token_chain_append(B, C); }
-table				::= LINE_TABLE.
+table(A)			::= table_header(B) table_body(C) LINE_EMPTY(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
+table(A)			::= table_header(B) table_body(C).			{ A = B; token_chain_append(B, C); }
+
+table_header(A)		::= table_section(B) LINE_TABLE_SEPARATOR(C).	{ A = token_new_parent(B, BLOCK_TABLE_HEADER); token_chain_append(B, C); }
+
+table_body(A)		::= table_body(B) LINE_EMPTY(C) table_section(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, token_new_parent(D, BLOCK_TABLE_SECTION)); }
+table_body(A)		::= table_section(B).						{ A = token_new_parent(B, BLOCK_TABLE_SECTION); }
+
+table_section(A)	::= table_section(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
+table_section		::= LINE_TABLE.
 
 def_citation(A)		::= LINE_DEF_CITATION(B) para_lines(C) cont_blocks(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
 def_citation(A)		::= LINE_DEF_CITATION(B) para_lines(C).		{ A = B; token_chain_append(B, C); }
@@ -225,6 +235,13 @@ def(A)				::= LINE_DEFINITION(B).						{ A = token_new_parent(B, BLOCK_DEFINITIO
 
 def_lines(A)		::= def_lines(B) LINE_CONTINUATION(C).		{ A = B; token_chain_append(B, C); }
 def_lines			::= LINE_CONTINUATION.
+
+
+// Fallbacks for improper structures
+para(A)				::= table_section(B) LINE_EMPTY(C).			{ A = B; token_chain_append(B, C); }
+para(A)				::= table_section(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
+para(A)				::= table_section(B).						{ A = B; }
+
 
 
 //

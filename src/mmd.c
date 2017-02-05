@@ -544,6 +544,14 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = LINE_PLAIN;
 			}
 			break;
+		case PIPE:
+			// If PIPE is first, save checking later and assign LINE_TABLE now
+			if (!(e->extensions & EXT_COMPATIBILITY)) {
+				scan_len = scan_table_separator(&source[line->start]);
+				line->type = (scan_len) ? LINE_TABLE_SEPARATOR : LINE_TABLE;
+
+				break;
+			}
 		case TEXT_PLAIN:
 			if (e->allow_meta && !(e->extensions & EXT_COMPATIBILITY)) {
 				scan_len = scan_url(&source[line->start]);
@@ -558,12 +566,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			break;
 	}
 
-	if (line->type == LINE_PLAIN) {
+	if ((line->type == LINE_PLAIN) &&
+		!(e->extensions & EXT_COMPATIBILITY)) {
+		// Check if this is a potential table line
 		token * walker = line->child;
 
 		while (walker != NULL) {
 			if (walker->type == PIPE) {
-				line->type = LINE_TABLE;
+				scan_len = scan_table_separator(&source[line->start]);
+				line->type = (scan_len) ? LINE_TABLE_SEPARATOR : LINE_TABLE;
 
 				return;
 			}
@@ -769,7 +780,9 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
-//	ParseTrace(stderr, "parser >>");
+#ifndef NDEBUG
+	ParseTrace(stderr, "parser >>");
+#endif
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -784,7 +797,9 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 		if (remainder)
 			remainder->prev = NULL;
 
-//		fprintf(stderr, "\nNew line\n");
+#ifndef NDEBUG
+		fprintf(stderr, "\nNew line\n");
+#endif
 
 		Parse(pParser, walker->type, walker, e);
 
@@ -792,6 +807,9 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	}
 
 	// Signal finish to parser
+#ifndef NDEBUG
+	fprintf(stderr, "\nFinish parse\n");
+#endif
 	Parse(pParser, 0, NULL, e);
 
 	// Disconnect of (now empty) root
@@ -1307,7 +1325,9 @@ void is_list_loose(token * list) {
 
 /// Is this actually an HTML block?
 void is_para_html(mmd_engine * e, token * block) {
-	if (block->child->type != LINE_PLAIN)
+	if ((block == NULL) ||
+		(block->child == NULL) ||
+		(block->child->type != LINE_PLAIN))
 		return;
 	token * t = block->child->child;
 
@@ -1431,6 +1451,78 @@ void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
 }
 
 
+void strip_line_tokens_from_table(mmd_engine * e, token * table) {
+	token * walker = table->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case BLOCK_TABLE_SECTION:
+				strip_line_tokens_from_block(e, walker);
+				break;
+			case BLOCK_TABLE_HEADER:
+				strip_line_tokens_from_block(e, walker);
+				break;
+			case LINE_EMPTY:
+				walker->type = TEXT_EMPTY;
+				break;
+		}
+
+		walker = walker->next;
+	}
+}
+
+
+void parse_table_row_into_cells(token * row) {
+	token * first = NULL;
+	token * last = NULL;
+
+	token * walker = row->child;
+
+	if (walker->type == PIPE) {
+		walker->type = TABLE_DIVIDER;
+		first = walker->next;
+	} else {
+		first = walker;
+		last = first;
+	}
+
+
+	walker = walker->next;
+
+	while (walker) {
+		switch (walker->type) {
+			case PIPE:
+				if (row->child == first) {
+					row->child = token_prune_graft(first, last, TABLE_CELL);
+				} else {
+					token_prune_graft(first, last, TABLE_CELL);
+				}
+				first = NULL;
+				last = NULL;
+				walker->type = TABLE_DIVIDER;
+				break;
+			case TEXT_NL:
+			case TEXT_LINEBREAK:
+				break;
+			default:
+				if (!first)
+					first = walker;
+				last = walker;
+		}
+
+		walker = walker->next;
+	}
+
+	if (first) {
+		if (row->child == first) {
+			row->child = token_prune_graft(first, last, TABLE_CELL);
+		} else {
+			token_prune_graft(first, last, TABLE_CELL);
+		}
+	}
+}
+
+
 void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	if ((block == NULL) || (block->child == NULL))
 		return;
@@ -1455,6 +1547,9 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 		case BLOCK_DEFLIST:
 			// Handle definition lists
 			return strip_line_tokens_from_deflist(e, block);
+		case BLOCK_TABLE:
+			// Handle tables
+			return strip_line_tokens_from_table(e, block);
 	}
 
 	token * children = NULL;
@@ -1486,6 +1581,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_LIST_ENUMERATED:
 			case LINE_META:
 			case LINE_PLAIN:
+				handle_line:
 				// Remove leading non-indent space from line
 				if (l->child && l->child->type == NON_INDENT_SPACE)
 				token_remove_first_child(l);
@@ -1515,10 +1611,17 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				// Advance to next line
 				l = l->next;
 				break;
+			case LINE_TABLE_SEPARATOR:
 			case LINE_TABLE:
-				l->type = ROW_TABLE;
-				break;
+				if ((block->type == BLOCK_TABLE_SECTION) ||
+					(block->type == BLOCK_TABLE_HEADER)) {
+					l->type = (l->type == LINE_TABLE) ? TABLE_ROW : LINE_TABLE_SEPARATOR;
+					parse_table_row_into_cells(l);
+				} else {
+					goto handle_line;
+				}
 			default:
+				handle_block:
 				//fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
 				// This is a block, need to remove it from chain and
 				// Add to parent

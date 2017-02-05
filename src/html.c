@@ -476,6 +476,58 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				print("</p>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_TABLE:
+			pad(out, 2, scratch);
+			print("<table>\n");
+			scratch->padded = 2;
+			read_table_column_alignments(source, t, scratch);
+
+			print("<colgroup>\n");
+			for (int i = 0; i < scratch->table_column_count; ++i)
+			{
+				switch (scratch->table_alignment[i]) {
+					case 'l':
+					case 'L':
+						print("<col style=\"text-align:left;\"/>\n");
+						break;
+					case 'r':
+					case 'R':
+						print("<col style=\"text-align:right;\"/>\n");
+						break;
+					case 'c':
+					case 'C':
+						print("<col style=\"text-align:center;\"/>\n");
+						break;
+					default:
+						print("<col />\n");
+						break;
+				}
+			}
+			print("</colgroup>\n");
+			scratch->padded = 1;
+
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			pad(out, 1, scratch);
+			print("</table>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_TABLE_HEADER:
+			pad(out, 2, scratch);
+			print("<thead>\n");
+			scratch->in_table_header = 1;
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			scratch->in_table_header = 0;
+			print("</thead>\n");
+			scratch->padded = 1;
+			break;
+		case BLOCK_TABLE_SECTION:
+			pad(out, 2, scratch);
+			print("<tbody>\n");
+			scratch->padded = 2;
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</tbody>");
+			scratch->padded = 0;
+			break;
 		case BLOCK_TERM:
 			pad(out, 2, scratch);
 			print("<dt>");
@@ -1022,6 +1074,45 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			} else {
 				print("^");
 			}	
+			break;
+		case TABLE_CELL:
+			if (scratch->in_table_header) {
+				print("\t<th");
+			} else {
+				print("\t<td");
+			}
+			switch (scratch->table_alignment[scratch->table_cell_count]) {
+				case 'l':
+					print(" style=\"text-align:left;\"");
+					break;
+				case 'r':
+					print(" style=\"text-align:right;\"");
+					break;
+				case 'c':
+					print(" style=\"text-align:center;\"");
+					break;
+			}
+			if (t->next->type == TABLE_DIVIDER) {
+				if (t->next->len > 1) {
+					printf(" colspan=\"%d\"", t->next->len);
+				}
+			}
+			print(">");
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			if (scratch->in_table_header) {
+				print("</th>\n");
+			} else {
+				print("</td>\n");
+			}
+			scratch->table_cell_count += t->next->len;
+			break;
+		case TABLE_DIVIDER:
+			break;
+		case TABLE_ROW:
+			print("<tr>\n");
+			scratch->table_cell_count = 0;
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</tr>\n");
 			break;
 		case TEXT_LINEBREAK:
 			if (t->next) {

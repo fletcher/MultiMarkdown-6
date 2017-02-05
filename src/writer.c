@@ -1353,3 +1353,61 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 	}
 }
 
+
+void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch) {
+	token * walker = table->child->child;
+
+	// Find the separator line	
+	while (walker->next) 
+		walker = walker->next;
+
+	walker->type = TEXT_EMPTY;
+
+	// Iterate through cells to create alignment string
+	short counter = 0;
+	short align = 0;
+
+	walker = walker->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case TABLE_CELL:
+				align = scan_alignment_string(&source[walker->start]);
+
+				switch (align) {
+					case ALIGN_LEFT:
+						scratch->table_alignment[counter] = 'l';
+						break;
+					case ALIGN_RIGHT:
+						scratch->table_alignment[counter] = 'r';
+						break;
+					case ALIGN_CENTER:
+						scratch->table_alignment[counter] = 'c';
+						break;
+					case ALIGN_LEFT | ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'L';
+						break;
+					case ALIGN_RIGHT | ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'R';
+						break;
+					case ALIGN_CENTER | ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'C';
+						break;
+					case ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'C';
+						break;
+					default:
+						scratch->table_alignment[counter] = 'n';
+				}
+
+				counter++;
+				break;
+		}
+
+		walker = walker->next;
+	}
+
+	scratch->table_alignment[counter] = '\0';
+	scratch->table_column_count = counter;
+}
+

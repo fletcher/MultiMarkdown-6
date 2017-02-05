@@ -138,6 +138,17 @@
 	meta_line	= meta_key sp ':' meta_value nl;	// meta_line can't match url above
 
 	definition	= non_indent ':' sp [^\n\r\x00];
+
+	table_separator	= (('|' [:\-= \t|+]*) | ([:\-= \t+]+ '|' [:\-= \t|+]*)) nl;
+
+	align		= [\-=]+;
+	align_left	= sp ':' align sp ('|' | nl);
+	align_right	= sp align ':' sp ('|' | nl);
+	align_center	= sp ':' align ':' sp ('|' | nl);
+	align_wrap_left		= sp ':' align '+' sp ('|' | nl);
+	align_wrap_right	= sp align ':' '+' sp ('|' | nl);
+	align_wrap_center	= sp ':' align ':' '+' sp ('|' | nl);
+
 */
 
 
@@ -343,6 +354,34 @@ size_t scan_definition(const char * c) {
 
 /*!re2c
 	definition	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_table_separator(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	table_separator	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_alignment_string(const char * c) {
+	const char * marker = NULL;
+
+/*!re2c
+	align_left		{ return ALIGN_LEFT; }
+	align_right		{ return ALIGN_RIGHT; }
+	align_center	{ return ALIGN_CENTER; }
+
+	align_wrap_left		{ return ALIGN_WRAP | ALIGN_LEFT; }
+	align_wrap_right	{ return ALIGN_WRAP | ALIGN_RIGHT; }
+	align_wrap_center	{ return ALIGN_WRAP | ALIGN_CENTER; }
+
 	.?			{ return 0; }
 */	
 }

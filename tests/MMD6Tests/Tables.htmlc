@@ -1,0 +1,9 @@
+<p>|    |   Grouping   ||
+First Header | Second Header | Third Header |
+------------ | :-----------: | -----------: |
+Content  |   <em>Long Cell</em>  ||
+| Content  | <strong>Cell</strong> |   Cell |</p>
+
+<p>New section |  More  |   Data
+And more  || With an escaped '|'   |<br />
+[Prototype table]</p>
