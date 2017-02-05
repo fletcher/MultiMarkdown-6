@@ -429,6 +429,7 @@ features have been implemented:
 	implemented yet)
 * Superscripts/subscripts
 * Table of Contents
+* Tables
 
 
 Things that are partially completed:
@@ -451,7 +452,6 @@ Things yet to be completed:
 * Manually specified labels for headers
 * Abbreviations
 * Glossaries
-* Tables
 * File Transclusion
 
 
