@@ -1,44 +1,126 @@
 <table>
-<caption id="prototypetable">Prototype table</caption>
 <colgroup>
 <col />
 <col style="text-align:center;"/>
-<col style="text-align:right;"/>
 </colgroup>
 
 <thead>
 <tr>
-	<th>    </th>
-	<th style="text-align:center;" colspan="2">   Grouping   </th>
-</tr>
-<tr>
-	<th>First Header </th>
-	<th style="text-align:center;"> Second Header </th>
-	<th style="text-align:right;"> Third Header </th>
+	<th> foo	</th>
+	<th style="text-align:center;"> bar	</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-	<td>Content  </td>
-	<td style="text-align:center;" colspan="2">   <em>Long Cell</em>  </td>
+	<td> <em>foo</em>	</td>
+	<td style="text-align:center;"> <em>bar</em>	</td>
 </tr>
 <tr>
-	<td> Content  </td>
-	<td style="text-align:center;"> <strong>Cell</strong> </td>
-	<td style="text-align:right;">   Cell </td>
+	<td colspan="2"> <strong>foo bar</strong>		</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;" class="extended"/>
+<col style="text-align:right;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"> foo1 </th>
+	<th style="text-align:right;"> bar1 </th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><em>foo</em> </td>
+	<td style="text-align:right;"> <em>bar</em> </td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"> <strong>foo bar</strong> </td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:right;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"> foo2 </th>
+	<th style="text-align:right;"> bar2 </th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><em>foo</em> </td>
+	<td style="text-align:right;"> <em>bar</em> </td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"> <strong>foo bar</strong> </td>
 </tr>
 </tbody>
 
 <tbody>
 <tr>
-	<td>New section </td>
-	<td style="text-align:center;">  More  </td>
-	<td style="text-align:right;">   Data</td>
+	<td style="text-align:left;"> foo3 </td>
+	<td style="text-align:right;"> bar3 </td>
 </tr>
 <tr>
-	<td colspan="2">And more  </td>
-	<td style="text-align:right;"> With an escaped &#8216;|&#8217;   </td>
+	<td style="text-align:left;"><em>foo</em> </td>
+	<td style="text-align:right;"> <em>bar</em> </td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"> <strong>foo bar</strong> </td>
 </tr>
 </tbody>
 </table>
+
+<p>| foo4 | bar4 |<br />
+<em>foo</em> | <em>bar</em> |<br />
+| <strong>foo bar</strong> ||</p>
+
+<p>5</p>
+
+<table>
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:right;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;"> foo5 </th>
+	<th style="text-align:right;"> bar5 </th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"><em>foo</em> </td>
+	<td style="text-align:right;"> <em>bar</em> </td>
+</tr>
+<tr>
+	<td style="text-align:left;" colspan="2"> <strong>foo bar</strong> | </td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td style="text-align:left;"> foo6 </td>
+	<td style="text-align:right;"> bar6 </td>
+</tr>
+</tbody>
+</table>
+
+<p>| :&#8212;- | &#8212;-: |
+<em>foo</em> | <em>bar</em> |
+| <strong>foo bar</strong> ||</p>

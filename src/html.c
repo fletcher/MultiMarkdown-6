@@ -487,16 +487,22 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			{
 				switch (scratch->table_alignment[i]) {
 					case 'l':
-					case 'L':
 						print("<col style=\"text-align:left;\"/>\n");
 						break;
+					case 'L':
+						print("<col style=\"text-align:left;\" class=\"extended\"/>\n");
+						break;
 					case 'r':
-					case 'R':
 						print("<col style=\"text-align:right;\"/>\n");
 						break;
+					case 'R':
+						print("<col style=\"text-align:right;\" class=\"extended\"/>\n");
+						break;
 					case 'c':
-					case 'C':
 						print("<col style=\"text-align:center;\"/>\n");
+						break;
+					case 'C':
+						print("<col style=\"text-align:center;\" class=\"extended\"/>\n");
 						break;
 					default:
 						print("<col />\n");
@@ -1083,12 +1089,15 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 			switch (scratch->table_alignment[scratch->table_cell_count]) {
 				case 'l':
+				case 'L':
 					print(" style=\"text-align:left;\"");
 					break;
 				case 'r':
+				case 'R':
 					print(" style=\"text-align:right;\"");
 					break;
 				case 'c':
+				case 'C':
 					print(" style=\"text-align:center;\"");
 					break;
 			}

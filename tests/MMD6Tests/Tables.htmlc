@@ -1,9 +1,34 @@
-<p>|    |   Grouping   ||
-First Header | Second Header | Third Header |
------------- | :-----------: | -----------: |
-Content  |   <em>Long Cell</em>  ||
-| Content  | <strong>Cell</strong> |   Cell |</p>
+<p>| foo	| bar	|<br />
+| ------	| :------:	|<br />
+| <em>foo</em>	| <em>bar</em>	|<br />
+| <strong>foo bar</strong>		||</p>
 
-<p>New section |  More  |   Data
-And more  || With an escaped '|'   |<br />
-[Prototype table]</p>
+<p>| foo1 | bar1 |
+| :---+ | ----: |
+<em>foo</em> | <em>bar</em> |
+| <strong>foo bar</strong> ||</p>
+
+<p>| foo2 | bar2 |
+| :---- | ----: |
+<em>foo</em> | <em>bar</em> |
+| <strong>foo bar</strong> ||</p>
+
+<p>| foo3 | bar3 |<br />
+<em>foo</em> | <em>bar</em> |<br />
+| <strong>foo bar</strong> ||</p>
+
+<p>| foo4 | bar4 |<br />
+<em>foo</em> | <em>bar</em> |<br />
+| <strong>foo bar</strong> ||</p>
+
+<p>5</p>
+
+<p>| foo5 | bar5 |<br />
+| :---- | ------: |<br />
+<em>foo</em> | <em>bar</em> |<br />
+| <strong>foo bar</strong> | ||</p>
+
+<p>| foo6 | bar6 |
+| :---- | ----: |
+<em>foo</em> | <em>bar</em> |
+| <strong>foo bar</strong> ||</p>

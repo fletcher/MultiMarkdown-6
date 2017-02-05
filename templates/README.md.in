@@ -29,6 +29,8 @@
 	* "pathologic" test suite -- fix handling of nested brackets, e.g.
 	`[[[[foo]]]]` to avoid bogging down checking for reference links that
 	don't exist.  
+	* Table support
+	* Definition list support
 
 ## An Announcement! ##
 
