@@ -23,3 +23,8 @@ lemon/build
 
 build-xcode
 build-xcode-debug
+
+test/parser_test.c
+test/parser_test.h
+test/parser_test.out
+test/a.out
