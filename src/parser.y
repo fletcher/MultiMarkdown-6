@@ -172,8 +172,10 @@ table_section(A)	::= table_rows(B).							{ A = token_new_parent(B, BLOCK_TABLE_
 
 
 table(A)			::= table_header(B) table_body(C).			{ A = B; token_chain_append(B, C); }
+table				::= table_header.
 
 table_body(A)		::= table_body(B) table_section(C).			{ A = B; token_chain_append(B, C); }
+//table_body(A)		::= table_body(B) error.					{ A = B; }
 table_body			::= table_section.
 
 table_rows(A)		::= table_rows(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
@@ -211,6 +213,7 @@ fenced_block(A)		::= LINE_FENCE_BACKTICK_START(B) fenced_lines(C).							{ A = B
 
 fenced_lines(A)		::= fenced_lines(B) fenced_line(C).			{ A = B; token_chain_append(B, C); }
 fenced_lines		::= fenced_line.
+fenced_lines		::= .
 
 fenced_line			::= LINE_CONTINUATION.
 fenced_line			::= LINE_EMPTY.
@@ -225,11 +228,10 @@ meta_lines			::= meta_line.
 meta_line 			::= LINE_META.
 meta_line 			::= LINE_CONTINUATION.
 
-definition_block(A)	::= definition_block(B) empty(C) definition(D).		{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
-definition_block(A)	::= definition_block(B) empty(C).				{ A = B; token_chain_append(B, C); }
-definition_block	::= definition.
-
-definition(A)		::= para(B) defs(C).						{ A = token_new_parent(B, BLOCK_DEFINITION_GROUP); token_chain_append(B, C); B->type = BLOCK_TERM; }
+// Lemon's LALR(1) parser can't properly allow for detecting consecutive definition blocks and concatenating them,
+// because 'para defs para' could be the beginning of the next definition, OR the next regular para.
+// We have to bundle them when exporting, if desired.
+definition_block(A)	::= para(B) defs(C).						{ A = B; token_chain_append(B, C); B->type = BLOCK_TERM; }
 
 defs(A)				::= defs(B) def(C).							{ A = B; token_chain_append(B, C); }
 defs				::= def.

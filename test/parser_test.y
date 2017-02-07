@@ -122,8 +122,8 @@ cont_block ::= empty indented_line para_lines.
 cont_block ::= empty indented_line.
 table_header ::= table_rows LINE_TABLE_SEPARATOR.
 table_section ::= table_rows LINE_EMPTY.
-table_section ::= table_rows.
 table ::= table_header table_body.
+table ::= table_header.
 table_body ::= table_body table_section.
 table_rows ::= table_rows LINE_TABLE.
 def_citation ::= LINE_DEF_CITATION para_lines cont_blocks.
@@ -140,10 +140,15 @@ fenced_block ::= LINE_FENCE_BACKTICK fenced_lines.
 fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines LINE_FENCE_BACKTICK.
 fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines.
 fenced_lines ::= fenced_lines fenced_line.
+fenced_lines ::= .
 meta_block ::= LINE_META meta_lines.
 meta_lines ::= meta_lines meta_line.
-definition_block ::= definition_block empty definition.
-definition_block ::= definition_block empty.
+definition_block ::= para defs.
+defs ::= defs def.
+def ::= LINE_DEFINITION def_lines.
+def ::= LINE_DEFINITION.
+def_lines ::= def_lines LINE_CONTINUATION.
+para ::= table_rows.
 para ::= LINE_PLAIN.
 para_lines ::= para_line.
 para_line ::= LINE_CONTINUATION.
@@ -173,22 +178,12 @@ html_block_line ::= LINE_HTML.
 fenced_lines ::= fenced_line.
 fenced_line ::= LINE_CONTINUATION.
 fenced_line ::= LINE_EMPTY.
-fenced_line ::= .
 meta_block ::= LINE_META.
 meta_lines ::= meta_line.
 meta_line ::= LINE_META.
 meta_line ::= LINE_CONTINUATION.
-definition_block ::= definition.
-definition ::= para defs.
-defs ::= defs def.
 defs ::= def.
-def ::= LINE_DEFINITION def_lines.
-def ::= LINE_DEFINITION.
-def_lines ::= def_lines LINE_CONTINUATION.
 def_lines ::= LINE_CONTINUATION.
-para ::= table_rows.
-para ::= defs.
-para ::= table_header.
 
 
 
@@ -279,6 +274,8 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
+
+//	return(0);
 
 	fprintf(stderr, "\nQuad line tests\n");
 

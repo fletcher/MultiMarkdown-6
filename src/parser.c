@@ -92,7 +92,7 @@
 #endif
 /************* Begin control #defines *****************************************/
 #define YYCODETYPE unsigned char
-#define YYNOCODE 70
+#define YYNOCODE 69
 #define YYACTIONTYPE unsigned short int
 #define ParseTOKENTYPE  token * 
 typedef union {
@@ -107,16 +107,16 @@ typedef union {
 #define ParseARG_FETCH  mmd_engine * engine  = yypParser->engine 
 #define ParseARG_STORE yypParser->engine  = engine 
 #define YYFALLBACK 1
-#define YYNSTATE             51
-#define YYNRULE              110
-#define YY_MAX_SHIFT         50
-#define YY_MIN_SHIFTREDUCE   116
-#define YY_MAX_SHIFTREDUCE   225
-#define YY_MIN_REDUCE        226
-#define YY_MAX_REDUCE        335
-#define YY_ERROR_ACTION      336
-#define YY_ACCEPT_ACTION     337
-#define YY_NO_ACTION         338
+#define YYNSTATE             47
+#define YYNRULE              109
+#define YY_MAX_SHIFT         46
+#define YY_MIN_SHIFTREDUCE   111
+#define YY_MAX_SHIFTREDUCE   219
+#define YY_MIN_REDUCE        220
+#define YY_MAX_REDUCE        328
+#define YY_ERROR_ACTION      329
+#define YY_ACCEPT_ACTION     330
+#define YY_NO_ACTION         331
 /************* End control #defines *******************************************/
 
 /* Define the yytestcase() macro to be a no-op if is not already defined
@@ -188,29 +188,28 @@ typedef union {
 **  yy_default[]       Default action for each state.
 **
 *********** Begin parsing tables **********************************************/
-#define YY_ACTTAB_COUNT (207)
+#define YY_ACTTAB_COUNT (197)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */   226,   25,  143,  143,  196,  197,  208,   16,  121,  122,
- /*    10 */   123,  124,  125,  126,  132,   17,    5,    4,    3,    2,
- /*    20 */    18,   15,   14,  139,  198,   13,   25,   35,   35,  196,
- /*    30 */   197,  208,   16,  121,  122,  123,  124,  125,  126,  132,
- /*    40 */    17,    5,    4,    3,    2,   18,   15,   14,  139,  198,
- /*    50 */    13,  337,    1,  118,   31,   12,   49,   43,   41,  130,
- /*    60 */   131,  133,  134,  135,  136,  137,  138,   40,   46,   23,
- /*    70 */    23,   12,   32,   32,   43,  202,   41,  208,   11,   47,
- /*    80 */    33,   33,  222,   44,   24,   36,   36,  201,   40,  117,
- /*    90 */    31,   12,   49,   43,   41,  130,  131,  133,  134,  135,
- /*   100 */   136,  137,  138,   40,  221,   37,   37,   12,   34,   48,
- /*   110 */    43,  192,   41,   34,   11,   47,  198,  192,  182,  181,
- /*   120 */     6,    6,  217,   34,   40,    7,    7,   19,   34,   19,
- /*   130 */    38,   38,   21,   34,   21,    8,    8,   34,  198,  179,
- /*   140 */     9,    9,   26,  218,   26,  217,  142,   28,   34,   28,
- /*   150 */   142,   30,   20,  174,   20,   34,   22,   25,   22,  196,
- /*   160 */   197,  142,  208,  177,  217,   34,  218,   27,  142,   27,
- /*   170 */   146,  196,  197,  214,   29,  142,   29,  215,  165,  195,
- /*   180 */   144,   10,  175,   46,  164,  218,  157,   45,   45,   39,
- /*   190 */    39,  144,   42,   42,  160,    4,  161,    5,  165,  152,
- /*   200 */   147,  225,   50,  185,  144,  165,  188,
+ /*     0 */   220,   23,  138,  138,  189,  190,  202,   15,  116,  117,
+ /*    10 */   118,  119,  120,  121,  127,   16,    5,    4,    3,    2,
+ /*    20 */    17,   14,   13,  134,  191,   12,   23,   33,   33,  189,
+ /*    30 */   190,  202,   15,  116,  117,  118,  119,  120,  121,  127,
+ /*    40 */    16,    5,    4,    3,    2,   17,   14,   13,  134,  191,
+ /*    50 */    12,  330,    1,  113,   29,   11,   45,   40,   38,  125,
+ /*    60 */   126,  128,  129,  130,  131,  132,  133,  135,   43,   22,
+ /*    70 */    22,   11,   30,   30,   40,  217,   38,  202,   10,   44,
+ /*    80 */   112,   29,   11,   45,   40,   38,  125,  126,  128,  129,
+ /*    90 */   130,  131,  132,  133,  135,   32,   32,  216,   11,   32,
+ /*   100 */   208,   40,  191,   38,  209,   10,   44,    6,    6,  137,
+ /*   110 */    32,    7,    7,   32,   18,   19,   18,   19,   20,  185,
+ /*   120 */    20,  212,    8,    8,   32,    9,    9,   32,   32,   24,
+ /*   130 */   174,   24,   26,   41,   26,  212,  185,  137,  212,  172,
+ /*   140 */   137,  137,  213,   21,  160,   21,   25,   27,   25,   27,
+ /*   150 */   189,  190,   32,  170,  189,  190,  213,  191,   28,  213,
+ /*   160 */    31,   31,  156,   34,   34,  195,   35,   35,   36,   36,
+ /*   170 */   188,   43,  159,  152,  139,   37,   37,  194,   42,   42,
+ /*   180 */   155,   39,   39,    4,  160,  176,  169,  141,  137,    5,
+ /*   190 */   219,  142,  147,  139,   46,  178,  181,
 };
 static const YYCODETYPE yy_lookahead[] = {
  /*     0 */     0,    1,   47,   48,    4,    5,    6,    7,    8,    9,
@@ -221,50 +220,47 @@ static const YYCODETYPE yy_lookahead[] = {
  /*    50 */    25,   28,   29,   30,   31,   32,   33,   34,   35,   36,
  /*    60 */    37,   38,   39,   40,   41,   42,   43,   44,   56,   57,
  /*    70 */    58,   48,   61,   62,   51,    3,   53,    6,   55,   56,
- /*    80 */    61,   62,    3,   26,   31,   59,   60,   15,   65,   30,
- /*    90 */    31,   32,   33,   34,   35,   36,   37,   38,   39,   40,
- /*   100 */    41,   42,   43,   44,   25,   49,   50,   48,   33,   56,
- /*   110 */    51,    3,   53,   33,   55,   56,   24,    3,   65,   64,
- /*   120 */    45,   46,    3,   33,   65,   45,   46,   52,   33,   54,
- /*   130 */    45,   46,   52,   33,   54,   45,   46,   33,   24,   62,
- /*   140 */    45,   46,   52,   24,   54,    3,   46,   52,   33,   54,
- /*   150 */    46,   48,   52,   60,   54,   33,   52,    1,   54,    4,
- /*   160 */     5,   46,    6,   21,    3,   33,   24,   52,   46,   54,
- /*   170 */    50,    4,    5,    3,   52,   46,   54,    7,    6,   24,
- /*   180 */    24,   33,   21,   56,   57,   24,   54,   66,   67,   45,
- /*   190 */    46,   24,   45,   46,    2,   17,   24,   16,    6,   53,
- /*   200 */    51,    3,   68,   67,   24,    6,    3,
+ /*    80 */    30,   31,   32,   33,   34,   35,   36,   37,   38,   39,
+ /*    90 */    40,   41,   42,   43,   44,   33,   33,   25,   48,   33,
+ /*   100 */     3,   51,   24,   53,    7,   55,   56,   45,   46,   46,
+ /*   110 */    33,   45,   46,   33,   52,   52,   54,   54,   52,    3,
+ /*   120 */    54,    3,   45,   46,   33,   45,   46,   33,   33,   52,
+ /*   130 */    62,   54,   52,   26,   54,    3,    3,   46,    3,   21,
+ /*   140 */    46,   46,   24,   52,    6,   54,   52,   52,   54,   54,
+ /*   150 */     4,    5,   33,   21,    4,    5,   24,   24,   48,   24,
+ /*   160 */    61,   62,   24,   59,   60,    3,   49,   50,   45,   46,
+ /*   170 */    24,   56,   57,   54,   24,   45,   46,   15,   65,   66,
+ /*   180 */     2,   45,   46,   17,    6,   64,   60,   50,   46,   16,
+ /*   190 */     3,   51,   53,   24,   67,   66,    3,
 };
-#define YY_SHIFT_USE_DFLT (207)
-#define YY_SHIFT_COUNT    (50)
+#define YY_SHIFT_USE_DFLT (197)
+#define YY_SHIFT_COUNT    (46)
 #define YY_SHIFT_MIN      (0)
-#define YY_SHIFT_MAX      (203)
+#define YY_SHIFT_MAX      (193)
 static const unsigned char yy_shift_ofst[] = {
- /*     0 */    25,    0,  114,  114,  114,  114,  114,  114,  114,  114,
- /*    10 */   156,   71,  155,   79,  119,  119,  170,   72,  108,   92,
- /*    20 */    92,   92,   92,   71,   57,  108,   92,   92,   92,   92,
- /*    30 */   108,   57,  142,  161,  167,   79,  170,   72,  108,  108,
- /*    40 */    92,  178,  108,  181,  198,   57,  172,  192,  199,  180,
- /*    50 */   203,
+ /*     0 */    25,    0,  133,  133,  133,  133,  133,  133,  133,  133,
+ /*    10 */    71,  146,   72,  135,  135,   97,  162,  116,   78,   78,
+ /*    20 */    78,   78,   71,  116,   78,   78,   78,   78,  116,  107,
+ /*    30 */   118,  132,  150,   72,   97,  162,  116,  116,  166,  116,
+ /*    40 */   173,  187,  107,  138,  178,  169,  193,
 };
 #define YY_REDUCE_USE_DFLT (-46)
-#define YY_REDUCE_COUNT (45)
+#define YY_REDUCE_COUNT (42)
 #define YY_REDUCE_MIN   (-45)
-#define YY_REDUCE_MAX   (149)
+#define YY_REDUCE_MAX   (142)
 static const short yy_reduce_ofst[] = {
- /*     0 */    23,   59,   75,   80,   90,   95,  100,  104,  115,  122,
- /*    10 */    53,   12,  -45,  -36,   11,   19,   26,   56,   85,  132,
- /*    20 */   132,  132,  132,  127,  121,  144,  132,  132,  132,  132,
- /*    30 */   147,  121,   77,   77,  103,   55,   93,  120,  129,  129,
- /*    40 */   148,  146,  129,  149,  134,  136,
+ /*     0 */    23,   50,   62,   66,   77,   80,   63,   91,   94,   95,
+ /*    10 */    12,  -45,  -36,   11,   99,  104,  117,  123,  119,  119,
+ /*    20 */   119,  119,  115,  130,  119,  119,  119,  119,  136,  113,
+ /*    30 */    68,   68,  110,  121,  126,  137,  142,  142,  139,  142,
+ /*    40 */   140,  127,  129,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */   336,  336,  320,  319,  266,  261,  280,  277,  264,  259,
- /*    10 */   293,  336,  230,  329,  336,  336,  322,  309,  321,  281,
- /*    20 */   279,  278,  276,  273,  336,  300,  265,  263,  260,  258,
- /*    30 */   269,  229,  288,  286,  316,  290,  283,  255,  282,  251,
- /*    40 */   250,  239,  268,  238,  297,  294,  272,  299,  299,  237,
- /*    50 */   296,
+ /*     0 */   329,  329,  313,  312,  260,  255,  274,  271,  258,  253,
+ /*    10 */   309,  224,  323,  320,  320,  315,  301,  314,  275,  273,
+ /*    20 */   272,  270,  267,  292,  259,  257,  254,  252,  263,  223,
+ /*    30 */   282,  280,  308,  284,  277,  249,  276,  245,  233,  262,
+ /*    40 */   232,  289,  286,  266,  291,  231,  288,
 };
 /********** End of lemon-generated parsing tables *****************************/
 
@@ -408,8 +404,7 @@ static const char *const yyTokenName[] = {
   "cont_blocks",   "item_enumerated",  "cont_block",    "table_header",
   "table_rows",    "table_section",  "table_body",    "html_block_lines",
   "html_block_line",  "fenced_lines",  "fenced_line",   "meta_lines",  
-  "meta_line",     "definition",    "defs",          "def",         
-  "def_lines",   
+  "meta_line",     "defs",          "def",           "def_lines",   
 };
 #endif /* NDEBUG */
 
@@ -483,50 +478,49 @@ static const char *const yyRuleName[] = {
  /*  63 */ "fenced_lines ::= fenced_lines fenced_line",
  /*  64 */ "meta_block ::= LINE_META meta_lines",
  /*  65 */ "meta_lines ::= meta_lines meta_line",
- /*  66 */ "definition_block ::= definition_block empty definition",
- /*  67 */ "definition_block ::= definition_block empty",
- /*  68 */ "definition ::= para defs",
- /*  69 */ "defs ::= defs def",
- /*  70 */ "def ::= LINE_DEFINITION def_lines",
- /*  71 */ "def ::= LINE_DEFINITION",
- /*  72 */ "def_lines ::= def_lines LINE_CONTINUATION",
- /*  73 */ "para ::= table_rows",
- /*  74 */ "para ::= LINE_PLAIN",
- /*  75 */ "para_lines ::= para_line",
- /*  76 */ "para_line ::= LINE_CONTINUATION",
- /*  77 */ "indented_code ::= indented_line",
- /*  78 */ "code_line ::= indented_line",
- /*  79 */ "code_line ::= LINE_EMPTY",
- /*  80 */ "indented_line ::= LINE_INDENTED_TAB",
- /*  81 */ "indented_line ::= LINE_INDENTED_SPACE",
- /*  82 */ "empty ::= LINE_EMPTY",
- /*  83 */ "blockquote ::= LINE_BLOCKQUOTE",
- /*  84 */ "quote_lines ::= quote_line",
- /*  85 */ "quote_line ::= LINE_BLOCKQUOTE",
- /*  86 */ "quote_line ::= LINE_CONTINUATION",
- /*  87 */ "list_bulleted ::= item_bulleted",
- /*  88 */ "list_enumerated ::= item_enumerated",
- /*  89 */ "cont_blocks ::= cont_block",
- /*  90 */ "cont_block ::= empty",
- /*  91 */ "table_body ::= table_section",
- /*  92 */ "table_rows ::= LINE_TABLE",
- /*  93 */ "def_citation ::= LINE_DEF_CITATION",
- /*  94 */ "def_footnote ::= LINE_DEF_FOOTNOTE",
- /*  95 */ "def_link ::= LINE_DEF_LINK",
- /*  96 */ "html_block ::= LINE_HTML",
- /*  97 */ "html_block_lines ::= html_block_line",
- /*  98 */ "html_block_line ::= LINE_CONTINUATION",
- /*  99 */ "html_block_line ::= LINE_HTML",
- /* 100 */ "fenced_lines ::= fenced_line",
+ /*  66 */ "definition_block ::= para defs",
+ /*  67 */ "defs ::= defs def",
+ /*  68 */ "def ::= LINE_DEFINITION def_lines",
+ /*  69 */ "def ::= LINE_DEFINITION",
+ /*  70 */ "def_lines ::= def_lines LINE_CONTINUATION",
+ /*  71 */ "para ::= table_rows",
+ /*  72 */ "para ::= LINE_PLAIN",
+ /*  73 */ "para_lines ::= para_line",
+ /*  74 */ "para_line ::= LINE_CONTINUATION",
+ /*  75 */ "indented_code ::= indented_line",
+ /*  76 */ "code_line ::= indented_line",
+ /*  77 */ "code_line ::= LINE_EMPTY",
+ /*  78 */ "indented_line ::= LINE_INDENTED_TAB",
+ /*  79 */ "indented_line ::= LINE_INDENTED_SPACE",
+ /*  80 */ "empty ::= LINE_EMPTY",
+ /*  81 */ "blockquote ::= LINE_BLOCKQUOTE",
+ /*  82 */ "quote_lines ::= quote_line",
+ /*  83 */ "quote_line ::= LINE_BLOCKQUOTE",
+ /*  84 */ "quote_line ::= LINE_CONTINUATION",
+ /*  85 */ "list_bulleted ::= item_bulleted",
+ /*  86 */ "list_enumerated ::= item_enumerated",
+ /*  87 */ "cont_blocks ::= cont_block",
+ /*  88 */ "cont_block ::= empty",
+ /*  89 */ "table ::= table_header",
+ /*  90 */ "table_body ::= table_section",
+ /*  91 */ "table_rows ::= LINE_TABLE",
+ /*  92 */ "def_citation ::= LINE_DEF_CITATION",
+ /*  93 */ "def_footnote ::= LINE_DEF_FOOTNOTE",
+ /*  94 */ "def_link ::= LINE_DEF_LINK",
+ /*  95 */ "html_block ::= LINE_HTML",
+ /*  96 */ "html_block_lines ::= html_block_line",
+ /*  97 */ "html_block_line ::= LINE_CONTINUATION",
+ /*  98 */ "html_block_line ::= LINE_HTML",
+ /*  99 */ "fenced_lines ::= fenced_line",
+ /* 100 */ "fenced_lines ::=",
  /* 101 */ "fenced_line ::= LINE_CONTINUATION",
  /* 102 */ "fenced_line ::= LINE_EMPTY",
  /* 103 */ "meta_block ::= LINE_META",
  /* 104 */ "meta_lines ::= meta_line",
  /* 105 */ "meta_line ::= LINE_META",
  /* 106 */ "meta_line ::= LINE_CONTINUATION",
- /* 107 */ "definition_block ::= definition",
- /* 108 */ "defs ::= def",
- /* 109 */ "def_lines ::= LINE_CONTINUATION",
+ /* 107 */ "defs ::= def",
+ /* 108 */ "def_lines ::= LINE_CONTINUATION",
 };
 #endif /* NDEBUG */
 
@@ -941,13 +935,11 @@ static const struct {
   { 61, 2 },
   { 43, 2 },
   { 63, 2 },
-  { 44, 3 },
   { 44, 2 },
   { 65, 2 },
   { 66, 2 },
+  { 66, 1 },
   { 67, 2 },
-  { 67, 1 },
-  { 68, 2 },
   { 31, 1 },
   { 31, 1 },
   { 45, 1 },
@@ -966,6 +958,7 @@ static const struct {
   { 35, 1 },
   { 52, 1 },
   { 54, 1 },
+  { 37, 1 },
   { 58, 1 },
   { 56, 1 },
   { 38, 1 },
@@ -976,15 +969,15 @@ static const struct {
   { 60, 1 },
   { 60, 1 },
   { 61, 1 },
+  { 61, 0 },
   { 62, 1 },
   { 62, 1 },
   { 43, 1 },
   { 63, 1 },
   { 64, 1 },
   { 64, 1 },
-  { 44, 1 },
-  { 66, 1 },
-  { 68, 1 },
+  { 65, 1 },
+  { 67, 1 },
 };
 
 static void yy_accept(yyParser*);  /* Forward Declaration */
@@ -1185,9 +1178,8 @@ static void yy_reduce(
       case 63: /* fenced_lines ::= fenced_lines fenced_line */ yytestcase(yyruleno==63);
       case 64: /* meta_block ::= LINE_META meta_lines */ yytestcase(yyruleno==64);
       case 65: /* meta_lines ::= meta_lines meta_line */ yytestcase(yyruleno==65);
-      case 67: /* definition_block ::= definition_block empty */ yytestcase(yyruleno==67);
-      case 69: /* defs ::= defs def */ yytestcase(yyruleno==69);
-      case 72: /* def_lines ::= def_lines LINE_CONTINUATION */ yytestcase(yyruleno==72);
+      case 67: /* defs ::= defs def */ yytestcase(yyruleno==67);
+      case 70: /* def_lines ::= def_lines LINE_CONTINUATION */ yytestcase(yyruleno==70);
 { yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); }
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
@@ -1236,7 +1228,6 @@ static void yy_reduce(
         break;
       case 50: /* def_citation ::= LINE_DEF_CITATION para_lines cont_blocks */
       case 53: /* def_footnote ::= LINE_DEF_FOOTNOTE para_lines cont_blocks */ yytestcase(yyruleno==53);
-      case 66: /* definition_block ::= definition_block empty definition */ yytestcase(yyruleno==66);
 { yylhsminor.yy0 = yymsp[-2].minor.yy0; token_chain_append(yymsp[-2].minor.yy0, yymsp[-1].minor.yy0); token_chain_append(yymsp[-2].minor.yy0, yymsp[0].minor.yy0); }
   yymsp[-2].minor.yy0 = yylhsminor.yy0;
         break;
@@ -1245,59 +1236,60 @@ static void yy_reduce(
 { yylhsminor.yy0 = yymsp[-2].minor.yy0; token_chain_append(yymsp[-2].minor.yy0, yymsp[-1].minor.yy0); token_chain_append(yymsp[-2].minor.yy0, yymsp[0].minor.yy0); yymsp[0].minor.yy0->child->type = CODE_FENCE; }
   yymsp[-2].minor.yy0 = yylhsminor.yy0;
         break;
-      case 68: /* definition ::= para defs */
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_DEFINITION_GROUP); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); yymsp[-1].minor.yy0->type = BLOCK_TERM; }
+      case 66: /* definition_block ::= para defs */
+{ yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); yymsp[-1].minor.yy0->type = BLOCK_TERM; }
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
-      case 70: /* def ::= LINE_DEFINITION def_lines */
+      case 68: /* def ::= LINE_DEFINITION def_lines */
 { yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_DEFINITION); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); }
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
-      case 71: /* def ::= LINE_DEFINITION */
+      case 69: /* def ::= LINE_DEFINITION */
 { yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFINITION); }
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
-      case 73: /* para ::= table_rows */
+      case 71: /* para ::= table_rows */
 { yylhsminor.yy0 = yymsp[0].minor.yy0; }
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       default:
-      /* (74) para ::= LINE_PLAIN */ yytestcase(yyruleno==74);
-      /* (75) para_lines ::= para_line (OPTIMIZED OUT) */ assert(yyruleno!=75);
-      /* (76) para_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==76);
-      /* (77) indented_code ::= indented_line (OPTIMIZED OUT) */ assert(yyruleno!=77);
-      /* (78) code_line ::= indented_line (OPTIMIZED OUT) */ assert(yyruleno!=78);
-      /* (79) code_line ::= LINE_EMPTY */ yytestcase(yyruleno==79);
-      /* (80) indented_line ::= LINE_INDENTED_TAB */ yytestcase(yyruleno==80);
-      /* (81) indented_line ::= LINE_INDENTED_SPACE */ yytestcase(yyruleno==81);
-      /* (82) empty ::= LINE_EMPTY */ yytestcase(yyruleno==82);
-      /* (83) blockquote ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno==83);
-      /* (84) quote_lines ::= quote_line (OPTIMIZED OUT) */ assert(yyruleno!=84);
-      /* (85) quote_line ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno==85);
-      /* (86) quote_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==86);
-      /* (87) list_bulleted ::= item_bulleted (OPTIMIZED OUT) */ assert(yyruleno!=87);
-      /* (88) list_enumerated ::= item_enumerated (OPTIMIZED OUT) */ assert(yyruleno!=88);
-      /* (89) cont_blocks ::= cont_block (OPTIMIZED OUT) */ assert(yyruleno!=89);
-      /* (90) cont_block ::= empty */ yytestcase(yyruleno==90);
-      /* (91) table_body ::= table_section (OPTIMIZED OUT) */ assert(yyruleno!=91);
-      /* (92) table_rows ::= LINE_TABLE */ yytestcase(yyruleno==92);
-      /* (93) def_citation ::= LINE_DEF_CITATION */ yytestcase(yyruleno==93);
-      /* (94) def_footnote ::= LINE_DEF_FOOTNOTE */ yytestcase(yyruleno==94);
-      /* (95) def_link ::= LINE_DEF_LINK */ yytestcase(yyruleno==95);
-      /* (96) html_block ::= LINE_HTML */ yytestcase(yyruleno==96);
-      /* (97) html_block_lines ::= html_block_line (OPTIMIZED OUT) */ assert(yyruleno!=97);
-      /* (98) html_block_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==98);
-      /* (99) html_block_line ::= LINE_HTML */ yytestcase(yyruleno==99);
-      /* (100) fenced_lines ::= fenced_line (OPTIMIZED OUT) */ assert(yyruleno!=100);
+      /* (72) para ::= LINE_PLAIN */ yytestcase(yyruleno==72);
+      /* (73) para_lines ::= para_line (OPTIMIZED OUT) */ assert(yyruleno!=73);
+      /* (74) para_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==74);
+      /* (75) indented_code ::= indented_line (OPTIMIZED OUT) */ assert(yyruleno!=75);
+      /* (76) code_line ::= indented_line (OPTIMIZED OUT) */ assert(yyruleno!=76);
+      /* (77) code_line ::= LINE_EMPTY */ yytestcase(yyruleno==77);
+      /* (78) indented_line ::= LINE_INDENTED_TAB */ yytestcase(yyruleno==78);
+      /* (79) indented_line ::= LINE_INDENTED_SPACE */ yytestcase(yyruleno==79);
+      /* (80) empty ::= LINE_EMPTY */ yytestcase(yyruleno==80);
+      /* (81) blockquote ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno==81);
+      /* (82) quote_lines ::= quote_line (OPTIMIZED OUT) */ assert(yyruleno!=82);
+      /* (83) quote_line ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno==83);
+      /* (84) quote_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==84);
+      /* (85) list_bulleted ::= item_bulleted (OPTIMIZED OUT) */ assert(yyruleno!=85);
+      /* (86) list_enumerated ::= item_enumerated (OPTIMIZED OUT) */ assert(yyruleno!=86);
+      /* (87) cont_blocks ::= cont_block (OPTIMIZED OUT) */ assert(yyruleno!=87);
+      /* (88) cont_block ::= empty */ yytestcase(yyruleno==88);
+      /* (89) table ::= table_header */ yytestcase(yyruleno==89);
+      /* (90) table_body ::= table_section (OPTIMIZED OUT) */ assert(yyruleno!=90);
+      /* (91) table_rows ::= LINE_TABLE */ yytestcase(yyruleno==91);
+      /* (92) def_citation ::= LINE_DEF_CITATION */ yytestcase(yyruleno==92);
+      /* (93) def_footnote ::= LINE_DEF_FOOTNOTE */ yytestcase(yyruleno==93);
+      /* (94) def_link ::= LINE_DEF_LINK */ yytestcase(yyruleno==94);
+      /* (95) html_block ::= LINE_HTML */ yytestcase(yyruleno==95);
+      /* (96) html_block_lines ::= html_block_line (OPTIMIZED OUT) */ assert(yyruleno!=96);
+      /* (97) html_block_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==97);
+      /* (98) html_block_line ::= LINE_HTML */ yytestcase(yyruleno==98);
+      /* (99) fenced_lines ::= fenced_line (OPTIMIZED OUT) */ assert(yyruleno!=99);
+      /* (100) fenced_lines ::= */ yytestcase(yyruleno==100);
       /* (101) fenced_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==101);
       /* (102) fenced_line ::= LINE_EMPTY */ yytestcase(yyruleno==102);
       /* (103) meta_block ::= LINE_META */ yytestcase(yyruleno==103);
       /* (104) meta_lines ::= meta_line (OPTIMIZED OUT) */ assert(yyruleno!=104);
       /* (105) meta_line ::= LINE_META */ yytestcase(yyruleno==105);
       /* (106) meta_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==106);
-      /* (107) definition_block ::= definition (OPTIMIZED OUT) */ assert(yyruleno!=107);
-      /* (108) defs ::= def (OPTIMIZED OUT) */ assert(yyruleno!=108);
-      /* (109) def_lines ::= LINE_CONTINUATION */ yytestcase(yyruleno==109);
+      /* (107) defs ::= def (OPTIMIZED OUT) */ assert(yyruleno!=107);
+      /* (108) def_lines ::= LINE_CONTINUATION */ yytestcase(yyruleno==108);
         break;
 /********** End reduce actions ************************************************/
   };

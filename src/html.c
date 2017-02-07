@@ -328,18 +328,24 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("</dd>");
 			scratch->padded = 0;
 			break;
-		case BLOCK_DEFINITION_GROUP:
-			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
-			break;			
 		case BLOCK_DEFLIST:
 			pad(out, 2, scratch);
-			print("<dl>\n");
+
+			// Group consecutive definition lists into a single list.
+			// lemon's LALR(1) parser can't properly handle this (to my understanding).
+
+			if (!(t->prev && t->prev->prev && (t->prev->prev->type == BLOCK_DEFLIST)))
+				print("<dl>\n");
+	
 			scratch->padded = 2;
 
 			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
 			pad(out, 1, scratch);
-			print("</dl>");
-			scratch->padded = 0;
+
+			if (!(t->next && t->next->next && (t->next->next->type == BLOCK_DEFLIST)))
+				print("</dl>\n");
+
+			scratch->padded = 1;
 			break;
 		case BLOCK_CODE_FENCED:
 		case BLOCK_CODE_INDENTED:

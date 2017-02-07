@@ -842,7 +842,6 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_BLOCKQUOTE:
 		case BLOCK_DEFLIST:
 		case BLOCK_DEFINITION:
-		case BLOCK_DEFINITION_GROUP:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
 		case BLOCK_DEF_LINK:
@@ -912,7 +911,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_BLOCKQUOTE:
 			case BLOCK_DEFLIST:
 			case BLOCK_DEFINITION:
-			case BLOCK_DEFINITION_GROUP:
 			case BLOCK_H1:
 			case BLOCK_H2:
 			case BLOCK_H3:
@@ -1416,24 +1414,6 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 }
 
 
-void strip_line_tokens_from_defgroup(mmd_engine * e, token * group) {
-	token * walker = group->child;
-
-	while (walker) {
-		switch (walker->type) {
-			case LINE_PLAIN:
-				walker->type = BLOCK_TERM;
-			case BLOCK_TERM:
-				break;
-			case BLOCK_DEFINITION:
-				strip_line_tokens_from_block(e, walker);
-				break;
-		}
-		walker = walker->next;
-	}
-}
-
-
 void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
 	token * walker = deflist->child;
 
@@ -1442,8 +1422,12 @@ void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
 			case LINE_EMPTY:
 				walker->type = TEXT_EMPTY;
 				break;
-			case BLOCK_DEFINITION_GROUP:
-				strip_line_tokens_from_defgroup(e, walker);
+			case LINE_PLAIN:
+				walker->type = BLOCK_TERM;
+			case BLOCK_TERM:
+				break;
+			case BLOCK_DEFINITION:
+				strip_line_tokens_from_block(e, walker);
 				break;
 		}
 		walker = walker->next;
