@@ -62,7 +62,7 @@
 
 %extra_argument { mmd_engine * engine }
 
-%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
+%fallback LINE_PLAIN LINE_TABLE_SEPARATOR .
 
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE  LINE_TABLE.
 
@@ -246,8 +246,8 @@ def_lines			::= LINE_CONTINUATION.
 // Fallbacks for improper structures
 // para(A)				::= table_section(B) LINE_EMPTY(C).			{ A = B; token_chain_append(B, C); }
 // para(A)				::= table_section(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
-para(A)					::= table_rows(B).						{ A = B; }
-
+para(A)				::= table_rows(B).							{ A = B; }
+para				::= defs.
 
 
 //

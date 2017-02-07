@@ -67,7 +67,8 @@
 
 // Manually copy fallbacks from `parser.y` here
 
-%fallback LINE_PLAIN LINE_TABLE_SEPARATOR LINE_DEFINITION.
+//%fallback LINE_PLAIN LINE_TABLE_SEPARATOR LINE_DEFINITION.
+%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
 
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE  LINE_TABLE.
 
@@ -122,8 +123,8 @@ cont_block ::= empty indented_line para_lines.
 cont_block ::= empty indented_line.
 table_header ::= table_rows LINE_TABLE_SEPARATOR.
 table_section ::= table_rows LINE_EMPTY.
+table_section ::= table_rows.
 table ::= table_header table_body.
-table ::= table_header.
 table_body ::= table_body table_section.
 table_rows ::= table_rows LINE_TABLE.
 def_citation ::= LINE_DEF_CITATION para_lines cont_blocks.
@@ -140,7 +141,6 @@ fenced_block ::= LINE_FENCE_BACKTICK fenced_lines.
 fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines LINE_FENCE_BACKTICK.
 fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines.
 fenced_lines ::= fenced_lines fenced_line.
-fenced_lines ::= .
 meta_block ::= LINE_META meta_lines.
 meta_lines ::= meta_lines meta_line.
 definition_block ::= para defs.
@@ -166,6 +166,7 @@ list_bulleted ::= item_bulleted.
 list_enumerated ::= item_enumerated.
 cont_blocks ::= cont_block.
 cont_block ::= empty.
+table ::= table_header.
 table_body ::= table_section.
 table_rows ::= LINE_TABLE.
 def_citation ::= LINE_DEF_CITATION.
@@ -176,6 +177,7 @@ html_block_lines ::= html_block_line.
 html_block_line ::= LINE_CONTINUATION.
 html_block_line ::= LINE_HTML.
 fenced_lines ::= fenced_line.
+fenced_lines ::=.
 fenced_line ::= LINE_CONTINUATION.
 fenced_line ::= LINE_EMPTY.
 meta_block ::= LINE_META.
@@ -184,8 +186,7 @@ meta_line ::= LINE_META.
 meta_line ::= LINE_CONTINUATION.
 defs ::= def.
 def_lines ::= LINE_CONTINUATION.
-
-
+para ::= defs.
 
 //
 // Additional Configuration
@@ -204,7 +205,7 @@ def_lines ::= LINE_CONTINUATION.
 
 	#define kMaxToken 26
 
-	int i,j,k,l,m;
+	int i,j,k,l,m, n;
 
 int main(int argc, char** argv) {
 
@@ -222,6 +223,7 @@ int main(int argc, char** argv) {
 	k = 0;
 	l = 0;
 	m = 0;
+	n = 0;
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
@@ -305,7 +307,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	return(0);
+//	return(0);
 
 	fprintf(stderr, "\nFive line tests\n");
 
@@ -338,6 +340,47 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
+
+	return(0);
+
+	// Six cycles takes quite a while
+
+	fprintf(stderr, "\nSix line tests\n");
+
+	i = 0;
+	j = 0;
+	k = 0;
+	l = 0;
+	m = 0;
+	n = 0;
+
+	for (i = 1; i <= kMaxToken; ++i)
+	{
+		fprintf(stderr, "%d\n", i);
+		
+		for (j = 1; j <= kMaxToken; ++j) {
+
+			for (k = 1; k <= kMaxToken; ++k) {
+
+				for (l = 1; l <= kMaxToken; ++l) {
+
+					for (m = 1; m <= kMaxToken; ++m) {	
+
+						for (n = 1; n <= kMaxToken; ++n) {	
+							Parse(pParser, i, NULL);
+							Parse(pParser, j, NULL);
+							Parse(pParser, k, NULL);
+							Parse(pParser, l, NULL);
+							Parse(pParser, m, NULL);
+							Parse(pParser, n, NULL);
+
+							Parse(pParser, 0, NULL);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 }
@@ -360,6 +403,6 @@ int main(int argc, char** argv) {
 }
 
 %parse_failure {
-	fprintf(stderr, "%d:%d:%d:%d:%d Parser failed to successfully parse.\n", i, j, k, l, m);
+	fprintf(stderr, "%d:%d:%d:%d:%d:%d Parser failed to successfully parse.\n", i, j, k, l, m, n);
 }
 
