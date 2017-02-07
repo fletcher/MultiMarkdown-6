@@ -420,7 +420,6 @@ features have been implemented:
 * Automatic cross-reference targets
 * Basic Citation support
 * CriticMarkup support
-* Definition lists
 * Inline and reference footnotes
 * Image and Link attributes (attributes can now be used with inline links as
 	well as reference links)
@@ -441,15 +440,16 @@ Things that are partially completed:
 	* Locators required?
 * CriticMarkup -- need to decide:
 	* How to handle CM stretches that include blank lines
+* Definition lists
 * Fenced code blocks
+* Footnotes -- need support for multiple blocks inside
+* Headers -- need support for manual labels
 * Metadata
 * Full/Snippet modes
 
 
 Things yet to be completed:
 
-* Multiple blocks inside of reference footnotes
-* Manually specified labels for headers
 * Abbreviations
 * Glossaries
 * File Transclusion
