@@ -166,20 +166,25 @@ cont_block(A)		::= empty(B) indented_line(C).				{ A = B; token_chain_append(B, 
 cont_block			::= empty.
 
 
-table_header(A)		::= table_rows(B) LINE_TABLE_SEPARATOR(C).	{ A = token_new_parent(B, BLOCK_TABLE_HEADER); token_chain_append(B, C); }
-table_section(A)	::= table_rows(B) LINE_EMPTY(C).			{ A = token_new_parent(B, BLOCK_TABLE_SECTION); token_chain_append(B, C); }
-table_section(A)	::= table_rows(B).							{ A = token_new_parent(B, BLOCK_TABLE_SECTION); }
+table_header(A)		::= header_rows(B) LINE_TABLE_SEPARATOR(C).	{ A = token_new_parent(B, BLOCK_TABLE_HEADER); token_chain_append(B, C); }
 
+table_section(A)	::= all_rows(B) LINE_EMPTY(C).				{ A = token_new_parent(B, BLOCK_TABLE_SECTION); token_chain_append(B, C); }
+table_section(A)	::= all_rows(B).							{ A = token_new_parent(B, BLOCK_TABLE_SECTION); }
+
+all_rows(A)			::= all_rows(B) row(C).						{ A = B; token_chain_append(B, C); }
+all_rows			::= row.
+
+row					::= header_rows.
+row					::= LINE_TABLE_SEPARATOR.
 
 table(A)			::= table_header(B) table_body(C).			{ A = B; token_chain_append(B, C); }
 table				::= table_header.
 
 table_body(A)		::= table_body(B) table_section(C).			{ A = B; token_chain_append(B, C); }
-//table_body(A)		::= table_body(B) error.					{ A = B; }
 table_body			::= table_section.
 
-table_rows(A)		::= table_rows(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
-table_rows			::= LINE_TABLE.
+header_rows(A)		::= header_rows(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
+header_rows			::= LINE_TABLE.
 
 
 def_citation(A)		::= LINE_DEF_CITATION(B) para_lines(C) cont_blocks(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
@@ -246,7 +251,7 @@ def_lines			::= LINE_CONTINUATION.
 // Fallbacks for improper structures
 // para(A)				::= table_section(B) LINE_EMPTY(C).			{ A = B; token_chain_append(B, C); }
 // para(A)				::= table_section(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
-para(A)				::= table_rows(B).							{ A = B; }
+para(A)				::= all_rows(B).							{ A = B; }
 para				::= defs.
 
 

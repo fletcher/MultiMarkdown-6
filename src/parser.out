@@ -46,11 +46,15 @@ State 0:
           item_enumerated ::= * LINE_LIST_ENUMERATED para_lines
           item_enumerated ::= * LINE_LIST_ENUMERATED cont_blocks
           item_enumerated ::= * LINE_LIST_ENUMERATED
-          table_header ::= * table_rows LINE_TABLE_SEPARATOR
+          table_header ::= * header_rows LINE_TABLE_SEPARATOR
+          all_rows ::= * all_rows row
+          all_rows ::= * row
+          row ::= * header_rows
+          row ::= * LINE_TABLE_SEPARATOR
           table ::= * table_header table_body
           table ::= * table_header
-          table_rows ::= * table_rows LINE_TABLE
-          table_rows ::= * LINE_TABLE
+          header_rows ::= * header_rows LINE_TABLE
+          header_rows ::= * LINE_TABLE
           def_citation ::= * LINE_DEF_CITATION para_lines cont_blocks
           def_citation ::= * LINE_DEF_CITATION para_lines
           def_citation ::= * LINE_DEF_CITATION cont_blocks
@@ -74,14 +78,15 @@ State 0:
           defs ::= * def
           def ::= * LINE_DEFINITION def_lines
           def ::= * LINE_DEFINITION
-          para ::= * table_rows
+          para ::= * all_rows
           para ::= * defs
 
-                    LINE_PLAIN shift        23     
-             LINE_INDENTED_TAB shift-reduce 78     indented_line ::= LINE_INDENTED_TAB
-           LINE_INDENTED_SPACE shift-reduce 79     indented_line ::= LINE_INDENTED_SPACE
-                    LINE_TABLE shift-reduce 91     table_rows ::= LINE_TABLE
-                     LINE_HTML shift        15     
+                    LINE_PLAIN shift        25     
+          LINE_TABLE_SEPARATOR shift-reduce 92     row ::= LINE_TABLE_SEPARATOR
+             LINE_INDENTED_TAB shift-reduce 79     indented_line ::= LINE_INDENTED_TAB
+           LINE_INDENTED_SPACE shift-reduce 80     indented_line ::= LINE_INDENTED_SPACE
+                    LINE_TABLE shift-reduce 95     header_rows ::= LINE_TABLE
+                     LINE_HTML shift        17     
                     LINE_ATX_1 shift-reduce 5      block ::= LINE_ATX_1
                     LINE_ATX_2 shift-reduce 6      block ::= LINE_ATX_2
                     LINE_ATX_3 shift-reduce 7      block ::= LINE_ATX_3
@@ -89,26 +94,26 @@ State 0:
                     LINE_ATX_5 shift-reduce 9      block ::= LINE_ATX_5
                     LINE_ATX_6 shift-reduce 10     block ::= LINE_ATX_6
                        LINE_HR shift-reduce 16     block ::= LINE_HR
-               LINE_BLOCKQUOTE shift        16     
-            LINE_LIST_BULLETED shift        5      
-          LINE_LIST_ENUMERATED shift        4      
+               LINE_BLOCKQUOTE shift        19     
+            LINE_LIST_BULLETED shift        6      
+          LINE_LIST_ENUMERATED shift        5      
              LINE_DEF_CITATION shift        3      
              LINE_DEF_FOOTNOTE shift        2      
-                 LINE_DEF_LINK shift        17     
-           LINE_FENCE_BACKTICK shift        14     
-     LINE_FENCE_BACKTICK_START shift        13     
+                 LINE_DEF_LINK shift        20     
+           LINE_FENCE_BACKTICK shift        16     
+     LINE_FENCE_BACKTICK_START shift        15     
                       LINE_TOC shift-reduce 23     block ::= LINE_TOC
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                     LINE_META shift        12     
-               LINE_DEFINITION shift        42     
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                     LINE_META shift        14     
+               LINE_DEFINITION shift        44     
                            doc accept
                         blocks shift        1      
                          block shift-reduce 2      blocks ::= block
-                          para shift        29     
-                 indented_code shift        11     
-                         empty shift        46     
-                 list_bulleted shift        41     
-               list_enumerated shift        39     
+                          para shift        31     
+                 indented_code shift        13     
+                         empty shift        48     
+                 list_bulleted shift        43     
+               list_enumerated shift        41     
                     blockquote shift-reduce 14     block ::= blockquote
                          table shift-reduce 15     block ::= table
                   def_citation shift-reduce 17     block ::= def_citation
@@ -118,13 +123,15 @@ State 0:
                   fenced_block shift-reduce 21     block ::= fenced_block
                     meta_block shift-reduce 22     block ::= meta_block
               definition_block shift-reduce 24     block ::= definition_block
-                 indented_line shift        11       /* because indented_line==indented_code */
-                 item_bulleted shift        41       /* because item_bulleted==list_bulleted */
-               item_enumerated shift        39       /* because item_enumerated==list_enumerated */
-                  table_header shift        10     
-                    table_rows shift        45     
-                          defs shift        36     
-                           def shift        36       /* because def==defs */
+                 indented_line shift        13       /* because indented_line==indented_code */
+                 item_bulleted shift        43       /* because item_bulleted==list_bulleted */
+               item_enumerated shift        41       /* because item_enumerated==list_enumerated */
+                  table_header shift        4      
+                   header_rows shift        46     
+                      all_rows shift        18     
+                           row shift        18       /* because row==all_rows */
+                          defs shift        38     
+                           def shift        38       /* because def==defs */
 
 State 1:
       (0) doc ::= blocks *
@@ -173,11 +180,15 @@ State 1:
           item_enumerated ::= * LINE_LIST_ENUMERATED para_lines
           item_enumerated ::= * LINE_LIST_ENUMERATED cont_blocks
           item_enumerated ::= * LINE_LIST_ENUMERATED
-          table_header ::= * table_rows LINE_TABLE_SEPARATOR
+          table_header ::= * header_rows LINE_TABLE_SEPARATOR
+          all_rows ::= * all_rows row
+          all_rows ::= * row
+          row ::= * header_rows
+          row ::= * LINE_TABLE_SEPARATOR
           table ::= * table_header table_body
           table ::= * table_header
-          table_rows ::= * table_rows LINE_TABLE
-          table_rows ::= * LINE_TABLE
+          header_rows ::= * header_rows LINE_TABLE
+          header_rows ::= * LINE_TABLE
           def_citation ::= * LINE_DEF_CITATION para_lines cont_blocks
           def_citation ::= * LINE_DEF_CITATION para_lines
           def_citation ::= * LINE_DEF_CITATION cont_blocks
@@ -201,15 +212,16 @@ State 1:
           defs ::= * def
           def ::= * LINE_DEFINITION def_lines
           def ::= * LINE_DEFINITION
-          para ::= * table_rows
+          para ::= * all_rows
           para ::= * defs
 
                              $ reduce       0      doc ::= blocks
-                    LINE_PLAIN shift        23     
-             LINE_INDENTED_TAB shift-reduce 78     indented_line ::= LINE_INDENTED_TAB
-           LINE_INDENTED_SPACE shift-reduce 79     indented_line ::= LINE_INDENTED_SPACE
-                    LINE_TABLE shift-reduce 91     table_rows ::= LINE_TABLE
-                     LINE_HTML shift        15     
+                    LINE_PLAIN shift        25     
+          LINE_TABLE_SEPARATOR shift-reduce 92     row ::= LINE_TABLE_SEPARATOR
+             LINE_INDENTED_TAB shift-reduce 79     indented_line ::= LINE_INDENTED_TAB
+           LINE_INDENTED_SPACE shift-reduce 80     indented_line ::= LINE_INDENTED_SPACE
+                    LINE_TABLE shift-reduce 95     header_rows ::= LINE_TABLE
+                     LINE_HTML shift        17     
                     LINE_ATX_1 shift-reduce 5      block ::= LINE_ATX_1
                     LINE_ATX_2 shift-reduce 6      block ::= LINE_ATX_2
                     LINE_ATX_3 shift-reduce 7      block ::= LINE_ATX_3
@@ -217,24 +229,24 @@ State 1:
                     LINE_ATX_5 shift-reduce 9      block ::= LINE_ATX_5
                     LINE_ATX_6 shift-reduce 10     block ::= LINE_ATX_6
                        LINE_HR shift-reduce 16     block ::= LINE_HR
-               LINE_BLOCKQUOTE shift        16     
-            LINE_LIST_BULLETED shift        5      
-          LINE_LIST_ENUMERATED shift        4      
+               LINE_BLOCKQUOTE shift        19     
+            LINE_LIST_BULLETED shift        6      
+          LINE_LIST_ENUMERATED shift        5      
              LINE_DEF_CITATION shift        3      
              LINE_DEF_FOOTNOTE shift        2      
-                 LINE_DEF_LINK shift        17     
-           LINE_FENCE_BACKTICK shift        14     
-     LINE_FENCE_BACKTICK_START shift        13     
+                 LINE_DEF_LINK shift        20     
+           LINE_FENCE_BACKTICK shift        16     
+     LINE_FENCE_BACKTICK_START shift        15     
                       LINE_TOC shift-reduce 23     block ::= LINE_TOC
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                     LINE_META shift        12     
-               LINE_DEFINITION shift        42     
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                     LINE_META shift        14     
+               LINE_DEFINITION shift        44     
                          block shift-reduce 1      blocks ::= blocks block
-                          para shift        29     
-                 indented_code shift        11     
-                         empty shift        46     
-                 list_bulleted shift        41     
-               list_enumerated shift        39     
+                          para shift        31     
+                 indented_code shift        13     
+                         empty shift        48     
+                 list_bulleted shift        43     
+               list_enumerated shift        41     
                     blockquote shift-reduce 14     block ::= blockquote
                          table shift-reduce 15     block ::= table
                   def_citation shift-reduce 17     block ::= def_citation
@@ -244,13 +256,15 @@ State 1:
                   fenced_block shift-reduce 21     block ::= fenced_block
                     meta_block shift-reduce 22     block ::= meta_block
               definition_block shift-reduce 24     block ::= definition_block
-                 indented_line shift        11       /* because indented_line==indented_code */
-                 item_bulleted shift        41       /* because item_bulleted==list_bulleted */
-               item_enumerated shift        39       /* because item_enumerated==list_enumerated */
-                  table_header shift        10     
-                    table_rows shift        45     
-                          defs shift        36     
-                           def shift        36       /* because def==defs */
+                 indented_line shift        13       /* because indented_line==indented_code */
+                 item_bulleted shift        43       /* because item_bulleted==list_bulleted */
+               item_enumerated shift        41       /* because item_enumerated==list_enumerated */
+                  table_header shift        4      
+                   header_rows shift        46     
+                      all_rows shift        18     
+                           row shift        18       /* because row==all_rows */
+                          defs shift        38     
+                           def shift        38       /* because def==defs */
 
 State 2:
           para_lines ::= * para_lines para_line
@@ -266,17 +280,17 @@ State 2:
           def_footnote ::= LINE_DEF_FOOTNOTE * para_lines cont_blocks
           def_footnote ::= LINE_DEF_FOOTNOTE * para_lines
           def_footnote ::= LINE_DEF_FOOTNOTE * cont_blocks
-     (93) def_footnote ::= LINE_DEF_FOOTNOTE *
+     (97) def_footnote ::= LINE_DEF_FOOTNOTE *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       93      ** Parsing conflict **
-                         empty shift        32     
-                    para_lines shift        6      
-                     para_line shift        6        /* because para_line==para_lines */
-                   cont_blocks shift        18     
-                    cont_block shift        18       /* because cont_block==cont_blocks */
-                     {default} reduce       93     def_footnote ::= LINE_DEF_FOOTNOTE
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       97      ** Parsing conflict **
+                         empty shift        34     
+                    para_lines shift        7      
+                     para_line shift        7        /* because para_line==para_lines */
+                   cont_blocks shift        21     
+                    cont_block shift        21       /* because cont_block==cont_blocks */
+                     {default} reduce       97     def_footnote ::= LINE_DEF_FOOTNOTE
 
 State 3:
           para_lines ::= * para_lines para_line
@@ -292,19 +306,44 @@ State 3:
           def_citation ::= LINE_DEF_CITATION * para_lines cont_blocks
           def_citation ::= LINE_DEF_CITATION * para_lines
           def_citation ::= LINE_DEF_CITATION * cont_blocks
-     (92) def_citation ::= LINE_DEF_CITATION *
+     (96) def_citation ::= LINE_DEF_CITATION *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       92      ** Parsing conflict **
-                         empty shift        32     
-                    para_lines shift        7      
-                     para_line shift        7        /* because para_line==para_lines */
-                   cont_blocks shift        20     
-                    cont_block shift        20       /* because cont_block==cont_blocks */
-                     {default} reduce       92     def_citation ::= LINE_DEF_CITATION
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       96      ** Parsing conflict **
+                         empty shift        34     
+                    para_lines shift        8      
+                     para_line shift        8        /* because para_line==para_lines */
+                   cont_blocks shift        23     
+                    cont_block shift        23       /* because cont_block==cont_blocks */
+                     {default} reduce       96     def_citation ::= LINE_DEF_CITATION
 
 State 4:
+          table_section ::= * all_rows LINE_EMPTY
+          table_section ::= * all_rows
+          all_rows ::= * all_rows row
+          all_rows ::= * row
+          row ::= * header_rows
+          row ::= * LINE_TABLE_SEPARATOR
+          table ::= table_header * table_body
+     (93) table ::= table_header *
+          table_body ::= * table_body table_section
+          table_body ::= * table_section
+          header_rows ::= * header_rows LINE_TABLE
+          header_rows ::= * LINE_TABLE
+
+          LINE_TABLE_SEPARATOR shift-reduce 92     row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       93      ** Parsing conflict **
+                    LINE_TABLE shift-reduce 95     header_rows ::= LINE_TABLE
+                    LINE_TABLE reduce       93      ** Parsing conflict **
+                   header_rows shift        47     
+                 table_section shift        9        /* because table_section==table_body */
+                      all_rows shift        12     
+                           row shift        12       /* because row==all_rows */
+                    table_body shift        9      
+                     {default} reduce       93     table ::= table_header
+
+State 5:
           para_lines ::= * para_lines para_line
           para_lines ::= * para_line
           para_line ::= * LINE_CONTINUATION
@@ -320,17 +359,17 @@ State 4:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       40      ** Parsing conflict **
-                         empty shift        32     
-                    para_lines shift        8      
-                     para_line shift        8        /* because para_line==para_lines */
-                   cont_blocks shift        24     
-                    cont_block shift        24       /* because cont_block==cont_blocks */
+                         empty shift        34     
+                    para_lines shift        10     
+                     para_line shift        10       /* because para_line==para_lines */
+                   cont_blocks shift        26     
+                    cont_block shift        26       /* because cont_block==cont_blocks */
                      {default} reduce       40     item_enumerated ::= LINE_LIST_ENUMERATED
 
-State 5:
+State 6:
           para_lines ::= * para_lines para_line
           para_lines ::= * para_line
           para_line ::= * LINE_CONTINUATION
@@ -346,37 +385,15 @@ State 5:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       35      ** Parsing conflict **
-                         empty shift        32     
-                    para_lines shift        9      
-                     para_line shift        9        /* because para_line==para_lines */
-                   cont_blocks shift        26     
-                    cont_block shift        26       /* because cont_block==cont_blocks */
+                         empty shift        34     
+                    para_lines shift        11     
+                     para_line shift        11       /* because para_line==para_lines */
+                   cont_blocks shift        28     
+                    cont_block shift        28       /* because cont_block==cont_blocks */
                      {default} reduce       35     item_bulleted ::= LINE_LIST_BULLETED
-
-State 6:
-          para_lines ::= para_lines * para_line
-          para_line ::= * LINE_CONTINUATION
-          empty ::= * empty LINE_EMPTY
-          empty ::= * LINE_EMPTY
-          cont_blocks ::= * cont_blocks cont_block
-          cont_blocks ::= * cont_block
-          cont_block ::= * empty indented_line para_lines
-          cont_block ::= * empty indented_line
-          cont_block ::= * empty
-          def_footnote ::= LINE_DEF_FOOTNOTE para_lines * cont_blocks
-     (54) def_footnote ::= LINE_DEF_FOOTNOTE para_lines *
-
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       54      ** Parsing conflict **
-                         empty shift        32     
-                     para_line shift-reduce 26     para_lines ::= para_lines para_line
-                   cont_blocks shift        19     
-                    cont_block shift        19       /* because cont_block==cont_blocks */
-                     {default} reduce       54     def_footnote ::= LINE_DEF_FOOTNOTE para_lines
 
 State 7:
           para_lines ::= para_lines * para_line
@@ -388,19 +405,63 @@ State 7:
           cont_block ::= * empty indented_line para_lines
           cont_block ::= * empty indented_line
           cont_block ::= * empty
-          def_citation ::= LINE_DEF_CITATION para_lines * cont_blocks
-     (51) def_citation ::= LINE_DEF_CITATION para_lines *
+          def_footnote ::= LINE_DEF_FOOTNOTE para_lines * cont_blocks
+     (55) def_footnote ::= LINE_DEF_FOOTNOTE para_lines *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       51      ** Parsing conflict **
-                         empty shift        32     
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       55      ** Parsing conflict **
+                         empty shift        34     
                      para_line shift-reduce 26     para_lines ::= para_lines para_line
-                   cont_blocks shift        21     
-                    cont_block shift        21       /* because cont_block==cont_blocks */
-                     {default} reduce       51     def_citation ::= LINE_DEF_CITATION para_lines
+                   cont_blocks shift        22     
+                    cont_block shift        22       /* because cont_block==cont_blocks */
+                     {default} reduce       55     def_footnote ::= LINE_DEF_FOOTNOTE para_lines
 
 State 8:
+          para_lines ::= para_lines * para_line
+          para_line ::= * LINE_CONTINUATION
+          empty ::= * empty LINE_EMPTY
+          empty ::= * LINE_EMPTY
+          cont_blocks ::= * cont_blocks cont_block
+          cont_blocks ::= * cont_block
+          cont_block ::= * empty indented_line para_lines
+          cont_block ::= * empty indented_line
+          cont_block ::= * empty
+          def_citation ::= LINE_DEF_CITATION para_lines * cont_blocks
+     (52) def_citation ::= LINE_DEF_CITATION para_lines *
+
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       52      ** Parsing conflict **
+                         empty shift        34     
+                     para_line shift-reduce 26     para_lines ::= para_lines para_line
+                   cont_blocks shift        24     
+                    cont_block shift        24       /* because cont_block==cont_blocks */
+                     {default} reduce       52     def_citation ::= LINE_DEF_CITATION para_lines
+
+State 9:
+          table_section ::= * all_rows LINE_EMPTY
+          table_section ::= * all_rows
+          all_rows ::= * all_rows row
+          all_rows ::= * row
+          row ::= * header_rows
+          row ::= * LINE_TABLE_SEPARATOR
+     (48) table ::= table_header table_body *
+          table_body ::= table_body * table_section
+          header_rows ::= * header_rows LINE_TABLE
+          header_rows ::= * LINE_TABLE
+
+          LINE_TABLE_SEPARATOR shift-reduce 92     row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       48      ** Parsing conflict **
+                    LINE_TABLE shift-reduce 95     header_rows ::= LINE_TABLE
+                    LINE_TABLE reduce       48      ** Parsing conflict **
+                   header_rows shift        47     
+                 table_section shift-reduce 49     table_body ::= table_body table_section
+                      all_rows shift        12     
+                           row shift        12       /* because row==all_rows */
+                     {default} reduce       48     table ::= table_header table_body
+
+State 10:
           para_lines ::= para_lines * para_line
           para_line ::= * LINE_CONTINUATION
           empty ::= * empty LINE_EMPTY
@@ -413,16 +474,16 @@ State 8:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       38      ** Parsing conflict **
-                         empty shift        32     
+                         empty shift        34     
                      para_line shift-reduce 26     para_lines ::= para_lines para_line
-                   cont_blocks shift        25     
-                    cont_block shift        25       /* because cont_block==cont_blocks */
+                   cont_blocks shift        27     
+                    cont_block shift        27       /* because cont_block==cont_blocks */
                      {default} reduce       38     item_enumerated ::= LINE_LIST_ENUMERATED para_lines
 
-State 9:
+State 11:
           para_lines ::= para_lines * para_line
           para_line ::= * LINE_CONTINUATION
           empty ::= * empty LINE_EMPTY
@@ -435,33 +496,35 @@ State 9:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       33      ** Parsing conflict **
-                         empty shift        32     
+                         empty shift        34     
                      para_line shift-reduce 26     para_lines ::= para_lines para_line
-                   cont_blocks shift        27     
-                    cont_block shift        27       /* because cont_block==cont_blocks */
+                   cont_blocks shift        29     
+                    cont_block shift        29       /* because cont_block==cont_blocks */
                      {default} reduce       33     item_bulleted ::= LINE_LIST_BULLETED para_lines
 
-State 10:
-          table_section ::= * table_rows LINE_EMPTY
-          table_section ::= * table_rows
-          table ::= table_header * table_body
-     (89) table ::= table_header *
-          table_body ::= * table_body table_section
-          table_body ::= * table_section
-          table_rows ::= * table_rows LINE_TABLE
-          table_rows ::= * LINE_TABLE
+State 12:
+          table_section ::= all_rows * LINE_EMPTY
+     (46) table_section ::= all_rows *
+          all_rows ::= all_rows * row
+          row ::= * header_rows
+          row ::= * LINE_TABLE_SEPARATOR
+          header_rows ::= * header_rows LINE_TABLE
+          header_rows ::= * LINE_TABLE
 
-                    LINE_TABLE shift-reduce 91     table_rows ::= LINE_TABLE
-                    LINE_TABLE reduce       89      ** Parsing conflict **
-                    table_rows shift        44     
-                 table_section shift        22       /* because table_section==table_body */
-                    table_body shift        22     
-                     {default} reduce       89     table ::= table_header
+          LINE_TABLE_SEPARATOR shift-reduce 92     row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       46      ** Parsing conflict **
+                    LINE_TABLE shift-reduce 95     header_rows ::= LINE_TABLE
+                    LINE_TABLE reduce       46      ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 45     table_section ::= all_rows LINE_EMPTY
+                    LINE_EMPTY reduce       46      ** Parsing conflict **
+                   header_rows shift        47     
+                           row shift-reduce 47     all_rows ::= all_rows row
+                     {default} reduce       46     table_section ::= all_rows
 
-State 11:
+State 13:
       (4) block ::= indented_code *
           indented_code ::= indented_code * code_line
           code_line ::= * indented_line
@@ -469,151 +532,122 @@ State 11:
           indented_line ::= * LINE_INDENTED_TAB
           indented_line ::= * LINE_INDENTED_SPACE
 
-             LINE_INDENTED_TAB shift-reduce 78     indented_line ::= LINE_INDENTED_TAB
+             LINE_INDENTED_TAB shift-reduce 79     indented_line ::= LINE_INDENTED_TAB
              LINE_INDENTED_TAB reduce       4       ** Parsing conflict **
-           LINE_INDENTED_SPACE shift-reduce 79     indented_line ::= LINE_INDENTED_SPACE
+           LINE_INDENTED_SPACE shift-reduce 80     indented_line ::= LINE_INDENTED_SPACE
            LINE_INDENTED_SPACE reduce       4       ** Parsing conflict **
-                    LINE_EMPTY shift-reduce 77     code_line ::= LINE_EMPTY
+                    LINE_EMPTY shift-reduce 78     code_line ::= LINE_EMPTY
                     LINE_EMPTY reduce       4       ** Parsing conflict **
                      code_line shift-reduce 27     indented_code ::= indented_code code_line
                  indented_line shift-reduce 27     indented_code ::= indented_code code_line  /* because indented_line==code_line */
                      {default} reduce       4      block ::= indented_code
 
-State 12:
+State 14:
           meta_block ::= LINE_META * meta_lines
-    (103) meta_block ::= LINE_META *
+    (107) meta_block ::= LINE_META *
           meta_lines ::= * meta_lines meta_line
           meta_lines ::= * meta_line
           meta_line ::= * LINE_META
           meta_line ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 106    meta_line ::= LINE_CONTINUATION
-                     LINE_META shift-reduce 105    meta_line ::= LINE_META
-                     LINE_META reduce       103     ** Parsing conflict **
-                    meta_lines shift        33     
-                     meta_line shift        33       /* because meta_line==meta_lines */
-                     {default} reduce       103    meta_block ::= LINE_META
+             LINE_CONTINUATION shift-reduce 110    meta_line ::= LINE_CONTINUATION
+                     LINE_META shift-reduce 109    meta_line ::= LINE_META
+                     LINE_META reduce       107     ** Parsing conflict **
+                    meta_lines shift        35     
+                     meta_line shift        35       /* because meta_line==meta_lines */
+                     {default} reduce       107    meta_block ::= LINE_META
 
-State 13:
+State 15:
           fenced_block ::= LINE_FENCE_BACKTICK_START * fenced_lines LINE_FENCE_BACKTICK
           fenced_block ::= LINE_FENCE_BACKTICK_START * fenced_lines
           fenced_lines ::= * fenced_lines fenced_line
           fenced_lines ::= * fenced_line
-    (100) fenced_lines ::= *
+    (104) fenced_lines ::= *
           fenced_line ::= * LINE_CONTINUATION
           fenced_line ::= * LINE_EMPTY
 
-             LINE_CONTINUATION shift-reduce 101    fenced_line ::= LINE_CONTINUATION
-             LINE_CONTINUATION reduce       100     ** Parsing conflict **
-                    LINE_EMPTY shift-reduce 102    fenced_line ::= LINE_EMPTY
-                    LINE_EMPTY reduce       100     ** Parsing conflict **
-                  fenced_lines shift        30     
-                   fenced_line shift        30       /* because fenced_line==fenced_lines */
-                     {default} reduce       100    fenced_lines ::=
+             LINE_CONTINUATION shift-reduce 105    fenced_line ::= LINE_CONTINUATION
+             LINE_CONTINUATION reduce       104     ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 106    fenced_line ::= LINE_EMPTY
+                    LINE_EMPTY reduce       104     ** Parsing conflict **
+                  fenced_lines shift        32     
+                   fenced_line shift        32       /* because fenced_line==fenced_lines */
+                     {default} reduce       104    fenced_lines ::=
 
-State 14:
+State 16:
           fenced_block ::= LINE_FENCE_BACKTICK * fenced_lines LINE_FENCE_BACKTICK
           fenced_block ::= LINE_FENCE_BACKTICK * fenced_lines
           fenced_lines ::= * fenced_lines fenced_line
           fenced_lines ::= * fenced_line
-    (100) fenced_lines ::= *
+    (104) fenced_lines ::= *
           fenced_line ::= * LINE_CONTINUATION
           fenced_line ::= * LINE_EMPTY
 
-             LINE_CONTINUATION shift-reduce 101    fenced_line ::= LINE_CONTINUATION
-             LINE_CONTINUATION reduce       100     ** Parsing conflict **
-                    LINE_EMPTY shift-reduce 102    fenced_line ::= LINE_EMPTY
-                    LINE_EMPTY reduce       100     ** Parsing conflict **
-                  fenced_lines shift        31     
-                   fenced_line shift        31       /* because fenced_line==fenced_lines */
-                     {default} reduce       100    fenced_lines ::=
+             LINE_CONTINUATION shift-reduce 105    fenced_line ::= LINE_CONTINUATION
+             LINE_CONTINUATION reduce       104     ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 106    fenced_line ::= LINE_EMPTY
+                    LINE_EMPTY reduce       104     ** Parsing conflict **
+                  fenced_lines shift        33     
+                   fenced_line shift        33       /* because fenced_line==fenced_lines */
+                     {default} reduce       104    fenced_lines ::=
 
-State 15:
+State 17:
           html_block ::= LINE_HTML * html_block_lines
-     (95) html_block ::= LINE_HTML *
+     (99) html_block ::= LINE_HTML *
           html_block_lines ::= * html_block_lines html_block_line
           html_block_lines ::= * html_block_line
           html_block_line ::= * LINE_CONTINUATION
           html_block_line ::= * LINE_HTML
 
-             LINE_CONTINUATION shift-reduce 97     html_block_line ::= LINE_CONTINUATION
-                     LINE_HTML shift-reduce 98     html_block_line ::= LINE_HTML
-                     LINE_HTML reduce       95      ** Parsing conflict **
-              html_block_lines shift        34     
-               html_block_line shift        34       /* because html_block_line==html_block_lines */
-                     {default} reduce       95     html_block ::= LINE_HTML
+             LINE_CONTINUATION shift-reduce 101    html_block_line ::= LINE_CONTINUATION
+                     LINE_HTML shift-reduce 102    html_block_line ::= LINE_HTML
+                     LINE_HTML reduce       99      ** Parsing conflict **
+              html_block_lines shift        36     
+               html_block_line shift        36       /* because html_block_line==html_block_lines */
+                     {default} reduce       99     html_block ::= LINE_HTML
 
-State 16:
+State 18:
+          all_rows ::= all_rows * row
+          row ::= * header_rows
+          row ::= * LINE_TABLE_SEPARATOR
+          header_rows ::= * header_rows LINE_TABLE
+          header_rows ::= * LINE_TABLE
+     (72) para ::= all_rows *
+
+          LINE_TABLE_SEPARATOR shift-reduce 92     row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       72      ** Parsing conflict **
+                    LINE_TABLE shift-reduce 95     header_rows ::= LINE_TABLE
+                    LINE_TABLE reduce       72      ** Parsing conflict **
+                   header_rows shift        47     
+                           row shift-reduce 47     all_rows ::= all_rows row
+                     {default} reduce       72     para ::= all_rows
+
+State 19:
           blockquote ::= LINE_BLOCKQUOTE * quote_lines
-     (81) blockquote ::= LINE_BLOCKQUOTE *
+     (82) blockquote ::= LINE_BLOCKQUOTE *
           quote_lines ::= * quote_lines quote_line
           quote_lines ::= * quote_line
           quote_line ::= * LINE_BLOCKQUOTE
           quote_line ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 84     quote_line ::= LINE_CONTINUATION
-               LINE_BLOCKQUOTE shift-reduce 83     quote_line ::= LINE_BLOCKQUOTE
-               LINE_BLOCKQUOTE reduce       81      ** Parsing conflict **
-                   quote_lines shift        35     
-                    quote_line shift        35       /* because quote_line==quote_lines */
-                     {default} reduce       81     blockquote ::= LINE_BLOCKQUOTE
+             LINE_CONTINUATION shift-reduce 85     quote_line ::= LINE_CONTINUATION
+               LINE_BLOCKQUOTE shift-reduce 84     quote_line ::= LINE_BLOCKQUOTE
+               LINE_BLOCKQUOTE reduce       82      ** Parsing conflict **
+                   quote_lines shift        37     
+                    quote_line shift        37       /* because quote_line==quote_lines */
+                     {default} reduce       82     blockquote ::= LINE_BLOCKQUOTE
 
-State 17:
+State 20:
           para_lines ::= * para_lines para_line
           para_lines ::= * para_line
           para_line ::= * LINE_CONTINUATION
           def_link ::= LINE_DEF_LINK * para_lines
-     (94) def_link ::= LINE_DEF_LINK *
+     (98) def_link ::= LINE_DEF_LINK *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    para_lines shift        37     
-                     para_line shift        37       /* because para_line==para_lines */
-                     {default} reduce       94     def_link ::= LINE_DEF_LINK
-
-State 18:
-          empty ::= * empty LINE_EMPTY
-          empty ::= * LINE_EMPTY
-          cont_blocks ::= cont_blocks * cont_block
-          cont_block ::= * empty indented_line para_lines
-          cont_block ::= * empty indented_line
-          cont_block ::= * empty
-     (55) def_footnote ::= LINE_DEF_FOOTNOTE cont_blocks *
-
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       55      ** Parsing conflict **
-                         empty shift        32     
-                    cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
-                     {default} reduce       55     def_footnote ::= LINE_DEF_FOOTNOTE cont_blocks
-
-State 19:
-          empty ::= * empty LINE_EMPTY
-          empty ::= * LINE_EMPTY
-          cont_blocks ::= cont_blocks * cont_block
-          cont_block ::= * empty indented_line para_lines
-          cont_block ::= * empty indented_line
-          cont_block ::= * empty
-     (53) def_footnote ::= LINE_DEF_FOOTNOTE para_lines cont_blocks *
-
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       53      ** Parsing conflict **
-                         empty shift        32     
-                    cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
-                     {default} reduce       53     def_footnote ::= LINE_DEF_FOOTNOTE para_lines cont_blocks
-
-State 20:
-          empty ::= * empty LINE_EMPTY
-          empty ::= * LINE_EMPTY
-          cont_blocks ::= cont_blocks * cont_block
-          cont_block ::= * empty indented_line para_lines
-          cont_block ::= * empty indented_line
-          cont_block ::= * empty
-     (52) def_citation ::= LINE_DEF_CITATION cont_blocks *
-
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       52      ** Parsing conflict **
-                         empty shift        32     
-                    cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
-                     {default} reduce       52     def_citation ::= LINE_DEF_CITATION cont_blocks
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    para_lines shift        39     
+                     para_line shift        39       /* because para_line==para_lines */
+                     {default} reduce       98     def_link ::= LINE_DEF_LINK
 
 State 21:
           empty ::= * empty LINE_EMPTY
@@ -622,41 +656,72 @@ State 21:
           cont_block ::= * empty indented_line para_lines
           cont_block ::= * empty indented_line
           cont_block ::= * empty
-     (50) def_citation ::= LINE_DEF_CITATION para_lines cont_blocks *
+     (56) def_footnote ::= LINE_DEF_FOOTNOTE cont_blocks *
 
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
-                    LINE_EMPTY reduce       50      ** Parsing conflict **
-                         empty shift        32     
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       56      ** Parsing conflict **
+                         empty shift        34     
                     cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
-                     {default} reduce       50     def_citation ::= LINE_DEF_CITATION para_lines cont_blocks
+                     {default} reduce       56     def_footnote ::= LINE_DEF_FOOTNOTE cont_blocks
 
 State 22:
-          table_section ::= * table_rows LINE_EMPTY
-          table_section ::= * table_rows
-     (47) table ::= table_header table_body *
-          table_body ::= table_body * table_section
-          table_rows ::= * table_rows LINE_TABLE
-          table_rows ::= * LINE_TABLE
+          empty ::= * empty LINE_EMPTY
+          empty ::= * LINE_EMPTY
+          cont_blocks ::= cont_blocks * cont_block
+          cont_block ::= * empty indented_line para_lines
+          cont_block ::= * empty indented_line
+          cont_block ::= * empty
+     (54) def_footnote ::= LINE_DEF_FOOTNOTE para_lines cont_blocks *
 
-                    LINE_TABLE shift-reduce 91     table_rows ::= LINE_TABLE
-                    LINE_TABLE reduce       47      ** Parsing conflict **
-                    table_rows shift        44     
-                 table_section shift-reduce 48     table_body ::= table_body table_section
-                     {default} reduce       47     table ::= table_header table_body
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       54      ** Parsing conflict **
+                         empty shift        34     
+                    cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
+                     {default} reduce       54     def_footnote ::= LINE_DEF_FOOTNOTE para_lines cont_blocks
 
 State 23:
+          empty ::= * empty LINE_EMPTY
+          empty ::= * LINE_EMPTY
+          cont_blocks ::= cont_blocks * cont_block
+          cont_block ::= * empty indented_line para_lines
+          cont_block ::= * empty indented_line
+          cont_block ::= * empty
+     (53) def_citation ::= LINE_DEF_CITATION cont_blocks *
+
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       53      ** Parsing conflict **
+                         empty shift        34     
+                    cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
+                     {default} reduce       53     def_citation ::= LINE_DEF_CITATION cont_blocks
+
+State 24:
+          empty ::= * empty LINE_EMPTY
+          empty ::= * LINE_EMPTY
+          cont_blocks ::= cont_blocks * cont_block
+          cont_block ::= * empty indented_line para_lines
+          cont_block ::= * empty indented_line
+          cont_block ::= * empty
+     (51) def_citation ::= LINE_DEF_CITATION para_lines cont_blocks *
+
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
+                    LINE_EMPTY reduce       51      ** Parsing conflict **
+                         empty shift        34     
+                    cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
+                     {default} reduce       51     def_citation ::= LINE_DEF_CITATION para_lines cont_blocks
+
+State 25:
           para ::= LINE_PLAIN * para_lines
-     (72) para ::= LINE_PLAIN *
+     (73) para ::= LINE_PLAIN *
           para_lines ::= * para_lines para_line
           para_lines ::= * para_line
           para_line ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    para_lines shift        38     
-                     para_line shift        38       /* because para_line==para_lines */
-                     {default} reduce       72     para ::= LINE_PLAIN
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    para_lines shift        40     
+                     para_line shift        40       /* because para_line==para_lines */
+                     {default} reduce       73     para ::= LINE_PLAIN
 
-State 24:
+State 26:
           empty ::= * empty LINE_EMPTY
           empty ::= * LINE_EMPTY
      (39) item_enumerated ::= LINE_LIST_ENUMERATED cont_blocks *
@@ -665,13 +730,13 @@ State 24:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       39      ** Parsing conflict **
-                         empty shift        32     
+                         empty shift        34     
                     cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
                      {default} reduce       39     item_enumerated ::= LINE_LIST_ENUMERATED cont_blocks
 
-State 25:
+State 27:
           empty ::= * empty LINE_EMPTY
           empty ::= * LINE_EMPTY
      (37) item_enumerated ::= LINE_LIST_ENUMERATED para_lines cont_blocks *
@@ -680,13 +745,13 @@ State 25:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       37      ** Parsing conflict **
-                         empty shift        32     
+                         empty shift        34     
                     cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
                      {default} reduce       37     item_enumerated ::= LINE_LIST_ENUMERATED para_lines cont_blocks
 
-State 26:
+State 28:
           empty ::= * empty LINE_EMPTY
           empty ::= * LINE_EMPTY
      (34) item_bulleted ::= LINE_LIST_BULLETED cont_blocks *
@@ -695,13 +760,13 @@ State 26:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       34      ** Parsing conflict **
-                         empty shift        32     
+                         empty shift        34     
                     cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
                      {default} reduce       34     item_bulleted ::= LINE_LIST_BULLETED cont_blocks
 
-State 27:
+State 29:
           empty ::= * empty LINE_EMPTY
           empty ::= * LINE_EMPTY
      (32) item_bulleted ::= LINE_LIST_BULLETED para_lines cont_blocks *
@@ -710,25 +775,25 @@ State 27:
           cont_block ::= * empty indented_line
           cont_block ::= * empty
 
-                    LINE_EMPTY shift-reduce 80     empty ::= LINE_EMPTY
+                    LINE_EMPTY shift-reduce 81     empty ::= LINE_EMPTY
                     LINE_EMPTY reduce       32      ** Parsing conflict **
-                         empty shift        32     
+                         empty shift        34     
                     cont_block shift-reduce 41     cont_blocks ::= cont_blocks cont_block
                      {default} reduce       32     item_bulleted ::= LINE_LIST_BULLETED para_lines cont_blocks
 
-State 28:
+State 30:
           para_lines ::= * para_lines para_line
           para_lines ::= * para_line
           para_line ::= * LINE_CONTINUATION
           cont_block ::= empty indented_line * para_lines
      (43) cont_block ::= empty indented_line *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
-                    para_lines shift        40     
-                     para_line shift        40       /* because para_line==para_lines */
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
+                    para_lines shift        42     
+                     para_line shift        42       /* because para_line==para_lines */
                      {default} reduce       43     cont_block ::= empty indented_line
 
-State 29:
+State 31:
       (3) block ::= para *
           definition_block ::= para * defs
           defs ::= * defs def
@@ -736,125 +801,125 @@ State 29:
           def ::= * LINE_DEFINITION def_lines
           def ::= * LINE_DEFINITION
 
-               LINE_DEFINITION shift        42     
+               LINE_DEFINITION shift        44     
                LINE_DEFINITION reduce       3       ** Parsing conflict **
-                          defs shift        43     
-                           def shift        43       /* because def==defs */
+                          defs shift        45     
+                           def shift        45       /* because def==defs */
                      {default} reduce       3      block ::= para
 
-State 30:
-          fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines * LINE_FENCE_BACKTICK
-     (62) fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines *
-          fenced_lines ::= fenced_lines * fenced_line
-          fenced_line ::= * LINE_CONTINUATION
-          fenced_line ::= * LINE_EMPTY
-
-             LINE_CONTINUATION shift-reduce 101    fenced_line ::= LINE_CONTINUATION
-           LINE_FENCE_BACKTICK shift-reduce 61     fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines LINE_FENCE_BACKTICK
-           LINE_FENCE_BACKTICK reduce       62      ** Parsing conflict **
-                    LINE_EMPTY shift-reduce 102    fenced_line ::= LINE_EMPTY
-                    LINE_EMPTY reduce       62      ** Parsing conflict **
-                   fenced_line shift-reduce 63     fenced_lines ::= fenced_lines fenced_line
-                     {default} reduce       62     fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines
-
-State 31:
-          fenced_block ::= LINE_FENCE_BACKTICK fenced_lines * LINE_FENCE_BACKTICK
-     (60) fenced_block ::= LINE_FENCE_BACKTICK fenced_lines *
-          fenced_lines ::= fenced_lines * fenced_line
-          fenced_line ::= * LINE_CONTINUATION
-          fenced_line ::= * LINE_EMPTY
-
-             LINE_CONTINUATION shift-reduce 101    fenced_line ::= LINE_CONTINUATION
-           LINE_FENCE_BACKTICK shift-reduce 59     fenced_block ::= LINE_FENCE_BACKTICK fenced_lines LINE_FENCE_BACKTICK
-           LINE_FENCE_BACKTICK reduce       60      ** Parsing conflict **
-                    LINE_EMPTY shift-reduce 102    fenced_line ::= LINE_EMPTY
-                    LINE_EMPTY reduce       60      ** Parsing conflict **
-                   fenced_line shift-reduce 63     fenced_lines ::= fenced_lines fenced_line
-                     {default} reduce       60     fenced_block ::= LINE_FENCE_BACKTICK fenced_lines
-
 State 32:
+          fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines * LINE_FENCE_BACKTICK
+     (63) fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines *
+          fenced_lines ::= fenced_lines * fenced_line
+          fenced_line ::= * LINE_CONTINUATION
+          fenced_line ::= * LINE_EMPTY
+
+             LINE_CONTINUATION shift-reduce 105    fenced_line ::= LINE_CONTINUATION
+           LINE_FENCE_BACKTICK shift-reduce 62     fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines LINE_FENCE_BACKTICK
+           LINE_FENCE_BACKTICK reduce       63      ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 106    fenced_line ::= LINE_EMPTY
+                    LINE_EMPTY reduce       63      ** Parsing conflict **
+                   fenced_line shift-reduce 64     fenced_lines ::= fenced_lines fenced_line
+                     {default} reduce       63     fenced_block ::= LINE_FENCE_BACKTICK_START fenced_lines
+
+State 33:
+          fenced_block ::= LINE_FENCE_BACKTICK fenced_lines * LINE_FENCE_BACKTICK
+     (61) fenced_block ::= LINE_FENCE_BACKTICK fenced_lines *
+          fenced_lines ::= fenced_lines * fenced_line
+          fenced_line ::= * LINE_CONTINUATION
+          fenced_line ::= * LINE_EMPTY
+
+             LINE_CONTINUATION shift-reduce 105    fenced_line ::= LINE_CONTINUATION
+           LINE_FENCE_BACKTICK shift-reduce 60     fenced_block ::= LINE_FENCE_BACKTICK fenced_lines LINE_FENCE_BACKTICK
+           LINE_FENCE_BACKTICK reduce       61      ** Parsing conflict **
+                    LINE_EMPTY shift-reduce 106    fenced_line ::= LINE_EMPTY
+                    LINE_EMPTY reduce       61      ** Parsing conflict **
+                   fenced_line shift-reduce 64     fenced_lines ::= fenced_lines fenced_line
+                     {default} reduce       61     fenced_block ::= LINE_FENCE_BACKTICK fenced_lines
+
+State 34:
           indented_line ::= * LINE_INDENTED_TAB
           indented_line ::= * LINE_INDENTED_SPACE
           empty ::= empty * LINE_EMPTY
           cont_block ::= empty * indented_line para_lines
           cont_block ::= empty * indented_line
-     (88) cont_block ::= empty *
+     (89) cont_block ::= empty *
 
-             LINE_INDENTED_TAB shift-reduce 78     indented_line ::= LINE_INDENTED_TAB
-             LINE_INDENTED_TAB reduce       88      ** Parsing conflict **
-           LINE_INDENTED_SPACE shift-reduce 79     indented_line ::= LINE_INDENTED_SPACE
-           LINE_INDENTED_SPACE reduce       88      ** Parsing conflict **
+             LINE_INDENTED_TAB shift-reduce 79     indented_line ::= LINE_INDENTED_TAB
+             LINE_INDENTED_TAB reduce       89      ** Parsing conflict **
+           LINE_INDENTED_SPACE shift-reduce 80     indented_line ::= LINE_INDENTED_SPACE
+           LINE_INDENTED_SPACE reduce       89      ** Parsing conflict **
                     LINE_EMPTY shift-reduce 28     empty ::= empty LINE_EMPTY
-                    LINE_EMPTY reduce       88      ** Parsing conflict **
-                 indented_line shift        28     
-                     {default} reduce       88     cont_block ::= empty
+                    LINE_EMPTY reduce       89      ** Parsing conflict **
+                 indented_line shift        30     
+                     {default} reduce       89     cont_block ::= empty
 
-State 33:
-     (64) meta_block ::= LINE_META meta_lines *
+State 35:
+     (65) meta_block ::= LINE_META meta_lines *
           meta_lines ::= meta_lines * meta_line
           meta_line ::= * LINE_META
           meta_line ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 106    meta_line ::= LINE_CONTINUATION
-                     LINE_META shift-reduce 105    meta_line ::= LINE_META
-                     LINE_META reduce       64      ** Parsing conflict **
-                     meta_line shift-reduce 65     meta_lines ::= meta_lines meta_line
-                     {default} reduce       64     meta_block ::= LINE_META meta_lines
+             LINE_CONTINUATION shift-reduce 110    meta_line ::= LINE_CONTINUATION
+                     LINE_META shift-reduce 109    meta_line ::= LINE_META
+                     LINE_META reduce       65      ** Parsing conflict **
+                     meta_line shift-reduce 66     meta_lines ::= meta_lines meta_line
+                     {default} reduce       65     meta_block ::= LINE_META meta_lines
 
-State 34:
-     (57) html_block ::= LINE_HTML html_block_lines *
+State 36:
+     (58) html_block ::= LINE_HTML html_block_lines *
           html_block_lines ::= html_block_lines * html_block_line
           html_block_line ::= * LINE_CONTINUATION
           html_block_line ::= * LINE_HTML
 
-             LINE_CONTINUATION shift-reduce 97     html_block_line ::= LINE_CONTINUATION
-                     LINE_HTML shift-reduce 98     html_block_line ::= LINE_HTML
-                     LINE_HTML reduce       57      ** Parsing conflict **
-               html_block_line shift-reduce 58     html_block_lines ::= html_block_lines html_block_line
-                     {default} reduce       57     html_block ::= LINE_HTML html_block_lines
+             LINE_CONTINUATION shift-reduce 101    html_block_line ::= LINE_CONTINUATION
+                     LINE_HTML shift-reduce 102    html_block_line ::= LINE_HTML
+                     LINE_HTML reduce       58      ** Parsing conflict **
+               html_block_line shift-reduce 59     html_block_lines ::= html_block_lines html_block_line
+                     {default} reduce       58     html_block ::= LINE_HTML html_block_lines
 
-State 35:
+State 37:
      (29) blockquote ::= LINE_BLOCKQUOTE quote_lines *
           quote_lines ::= quote_lines * quote_line
           quote_line ::= * LINE_BLOCKQUOTE
           quote_line ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 84     quote_line ::= LINE_CONTINUATION
-               LINE_BLOCKQUOTE shift-reduce 83     quote_line ::= LINE_BLOCKQUOTE
+             LINE_CONTINUATION shift-reduce 85     quote_line ::= LINE_CONTINUATION
+               LINE_BLOCKQUOTE shift-reduce 84     quote_line ::= LINE_BLOCKQUOTE
                LINE_BLOCKQUOTE reduce       29      ** Parsing conflict **
                     quote_line shift-reduce 30     quote_lines ::= quote_lines quote_line
                      {default} reduce       29     blockquote ::= LINE_BLOCKQUOTE quote_lines
 
-State 36:
+State 38:
           defs ::= defs * def
           def ::= * LINE_DEFINITION def_lines
           def ::= * LINE_DEFINITION
-    (109) para ::= defs *
+    (113) para ::= defs *
 
-               LINE_DEFINITION shift        42     
-               LINE_DEFINITION reduce       109     ** Parsing conflict **
-                           def shift-reduce 67     defs ::= defs def
-                     {default} reduce       109    para ::= defs
+               LINE_DEFINITION shift        44     
+               LINE_DEFINITION reduce       113     ** Parsing conflict **
+                           def shift-reduce 68     defs ::= defs def
+                     {default} reduce       113    para ::= defs
 
-State 37:
+State 39:
           para_lines ::= para_lines * para_line
           para_line ::= * LINE_CONTINUATION
-     (56) def_link ::= LINE_DEF_LINK para_lines *
+     (57) def_link ::= LINE_DEF_LINK para_lines *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
                      para_line shift-reduce 26     para_lines ::= para_lines para_line
-                     {default} reduce       56     def_link ::= LINE_DEF_LINK para_lines
+                     {default} reduce       57     def_link ::= LINE_DEF_LINK para_lines
 
-State 38:
+State 40:
      (25) para ::= LINE_PLAIN para_lines *
           para_lines ::= para_lines * para_line
           para_line ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
                      para_line shift-reduce 26     para_lines ::= para_lines para_line
                      {default} reduce       25     para ::= LINE_PLAIN para_lines
 
-State 39:
+State 41:
      (13) block ::= list_enumerated *
           list_enumerated ::= list_enumerated * item_enumerated
           item_enumerated ::= * LINE_LIST_ENUMERATED para_lines cont_blocks
@@ -862,21 +927,21 @@ State 39:
           item_enumerated ::= * LINE_LIST_ENUMERATED cont_blocks
           item_enumerated ::= * LINE_LIST_ENUMERATED
 
-          LINE_LIST_ENUMERATED shift        4      
+          LINE_LIST_ENUMERATED shift        5      
           LINE_LIST_ENUMERATED reduce       13      ** Parsing conflict **
                item_enumerated shift-reduce 36     list_enumerated ::= list_enumerated item_enumerated
                      {default} reduce       13     block ::= list_enumerated
 
-State 40:
+State 42:
           para_lines ::= para_lines * para_line
           para_line ::= * LINE_CONTINUATION
      (42) cont_block ::= empty indented_line para_lines *
 
-             LINE_CONTINUATION shift-reduce 74     para_line ::= LINE_CONTINUATION
+             LINE_CONTINUATION shift-reduce 75     para_line ::= LINE_CONTINUATION
                      para_line shift-reduce 26     para_lines ::= para_lines para_line
                      {default} reduce       42     cont_block ::= empty indented_line para_lines
 
-State 41:
+State 43:
      (12) block ::= list_bulleted *
           list_bulleted ::= list_bulleted * item_bulleted
           item_bulleted ::= * LINE_LIST_BULLETED para_lines cont_blocks
@@ -884,54 +949,52 @@ State 41:
           item_bulleted ::= * LINE_LIST_BULLETED cont_blocks
           item_bulleted ::= * LINE_LIST_BULLETED
 
-            LINE_LIST_BULLETED shift        5      
+            LINE_LIST_BULLETED shift        6      
             LINE_LIST_BULLETED reduce       12      ** Parsing conflict **
                  item_bulleted shift-reduce 31     list_bulleted ::= list_bulleted item_bulleted
                      {default} reduce       12     block ::= list_bulleted
 
-State 42:
+State 44:
           def ::= LINE_DEFINITION * def_lines
-     (69) def ::= LINE_DEFINITION *
+     (70) def ::= LINE_DEFINITION *
           def_lines ::= * def_lines LINE_CONTINUATION
           def_lines ::= * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 108    def_lines ::= LINE_CONTINUATION
-                     def_lines shift        47     
-                     {default} reduce       69     def ::= LINE_DEFINITION
+             LINE_CONTINUATION shift-reduce 112    def_lines ::= LINE_CONTINUATION
+                     def_lines shift        49     
+                     {default} reduce       70     def ::= LINE_DEFINITION
 
-State 43:
-     (66) definition_block ::= para defs *
+State 45:
+     (67) definition_block ::= para defs *
           defs ::= defs * def
           def ::= * LINE_DEFINITION def_lines
           def ::= * LINE_DEFINITION
 
-               LINE_DEFINITION shift        42     
-               LINE_DEFINITION reduce       66      ** Parsing conflict **
-                           def shift-reduce 67     defs ::= defs def
-                     {default} reduce       66     definition_block ::= para defs
-
-State 44:
-          table_section ::= table_rows * LINE_EMPTY
-     (46) table_section ::= table_rows *
-          table_rows ::= table_rows * LINE_TABLE
-
-                    LINE_TABLE shift-reduce 49     table_rows ::= table_rows LINE_TABLE
-                    LINE_TABLE reduce       46      ** Parsing conflict **
-                    LINE_EMPTY shift-reduce 45     table_section ::= table_rows LINE_EMPTY
-                    LINE_EMPTY reduce       46      ** Parsing conflict **
-                     {default} reduce       46     table_section ::= table_rows
-
-State 45:
-          table_header ::= table_rows * LINE_TABLE_SEPARATOR
-          table_rows ::= table_rows * LINE_TABLE
-     (71) para ::= table_rows *
-
-          LINE_TABLE_SEPARATOR shift-reduce 44     table_header ::= table_rows LINE_TABLE_SEPARATOR
-                    LINE_TABLE shift-reduce 49     table_rows ::= table_rows LINE_TABLE
-                    LINE_TABLE reduce       71      ** Parsing conflict **
-                     {default} reduce       71     para ::= table_rows
+               LINE_DEFINITION shift        44     
+               LINE_DEFINITION reduce       67      ** Parsing conflict **
+                           def shift-reduce 68     defs ::= defs def
+                     {default} reduce       67     definition_block ::= para defs
 
 State 46:
+          table_header ::= header_rows * LINE_TABLE_SEPARATOR
+     (91) row ::= header_rows *
+          header_rows ::= header_rows * LINE_TABLE
+
+          LINE_TABLE_SEPARATOR shift-reduce 44     table_header ::= header_rows LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       91      ** Parsing conflict **
+                    LINE_TABLE shift-reduce 50     header_rows ::= header_rows LINE_TABLE
+                    LINE_TABLE reduce       91      ** Parsing conflict **
+                     {default} reduce       91     row ::= header_rows
+
+State 47:
+     (91) row ::= header_rows *
+          header_rows ::= header_rows * LINE_TABLE
+
+                    LINE_TABLE shift-reduce 50     header_rows ::= header_rows LINE_TABLE
+                    LINE_TABLE reduce       91      ** Parsing conflict **
+                     {default} reduce       91     row ::= header_rows
+
+State 48:
      (11) block ::= empty *
           empty ::= empty * LINE_EMPTY
 
@@ -939,12 +1002,12 @@ State 46:
                     LINE_EMPTY reduce       11      ** Parsing conflict **
                      {default} reduce       11     block ::= empty
 
-State 47:
-     (68) def ::= LINE_DEFINITION def_lines *
+State 49:
+     (69) def ::= LINE_DEFINITION def_lines *
           def_lines ::= def_lines * LINE_CONTINUATION
 
-             LINE_CONTINUATION shift-reduce 70     def_lines ::= def_lines LINE_CONTINUATION
-                     {default} reduce       68     def ::= LINE_DEFINITION def_lines
+             LINE_CONTINUATION shift-reduce 71     def_lines ::= def_lines LINE_CONTINUATION
+                     {default} reduce       69     def ::= LINE_DEFINITION def_lines
 
 ----------------------------------------------------
 Symbols:
@@ -976,10 +1039,10 @@ Symbols:
    25: LINE_META
    26: LINE_DEFINITION
    27: error:
-   28: doc: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_TOC LINE_EMPTY LINE_META LINE_DEFINITION
-   29: blocks: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_TOC LINE_EMPTY LINE_META LINE_DEFINITION
-   30: block: LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_TOC LINE_EMPTY LINE_META LINE_DEFINITION
-   31: para: LINE_PLAIN LINE_TABLE LINE_DEFINITION
+   28: doc: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_TOC LINE_EMPTY LINE_META LINE_DEFINITION
+   29: blocks: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_TOC LINE_EMPTY LINE_META LINE_DEFINITION
+   30: block: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START LINE_TOC LINE_EMPTY LINE_META LINE_DEFINITION
+   31: para: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_TABLE LINE_DEFINITION
    32: indented_code: LINE_INDENTED_TAB LINE_INDENTED_SPACE
    33: empty: LINE_EMPTY
    34: list_bulleted: LINE_LIST_BULLETED
@@ -992,7 +1055,7 @@ Symbols:
    41: html_block: LINE_HTML
    42: fenced_block: LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START
    43: meta_block: LINE_META
-   44: definition_block: LINE_PLAIN LINE_TABLE LINE_DEFINITION
+   44: definition_block: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_TABLE LINE_DEFINITION
    45: para_lines: LINE_CONTINUATION
    46: para_line: LINE_CONTINUATION
    47: code_line: LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_EMPTY
@@ -1004,15 +1067,17 @@ Symbols:
    53: item_enumerated: LINE_LIST_ENUMERATED
    54: cont_block: LINE_EMPTY
    55: table_header: LINE_TABLE
-   56: table_rows: LINE_TABLE
-   57: table_section: LINE_TABLE
-   58: table_body: LINE_TABLE
-   59: html_block_lines: LINE_CONTINUATION LINE_HTML
-   60: html_block_line: LINE_CONTINUATION LINE_HTML
-   61: fenced_lines: <lambda> LINE_CONTINUATION LINE_EMPTY
-   62: fenced_line: LINE_CONTINUATION LINE_EMPTY
-   63: meta_lines: LINE_CONTINUATION LINE_META
-   64: meta_line: LINE_CONTINUATION LINE_META
-   65: defs: LINE_DEFINITION
-   66: def: LINE_DEFINITION
-   67: def_lines: LINE_CONTINUATION
+   56: header_rows: LINE_TABLE
+   57: table_section: LINE_TABLE_SEPARATOR LINE_TABLE
+   58: all_rows: LINE_TABLE_SEPARATOR LINE_TABLE
+   59: row: LINE_TABLE_SEPARATOR LINE_TABLE
+   60: table_body: LINE_TABLE_SEPARATOR LINE_TABLE
+   61: html_block_lines: LINE_CONTINUATION LINE_HTML
+   62: html_block_line: LINE_CONTINUATION LINE_HTML
+   63: fenced_lines: <lambda> LINE_CONTINUATION LINE_EMPTY
+   64: fenced_line: LINE_CONTINUATION LINE_EMPTY
+   65: meta_lines: LINE_CONTINUATION LINE_META
+   66: meta_line: LINE_CONTINUATION LINE_META
+   67: defs: LINE_DEFINITION
+   68: def: LINE_DEFINITION
+   69: def_lines: LINE_CONTINUATION

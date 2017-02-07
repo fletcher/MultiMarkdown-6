@@ -1597,9 +1597,11 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				break;
 			case LINE_TABLE_SEPARATOR:
 			case LINE_TABLE:
-				if ((block->type == BLOCK_TABLE_SECTION) ||
-					(block->type == BLOCK_TABLE_HEADER)) {
+				if (block->type == BLOCK_TABLE_HEADER) {
 					l->type = (l->type == LINE_TABLE) ? TABLE_ROW : LINE_TABLE_SEPARATOR;
+					parse_table_row_into_cells(l);
+				} else if (block->type == BLOCK_TABLE_SECTION) {
+					l->type =  TABLE_ROW;
 					parse_table_row_into_cells(l);
 				} else {
 					goto handle_line;
