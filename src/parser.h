@@ -21,6 +21,6 @@
 #define LINE_FENCE_BACKTICK             21
 #define LINE_FENCE_BACKTICK_START       22
 #define LINE_TOC                        23
-#define LINE_EMPTY                      24
-#define LINE_META                       25
-#define LINE_DEFINITION                 26
+#define LINE_DEFINITION                 24
+#define LINE_EMPTY                      25
+#define LINE_META                       26

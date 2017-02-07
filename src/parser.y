@@ -89,84 +89,196 @@ blocks(A)			::= block(B).
 		A = B;
 	}
 
-	
-block(A)			::= para(B).								{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
-block(A)			::= indented_code(B).						{ A = token_new_parent(B, BLOCK_CODE_INDENTED); }
-block(A)			::= LINE_ATX_1(B).							{ A = token_new_parent(B, BLOCK_H1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_2(B).							{ A = token_new_parent(B, BLOCK_H2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_3(B).							{ A = token_new_parent(B, BLOCK_H3); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_4(B).							{ A = token_new_parent(B, BLOCK_H4); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_5(B).							{ A = token_new_parent(B, BLOCK_H5); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_6(B).							{ A = token_new_parent(B, BLOCK_H6); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= empty(B).								{ A = token_new_parent(B, BLOCK_EMPTY); }
-block(A)			::= list_bulleted(B).						{ A = token_new_parent(B, BLOCK_LIST_BULLETED); is_list_loose(A); }
-block(A)			::= list_enumerated(B).						{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
-block(A)			::= blockquote(B).							{ A = token_new_parent(B, BLOCK_BLOCKQUOTE); recursive_parse_blockquote(engine, A); }
-block(A)			::= table(B).								{ A = token_new_parent(B, BLOCK_TABLE); }
-block(A)			::= LINE_HR(B).								{ A = token_new_parent(B, BLOCK_HR); }
-block(A)			::= def_citation(B).						{ A = token_new_parent(B, BLOCK_DEF_CITATION); stack_push(engine->definition_stack, A); }
-block(A)			::= def_footnote(B).						{ A = token_new_parent(B, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, A); }
-block(A)			::= def_link(B).							{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
-block(A)			::= html_block(B).							{ A = token_new_parent(B, BLOCK_HTML); }
-block(A)			::= fenced_block(B).						{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
-block(A)			::= meta_block(B).							{ A = token_new_parent(B, BLOCK_META); }
-block(A)			::= LINE_TOC(B).							{ A = token_new_parent(B, BLOCK_TOC); }
-block(A)			::= definition_block(B).					{ A = token_new_parent(B, BLOCK_DEFLIST); }
 
-para(A)				::= LINE_PLAIN(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
-para				::= LINE_PLAIN.
+// Blocks
 
-para_lines(A)		::= para_lines(B) para_line(C).				{ A = B; token_chain_append(B, C); }
-para_lines			::= para_line.
+// Single line blocks
 
-para_line 			::= LINE_CONTINUATION.
+block(A)			::= LINE_ATX_1(B).		{ A = token_new_parent(B, BLOCK_H1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_2(B).		{ A = token_new_parent(B, BLOCK_H2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_3(B).		{ A = token_new_parent(B, BLOCK_H3); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_4(B).		{ A = token_new_parent(B, BLOCK_H4); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_5(B).		{ A = token_new_parent(B, BLOCK_H5); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_6(B).		{ A = token_new_parent(B, BLOCK_H6); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
 
-indented_code(A)	::= indented_code(B) code_line(C).			{ A = B; token_chain_append(B, C); }
-indented_code		::= indented_line.
+block(A)			::= LINE_HR(B).			{ A = token_new_parent(B, BLOCK_HR); }
 
-code_line			::= indented_line.
-code_line			::= LINE_EMPTY.
+block(A)			::= LINE_TOC(B).		{ A = token_new_parent(B, BLOCK_TOC); }
+
+
+// Multi-line blocks
+
+block(A)			::= blockquote(B).			{ A = token_new_parent(B, BLOCK_BLOCKQUOTE); recursive_parse_blockquote(engine, A); }
+block(A)			::= def_citation(B).		{ A = token_new_parent(B, BLOCK_DEF_CITATION); stack_push(engine->definition_stack, A); }
+block(A)			::= def_footnote(B).		{ A = token_new_parent(B, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, A); }
+block(A)			::= def_link(B).			{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
+block(A)			::= definition_block(B).	{ A = token_new_parent(B, BLOCK_DEFLIST); }
+block(A)			::= empty(B).				{ A = token_new_parent(B, BLOCK_EMPTY); }
+block(A)			::= fenced_block(B).		{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
+block(A)			::= html_block(B).			{ A = token_new_parent(B, BLOCK_HTML); }
+block(A)			::= indented_code(B).		{ A = token_new_parent(B, BLOCK_CODE_INDENTED); }
+block(A)			::= list_bullet(B).			{ A = token_new_parent(B, BLOCK_LIST_BULLETED); is_list_loose(A); }
+block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
+block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
+block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
+block(A)			::= table(B).				{ A = token_new_parent(B, BLOCK_TABLE); }
+
+
+// Reusable components
+
+// A "chunk" allows you to grab all regular lines before the next empty line.
+// For example, to grab all lines after the first line in a paragraph.
+// You will want to specify a certain line type to start a chunk, but
+// this can grab the remaining lines, if any.
+
+chunk(A)			::= chunk(B) chunk_line(C).					{ A = B; token_chain_append(B, C); }
+chunk				::= chunk_line.
+
+chunk_line			::= LINE_CONTINUATION.
+
+
+// A "nested chunk" is useful when a chunk can also include following blocks
+// that have an extra level of indention to indicate that they belong together.
+// For example, a list item can include multiple paragraphs, even other lists.
+// This structure is also used in footnotes and definitions.
+
+nested_chunks(A)	::= nested_chunks(B) nested_chunk(C).		{ A = B; token_chain_append(B, C); }
+nested_chunks		::= nested_chunk.
+
+nested_chunk(A)		::= empty(B) indented_line(C) chunk(D).		{ A = B; token_chain_append(B, C); token_chain_append(B, D); C->type = LINE_CONTINUATION; }
+nested_chunk(A)		::= empty(B) indented_line(C).				{ A = B; token_chain_append(B, C); C->type = LINE_CONTINUATION; }
+nested_chunk		::= empty.
 
 indented_line		::= LINE_INDENTED_TAB.
 indented_line		::= LINE_INDENTED_SPACE.
 
-empty(A)			::= empty(B) LINE_EMPTY(C).					{ A = B; token_chain_append(B, C); }
-empty				::= LINE_EMPTY.
 
-blockquote(A)		::= LINE_BLOCKQUOTE(B) quote_lines(C).		{ A = B; token_chain_append(B, C); }
-blockquote			::= LINE_BLOCKQUOTE.
+// Shortcut for optional chunk
+//opt_chunk			::= chunk.
+//opt_chunk			::= .
 
-quote_lines(A)		::= quote_lines(B) quote_line(C).			{ A = B; token_chain_append(B, C); }
-quote_lines			::= quote_line.
+
+// Shortcut for "extended chunk" (chunk with following blocks)
+ext_chunk(A)		::= chunk(B) nested_chunks(C).				{ A = B; token_chain_append(B, C); }
+
+
+// Shortcut for optionally extended chunk
+opt_ext_chunk(A)	::= chunk(B) nested_chunks(C).				{ A = B; token_chain_append(B, C); }
+opt_ext_chunk		::= chunk.
+
+
+// Shortcut for anything that falls into the extended chunk pattern
+tail				::= opt_ext_chunk.
+tail				::= nested_chunks.
+
+
+// Blockquotes
+blockquote(A)		::= blockquote(B) quote_line(C).			{ A = B; token_chain_append(B, C); }
+blockquote 			::= LINE_BLOCKQUOTE.
 
 quote_line			::= LINE_BLOCKQUOTE.
 quote_line			::= LINE_CONTINUATION.
 
-list_bulleted(A)	::= list_bulleted(B) item_bulleted(C).		{ A = B; token_chain_append(B, C); }
-list_bulleted		::=	item_bulleted.
 
-item_bulleted(A)	::= LINE_LIST_BULLETED(B) para_lines(C) cont_blocks(D).	{ token_chain_append(B, C); token_chain_append(B, D); A = token_new_parent(B, BLOCK_LIST_ITEM); recursive_parse_list_item(engine, A); }
-item_bulleted(A)	::= LINE_LIST_BULLETED(B) para_lines(C).	{ token_chain_append(B, C); A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); recursive_parse_list_item(engine, A); }
-item_bulleted(A)	::= LINE_LIST_BULLETED(B) cont_blocks(C).	{ token_chain_append(B, C); A = token_new_parent(B, BLOCK_LIST_ITEM); if (C) {recursive_parse_list_item(engine, A);} }
-item_bulleted(A)	::= LINE_LIST_BULLETED(B).					{ A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); }
+// Reference definitions
+def_citation(A)		::= LINE_DEF_CITATION(B) tail(C).			{ A = B; token_chain_append(B, C); }
+def_citation		::= LINE_DEF_CITATION.
 
-list_enumerated(A)	::= list_enumerated(B) item_enumerated(C).	{ A = B; token_chain_append(B, C); }
-list_enumerated		::=	item_enumerated.
+def_footnote(A)		::= LINE_DEF_FOOTNOTE(B) tail(C).			{ A = B; token_chain_append(B, C); }
+def_footnote		::= LINE_DEF_FOOTNOTE.
 
-item_enumerated(A)	::= LINE_LIST_ENUMERATED(B) para_lines(C) cont_blocks(D).	{ token_chain_append(B, C); token_chain_append(B, D); A = token_new_parent(B, BLOCK_LIST_ITEM); recursive_parse_list_item(engine, A); }
-item_enumerated(A)	::= LINE_LIST_ENUMERATED(B) para_lines(C).	{ token_chain_append(B, C); A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); recursive_parse_list_item(engine, A); }
-item_enumerated(A)	::= LINE_LIST_ENUMERATED(B) cont_blocks(C).	{ token_chain_append(B, C); A = token_new_parent(B, BLOCK_LIST_ITEM); recursive_parse_list_item(engine, A); }
-item_enumerated(A)	::= LINE_LIST_ENUMERATED(B).				{ A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); }
+def_link(A)			::= LINE_DEF_LINK(B) chunk(C).				{ A = B; token_chain_append(B, C); }
+def_link			::= LINE_DEF_LINK.
 
-cont_blocks(A)		::= cont_blocks(B) cont_block(C).			{ A = B; token_chain_append(B, C); }
-cont_blocks			::= cont_block.
 
-cont_block(A)		::= empty(B) indented_line(C) para_lines(D).{ A = B; token_chain_append(B, C); token_chain_append(B, D); C->type = LINE_CONTINUATION; }
-cont_block(A)		::= empty(B) indented_line(C).				{ A = B; token_chain_append(B, C); C->type = LINE_CONTINUATION; }
-cont_block			::= empty.
+// Definition lists
+// Lemon's LALR(1) parser can't properly allow for detecting consecutive definition blocks and concatenating them,
+// because 'para defs para' could be the beginning of the next definition, OR the next regular para.
+// We have to bundle them when exporting, if desired.
+definition_block(A)	::= para(B) defs(C).						{ A = B; token_chain_append(B, C); B->type = BLOCK_TERM; }
 
+defs(A)				::= defs(B) def(C).							{ A = B; token_chain_append(B, token_new_parent(C, BLOCK_DEFINITION)); }
+defs(A)				::= def(B).									{ A = token_new_parent(B, BLOCK_DEFINITION); }
+
+def(A)				::= def(B) LINE_CONTINUATION(C).			{ A = B; token_chain_append(B, C); }
+def					::= LINE_DEFINITION.
+
+
+// Empty lines
+empty(A)			::= empty(B) LINE_EMPTY(C).					{ A = B; token_chain_append(B, C); }
+empty				::= LINE_EMPTY.
+
+
+// Fenced code blocks
+fenced_block(A)		::= fenced(B) LINE_FENCE_BACKTICK(C).		{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
+fenced_block		::= fenced.
+
+fenced(A)			::= fenced(B) fenced_line(C).				{ A = B; token_chain_append(B, C); }
+fenced				::= LINE_FENCE_BACKTICK.
+fenced				::= LINE_FENCE_BACKTICK_START.
+
+fenced_line			::= LINE_CONTINUATION.
+fenced_line			::= LINE_EMPTY.
+
+
+// HTML
+html_block(A)		::= html_block(B) html_line(C).				{ A = B; token_chain_append(B, C); }
+html_block			::= LINE_HTML.
+
+html_line			::= LINE_CONTINUATION.
+html_line			::= LINE_HTML.
+
+
+// Indented code blocks
+indented_code(A)	::= indented_code(B) indented_line(C).		{ A = B; token_chain_append(B, C); }
+indented_code(A)	::= indented_code(B) LINE_EMPTY(C).			{ A = B; token_chain_append(B, C); }
+indented_code		::= indented_line.
+
+
+// Bulleted lists
+list_bullet(A)		::= list_bullet(B) item_bullet(C).			{ A = B; token_chain_append(B, C); }
+list_bullet			::=	item_bullet.
+
+item_bullet(A)		::= LINE_LIST_BULLETED(B) ext_chunk(C).		{ A = token_new_parent(B, BLOCK_LIST_ITEM); token_chain_append(B, C); recursive_parse_list_item(engine, A); }
+item_bullet(A)		::= LINE_LIST_BULLETED(B) chunk(C).			{ A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); token_chain_append(B, C); recursive_parse_list_item(engine, A); }
+item_bullet(A)		::= LINE_LIST_BULLETED(B) nested_chunks(C).	{ A = token_new_parent(B, BLOCK_LIST_ITEM); token_chain_append(B, C); recursive_parse_list_item(engine, A); }
+item_bullet(A)		::= LINE_LIST_BULLETED(B).					{ A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); }
+
+
+// Enumerated lists
+list_enum(A)		::= list_enum(B) item_enum(C).				{ A = B; token_chain_append(B, C); }
+list_enum			::=	item_enum.
+
+item_enum(A)		::= LINE_LIST_ENUMERATED(B) ext_chunk(C).	{ A = token_new_parent(B, BLOCK_LIST_ITEM); token_chain_append(B, C); recursive_parse_list_item(engine, A); }
+item_enum(A)		::= LINE_LIST_ENUMERATED(B) chunk(C).		{ A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); token_chain_append(B, C); recursive_parse_list_item(engine, A); }
+item_enum(A)		::= LINE_LIST_ENUMERATED(B) nested_chunks(C).	{ A = token_new_parent(B, BLOCK_LIST_ITEM); token_chain_append(B, C); recursive_parse_list_item(engine, A); }
+item_enum(A)		::= LINE_LIST_ENUMERATED(B).				{ A = token_new_parent(B, BLOCK_LIST_ITEM_TIGHT); }
+
+
+// Metadata
+meta_block(A)		::= meta_block(B) meta_line(C).				{ A = B; token_chain_append(B, C); }
+meta_block 			::= LINE_META.
+
+meta_line 			::= LINE_META.
+meta_line 			::= LINE_CONTINUATION.
+
+
+// Paragraphs
+para(A)				::= LINE_PLAIN(B) chunk(C).					{ A = B; token_chain_append(B, C); }
+para				::= LINE_PLAIN.
+
+
+// Tables
+table(A)			::= table_header(B) table_body(C).			{ A = B; token_chain_append(B, C); }
+table				::= table_header.
 
 table_header(A)		::= header_rows(B) LINE_TABLE_SEPARATOR(C).	{ A = token_new_parent(B, BLOCK_TABLE_HEADER); token_chain_append(B, C); }
+
+header_rows(A)		::= header_rows(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
+header_rows			::= LINE_TABLE.
+
+table_body(A)		::= table_body(B) table_section(C).			{ A = B; token_chain_append(B, C); }
+table_body			::= table_section.
 
 table_section(A)	::= all_rows(B) LINE_EMPTY(C).				{ A = token_new_parent(B, BLOCK_TABLE_SECTION); token_chain_append(B, C); }
 table_section(A)	::= all_rows(B).							{ A = token_new_parent(B, BLOCK_TABLE_SECTION); }
@@ -177,80 +289,8 @@ all_rows			::= row.
 row					::= header_rows.
 row					::= LINE_TABLE_SEPARATOR.
 
-table(A)			::= table_header(B) table_body(C).			{ A = B; token_chain_append(B, C); }
-table				::= table_header.
-
-table_body(A)		::= table_body(B) table_section(C).			{ A = B; token_chain_append(B, C); }
-table_body			::= table_section.
-
-header_rows(A)		::= header_rows(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
-header_rows			::= LINE_TABLE.
-
-
-def_citation(A)		::= LINE_DEF_CITATION(B) para_lines(C) cont_blocks(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
-def_citation(A)		::= LINE_DEF_CITATION(B) para_lines(C).		{ A = B; token_chain_append(B, C); }
-def_citation(A)		::= LINE_DEF_CITATION(B) cont_blocks(C).	{ A = B; token_chain_append(B, C); }
-def_citation		::= LINE_DEF_CITATION.
-
-def_footnote(A)		::= LINE_DEF_FOOTNOTE(B) para_lines(C) cont_blocks(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, D); }
-def_footnote(A)		::= LINE_DEF_FOOTNOTE(B) para_lines(C).		{ A = B; token_chain_append(B, C); }
-def_footnote(A)		::= LINE_DEF_FOOTNOTE(B) cont_blocks(C).	{ A = B; token_chain_append(B, C); }
-def_footnote		::= LINE_DEF_FOOTNOTE.
-
-def_link(A)			::= LINE_DEF_LINK(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
-def_link			::= LINE_DEF_LINK.
-
-html_block(A)		::= LINE_HTML(B) html_block_lines(C).		{ A = B; token_chain_append(B, C); }
-html_block			::= LINE_HTML.
-
-
-html_block_lines(A)	::= html_block_lines(B) html_block_line(C).	{ A = B; token_chain_append(B, C); }
-html_block_lines	::= html_block_line.
-
-html_block_line		::= LINE_CONTINUATION.
-html_block_line		::= LINE_HTML.
-
-fenced_block(A)		::= LINE_FENCE_BACKTICK(B) fenced_lines(C) LINE_FENCE_BACKTICK(D).		{ A = B; token_chain_append(B, C); token_chain_append(B, D); D->child->type = CODE_FENCE; }
-fenced_block(A)		::= LINE_FENCE_BACKTICK(B) fenced_lines(C).								{ A = B; token_chain_append(B, C); }
-fenced_block(A)		::= LINE_FENCE_BACKTICK_START(B) fenced_lines(C) LINE_FENCE_BACKTICK(D).	{ A = B; token_chain_append(B, C); token_chain_append(B, D); D->child->type = CODE_FENCE; }
-fenced_block(A)		::= LINE_FENCE_BACKTICK_START(B) fenced_lines(C).							{ A = B; token_chain_append(B, C); }
-
-
-fenced_lines(A)		::= fenced_lines(B) fenced_line(C).			{ A = B; token_chain_append(B, C); }
-fenced_lines		::= fenced_line.
-fenced_lines		::= .
-
-fenced_line			::= LINE_CONTINUATION.
-fenced_line			::= LINE_EMPTY.
-
-
-meta_block(A)		::= LINE_META(B) meta_lines(C).				{ A = B; token_chain_append(B, C); }
-meta_block			::= LINE_META.
-
-meta_lines(A)		::= meta_lines(B) meta_line(C).				{ A = B; token_chain_append(B, C); }
-meta_lines			::= meta_line.
-
-meta_line 			::= LINE_META.
-meta_line 			::= LINE_CONTINUATION.
-
-// Lemon's LALR(1) parser can't properly allow for detecting consecutive definition blocks and concatenating them,
-// because 'para defs para' could be the beginning of the next definition, OR the next regular para.
-// We have to bundle them when exporting, if desired.
-definition_block(A)	::= para(B) defs(C).						{ A = B; token_chain_append(B, C); B->type = BLOCK_TERM; }
-
-defs(A)				::= defs(B) def(C).							{ A = B; token_chain_append(B, C); }
-defs				::= def.
-
-def(A)				::= LINE_DEFINITION(B) def_lines(C).		{ A = token_new_parent(B, BLOCK_DEFINITION); token_chain_append(B, C); }
-def(A)				::= LINE_DEFINITION(B).						{ A = token_new_parent(B, BLOCK_DEFINITION); }
-
-def_lines(A)		::= def_lines(B) LINE_CONTINUATION(C).		{ A = B; token_chain_append(B, C); }
-def_lines			::= LINE_CONTINUATION.
-
 
 // Fallbacks for improper structures
-// para(A)				::= table_section(B) LINE_EMPTY(C).			{ A = B; token_chain_append(B, C); }
-// para(A)				::= table_section(B) para_lines(C).			{ A = B; token_chain_append(B, C); }
 para(A)				::= all_rows(B).							{ A = B; }
 para				::= defs.
 
