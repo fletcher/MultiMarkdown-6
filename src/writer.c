@@ -246,7 +246,12 @@ char * text_inside_pair(const char * source, token * pair) {
 	char * result = NULL;
 
 	if (source && pair) {
-		result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+		if (pair->child->mate) {
+			// [foo], [^foo], [#foo] should give different strings -- use closer len
+			result = strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
+		} else {
+			result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+		}
 	}
 
 	return result;
@@ -644,6 +649,67 @@ bool validate_url(const char * url) {
 }
 
 
+char * destination_accept(const char * source, token ** remainder, bool validate) {
+	char * url = NULL;
+	char * clean = NULL;
+	token * t = NULL;
+	size_t start;
+	size_t scan_len;
+
+	switch ((*remainder)->type) {
+		case PAIR_PAREN:
+		case PAIR_ANGLE:
+		case PAIR_QUOTE_SINGLE:
+		case PAIR_QUOTE_DOUBLE:
+			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
+			url = text_inside_pair(source, t);
+			break;
+		case TEXT_PLAIN:
+			start = (*remainder)->start;
+			
+			// Skip any whitespace
+			while (char_is_whitespace(source[start]))
+				start++;
+
+			scan_len = scan_destination(&source[start]);
+
+			// Grab destination string
+			url = strndup(&source[start], scan_len);
+
+			// Advance remainder
+			while ((*remainder)->start < start + scan_len)
+				*remainder = (*remainder)->next;
+
+
+			t = (*remainder)->prev;
+
+			// Is there a space in a URL concatenated with a title or attribute?
+			// e.g. [foo]: http://foo.bar/ class="foo"
+			// Since only one space between URL and class, they are joined.
+
+			if (t->type == TEXT_PLAIN) {
+				// Trim leading whitespace
+				token_trim_leading_whitespace(t, source);
+				token_split_on_char(t, source, ' ');
+				*remainder = t->next;
+			}
+
+			break;
+	}
+
+	// Is this a valid URL?
+	clean = clean_string(url, false);
+	
+	if (validate && !validate_url(clean)) {
+		free(clean);
+		clean = NULL;
+	}
+
+	free(url);
+	return clean;
+}
+
+
 char * url_accept(const char * source, token ** remainder, bool validate) {
 	char * url = NULL;
 	char * clean = NULL;
@@ -880,7 +946,35 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 	
 	// Prepare for parsing
 
+	// Account for settings
+
 	switch (label->type) {
+		case PAIR_BRACKET_CITATION:
+			if (e->extensions & EXT_NOTES) {
+				if (!token_chain_accept(remainder, COLON))
+					return false;
+
+				title = *remainder;		// Track first token of content in 'title'
+				f = footnote_new(e->dstr->str, label, title);
+
+				// Store citation for later use
+				stack_push(e->citation_stack, f);
+				
+				break;
+			}
+		case PAIR_BRACKET_FOOTNOTE:
+			if (e->extensions & EXT_NOTES) {
+				if (!token_chain_accept(remainder, COLON))
+					return false;
+
+				title = *remainder;		// Track first token of content in 'title'
+				f = footnote_new(e->dstr->str, label, title);
+
+				// Store footnote for later use
+				stack_push(e->footnote_stack, f);
+				
+				break;
+			}
 		case PAIR_BRACKET:
 			// Reference Link Definition
 
@@ -890,8 +984,8 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 			// Skip space
 			whitespace_accept(remainder);
 
-			// Grab URL
-			url_char = url_accept(e->dstr->str, remainder, false);
+			// Grab destination
+			url_char = destination_accept(e->dstr->str, remainder, false);
 
 			whitespace_accept(remainder);
 
@@ -942,28 +1036,6 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 				stack_push(e->link_stack, l);
 
 			break;
-		case PAIR_BRACKET_CITATION:
-			if (!token_chain_accept(remainder, COLON))
-				return false;
-
-			title = *remainder;		// Track first token of content in 'title'
-			f = footnote_new(e->dstr->str, label, title);
-
-			// Store citation for later use
-			stack_push(e->citation_stack, f);
-			
-			break;
-		case PAIR_BRACKET_FOOTNOTE:
-			if (!token_chain_accept(remainder, COLON))
-				return false;
-
-			title = *remainder;		// Track first token of content in 'title'
-			f = footnote_new(e->dstr->str, label, title);
-
-			// Store footnote for later use
-			stack_push(e->footnote_stack, f);
-			
-			break;
 		case PAIR_BRACKET_VARIABLE:
 			fprintf(stderr, "Process variable:\n");
 			token_describe(label, e->dstr->str);
@@ -989,6 +1061,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 
 void process_definition_block(mmd_engine * e, token * block) {
 	footnote * f;
+
 
 	token * label = block->child;
 	if (label->type == BLOCK_PARA)

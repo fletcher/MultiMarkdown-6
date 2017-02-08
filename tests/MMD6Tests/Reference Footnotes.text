@@ -1,8 +1,14 @@
-Reference.[^foo]
+foo.[^bar]
 
-Reference.[^foo2]
+foo.[^bar2]
 
+foo.[^bar3]
 
-[^foo]: This is a *short* footnote.
-[^foo2]: This is a longer footnote.
-With two lines.
+[^bar]: *foo*
+[^bar2]: *foo
+bar*
+[^bar3]: foo
+
+	*bar*
+
+	* bat

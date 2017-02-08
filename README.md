@@ -398,14 +398,10 @@ most circumstances.
 
 		</div>
 
-5. I haven't worked a lot yet on the MMD-specific features, so there may be
-more changes to come.  One thing I do anticipate is that if fenced code blocks
-stay, they will work slightly differently.  Currently, an opening fence
-doesn't mean anything unless there is a closing fence that follows it.  Again,
-this requires backtracking in the parser.  I suspect that an opening fence
-will definitely open a code block.  If there is no closing fence, then the
-rest of the document will remain inside the code block.  This is the approach
-used by CommonMark and it's a reasonable one, IMO.
+5. "Malformed" reference link definitions are handled slightly differently.
+For example, `Reference Footnotes.text` is parsed differently in compatibility
+mode than MMD-5.  This started as a side-effect of the parsing algorithm, but
+I actually think it makes sense.  This may or may not change in the future.
 
 
 ## Where Does MultiMarkdown 6 Stand? ##
@@ -420,6 +416,8 @@ features have been implemented:
 * Automatic cross-reference targets
 * Basic Citation support
 * CriticMarkup support
+* Definition lists
+* Footnotes
 * Inline and reference footnotes
 * Image and Link attributes (attributes can now be used with inline links as
 	well as reference links)
@@ -440,9 +438,7 @@ Things that are partially completed:
 	* Locators required?
 * CriticMarkup -- need to decide:
 	* How to handle CM stretches that include blank lines
-* Definition lists
 * Fenced code blocks
-* Footnotes -- need support for multiple blocks inside
 * Headers -- need support for manual labels
 * Metadata
 * Full/Snippet modes

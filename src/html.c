@@ -224,6 +224,12 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 
 	print(">");
 
+	// If we're printing contents of bracket as text, then ensure we include it all
+	if (text && text->child && text->child->len > 1) {
+		text->child->next->start--;
+		text->child->next->len++;
+	}
+	
 	mmd_export_token_tree_html(out, source, text->child, offset, scratch);
 
 	print("</a>");

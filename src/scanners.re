@@ -387,6 +387,17 @@ size_t scan_alignment_string(const char * c) {
 }
 
 
+size_t scan_destination(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	destination	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
 #ifdef TEST
 void Test_scan_url(CuTest* tc) {
 	int url_len;

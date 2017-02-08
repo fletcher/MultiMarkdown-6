@@ -122,10 +122,18 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		// Brackets, Parentheses, Angles
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+
+		if (extensions & EXT_NOTES) {
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		} else {
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		}
+		
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		
+		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, PAREN_LEFT, PAREN_RIGHT, PAIR_PAREN, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, ANGLE_LEFT, ANGLE_RIGHT, PAIR_ANGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, BRACE_DOUBLE_LEFT, BRACE_DOUBLE_RIGHT, PAIR_BRACES, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -533,7 +541,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_citation(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_CITATION : LINE_PLAIN;
 			} else {
-				line->type = LINE_PLAIN;
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;
 		case BRACKET_FOOTNOTE_LEFT:
@@ -541,7 +550,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_foot(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_FOOTNOTE : LINE_PLAIN;
 			} else {
-				line->type = LINE_PLAIN;
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;
 		case PIPE:

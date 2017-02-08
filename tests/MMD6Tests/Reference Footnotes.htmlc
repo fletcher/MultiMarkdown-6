@@ -1,7 +1,10 @@
-<p>Reference.[^foo]</p>
+<p>foo.<a href="*foo*">^bar</a></p>
 
-<p>Reference.[^foo2]</p>
+<p>foo.<a href="*foo">^bar2</a></p>
 
-<p>[^foo]: This is a <em>short</em> footnote.
-[^foo2]: This is a longer footnote.
-With two lines.</p>
+<p>foo.<a href="foo">^bar3</a></p>
+
+<pre><code>*bar*
+
+* bat
+</code></pre>
