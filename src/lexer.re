@@ -88,9 +88,11 @@ int scan(Scanner * s, const char * stop) {
 		INDENT_SPACE 					= ' '{4};
 		NON_INDENT_SPACE				= ' '{2,3};
 
-		TEXT_LINEBREAK					= "  " NL;
+		TEXT_LINEBREAK					= ' '{2,} NL;
 
 		// The order of these seems to matter
+
+		"{{TOC}}"						{ return TOC; }
 
 		"{++"							{ return CRITIC_ADD_OPEN; }
 		"++}"							{ return CRITIC_ADD_CLOSE; }
@@ -209,7 +211,7 @@ int scan(Scanner * s, const char * stop) {
 		'.' / (SP|NL)					{ return TEXT_PERIOD; }
 
 		TEXT_LINEBREAK					{ return TEXT_LINEBREAK; }
-		NL								{ return TEXT_NL; }
+		' '? NL							{ return TEXT_NL; }
 
 		NON_INDENT_SPACE				{ return NON_INDENT_SPACE; }
 

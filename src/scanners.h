@@ -61,8 +61,19 @@
 #include "CuTest.h"
 #endif
 
+enum alignments {
+	ALIGN_LEFT      = 1 << 0,
+	ALIGN_RIGHT     = 1 << 1,
+	ALIGN_CENTER    = 1 << 2,
+	ALIGN_WRAP      = 1 << 3
+};
+
+
+size_t scan_alignment_string(const char * c);
 size_t scan_attr(const char * c);
 size_t scan_attributes(const char * c);
+size_t scan_definition(const char * c);
+size_t scan_destination(const char * c);
 size_t scan_email(const char * c);
 size_t scan_fence_start(const char * c);
 size_t scan_fence_end(const char * c);
@@ -77,6 +88,7 @@ size_t scan_ref_foot(const char * c);
 size_t scan_ref_link(const char * c);
 size_t scan_ref_link_no_attributes(const char * c);
 size_t scan_spnl(const char * c);
+size_t scan_table_separator(const char * c);
 size_t scan_url(const char * c);
 size_t scan_value(const char * c);
 

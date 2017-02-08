@@ -134,6 +134,10 @@ token * token_new(unsigned short type, size_t start, size_t len) {
 
 /// Create a parent for a chain of tokens
 token * token_new_parent(token * child, unsigned short type) {
+	if (child == NULL) {
+		return token_new(type, 0, 0);
+	}
+	
 	token * t = token_new(type, child->start, 0);
 	t->child = child;
 	child->prev = NULL;

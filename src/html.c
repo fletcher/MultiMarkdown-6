@@ -59,8 +59,8 @@
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
-#include "libMultiMarkdown.h"
 #include "i18n.h"
+#include "libMultiMarkdown.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"
@@ -224,6 +224,12 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 
 	print(">");
 
+	// If we're printing contents of bracket as text, then ensure we include it all
+	if (text && text->child && text->child->len > 1) {
+		text->child->next->start--;
+		text->child->next->len++;
+	}
+	
 	mmd_export_token_tree_html(out, source, text->child, offset, scratch);
 
 	print("</a>");
@@ -272,6 +278,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		return;
 
 	short	temp_short;
+	short	temp_short2;
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
@@ -319,6 +326,39 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 1, scratch);
 			print("</blockquote>");
 			scratch->padded = 0;
+			break;
+		case BLOCK_DEFINITION:
+			pad(out, 2, scratch);
+			print("<dd>");
+
+			temp_short = scratch->list_is_tight;
+			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+				scratch->list_is_tight = true;
+
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</dd>");
+			scratch->padded = 0;
+
+			scratch->list_is_tight = temp_short;
+			break;
+		case BLOCK_DEFLIST:
+			pad(out, 2, scratch);
+
+			// Group consecutive definition lists into a single list.
+			// lemon's LALR(1) parser can't properly handle this (to my understanding).
+
+			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
+				print("<dl>\n");
+	
+			scratch->padded = 2;
+
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			pad(out, 1, scratch);
+
+			if (!(t->next && (t->next->type == BLOCK_DEFLIST)))
+				print("</dl>\n");
+
+			scratch->padded = 1;
 			break;
 		case BLOCK_CODE_FENCED:
 		case BLOCK_CODE_INDENTED:
@@ -453,6 +493,135 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 
 			if (!scratch->list_is_tight)
 				print("</p>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_TABLE:
+			pad(out, 2, scratch);
+			print("<table>\n");
+			scratch->padded = 2;
+			read_table_column_alignments(source, t, scratch);
+
+			print("<colgroup>\n");
+			for (int i = 0; i < scratch->table_column_count; ++i)
+			{
+				switch (scratch->table_alignment[i]) {
+					case 'l':
+						print("<col style=\"text-align:left;\"/>\n");
+						break;
+					case 'L':
+						print("<col style=\"text-align:left;\" class=\"extended\"/>\n");
+						break;
+					case 'r':
+						print("<col style=\"text-align:right;\"/>\n");
+						break;
+					case 'R':
+						print("<col style=\"text-align:right;\" class=\"extended\"/>\n");
+						break;
+					case 'c':
+						print("<col style=\"text-align:center;\"/>\n");
+						break;
+					case 'C':
+						print("<col style=\"text-align:center;\" class=\"extended\"/>\n");
+						break;
+					default:
+						print("<col />\n");
+						break;
+				}
+			}
+			print("</colgroup>\n");
+			scratch->padded = 1;
+
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			pad(out, 1, scratch);
+			print("</table>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_TABLE_HEADER:
+			pad(out, 2, scratch);
+			print("<thead>\n");
+			scratch->in_table_header = 1;
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			scratch->in_table_header = 0;
+			print("</thead>\n");
+			scratch->padded = 1;
+			break;
+		case BLOCK_TABLE_SECTION:
+			pad(out, 2, scratch);
+			print("<tbody>\n");
+			scratch->padded = 2;
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</tbody>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_TERM:
+			pad(out, 2, scratch);
+			print("<dt>");
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</dt>\n");
+			scratch->padded = 2;
+			break;
+		case BLOCK_TOC:
+			temp_short = 0;
+			temp_short2 = 0;
+			pad(out, 2, scratch);
+			print("<div class=\"TOC\">");
+
+			for (int i = 0; i < scratch->header_stack->size; ++i)
+			{
+				temp_token = stack_peek_index(scratch->header_stack, i);
+
+				if (temp_token->type == temp_short2) {
+					// Same level -- close list item
+					print("</li>\n");
+				}
+
+				if (temp_short == 0) {
+					// First item
+					print("\n<ul>\n");
+					temp_short = temp_token->type;
+					temp_short2 = temp_short;
+				}
+
+				// Indent?
+				if (temp_token->type == temp_short2) {
+					// Same level -- NTD
+				} else if (temp_token->type == temp_short2 + 1) {
+					// Indent
+					print("\n\n<ul>\n");
+					temp_short2++;
+				} else if (temp_token->type < temp_short2) {
+					// Outdent
+					print("</li>\n");
+					while (temp_short2 > temp_token->type) {
+						if (temp_short2 > temp_short)
+							print("</ul></li>\n");
+						else
+							temp_short = temp_short2 - 1;
+
+						temp_short2--;
+					}
+				} else {
+					// Skipped more than one level -- ignore
+					continue;
+				}
+
+				temp_char = label_from_token(source, temp_token);
+
+				printf("<li><a href=\"#%s\">", temp_char);
+				mmd_export_token_tree_html(out, source, temp_token->child, offset, scratch);
+				print("</a>");
+				free(temp_char);
+			}
+
+			while (temp_short2 > (temp_short)) {
+				print("</ul>\n");
+				temp_short2--;
+			}
+			
+			if (temp_short)
+				print("</li>\n</ul>\n");
+
+			print("</div>");
 			scratch->padded = 0;
 			break;
 		case BRACE_DOUBLE_LEFT:
@@ -931,6 +1100,48 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				print("^");
 			}	
 			break;
+		case TABLE_CELL:
+			if (scratch->in_table_header) {
+				print("\t<th");
+			} else {
+				print("\t<td");
+			}
+			switch (scratch->table_alignment[scratch->table_cell_count]) {
+				case 'l':
+				case 'L':
+					print(" style=\"text-align:left;\"");
+					break;
+				case 'r':
+				case 'R':
+					print(" style=\"text-align:right;\"");
+					break;
+				case 'c':
+				case 'C':
+					print(" style=\"text-align:center;\"");
+					break;
+			}
+			if (t->next->type == TABLE_DIVIDER) {
+				if (t->next->len > 1) {
+					printf(" colspan=\"%d\"", t->next->len);
+				}
+			}
+			print(">");
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			if (scratch->in_table_header) {
+				print("</th>\n");
+			} else {
+				print("</td>\n");
+			}
+			scratch->table_cell_count += t->next->len;
+			break;
+		case TABLE_DIVIDER:
+			break;
+		case TABLE_ROW:
+			print("<tr>\n");
+			scratch->table_cell_count = 0;
+			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			print("</tr>\n");
+			break;
 		case TEXT_LINEBREAK:
 			if (t->next) {
 				print("<br />\n");
@@ -947,6 +1158,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
+		case TOC:
 			print_token(t);
 			break;
 		case UL:
@@ -954,12 +1166,21 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		default:
 			fprintf(stderr, "Unknown token type: %d\n", t->type);
+			token_describe(t, source);
 			break;
 	}
 }
 
 
 void mmd_export_token_tree_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
+
+	// Prevent stack overflow with "dangerous" input causing extreme recursion
+	if (scratch->recurse_depth == kMaxExportRecursiveDepth) {
+		return;
+	}
+
+	scratch->recurse_depth++;
+
 	while (t != NULL) {
 		if (scratch->skip_token) {
 			scratch->skip_token--;
@@ -969,6 +1190,8 @@ void mmd_export_token_tree_html(DString * out, const char * source, token * t, s
 
 		t = t->next;
 	}
+
+	scratch->recurse_depth--;
 }
 
 

@@ -62,10 +62,14 @@
 #include "token.h"
 #include "token_pairs.h"
 
+#define kMaxParseRecursiveDepth 1000		//!< Maximum recursion depth when parsing -- to prevent stack overflow with "pathologic" input
+
+
 struct mmd_engine {
 	DString *				dstr;
 	token *					root;
 	unsigned long			extensions;
+	unsigned short			recurse_depth;
 
 	bool					allow_meta;
 
@@ -86,6 +90,7 @@ struct mmd_engine {
 
 
 /// Expose routines to lemon parser
+void recursive_parse_indent(mmd_engine * e, token * block);
 void recursive_parse_list_item(mmd_engine * e, token * block);
 void recursive_parse_blockquote(mmd_engine * e, token * block);
 void strip_line_tokens_from_block(mmd_engine * e, token * block);

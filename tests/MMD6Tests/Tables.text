@@ -1,0 +1,37 @@
+| foo	| bar	|  
+|  ------	| :------:	|  
+| *foo*	| *bar*	|  
+| **foo bar**		||  
+
+
+| foo1  |  bar1 |
+| :---+ | ----: |
+ *foo*  | *bar* |
+| **foo bar**  ||
+
+
+| foo2  |  bar2 |
+| :---- | ----: |
+ *foo*  | *bar* |
+| **foo bar**  ||
+
+| foo3  |  bar3 |  
+ *foo*  | *bar* |  
+| **foo bar**  ||  
+
+
+| foo4  |  bar4 |  
+ *foo*  | *bar* |  
+| **foo bar**  ||  
+
+5
+
+| foo5  |    bar5 |  
+| :---- | ------: |  
+ *foo*  |   *bar* |  
+| **foo bar** \| ||  
+
+| foo6  |  bar6 |
+| :---- | ----: |
+ *foo*  | *bar* |
+| **foo bar**  ||

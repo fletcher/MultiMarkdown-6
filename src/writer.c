@@ -90,6 +90,10 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 		p->quotes_lang = e->quotes_lang;
 		p->language = e->language;
 
+		p->header_stack = e->header_stack;
+
+		p->recurse_depth = 0;
+
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
 		link * l;
@@ -242,7 +246,12 @@ char * text_inside_pair(const char * source, token * pair) {
 	char * result = NULL;
 
 	if (source && pair) {
-		result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+		if (pair->child->mate) {
+			// [foo], [^foo], [#foo] should give different strings -- use closer len
+			result = strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
+		} else {
+			result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+		}
 	}
 
 	return result;
@@ -640,6 +649,67 @@ bool validate_url(const char * url) {
 }
 
 
+char * destination_accept(const char * source, token ** remainder, bool validate) {
+	char * url = NULL;
+	char * clean = NULL;
+	token * t = NULL;
+	size_t start;
+	size_t scan_len;
+
+	switch ((*remainder)->type) {
+		case PAIR_PAREN:
+		case PAIR_ANGLE:
+		case PAIR_QUOTE_SINGLE:
+		case PAIR_QUOTE_DOUBLE:
+			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
+			url = text_inside_pair(source, t);
+			break;
+		case TEXT_PLAIN:
+			start = (*remainder)->start;
+			
+			// Skip any whitespace
+			while (char_is_whitespace(source[start]))
+				start++;
+
+			scan_len = scan_destination(&source[start]);
+
+			// Grab destination string
+			url = strndup(&source[start], scan_len);
+
+			// Advance remainder
+			while ((*remainder)->start < start + scan_len)
+				*remainder = (*remainder)->next;
+
+
+			t = (*remainder)->prev;
+
+			// Is there a space in a URL concatenated with a title or attribute?
+			// e.g. [foo]: http://foo.bar/ class="foo"
+			// Since only one space between URL and class, they are joined.
+
+			if (t->type == TEXT_PLAIN) {
+				// Trim leading whitespace
+				token_trim_leading_whitespace(t, source);
+				token_split_on_char(t, source, ' ');
+				*remainder = t->next;
+			}
+
+			break;
+	}
+
+	// Is this a valid URL?
+	clean = clean_string(url, false);
+	
+	if (validate && !validate_url(clean)) {
+		free(clean);
+		clean = NULL;
+	}
+
+	free(url);
+	return clean;
+}
+
+
 char * url_accept(const char * source, token ** remainder, bool validate) {
 	char * url = NULL;
 	char * clean = NULL;
@@ -876,7 +946,35 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 	
 	// Prepare for parsing
 
+	// Account for settings
+
 	switch (label->type) {
+		case PAIR_BRACKET_CITATION:
+			if (e->extensions & EXT_NOTES) {
+				if (!token_chain_accept(remainder, COLON))
+					return false;
+
+				title = *remainder;		// Track first token of content in 'title'
+				f = footnote_new(e->dstr->str, label, title);
+
+				// Store citation for later use
+				stack_push(e->citation_stack, f);
+				
+				break;
+			}
+		case PAIR_BRACKET_FOOTNOTE:
+			if (e->extensions & EXT_NOTES) {
+				if (!token_chain_accept(remainder, COLON))
+					return false;
+
+				title = *remainder;		// Track first token of content in 'title'
+				f = footnote_new(e->dstr->str, label, title);
+
+				// Store footnote for later use
+				stack_push(e->footnote_stack, f);
+				
+				break;
+			}
 		case PAIR_BRACKET:
 			// Reference Link Definition
 
@@ -886,8 +984,8 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 			// Skip space
 			whitespace_accept(remainder);
 
-			// Grab URL
-			url_char = url_accept(e->dstr->str, remainder, false);
+			// Grab destination
+			url_char = destination_accept(e->dstr->str, remainder, false);
 
 			whitespace_accept(remainder);
 
@@ -938,28 +1036,6 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 				stack_push(e->link_stack, l);
 
 			break;
-		case PAIR_BRACKET_CITATION:
-			if (!token_chain_accept(remainder, COLON))
-				return false;
-
-			title = *remainder;		// Track first token of content in 'title'
-			f = footnote_new(e->dstr->str, label, title);
-
-			// Store citation for later use
-			stack_push(e->citation_stack, f);
-			
-			break;
-		case PAIR_BRACKET_FOOTNOTE:
-			if (!token_chain_accept(remainder, COLON))
-				return false;
-
-			title = *remainder;		// Track first token of content in 'title'
-			f = footnote_new(e->dstr->str, label, title);
-
-			// Store footnote for later use
-			stack_push(e->footnote_stack, f);
-			
-			break;
 		case PAIR_BRACKET_VARIABLE:
 			fprintf(stderr, "Process variable:\n");
 			token_describe(label, e->dstr->str);
@@ -984,31 +1060,35 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 
 
 void process_definition_block(mmd_engine * e, token * block) {
-	token * remainder = block->child;
-	bool def_list = false;
+	footnote * f;
 
-//	while (remainder) {
-		switch (remainder->type) {
-			case PAIR_BRACKET_FOOTNOTE:
-			case PAIR_BRACKET_CITATION:
-			case PAIR_BRACKET_VARIABLE:
-				if (!(e->extensions & EXT_NOTES))
-					return;
-			case PAIR_BRACKET:
-				if (definition_extract(e, &remainder))
-					def_list = true;
-				break;
-			default:
-				// Rest of block is not definitions (or has already been processed)
-				if (def_list) {
-					tokens_prune(block->child, remainder->prev);
-					block->child = remainder;
-				}
-				return;
-		}
-//	}
-	
-	// Ignore this block in the future
+
+	token * label = block->child;
+	if (label->type == BLOCK_PARA)
+		label = label->child;
+
+	switch (block->type) {
+		case BLOCK_DEF_FOOTNOTE:
+			f = footnote_new(e->dstr->str, label, block->child);
+			stack_push(e->footnote_stack, f);
+			label->type = TEXT_EMPTY;
+			label->next->type = TEXT_EMPTY;
+			strip_leading_whitespace(label, e->dstr->str);
+			break;
+		case BLOCK_DEF_CITATION:
+			f = footnote_new(e->dstr->str, label, block->child);
+			stack_push(e->citation_stack, f);
+			label->type = TEXT_EMPTY;
+			label->next->type = TEXT_EMPTY;
+			strip_leading_whitespace(label, e->dstr->str);
+			break;
+		case BLOCK_DEF_LINK:
+			definition_extract(e, &(block->child));
+			break;
+		default:
+			fprintf(stderr, "proceess %d\n", block->type);
+	}
+
 	block->type = BLOCK_EMPTY;
 }
 
@@ -1158,11 +1238,29 @@ void parse_brackets(const char * source, scratch_pad * scratch, token * bracket,
 		temp_char = text_inside_pair(source, next);
 
 		if (temp_char[0] == '\0') {
-			// Empty label, use first bracket
+			// Empty label, use first bracket (e.g. implicit link `[foo][]`)
 			free(temp_char);
 			temp_char = text_inside_pair(source, bracket);
 		}
 	} else {
+		// This may be a simplified implicit link, e.g. `[foo]`
+
+		// But not if it's nested brackets, since it would not
+		// end up being a valid reference
+		token * walker = bracket->child;
+		while (walker) {
+			switch (walker->type) {
+				case PAIR_BRACKET:
+				case PAIR_BRACKET_CITATION:
+				case PAIR_BRACKET_FOOTNOTE:
+				case PAIR_BRACKET_VARIABLE:
+					*final_link = NULL;
+					return;
+			}
+
+			walker = walker->next;
+		}
+
 		temp_char = text_inside_pair(source, bracket);
 		// Don't skip tokens
 		temp_short = 0;
@@ -1331,3 +1429,81 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 	}
 }
 
+
+void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch) {
+	token * walker = table->child->child;
+
+	// Find the separator line	
+	while (walker->next) 
+		walker = walker->next;
+
+	walker->type = TEXT_EMPTY;
+
+	// Iterate through cells to create alignment string
+	short counter = 0;
+	short align = 0;
+
+	walker = walker->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case TABLE_CELL:
+				align = scan_alignment_string(&source[walker->start]);
+
+				switch (align) {
+					case ALIGN_LEFT:
+						scratch->table_alignment[counter] = 'l';
+						break;
+					case ALIGN_RIGHT:
+						scratch->table_alignment[counter] = 'r';
+						break;
+					case ALIGN_CENTER:
+						scratch->table_alignment[counter] = 'c';
+						break;
+					case ALIGN_LEFT | ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'L';
+						break;
+					case ALIGN_RIGHT | ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'R';
+						break;
+					case ALIGN_CENTER | ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'C';
+						break;
+					case ALIGN_WRAP:
+						scratch->table_alignment[counter] = 'C';
+						break;
+					default:
+						scratch->table_alignment[counter] = 'n';
+				}
+
+				counter++;
+				break;
+		}
+
+		walker = walker->next;
+	}
+
+	scratch->table_alignment[counter] = '\0';
+	scratch->table_column_count = counter;
+}
+
+
+void strip_leading_whitespace(token * chain, const char * source) {
+	while (chain) {
+		switch (chain->type) {
+			case INDENT_TAB:
+			case INDENT_SPACE:
+			case NON_INDENT_SPACE:
+				chain->type = TEXT_EMPTY;
+			case TEXT_EMPTY:
+				chain = chain->next;
+				break;
+			case TEXT_PLAIN:
+				token_trim_leading_whitespace(chain, source);
+			default:
+				return;
+		}
+
+		chain = chain->next;
+	}
+}

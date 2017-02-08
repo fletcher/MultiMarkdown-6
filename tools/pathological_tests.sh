@@ -76,17 +76,15 @@ echo "**x <a href=\"d\">*b**c*</a></p>" >>	path8.html
 
 
 # Nested brackets
-# TODO: Performance hit between 1000 and 10,000 iterations
-# Checking each level to see if it's a valid link on the stack
-# seq -s " " -f "[" $X >				path9.text
-# echo -n "a" >> 						path9.text
-# seq -s " " -f "]" $X >>				path9.text
-# 
-# echo -n "<p>" >						path9.html
-# seq -s " " -f "[" $X >>				path9.html
-# echo -n "a" >> 						path9.html
-# seq -s " " -f "]" $Y >>				path9.html
-# echo "]</p>" >>						path9.html
+seq -s " " -f "[" $X >				path9.text
+echo -n "a" >> 						path9.text
+seq -s " " -f "]" $X >>				path9.text
+
+echo -n "<p>" >						path9.html
+seq -s " " -f "[" $X >>				path9.html
+echo -n "a" >> 						path9.html
+seq -s " " -f "]" $Y >>				path9.html
+echo "]</p>" >>						path9.html
 
 
 # Nested block quotes

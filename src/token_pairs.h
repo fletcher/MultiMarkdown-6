@@ -65,8 +65,9 @@
 #include "CuTest.h"
 #endif
 
-#define kMaxTokenTypes	200			// This needs to be larger than the largest token type being used
-#define kLargeStackThreshold 1000	// Avoid unnecessary searches of large stacks
+#define kMaxTokenTypes	200				//!< This needs to be larger than the largest token type being used
+#define kLargeStackThreshold 1000		//!< Avoid unnecessary searches of large stacks
+#define kMaxPairRecursiveDepth 1000		//!< Maximum recursion depth to traverse when pairing tokens -- to prevent stack overflow with "pathologic" input
 
 
 /// Store information about which tokens can be paired, and what actions to take when 
@@ -114,7 +115,8 @@ void token_pair_engine_add_pairing(
 void token_pairs_match_pairs_inside_token(
 	token * parent,							//!< Which tokens should we search for pairs
 	token_pair_engine * e,					//!< Token pair engine to be used for matching
-	stack * s								//!< Pointer to a stack to use for pairing tokens
+	stack * s,								//!< Pointer to a stack to use for pairing tokens
+	unsigned short depth					//!< Keep track of recursion depth
 );
 
 

@@ -75,6 +75,7 @@
 void * ParseAlloc();
 void Parse();
 void ParseFree();
+void ParseTrace();
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
@@ -90,6 +91,8 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->root = NULL;
 
 		e->extensions = extensions;
+
+		e->recurse_depth = 0;
 
 		e->allow_meta = (extensions & EXT_COMPATIBILITY) ? false : true;
 
@@ -119,10 +122,18 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		// Brackets, Parentheses, Angles
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+
+		if (extensions & EXT_NOTES) {
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		} else {
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		}
+		
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		
+		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, PAREN_LEFT, PAREN_RIGHT, PAIR_PAREN, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, ANGLE_LEFT, ANGLE_RIGHT, PAIR_ANGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, BRACE_DOUBLE_LEFT, BRACE_DOUBLE_RIGHT, PAIR_BRACES, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -326,6 +337,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			}
 			line->type = LINE_PLAIN;
 			break;
+		case COLON:
+			line->type = LINE_PLAIN;
+			if (e->extensions & EXT_COMPATIBILITY) {
+				break;
+			}
+			if (scan_definition(&source[line->child->start])) {
+				line->type = LINE_DEFINITION;
+			}
+			break;
 		case HASH1:
 		case HASH2:
 		case HASH3:
@@ -504,6 +524,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			e->allow_meta = false;
 			line->type = LINE_EMPTY;
 			break;
+		case TOC:
+			line->type = (e->extensions & EXT_COMPATIBILITY) ? LINE_PLAIN : LINE_TOC;
+			break;
 		case BRACKET_LEFT:
 			if (e->extensions & EXT_COMPATIBILITY) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);
@@ -518,7 +541,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_citation(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_CITATION : LINE_PLAIN;
 			} else {
-				line->type = LINE_PLAIN;
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;
 		case BRACKET_FOOTNOTE_LEFT:
@@ -526,9 +550,18 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_foot(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_FOOTNOTE : LINE_PLAIN;
 			} else {
-				line->type = LINE_PLAIN;
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;
+		case PIPE:
+			// If PIPE is first, save checking later and assign LINE_TABLE now
+			if (!(e->extensions & EXT_COMPATIBILITY)) {
+				scan_len = scan_table_separator(&source[line->start]);
+				line->type = (scan_len) ? LINE_TABLE_SEPARATOR : LINE_TABLE;
+
+				break;
+			}
 		case TEXT_PLAIN:
 			if (e->allow_meta && !(e->extensions & EXT_COMPATIBILITY)) {
 				scan_len = scan_url(&source[line->start]);
@@ -543,12 +576,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			break;
 	}
 
-	if (line->type == LINE_PLAIN) {
+	if ((line->type == LINE_PLAIN) &&
+		!(e->extensions & EXT_COMPATIBILITY)) {
+		// Check if this is a potential table line
 		token * walker = line->child;
 
 		while (walker != NULL) {
 			if (walker->type == PIPE) {
-				line->type = LINE_TABLE;
+				scan_len = scan_table_separator(&source[line->start]);
+				line->type = (scan_len) ? LINE_TABLE_SEPARATOR : LINE_TABLE;
 
 				return;
 			}
@@ -745,9 +781,18 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len) {
 /// Parse token tree
 void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 
+	if (e->recurse_depth == kMaxParseRecursiveDepth)
+		return;
+
+	e->recurse_depth++;
+
 	void* pParser = ParseAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
+
+#ifndef NDEBUG
+	ParseTrace(stderr, "parser >>");
+#endif
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -762,12 +807,19 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 		if (remainder)
 			remainder->prev = NULL;
 
+#ifndef NDEBUG
+		fprintf(stderr, "\nNew line\n");
+#endif
+
 		Parse(pParser, walker->type, walker, e);
 
 		walker = remainder;
 	}
 
 	// Signal finish to parser
+#ifndef NDEBUG
+	fprintf(stderr, "\nFinish parse\n");
+#endif
 	Parse(pParser, 0, NULL, e);
 
 	// Disconnect of (now empty) root
@@ -776,6 +828,8 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	e->root = NULL;
 
 	ParseFree(pParser, free);
+
+	e->recurse_depth--;
 }
 
 
@@ -796,6 +850,8 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 
 	switch (block->type) {
 		case BLOCK_BLOCKQUOTE:
+		case BLOCK_DEFLIST:
+		case BLOCK_DEFINITION:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
 		case BLOCK_DEF_LINK:
@@ -806,7 +862,8 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_H5:
 		case BLOCK_H6:
 		case BLOCK_PARA:
-			token_pairs_match_pairs_inside_token(block, e, s);
+		case BLOCK_TERM:
+			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			break;
 		case DOC_START_TOKEN:
 		case BLOCK_LIST_BULLETED:
@@ -817,13 +874,13 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 			break;
 		case BLOCK_LIST_ITEM:
 		case BLOCK_LIST_ITEM_TIGHT:
-			token_pairs_match_pairs_inside_token(block, e, s);
+			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
 		case LINE_TABLE:
 		case BLOCK_TABLE:
 			// TODO: Need to parse into cells first
-			token_pairs_match_pairs_inside_token(block, e, s);
+			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
 		case BLOCK_EMPTY:
@@ -862,6 +919,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 				t->type = BLOCK_PARA;
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
+			case BLOCK_DEFLIST:
+			case BLOCK_DEFINITION:
 			case BLOCK_H1:
 			case BLOCK_H2:
 			case BLOCK_H3:
@@ -876,6 +935,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_LIST_ITEM_TIGHT:
 			case BLOCK_PARA:
 			case BLOCK_TABLE:
+			case BLOCK_TERM:
 				// Assign child tokens of blocks
 				mmd_assign_ambidextrous_tokens_in_block(e, t, str, start_offset);
 				break;
@@ -1231,11 +1291,27 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 	// Strip list marker from first line
 	token_remove_first_child(block->child);
 
-	// Remove all leading space from first line of list item
-//	strip_all_leading_space(block->child)
-
 	// Remove one indent level from all lines to allow recursive parsing
 	deindent_block(e, block);
+
+	mmd_parse_token_chain(e, block);
+}
+
+
+void recursive_parse_indent(mmd_engine * e, token * block) {
+	// Remove one indent level from all lines to allow recursive parsing
+	deindent_block(e, block);
+
+	// First line is now plain text
+	block->child->type = LINE_PLAIN;
+
+	// Strip tokens?
+	switch (block->type) {
+		case BLOCK_DEFINITION:
+			// Strip leading ':' from definition
+			token_remove_first_child(block->child);
+			break;
+	}
 
 	mmd_parse_token_chain(e, block);
 }
@@ -1273,7 +1349,9 @@ void is_list_loose(token * list) {
 
 /// Is this actually an HTML block?
 void is_para_html(mmd_engine * e, token * block) {
-	if (block->child->type != LINE_PLAIN)
+	if ((block == NULL) ||
+		(block->child == NULL) ||
+		(block->child->type != LINE_PLAIN))
 		return;
 	token * t = block->child->child;
 
@@ -1362,6 +1440,99 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 }
 
 
+void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
+	token * walker = deflist->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case LINE_EMPTY:
+				walker->type = TEXT_EMPTY;
+				break;
+			case LINE_PLAIN:
+				walker->type = BLOCK_TERM;
+			case BLOCK_TERM:
+				break;
+			case BLOCK_DEFINITION:
+				strip_line_tokens_from_block(e, walker);
+				break;
+		}
+		walker = walker->next;
+	}
+}
+
+
+void strip_line_tokens_from_table(mmd_engine * e, token * table) {
+	token * walker = table->child;
+
+	while (walker) {
+		switch (walker->type) {
+			case BLOCK_TABLE_SECTION:
+				strip_line_tokens_from_block(e, walker);
+				break;
+			case BLOCK_TABLE_HEADER:
+				strip_line_tokens_from_block(e, walker);
+				break;
+			case LINE_EMPTY:
+				walker->type = TEXT_EMPTY;
+				break;
+		}
+
+		walker = walker->next;
+	}
+}
+
+
+void parse_table_row_into_cells(token * row) {
+	token * first = NULL;
+	token * last = NULL;
+
+	token * walker = row->child;
+
+	if (walker->type == PIPE) {
+		walker->type = TABLE_DIVIDER;
+		first = walker->next;
+	} else {
+		first = walker;
+		last = first;
+	}
+
+
+	walker = walker->next;
+
+	while (walker) {
+		switch (walker->type) {
+			case PIPE:
+				if (row->child == first) {
+					row->child = token_prune_graft(first, last, TABLE_CELL);
+				} else {
+					token_prune_graft(first, last, TABLE_CELL);
+				}
+				first = NULL;
+				last = NULL;
+				walker->type = TABLE_DIVIDER;
+				break;
+			case TEXT_NL:
+			case TEXT_LINEBREAK:
+				break;
+			default:
+				if (!first)
+					first = walker;
+				last = walker;
+		}
+
+		walker = walker->next;
+	}
+
+	if (first) {
+		if (row->child == first) {
+			row->child = token_prune_graft(first, last, TABLE_CELL);
+		} else {
+			token_prune_graft(first, last, TABLE_CELL);
+		}
+	}
+}
+
+
 void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	if ((block == NULL) || (block->child == NULL))
 		return;
@@ -1383,6 +1554,12 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			while (l->tail->type == LINE_EMPTY)
 				token_remove_last_child(block);
 			break;
+		case BLOCK_DEFLIST:
+			// Handle definition lists
+			return strip_line_tokens_from_deflist(e, block);
+		case BLOCK_TABLE:
+			// Handle tables
+			return strip_line_tokens_from_table(e, block);
 	}
 
 	token * children = NULL;
@@ -1393,6 +1570,11 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	// Move contents of line directly into the parent block
 	while (l != NULL) {
 		switch (l->type) {
+			case LINE_DEFINITION:
+				if (block->type == BLOCK_DEFINITION) {
+					// Remove leading colon
+					token_remove_first_child(l);
+				}
 			case LINE_ATX_1:
 			case LINE_ATX_2:
 			case LINE_ATX_3:
@@ -1409,6 +1591,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_LIST_ENUMERATED:
 			case LINE_META:
 			case LINE_PLAIN:
+				handle_line:
 				// Remove leading non-indent space from line
 				if (l->child && l->child->type == NON_INDENT_SPACE)
 				token_remove_first_child(l);
@@ -1438,10 +1621,20 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				// Advance to next line
 				l = l->next;
 				break;
+			case LINE_TABLE_SEPARATOR:
 			case LINE_TABLE:
-				l->type = ROW_TABLE;
-				break;
+				if (block->type == BLOCK_TABLE_HEADER) {
+					l->type = (l->type == LINE_TABLE) ? TABLE_ROW : LINE_TABLE_SEPARATOR;
+					parse_table_row_into_cells(l);
+				} else if (block->type == BLOCK_TABLE_SECTION) {
+					l->type =  TABLE_ROW;
+					parse_table_row_into_cells(l);
+				} else {
+					goto handle_line;
+				}
 			default:
+				handle_block:
+				//fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
 				// This is a block, need to remove it from chain and
 				// Add to parent
 				temp = l->next;
@@ -1483,6 +1676,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		// Prepare stack to be used for token pairing
 		// This avoids allocating/freeing one for each iteration.
 		stack * pair_stack = stack_new(0);
+
 
 		mmd_pair_tokens_in_block(doc, e->pairings1, pair_stack);
 		mmd_pair_tokens_in_block(doc, e->pairings2, pair_stack);

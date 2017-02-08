@@ -1,0 +1,21 @@
+foo
+bar
+:	*foo bar
+:	baz bat*
+
+foo
+bar
+:	*foo bar
+	bar foo*
+:	baz bat
+
+bat
+:	*foo*
+
+foo
+:	*foo bar
+	bar foo
+:	baz* bat
+
+foo
+

@@ -1,0 +1,6 @@
+bat
+:	*foo*
+
+	bar
+
+		*foo*

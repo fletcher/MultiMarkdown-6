@@ -67,6 +67,10 @@
 #include "uthash.h"
 
 
+#define kMaxExportRecursiveDepth 1000		//!< Maximum recursion depth when exporting token tree -- to prevent stack overflow with "pathologic" input
+
+#define kMaxTableColumns 48					//!< Maximum number of table columns for specifying alignment
+
 typedef struct {
 	struct link *		link_hash;
 	struct meta *		meta_hash;
@@ -89,7 +93,16 @@ typedef struct {
 
 	short				language;
 	short				quotes_lang;
+
+	stack *				header_stack;
+
+	short				recurse_depth;
 	
+	short				in_table_header;
+	short				table_column_count;
+	short				table_cell_count;
+	char 				table_alignment[kMaxTableColumns];
+
 	char 				_PADDING[4];	//!< pad struct for alignment
 
 } scratch_pad;
@@ -181,6 +194,10 @@ meta * meta_new(const char * source, size_t start, size_t len);
 void meta_set_value(meta * m, const char * value);
 void meta_free(meta * m);
 char * extract_metadata(scratch_pad * scratch, const char * target);
+
+void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch);
+
+void strip_leading_whitespace(token * chain, const char * source);
 
 #endif
 
