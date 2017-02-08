@@ -249,7 +249,7 @@ int main(int argc, char** argv) {
 	// Parse options
 	unsigned long extensions = EXT_SMART | EXT_NOTES | EXT_CRITIC;
 
-	if (a_compatibility->count >= 0) {
+	if (a_compatibility->count > 0) {
 		// Compatibility mode disables certain features
 		// Reset extensions
 		extensions = EXT_COMPATIBILITY | EXT_NO_LABELS | EXT_OBFUSCATE;
