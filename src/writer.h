@@ -197,5 +197,7 @@ char * extract_metadata(scratch_pad * scratch, const char * target);
 
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch);
 
+void strip_leading_whitespace(token * chain, const char * source);
+
 #endif
 

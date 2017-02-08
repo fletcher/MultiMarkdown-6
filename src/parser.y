@@ -94,23 +94,23 @@ blocks(A)			::= block(B).
 
 // Single line blocks
 
-block(A)			::= LINE_ATX_1(B).		{ A = token_new_parent(B, BLOCK_H1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_2(B).		{ A = token_new_parent(B, BLOCK_H2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_3(B).		{ A = token_new_parent(B, BLOCK_H3); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_4(B).		{ A = token_new_parent(B, BLOCK_H4); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_5(B).		{ A = token_new_parent(B, BLOCK_H5); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= LINE_ATX_6(B).		{ A = token_new_parent(B, BLOCK_H6); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_1(B).			{ A = token_new_parent(B, BLOCK_H1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_2(B).			{ A = token_new_parent(B, BLOCK_H2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_3(B).			{ A = token_new_parent(B, BLOCK_H3); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_4(B).			{ A = token_new_parent(B, BLOCK_H4); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_5(B).			{ A = token_new_parent(B, BLOCK_H5); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_6(B).			{ A = token_new_parent(B, BLOCK_H6); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
 
-block(A)			::= LINE_HR(B).			{ A = token_new_parent(B, BLOCK_HR); }
+block(A)			::= LINE_HR(B).				{ A = token_new_parent(B, BLOCK_HR); }
 
-block(A)			::= LINE_TOC(B).		{ A = token_new_parent(B, BLOCK_TOC); }
+block(A)			::= LINE_TOC(B).			{ A = token_new_parent(B, BLOCK_TOC); }
 
 
 // Multi-line blocks
 
 block(A)			::= blockquote(B).			{ A = token_new_parent(B, BLOCK_BLOCKQUOTE); recursive_parse_blockquote(engine, A); }
 block(A)			::= def_citation(B).		{ A = token_new_parent(B, BLOCK_DEF_CITATION); stack_push(engine->definition_stack, A); }
-block(A)			::= def_footnote(B).		{ A = token_new_parent(B, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, A); }
+block(A)			::= def_footnote(B).		{ A = token_new_parent(B, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, A); recursive_parse_indent(engine, A); }
 block(A)			::= def_link(B).			{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
 block(A)			::= definition_block(B).	{ A = token_new_parent(B, BLOCK_DEFLIST); }
 block(A)			::= empty(B).				{ A = token_new_parent(B, BLOCK_EMPTY); }
@@ -170,6 +170,7 @@ opt_ext_chunk		::= chunk.
 // Shortcut for anything that falls into the extended chunk pattern
 tail				::= opt_ext_chunk.
 tail				::= nested_chunks.
+//tail 				::= empty.
 
 
 // Blockquotes
@@ -197,11 +198,11 @@ def_link			::= LINE_DEF_LINK.
 // We have to bundle them when exporting, if desired.
 definition_block(A)	::= para(B) defs(C).						{ A = B; token_chain_append(B, C); B->type = BLOCK_TERM; }
 
-defs(A)				::= defs(B) def(C).							{ A = B; token_chain_append(B, token_new_parent(C, BLOCK_DEFINITION)); }
-defs(A)				::= def(B).									{ A = token_new_parent(B, BLOCK_DEFINITION); }
+defs(A)				::= defs(B) def(C).							{ A = B; token_chain_append(B, C); }
+defs				::= def.									
 
-def(A)				::= def(B) LINE_CONTINUATION(C).			{ A = B; token_chain_append(B, C); }
-def					::= LINE_DEFINITION.
+def(A)				::= LINE_DEFINITION(B) tail(C).				{ A = token_new_parent(B, BLOCK_DEFINITION); token_chain_append(B, C); recursive_parse_indent(engine, A); }
+def(A)				::= LINE_DEFINITION(B).						{ A = token_new_parent(B, BLOCK_DEFINITION);  }
 
 
 // Empty lines

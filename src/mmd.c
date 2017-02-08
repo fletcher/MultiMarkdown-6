@@ -1281,11 +1281,27 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 	// Strip list marker from first line
 	token_remove_first_child(block->child);
 
-	// Remove all leading space from first line of list item
-//	strip_all_leading_space(block->child)
-
 	// Remove one indent level from all lines to allow recursive parsing
 	deindent_block(e, block);
+
+	mmd_parse_token_chain(e, block);
+}
+
+
+void recursive_parse_indent(mmd_engine * e, token * block) {
+	// Remove one indent level from all lines to allow recursive parsing
+	deindent_block(e, block);
+
+	// First line is now plain text
+	block->child->type = LINE_PLAIN;
+
+	// Strip tokens?
+	switch (block->type) {
+		case BLOCK_DEFINITION:
+			// Strip leading ':' from definition
+			token_remove_first_child(block->child);
+			break;
+	}
 
 	mmd_parse_token_chain(e, block);
 }

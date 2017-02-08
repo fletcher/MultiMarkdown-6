@@ -107,9 +107,9 @@ typedef union {
 #define ParseARG_FETCH  mmd_engine * engine  = yypParser->engine 
 #define ParseARG_STORE yypParser->engine  = engine 
 #define YYFALLBACK 1
-#define YYNSTATE             40
+#define YYNSTATE             39
 #define YYNRULE              104
-#define YY_MAX_SHIFT         39
+#define YY_MAX_SHIFT         38
 #define YY_MIN_SHIFTREDUCE   106
 #define YY_MAX_SHIFTREDUCE   209
 #define YY_MIN_REDUCE        210
@@ -188,28 +188,29 @@ typedef union {
 **  yy_default[]       Default action for each state.
 **
 *********** Begin parsing tables **********************************************/
-#define YY_ACTTAB_COUNT (200)
+#define YY_ACTTAB_COUNT (208)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */   315,    1,  108,   27,  118,  119,  120,  121,   39,  123,
- /*    10 */    26,   24,   34,   32,   25,   17,  130,   36,  166,   11,
- /*    20 */    11,   24,  175,  176,  172,  208,   29,   37,   22,  204,
- /*    30 */    36,   34,   32,  169,    6,  187,   35,  186,   12,   12,
- /*    40 */   210,   13,  208,  145,  175,  176,  204,  193,  109,  110,
- /*    50 */   111,  112,  113,  114,  115,  180,    5,    4,    3,    2,
- /*    60 */    14,  189,  190,  116,  186,  187,  199,   13,  208,  147,
+ /*     0 */   315,    1,  108,   28,  118,  119,  120,  121,   38,  123,
+ /*    10 */    27,   25,   35,   33,   26,   18,  130,   37,  166,   12,
+ /*    20 */    12,   25,  175,  176,  172,  208,   30,   30,   23,  204,
+ /*    30 */    37,   35,   33,  169,    7,  187,   36,    4,   13,   13,
+ /*    40 */   210,   14,  208,  145,  175,  176,  204,  193,  109,  110,
+ /*    50 */   111,  112,  113,  114,  115,  180,    6,    5,    3,    2,
+ /*    60 */    15,  189,  190,  116,    4,  187,  199,   14,  208,  147,
  /*    70 */   175,  176,  204,  193,  109,  110,  111,  112,  113,  114,
- /*    80 */   115,  180,    5,    4,    3,    2,   14,  189,  190,  116,
- /*    90 */   186,  187,  199,  107,   27,  118,  119,  120,  121,   39,
- /*   100 */   123,   26,   24,   34,   32,   25,   17,  130,   31,   37,
- /*   110 */   175,  176,   24,   28,   28,  172,   23,   29,   37,   22,
- /*   120 */    30,   30,   34,   32,   23,    6,  182,   35,  132,   12,
- /*   130 */    12,  150,   23,    8,    8,   15,   15,  187,  181,  139,
- /*   140 */   139,    8,    8,   15,   15,   33,   33,  138,  138,   23,
- /*   150 */     7,   36,    7,   11,   11,   23,   20,  149,    9,    9,
- /*   160 */    18,   18,   23,  157,   10,   10,   19,   19,  191,  152,
- /*   170 */    23,  201,  131,   16,   16,  208,  161,  137,  148,  204,
- /*   180 */   131,   21,   21,  194,  164,  131,  146,  195,  165,    4,
- /*   190 */   192,   38,  156,    5,  200,  165,  151,  144,  167,  145,
+ /*    80 */   115,  180,    6,    5,    3,    2,   15,  189,  190,  116,
+ /*    90 */     4,  187,  199,  107,   28,  118,  119,  120,  121,   38,
+ /*   100 */   123,   27,   25,   35,   33,   26,   18,  130,   32,   32,
+ /*   110 */   175,  176,   25,   29,   29,  172,   24,   30,   30,   23,
+ /*   120 */    31,   31,   35,   33,   24,    7,  182,   36,  132,   13,
+ /*   130 */    13,  150,   24,    9,    9,   16,   16,  187,  181,  139,
+ /*   140 */   139,    9,    9,   16,   16,   34,   34,  138,  138,   24,
+ /*   150 */     8,   37,    8,   12,   12,  161,   24,   21,    9,    9,
+ /*   160 */    16,   16,   24,  149,  143,  143,  131,   17,   17,   24,
+ /*   170 */   137,   10,   10,   19,   19,  191,  157,   24,   11,   11,
+ /*   180 */    20,   20,  208,  152,  201,  148,  204,  131,   22,   22,
+ /*   190 */   194,  164,  131,  146,  195,  165,    5,  192,  142,  156,
+ /*   200 */     6,  151,  165,  145,  212,  167,  212,  200,
 };
 static const YYCODETYPE yy_lookahead[] = {
  /*     0 */    28,   29,   30,   31,   32,   33,   34,   35,   36,   37,
@@ -227,37 +228,38 @@ static const YYCODETYPE yy_lookahead[] = {
  /*   120 */    45,   46,   59,   60,   36,   62,    3,   64,   48,   66,
  /*   130 */    67,   25,   36,   45,   46,   47,   48,   25,   15,   51,
  /*   140 */    52,   45,   46,   47,   48,   45,   46,   51,   52,   36,
- /*   150 */    63,   64,   65,   66,   67,   36,   49,   49,   45,   46,
- /*   160 */    47,   48,   36,   50,   45,   46,   47,   48,    3,   50,
- /*   170 */    36,    3,   46,   47,   48,    2,   61,   53,   58,    6,
- /*   180 */    46,   47,   48,    3,    2,   46,   21,    7,    6,   17,
- /*   190 */    25,   55,   60,   16,   26,    6,   59,    3,   25,   25,
+ /*   150 */    63,   64,   65,   66,   67,   61,   36,   49,   45,   46,
+ /*   160 */    47,   48,   36,   49,   51,   52,   46,   47,   48,   36,
+ /*   170 */    53,   45,   46,   47,   48,    3,   50,   36,   45,   46,
+ /*   180 */    47,   48,    2,   50,    3,   58,    6,   46,   47,   48,
+ /*   190 */     3,    2,   46,   21,    7,    6,   17,   25,   55,   60,
+ /*   200 */    16,   59,    6,   25,   68,   25,   68,   26,
 };
-#define YY_SHIFT_USE_DFLT (200)
-#define YY_SHIFT_COUNT    (39)
+#define YY_SHIFT_USE_DFLT (208)
+#define YY_SHIFT_COUNT    (38)
 #define YY_SHIFT_MIN      (0)
-#define YY_SHIFT_MAX      (194)
+#define YY_SHIFT_MAX      (196)
 static const unsigned char yy_shift_ofst[] = {
- /*     0 */    66,   40,  112,  112,  112,  112,   23,   23,  112,  112,
- /*    10 */   112,  173,   23,   21,   21,   10,   10,   13,   10,   10,
- /*    20 */    21,   10,  165,   18,  106,  168,  180,  123,   21,   13,
- /*    30 */    21,   13,  172,   21,  177,  182,  189,  194,  194,  174,
+ /*     0 */    66,   40,  112,  112,  112,  112,  112,   23,   23,  112,
+ /*    10 */   112,  112,  180,   23,   21,   21,   10,   10,   13,   10,
+ /*    20 */    10,   21,   10,  172,   18,  106,  181,  187,  123,   21,
+ /*    30 */    13,   21,   13,  179,   21,  184,  189,  196,  178,
 };
 #define YY_REDUCE_USE_DFLT (-48)
-#define YY_REDUCE_COUNT (34)
+#define YY_REDUCE_COUNT (35)
 #define YY_REDUCE_MIN   (-47)
-#define YY_REDUCE_MAX   (139)
+#define YY_REDUCE_MAX   (146)
 static const short yy_reduce_ofst[] = {
- /*     0 */   -28,   63,   88,   96,  113,  119,   87,  -47,  126,  134,
- /*    10 */   134,  -34,  -34,   68,   75,   80,   80,   54,   80,   80,
- /*    20 */   100,   80,   12,  107,  108,  115,  120,  124,  139,  136,
- /*    30 */   139,  136,  132,  139,  137,
+ /*     0 */   -28,   63,   88,   96,  113,  126,  133,   87,  -47,  120,
+ /*    10 */   141,  141,  -34,  -34,   68,   75,   80,   80,   54,   80,
+ /*    20 */    80,  100,   80,   12,  108,  114,   94,  127,  117,  146,
+ /*    30 */   143,  146,  143,  139,  146,  142,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */   314,  314,  288,  287,  264,  259,  307,  267,  281,  262,
- /*    10 */   257,  272,  274,  306,  289,  283,  240,  233,  263,  258,
- /*    20 */   238,  239,  292,  278,  229,  232,  228,  221,  266,  313,
- /*    30 */   244,  245,  231,  237,  230,  311,  311,  247,  246,  226,
+ /*     0 */   314,  314,  288,  287,  248,  264,  259,  307,  267,  281,
+ /*    10 */   262,  257,  272,  274,  306,  289,  283,  240,  233,  263,
+ /*    20 */   258,  238,  239,  292,  278,  229,  232,  228,  221,  266,
+ /*    30 */   313,  244,  245,  231,  237,  230,  311,  311,  226,
 };
 /********** End of lemon-generated parsing tables *****************************/
 
@@ -446,8 +448,8 @@ static const char *const yyRuleName[] = {
  /*  34 */ "def_link ::= LINE_DEF_LINK chunk",
  /*  35 */ "definition_block ::= para defs",
  /*  36 */ "defs ::= defs def",
- /*  37 */ "defs ::= def",
- /*  38 */ "def ::= def LINE_CONTINUATION",
+ /*  37 */ "def ::= LINE_DEFINITION tail",
+ /*  38 */ "def ::= LINE_DEFINITION",
  /*  39 */ "empty ::= empty LINE_EMPTY",
  /*  40 */ "fenced_block ::= fenced LINE_FENCE_BACKTICK",
  /*  41 */ "fenced ::= fenced fenced_line",
@@ -489,7 +491,7 @@ static const char *const yyRuleName[] = {
  /*  77 */ "def_citation ::= LINE_DEF_CITATION",
  /*  78 */ "def_footnote ::= LINE_DEF_FOOTNOTE",
  /*  79 */ "def_link ::= LINE_DEF_LINK",
- /*  80 */ "def ::= LINE_DEFINITION",
+ /*  80 */ "defs ::= def",
  /*  81 */ "empty ::= LINE_EMPTY",
  /*  82 */ "fenced_block ::= fenced",
  /*  83 */ "fenced ::= LINE_FENCE_BACKTICK",
@@ -898,8 +900,8 @@ static const struct {
   { 34, 2 },
   { 35, 2 },
   { 54, 2 },
-  { 54, 1 },
   { 55, 2 },
+  { 55, 1 },
   { 36, 2 },
   { 37, 2 },
   { 56, 2 },
@@ -941,7 +943,7 @@ static const struct {
   { 32, 1 },
   { 33, 1 },
   { 34, 1 },
-  { 55, 1 },
+  { 54, 1 },
   { 36, 1 },
   { 37, 1 },
   { 56, 1 },
@@ -1094,7 +1096,7 @@ static void yy_reduce(
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 13: /* block ::= def_footnote */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, yylhsminor.yy0); }
+{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, yylhsminor.yy0); recursive_parse_indent(engine, yylhsminor.yy0); }
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 14: /* block ::= def_link */
@@ -1149,7 +1151,7 @@ static void yy_reduce(
       case 32: /* def_citation ::= LINE_DEF_CITATION tail */ yytestcase(yyruleno==32);
       case 33: /* def_footnote ::= LINE_DEF_FOOTNOTE tail */ yytestcase(yyruleno==33);
       case 34: /* def_link ::= LINE_DEF_LINK chunk */ yytestcase(yyruleno==34);
-      case 38: /* def ::= def LINE_CONTINUATION */ yytestcase(yyruleno==38);
+      case 36: /* defs ::= defs def */ yytestcase(yyruleno==36);
       case 39: /* empty ::= empty LINE_EMPTY */ yytestcase(yyruleno==39);
       case 41: /* fenced ::= fenced fenced_line */ yytestcase(yyruleno==41);
       case 42: /* html_block ::= html_block html_line */ yytestcase(yyruleno==42);
@@ -1178,12 +1180,12 @@ static void yy_reduce(
 { yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); yymsp[-1].minor.yy0->type = BLOCK_TERM; }
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
-      case 36: /* defs ::= defs def */
-{ yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFINITION)); }
+      case 37: /* def ::= LINE_DEFINITION tail */
+{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_DEFINITION); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); recursive_parse_indent(engine, yylhsminor.yy0); }
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
-      case 37: /* defs ::= def */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFINITION); }
+      case 38: /* def ::= LINE_DEFINITION */
+{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFINITION);  }
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 40: /* fenced_block ::= fenced LINE_FENCE_BACKTICK */
@@ -1239,7 +1241,7 @@ static void yy_reduce(
       /* (77) def_citation ::= LINE_DEF_CITATION */ yytestcase(yyruleno==77);
       /* (78) def_footnote ::= LINE_DEF_FOOTNOTE */ yytestcase(yyruleno==78);
       /* (79) def_link ::= LINE_DEF_LINK */ yytestcase(yyruleno==79);
-      /* (80) def ::= LINE_DEFINITION */ yytestcase(yyruleno==80);
+      /* (80) defs ::= def (OPTIMIZED OUT) */ assert(yyruleno!=80);
       /* (81) empty ::= LINE_EMPTY */ yytestcase(yyruleno==81);
       /* (82) fenced_block ::= fenced */ yytestcase(yyruleno==82);
       /* (83) fenced ::= LINE_FENCE_BACKTICK */ yytestcase(yyruleno==83);

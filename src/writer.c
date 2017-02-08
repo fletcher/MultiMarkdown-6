@@ -988,31 +988,34 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 
 
 void process_definition_block(mmd_engine * e, token * block) {
-	token * remainder = block->child;
-	bool def_list = false;
+	footnote * f;
 
-//	while (remainder) {
-		switch (remainder->type) {
-			case PAIR_BRACKET_FOOTNOTE:
-			case PAIR_BRACKET_CITATION:
-			case PAIR_BRACKET_VARIABLE:
-				if (!(e->extensions & EXT_NOTES))
-					return;
-			case PAIR_BRACKET:
-				if (definition_extract(e, &remainder))
-					def_list = true;
-				break;
-			default:
-				// Rest of block is not definitions (or has already been processed)
-				if (def_list) {
-					tokens_prune(block->child, remainder->prev);
-					block->child = remainder;
-				}
-				return;
-		}
-//	}
-	
-	// Ignore this block in the future
+	token * label = block->child;
+	if (label->type == BLOCK_PARA)
+		label = label->child;
+
+	switch (block->type) {
+		case BLOCK_DEF_FOOTNOTE:
+			f = footnote_new(e->dstr->str, label, block->child);
+			stack_push(e->footnote_stack, f);
+			label->type = TEXT_EMPTY;
+			label->next->type = TEXT_EMPTY;
+			strip_leading_whitespace(label, e->dstr->str);
+			break;
+		case BLOCK_DEF_CITATION:
+			f = footnote_new(e->dstr->str, label, block->child);
+			stack_push(e->citation_stack, f);
+			label->type = TEXT_EMPTY;
+			label->next->type = TEXT_EMPTY;
+			strip_leading_whitespace(label, e->dstr->str);
+			break;
+		case BLOCK_DEF_LINK:
+			definition_extract(e, &(block->child));
+			break;
+		default:
+			fprintf(stderr, "proceess %d\n", block->type);
+	}
+
 	block->type = BLOCK_EMPTY;
 }
 
@@ -1411,3 +1414,23 @@ void read_table_column_alignments(const char * source, token * table, scratch_pa
 	scratch->table_column_count = counter;
 }
 
+
+void strip_leading_whitespace(token * chain, const char * source) {
+	while (chain) {
+		switch (chain->type) {
+			case INDENT_TAB:
+			case INDENT_SPACE:
+			case NON_INDENT_SPACE:
+				chain->type = TEXT_EMPTY;
+			case TEXT_EMPTY:
+				chain = chain->next;
+				break;
+			case TEXT_PLAIN:
+				token_trim_leading_whitespace(chain, source);
+			default:
+				return;
+		}
+
+		chain = chain->next;
+	}
+}

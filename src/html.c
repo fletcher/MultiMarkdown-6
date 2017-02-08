@@ -324,9 +324,16 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case BLOCK_DEFINITION:
 			pad(out, 2, scratch);
 			print("<dd>");
+
+			temp_short = scratch->list_is_tight;
+			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+				scratch->list_is_tight = true;
+
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			print("</dd>");
 			scratch->padded = 0;
+
+			scratch->list_is_tight = temp_short;
 			break;
 		case BLOCK_DEFLIST:
 			pad(out, 2, scratch);
@@ -334,7 +341,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			// Group consecutive definition lists into a single list.
 			// lemon's LALR(1) parser can't properly handle this (to my understanding).
 
-			if (!(t->prev && t->prev->prev && (t->prev->prev->type == BLOCK_DEFLIST)))
+			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
 				print("<dl>\n");
 	
 			scratch->padded = 2;
@@ -342,7 +349,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
 			pad(out, 1, scratch);
 
-			if (!(t->next && t->next->next && (t->next->next->type == BLOCK_DEFLIST)))
+			if (!(t->next && (t->next->type == BLOCK_DEFLIST)))
 				print("</dl>\n");
 
 			scratch->padded = 1;
