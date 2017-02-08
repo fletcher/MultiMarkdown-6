@@ -78,6 +78,7 @@ typedef struct {
 	unsigned long		extensions;
 	short				padded;			//!< How many empty lines at end output buffer
 	short				list_is_tight;
+	short				close_para;
 	short				skip_token;
 
 	short				footnote_para_counter;

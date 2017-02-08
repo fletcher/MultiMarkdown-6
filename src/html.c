@@ -236,8 +236,19 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 }
 
 
-void mmd_export_image_html(DString * out, const char * source, token * text, link * link, size_t offset, scratch_pad * scratch) {
+void mmd_export_image_html(DString * out, const char * source, token * text, link * link, size_t offset, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
+
+	// Compatibility mode doesn't allow figures
+	if (scratch->extensions & EXT_COMPATIBILITY)
+		is_figure = false;
+
+	if (is_figure) {
+		// Remove wrapping <p> markers
+		d_string_erase(out, out->currentStringLength - 3, 3);
+		print("<figure>\n");
+		scratch->close_para = false;
+	}
 
 	if (link->url)
 		printf("<img src=\"%s\"", link->url);
@@ -250,7 +261,7 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		print("\"");
 	}
 
-	if (0 && link->label) {
+	if (link->label && !(scratch->extensions & EXT_COMPATIBILITY)) {
 		// \todo: Need to decide on approach to id's
 		char * label = label_from_token(source, link->label);
 		printf(" id=\"%s\"", label);
@@ -270,6 +281,15 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 	}
 
 	print(" />");
+
+	if (is_figure) {
+		if (text) {
+			print("\n<figcaption>");
+			mmd_export_token_tree_html(out, source, text->child, offset, scratch);
+			print("</figcaption>");
+		}
+		print("\n</figure>");
+	}
 }
 
 
@@ -457,8 +477,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			scratch->padded = 2;
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 
-			if (!scratch->list_is_tight)
-				print("</p>");
+			if (scratch->close_para) {
+				if (!scratch->list_is_tight)
+					print("</p>");
+			} else {
+				scratch->close_para = true;
+			}
 
 			print("</li>");
 			scratch->padded = 0;
@@ -491,8 +515,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			}
 
-			if (!scratch->list_is_tight)
-				print("</p>");
+			if (scratch->close_para) {
+				if (!scratch->list_is_tight)
+					print("</p>");
+			} else {
+				scratch->close_para = true;
+			}
 			scratch->padded = 0;
 			break;
 		case BLOCK_TABLE:
@@ -859,8 +887,26 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					// Link
 					mmd_export_link_html(out, source, t, temp_link, offset, scratch);
 				} else {
-					// Image
-					mmd_export_image_html(out, source, t, temp_link, offset, scratch);
+					// Image -- should it be a figure (e.g. image is only thing in paragraph)?
+					temp_token = t->next;
+
+					if (temp_token &&
+						((temp_token->type == PAIR_BRACKET) ||
+						(temp_token->type == PAIR_PAREN))) {
+						temp_token = temp_token->next;
+					}
+
+					if (temp_token && temp_token->type == TEXT_NL)
+						temp_token = temp_token->next;
+
+					if (temp_token && temp_token->type == TEXT_LINEBREAK)
+						temp_token = temp_token->next;
+
+					if (t->prev || temp_token) {
+						mmd_export_image_html(out, source, t, temp_link, offset, scratch, false);
+					} else {
+						mmd_export_image_html(out, source, t, temp_link, offset, scratch, true);
+					}
 				}
 				
 				if (temp_bool) {

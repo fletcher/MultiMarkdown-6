@@ -85,6 +85,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 		p->padded = 2;							// Prevent unnecessary leading space
 		p->list_is_tight = false;				// Tight vs Loose list
 		p->skip_token = 0;						// Skip over next n tokens
+		p->close_para = true;
 
 		p->extensions = e->extensions;
 		p->quotes_lang = e->quotes_lang;
@@ -452,8 +453,13 @@ link * link_new(const char * source, token * label, char * url, char * title, ch
 
 	if (l) {
 		l->label = label;
-		l->clean_text = clean_inside_pair(source, label, true);
-		l->label_text = label_from_token(source, label);
+		if (label) {
+			l->clean_text = clean_inside_pair(source, label, true);
+			l->label_text = label_from_token(source, label);
+		} else {
+			l->clean_text = NULL;
+			l->label_text = NULL;
+		}
 		l->url = clean_string(url, false);
 		l->title = (title == NULL) ? NULL : strdup(title);
 		l->attributes = (attributes == NULL) ? NULL : parse_attributes(attributes);
@@ -808,9 +814,9 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 
 	if (attr_char) {
 		if (!(scratch->extensions & EXT_COMPATIBILITY))
-			l = link_new(source, bracket, url_char, title_char, attr_char);
+			l = link_new(source, NULL, url_char, title_char, attr_char);
 	} else {
-		l = link_new(source, bracket, url_char, title_char, attr_char);		
+		l = link_new(source, NULL, url_char, title_char, attr_char);		
 	}
 
 	free(url_char);

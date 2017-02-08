@@ -1,0 +1,9 @@
+<p>![foo]</p>
+
+<p>![<em>bar</em>][foo]</p>
+
+<p>![<em>bar</em>][foo] bar</p>
+
+<p>![<em>foo</em>](http://foo.bar/ &quot;foo&quot; width=&quot;40px&quot;)</p>
+
+<p>[foo]: http://foo.bar/	&quot;foo&quot; width=&quot;40px&quot;</p>
