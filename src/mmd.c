@@ -326,12 +326,32 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			}
 			scan_len = scan_fence_end(&source[line->child->start]);
 			if (scan_len) {
-				line->type = LINE_FENCE_BACKTICK;
+				switch (line->child->len) {
+					case 3:
+						line->type = LINE_FENCE_BACKTICK_3;
+						break;
+					case 4:
+						line->type = LINE_FENCE_BACKTICK_4;
+						break;
+					default:
+						line->type = LINE_FENCE_BACKTICK_5;
+						break;
+				}
 				break;
 			} else {
 				scan_len = scan_fence_start(&source[line->child->start]);
 				if (scan_len) {
-					line->type = LINE_FENCE_BACKTICK_START;
+					switch (line->child->len) {
+						case 3:
+							line->type = LINE_FENCE_BACKTICK_START_3;
+							break;
+						case 4:
+							line->type = LINE_FENCE_BACKTICK_START_4;
+							break;
+						default:
+							line->type = LINE_FENCE_BACKTICK_START_5;
+							break;
+					}
 					break;
 				}
 			}

@@ -117,8 +117,21 @@ defs ::= defs def.
 def ::= LINE_DEFINITION tail.
 def ::= LINE_DEFINITION.
 empty ::= empty LINE_EMPTY.
-fenced_block ::= fenced LINE_FENCE_BACKTICK.
-fenced ::= fenced fenced_line.
+fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_3.
+fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_4.
+fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_5.
+fenced_3 ::= fenced_3 fenced_line.
+fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_4.
+fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_5.
+fenced_4 ::= fenced_4 fenced_line.
+fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3.
+fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3.
+fenced_block ::= fenced_5 LINE_FENCE_BACKTICK_5.
+fenced_5 ::= fenced_5 fenced_line.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4.
 html_block ::= html_block html_line.
 indented_code ::= indented_code indented_line.
 indented_code ::= indented_code LINE_EMPTY.
@@ -159,9 +172,15 @@ def_footnote ::= LINE_DEF_FOOTNOTE.
 def_link ::= LINE_DEF_LINK.
 defs ::= def.
 empty ::= LINE_EMPTY.
-fenced_block ::= fenced.
-fenced ::= LINE_FENCE_BACKTICK.
-fenced ::= LINE_FENCE_BACKTICK_START.
+fenced_block ::= fenced_3.
+fenced_3 ::= LINE_FENCE_BACKTICK_3.
+fenced_3 ::= LINE_FENCE_BACKTICK_START_3.
+fenced_block ::= fenced_4.
+fenced_4 ::= LINE_FENCE_BACKTICK_4.
+fenced_4 ::= LINE_FENCE_BACKTICK_START_4.
+fenced_block ::= fenced_5.
+fenced_5 ::= LINE_FENCE_BACKTICK_5.
+fenced_5 ::= LINE_FENCE_BACKTICK_START_5.
 fenced_line ::= LINE_CONTINUATION.
 fenced_line ::= LINE_EMPTY.
 html_block ::= LINE_HTML.
@@ -198,7 +217,7 @@ para ::= defs.
 	void ParseFree();
 	void ParseTrace();
 
-	#define kMaxToken 26
+	#define kMaxToken 32
 
 	int i,j,k,l,m, n;
 

@@ -1269,7 +1269,8 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, si
 			print("&quot;");
 			break;
 		case CODE_FENCE:
-			t->next->type = TEXT_EMPTY;
+			if (t->next)
+				t->next->type = TEXT_EMPTY;
 		case TEXT_EMPTY:
 			break;
 		default:

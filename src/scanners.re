@@ -69,6 +69,7 @@
 	sp 			= [ \t]*;
 	spnl		= sp (nl sp)?;
 	non_indent	= ' '{0,3};
+	nl_eof		= nl | '\x00';
 
 	email		= 'mailto:'? [-A-Za-z0-9+_./!%~$]+ '@' [^ \t\n\r\x00>]+;
 
@@ -96,7 +97,7 @@
 
 	destination	= ('<' [^ \t\n\r\x00>]* '>') | [^ \t\n\r\x00]+;
 
-	ref_link_no_attributes	= non_indent '[' label ']' ':' spnl destination sp (nl | (nl? (title) sp) nl);
+	ref_link_no_attributes	= non_indent '[' label ']' ':' spnl destination sp (nl_eof | (nl? (title) sp) nl_eof);
 
 	tag_name	= [A-Za-z] [A-Za-z0-9\-]*;
 
@@ -127,27 +128,27 @@
 
 	html_block	= '<' '/'? block_tag attributes? '/'? '>';
 
-	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00] nl;
+	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00] nl_eof;
 
-	fence_end	= non_indent [`~]{3,} sp nl;
+	fence_end	= non_indent [`~]{3,} sp nl_eof;
 
 	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ -\.]*;
 
 	meta_value	= [^\n\r\x00]+;
 
-	meta_line	= meta_key sp ':' meta_value nl;	// meta_line can't match url above
+	meta_line	= meta_key sp ':' meta_value nl_eof;	// meta_line can't match url above
 
 	definition	= non_indent ':' sp [^\n\r\x00];
 
-	table_separator	= (('|' [:\-= \t|+]*) | ([:\-= \t+]+ '|' [:\-= \t|+]*)) nl;
+	table_separator	= (('|' [:\-= \t|+]*) | ([:\-= \t+]+ '|' [:\-= \t|+]*)) nl_eof;
 
 	align		= [\-=]+;
-	align_left	= sp ':' align sp ('|' | nl);
-	align_right	= sp align ':' sp ('|' | nl);
-	align_center	= sp ':' align ':' sp ('|' | nl);
-	align_wrap_left		= sp ':' align '+' sp ('|' | nl);
-	align_wrap_right	= sp align ':' '+' sp ('|' | nl);
-	align_wrap_center	= sp ':' align ':' '+' sp ('|' | nl);
+	align_left	= sp ':' align sp ('|' | nl_eof);
+	align_right	= sp align ':' sp ('|' | nl_eof);
+	align_center	= sp ':' align ':' sp ('|' | nl_eof);
+	align_wrap_left		= sp ':' align '+' sp ('|' | nl_eof);
+	align_wrap_right	= sp align ':' '+' sp ('|' | nl_eof);
+	align_wrap_center	= sp ':' align ':' '+' sp ('|' | nl_eof);
 
 */
 
