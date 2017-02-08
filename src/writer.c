@@ -1526,3 +1526,30 @@ void strip_leading_whitespace(token * chain, const char * source) {
 		chain = chain->next;
 	}
 }
+
+
+bool table_has_caption(token * t) {
+
+	if (t->next && t->next->type == BLOCK_PARA) {
+		t = t->next->child;
+
+		if (t->type == PAIR_BRACKET) {
+			t = t->next;
+
+			if (t && t->next &&
+				t->next->type == PAIR_BRACKET)
+				t = t->next;
+
+			if (t && t->next &&
+				((t->next->type == TEXT_NL) ||
+				(t->next->type == TEXT_LINEBREAK)))
+				t = t->next;
+
+			if (t->next == NULL)
+				return true;
+		}
+	}
+
+	return false;
+}
+

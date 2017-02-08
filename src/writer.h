@@ -203,5 +203,7 @@ void read_table_column_alignments(const char * source, token * table, scratch_pa
 
 void strip_leading_whitespace(token * chain, const char * source);
 
+bool table_has_caption(token * table);
+
 #endif
 

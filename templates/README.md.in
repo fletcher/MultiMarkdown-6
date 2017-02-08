@@ -407,6 +407,9 @@ For example, `Reference Footnotes.text` is parsed differently in compatibility
 mode than MMD-5.  This started as a side-effect of the parsing algorithm, but
 I actually think it makes sense.  This may or may not change in the future.
 
+6. Table captions in MMD-6 must come immediately *after* the table, not
+before it.
+
 
 ## Where Does MultiMarkdown 6 Stand? ##
 
@@ -454,7 +457,6 @@ Things yet to be completed:
 * Abbreviations
 * Glossaries
 * File Transclusion
-* Table Captions
 
 
 ### Accuracy ###

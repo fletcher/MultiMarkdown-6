@@ -526,6 +526,29 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case BLOCK_TABLE:
 			pad(out, 2, scratch);
 			print("<table>\n");
+
+			// Are we followed by a caption?
+			if (table_has_caption(t)) {
+				temp_token = t->next->child;
+
+				if (temp_token->next &&
+					temp_token->next->type == PAIR_BRACKET) {
+					temp_token = temp_token->next;
+				}
+
+				temp_char = label_from_token(source, temp_token);
+				printf("<caption id=\"%s\">", temp_char);
+				free(temp_char);
+
+				t->next->child->child->type = TEXT_EMPTY;
+				t->next->child->child->mate->type = TEXT_EMPTY;
+				mmd_export_token_tree_html(out, source, t->next->child->child, offset, scratch);
+				print("</caption>\n");
+				temp_short = 1;
+			} else {
+				temp_short = 0;
+			}
+
 			scratch->padded = 2;
 			read_table_column_alignments(source, t, scratch);
 
@@ -563,6 +586,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 1, scratch);
 			print("</table>");
 			scratch->padded = 0;
+
+			scratch->skip_token = temp_short;
+
 			break;
 		case BLOCK_TABLE_HEADER:
 			pad(out, 2, scratch);
