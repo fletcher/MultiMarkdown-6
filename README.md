@@ -4,9 +4,9 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown 6        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-01-28 |  
+| Date:      | 2017-02-07 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.1.1a      |  
+| Version:   | 0.1.2a      |  
 
 
 ## Updates ##
@@ -24,7 +24,7 @@
 		* Metadata/Variables
 		* "pathologic" test cases from CommonMark
 
-* 2017-?? --  v 0.1.2a:
+* 2017-02-07 --  v 0.1.2a:
 
 	* "pathologic" test suite -- fix handling of nested brackets, e.g.
 	`[[[[foo]]]]` to avoid bogging down checking for reference links that
@@ -32,6 +32,10 @@
 	* Table support -- a single blank line separates sections of tables, so
 	at least two blank lines are needed between adjacent tables.
 	* Definition list support
+	* "fuzz testing" -- stress test the parser for unexpected failures
+	* Table of Contents support
+	* Improved compatibility mode parsing
+
 
 ## An Announcement! ##
 
