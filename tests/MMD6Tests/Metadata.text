@@ -7,5 +7,9 @@ foo:	bar
 foo bar
 	foo bar
 foo:	*bar*
+html header level: 2
+base header level: 3
 
 foo:	bar
+
+# foo #

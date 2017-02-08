@@ -78,7 +78,7 @@ void store_metadata(scratch_pad * scratch, meta * m);
 
 
 /// Temporary storage while exporting parse tree to output format
-scratch_pad * scratch_pad_new(mmd_engine * e) {
+scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 	scratch_pad * p = malloc(sizeof(scratch_pad));
 
 	if (p) {
@@ -88,12 +88,15 @@ scratch_pad * scratch_pad_new(mmd_engine * e) {
 		p->close_para = true;
 
 		p->extensions = e->extensions;
+		p->output_format = format;
 		p->quotes_lang = e->quotes_lang;
 		p->language = e->language;
 
 		p->header_stack = e->header_stack;
 
 		p->recurse_depth = 0;
+
+		p->base_header_level = 1;
 
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
@@ -1143,29 +1146,39 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 		return;
 
 	meta * m;
+	short header_level = -10;
 
 	for (int i = 0; i < e->metadata_stack->size; ++i)
 	{
 		// Check for certain metadata keys
 		m = stack_peek_index(e->metadata_stack, i);
 
-		// Certain keys do not force complete documents
-		if (!(scratch->extensions & EXT_COMPLETE) &&
-			!(scratch->extensions & EXT_SNIPPET)) {
-			if ((strcmp(m->key, "baseheaderlevel")	!= 0) &&
-				(strcmp(m->key, "xhtmlheaderlevel")	!= 0) &&
-				(strcmp(m->key, "htmlheaderlevel")	!= 0) &&
-				(strcmp(m->key, "latexheaderlevel")	!= 0) &&
-				(strcmp(m->key, "odfheaderlevel")	!= 0) &&
-				(strcmp(m->key, "xhtmlheader")		!= 0) &&
-				(strcmp(m->key, "htmlheader")		!= 0) &&
-				(strcmp(m->key, "quoteslanguage")	!= 0)) {
-				// We found a key that is not in the list, so
-				// Force a complete document
+		if (strcmp(m->key, "baseheaderlevel") == 0) {
+			if (header_level == -10)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_HTML)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_HTML)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_LATEX)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_ODF)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+		} else {
+			// Any other key triggers complete document
+			if (!(scratch->extensions & EXT_SNIPPET))
 				scratch->extensions |= EXT_COMPLETE;
-			}
 		}
+
 	}
+
+	if (header_level != -10)
+		scratch->base_header_level = header_level;
 }
 
 
@@ -1178,7 +1191,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	process_header_stack(e);
 
 	// Create scratch pad
-	scratch_pad * scratch = scratch_pad_new(e);
+	scratch_pad * scratch = scratch_pad_new(e, format);
 
 	// Process metadata
 	process_metadata_stack(e, scratch);

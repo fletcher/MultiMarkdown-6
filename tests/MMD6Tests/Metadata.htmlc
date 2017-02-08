@@ -6,6 +6,10 @@ HTML header:	<script type="text/javascript"
 foo:	bar
 foo bar
 foo bar
-foo:	<em>bar</em></p>
+foo:	<em>bar</em>
+html header level: 2
+base header level: 3</p>
 
 <p>foo:	bar</p>
+
+<h1>foo </h1>

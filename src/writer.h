@@ -76,6 +76,7 @@ typedef struct {
 	struct meta *		meta_hash;
 
 	unsigned long		extensions;
+	short				output_format;
 	short				padded;			//!< How many empty lines at end output buffer
 	short				list_is_tight;
 	short				close_para;
@@ -94,6 +95,8 @@ typedef struct {
 
 	short				language;
 	short				quotes_lang;
+
+	short				base_header_level;
 
 	stack *				header_stack;
 
@@ -159,7 +162,7 @@ typedef struct meta meta;
 
 
 /// Temporary storage while exporting parse tree to output format
-scratch_pad * scratch_pad_new(mmd_engine * e);
+scratch_pad * scratch_pad_new(mmd_engine * e, short format);
 
 void scratch_pad_free(scratch_pad * scratch);
 

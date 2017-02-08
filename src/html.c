@@ -399,14 +399,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			temp_short = t->type - BLOCK_H1 + 1;
 			if (scratch->extensions & EXT_NO_LABELS) {
-				printf("<h%1d>", temp_short);
+				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
 				temp_char = label_from_token(source, t);
-				printf("<h%1d id=\"%s\">", temp_short, temp_char);
+				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
 			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
-			printf("</h%1d>", temp_short);
+			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
 		case BLOCK_HR:

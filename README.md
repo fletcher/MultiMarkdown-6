@@ -421,6 +421,7 @@ features have been implemented:
 * Basic Citation support
 * CriticMarkup support
 * Definition lists
+* Figures
 * Footnotes
 * Inline and reference footnotes
 * Image and Link attributes (attributes can now be used with inline links as
@@ -453,7 +454,6 @@ Things yet to be completed:
 * Abbreviations
 * Glossaries
 * File Transclusion
-* Figures
 * Table Captions
 
 
