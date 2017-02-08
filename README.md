@@ -453,7 +453,8 @@ Things yet to be completed:
 * Abbreviations
 * Glossaries
 * File Transclusion
-
+* Figures
+* Table Captions
 
 
 ### Accuracy ###

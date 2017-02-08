@@ -914,7 +914,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 				// Do we treat this like metadata?
 				if (!(e->extensions & EXT_COMPATIBILITY) &&
 					!(e->extensions & EXT_NO_METADATA))
-					return;
+					break;
 				// This is not metadata
 				t->type = BLOCK_PARA;
 			case DOC_START_TOKEN:
