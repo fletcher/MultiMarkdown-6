@@ -11,18 +11,13 @@
 
 ## Updates ##
 
-* 2017-01-28 -- v 0.1.1a includes a few updates:
+* 2017-02-08 -- v 0.1.3a:
 
-	* Metadata support
-	* Metadata variables support
-	* Extended ASCII range character checking
-	* Rudimentary language translations, including German
-	* Improved performance
-	* Additional testing:
-		* CriticMarkup
-		* HTML Blokcs
-		* Metadata/Variables
-		* "pathologic" test cases from CommonMark
+	*    ADDED: Add support for reference image id attributes
+	*    ADDED: Add support for table captions
+	*    ADDED: Metadata support for base header level
+	*    ADDED: Support distinction between 3 and 5 backticks in fenced code blocks
+	*    FIXED: Fix issue with metadata disrupting smart quotes
 
 * 2017-02-07 --  v 0.1.2a:
 
@@ -36,13 +31,18 @@
 	* Table of Contents support
 	* Improved compatibility mode parsing
 
-* 2017-02-08 -- v 0.1.3a:
+* 2017-01-28 -- v 0.1.1a includes a few updates:
 
-	*    ADDED: Add support for reference image id attributes
-	*    ADDED: Add support for table captions
-	*    ADDED: Metadata support for base header level
-	*    ADDED: Support distinction between 3 and 5 backticks in fenced code blocks
-	*    FIXED: Fix issue with metadata disrupting smart quotes
+	* Metadata support
+	* Metadata variables support
+	* Extended ASCII range character checking
+	* Rudimentary language translations, including German
+	* Improved performance
+	* Additional testing:
+		* CriticMarkup
+		* HTML Blokcs
+		* Metadata/Variables
+		* "pathologic" test cases from CommonMark
 
 
 ## An Announcement! ##
