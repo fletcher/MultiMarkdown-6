@@ -1597,3 +1597,25 @@ bool table_has_caption(token * t) {
 	return false;
 }
 
+
+/// Grab the first "word" after the end of the fence marker:
+/// ````perl
+/// or
+/// ```` perl 
+char * get_fence_language_specifier(token * fence, const char * source) {
+	char * result = NULL;
+	size_t start = fence->start + fence->len;
+	size_t len = 0;
+
+	while (char_is_whitespace(source[start]))
+		start++;
+
+	while (!char_is_whitespace_or_line_ending(source[start + len]))
+		len++;
+
+	if (len)
+		result = strndup(&source[start], len);
+
+	return result;
+}
+

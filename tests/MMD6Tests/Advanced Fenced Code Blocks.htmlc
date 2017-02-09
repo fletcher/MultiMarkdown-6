@@ -27,3 +27,12 @@ foo *6*
 `````</code></p>
 
 <p>10</p>
+
+<p><code>perl
+foo</code></p>
+
+<p><code>	perl
+foo</code></p>
+
+<p><code>perl ruby
+foo</code></p>

@@ -205,5 +205,7 @@ void strip_leading_whitespace(token * chain, const char * source);
 
 bool table_has_caption(token * table);
 
+char * get_fence_language_specifier(token * fence, const char * source);
+
 #endif
 

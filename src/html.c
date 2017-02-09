@@ -381,6 +381,20 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			scratch->padded = 1;
 			break;
 		case BLOCK_CODE_FENCED:
+			pad(out, 2, scratch);
+			print("<pre><code");
+
+			temp_char = get_fence_language_specifier(t->child->child, source);
+			if (temp_char) {
+				printf(" class=\"%s\"", temp_char);
+				free(temp_char);
+			}
+
+			print(">");
+			mmd_export_token_tree_html_raw(out, source, t->child->next, t->start + offset, scratch);
+			print("</code></pre>");
+			scratch->padded = 0;
+			break;
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
 			print("<pre><code>");

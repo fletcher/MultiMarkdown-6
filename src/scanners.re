@@ -128,7 +128,7 @@
 
 	html_block	= '<' '/'? block_tag attributes? '/'? '>';
 
-	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00] nl_eof;
+	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00]+ nl_eof;
 
 	fence_end	= non_indent [`~]{3,} sp nl_eof;
 
