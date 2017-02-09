@@ -36,6 +36,14 @@
 	* Table of Contents support
 	* Improved compatibility mode parsing
 
+* 2017-02-08 -- v 0.1.3a:
+
+	*    ADDED: Add support for reference image id attributes
+	*    ADDED: Add support for table captions
+	*    ADDED: Metadata support for base header level
+	*    ADDED: Support distinction between 3 and 5 backticks in fenced code blocks
+	*    FIXED: Fix issue with metadata disrupting smart quotes
+
 
 ## An Announcement! ##
 
