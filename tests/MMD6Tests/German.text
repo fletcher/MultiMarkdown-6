@@ -1,0 +1,19 @@
+language:	de
+
+'foo'
+
+"foo"
+
+foo's
+
+foo --- bar
+
+foo -- bar
+
+5
+
+foo...
+
+[^foo]
+
+[#bar]
