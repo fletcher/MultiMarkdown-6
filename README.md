@@ -4,12 +4,17 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown 6        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-02-07 |  
+| Date:      | 2017-02-08 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.1.2a      |  
+| Version:   | 0.1.4a      |  
 
 
 ## Updates ##
+
+* 2017-02-08 -- v 0.1.4a:
+
+	*    ADDED: Add smart quote support for other languages (resolves #15)
+
 
 * 2017-02-08 -- v 0.1.3a:
 

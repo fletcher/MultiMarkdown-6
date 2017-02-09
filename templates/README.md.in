@@ -11,6 +11,11 @@
 
 ## Updates ##
 
+* 2017-02-08 -- v 0.1.4a:
+
+	*    ADDED: Add smart quote support for other languages (resolves #15)
+
+
 * 2017-02-08 -- v 0.1.3a:
 
 	*    ADDED: Add support for reference image id attributes
