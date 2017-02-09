@@ -135,6 +135,8 @@ enum token_types {
 	BLOCK_LIST_ITEM_TIGHT,
 	BLOCK_META,
 	BLOCK_PARA,
+	BLOCK_SETEXT_1,
+	BLOCK_SETEXT_2,
 	BLOCK_TABLE,
 	BLOCK_TABLE_HEADER,
 	BLOCK_TABLE_SECTION,
@@ -229,6 +231,7 @@ enum token_types {
 	MATH_DOLLAR_SINGLE,
 	MATH_DOLLAR_DOUBLE,
 
+	EQUAL,
 	PIPE,
 	PLUS,
 	
@@ -282,7 +285,9 @@ enum smart_quotes_language {
 
 
 enum output_format {
-	FORMAT_HTML
+	FORMAT_HTML,
+	FORMAT_LATEX,
+	FORMAT_ODF,
 };
 
 

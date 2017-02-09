@@ -78,21 +78,25 @@ void store_metadata(scratch_pad * scratch, meta * m);
 
 
 /// Temporary storage while exporting parse tree to output format
-scratch_pad * scratch_pad_new(mmd_engine * e) {
+scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 	scratch_pad * p = malloc(sizeof(scratch_pad));
 
 	if (p) {
 		p->padded = 2;							// Prevent unnecessary leading space
 		p->list_is_tight = false;				// Tight vs Loose list
 		p->skip_token = 0;						// Skip over next n tokens
+		p->close_para = true;
 
 		p->extensions = e->extensions;
+		p->output_format = format;
 		p->quotes_lang = e->quotes_lang;
 		p->language = e->language;
 
 		p->header_stack = e->header_stack;
 
 		p->recurse_depth = 0;
+
+		p->base_header_level = 1;
 
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
@@ -452,8 +456,13 @@ link * link_new(const char * source, token * label, char * url, char * title, ch
 
 	if (l) {
 		l->label = label;
-		l->clean_text = clean_inside_pair(source, label, true);
-		l->label_text = label_from_token(source, label);
+		if (label) {
+			l->clean_text = clean_inside_pair(source, label, true);
+			l->label_text = label_from_token(source, label);
+		} else {
+			l->clean_text = NULL;
+			l->label_text = NULL;
+		}
 		l->url = clean_string(url, false);
 		l->title = (title == NULL) ? NULL : strdup(title);
 		l->attributes = (attributes == NULL) ? NULL : parse_attributes(attributes);
@@ -729,7 +738,7 @@ char * url_accept(const char * source, token ** remainder, bool validate) {
 			first = *remainder;
 			
 			// Grab parts for URL
-			while (token_chain_accept_multiple(remainder, 5, AMPERSAND, COLON, TEXT_PERIOD, TEXT_PLAIN, UL));
+			while (token_chain_accept_multiple(remainder, 6, AMPERSAND, COLON, EQUAL, TEXT_PERIOD, TEXT_PLAIN, UL));
 
 			last = (*remainder)->prev;
 
@@ -808,9 +817,9 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 
 	if (attr_char) {
 		if (!(scratch->extensions & EXT_COMPATIBILITY))
-			l = link_new(source, bracket, url_char, title_char, attr_char);
+			l = link_new(source, NULL, url_char, title_char, attr_char);
 	} else {
-		l = link_new(source, bracket, url_char, title_char, attr_char);		
+		l = link_new(source, NULL, url_char, title_char, attr_char);		
 	}
 
 	free(url_char);
@@ -1137,29 +1146,39 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 		return;
 
 	meta * m;
+	short header_level = -10;
 
 	for (int i = 0; i < e->metadata_stack->size; ++i)
 	{
 		// Check for certain metadata keys
 		m = stack_peek_index(e->metadata_stack, i);
 
-		// Certain keys do not force complete documents
-		if (!(scratch->extensions & EXT_COMPLETE) &&
-			!(scratch->extensions & EXT_SNIPPET)) {
-			if ((strcmp(m->key, "baseheaderlevel")	!= 0) &&
-				(strcmp(m->key, "xhtmlheaderlevel")	!= 0) &&
-				(strcmp(m->key, "htmlheaderlevel")	!= 0) &&
-				(strcmp(m->key, "latexheaderlevel")	!= 0) &&
-				(strcmp(m->key, "odfheaderlevel")	!= 0) &&
-				(strcmp(m->key, "xhtmlheader")		!= 0) &&
-				(strcmp(m->key, "htmlheader")		!= 0) &&
-				(strcmp(m->key, "quoteslanguage")	!= 0)) {
-				// We found a key that is not in the list, so
-				// Force a complete document
+		if (strcmp(m->key, "baseheaderlevel") == 0) {
+			if (header_level == -10)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_HTML)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_HTML)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_LATEX)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_ODF)
+				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+		} else {
+			// Any other key triggers complete document
+			if (!(scratch->extensions & EXT_SNIPPET))
 				scratch->extensions |= EXT_COMPLETE;
-			}
 		}
+
 	}
+
+	if (header_level != -10)
+		scratch->base_header_level = header_level;
 }
 
 
@@ -1172,7 +1191,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	process_header_stack(e);
 
 	// Create scratch pad
-	scratch_pad * scratch = scratch_pad_new(e);
+	scratch_pad * scratch = scratch_pad_new(e, format);
 
 	// Process metadata
 	process_metadata_stack(e, scratch);
@@ -1507,3 +1526,30 @@ void strip_leading_whitespace(token * chain, const char * source) {
 		chain = chain->next;
 	}
 }
+
+
+bool table_has_caption(token * t) {
+
+	if (t->next && t->next->type == BLOCK_PARA) {
+		t = t->next->child;
+
+		if (t->type == PAIR_BRACKET) {
+			t = t->next;
+
+			if (t && t->next &&
+				t->next->type == PAIR_BRACKET)
+				t = t->next;
+
+			if (t && t->next &&
+				((t->next->type == TEXT_NL) ||
+				(t->next->type == TEXT_LINEBREAK)))
+				t = t->next;
+
+			if (t->next == NULL)
+				return true;
+		}
+	}
+
+	return false;
+}
+

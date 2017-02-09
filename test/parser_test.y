@@ -67,7 +67,8 @@
 
 // Manually copy fallbacks from `parser.y` here
 
-//%fallback LINE_PLAIN LINE_TABLE_SEPARATOR LINE_DEFINITION.
+%fallback LINE_HR LINE_SETEXT_1 LINE_SETEXT_2.
+
 %fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
 
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE  LINE_TABLE.
@@ -101,6 +102,8 @@ block ::= list_bullet.
 block ::= list_enum.
 block ::= meta_block.
 block ::= para.
+block ::= setext_1.
+block ::= setext_2.
 block ::= table.
 chunk ::= chunk chunk_line.
 nested_chunks ::= nested_chunks nested_chunk.
@@ -117,8 +120,21 @@ defs ::= defs def.
 def ::= LINE_DEFINITION tail.
 def ::= LINE_DEFINITION.
 empty ::= empty LINE_EMPTY.
-fenced_block ::= fenced LINE_FENCE_BACKTICK.
-fenced ::= fenced fenced_line.
+fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_3.
+fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_4.
+fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_5.
+fenced_3 ::= fenced_3 fenced_line.
+fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_4.
+fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_5.
+fenced_4 ::= fenced_4 fenced_line.
+fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3.
+fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3.
+fenced_block ::= fenced_5 LINE_FENCE_BACKTICK_5.
+fenced_5 ::= fenced_5 fenced_line.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4.
+fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4.
 html_block ::= html_block html_line.
 indented_code ::= indented_code indented_line.
 indented_code ::= indented_code LINE_EMPTY.
@@ -134,6 +150,8 @@ item_enum ::= LINE_LIST_ENUMERATED nested_chunks.
 item_enum ::= LINE_LIST_ENUMERATED.
 meta_block ::= meta_block meta_line.
 para ::= LINE_PLAIN chunk.
+setext_1 ::= para LINE_SETEXT_1.
+setext_2 ::= para LINE_SETEXT_2.
 table ::= table_header table_body.
 table_header ::= header_rows LINE_TABLE_SEPARATOR.
 header_rows ::= header_rows LINE_TABLE.
@@ -159,11 +177,19 @@ def_footnote ::= LINE_DEF_FOOTNOTE.
 def_link ::= LINE_DEF_LINK.
 defs ::= def.
 empty ::= LINE_EMPTY.
-fenced_block ::= fenced.
-fenced ::= LINE_FENCE_BACKTICK.
-fenced ::= LINE_FENCE_BACKTICK_START.
+fenced_block ::= fenced_3.
+fenced_3 ::= LINE_FENCE_BACKTICK_3.
+fenced_3 ::= LINE_FENCE_BACKTICK_START_3.
+fenced_block ::= fenced_4.
+fenced_4 ::= LINE_FENCE_BACKTICK_4.
+fenced_4 ::= LINE_FENCE_BACKTICK_START_4.
+fenced_block ::= fenced_5.
+fenced_5 ::= LINE_FENCE_BACKTICK_5.
+fenced_5 ::= LINE_FENCE_BACKTICK_START_5.
 fenced_line ::= LINE_CONTINUATION.
 fenced_line ::= LINE_EMPTY.
+fenced_line ::= LINE_SETEXT_1.
+fenced_line ::= LINE_SETEXT_2.
 html_block ::= LINE_HTML.
 html_line ::= LINE_CONTINUATION.
 html_line ::= LINE_HTML.
@@ -191,6 +217,7 @@ para ::= defs.
 	#include <assert.h>
 	#include <stdio.h>
 	#include <stdlib.h>
+	#include "parser_test.h"
 
 	// Basic parser function declarations
 	void * ParseAlloc();
@@ -198,7 +225,7 @@ para ::= defs.
 	void ParseFree();
 	void ParseTrace();
 
-	#define kMaxToken 26
+	#define kMaxToken 34
 
 	int i,j,k,l,m, n;
 
@@ -222,7 +249,10 @@ int main(int argc, char** argv) {
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
-		
+		// LINE_CONTINUATION can't be the first line
+		if (i == LINE_CONTINUATION)
+			break;
+
 		Parse(pParser, i, NULL);
 
 		Parse(pParser, 0, NULL);
@@ -238,6 +268,9 @@ int main(int argc, char** argv) {
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
+		// LINE_CONTINUATION can't be the first line
+		if (i == LINE_CONTINUATION)
+			break;
 
 		for (j = 1; j <= kMaxToken; ++j) {
 			
@@ -258,6 +291,9 @@ int main(int argc, char** argv) {
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
+		// LINE_CONTINUATION can't be the first line
+		if (i == LINE_CONTINUATION)
+			break;
 		
 		for (j = 1; j <= kMaxToken; ++j) {
 
@@ -284,6 +320,9 @@ int main(int argc, char** argv) {
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
+		// LINE_CONTINUATION can't be the first line
+		if (i == LINE_CONTINUATION)
+			break;
 		
 		for (j = 1; j <= kMaxToken; ++j) {
 
@@ -314,6 +353,9 @@ int main(int argc, char** argv) {
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
+		// LINE_CONTINUATION can't be the first line
+		if (i == LINE_CONTINUATION)
+			break;
 		
 		for (j = 1; j <= kMaxToken; ++j) {
 
@@ -351,6 +393,10 @@ int main(int argc, char** argv) {
 
 	for (i = 1; i <= kMaxToken; ++i)
 	{
+		// LINE_CONTINUATION can't be the first line
+		if (i == LINE_CONTINUATION)
+			break;
+
 		fprintf(stderr, "%d\n", i);
 		
 		for (j = 1; j <= kMaxToken; ++j) {

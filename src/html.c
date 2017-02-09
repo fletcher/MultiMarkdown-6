@@ -236,8 +236,19 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 }
 
 
-void mmd_export_image_html(DString * out, const char * source, token * text, link * link, size_t offset, scratch_pad * scratch) {
+void mmd_export_image_html(DString * out, const char * source, token * text, link * link, size_t offset, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
+
+	// Compatibility mode doesn't allow figures
+	if (scratch->extensions & EXT_COMPATIBILITY)
+		is_figure = false;
+
+	if (is_figure) {
+		// Remove wrapping <p> markers
+		d_string_erase(out, out->currentStringLength - 3, 3);
+		print("<figure>\n");
+		scratch->close_para = false;
+	}
 
 	if (link->url)
 		printf("<img src=\"%s\"", link->url);
@@ -250,7 +261,7 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		print("\"");
 	}
 
-	if (0 && link->label) {
+	if (link->label && !(scratch->extensions & EXT_COMPATIBILITY)) {
 		// \todo: Need to decide on approach to id's
 		char * label = label_from_token(source, link->label);
 		printf(" id=\"%s\"", label);
@@ -270,6 +281,15 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 	}
 
 	print(" />");
+
+	if (is_figure) {
+		if (text) {
+			print("\n<figcaption>");
+			mmd_export_token_tree_html(out, source, text->child, offset, scratch);
+			print("</figcaption>");
+		}
+		print("\n</figure>");
+	}
 }
 
 
@@ -379,14 +399,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			temp_short = t->type - BLOCK_H1 + 1;
 			if (scratch->extensions & EXT_NO_LABELS) {
-				printf("<h%1d>", temp_short);
+				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
 				temp_char = label_from_token(source, t);
-				printf("<h%1d id=\"%s\">", temp_short, temp_char);
+				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
 			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
-			printf("</h%1d>", temp_short);
+			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
 		case BLOCK_HR:
@@ -457,8 +477,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			scratch->padded = 2;
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 
-			if (!scratch->list_is_tight)
-				print("</p>");
+			if (scratch->close_para) {
+				if (!scratch->list_is_tight)
+					print("</p>");
+			} else {
+				scratch->close_para = true;
+			}
 
 			print("</li>");
 			scratch->padded = 0;
@@ -491,13 +515,68 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			}
 
-			if (!scratch->list_is_tight)
-				print("</p>");
+			if (scratch->close_para) {
+				if (!scratch->list_is_tight)
+					print("</p>");
+			} else {
+				scratch->close_para = true;
+			}
+			scratch->padded = 0;
+			break;
+		case BLOCK_SETEXT_1:
+			pad(out, 2, scratch);
+			temp_short = 1;
+			if (scratch->extensions & EXT_NO_LABELS) {
+				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
+			} else {
+				temp_char = label_from_token(source, t);
+				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
+				free(temp_char);
+			}
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
+			scratch->padded = 0;
+			break;
+		case BLOCK_SETEXT_2:
+			pad(out, 2, scratch);
+			temp_short = 2;
+			if (scratch->extensions & EXT_NO_LABELS) {
+				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
+			} else {
+				temp_char = label_from_token(source, t);
+				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
+				free(temp_char);
+			}
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
 		case BLOCK_TABLE:
 			pad(out, 2, scratch);
 			print("<table>\n");
+
+			// Are we followed by a caption?
+			if (table_has_caption(t)) {
+				temp_token = t->next->child;
+
+				if (temp_token->next &&
+					temp_token->next->type == PAIR_BRACKET) {
+					temp_token = temp_token->next;
+				}
+
+				temp_char = label_from_token(source, temp_token);
+				printf("<caption id=\"%s\">", temp_char);
+				free(temp_char);
+
+				t->next->child->child->type = TEXT_EMPTY;
+				t->next->child->child->mate->type = TEXT_EMPTY;
+				mmd_export_token_tree_html(out, source, t->next->child->child, offset, scratch);
+				print("</caption>\n");
+				temp_short = 1;
+			} else {
+				temp_short = 0;
+			}
+
 			scratch->padded = 2;
 			read_table_column_alignments(source, t, scratch);
 
@@ -535,6 +614,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 1, scratch);
 			print("</table>");
 			scratch->padded = 0;
+
+			scratch->skip_token = temp_short;
+
 			break;
 		case BLOCK_TABLE_HEADER:
 			pad(out, 2, scratch);
@@ -714,6 +796,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case EMPH_STOP:
 			print("</em>");
 			break;
+		case EQUAL:
+			print("=");
+			break;
 		case ESCAPED_CHARACTER:
 			mmd_print_char_html(out, source[t->start + 1], false);
 			break;
@@ -859,8 +944,26 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					// Link
 					mmd_export_link_html(out, source, t, temp_link, offset, scratch);
 				} else {
-					// Image
-					mmd_export_image_html(out, source, t, temp_link, offset, scratch);
+					// Image -- should it be a figure (e.g. image is only thing in paragraph)?
+					temp_token = t->next;
+
+					if (temp_token &&
+						((temp_token->type == PAIR_BRACKET) ||
+						(temp_token->type == PAIR_PAREN))) {
+						temp_token = temp_token->next;
+					}
+
+					if (temp_token && temp_token->type == TEXT_NL)
+						temp_token = temp_token->next;
+
+					if (temp_token && temp_token->type == TEXT_LINEBREAK)
+						temp_token = temp_token->next;
+
+					if (t->prev || temp_token) {
+						mmd_export_image_html(out, source, t, temp_link, offset, scratch, false);
+					} else {
+						mmd_export_image_html(out, source, t, temp_link, offset, scratch, true);
+					}
 				}
 				
 				if (temp_bool) {
@@ -1223,7 +1326,8 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, si
 			print("&quot;");
 			break;
 		case CODE_FENCE:
-			t->next->type = TEXT_EMPTY;
+			if (t->next)
+				t->next->type = TEXT_EMPTY;
 		case TEXT_EMPTY:
 			break;
 		default:

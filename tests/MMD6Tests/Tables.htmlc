@@ -32,3 +32,18 @@
 | :---- | ----: |
 <em>foo</em> | <em>bar</em> |
 | <strong>foo bar</strong> ||</p>
+
+<p>| foo | bar |
+| --- | --- |
+| foo | bar |
+[<em>foo</em>][bar]</p>
+
+<p>| foo | bar |
+| --- | --- |
+| foo | bar |
+[<em>foo</em>]</p>
+
+<p>[<em>foo</em>][bar]
+| foo | bar |
+| --- | --- |
+| foo | bar |</p>

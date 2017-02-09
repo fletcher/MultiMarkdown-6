@@ -76,8 +76,10 @@ typedef struct {
 	struct meta *		meta_hash;
 
 	unsigned long		extensions;
+	short				output_format;
 	short				padded;			//!< How many empty lines at end output buffer
 	short				list_is_tight;
+	short				close_para;
 	short				skip_token;
 
 	short				footnote_para_counter;
@@ -93,6 +95,8 @@ typedef struct {
 
 	short				language;
 	short				quotes_lang;
+
+	short				base_header_level;
 
 	stack *				header_stack;
 
@@ -158,7 +162,7 @@ typedef struct meta meta;
 
 
 /// Temporary storage while exporting parse tree to output format
-scratch_pad * scratch_pad_new(mmd_engine * e);
+scratch_pad * scratch_pad_new(mmd_engine * e, short format);
 
 void scratch_pad_free(scratch_pad * scratch);
 
@@ -198,6 +202,8 @@ char * extract_metadata(scratch_pad * scratch, const char * target);
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch);
 
 void strip_leading_whitespace(token * chain, const char * source);
+
+bool table_has_caption(token * table);
 
 #endif
 
