@@ -17,6 +17,7 @@
 	*    ADDED: Add support for table captions
 	*    ADDED: Metadata support for base header level
 	*    ADDED: Support distinction between 3 and 5 backticks in fenced code blocks
+	*    ADDED: Support Setext headers
 	*    FIXED: Fix issue with metadata disrupting smart quotes
 
 * 2017-02-07 --  v 0.1.2a:
