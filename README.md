@@ -420,9 +420,8 @@ before it.
 
 ### Features ###
 
-I *think* that all basic Markdown features have been implemented, except for
-Setext headers, as mentioned above.  Additionally, the following MultiMarkdown
-features have been implemented:
+I *think* that all basic Markdown features have been implemented.
+Additionally, the following MultiMarkdown features have been implemented:
 
 * Automatic cross-reference targets
 * Basic Citation support
