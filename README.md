@@ -366,13 +366,17 @@ MultiMarkdown v6 is mostly about making a better MMD parser, but it will
 likely involve a few changes to the MultiMarkdown language itself.
 
 
-1. I am thinking about removing Setext headers from the language.  I almost
+1. {--I am thinking about removing Setext headers from the language.  I almost
 never use them, much preferring to use ATX style headers (`# foo #`).
 Additionally, I have never liked the fact that Setext headers allow the
 meaning of a line to be completely changed by the following line.  It makes
 the parsing slightly more difficult on a technical level (requiring some
 backtracking at times).  I'm not 100% certain on this, but right now I believe
-it's the only Markdown feature that doesn't exist in MMD 6 yet.
+it's the only Markdown feature that doesn't exist in MMD 6 yet.--}{++I decided
+to go ahead and implement Setext headers, as it can be done with the new
+parser without backtracking.  One difference with older versions of MMD, as
+well as Markdown itself, is that a setext header can consist of more than one
+line to be included in the header.++}
 
 2. Whitespace is not allowed between the text brackets and label brackets in
 reference links, images, footnotes, etc.  For example `[foo] [bar]` will no

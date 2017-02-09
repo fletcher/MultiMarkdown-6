@@ -434,8 +434,20 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 					break;
 			}
 			break;
+		case EQUAL:
+			// Could this be a setext heading marker?
+			if (scan_setext(&source[line->child->start])) {
+				line->type = LINE_SETEXT_1;
+			} else {
+				line->type = LINE_PLAIN;
+			}
+			break;
 		case DASH_N:
 		case DASH_M:
+			if (scan_setext(&source[line->child->start])) {
+				line->type = LINE_SETEXT_2;
+				break;
+			}
 		case STAR:
 		case UL:
 			// Could this be a horizontal rule?
@@ -1590,6 +1602,15 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 	// Move contents of line directly into the parent block
 	while (l != NULL) {
 		switch (l->type) {
+			case LINE_SETEXT_1:
+			case LINE_SETEXT_2:
+				if ((block->type == BLOCK_SETEXT_1) ||
+					(block->type == BLOCK_SETEXT_2)) {
+					temp = l->next;
+					tokens_prune(l, l);
+					l = temp;
+					break;
+				}
 			case LINE_DEFINITION:
 				if (block->type == BLOCK_DEFINITION) {
 					// Remove leading colon

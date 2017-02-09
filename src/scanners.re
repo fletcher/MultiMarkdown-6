@@ -150,6 +150,9 @@
 	align_wrap_right	= sp align ':' '+' sp ('|' | nl_eof);
 	align_wrap_center	= sp ':' align ':' '+' sp ('|' | nl_eof);
 
+	setext_1	= non_indent '='{2,} nl_eof;
+
+	setext_2	= non_indent '-'{2,} nl_eof;
 */
 
 
@@ -394,6 +397,18 @@ size_t scan_destination(const char * c) {
 
 /*!re2c
 	destination	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_setext(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	setext_1	{ return (size_t)( c - start ); }
+	setext_2	{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	
 }

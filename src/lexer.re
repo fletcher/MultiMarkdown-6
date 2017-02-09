@@ -218,6 +218,7 @@ int scan(Scanner * s, const char * stop) {
 		"*"								{ return STAR; }
 		"+"								{ return PLUS; }
 		"_"								{ return UL; }
+		"="								{ return EQUAL; }
 
 		'`'+							{ return BACKTICK; }
 

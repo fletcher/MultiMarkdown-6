@@ -738,7 +738,7 @@ char * url_accept(const char * source, token ** remainder, bool validate) {
 			first = *remainder;
 			
 			// Grab parts for URL
-			while (token_chain_accept_multiple(remainder, 5, AMPERSAND, COLON, TEXT_PERIOD, TEXT_PLAIN, UL));
+			while (token_chain_accept_multiple(remainder, 6, AMPERSAND, COLON, EQUAL, TEXT_PERIOD, TEXT_PLAIN, UL));
 
 			last = (*remainder)->prev;
 

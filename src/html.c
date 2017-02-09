@@ -523,6 +523,34 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 			scratch->padded = 0;
 			break;
+		case BLOCK_SETEXT_1:
+			pad(out, 2, scratch);
+			temp_short = 1;
+			if (scratch->extensions & EXT_NO_LABELS) {
+				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
+			} else {
+				temp_char = label_from_token(source, t);
+				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
+				free(temp_char);
+			}
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
+			scratch->padded = 0;
+			break;
+		case BLOCK_SETEXT_2:
+			pad(out, 2, scratch);
+			temp_short = 2;
+			if (scratch->extensions & EXT_NO_LABELS) {
+				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
+			} else {
+				temp_char = label_from_token(source, t);
+				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
+				free(temp_char);
+			}
+			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
+			scratch->padded = 0;
+			break;
 		case BLOCK_TABLE:
 			pad(out, 2, scratch);
 			print("<table>\n");
@@ -767,6 +795,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		case EMPH_STOP:
 			print("</em>");
+			break;
+		case EQUAL:
+			print("=");
 			break;
 		case ESCAPED_CHARACTER:
 			mmd_print_char_html(out, source[t->start + 1], false);

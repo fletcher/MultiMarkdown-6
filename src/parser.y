@@ -62,7 +62,9 @@
 
 %extra_argument { mmd_engine * engine }
 
-%fallback LINE_PLAIN LINE_TABLE_SEPARATOR .
+%fallback LINE_HR LINE_SETEXT_1 LINE_SETEXT_2.
+
+%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
 
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE  LINE_TABLE.
 
@@ -121,6 +123,8 @@ block(A)			::= list_bullet(B).			{ A = token_new_parent(B, BLOCK_LIST_BULLETED);
 block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
 block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
 block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
+block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); }
+block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); }
 block(A)			::= table(B).				{ A = token_new_parent(B, BLOCK_TABLE); }
 
 
@@ -246,6 +250,8 @@ fenced_5			::= LINE_FENCE_BACKTICK_START_5.
 
 fenced_line			::= LINE_CONTINUATION.
 fenced_line			::= LINE_EMPTY.
+fenced_line			::= LINE_SETEXT_1.
+fenced_line			::= LINE_SETEXT_2.
 
 
 // HTML
@@ -293,6 +299,11 @@ meta_line 			::= LINE_CONTINUATION.
 // Paragraphs
 para(A)				::= LINE_PLAIN(B) chunk(C).					{ A = B; token_chain_append(B, C); }
 para				::= LINE_PLAIN.
+
+
+// Setext headers
+setext_1(A)			::= para(B) LINE_SETEXT_1(C).				{ A = B; token_chain_append(B, C); }
+setext_2(A)			::= para(B) LINE_SETEXT_2(C).				{ A = B; token_chain_append(B, C); }
 
 
 // Tables

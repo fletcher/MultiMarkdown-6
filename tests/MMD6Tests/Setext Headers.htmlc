@@ -1,0 +1,28 @@
+<h1>foo bar</h1>
+
+<h2>foo bar</h2>
+
+<h1>foo
+bar</h1>
+
+<h2>foo
+bar</h2>
+
+<h1>foo</h1>
+
+<p>bar</p>
+
+<p>5</p>
+
+<h2>foo</h2>
+
+<p>bar</p>
+
+<h1>````
+foo</h1>
+
+<p>````</p>
+
+<hr />
+
+<hr />
