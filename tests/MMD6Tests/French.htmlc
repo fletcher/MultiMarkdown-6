@@ -1,0 +1,19 @@
+<p>language:	fr</p>
+
+<p>'foo'</p>
+
+<p>&quot;foo&quot;</p>
+
+<p>foo's</p>
+
+<p>foo --- bar</p>
+
+<p>foo -- bar</p>
+
+<p>5</p>
+
+<p>foo...</p>
+
+<p>[^foo]</p>
+
+<p>[#bar]</p>

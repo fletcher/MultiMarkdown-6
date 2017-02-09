@@ -62,6 +62,7 @@
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
+#include "i18n.h"
 #include "mmd.h"
 #include "scanners.h"
 #include "token.h"
@@ -1147,6 +1148,7 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 
 	meta * m;
 	short header_level = -10;
+	char * temp_char = NULL;
 
 	for (int i = 0; i < e->metadata_stack->size; ++i)
 	{
@@ -1168,7 +1170,49 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
 			if (scratch->output_format == FORMAT_ODF)
 				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "language") == 0) {
+			temp_char = label_from_string(m->value);
+
+			if (strcmp(temp_char, "de") == 0) {
+				scratch->language = LC_DE;
+				scratch->quotes_lang = GERMAN;
+			} else if (strcmp(temp_char, "fr") == 0) {
+				//scratch->language = LC_FR;
+				scratch->quotes_lang = FRENCH;
+			} else if (strcmp(temp_char, "nl") == 0) {
+				//scratch->language = LC_NL;
+				scratch->quotes_lang = DUTCH;
+			} else if (strcmp(temp_char, "sv") == 0) {
+				//scratch->language = LC_SV;
+				scratch->quotes_lang = SWEDISH;
+			} else {
+				scratch->language = LC_EN;
+				scratch->quotes_lang = ENGLISH;
+			}
+
+			free(temp_char);
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+			temp_char = label_from_string(m->value);
+
+			if ((strcmp(temp_char, "dutch") == 0) ||
+				(strcmp(temp_char, "nl") == 0)) {
+				scratch->quotes_lang = DUTCH;
+			} else if ((strcmp(temp_char, "french") == 0) ||
+				(strcmp(temp_char, "fr") == 0)) {
+				scratch->quotes_lang = FRENCH;
+			} else if ((strcmp(temp_char, "german") == 0) ||
+				(strcmp(temp_char, "de") == 0)) {
+				scratch->quotes_lang = GERMAN;
+			} else if (strcmp(temp_char, "germanguillemets") == 0) {
+				scratch->quotes_lang = GERMANGUILL;
+			} else if ((strcmp(temp_char, "swedish") == 0) ||
+				(strcmp(temp_char, "sv") == 0)) {
+				scratch->quotes_lang = SWEDISH;
+			} else {
+				scratch->quotes_lang = ENGLISH;
+			}
+
+			free(temp_char);
 		} else {
 			// Any other key triggers complete document
 			if (!(scratch->extensions & EXT_SNIPPET))

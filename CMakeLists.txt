@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown 6")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-02-07")
+set (My_Project_Revised_Date "2017-02-08")
 set (My_Project_Version_Major 0)
 set (My_Project_Version_Minor 1)
-set (My_Project_Version_Patch 2a)
+set (My_Project_Version_Patch 4a)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
