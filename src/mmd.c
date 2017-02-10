@@ -894,6 +894,8 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_H5:
 		case BLOCK_H6:
 		case BLOCK_PARA:
+		case BLOCK_SETEXT_1:
+		case BLOCK_SETEXT_2:
 		case BLOCK_TERM:
 			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			break;
@@ -966,6 +968,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_LIST_ITEM:
 			case BLOCK_LIST_ITEM_TIGHT:
 			case BLOCK_PARA:
+			case BLOCK_SETEXT_1:
+			case BLOCK_SETEXT_2:
 			case BLOCK_TABLE:
 			case BLOCK_TERM:
 				// Assign child tokens of blocks

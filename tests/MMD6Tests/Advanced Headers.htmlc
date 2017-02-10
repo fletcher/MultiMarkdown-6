@@ -9,3 +9,5 @@
 <h1>foo [bar][bat][baz]</h1>
 
 <p>5</p>
+
+<h1>foo [bar]</h1>
