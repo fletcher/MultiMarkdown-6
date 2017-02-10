@@ -207,5 +207,7 @@ bool table_has_caption(token * table);
 
 char * get_fence_language_specifier(token * fence, const char * source);
 
+token * manual_label_from_header(token * h, const char * source);
+
 #endif
 

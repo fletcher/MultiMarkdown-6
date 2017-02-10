@@ -1,0 +1,11 @@
+# foo [bar] #
+
+# foo[bar]
+
+# foo [bar][bat]
+
+# foo [bar] [bat]
+
+# foo [bar][bat][baz]
+
+5

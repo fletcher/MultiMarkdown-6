@@ -1110,9 +1110,68 @@ void process_definition_stack(mmd_engine * e) {
 	}
 }
 
+token * manual_label_from_header(token * h, const char * source) {
+	token * walker = h->child->tail;
+	token * label = NULL;
+	short count = 0;
+
+	while (walker) {
+		switch (walker->type) {
+			case MANUAL_LABEL:
+				// Already identified
+				label = walker;
+				walker = NULL;
+				break;
+			case INDENT_TAB:
+			case INDENT_SPACE:
+			case NON_INDENT_SPACE:
+			case TEXT_NL:
+			case TEXT_LINEBREAK:
+			case TEXT_EMPTY:
+				walker = walker->prev;
+				break;
+			case TEXT_PLAIN:
+				if (walker->len == 1) {
+					if (source[walker->start] == ' ') {
+						walker = walker->prev;
+						break;
+					}
+				}
+				walker = NULL;
+				break;
+			case PAIR_BRACKET:
+				label = walker;
+				while(walker->type == PAIR_BRACKET) {
+					walker = walker->prev;
+					count++;
+				}
+				if (count % 2 == 0) {
+					// Even count
+					label = NULL;
+				} else {
+					// Odd count
+					label->type = MANUAL_LABEL;
+				}
+			default:
+				walker = NULL;
+		}
+	}
+
+	return label;
+}
+
 
 void process_header_to_links(mmd_engine * e, token * h) {
 	char * label = label_from_token(e->dstr->str, h);
+
+	// See if we have a manual label
+	token * manual = manual_label_from_header(h, e->dstr->str);
+
+	if (manual) {
+		free(label);
+		label = label_from_token(e->dstr->str, manual);
+		h = manual;
+	}
 
 	DString * url = d_string_new("#");
 

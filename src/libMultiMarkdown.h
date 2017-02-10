@@ -270,6 +270,8 @@ enum token_types {
 	TEXT_NUMBER_POSS_LIST,
 	TEXT_PERIOD,
 	TEXT_PLAIN,
+
+	MANUAL_LABEL,
 };
 
 

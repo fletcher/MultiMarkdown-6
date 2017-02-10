@@ -415,7 +415,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_char = label_from_token(source, t);
+				temp_token = manual_label_from_header(t, source);
+				if (temp_token) {
+					temp_char = label_from_token(source, temp_token);
+				} else {
+					temp_char = label_from_token(source, t);
+				}
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
@@ -1267,6 +1272,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		case CODE_FENCE:
 		case TEXT_EMPTY:
+		case MANUAL_LABEL:
 			break;
 		case TEXT_NL:
 			if (t->next)
