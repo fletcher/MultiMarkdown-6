@@ -965,6 +965,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			break;
 		case PAIR_BRACKET:
+			if ((scratch->extensions & EXT_NOTES) &&
+				(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
+				goto parse_citation;
+			}
+
 		case PAIR_BRACKET_IMAGE:
 			parse_brackets(source, scratch, t, &temp_link, &temp_short, &temp_bool);
 
@@ -1008,22 +1013,60 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			break;
 		case PAIR_BRACKET_CITATION:
+			parse_citation:
+			temp_bool = true;
+
+			if (t->type == PAIR_BRACKET) {
+				// This is a locator for subsequent ciation
+				temp_char = text_inside_pair(source, t);
+				temp_char2 = label_from_string(temp_char);
+
+				if (strcmp(temp_char2, "notcited") == 0) {
+					free(temp_char2);
+					free(temp_char);
+					temp_char = strdup("");
+					temp_bool = false;
+				}
+
+				if (temp_char[0] == '\0')
+					temp_char2 = strdup("");
+				else
+					temp_char2 = strdup(", ");
+
+
+				// Process the actual citation
+				t = t->next;
+			} else {
+				temp_char = strdup("");
+				temp_char2 = strdup("");
+			}
+
 			if (scratch->extensions & EXT_NOTES) {
 				citation_from_bracket(source, scratch, t, &temp_short);
 
-				if (temp_short < scratch->used_citations->size) {
-					// Re-using previous citation
-					printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
-						   temp_short, LC("see citation"), temp_short);
-				} else {
-					// This is a new citation
-					printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
-						   temp_short, temp_short, LC("see citation"), temp_short);
+				if (temp_bool) {
+					if (temp_short < scratch->used_citations->size) {
+						// Re-using previous citation
+						printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+								temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					} else {
+						// This is a new citation
+						printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+								temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					}
+				}
+
+				if (t->prev && (t->prev->type == PAIR_BRACKET)) {
+					// Skip citation on next pass
+					scratch->skip_token = 1;
 				}
 			} else {
 				// Footnotes disabled
 				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			}
+
+			free(temp_char);
+			free(temp_char2);
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {

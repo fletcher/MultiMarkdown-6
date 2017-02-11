@@ -209,5 +209,7 @@ char * get_fence_language_specifier(token * fence, const char * source);
 
 token * manual_label_from_header(token * h, const char * source);
 
+char * label_from_string(const char * str);
+
 #endif
 
