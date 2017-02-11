@@ -1,9 +1,13 @@
-<p>[#first]</p>
+<p>[#foo1]</p>
 
-<p>[p. 123][#first]</p>
+<p>[p. 123][#foo1]</p>
 
-<p>[][#first]</p>
+<p>[][#foo1]</p>
 
-<p>[Not Cited][#first]</p>
+<p>[Not Cited][#foo2]</p>
 
-<p>[#first]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>
+<p>[#foo1]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>
+
+<p>[#foo2]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>
+
+<p>[#foo3]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>

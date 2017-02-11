@@ -1,10 +1,13 @@
-[#first]
+[#foo1]
 
-[p. 123][#first]
+[p. 123][#foo1]
 
-[][#first]
+[][#foo1]
 
-[Not Cited][#first]
+[Not Cited][#foo2]
 
+[#foo1]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
 
-[#first]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+[#foo2]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+
+[#foo3]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
