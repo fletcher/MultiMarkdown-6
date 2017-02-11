@@ -426,12 +426,12 @@ void Test_scan_url(CuTest* tc) {
 	url_len = (int) scan_url("http://test.com/");
 	CuAssertIntEquals(tc, 16, url_len);
 	url_len = (int) scan_email("mailto:foo@bar.com");
-	CuAssertIntEquals(tc, 0, url_len);
+	CuAssertIntEquals(tc, 18, url_len);
 
 	url_len = (int) scan_url("foo@bar.com  ");
-	CuAssertIntEquals(tc, 12, url_len);
+	CuAssertIntEquals(tc, 11, url_len);
 	url_len = (int) scan_email("mailto:foo@bar.com");
-	CuAssertIntEquals(tc, 12, url_len);
+	CuAssertIntEquals(tc, 18, url_len);
 }
 #endif
 
