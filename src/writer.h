@@ -211,5 +211,7 @@ token * manual_label_from_header(token * h, const char * source);
 
 char * label_from_string(const char * str);
 
+char * clean_string(const char * str, bool lowercase);
+
 #endif
 

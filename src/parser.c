@@ -1114,6 +1114,7 @@ static void yy_reduce(
         break;
       case 2: /* blocks ::= block */
 {
+		engine->root = yymsp[0].minor.yy0;
 		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", yymsp[0].minor.yy0->type);

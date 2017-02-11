@@ -76,10 +76,6 @@ void token_pool_init(void) {
 	if (token_pool == NULL) {
 		// No pool exists
 		token_pool = pool_new(sizeof(token));
-	} else {
-		// Pool exists, ensure it's drained
-		// NOTE: This invalidates any tokens currently in use.
-		token_pool_drain();
 	}
 }
 

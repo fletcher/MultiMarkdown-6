@@ -84,6 +84,7 @@ blocks(A)			::= blocks(B) block(C).
 	}
 blocks(A)			::= block(B).
 	{
+		engine->root = B;	// In case the first block is metadata and we just want to know if it exists
 		strip_line_tokens_from_block(engine, B);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", B->type);

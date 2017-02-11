@@ -180,6 +180,7 @@ set(src_files
 	src/stack.c
 	src/token.c
 	src/token_pairs.c
+	src/transclude.c
 	src/writer.c
 )
 
@@ -197,6 +198,7 @@ set(header_files
 	src/stack.h
 	src/token.h
 	src/token_pairs.h
+	src/transclude.h
 	src/uthash.h
 	src/writer.h
 )

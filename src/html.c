@@ -1017,7 +1017,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			temp_bool = true;
 
 			if (t->type == PAIR_BRACKET) {
-				// This is a locator for subsequent ciation
+				// This is a locator for subsequent citation
 				temp_char = text_inside_pair(source, t);
 				temp_char2 = label_from_string(temp_char);
 

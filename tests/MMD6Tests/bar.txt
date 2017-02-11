@@ -1,0 +1,14 @@
+Title:  bar
+transclude base: transclusion
+
+This text is included in `bar.txt`.
+
+This can be transcluded without causing an infinite loop -- {{foo.txt}}
+
+```
+{{nometa.txt}}
+```
+
+```
+{{nometa-bom8.txt}}
+```
