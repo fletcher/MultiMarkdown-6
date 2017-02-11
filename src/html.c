@@ -1252,7 +1252,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					print(" style=\"text-align:center;\"");
 					break;
 			}
-			if (t->next->type == TABLE_DIVIDER) {
+			if (t->next && t->next->type == TABLE_DIVIDER) {
 				if (t->next->len > 1) {
 					printf(" colspan=\"%d\"", t->next->len);
 				}
@@ -1264,7 +1264,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			} else {
 				print("</td>\n");
 			}
-			scratch->table_cell_count += t->next->len;
+            if (t->next)
+                scratch->table_cell_count += t->next->len;
+            else
+                scratch->table_cell_count++;
+            
 			break;
 		case TABLE_DIVIDER:
 			break;
