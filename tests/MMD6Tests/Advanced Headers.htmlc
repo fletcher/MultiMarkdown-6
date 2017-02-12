@@ -11,3 +11,12 @@
 <p>5</p>
 
 <h1>foo [bar]</h1>
+
+<h1><em>foo</em> bar </h1>
+
+<h1><em>foo
+bar</em></h1>
+
+<p>[bar]</p>
+
+<p>[foo][bar]</p>

@@ -203,9 +203,32 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 
 void mmd_export_link_latex(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	attr * a = link->attributes;
+	char * temp_char;
 
 	if (link->url) {
-		printf("\\href{%s}", link->url);
+		if (link->url[0] == '#') {
+			// Internal link
+			if (text && text->child) {
+				temp_char = label_from_token(source, text);
+
+				if (strcmp(temp_char, &(link->url[1])) == 0) {
+					// [bar][bar] or [bar](#bar) or [bar]
+					printf("\\autoref{%s}", &(link->url)[1]);
+				} else {
+					mmd_export_token_tree_latex(out, source, text->child, scratch);
+					print(" (");
+					printf("\\autoref{%s}", &(link->url)[1]);
+					print(")");
+				}
+
+				free(temp_char);
+			} else {
+				printf("\\autoref{%s}", &(link->url)[1]);
+			}
+			return;
+		} else {
+			printf("\\href{%s}", link->url);			
+		}
 	} else
 		print("\\href{}");
 

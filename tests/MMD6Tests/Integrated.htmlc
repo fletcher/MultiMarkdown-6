@@ -55,6 +55,10 @@ code
 
 <p>![test](http://foo.bar/ &quot;title&quot; width=&quot;40px&quot; height=400px)</p>
 
+<p>[Math]</p>
+
+<p>[foo][math]</p>
+
 <h1>Math </h1>
 
 <p>math ${e}^{i\pi }+1=0$</p>

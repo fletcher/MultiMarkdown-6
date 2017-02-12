@@ -4,16 +4,27 @@
 \part{foo}
 \label{bar}
 
-\part{foo [bar][bat]}
+\part{foo bar (\autoref{bat})}
 \label{foobarbat}
 
-\part{foo [bar][bat]}
+\part{foo \autoref{bar} }
 \label{bat}
 
-\part{foo [bar][bat]}
+\part{foo bar (\autoref{bat})}
 \label{baz}
 
 5
 
 \part{foo }
 \label{bar}
+
+\part{\emph{foo} bar }
+\label{foobar}
+
+\part{\emph{foo
+bar}}
+\label{foobar}
+
+\autoref{bar}
+
+foo (\autoref{bar})
