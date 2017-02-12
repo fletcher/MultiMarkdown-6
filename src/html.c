@@ -943,9 +943,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("</code>");
 			break;
 		case PAIR_ANGLE:
-			temp_token = t;
-
-			temp_char = url_accept(source, &temp_token, true);
+			temp_char = url_accept(source, t->start + 1, t->len - 2, NULL, true);
 
 			if (temp_char) {
 				if (scan_email(temp_char))

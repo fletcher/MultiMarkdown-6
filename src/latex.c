@@ -660,9 +660,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_char(' ');
 			break;
 		case PAIR_ANGLE:
-			temp_token = t;
-
-			temp_char = url_accept(source, &temp_token, true);
+			temp_char = url_accept(source, t->start + 1, t->len - 2, NULL, true);
 
 			if (temp_char) {
 				if (scan_email(temp_char)) {

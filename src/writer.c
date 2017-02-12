@@ -722,90 +722,80 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 }
 
 
-char * url_accept(const char * source, token ** remainder, bool validate) {
+char * url_accept(const char * source, size_t start, size_t max_len, size_t * end_pos, bool validate) {
 	char * url = NULL;
 	char * clean = NULL;
-	token * t = NULL;
-	token * first = NULL;
-	token * last = NULL;
+	size_t scan_len;
 
-	switch ((*remainder)->type) {
-		case PAIR_PAREN:
-		case PAIR_ANGLE:
-		case PAIR_QUOTE_SINGLE:
-		case PAIR_QUOTE_DOUBLE:
-			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
-			url = text_inside_pair(source, t);
-			break;
-		case SLASH:
-		case TEXT_PLAIN:
-			first = *remainder;
-			
-			// Grab parts for URL
-			while (token_chain_accept_multiple(remainder, 7, AMPERSAND, COLON, EQUAL, SLASH, TEXT_PERIOD, TEXT_PLAIN, UL));
+	scan_len = scan_destination(&source[start]);
 
-			last = (*remainder)->prev;
+	if (scan_len) {
+		if (scan_len > max_len)
+			scan_len = max_len;
 
-			// Is there a space in a URL concatenated with a title or attribute?
-			// e.g. [foo]: http://foo.bar/ class="foo"
-			// Since only one space between URL and class, they are joined.
+		if (end_pos)
+			*end_pos = start + scan_len;
 
-			if (last->type == TEXT_PLAIN) {
-				// Trim leading whitespace
-				token_trim_leading_whitespace(last, source);
-				token_split_on_char(last, source, ' ');
-				*remainder = last->next;
-			}
+		// Is this <foo>?
+		if ((source[start] == '<') &&
+			(source[start + scan_len - 1] == '>')) {
+			// Strip '<' and '>'
+			start++;
+			scan_len -= 2;
+		}
 
-			url = strndup(&source[first->start], last->start + last->len - first->start);
-			break;
+		url = strndup(&source[start], scan_len);
+
+		clean = clean_string(url, false);
+
+		if (validate && !validate_url(clean)) {
+			free(clean);
+			clean = NULL;
+		}
+
+		free(url);
 	}
 
-	// Is this a valid URL?
-	clean = clean_string(url, false);
-	
-	if (validate && !validate_url(clean)) {
-		free(clean);
-		clean = NULL;
-	}
-
-	free(url);
 	return clean;
 }
 
 
 /// Extract url string from `(foo)` or `(<foo>)` or `(foo "bar")`
 void extract_from_paren(token * paren, const char * source, char ** url, char ** title, char ** attributes) {
-	token * t;
+   size_t scan_len;
+    size_t pos = paren->child->next->start;
+    
+    
 	size_t attr_len;
 
-	token * remainder = paren->child->next;
+	// Skip whitespace
+	while (char_is_whitespace(source[pos]))
+		pos++;
 
-	if (remainder) {
-		// Skip whitespace
-		whitespace_accept(&remainder);
+	// Grab URL
+	*url = url_accept(source, pos, paren->start + paren->len - 1 - pos, &pos, false);
 
-		// Grab URL
-		*url = url_accept(source, &remainder, false);
+	// Skip whitespace
+	while (char_is_whitespace(source[pos]))
+		pos++;
 
-		// Skip whitespace
-		whitespace_accept(&remainder);
+	// Grab title, if present
+	scan_len = scan_title(&source[pos]);
 
-		// Grab title, if present
-		t = token_chain_accept_multiple(&remainder, 3, PAIR_QUOTE_DOUBLE, PAIR_QUOTE_SINGLE, PAIR_PAREN);
+	if (scan_len) {
+		*title = strndup(&source[pos + 1], scan_len - 2);
+		pos += scan_len;
+	}
 
-		if (t) {
-			*title = text_inside_pair(source, t);
-		}
+	// Skip whitespace
+	while (char_is_whitespace(source[pos]))
+		pos++;
 
-		// Grab attributes, if present
-		if (t) {
-			attr_len = scan_attributes(&source[t->start + t->len]);
-			
-			if (attr_len) {
-				*attributes = strndup(&source[t->start + t->len], attr_len);
-			}
-		}
+	// Grab attributes, if present
+	attr_len = scan_attributes(&source[pos]);
+	
+	if (attr_len) {
+		*attributes = strndup(&source[pos], attr_len);
 	}
 }
 

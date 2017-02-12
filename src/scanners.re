@@ -402,6 +402,16 @@ size_t scan_destination(const char * c) {
 }
 
 
+size_t scan_title(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	title	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
 size_t scan_setext(const char * c) {
 	const char * marker = NULL;
 	const char * start = c;

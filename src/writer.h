@@ -189,7 +189,7 @@ void print_token_raw(DString * out, const char * source, token * t);
 
 void print_token_tree_raw(DString * out, const char * source, token * t);
 
-char * url_accept(const char * source, token ** remainder, bool validate);
+char * url_accept(const char * source, size_t start, size_t max_len, size_t * end_pos, bool validate);
 
 void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void citation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
