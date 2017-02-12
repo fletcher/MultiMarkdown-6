@@ -140,6 +140,8 @@ int scan(Scanner * s, const char * stop) {
 		'&amp;'							{ return AMPERSAND_LONG; }
 		"&"								{ return AMPERSAND; }
 
+		"/"								{ return SLASH; }
+
 		"\\."							{ return ESCAPED_CHARACTER; }
 		"\\!"							{ return ESCAPED_CHARACTER; }
 		"\\?"							{ return ESCAPED_CHARACTER; }
@@ -179,6 +181,8 @@ int scan(Scanner * s, const char * stop) {
 		"\\_"							{ return ESCAPED_CHARACTER; }
 
 		"\\|"							{ return ESCAPED_CHARACTER; }
+
+		"\\ "							{ return ESCAPED_CHARACTER; }
 
 		"\\\\("							{ return MATH_PAREN_OPEN; }
 		"\\\\)"							{ return MATH_PAREN_CLOSE; }

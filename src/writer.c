@@ -675,6 +675,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
 			url = text_inside_pair(source, t);
 			break;
+		case SLASH:
 		case TEXT_PLAIN:
 			start = (*remainder)->start;
 			
@@ -736,11 +737,12 @@ char * url_accept(const char * source, token ** remainder, bool validate) {
 			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
 			url = text_inside_pair(source, t);
 			break;
+		case SLASH:
 		case TEXT_PLAIN:
 			first = *remainder;
 			
 			// Grab parts for URL
-			while (token_chain_accept_multiple(remainder, 6, AMPERSAND, COLON, EQUAL, TEXT_PERIOD, TEXT_PLAIN, UL));
+			while (token_chain_accept_multiple(remainder, 7, AMPERSAND, COLON, EQUAL, SLASH, TEXT_PERIOD, TEXT_PLAIN, UL));
 
 			last = (*remainder)->prev;
 

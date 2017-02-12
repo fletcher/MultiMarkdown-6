@@ -1,0 +1,56 @@
+This file is a designed as a single test that incorporates most of the
+*commonly* used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet -- particularly useful
+when developing a new output format.
+
+# Basic Blocks #
+
+paragraph
+
+* list
+* items
+
+```
+fenced
+code
+```
+
+	indented
+	code
+
+> blockquote
+
+`code span`
+
+
+*emph* and **strong** and ***both***
+
+_emph_ and __strong__ and ___both___
+
+
+Escapes [escaped]
+----------------
+
+1. \$
+
+2. \#
+
+3. \[
+
+Foo.[^This is an inline footnote]
+
+Bar.[^foot]
+
+[^foot]: And a reference footnote.
+
+[link](http://foo.net/) and [link]
+
+[link]: http://bar.net "title" class="custom"
+
+math ${e}^{i\pi }+1=0$
+
+# Smart Quotes # 
+
+"foo" and 'bar' -- with --- dashes...
+
+

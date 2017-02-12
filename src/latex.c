@@ -74,6 +74,29 @@ void mmd_print_char_latex(DString * out, char c) {
 		case '\\':
 			print("\\textbackslash{}");
 			break;
+		case '~':
+			print("\\ensuremath{\\sim}");
+			break;
+		case '/':
+			print("\\slash ");
+			break;
+		case '^':
+			print("\\^{}");
+			break;
+		case '<':
+		case '>':
+			print_char('$');
+			print_char(c);
+			print_char('$');
+			break;
+		case '#':
+		case '{':
+		case '}':
+		case '$':
+		case '%':
+		case '&':
+		case '_':
+			print_char('\\');
 		default:
 			print_char(c);
 			break;
@@ -178,28 +201,26 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 	attr * a = link->attributes;
 
 	if (link->url) {
-		print("<a href=\"");
-		mmd_print_string_latex(out, link->url);
-		print("\"");
+		printf("\\href{%s}", link->url);
 	} else
-		print("<a href=\"\"");
+		print("\\href{}");
 
-	if (link->title && link->title[0] != '\0') {
-		print(" title=\"");
-		mmd_print_string_latex(out, link->title);
-		print("\"");
-	}
+//	if (link->title && link->title[0] != '\0') {
+//		print(" title=\"");
+//		mmd_print_string_latex(out, link->title);
+//		print("\"");
+//	}
 
-	while (a) {
-		print(" ");
-		print(a->key);
-		print("=\"");
-		print(a->value);
-		print("\"");
-		a = a->next;
-	}
+//	while (a) {
+//		print(" ");
+//		print(a->key);
+//		print("=\"");
+//		print(a->value);
+//		print("\"");
+//		a = a->next;
+//	}
 
-	print(">");
+	print("{");
 
 	// If we're printing contents of bracket as text, then ensure we include it all
 	if (text && text->child && text->child->len > 1) {
@@ -209,7 +230,12 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 	
 	mmd_export_token_tree_latex(out, source, text->child, scratch);
 
-	print("</a>");
+	print("}");
+
+	// Reprint as footnote for printed copies
+	printf("\\footnote{\\href{%s}{", link->url);
+	mmd_print_string_latex(out, link->url);
+	print("}}");
 }
 
 
@@ -281,6 +307,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 	char *	temp_char2	= NULL;
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
+	footnote * temp_note = NULL;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -455,6 +482,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 			break;
+		case BLOCK_META:
+			break;
 		case BLOCK_PARA:
 			pad(out, 2, scratch);
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
@@ -519,6 +548,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case EMPH_STOP:
 			print("}");
 			break;
+		case EQUAL:
+			print("=");
+			break;
 		case ESCAPED_CHARACTER:
 			mmd_print_char_latex(out, source[t->start + 1]);
 			break;
@@ -528,7 +560,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case HASH4:
 		case HASH5:
 		case HASH6:
-			print_token(t);
+			for (int i = 0; i < t->len; ++i)
+			{
+				print_char('\\');
+				print_char('#');
+			}
 			break;
 		case LINE_LIST_BULLETED:
 		case LINE_LIST_ENUMERATED:
@@ -545,6 +581,24 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case MARKER_H6:
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
+			break;
+		case MATH_BRACKET_OPEN:
+			print("\\[");
+			break;
+		case MATH_BRACKET_CLOSE:
+			print("\\]");
+			break;
+		case MATH_DOLLAR_SINGLE:
+			print("$");
+			break;
+		case MATH_DOLLAR_DOUBLE:
+			print("$$");
+			break;
+		case MATH_PAREN_OPEN:
+			print("\\(");
+			break;
+		case MATH_PAREN_CLOSE:
+			print("\\)");
 			break;
 		case NON_INDENT_SPACE:
 			print_char(' ');
@@ -672,12 +726,14 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_bool) {
 					if (temp_short < scratch->used_citations->size) {
 						// Re-using previous citation
-						printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-								temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+						printf("\\citation{reuse");
+
+						printf("}");
 					} else {
 						// This is a new citation
-						printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-								temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+						printf("\\citation{");
+
+						printf("}");
 					}
 				}
 
@@ -699,12 +755,16 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 				if (temp_short < scratch->used_footnotes->size) {
 					// Re-using previous footnote
-					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						   temp_short, LC("see footnote"), temp_short);
+					printf("\\footnote{reuse");
+
+					printf("}");
 				} else {
 					// This is a new footnote
-					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						   temp_short, temp_short, LC("see footnote"), temp_short);
+					printf("\\footnote{");
+					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_latex(out, source, temp_note->content, scratch);
+					printf("}");
 				}
 			} else {
 				// Footnotes disabled
@@ -749,6 +809,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			else
 				print_localized(QUOTE_RIGHT_DOUBLE);
 			break;
+		case SLASH:
+			print("\\slash ");
+			break;
 		case STAR:
 			print_token(t);
 			break;
@@ -757,6 +820,28 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case STRONG_STOP:
 			print("}");
+			break;
+		case SUBSCRIPT:
+			if (t->mate) {
+				(t->start < t->mate->start) ? (print("\\textsubscript{")) : (print("}"));
+			} else if (t->len != 1) {
+				print("\\textsubscript{");
+				mmd_export_token_latex(out, source, t->child, scratch);
+				print("}");
+			} else {
+				print("\\ensuremath{\\sim}");
+			}
+			break;
+		case SUPERSCRIPT:
+			if (t->mate) {
+				(t->start < t->mate->start) ? (print("\\textsuperscript{")) : (print("}"));
+			} else if (t->len != 1) {
+				print("\\textsuperscript{");
+				mmd_export_token_latex(out, source, t->child, scratch);
+				print("}");
+			} else {
+				print("\\^{}");
+			}	
 			break;
 		case TEXT_EMPTY:
 			break;
@@ -767,6 +852,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
+			print_token(t);
+			break;
+		case UL:
 			print_token(t);
 			break;
 		default:

@@ -1,0 +1,54 @@
+<p>This file is a designed as a single test that incorporates most of the
+<em>commonly</em> used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet -- particularly useful
+when developing a new output format.</p>
+
+<h1>Basic Blocks </h1>
+
+<p>paragraph</p>
+
+<ul>
+<li>list</li>
+<li>items</li>
+</ul>
+
+<p><code>fenced
+code</code></p>
+
+<pre><code>indented
+code
+</code></pre>
+
+<blockquote>
+<p>blockquote</p>
+</blockquote>
+
+<p><code>code span</code></p>
+
+<p><em>emph</em> and <strong>strong</strong> and <strong><em>both</em></strong></p>
+
+<p><em>emph</em> and <strong>strong</strong> and <strong><em>both</em></strong></p>
+
+<h2>Escapes [escaped]</h2>
+
+<ol>
+<li><p>$</p></li>
+<li><p>#</p></li>
+<li><p>[</p></li>
+</ol>
+
+<p>Foo.[^This is an inline footnote]</p>
+
+<p>Bar.[^foot]</p>
+
+<p>[^foot]: And a reference footnote.</p>
+
+<p><a href="http://foo.net/">link</a> and [link]</p>
+
+<p>[link]: http://bar.net &quot;title&quot; class=&quot;custom&quot;</p>
+
+<p>math ${e}^{i\pi }+1=0$</p>
+
+<h1>Smart Quotes </h1>
+
+<p>&quot;foo&quot; and 'bar' -- with --- dashes...</p>

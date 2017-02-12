@@ -1,0 +1,66 @@
+<p>This file is a designed as a single test that incorporates most of the
+<em>commonly</em> used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet &#8211; particularly useful
+when developing a new output format.</p>
+
+<h1 id="basicblocks">Basic Blocks </h1>
+
+<p>paragraph</p>
+
+<ul>
+<li>list</li>
+<li>items</li>
+</ul>
+
+<pre><code>fenced
+code
+</code></pre>
+
+<pre><code>indented
+code
+</code></pre>
+
+<blockquote>
+<p>blockquote</p>
+</blockquote>
+
+<p><code>code span</code></p>
+
+<p><em>emph</em> and <strong>strong</strong> and <strong><em>both</em></strong></p>
+
+<p><em>emph</em> and <strong>strong</strong> and <strong><em>both</em></strong></p>
+
+<h2 id="escaped">Escapes </h2>
+
+<ol>
+<li><p>$</p></li>
+<li><p>#</p></li>
+<li><p>[</p></li>
+</ol>
+
+<p>Foo.<a href="#fn:1" id="fnref:1" title="see footnote" class="footnote">[1]</a></p>
+
+<p>Bar.<a href="#fn:2" id="fnref:2" title="see footnote" class="footnote">[2]</a></p>
+
+<p><a href="http://foo.net/">link</a> and <a href="http://bar.net" title="title" class="custom">link</a></p>
+
+<p>math <span class="math">\({e}^{i\pi }+1=0\)</span></p>
+
+<h1 id="smartquotes">Smart Quotes </h1>
+
+<p>&#8220;foo&#8221; and &#8216;bar&#8217; &#8211; with &#8212; dashes&#8230;</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>This is an inline footnote <a href="#fnref:1" title="return to body" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+<li id="fn:2">
+<p>And a reference footnote. <a href="#fnref:2" title="return to body" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>

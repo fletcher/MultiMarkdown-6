@@ -753,7 +753,7 @@ static unsigned int yy_find_shift_action(
              yyTracePrompt, yyTokenName[iLookAhead], yyTokenName[iFallback]);
         }
 #endif
-        assert( yyFallback[iFallback]==0 ); /* Fallback loop must terminate */
+ //       assert( yyFallback[iFallback]==0 ); /* Fallback loop must terminate */
         iLookAhead = iFallback;
         continue;
       }

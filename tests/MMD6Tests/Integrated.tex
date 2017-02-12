@@ -1,0 +1,61 @@
+This file is a designed as a single test that incorporates most of the
+\emph{commonly} used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet -- particularly useful
+when developing a new output format.
+
+\part{Basic Blocks }
+\label{basicblocks}
+
+paragraph
+
+\begin{itemize}
+\item list
+
+\item items
+
+\end{itemize}
+
+\begin{verbatim}
+fenced
+code
+\end{verbatim}
+
+\begin{verbatim}
+indented
+code
+\end{verbatim}
+
+\begin{quote}
+blockquote
+\end{quote}
+
+\texttt{code span}
+
+\emph{emph} and \textbf{strong} and \textbf{\emph{both}}
+
+\emph{emph} and \textbf{strong} and \textbf{\emph{both}}
+
+\chapter{Escapes }
+\label{escaped}
+
+\begin{enumerate}
+\item \$
+
+\item \#
+
+\item [
+
+\end{enumerate}
+
+Foo.\footnote{This is an inline footnote}
+
+Bar.\footnote{And a reference footnote.}
+
+\href{http://foo.net/}{link}\footnote{\href{http://foo.net/}{http:/\slash foo.net\slash }} and \href{http://bar.net}{link}\footnote{\href{http://bar.net}{http:/\slash bar.net}}
+
+math ${e}^{i\pi }+1=0$
+
+\part{Smart Quotes }
+\label{smartquotes}
+
+``foo'' and `bar' -- with --- dashes{\ldots}

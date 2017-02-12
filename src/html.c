@@ -828,7 +828,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("=");
 			break;
 		case ESCAPED_CHARACTER:
-			mmd_print_char_html(out, source[t->start + 1], false);
+			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
+				(source[t->start + 1] == ' ')) {
+				print("&nbsp;");
+			} else {
+				mmd_print_char_html(out, source[t->start + 1], false);
+			}
 			break;
 		case HASH1:
 		case HASH2:
@@ -1243,6 +1248,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			else
 				print_localized(QUOTE_RIGHT_DOUBLE);
 			break;
+		case SLASH:
 		case STAR:
 			print_token(t);
 			break;

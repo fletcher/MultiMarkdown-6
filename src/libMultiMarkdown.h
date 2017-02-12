@@ -242,6 +242,7 @@ enum token_types {
 	EQUAL,
 	PIPE,
 	PLUS,
+	SLASH,
 	
 	SUPERSCRIPT,
 	SUBSCRIPT,
