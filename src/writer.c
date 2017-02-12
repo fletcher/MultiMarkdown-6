@@ -63,6 +63,7 @@
 #include "d_string.h"
 #include "html.h"
 #include "i18n.h"
+#include "latex.h"
 #include "mmd.h"
 #include "scanners.h"
 #include "token.h"
@@ -1311,6 +1312,16 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_end_complete_html(out, e->dstr->str, scratch);
+
+			break;
+		case FORMAT_LATEX:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_latex(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_latex(out, e->dstr->str, e->root, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_latex(out, e->dstr->str, scratch);
 
 			break;
 	}

@@ -70,7 +70,6 @@
 #define print(x) d_string_append(out, x)
 #define print_char(x) d_string_append_c(out, x)
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
-//#define print_token(t) d_string_append_c_array(out, &(source[t->start + offset]), t->len)
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
 #define print_localized(x) mmd_print_localized_char_html(out, x, scratch)
 

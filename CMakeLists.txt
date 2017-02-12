@@ -171,6 +171,7 @@ set(src_files
 	src/char.c
 	src/d_string.c
 	src/html.c
+	src/latex.c
 	src/lexer.c
 	src/mmd.c
 	src/object_pool.c
@@ -190,6 +191,7 @@ set(header_files
 	src/d_string.h
 	src/char.h
 	src/html.h
+	src/latex.h
 	src/lexer.h
 	src/libMultiMarkdown.h
 	src/mmd.h
@@ -441,6 +443,8 @@ endfunction(ADD_MMD_TEST)
 ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
 
 ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
+
+ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
 ADD_MMD_TEST(pathologic "" ../build html)
 

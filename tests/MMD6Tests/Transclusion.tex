@@ -1,0 +1,17 @@
+This text is included in \texttt{foo.txt}.
+
+This should not be transcluded to avoid an infinite loop -- \{\{foo.txt\}\}
+
+This text is included in \texttt{bar.txt}.
+
+This can be transcluded without causing an infinite loop -- \{\{foo.txt\}\}
+
+\begin{verbatim}
+This is a file with no metadata.
+\end{verbatim}
+
+\begin{verbatim}
+This is a file with no metadata.
+\end{verbatim}
+
+\{\{transclusion\slash bat.*\}\}

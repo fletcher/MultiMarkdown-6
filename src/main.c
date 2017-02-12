@@ -290,6 +290,8 @@ int main(int argc, char** argv) {
 	if (a_format->count > 0) {
 		if (strcmp(a_format->sval[0], "html") == 0)
 			format = FORMAT_HTML;
+		else if (strcmp(a_format->sval[0], "latex") == 0)
+			format = FORMAT_LATEX;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -337,6 +339,9 @@ int main(int argc, char** argv) {
 			switch (format) {
 				case FORMAT_HTML:
 					output_filename = filename_with_extension(a_file->filename[i], ".html");
+					break;
+				case FORMAT_LATEX:
+					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
 			}
 
