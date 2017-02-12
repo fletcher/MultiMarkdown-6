@@ -37,15 +37,25 @@ code
 <li><p>[</p></li>
 </ol>
 
+<h1>Footnotes </h1>
+
 <p>Foo.[^This is an inline footnote]</p>
 
 <p>Bar.[^foot]</p>
 
 <p>[^foot]: And a reference footnote.</p>
 
+<p>Cite.[#Inline Citation]</p>
+
+<h1>Links and Images </h1>
+
 <p><a href="http://foo.net/">link</a> and [link]</p>
 
 <p>[link]: http://bar.net &quot;title&quot; class=&quot;custom&quot;</p>
+
+<p>![test](http://foo.bar/ &quot;title&quot; width=&quot;40px&quot; height=400px)</p>
+
+<h1>Math </h1>
 
 <p>math ${e}^{i\pi }+1=0$</p>
 
@@ -71,3 +81,7 @@ code
 bar
 :	<em>foo bar
 :	baz bat</em></p>
+
+<h1>Horizontal Rules </h1>
+
+<hr />

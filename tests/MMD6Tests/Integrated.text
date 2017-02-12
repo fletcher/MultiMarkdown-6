@@ -36,21 +36,36 @@ Escapes [escaped]
 
 3. \[
 
+
+# Footnotes #
+
 Foo.[^This is an inline footnote]
 
 Bar.[^foot]
 
 [^foot]: And a reference footnote.
 
+Cite.[#Inline Citation]
+
+
+# Links and Images #
+
 [link](http://foo.net/) and [link]
 
 [link]: http://bar.net "title" class="custom"
 
+![test](http://foo.bar/ "title" width="40px" height=400px)
+
+
+# Math #
+
 math ${e}^{i\pi }+1=0$
+
 
 # Smart Quotes # 
 
 "foo" and 'bar' -- with --- dashes...
+
 
 # CriticMarkup #
 
@@ -64,9 +79,16 @@ math ${e}^{i\pi }+1=0$
 
 {==bar==}
 
+
 # Definition Lists #
 
 foo
 bar
 :	*foo bar
 :	baz bat*
+
+
+# Horizontal Rules #
+
+----
+

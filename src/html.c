@@ -1530,6 +1530,7 @@ void mmd_export_footnote_list_html(DString * out, const char * source, scratch_p
 		pad(out, 2, scratch);
 		print("</ol>\n</div>");
 		scratch->padded = 0;
+		scratch->footnote_being_printed = 0;
 	}
 }
 
@@ -1577,6 +1578,7 @@ void mmd_export_citation_list_html(DString * out, const char * source, scratch_p
 		pad(out, 2, scratch);
 		print("</ol>\n</div>");
 		scratch->padded = 0;
+		scratch->citation_being_printed = 0;
 	}
 }
 
