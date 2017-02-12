@@ -52,3 +52,22 @@ code
 <h1>Smart Quotes </h1>
 
 <p>&quot;foo&quot; and 'bar' -- with --- dashes...</p>
+
+<h1>CriticMarkup </h1>
+
+<p>{++foo++}</p>
+
+<p>{--bar--}</p>
+
+<p>{~~foo~&gt;bar~~}</p>
+
+<p>{&gt;&gt;foo&lt;&lt;}</p>
+
+<p>{==bar==}</p>
+
+<h1>Definition Lists </h1>
+
+<p>foo
+bar
+:	<em>foo bar
+:	baz bat</em></p>

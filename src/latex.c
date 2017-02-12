@@ -60,6 +60,7 @@
 #include "i18n.h"
 #include "latex.h"
 #include "parser.h"
+#include "scanners.h"
 
 
 #define print(x) d_string_append(out, x)
@@ -88,6 +89,9 @@ void mmd_print_char_latex(DString * out, char c) {
 			print_char('$');
 			print_char(c);
 			print_char('$');
+			break;
+		case '|':
+			print("\\textbar{}");
 			break;
 		case '#':
 		case '{':
@@ -366,6 +370,37 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print("\\end{verbatim}");
 			scratch->padded = 0;
 			break;
+		case BLOCK_DEFINITION:
+			pad(out, 2, scratch);
+
+			temp_short = scratch->list_is_tight;
+			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+				scratch->list_is_tight = true;
+
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			scratch->padded = 0;
+
+			scratch->list_is_tight = temp_short;
+			break;
+		case BLOCK_DEFLIST:
+			pad(out, 2, scratch);
+
+			// Group consecutive definition lists into a single list.
+			// lemon's LALR(1) parser can't properly handle this (to my understanding).
+
+			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
+				print("\\begin{description}\n");
+	
+			scratch->padded = 2;
+
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			pad(out, 1, scratch);
+
+			if (!(t->next && (t->next->type == BLOCK_DEFLIST)))
+				print("\\end{description}\n");
+
+			scratch->padded = 1;
+			break;
 		case BLOCK_EMPTY:
 			break;
 		case BLOCK_H1:
@@ -428,6 +463,14 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			scratch->padded = 0;
 			break;
+		case BLOCK_HR:
+			pad(out, 2, scratch);
+			print("\\begin{center}\\rule{3in}{0.4pt}\\end{center}");
+			scratch->padded = 0;
+			break;
+		case BLOCK_HTML:
+			// Don't print HTML
+			break;
 		case BLOCK_LIST_BULLETED_LOOSE:
 		case BLOCK_LIST_BULLETED:
 			temp_short = scratch->list_is_tight;
@@ -487,6 +530,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case BLOCK_PARA:
 			pad(out, 2, scratch);
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			scratch->padded = 0;
+			break;
+		case BLOCK_TERM:
+			pad(out, 2, scratch);
+			print("\\item[");
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			print("]");
 			scratch->padded = 0;
 			break;
 		case BRACE_DOUBLE_LEFT:
@@ -566,6 +616,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print_char('#');
 			}
 			break;
+		case INDENT_SPACE:
+			print_char(' ');
+			break;
+		case INDENT_TAB:
+			print_char('\t');
+			break;
 		case LINE_LIST_BULLETED:
 		case LINE_LIST_ENUMERATED:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
@@ -602,6 +658,30 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case NON_INDENT_SPACE:
 			print_char(' ');
+			break;
+		case PAIR_ANGLE:
+			temp_token = t;
+
+			temp_char = url_accept(source, &temp_token, true);
+
+			if (temp_char) {
+				if (scan_email(temp_char)) {
+					print("\\href{mailto:");
+					print(temp_char);
+				} else {
+					print("\\href{");
+					print(temp_char);
+				}
+				print("}{");
+				mmd_print_string_latex(out, temp_char);
+				print("}");
+			} else if (scan_html(&source[t->start])) {
+				print_token(t);
+			} else {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+
+			free(temp_char);
 			break;
 		case PAIR_BACKTICK:
 			// Strip leading whitespace
@@ -763,11 +843,132 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					printf("\\footnote{");
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
-					mmd_export_token_latex(out, source, temp_note->content, scratch);
+					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
 					printf("}");
 				}
 			} else {
 				// Footnotes disabled
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_BRACKET_VARIABLE:
+			temp_char = text_inside_pair(source, t);
+			temp_char2 = extract_metadata(scratch, temp_char);
+
+			if (temp_char2)
+				mmd_print_string_latex(out, temp_char2);
+			else
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+
+			// Don't free temp_char2 (it belongs to meta *)
+			free(temp_char);
+			break;
+		case PAIR_CRITIC_ADD:
+			// Ignore if we're rejecting
+			if (scratch->extensions & EXT_CRITIC_REJECT)
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+				} else {
+					print("\\underline{");
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					print("}");
+				}
+			} else {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);				
+			}
+			break;
+		case PAIR_CRITIC_DEL:
+			// Ignore if we're accepting
+			if (scratch->extensions & EXT_CRITIC_ACCEPT)
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_REJECT) {
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+				} else {
+					print("\\sout{");
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					print("}");
+				}
+			} else {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);				
+			}
+			break;
+		case PAIR_CRITIC_COM:
+			// Ignore if we're rejecting or accepting
+			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
+				(scratch->extensions & EXT_CRITIC_ACCEPT))
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				print("\\todo{");
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print("}");
+			} else {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_CRITIC_HI:
+			// Ignore if we're rejecting or accepting
+			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
+				(scratch->extensions & EXT_CRITIC_ACCEPT))
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				// 'hl' requires 'soul' package
+				print("\\hl{");
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print("}");
+			} else {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+			break;
+		case CRITIC_SUB_DIV_A:
+			print("~");
+			break;
+		case CRITIC_SUB_DIV_B:
+			print("&gt;");
+			break;
+		case PAIR_CRITIC_SUB_DEL:
+			if ((scratch->extensions & EXT_CRITIC) &&
+				(t->next->type == PAIR_CRITIC_SUB_ADD)) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
+
+				} else if (scratch->extensions & EXT_CRITIC_REJECT) {
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+				} else {
+					print("\\sout{");
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					print("}");
+				}
+			} else {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_CRITIC_SUB_ADD:
+			if ((scratch->extensions & EXT_CRITIC) &&
+				(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_REJECT) {
+
+				} else if (scratch->extensions & EXT_CRITIC_ACCEPT) {
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+				} else {
+					print("\\underline{");
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					print("}");
+				}
+			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
@@ -786,7 +987,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print(")");
 			break;
 		case PIPE:
-			print_token(t);
+			print("\\textbar{}");
 			break;
 		case PLUS:
 			print_token(t);

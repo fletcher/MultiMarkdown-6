@@ -2,7 +2,6 @@ This file is a designed as a single test that incorporates most of the
 *commonly* used MultiMarkdown features. This allows a single test file to
 identify common structures that are not supported yet -- particularly useful
 when developing a new output format.
-
 # Basic Blocks #
 
 paragraph
@@ -53,4 +52,21 @@ math ${e}^{i\pi }+1=0$
 
 "foo" and 'bar' -- with --- dashes...
 
+# CriticMarkup #
 
+{++foo++}
+
+{--bar--}
+
+{~~foo~>bar~~}
+
+{>>foo<<}
+
+{==bar==}
+
+# Definition Lists #
+
+foo
+bar
+:	*foo bar
+:	baz bat*
