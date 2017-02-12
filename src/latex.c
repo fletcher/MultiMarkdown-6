@@ -251,51 +251,52 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 		is_figure = false;
 
 	if (is_figure) {
-		// Remove wrapping <p> markers
-		d_string_erase(out, out->currentStringLength - 3, 3);
-		print("<figure>\n");
+		print("\\begin{figure}[htbp]\n\\centering\n");
 		scratch->close_para = false;
 	}
 
+	print("\\includegraphics[keepaspectratio");
+
+//	if (text) {
+//		print(" alt=\"");
+//		print_token_tree_raw(out, source, text->child);
+//		print("\"");
+//	}
+//
+//	if (link->title && link->title[0] != '\0')
+//		printf(" title=\"%s\"", link->title);
+//
+//	while (a) {
+//		print(" ");
+//		print(a->key);
+//		print("=\"");
+//		print(a->value);
+//		print("\"");
+//		a = a->next;
+//	}
+
+
 	if (link->url)
-		printf("<img src=\"%s\"", link->url);
+		printf("]{%s}", link->url);
 	else
-		print("<img src=\"\"");
+		print("]{}");
 
-	if (text) {
-		print(" alt=\"");
-		print_token_tree_raw(out, source, text->child);
-		print("\"");
-	}
-
-	if (link->label && !(scratch->extensions & EXT_COMPATIBILITY)) {
-		// \todo: Need to decide on approach to id's
-		char * label = label_from_token(source, link->label);
-		printf(" id=\"%s\"", label);
-		free(label);
-	}
-
-	if (link->title && link->title[0] != '\0')
-		printf(" title=\"%s\"", link->title);
-
-	while (a) {
-		print(" ");
-		print(a->key);
-		print("=\"");
-		print(a->value);
-		print("\"");
-		a = a->next;
-	}
-
-	print(" />");
 
 	if (is_figure) {
+		print("\n");
 		if (text) {
-			print("\n<figcaption>");
+			print("\\caption{");
 			mmd_export_token_tree_latex(out, source, text->child, scratch);
-			print("</figcaption>");
+			print("}\n");
 		}
-		print("\n</figure>");
+		if (link->label) {
+			// \todo: Need to decide on approach to id's
+			char * label = label_from_token(source, link->label);
+			printf("\\label{%s}\n", label);
+			free(label);
+		}
+
+		print("\\end{figure}");
 	}
 }
 
