@@ -998,6 +998,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			break;
 		case PAIR_MATH:
+			// Math is raw LaTeX -- use string itself
+			mmd_export_token_latex(out, source, t->child, scratch);
+			d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
+			mmd_export_token_latex(out, source, t->child->mate, scratch);
+			break;			
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
@@ -1135,7 +1140,11 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			print("$>$");
 			break;
 		case DASH_N:
-			print("-{}-");
+			if (t->len == 1) {
+				print("-");
+			} else {
+				print("-{}-");
+			}
 			break;
 		case DASH_M:
 			print("-{}-{}-");
