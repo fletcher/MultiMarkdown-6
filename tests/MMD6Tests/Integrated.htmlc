@@ -59,6 +59,10 @@ code
 
 <p>[foo][math]</p>
 
+<p><a href="#bar">bar</a></p>
+
+<p><a href="#bar">bar</a></p>
+
 <h1>Math </h1>
 
 <p>math ${e}^{i\pi }+1=0$</p>

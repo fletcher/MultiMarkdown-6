@@ -109,6 +109,9 @@ void mmd_print_char_latex(DString * out, char c) {
 
 
 void mmd_print_string_latex(DString * out, const char * str) {
+    if (str == NULL)
+        return;
+    
 	while (*str != '\0') {
 		mmd_print_char_latex(out, *str);
 		str++;
@@ -1067,6 +1070,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}	
 			break;
 		case TEXT_EMPTY:
+			break;
+		case TEXT_HASH:
+			print("\\#");
 			break;
 		case TEXT_NL:
 			if (t->next)

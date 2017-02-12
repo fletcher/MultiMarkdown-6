@@ -210,6 +210,7 @@ int scan(Scanner * s, const char * stop) {
 		'#'{6} SP						{ return HASH6; }
 		'#'{6} / SPNL					{ return HASH6; }
 
+		'#'								{ return TEXT_HASH; }
 
 		[0-9]+ / ('.' (SP|NL))			{ return TEXT_NUMBER_POSS_LIST; }
 		'.' / (SP|NL)					{ return TEXT_PERIOD; }

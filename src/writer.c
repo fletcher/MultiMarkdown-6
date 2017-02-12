@@ -675,9 +675,8 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
 			url = text_inside_pair(source, t);
 			break;
-		case SLASH:
-		case TEXT_PLAIN:
-			start = (*remainder)->start;
+        default:
+            start = (*remainder)->start;
 			
 			// Skip any whitespace
 			while (char_is_whitespace(source[start]))

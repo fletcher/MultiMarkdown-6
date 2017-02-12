@@ -60,6 +60,13 @@ Cite.[#Inline Citation]
 
 [foo][math]
 
+[bar][foo1]
+
+[bar][foo2]
+
+[foo1]:  #bar
+[foo2]: #bar
+
 
 # Math #
 

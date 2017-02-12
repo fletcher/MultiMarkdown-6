@@ -274,6 +274,7 @@ enum token_types {
 	TOC,
 	
 	TEXT_EMPTY,
+	TEXT_HASH,
 	TEXT_LINEBREAK,
 	TEXT_NL,
 	TEXT_NUMBER_POSS_LIST,
