@@ -65,7 +65,15 @@ code
 
 <h1>Math </h1>
 
-<p>math ${e}^{i\pi }+1=0$</p>
+<p>foo \({e}^{i\pi }+1=0\) bar</p>
+
+<p>\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</p>
+
+<p>foo ${e}^{i\pi }+1=0$ bar</p>
+
+<p>foo ${e}^{i\pi }+1=0$, bar</p>
+
+<p>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</p>
 
 <h1>Smart Quotes </h1>
 

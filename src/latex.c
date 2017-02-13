@@ -742,7 +742,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
 			print("\\texttt{");
-			mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
+			mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
 			print("}");
 			break;
 		case PAIR_BRACES:
@@ -1127,11 +1127,44 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 		return;
 
 	switch (t->type) {
+		case ESCAPED_CHARACTER:
+			mmd_print_char_latex(out, source[t->start + 1]);
+			break;
+		case CODE_FENCE:
+			if (t->next)
+				t->next->type = TEXT_EMPTY;
+		case TEXT_EMPTY:
+			break;
+		default:
+			if (t->child)
+				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
+			else
+				print_token(t);
+			break;
+	}
+}
+
+
+void mmd_export_token_tree_latex_raw(DString * out, const char * source, token * t, scratch_pad * scratch) {
+	while (t != NULL) {
+		if (scratch->skip_token) {
+			scratch->skip_token--;
+		} else {
+			mmd_export_token_latex_raw(out, source, t, scratch);
+		}
+
+		t = t->next;
+	}
+}
+
+
+void mmd_export_token_latex_tt(DString * out, const char * source, token * t, scratch_pad * scratch) {
+	if (t == NULL)
+		return;
+
+	switch (t->type) {
 		case AMPERSAND:
 			print("\\&");
-			break;
-		case AMPERSAND_LONG:
-			print("\\textbackslash{}&");
 			break;
 		case ANGLE_LEFT:
 			print("$<$");
@@ -1160,7 +1193,7 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			break;
 		default:
 			if (t->child)
-				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
+				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
 			else
 				print_token(t);
 			break;
@@ -1168,12 +1201,12 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 }
 
 
-void mmd_export_token_tree_latex_raw(DString * out, const char * source, token * t, scratch_pad * scratch) {
+void mmd_export_token_tree_latex_tt(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	while (t != NULL) {
 		if (scratch->skip_token) {
 			scratch->skip_token--;
 		} else {
-			mmd_export_token_latex_raw(out, source, t, scratch);
+			mmd_export_token_latex_tt(out, source, t, scratch);
 		}
 
 		t = t->next;

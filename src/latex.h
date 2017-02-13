@@ -68,6 +68,9 @@ void mmd_export_token_tree_latex(DString * out, const char * source, token * t, 
 void mmd_export_token_latex_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
 void mmd_export_token_tree_latex_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
 
+void mmd_export_token_latex_tt(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_tree_latex_tt(DString * out, const char * source, token * t, scratch_pad * scratch);
+
 void mmd_export_citation_list_latex(DString * out, const char * source, scratch_pad * scratch);
 void mmd_export_footnote_list_latex(DString * out, const char * source, scratch_pad * scratch);
 
