@@ -629,7 +629,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print("=");
 			break;
 		case ESCAPED_CHARACTER:
-			mmd_print_char_latex(out, source[t->start + 1]);
+			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
+				(source[t->start + 1] == ' ')) {
+				print("~");
+			} else {
+				mmd_print_char_latex(out, source[t->start + 1]);
+			}
 			break;
 		case HASH1:
 		case HASH2:
@@ -1134,7 +1139,9 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 
 	switch (t->type) {
 		case ESCAPED_CHARACTER:
-			mmd_print_char_latex(out, source[t->start + 1]);
+			print("\\");
+			print_char(source[t->start + 1]);
+//			mmd_print_char_latex(out, source[t->start + 1]);
 			break;
 		case CODE_FENCE:
 			if (t->next)
@@ -1170,6 +1177,7 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 
 	switch (t->type) {
 		case AMPERSAND:
+		case AMPERSAND_LONG:
 			print("\\&");
 			break;
 		case ANGLE_LEFT:
