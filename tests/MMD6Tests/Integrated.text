@@ -47,6 +47,10 @@ Bar.[^foot]
 
 Cite.[#Inline Citation]
 
+Cite.[#foo]
+
+[#foo]: bar
+
 
 # Links and Images #
 

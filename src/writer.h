@@ -176,6 +176,7 @@ link * explicit_link(scratch_pad * scratch, token * label, token * url, const ch
 link * extract_link_from_stack(scratch_pad * scratch, const char * target);
 
 char * text_inside_pair(const char * source, token * pair);
+char * clean_inside_pair(const char * source, token * t, bool lowercase);
 
 void link_free(link * l);
 void footnote_free(footnote * f);

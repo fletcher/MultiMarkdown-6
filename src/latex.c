@@ -810,51 +810,60 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
-			temp_bool = true;
+			temp_bool = true;   // Track whether this is a 'not cited'
+            temp_token = t;     // Remember whether we need to skip ahead
+            
+            if (scratch->extensions & EXT_NOTES) {
+                if (t->type == PAIR_BRACKET) {
+                    // This is a locator for subsequent citation (e.g. `[foo][#bar]`
+                    temp_char = text_inside_pair(source, t);
+                    temp_char2 = label_from_string(temp_char);
 
-			if (t->type == PAIR_BRACKET) {
-				// This is a locator for subsequent citation
-				temp_char = text_inside_pair(source, t);
-				temp_char2 = label_from_string(temp_char);
+                    if (strcmp(temp_char2, "notcited") == 0) {
+                        free(temp_char);
+                        temp_char = strdup("");
+                        temp_bool = false;
+                    }
 
-				if (strcmp(temp_char2, "notcited") == 0) {
-					free(temp_char2);
-					free(temp_char);
-					temp_char = strdup("");
-					temp_bool = false;
-				}
+                    free(temp_char2);
 
-				if (temp_char[0] == '\0')
-					temp_char2 = strdup("");
-				else
-					temp_char2 = strdup(", ");
+                    // Process the actual citation
+                    t = t->next;
+                } else {
+                    // This is just a citation (e.g. `[#foo]`)
+                    temp_char = strdup("");
+                }
 
-
-				// Process the actual citation
-				t = t->next;
-			} else {
-				temp_char = strdup("");
-				temp_char2 = strdup("");
-			}
-
-			if (scratch->extensions & EXT_NOTES) {
+                // See if we're a citep or cite
+                temp_char2 = clean_inside_pair(source, t, false);
+                
 				citation_from_bracket(source, scratch, t, &temp_short);
 
+				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
 				if (temp_bool) {
-					if (temp_short < scratch->used_citations->size) {
-						// Re-using previous citation
-						printf("\\citation{reuse");
-
-						printf("}");
+					// This is not a "not cited"
+					if (temp_char[0] == '\0') {
+                        if (temp_char2[strlen(temp_char2) - 1] == ';') {
+                            print("\\citet");
+                        } else {
+                            print("~\\citep");
+                        }
 					} else {
-						// This is a new citation
-						printf("\\citation{");
-
-						printf("}");
+                        if (temp_char2[strlen(temp_char2) - 1] == ';') {
+                            printf("\\citet[%s]", temp_char);
+                        } else {
+                            printf("~\\citep[%s]", temp_char);
+                        }
 					}
+
+					printf("{%s}", temp_note->label_text);
+				} else {
+					// This is a "nocite"
+					printf("~\\nocite{%s}",temp_note->label_text);
 				}
 
-				if (t->prev && (t->prev->type == PAIR_BRACKET)) {
+				if (temp_token != t) {
 					// Skip citation on next pass
 					scratch->skip_token = 1;
 				}
@@ -1241,3 +1250,37 @@ void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * sc
 
 }
 
+void mmd_export_citation_list_latex(DString * out, const char * source, scratch_pad * scratch) {
+	if (scratch->used_citations->size > 0) {
+		footnote * note;
+		token * content;
+
+		pad(out, 2, scratch);
+		print("\\begin{thebibliography}{0}");
+		scratch->padded = 0;
+
+		for (int i = 0; i < scratch->used_citations->size; ++i)
+		{
+			// Export footnote
+			pad(out, 2, scratch);
+
+			note = stack_peek_index(scratch->used_citations, i);
+			content = note->content;
+
+			printf("\\bibitem{%s}\n", note->label_text);
+			scratch->padded = 6;
+
+			scratch->footnote_para_counter = 0;
+
+			content = note->content;
+			scratch->citation_being_printed = i + 1;
+
+			mmd_export_token_tree_latex(out, source, content, scratch);
+		}
+
+		pad(out, 1, scratch);
+		print("\\end{thebibliography}");
+		scratch->padded = 0;
+		scratch->citation_being_printed = 0;
+	}
+}

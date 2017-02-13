@@ -1,8 +1,32 @@
+# citep #
+
 [#foo1]
+
+[#foo1][]
 
 [p. 123][#foo1]
 
 [][#foo1]
+
+[foo\]\[bar][#foo1]
+
+[#foo1][#foo2]
+
+
+# citet #
+
+[#foo1;]
+
+[#foo1;][]
+
+[p. 123][#foo1;]
+
+[][#foo1;]
+
+[foo\]\[bar][#foo1;]
+
+[#foo1;][#foo2;]
+
 
 [Not Cited][#foo2]
 

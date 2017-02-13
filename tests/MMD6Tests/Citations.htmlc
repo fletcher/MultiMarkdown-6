@@ -1,8 +1,30 @@
+<h1>citep </h1>
+
 <p>[#foo1]</p>
+
+<p>[#foo1][]</p>
 
 <p>[p. 123][#foo1]</p>
 
 <p>[][#foo1]</p>
+
+<p>[foo][bar][#foo1]</p>
+
+<p>[#foo1][#foo2]</p>
+
+<h1>citet </h1>
+
+<p>[#foo1;]</p>
+
+<p>[#foo1;][]</p>
+
+<p>[p. 123][#foo1;]</p>
+
+<p>[][#foo1;]</p>
+
+<p>[foo][bar][#foo1;]</p>
+
+<p>[#foo1;][#foo2;]</p>
 
 <p>[Not Cited][#foo2]</p>
 

@@ -1310,6 +1310,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 				mmd_start_complete_latex(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_latex(out, e->dstr->str, e->root, scratch);
+			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
 
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_end_complete_latex(out, e->dstr->str, scratch);
@@ -1532,12 +1533,12 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 	free(text);
 
 	if (citation_id == -1) {
-		// No match, this is an inline footnote -- create a new one
+		// No match, this is an inline citation -- create a new one
 		t->child->type = TEXT_EMPTY;
 		t->child->mate->type = TEXT_EMPTY;
 
-		// Create footnote
-		footnote * temp = footnote_new(source, NULL, t->child);
+		// Create citation
+		footnote * temp = footnote_new(source, t, t->child);
 
 		// Store as used
 		stack_push(scratch->used_citations, temp);

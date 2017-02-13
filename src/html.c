@@ -1047,15 +1047,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_bool) {
-					if (temp_short < scratch->used_citations->size) {
-						// Re-using previous citation
-						printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-								temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
-					} else {
-						// This is a new citation
-						printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-								temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
-					}
+                    // This is a new citation
+                    temp_short = scratch->used_citations->size;
+                    printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+                            temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
 				}
 
 				if (t->prev && (t->prev->type == PAIR_BRACKET)) {

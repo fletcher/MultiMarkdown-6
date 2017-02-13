@@ -77,5 +77,7 @@ void mmd_export_footnote_list_latex(DString * out, const char * source, scratch_
 void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * scratch);
 void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * scratch);
 
+void mmd_export_citation_list_latex(DString * out, const char * source, scratch_pad * scratch);
+
 
 #endif
