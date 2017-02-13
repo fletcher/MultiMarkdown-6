@@ -336,6 +336,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
+	char *	temp_char3	= NULL;
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
 	footnote * temp_note = NULL;
@@ -844,12 +845,24 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_bool) {
 					// This is not a "not cited"
 					if (temp_char[0] == '\0') {
+						// No locator
                         if (temp_char2[strlen(temp_char2) - 1] == ';') {
                             print("\\citet");
                         } else {
                             print("~\\citep");
                         }
 					} else {
+						// Locator present
+
+						// Does the locator contain two options?
+						// e.g. `[foo\]\[bar]`
+						temp_char3 = strstr(temp_char, "\\]\\[");
+						if (temp_char3) {
+							// Convert `\]\[` to `][`
+							temp_char[temp_char3 - temp_char] = ']';
+							memmove(temp_char3 + 1, temp_char3 + 3, strlen(temp_char3 - 3));
+						}
+
                         if (temp_char2[strlen(temp_char2) - 1] == ';') {
                             printf("\\citet[%s]", temp_char);
                         } else {
