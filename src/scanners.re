@@ -286,6 +286,17 @@ size_t scan_html(const char * c) {
 }
 
 
+size_t scan_html_comment(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	tag_comment	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
 size_t scan_html_block(const char * c) {
 	const char * marker = NULL;
 	const char * start = c;

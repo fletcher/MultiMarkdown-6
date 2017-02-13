@@ -1,63 +1,63 @@
-<del>*bar*</del>
+<del>*bar1*</del>
 
 <del>
-*bar*
+*bar2*
 </del>
 
 foo
 <del>
-*bar*
+*bar3*
 </del>
 
 <del>
-*bar*
+*bar4*
 
 </del>
 
 
 <del>
 
-*bar*
+*bar5*
 
 </del>
 
 5
 
-<div>*bar*</div>
+<div>*bar1*</div>
 
 <div>
-*bar*
+*bar2*
 </div>
 
 foo
 <div>
-*bar*
+*bar3*
 </div>
 
 <div>
-*bar*
+*bar4*
 
 </div>
 
 
 <div>
 
-*bar*
+*bar5*
 
 </div>
 
 10
 
 <div>
-# foo #
-[foo][foo]
+# foo1 #
+[foo][foo1]
 </div>
 
 <div>
 
-# foo #
+# foo2 #
 
-[foo][foo]
+[foo][foo2]
 
 </div>
 
@@ -76,7 +76,7 @@ longer
 
 <div>
 <div>
-**foo**
+**foo1**
 </div>
 </div>
 
@@ -84,18 +84,7 @@ longer
 <div>
 
 <div>
-**foo**
-</div>
-
-</div>
-
-
-<div>
-
-<div>
-
-**foo**
-
+**foo2**
 </div>
 
 </div>
@@ -104,7 +93,18 @@ longer
 <div>
 
 <div>
-**foo**
+
+**foo3**
+
+</div>
+
+</div>
+
+
+<div>
+
+<div>
+**foo4**
 </div>
 
 </div>
@@ -113,7 +113,7 @@ longer
 <div>
 <div>
 
-**foo**
+**foo5**
 </div>
 </div>
 

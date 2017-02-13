@@ -714,7 +714,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				mmd_print_string_latex(out, temp_char);
 				print("}");
 			} else if (scan_html(&source[t->start])) {
-				print_token(t);
+				// We ignore HTML blocks
+				if (scan_html_comment(&source[t->start])) {
+					// But allow HTML comments as raw LaTeX
+					d_string_append_c_array(out, &source[t->start + 4], t->len - 4 - 3);
+				}
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
