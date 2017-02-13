@@ -644,8 +644,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case HASH6:
 			for (int i = 0; i < t->len; ++i)
 			{
-				print_char('\\');
-				print_char('#');
+				if (source[t->start + i] == '#') {
+					print_char('\\');
+					print_char('#');
+				} else {
+					mmd_print_char_latex(out, source[t->start + i]);
+				}
 			}
 			break;
 		case INDENT_SPACE:
