@@ -688,7 +688,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print("\\$");
 			break;
 		case MATH_DOLLAR_DOUBLE:
-			print("$$");
+			if (t->mate)
+				print("$$");
+			else
+				print("\\$\\$");
 			break;
 		case MATH_PAREN_OPEN:
 			print("\\(");
@@ -1036,10 +1039,14 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			break;
 		case PAIR_MATH:
-			// Math is raw LaTeX -- use string itself
-			mmd_export_token_latex(out, source, t->child, scratch);
+			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
+				mmd_export_token_latex(out, source, t->child, scratch);
+
+			// Math is raw LaTeX -- use string itself rather than interior tokens
 			d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
-			mmd_export_token_latex(out, source, t->child->mate, scratch);
+
+			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
+				mmd_export_token_latex(out, source, t->child->mate, scratch);
 			break;			
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
@@ -1112,6 +1119,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print("\\^{}");
 			}	
 			break;
+		case TEXT_BACKSLASH:
+			print("\\textbackslash{}");
+			break;
 		case TEXT_EMPTY:
 			break;
 		case TEXT_HASH:
@@ -1124,6 +1134,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case TEXT_PERCENT:
 			print("\\%");
 			break;
+		case TEXT_BRACE_LEFT:
+		case TEXT_BRACE_RIGHT:
+			print("\\");
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
@@ -1177,7 +1190,7 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			if (t->next)
 				t->next->type = TEXT_EMPTY;
 		case TEXT_EMPTY:
-			break;
+			break;			
 		default:
 			if (t->child)
 				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
@@ -1235,6 +1248,21 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 				t->next->type = TEXT_EMPTY;
 		case TEXT_EMPTY:
 			break;
+        case SLASH:
+            print("\\slash ");
+            break;
+        case TEXT_BACKSLASH:
+        	print("\\textbackslash{}");
+        	break;
+		case BRACE_DOUBLE_LEFT:
+			print("\\{\\{");
+			break;
+		case BRACE_DOUBLE_RIGHT:
+			print("\\}\\}");
+			break;
+        case TEXT_BRACE_LEFT:
+        case TEXT_BRACE_RIGHT:
+        	print("\\");
 		default:
 			if (t->child)
 				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);

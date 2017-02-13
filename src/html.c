@@ -1333,6 +1333,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (t->next)
 				print_char('\n');
 			break;
+		case TEXT_BACKSLASH:
+		case TEXT_BRACE_LEFT:
+		case TEXT_BRACE_RIGHT:
 		case TEXT_HASH:
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERCENT:

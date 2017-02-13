@@ -192,7 +192,7 @@ int scan(Scanner * s, const char * stop) {
 		"$$"							{ return MATH_DOLLAR_DOUBLE; }
 
 		'^'								{ return SUPERSCRIPT; }
-		"~"								{ return SUBSCRIPT; }
+		'~'								{ return SUBSCRIPT; }
 
 		INDENT_TAB						{ return INDENT_TAB; }
 		INDENT_SPACE					{ return INDENT_SPACE; }
@@ -212,6 +212,9 @@ int scan(Scanner * s, const char * stop) {
 
 		'#'								{ return TEXT_HASH; }
 		'%'								{ return TEXT_PERCENT; }
+		'{'								{ return TEXT_BRACE_LEFT; }
+		'}'								{ return TEXT_BRACE_RIGHT; }
+		'\\'							{ return TEXT_BACKSLASH; }
 
 		[0-9]+ / ('.' (SP|NL))			{ return TEXT_NUMBER_POSS_LIST; }
 		'.' / (SP|NL)					{ return TEXT_PERIOD; }
