@@ -1361,12 +1361,67 @@ void mmd_export_token_tree_latex_tt(DString * out, const char * source, token * 
 
 
 void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * scratch) {
+	// Iterate over metadata keys
+	meta * m;
 
+	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
+		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibtex") == 0) {
+		} else if (strcmp(m->key, "css") == 0) {
+		} else if (strcmp(m->key, "htmlfooter") == 0) {
+		} else if (strcmp(m->key, "htmlheader") == 0) {
+		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
+		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "latexheader") == 0) {
+			print(m->value);
+			print_char('\n');
+		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexmode") == 0) {
+		} else if (strcmp(m->key, "mmdfooter") == 0) {
+		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+		} else if ((strcmp(m->key, "title") == 0) ||
+			(strcmp(m->key, "latextitle") == 0)) {
+			print("\\def\\mytitle{");
+			mmd_print_string_latex(out, m->value);
+			print("}\n");
+		} else if ((strcmp(m->key, "author") == 0) ||
+			(strcmp(m->key, "latexauthor") == 0)) {
+			print("\\def\\myauthor{");
+			mmd_print_string_latex(out, m->value);
+			print("}\n");
+		} else if (strcmp(m->key, "date") == 0) {
+			print("\\def\\mydate{");
+			mmd_print_string_latex(out, m->value);
+			print("}\n");
+		} else if (strcmp(m->key, "copyright") == 0) {
+			print("\\def\\mycopyright{");
+			mmd_print_string_latex(out, m->value);
+			print("}\n");
+		} else if (strcmp(m->key, "bibtex") == 0) {
+			print("\\def\\bibliocommand{\\bibliography{");
+			mmd_print_string_latex(out, m->value);
+			print("}}\n");
+		} else if (strcmp(m->key, "transcludebase") == 0) {
+		} else if (strcmp(m->key, "xhtmlheader") == 0) {
+		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
+		} else {
+			print("\\def\\");
+			mmd_print_string_latex(out, m->key);
+			print("{");
+			mmd_print_string_latex(out, m->value);
+			print("}\n");
+		}
+	}
+	scratch->padded = 1;
 }
 
 
 void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * scratch) {
-
+	pad(out, 2, scratch);
+	print("\\end{document}");
+	scratch->padded = 0;
 }
 
 void mmd_export_citation_list_latex(DString * out, const char * source, scratch_pad * scratch) {
