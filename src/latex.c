@@ -672,7 +672,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print("\\]");
 			break;
 		case MATH_DOLLAR_SINGLE:
-			print("$");
+			if (t->mate)
+				print("$");
+			else
+				print("\\$");
 			break;
 		case MATH_DOLLAR_DOUBLE:
 			print("$$");
@@ -1083,13 +1086,16 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (t->next)
 				print_char('\n');
 			break;
+		case TEXT_PERCENT:
+			print("\\%");
+			break;
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
 			print_token(t);
 			break;
 		case UL:
-			print_token(t);
+			print("\\_");
 			break;
 		default:
 			fprintf(stderr, "Unknown token type: %d\n", t->type);
