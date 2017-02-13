@@ -52,9 +52,10 @@
 
 */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>	
+#include <string.h>
 
 #include "char.h"
 #include "i18n.h"
@@ -269,8 +270,29 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 }
 
 
+char * correct_dimension_units(char *original) {
+	char *result;
+	int i;
+	
+	result = strdup(original);
+	
+	for (i = 0; result[i]; i++)
+		result[i] = tolower(result[i]);
+	
+	if (strstr(&result[strlen(result)-2],"px")) {
+		result[strlen(result)-2] = '\0';
+		strcat(result, "pt");
+	}
+	
+	return result;
+}
+
+
 void mmd_export_image_latex(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
+	char * height = NULL;
+	char * width = NULL;
+	float temp_float;
 
 	// Compatibility mode doesn't allow figures
 	if (scratch->extensions & EXT_COMPATIBILITY)
@@ -281,26 +303,64 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 		scratch->close_para = false;
 	}
 
-	print("\\includegraphics[keepaspectratio");
+	// Check attributes for dimensions
+	while (a) {
+		if (strcmp("height", a->key) == 0) {
+			height = correct_dimension_units(a->value);
+		} else if (strcmp("width", a->key) == 0) {
+			width = correct_dimension_units(a->value);
+		}
 
-//	if (text) {
-//		print(" alt=\"");
-//		print_token_tree_raw(out, source, text->child);
-//		print("\"");
-//	}
-//
-//	if (link->title && link->title[0] != '\0')
-//		printf(" title=\"%s\"", link->title);
-//
-//	while (a) {
-//		print(" ");
-//		print(a->key);
-//		print("=\"");
-//		print(a->value);
-//		print("\"");
-//		a = a->next;
-//	}
+		a = a->next;
+	}
 
+	print("\\includegraphics[");
+
+	if (height || width) {
+		if (!height || !width) {
+			// One not specified, preserve aspect
+			print("keepaspectratio,");
+		}
+
+		if (width) {
+			// Width specified
+			if (width[strlen(width) - 1] == '%') {
+				// specified as percent
+				width[strlen(width) - 1] = '\0';
+				temp_float = strtod(width, NULL);
+				temp_float = temp_float/100.0f;
+				printf("width=%.4f\\textwidth,", temp_float);
+			} else {
+				printf("width=%s,", width);
+			}
+
+			free(width);
+		} else {
+			// Default width
+			print("width=\\textwidth,");
+		}
+
+		if (height) {
+			// Height specified
+			if (height[strlen(height) - 1] == '%') {
+				// specified as percent
+				height[strlen(height) - 1] = '\0';
+				temp_float = strtod(height, NULL);
+				temp_float = temp_float/100.0f;
+				printf("height=%.4f\\textheight", temp_float);
+			} else {
+				printf("height=%s", height);
+			}
+
+			free(height);
+		} else {
+			// Default height
+			print("height=0.75\\textheight");
+		}
+	} else {
+		// no dimensions specified, use sensible defaults
+		print("keepaspectratio,width=\\textwidth,height=0.75\\textheight");
+	}
 
 	if (link->url)
 		printf("]{%s}", link->url);
@@ -1335,8 +1395,14 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			print("\\}\\}");
 			break;
         case TEXT_BRACE_LEFT:
+			print("\\{");
+			break;
         case TEXT_BRACE_RIGHT:
-        	print("\\");
+			print("\\}");
+			break;
+        case UL:
+        	print("\\_");
+        	break;
 		default:
 			if (t->child)
 				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
