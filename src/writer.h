@@ -182,6 +182,7 @@ void link_free(link * l);
 void footnote_free(footnote * f);
 
 char * label_from_token(const char * source, token * t);
+char * label_from_header(const char * source, token * t);
 
 void parse_brackets(const char * source, scratch_pad * scratch, token * bracket, link ** link, short * skip_token, bool * free_link);
 

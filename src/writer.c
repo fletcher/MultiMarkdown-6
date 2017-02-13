@@ -316,6 +316,19 @@ char * label_from_token(const char * source, token * t) {
 }
 
 
+char * label_from_header(const char * source, token * t) {
+	char * result;
+	token * temp_token = manual_label_from_header(t, source);
+	if (temp_token) {
+		result = label_from_token(source, temp_token);
+	} else {
+		result = label_from_token(source, t);
+	}
+
+	return result;
+}
+
+
 /// Clean up whitespace in string for standardization
 char * clean_string(const char * str, bool lowercase) {
 	if (str == NULL)

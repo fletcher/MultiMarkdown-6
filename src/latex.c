@@ -567,6 +567,80 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print("]");
 			scratch->padded = 0;
 			break;
+		case BLOCK_TOC:
+			temp_short = 0;
+			temp_short2 = 0;
+			pad(out, 2, scratch);
+
+			for (int i = 0; i < scratch->header_stack->size; ++i)
+			{
+				temp_token = stack_peek_index(scratch->header_stack, i);
+
+				if (temp_token->type == temp_short2) {
+					// Same level -- close list item
+					//pad(out, 2, scratch);
+				}
+
+				if (temp_short == 0) {
+					// First item
+					pad(out, 2, scratch);
+					print("\\begin{itemize}");
+					scratch->padded = 0;
+					temp_short = temp_token->type;
+					temp_short2 = temp_short;
+				}
+
+				// Indent?
+				if (temp_token->type == temp_short2) {
+					// Same level -- NTD
+				} else if (temp_token->type == temp_short2 + 1) {
+					// Indent
+					pad(out, 2, scratch);
+					print("\\begin{itemize}");
+					scratch->padded = 0;
+					temp_short2++;
+				} else if (temp_token->type < temp_short2) {
+					// Outdent
+					pad(out, 2, scratch);
+					while (temp_short2 > temp_token->type) {
+						if (temp_short2 > temp_short) {
+							pad(out, 2, scratch);
+							print("\\end{itemize}");
+							scratch->padded = 0;
+						} else
+							temp_short = temp_short2 - 1;
+
+						temp_short2--;
+					}
+				} else {
+					// Skipped more than one level -- ignore
+					continue;
+				}
+
+				temp_char = label_from_header(source, temp_token);
+				pad(out, 2, scratch);
+				print("\\item ");
+				mmd_export_token_tree_latex(out, source, temp_token->child, scratch);
+				printf("(\\autoref{%s})", temp_char);
+				scratch->padded = 0;
+				free(temp_char);
+			}
+
+			while (temp_short2 > (temp_short)) {
+				pad(out, 2, scratch);
+				print("\\end{itemize}");
+				scratch->padded = 0;
+				temp_short2--;
+			}
+			
+			if (temp_short) {
+				pad(out, 2, scratch);
+				print("\\end{itemize}");
+				scratch->padded = 0;
+			}
+
+			scratch->padded = 0;
+			break;
 		case BRACE_DOUBLE_LEFT:
 			print("\\{\\{");
 			break;
