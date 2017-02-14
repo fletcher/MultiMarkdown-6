@@ -1,6 +1,6 @@
 <h1>foo bar</h1>
 
-<h2>foo bar</h2>
+<h2>foo <em>bar</em></h2>
 
 <h1>foo
 bar</h1>

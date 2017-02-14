@@ -1,0 +1,5 @@
+Title:	foo
+
+This text is included in `foo.txt`.
+
+This should not be transcluded to avoid an infinite loop -- {{foo.txt}}

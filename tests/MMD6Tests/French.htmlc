@@ -16,4 +16,4 @@
 
 <p>[^foo]</p>
 
-<p>[#bar]</p>
+<p><a href="foo">#bar</a></p>

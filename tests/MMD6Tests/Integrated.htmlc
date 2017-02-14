@@ -1,0 +1,105 @@
+<p>This file is a designed as a single test that incorporates most of the
+<em>commonly</em> used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet -- particularly useful
+when developing a new output format.</p>
+
+<h1>Basic Blocks </h1>
+
+<p>paragraph</p>
+
+<ul>
+<li>list</li>
+<li>items</li>
+</ul>
+
+<p><code>fenced
+code</code></p>
+
+<pre><code>indented
+code
+</code></pre>
+
+<blockquote>
+<p>blockquote</p>
+</blockquote>
+
+<p><code>code span</code></p>
+
+<p><em>emph</em> and <strong>strong</strong> and <strong><em>both</em></strong></p>
+
+<p><em>emph</em> and <strong>strong</strong> and <strong><em>both</em></strong></p>
+
+<h2>Escapes [escaped]</h2>
+
+<ol>
+<li><p>$</p></li>
+<li><p>#</p></li>
+<li><p>[</p></li>
+</ol>
+
+<h1>Footnotes </h1>
+
+<p>Foo.[^This is an inline footnote]</p>
+
+<p>Bar.[^foot]</p>
+
+<p>[^foot]: And a reference footnote.</p>
+
+<p>Cite.[#Inline Citation]</p>
+
+<p>Cite.<a href="bar">#foo</a></p>
+
+<h1>Links and Images </h1>
+
+<p><a href="http://foo.net/">link</a> and [link]</p>
+
+<p>[link]: http://bar.net &quot;title&quot; class=&quot;custom&quot;</p>
+
+<p>![test](http://foo.bar/ &quot;title&quot; width=&quot;40px&quot; height=400px)</p>
+
+<p>[Math]</p>
+
+<p>[foo][math]</p>
+
+<p><a href="#bar">bar</a></p>
+
+<p><a href="#bar">bar</a></p>
+
+<h1>Math </h1>
+
+<p>foo \({e}^{i\pi }+1=0\) bar</p>
+
+<p>\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</p>
+
+<p>foo ${e}^{i\pi }+1=0$ bar</p>
+
+<p>foo ${e}^{i\pi }+1=0$, bar</p>
+
+<p>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</p>
+
+<h1>Smart Quotes </h1>
+
+<p>&quot;foo&quot; and 'bar' -- with --- dashes...</p>
+
+<h1>CriticMarkup </h1>
+
+<p>{++foo++}</p>
+
+<p>{--bar--}</p>
+
+<p>{~~foo~&gt;bar~~}</p>
+
+<p>{&gt;&gt;foo&lt;&lt;}</p>
+
+<p>{==bar==}</p>
+
+<h1>Definition Lists </h1>
+
+<p>foo
+bar
+:	<em>foo bar
+:	baz bat</em></p>
+
+<h1>Horizontal Rules </h1>
+
+<hr />

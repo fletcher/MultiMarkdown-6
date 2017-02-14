@@ -36,12 +36,12 @@
 <p>| foo | bar |
 | --- | --- |
 | foo | bar |
-[<em>foo</em>][bar]</p>
+[<em>caption</em>][bar]</p>
 
 <p>| foo | bar |
 | --- | --- |
 | foo | bar |
-[<em>foo</em>]</p>
+[<em>caption</em>]</p>
 
 <p>[<em>foo</em>][bar]
 | foo | bar |

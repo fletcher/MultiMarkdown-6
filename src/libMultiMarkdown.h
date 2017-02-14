@@ -98,6 +98,14 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 void mmd_engine_parse_string(mmd_engine * e);
 
 
+/// Does the text have metadata?
+bool mmd_has_metadata(mmd_engine * e, size_t * end);
+
+
+/// Extract desired metadata as string value
+char * metavalue_for_key(mmd_engine * e, const char * key);
+
+
 void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
 
 
@@ -234,6 +242,7 @@ enum token_types {
 	EQUAL,
 	PIPE,
 	PLUS,
+	SLASH,
 	
 	SUPERSCRIPT,
 	SUBSCRIPT,
@@ -264,12 +273,19 @@ enum token_types {
 
 	TOC,
 	
+	TEXT_BACKSLASH,
+	TEXT_BRACE_LEFT,
+	TEXT_BRACE_RIGHT,
 	TEXT_EMPTY,
+	TEXT_HASH,
 	TEXT_LINEBREAK,
 	TEXT_NL,
 	TEXT_NUMBER_POSS_LIST,
+	TEXT_PERCENT,
 	TEXT_PERIOD,
 	TEXT_PLAIN,
+
+	MANUAL_LABEL,
 };
 
 
@@ -285,6 +301,7 @@ enum smart_quotes_language {
 
 
 enum output_format {
+	FORMAT_MMD,
 	FORMAT_HTML,
 	FORMAT_LATEX,
 	FORMAT_ODF,
@@ -312,6 +329,7 @@ enum parser_extensions {
 	EXT_ESCAPED_LINE_BREAKS = 1 << 17,   //!< Escaped line break
 	EXT_NO_STRONG           = 1 << 18,   //!< Don't allow nested \<strong\>'s
 	EXT_NO_EMPH             = 1 << 19,   //!< Don't allow nested \<emph\>'s
+	EXT_TRANSCLUDE          = 1 << 20,   //!< Perform transclusion(s)
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

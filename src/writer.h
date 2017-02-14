@@ -176,11 +176,13 @@ link * explicit_link(scratch_pad * scratch, token * label, token * url, const ch
 link * extract_link_from_stack(scratch_pad * scratch, const char * target);
 
 char * text_inside_pair(const char * source, token * pair);
+char * clean_inside_pair(const char * source, token * t, bool lowercase);
 
 void link_free(link * l);
 void footnote_free(footnote * f);
 
 char * label_from_token(const char * source, token * t);
+char * label_from_header(const char * source, token * t);
 
 void parse_brackets(const char * source, scratch_pad * scratch, token * bracket, link ** link, short * skip_token, bool * free_link);
 
@@ -189,7 +191,7 @@ void print_token_raw(DString * out, const char * source, token * t);
 
 void print_token_tree_raw(DString * out, const char * source, token * t);
 
-char * url_accept(const char * source, token ** remainder, bool validate);
+char * url_accept(const char * source, size_t start, size_t max_len, size_t * end_pos, bool validate);
 
 void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void citation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
@@ -204,6 +206,14 @@ void read_table_column_alignments(const char * source, token * table, scratch_pa
 void strip_leading_whitespace(token * chain, const char * source);
 
 bool table_has_caption(token * table);
+
+char * get_fence_language_specifier(token * fence, const char * source);
+
+token * manual_label_from_header(token * h, const char * source);
+
+char * label_from_string(const char * str);
+
+char * clean_string(const char * str, bool lowercase);
 
 #endif
 

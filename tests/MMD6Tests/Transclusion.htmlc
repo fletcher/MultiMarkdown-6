@@ -1,0 +1,5 @@
+<p>{{foo.txt}}</p>
+
+<p>{{bar.txt}}</p>
+
+<p>{{transclusion/bat.*}}</p>

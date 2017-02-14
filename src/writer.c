@@ -63,6 +63,7 @@
 #include "d_string.h"
 #include "html.h"
 #include "i18n.h"
+#include "latex.h"
 #include "mmd.h"
 #include "scanners.h"
 #include "token.h"
@@ -312,6 +313,19 @@ char * label_from_token(const char * source, token * t) {
 	d_string_free(raw, true);
 
 	return label;
+}
+
+
+char * label_from_header(const char * source, token * t) {
+	char * result;
+	token * temp_token = manual_label_from_header(t, source);
+	if (temp_token) {
+		result = label_from_token(source, temp_token);
+	} else {
+		result = label_from_token(source, t);
+	}
+
+	return result;
 }
 
 
@@ -674,8 +688,8 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
 			url = text_inside_pair(source, t);
 			break;
-		case TEXT_PLAIN:
-			start = (*remainder)->start;
+        default:
+            start = (*remainder)->start;
 			
 			// Skip any whitespace
 			while (char_is_whitespace(source[start]))
@@ -720,89 +734,80 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 }
 
 
-char * url_accept(const char * source, token ** remainder, bool validate) {
+char * url_accept(const char * source, size_t start, size_t max_len, size_t * end_pos, bool validate) {
 	char * url = NULL;
 	char * clean = NULL;
-	token * t = NULL;
-	token * first = NULL;
-	token * last = NULL;
+	size_t scan_len;
 
-	switch ((*remainder)->type) {
-		case PAIR_PAREN:
-		case PAIR_ANGLE:
-		case PAIR_QUOTE_SINGLE:
-		case PAIR_QUOTE_DOUBLE:
-			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
-			url = text_inside_pair(source, t);
-			break;
-		case TEXT_PLAIN:
-			first = *remainder;
-			
-			// Grab parts for URL
-			while (token_chain_accept_multiple(remainder, 6, AMPERSAND, COLON, EQUAL, TEXT_PERIOD, TEXT_PLAIN, UL));
+	scan_len = scan_destination(&source[start]);
 
-			last = (*remainder)->prev;
+	if (scan_len) {
+		if (scan_len > max_len)
+			scan_len = max_len;
 
-			// Is there a space in a URL concatenated with a title or attribute?
-			// e.g. [foo]: http://foo.bar/ class="foo"
-			// Since only one space between URL and class, they are joined.
+		if (end_pos)
+			*end_pos = start + scan_len;
 
-			if (last->type == TEXT_PLAIN) {
-				// Trim leading whitespace
-				token_trim_leading_whitespace(last, source);
-				token_split_on_char(last, source, ' ');
-				*remainder = last->next;
-			}
+		// Is this <foo>?
+		if ((source[start] == '<') &&
+			(source[start + scan_len - 1] == '>')) {
+			// Strip '<' and '>'
+			start++;
+			scan_len -= 2;
+		}
 
-			url = strndup(&source[first->start], last->start + last->len - first->start);
-			break;
+		url = strndup(&source[start], scan_len);
+
+		clean = clean_string(url, false);
+
+		if (validate && !validate_url(clean)) {
+			free(clean);
+			clean = NULL;
+		}
+
+		free(url);
 	}
 
-	// Is this a valid URL?
-	clean = clean_string(url, false);
-	
-	if (validate && !validate_url(clean)) {
-		free(clean);
-		clean = NULL;
-	}
-
-	free(url);
 	return clean;
 }
 
 
 /// Extract url string from `(foo)` or `(<foo>)` or `(foo "bar")`
 void extract_from_paren(token * paren, const char * source, char ** url, char ** title, char ** attributes) {
-	token * t;
+   size_t scan_len;
+    size_t pos = paren->child->next->start;
+    
+    
 	size_t attr_len;
 
-	token * remainder = paren->child->next;
+	// Skip whitespace
+	while (char_is_whitespace(source[pos]))
+		pos++;
 
-	if (remainder) {
-		// Skip whitespace
-		whitespace_accept(&remainder);
+	// Grab URL
+	*url = url_accept(source, pos, paren->start + paren->len - 1 - pos, &pos, false);
 
-		// Grab URL
-		*url = url_accept(source, &remainder, false);
+	// Skip whitespace
+	while (char_is_whitespace(source[pos]))
+		pos++;
 
-		// Skip whitespace
-		whitespace_accept(&remainder);
+	// Grab title, if present
+	scan_len = scan_title(&source[pos]);
 
-		// Grab title, if present
-		t = token_chain_accept_multiple(&remainder, 3, PAIR_QUOTE_DOUBLE, PAIR_QUOTE_SINGLE, PAIR_PAREN);
+	if (scan_len) {
+		*title = strndup(&source[pos + 1], scan_len - 2);
+		pos += scan_len;
+	}
 
-		if (t) {
-			*title = text_inside_pair(source, t);
-		}
+	// Skip whitespace
+	while (char_is_whitespace(source[pos]))
+		pos++;
 
-		// Grab attributes, if present
-		if (t) {
-			attr_len = scan_attributes(&source[t->start + t->len]);
-			
-			if (attr_len) {
-				*attributes = strndup(&source[t->start + t->len], attr_len);
-			}
-		}
+	// Grab attributes, if present
+	attr_len = scan_attributes(&source[pos]);
+	
+	if (attr_len) {
+		*attributes = strndup(&source[pos], attr_len);
 	}
 }
 
@@ -1110,9 +1115,68 @@ void process_definition_stack(mmd_engine * e) {
 	}
 }
 
+token * manual_label_from_header(token * h, const char * source) {
+	token * walker = h->child->tail;
+	token * label = NULL;
+	short count = 0;
+
+	while (walker) {
+		switch (walker->type) {
+			case MANUAL_LABEL:
+				// Already identified
+				label = walker;
+				walker = NULL;
+				break;
+			case INDENT_TAB:
+			case INDENT_SPACE:
+			case NON_INDENT_SPACE:
+			case TEXT_NL:
+			case TEXT_LINEBREAK:
+			case TEXT_EMPTY:
+				walker = walker->prev;
+				break;
+			case TEXT_PLAIN:
+				if (walker->len == 1) {
+					if (source[walker->start] == ' ') {
+						walker = walker->prev;
+						break;
+					}
+				}
+				walker = NULL;
+				break;
+			case PAIR_BRACKET:
+				label = walker;
+				while(walker->type == PAIR_BRACKET) {
+					walker = walker->prev;
+					count++;
+				}
+				if (count % 2 == 0) {
+					// Even count
+					label = NULL;
+				} else {
+					// Odd count
+					label->type = MANUAL_LABEL;
+				}
+			default:
+				walker = NULL;
+		}
+	}
+
+	return label;
+}
+
 
 void process_header_to_links(mmd_engine * e, token * h) {
 	char * label = label_from_token(e->dstr->str, h);
+
+	// See if we have a manual label
+	token * manual = manual_label_from_header(h, e->dstr->str);
+
+	if (manual) {
+		free(label);
+		label = label_from_token(e->dstr->str, manual);
+		h = manual;
+	}
 
 	DString * url = d_string_new("#");
 
@@ -1252,6 +1316,17 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_end_complete_html(out, e->dstr->str, scratch);
+
+			break;
+		case FORMAT_LATEX:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_latex(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_latex(out, e->dstr->str, e->root, scratch);
+			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_latex(out, e->dstr->str, scratch);
 
 			break;
 	}
@@ -1471,12 +1546,12 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 	free(text);
 
 	if (citation_id == -1) {
-		// No match, this is an inline footnote -- create a new one
+		// No match, this is an inline citation -- create a new one
 		t->child->type = TEXT_EMPTY;
 		t->child->mate->type = TEXT_EMPTY;
 
-		// Create footnote
-		footnote * temp = footnote_new(source, NULL, t->child);
+		// Create citation
+		footnote * temp = footnote_new(source, t, t->child);
 
 		// Store as used
 		stack_push(scratch->used_citations, temp);
@@ -1595,5 +1670,27 @@ bool table_has_caption(token * t) {
 	}
 
 	return false;
+}
+
+
+/// Grab the first "word" after the end of the fence marker:
+/// ````perl
+/// or
+/// ```` perl 
+char * get_fence_language_specifier(token * fence, const char * source) {
+	char * result = NULL;
+	size_t start = fence->start + fence->len;
+	size_t len = 0;
+
+	while (char_is_whitespace(source[start]))
+		start++;
+
+	while (!char_is_whitespace_or_line_ending(source[start + len]))
+		len++;
+
+	if (len)
+		result = strndup(&source[start], len);
+
+	return result;
 }
 

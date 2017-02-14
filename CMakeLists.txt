@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown 6")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-02-08")
+set (My_Project_Revised_Date "2017-02-14")
 set (My_Project_Version_Major 0)
-set (My_Project_Version_Minor 1)
-set (My_Project_Version_Patch 4a)
+set (My_Project_Version_Minor 3)
+set (My_Project_Version_Patch 0a)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -171,6 +171,7 @@ set(src_files
 	src/char.c
 	src/d_string.c
 	src/html.c
+	src/latex.c
 	src/lexer.c
 	src/mmd.c
 	src/object_pool.c
@@ -180,6 +181,7 @@ set(src_files
 	src/stack.c
 	src/token.c
 	src/token_pairs.c
+	src/transclude.c
 	src/writer.c
 )
 
@@ -189,6 +191,7 @@ set(header_files
 	src/d_string.h
 	src/char.h
 	src/html.h
+	src/latex.h
 	src/lexer.h
 	src/libMultiMarkdown.h
 	src/mmd.h
@@ -197,6 +200,7 @@ set(header_files
 	src/stack.h
 	src/token.h
 	src/token_pairs.h
+	src/transclude.h
 	src/uthash.h
 	src/writer.h
 )
@@ -439,6 +443,8 @@ endfunction(ADD_MMD_TEST)
 ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
 
 ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
+
+ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
 ADD_MMD_TEST(pathologic "" ../build html)
 

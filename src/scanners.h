@@ -79,6 +79,7 @@ size_t scan_fence_start(const char * c);
 size_t scan_fence_end(const char * c);
 size_t scan_html(const char * c);
 size_t scan_html_block(const char * c);
+size_t scan_html_comment(const char * c);
 size_t scan_html_line(const char * c);
 size_t scan_key(const char * c);
 size_t scan_meta_key(const char * c);
@@ -90,6 +91,7 @@ size_t scan_ref_link_no_attributes(const char * c);
 size_t scan_setext(const char * c);
 size_t scan_spnl(const char * c);
 size_t scan_table_separator(const char * c);
+size_t scan_title(const char * c);
 size_t scan_url(const char * c);
 size_t scan_value(const char * c);
 

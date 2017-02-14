@@ -84,6 +84,7 @@ blocks(A)			::= blocks(B) block(C).
 	}
 blocks(A)			::= block(B).
 	{
+		engine->root = B;	// In case the first block is metadata and we just want to know if it exists
 		strip_line_tokens_from_block(engine, B);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", B->type);
@@ -123,8 +124,8 @@ block(A)			::= list_bullet(B).			{ A = token_new_parent(B, BLOCK_LIST_BULLETED);
 block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
 block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
 block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
-block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); }
-block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); }
+block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
+block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
 block(A)			::= table(B).				{ A = token_new_parent(B, BLOCK_TABLE); }
 
 

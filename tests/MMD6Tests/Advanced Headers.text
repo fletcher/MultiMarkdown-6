@@ -1,0 +1,24 @@
+# foo [bar] #
+
+# foo[bar]
+
+# foo [bar][bat]
+
+# foo [bar] [bat]
+
+# foo [bar][bat][baz]
+
+5
+
+foo [bar]
+=========
+
+# *foo* bar #
+
+*foo
+bar*
+====
+
+[bar]
+
+[foo][bar]

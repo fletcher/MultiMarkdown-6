@@ -140,6 +140,8 @@ int scan(Scanner * s, const char * stop) {
 		'&amp;'							{ return AMPERSAND_LONG; }
 		"&"								{ return AMPERSAND; }
 
+		"/"								{ return SLASH; }
+
 		"\\."							{ return ESCAPED_CHARACTER; }
 		"\\!"							{ return ESCAPED_CHARACTER; }
 		"\\?"							{ return ESCAPED_CHARACTER; }
@@ -180,6 +182,8 @@ int scan(Scanner * s, const char * stop) {
 
 		"\\|"							{ return ESCAPED_CHARACTER; }
 
+		"\\ "							{ return ESCAPED_CHARACTER; }
+
 		"\\\\("							{ return MATH_PAREN_OPEN; }
 		"\\\\)"							{ return MATH_PAREN_CLOSE; }
 		"\\\\["							{ return MATH_BRACKET_OPEN; }
@@ -188,7 +192,7 @@ int scan(Scanner * s, const char * stop) {
 		"$$"							{ return MATH_DOLLAR_DOUBLE; }
 
 		'^'								{ return SUPERSCRIPT; }
-		"~"								{ return SUBSCRIPT; }
+		'~'								{ return SUBSCRIPT; }
 
 		INDENT_TAB						{ return INDENT_TAB; }
 		INDENT_SPACE					{ return INDENT_SPACE; }
@@ -206,6 +210,11 @@ int scan(Scanner * s, const char * stop) {
 		'#'{6} SP						{ return HASH6; }
 		'#'{6} / SPNL					{ return HASH6; }
 
+		'#'								{ return TEXT_HASH; }
+		'%'								{ return TEXT_PERCENT; }
+		'{'								{ return TEXT_BRACE_LEFT; }
+		'}'								{ return TEXT_BRACE_RIGHT; }
+		'\\'							{ return TEXT_BACKSLASH; }
 
 		[0-9]+ / ('.' (SP|NL))			{ return TEXT_NUMBER_POSS_LIST; }
 		'.' / (SP|NL)					{ return TEXT_PERIOD; }

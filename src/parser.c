@@ -753,7 +753,7 @@ static unsigned int yy_find_shift_action(
              yyTracePrompt, yyTokenName[iLookAhead], yyTokenName[iFallback]);
         }
 #endif
-        assert( yyFallback[iFallback]==0 ); /* Fallback loop must terminate */
+ //       assert( yyFallback[iFallback]==0 ); /* Fallback loop must terminate */
         iLookAhead = iFallback;
         continue;
       }
@@ -1114,6 +1114,7 @@ static void yy_reduce(
         break;
       case 2: /* blocks ::= block */
 {
+		engine->root = yymsp[0].minor.yy0;
 		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
 		#ifndef NDEBUG
 		fprintf(stderr, "First block %d\n", yymsp[0].minor.yy0->type);
@@ -1207,11 +1208,11 @@ static void yy_reduce(
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 24: /* block ::= setext_1 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_1); }
+{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, yylhsminor.yy0); }
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 25: /* block ::= setext_2 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_2); }
+{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, yylhsminor.yy0); }
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 26: /* block ::= table */

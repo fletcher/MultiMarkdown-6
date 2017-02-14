@@ -1,10 +1,37 @@
-[#first]
+# citep #
 
-[p. 123][#first]
+[#foo1]
 
-[][#first]
+[#foo1][]
 
-[Not Cited][#first]
+[p. 123][#foo1]
+
+[][#foo1]
+
+[foo\]\[bar][#foo1]
+
+[#foo1][#foo2]
 
 
-[#first]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+# citet #
+
+[#foo1;]
+
+[#foo1;][]
+
+[p. 123][#foo1;]
+
+[][#foo1;]
+
+[foo\]\[bar][#foo1;]
+
+[#foo1;][#foo2;]
+
+
+[Not Cited][#foo2]
+
+[#foo1]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+
+[#foo2]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+
+[#foo3]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.

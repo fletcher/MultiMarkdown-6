@@ -40,12 +40,12 @@
 | foo | bar |
 | --- | --- |
 | foo | bar |
-[*foo*][bar]
+[*caption*][bar]
 
 | foo | bar |
 | --- | --- |
 | foo | bar |
-[*foo*]
+[*caption*]
 
 [*foo*][bar]
 | foo | bar |

@@ -70,7 +70,6 @@
 #define print(x) d_string_append(out, x)
 #define print_char(x) d_string_append_c(out, x)
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
-//#define print_token(t) d_string_append_c_array(out, &(source[t->start + offset]), t->len)
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
 #define print_localized(x) mmd_print_localized_char_html(out, x, scratch)
 
@@ -381,6 +380,20 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			scratch->padded = 1;
 			break;
 		case BLOCK_CODE_FENCED:
+			pad(out, 2, scratch);
+			print("<pre><code");
+
+			temp_char = get_fence_language_specifier(t->child->child, source);
+			if (temp_char) {
+				printf(" class=\"%s\"", temp_char);
+				free(temp_char);
+			}
+
+			print(">");
+			mmd_export_token_tree_html_raw(out, source, t->child->next, t->start + offset, scratch);
+			print("</code></pre>");
+			scratch->padded = 0;
+			break;
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
 			print("<pre><code>");
@@ -401,7 +414,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_char = label_from_token(source, t);
+				temp_char = label_from_header(source, t);
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
@@ -529,7 +542,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_char = label_from_token(source, t);
+				temp_token = manual_label_from_header(t, source);
+				if (temp_token) {
+					temp_char = label_from_token(source, temp_token);
+				} else {
+					temp_char = label_from_token(source, t);
+				}
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
@@ -543,7 +561,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_char = label_from_token(source, t);
+				temp_token = manual_label_from_header(t, source);
+				if (temp_token) {
+					temp_char = label_from_token(source, temp_token);
+				} else {
+					temp_char = label_from_token(source, t);
+				}
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
@@ -687,7 +710,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					continue;
 				}
 
-				temp_char = label_from_token(source, temp_token);
+				temp_char = label_from_header(source, temp_token);
 
 				printf("<li><a href=\"#%s\">", temp_char);
 				mmd_export_token_tree_html(out, source, temp_token->child, offset, scratch);
@@ -800,7 +823,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("=");
 			break;
 		case ESCAPED_CHARACTER:
-			mmd_print_char_html(out, source[t->start + 1], false);
+			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
+				(source[t->start + 1] == ' ')) {
+				print("&nbsp;");
+			} else {
+				mmd_print_char_html(out, source[t->start + 1], false);
+			}
 			break;
 		case HASH1:
 		case HASH2:
@@ -910,9 +938,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print("</code>");
 			break;
 		case PAIR_ANGLE:
-			temp_token = t;
-
-			temp_char = url_accept(source, &temp_token, true);
+			temp_char = url_accept(source, t->start + 1, t->len - 2, NULL, true);
 
 			if (temp_char) {
 				if (scan_email(temp_char))
@@ -936,6 +962,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			break;
 		case PAIR_BRACKET:
+			if ((scratch->extensions & EXT_NOTES) &&
+				(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
+				goto parse_citation;
+			}
+
 		case PAIR_BRACKET_IMAGE:
 			parse_brackets(source, scratch, t, &temp_link, &temp_short, &temp_bool);
 
@@ -979,22 +1010,62 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			break;
 		case PAIR_BRACKET_CITATION:
+			parse_citation:
+			temp_bool = true;
+
+			if (t->type == PAIR_BRACKET) {
+				// This is a locator for subsequent citation
+				temp_char = text_inside_pair(source, t);
+				temp_char2 = label_from_string(temp_char);
+
+				if (strcmp(temp_char2, "notcited") == 0) {
+					free(temp_char2);
+					free(temp_char);
+					temp_char = strdup("");
+					temp_bool = false;
+				}
+
+				if (temp_char[0] == '\0')
+					temp_char2 = strdup("");
+				else
+					temp_char2 = strdup(", ");
+
+
+				// Process the actual citation
+				t = t->next;
+			} else {
+				temp_char = strdup("");
+				temp_char2 = strdup("");
+			}
+
 			if (scratch->extensions & EXT_NOTES) {
+				temp_short2 = scratch->used_citations->size;
+
 				citation_from_bracket(source, scratch, t, &temp_short);
 
-				if (temp_short < scratch->used_citations->size) {
-					// Re-using previous citation
-					printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
-						   temp_short, LC("see citation"), temp_short);
-				} else {
-					// This is a new citation
-					printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
-						   temp_short, temp_short, LC("see citation"), temp_short);
+				if (temp_bool) {
+					if (temp_short2 == scratch->used_citations->size) {
+						// Repeat of earlier citation
+						printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+								temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					} else {
+						// New citation
+						printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+								temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					}
+				}
+
+				if (t->prev && (t->prev->type == PAIR_BRACKET)) {
+					// Skip citation on next pass
+					scratch->skip_token = 1;
 				}
 			} else {
 				// Footnotes disabled
 				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			}
+
+			free(temp_char);
+			free(temp_char2);
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
@@ -1172,6 +1243,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			else
 				print_localized(QUOTE_RIGHT_DOUBLE);
 			break;
+		case SLASH:
 		case STAR:
 			print_token(t);
 			break;
@@ -1223,7 +1295,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					print(" style=\"text-align:center;\"");
 					break;
 			}
-			if (t->next->type == TABLE_DIVIDER) {
+			if (t->next && t->next->type == TABLE_DIVIDER) {
 				if (t->next->len > 1) {
 					printf(" colspan=\"%d\"", t->next->len);
 				}
@@ -1235,7 +1307,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			} else {
 				print("</td>\n");
 			}
-			scratch->table_cell_count += t->next->len;
+			if (t->next)
+				scratch->table_cell_count += t->next->len;
+			else
+				scratch->table_cell_count++;
+			
 			break;
 		case TABLE_DIVIDER:
 			break;
@@ -1253,12 +1329,18 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		case CODE_FENCE:
 		case TEXT_EMPTY:
+		case MANUAL_LABEL:
 			break;
 		case TEXT_NL:
 			if (t->next)
 				print_char('\n');
 			break;
+		case TEXT_BACKSLASH:
+		case TEXT_BRACE_LEFT:
+		case TEXT_BRACE_RIGHT:
+		case TEXT_HASH:
 		case TEXT_NUMBER_POSS_LIST:
+		case TEXT_PERCENT:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
 		case TOC:
@@ -1448,6 +1530,7 @@ void mmd_export_footnote_list_html(DString * out, const char * source, scratch_p
 		pad(out, 2, scratch);
 		print("</ol>\n</div>");
 		scratch->padded = 0;
+		scratch->footnote_being_printed = 0;
 	}
 }
 
@@ -1495,6 +1578,7 @@ void mmd_export_citation_list_html(DString * out, const char * source, scratch_p
 		pad(out, 2, scratch);
 		print("</ol>\n</div>");
 		scratch->padded = 0;
+		scratch->citation_being_printed = 0;
 	}
 }
 

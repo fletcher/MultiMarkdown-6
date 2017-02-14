@@ -729,7 +729,12 @@ void strip_quote_markers_from_block(mmd_engine * e, token * block) {
 
 
 /// Create a token chain from source string
-token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len) {
+/// stop_on_empty_line allows us to stop parsing part of the way through
+token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool stop_on_empty_line) {
+	// Reset metadata flag
+	e->allow_meta = (e->extensions & EXT_COMPATIBILITY) ? false : true;
+
+
 	// Create a scanner (for re2c)
 	Scanner s;
 	s.start = str;
@@ -793,6 +798,11 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len) {
 				mmd_assign_line_type(e, line);
 
 				token_append_child(root, line);
+
+				if (stop_on_empty_line) {
+					if (line->type == LINE_EMPTY)
+						return root;
+				}
 				line = token_new(0,s.cur - str,0);
 				break;
 			default:
@@ -894,6 +904,8 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_H5:
 		case BLOCK_H6:
 		case BLOCK_PARA:
+		case BLOCK_SETEXT_1:
+		case BLOCK_SETEXT_2:
 		case BLOCK_TERM:
 			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			break;
@@ -966,6 +978,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_LIST_ITEM:
 			case BLOCK_LIST_ITEM_TIGHT:
 			case BLOCK_PARA:
+			case BLOCK_SETEXT_1:
+			case BLOCK_SETEXT_2:
 			case BLOCK_TABLE:
 			case BLOCK_TERM:
 				// Assign child tokens of blocks
@@ -1705,7 +1719,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 	e->definition_stack->size = 0;
 	
 	// Tokenize the string
-	token * doc = mmd_tokenize_string(e, &e->dstr->str[byte_start], byte_len);
+	token * doc = mmd_tokenize_string(e, &e->dstr->str[byte_start], byte_len, false);
 
 	// Parse tokens into blocks
 	mmd_parse_token_chain(e, doc);
@@ -1745,5 +1759,66 @@ void mmd_engine_parse_string(mmd_engine * e) {
 
 	// New parse tree
 	e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
+}
+
+
+bool mmd_has_metadata(mmd_engine * e, size_t * end) {
+	bool result = false;
+
+	// Free existing parse tree
+	if (e->root)
+		token_tree_free(e->root);
+
+#ifdef kUseObjectPool
+	// Ensure token pool is available and ready
+	token_pool_init();
+#endif
+
+	// Tokenize the string (up until first empty line)
+	token * doc = mmd_tokenize_string(e, &e->dstr->str[0], e->dstr->currentStringLength, true);
+
+	// Parse tokens into blocks
+	mmd_parse_token_chain(e, doc);
+
+	if (doc) {
+		if (doc->child && doc->child->type == BLOCK_META) {
+			result = true;
+
+			if (end != NULL)
+				*end = doc->child->len;
+		}
+
+		token_tree_free(doc);
+	}
+
+	return result;
+}
+
+
+/// Grab metadata without processing entire document
+/// Returned char * does not need to be freed
+char * metavalue_for_key(mmd_engine * e, const char * key) {
+	if (e->metadata_stack->size == 0) {
+		// Ensure we have checked for metadata
+		if (!mmd_has_metadata(e, NULL))
+			return NULL;
+	}
+
+	char * result = NULL;
+	char * clean = label_from_string(key);
+
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+
+		if (strcmp(clean, m->key) == 0) {
+			// We have a match
+			return m->value;
+		}
+	}
+
+	return result;
 }
 

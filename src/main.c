@@ -54,6 +54,7 @@
 */
 
 #include <ctype.h>
+#include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -66,6 +67,7 @@
 #include "html.h"
 #include "mmd.h"
 #include "token.h"
+#include "transclude.h"
 #include "version.h"
 
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
@@ -97,7 +99,7 @@ DString * stdin_buffer() {
 }
 
 
-DString * scan_file(const char * fname) {
+static DString * scan_file(const char * fname) {
 	/* Read from a file and return a GString *
 		`buffer` will need to be freed elsewhere */
 
@@ -177,7 +179,7 @@ char * mmd_process(DString * buffer, unsigned long extensions, short format, sho
 int main(int argc, char** argv) {
 	int exitcode = EXIT_SUCCESS;
 	char * binname = "multimarkdown";
-	short format = 0;
+	short format = FORMAT_HTML;
 	short language = LC_EN;
 
 	// Initialize argtable structs
@@ -247,7 +249,7 @@ int main(int argc, char** argv) {
 
 
 	// Parse options
-	unsigned long extensions = EXT_SMART | EXT_NOTES | EXT_CRITIC;
+	unsigned long extensions = EXT_SMART | EXT_NOTES | EXT_CRITIC | EXT_TRANSCLUDE;
 
 	if (a_compatibility->count > 0) {
 		// Compatibility mode disables certain features
@@ -288,6 +290,8 @@ int main(int argc, char** argv) {
 	if (a_format->count > 0) {
 		if (strcmp(a_format->sval[0], "html") == 0)
 			format = FORMAT_HTML;
+		else if (strcmp(a_format->sval[0], "latex") == 0)
+			format = FORMAT_LATEX;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -336,8 +340,20 @@ int main(int argc, char** argv) {
 				case FORMAT_HTML:
 					output_filename = filename_with_extension(a_file->filename[i], ".html");
 					break;
+				case FORMAT_LATEX:
+					output_filename = filename_with_extension(a_file->filename[i], ".tex");
+					break;
 			}
 
+			// Perform transclusion(s)
+			if (extensions & EXT_TRANSCLUDE) {
+				char * folder = dirname((char *) a_file->filename[i]);
+
+				transclude_source(buffer, folder, format, NULL, NULL);
+	
+				free(folder);
+			}
+	
 			result = mmd_process(buffer, extensions, format, language);
 
 			if (!(output_stream = fopen(output_filename, "w"))) {
@@ -376,6 +392,15 @@ int main(int argc, char** argv) {
 		} else {
 			// Obtain input from stdin
 			buffer = stdin_buffer();
+		}
+
+		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
+			// Perform transclusion(s)
+			char * folder = dirname((char *) a_file->filename[0]);
+
+			transclude_source(buffer, folder, format, NULL, NULL);
+
+			free(folder);
 		}
 
 		result = mmd_process(buffer, extensions, format, language);

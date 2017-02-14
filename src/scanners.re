@@ -128,7 +128,7 @@
 
 	html_block	= '<' '/'? block_tag attributes? '/'? '>';
 
-	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00] nl_eof;
+	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00]+ nl_eof;
 
 	fence_end	= non_indent [`~]{3,} sp nl_eof;
 
@@ -286,6 +286,17 @@ size_t scan_html(const char * c) {
 }
 
 
+size_t scan_html_comment(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	tag_comment	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
 size_t scan_html_block(const char * c) {
 	const char * marker = NULL;
 	const char * start = c;
@@ -402,6 +413,16 @@ size_t scan_destination(const char * c) {
 }
 
 
+size_t scan_title(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	title	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
 size_t scan_setext(const char * c) {
 	const char * marker = NULL;
 	const char * start = c;
@@ -426,12 +447,12 @@ void Test_scan_url(CuTest* tc) {
 	url_len = (int) scan_url("http://test.com/");
 	CuAssertIntEquals(tc, 16, url_len);
 	url_len = (int) scan_email("mailto:foo@bar.com");
-	CuAssertIntEquals(tc, 0, url_len);
+	CuAssertIntEquals(tc, 18, url_len);
 
 	url_len = (int) scan_url("foo@bar.com  ");
-	CuAssertIntEquals(tc, 12, url_len);
+	CuAssertIntEquals(tc, 11, url_len);
 	url_len = (int) scan_email("mailto:foo@bar.com");
-	CuAssertIntEquals(tc, 12, url_len);
+	CuAssertIntEquals(tc, 18, url_len);
 }
 #endif
 
