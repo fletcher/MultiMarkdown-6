@@ -11,6 +11,37 @@
 
 ## Updates ##
 
+* 2017-02-14 -- v 0.3.0a:
+
+	*    ADDED: Add basic image support to LaTeX
+	*    ADDED: Add file transclusion
+	*    ADDED: Add support for citation 'locators'
+	*    ADDED: Add support for manual labels on ATX Headers
+	*    ADDED: Add support for manual labels on Setext Headers
+	*    ADDED: Add support for tables in LaTeX
+	*    ADDED: HTML Comments appear as raw LaTeX
+	*    ADDED: Improved citation support in LaTeX
+	*    ADDED: Support \autoref{} in LaTeX
+	*    ADDED: Support combined options in LaTeX citations that use the '\]\[' syntax
+	*    ADDED: Support language specifier in fenced code blocks
+	*    ADDED: Support metadata in LaTeX
+	*    ADDED: Update Citations test suite
+	*    FIXED: Escaped LaTeX characters
+	*    FIXED: Fix bug in URL parsing
+	*    FIXED: Fix bug in citation links
+	*    FIXED: Fix bug when no closing divider or newline at end of last table cell
+	*    FIXED: Fix issue printing '-'
+	*    FIXED: Fix scan_url test suite
+	*    FIXED: Get Math working in LaTeX
+	*    FIXED: Improve reliability or link scanner
+	*    FIXED: Properly add id attribute to new instances of citation only
+	*    FIXED: Properly handle manual labels with TOC
+	*    FIXED: Properly print hash characters in LaTeX
+	*    FIXED: Separate LaTeX verbatim and texttt character handling
+	*    FIXED: Update Escapes test LaTeX result
+	*    FIXED: Work on escaping LaTeX characters
+
+
 * 2017-02-08 -- v 0.1.4a:
 
 	*    ADDED: Add smart quote support for other languages (resolves #15)

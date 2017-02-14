@@ -142,7 +142,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			store_citation(p, f);
 		}
 
-		// Store links in a hash for rapid retrieval when exporting
+		// Store metadata in a hash for rapid retrieval when exporting
 		p->meta_hash = NULL;
 		meta * m;
 

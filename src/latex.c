@@ -1567,6 +1567,11 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 	// Iterate over metadata keys
 	meta * m;
 
+	m = extract_meta_from_stack(scratch, "latexleader");
+	if (m) {
+		printf("\\input{%s}\n", m->value);
+	}
+
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
 		} else if (strcmp(m->key, "bibtex") == 0) {
@@ -1575,11 +1580,12 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "htmlheader") == 0) {
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexheader") == 0) {
-			print(m->value);
-			print_char('\n');
 		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexleader") == 0) {
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
@@ -1617,12 +1623,25 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 			print("}\n");
 		}
 	}
+
+	m = extract_meta_from_stack(scratch, "latexbegin");
+	if (m) {
+		printf("\\input{%s}\n", m->value);
+	}
+
 	scratch->padded = 1;
 }
 
 
 void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * scratch) {
 	pad(out, 2, scratch);
+
+	meta * m = extract_meta_from_stack(scratch, "latexfooter");
+
+	if (m) {
+		printf("\\input{%s}\n\n", m->value);
+	}
+
 	print("\\end{document}");
 	scratch->padded = 0;
 }

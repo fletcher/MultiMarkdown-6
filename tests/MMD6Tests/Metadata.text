@@ -1,13 +1,17 @@
+latex leader:	mmd-article-header
 title:	*foo* "bar"
 css:	http://foo.com/bar.css
 HTML header:	<script type="text/javascript"
 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
+latex begin:	mmd-article-begin-doc
+latex footer:	mmd-memoir-footer
 foo:	bar
 foo bar
 	foo bar
 foo:	*bar*
 html header level: 2
+latex header level: 2
 base header level: 3
 
 foo:	bar
