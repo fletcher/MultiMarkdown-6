@@ -1039,13 +1039,20 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 
 			if (scratch->extensions & EXT_NOTES) {
+				temp_short2 = scratch->used_citations->size;
+
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_bool) {
-                    // This is a new citation
-                    temp_short = scratch->used_citations->size;
-                    printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-                            temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					if (temp_short2 == scratch->used_citations->size) {
+						// Repeat of earlier citation
+						printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+								temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					} else {
+						// New citation
+						printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
+								temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					}
 				}
 
 				if (t->prev && (t->prev->type == PAIR_BRACKET)) {
@@ -1300,11 +1307,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			} else {
 				print("</td>\n");
 			}
-            if (t->next)
-                scratch->table_cell_count += t->next->len;
-            else
-                scratch->table_cell_count++;
-            
+			if (t->next)
+				scratch->table_cell_count += t->next->len;
+			else
+				scratch->table_cell_count++;
+			
 			break;
 		case TABLE_DIVIDER:
 			break;
