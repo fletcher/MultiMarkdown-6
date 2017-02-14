@@ -620,6 +620,89 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 			break;
+		case BLOCK_TABLE:
+			pad(out, 2, scratch);
+
+			print("\\begin{table}[htbp]\n");
+
+			print("\\begin{minipage}{\\linewidth}\n\\setlength{\\tymax}{0.5\\linewidth}\n\\centering\n\\small\n");
+
+			// Are we followed by a caption?
+			if (table_has_caption(t)) {
+				temp_token = t->next->child;
+
+				if (temp_token->next &&
+					temp_token->next->type == PAIR_BRACKET) {
+					temp_token = temp_token->next;
+				}
+
+				temp_char = label_from_token(source, temp_token);
+
+				t->next->child->child->type = TEXT_EMPTY;
+				t->next->child->child->mate->type = TEXT_EMPTY;
+
+				print("\\caption{");
+				mmd_export_token_tree_latex(out, source, t->next->child->child, scratch);
+				print("}\n");
+
+				printf("\\label{%s}\n", temp_char);
+				free(temp_char);
+
+				temp_short = 1;
+			} else {
+				temp_short = 0;
+			}
+
+			read_table_column_alignments(source, t, scratch);
+
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			pad(out, 1, scratch);
+			print("\n\\end{tabulary}\n\\end{minipage}");
+
+			print("\n\\end{table}");
+
+			scratch->skip_token = temp_short;
+			scratch->padded = 0;
+			break;
+		case BLOCK_TABLE_HEADER:
+			pad(out, 2, scratch);
+
+			print("\\begin{tabulary}{\\textwidth}{@{}");
+
+			for (int i = 0; i < scratch->table_column_count; ++i)
+			{
+				switch (scratch->table_alignment[i]) {
+					case 'l':
+					case 'L':
+					case 'r':
+					case 'R':
+					case 'c':
+					case 'C':
+						print_char(scratch->table_alignment[i]);
+						break;
+					default:
+						print_char('l');
+						break;
+				}
+			}
+
+			print("@{}} \\toprule\n");
+
+			scratch->in_table_header = 1;
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			scratch->in_table_header = 0;
+
+			print("\\midrule\n");
+
+			scratch->padded = 1;
+			break;
+		case BLOCK_TABLE_SECTION:
+			pad(out, 2, scratch);
+			scratch->padded = 2;
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			print("\\bottomrule");
+			scratch->padded = 0;
+			break;
 		case BLOCK_TERM:
 			pad(out, 2, scratch);
 			print("\\item[");
@@ -1196,7 +1279,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print(")");
 			break;
 		case PIPE:
-			print("\\textbar{}");
+			for (int i = 0; i < t->len; ++i)
+			{
+				print("\\textbar{}");
+			}
 			break;
 		case PLUS:
 			print_token(t);
@@ -1253,6 +1339,51 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print("\\^{}");
 			}	
 			break;
+		case TABLE_CELL:
+			if (t->next && t->next->type == TABLE_DIVIDER) {
+				if (t->next->len > 1) {
+					printf("\\multicolumn{%lu}{",t->next->len);
+					switch (scratch->table_alignment[scratch->table_cell_count]) {
+						case 'l':
+						case 'L':
+							print("l}{");
+							break;
+						case 'r':
+						case 'R':
+							print("r}{");
+							break;
+						default:
+							print("c}{");
+							break;
+					}
+				}
+			}
+
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+
+			if (t->next && t->next->type == TABLE_DIVIDER) {
+				if (t->next->len > 1)
+					print("}");
+			}
+
+			if (t->next && t->next->type == TABLE_DIVIDER) {
+				t = t->next;
+
+				if (t->next && t->next->type == TABLE_CELL)
+					print("&");
+
+				scratch->table_cell_count += t->next->len;
+			} else
+				scratch->table_cell_count++;
+
+			break;
+		case TABLE_DIVIDER:
+			break;
+		case TABLE_ROW:
+			scratch->table_cell_count = 0;
+			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			print("\\\\\n");
+			break;
 		case TEXT_BACKSLASH:
 			print("\\textbackslash{}");
 			break;
@@ -1260,6 +1391,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case TEXT_HASH:
 			print("\\#");
+			break;
+		case TEXT_LINEBREAK:
+			if (t->next) {
+				print("\n");
+				scratch->padded = 1;
+			}
 			break;
 		case TEXT_NL:
 			if (t->next)
