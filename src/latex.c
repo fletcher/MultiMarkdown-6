@@ -1190,7 +1190,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
-				print("\\todo{");
+				print("\\cmnote{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 				print("}");
 			} else {

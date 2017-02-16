@@ -64,11 +64,11 @@
 
 
 /// Combine directory and base filename to create a full path */
-char * path_from_dir_base(char * dir, char * base);
+char * path_from_dir_base(const char * dir, const char * base);
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
-void transclude_source(DString * source, char * dir, short format, stack * parsed, stack * manifest);
+void transclude_source(DString * source, const char * dir, short format, stack * parsed, stack * manifest);
 
 
 #endif

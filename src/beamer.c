@@ -155,7 +155,9 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 					temp_char = label_from_token(source, t);
 				}
 				printf("}\n\\label{%s}", temp_char);
-				free(temp_char);
+	
+				if (temp_char)
+					free(temp_char);
 			}
 			scratch->padded = 0;
 			break;

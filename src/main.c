@@ -331,6 +331,8 @@ int main(int argc, char** argv) {
 		// Batch process 1 or more files
 		for (int i = 0; i < a_file->count; ++i)
 		{
+			token_pool_drain();
+
 			buffer = scan_file(a_file->filename[i]);
 
 			if (buffer == NULL) {
@@ -357,7 +359,7 @@ int main(int argc, char** argv) {
 
 				transclude_source(buffer, folder, format, NULL, NULL);
 	
-				free(folder);
+				//free(folder);
 			}
 	
 			result = mmd_process(buffer, extensions, format, language);
