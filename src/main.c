@@ -359,7 +359,7 @@ int main(int argc, char** argv) {
 
 				transclude_source(buffer, folder, format, NULL, NULL);
 	
-				//free(folder);
+				// Don't free folder -- owned by dirname
 			}
 	
 			result = mmd_process(buffer, extensions, format, language);
@@ -408,7 +408,7 @@ int main(int argc, char** argv) {
 
 			transclude_source(buffer, folder, format, NULL, NULL);
 
-			free(folder);
+			// Don't free folder -- owned by dirname
 		}
 
 		result = mmd_process(buffer, extensions, format, language);

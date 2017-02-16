@@ -211,8 +211,7 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	if (freeDString)
 		d_string_free(e->dstr, true);
 
-	if (e->extensions & EXT_CRITIC)
-		token_pair_engine_free(e->pairings1);
+	token_pair_engine_free(e->pairings1);
 	
 	token_pair_engine_free(e->pairings2);
 	token_pair_engine_free(e->pairings3);
@@ -222,6 +221,12 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	// Pointers to blocks that are freed elsewhere
 	stack_free(e->definition_stack);
 	stack_free(e->header_stack);
+
+	// Citations need to be freed
+	while (e->citation_stack->size) {
+		footnote_free(stack_pop(e->citation_stack));
+	}
+	stack_free(e->citation_stack);
 
 	// Links need to be freed
 	while (e->link_stack->size) {
@@ -1815,10 +1820,12 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 
 		if (strcmp(clean, m->key) == 0) {
 			// We have a match
+			free(clean);
 			return m->value;
 		}
 	}
 
+	free(clean);
 	return result;
 }
 
