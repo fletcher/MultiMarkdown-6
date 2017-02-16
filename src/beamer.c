@@ -105,12 +105,12 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 				// Close out level
 				switch (t_level) {
 					case 3:
-						pad(out, 2, scratch);
+						pad(out, 1, scratch);
 						print("\\end{frame}\n\n");
 						scratch->padded = 2;
 						break;
 					case 4:
-						pad(out, 2, scratch);
+						pad(out, 1, scratch);
 						print("}\n\n");
 						scratch->padded = 2;
 						break;

@@ -63,7 +63,6 @@
 #include "parser.h"
 #include "scanners.h"
 
-
 #define print(x) d_string_append(out, x)
 #define print_char(x) d_string_append_c(out, x)
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
@@ -202,7 +201,6 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 			break;
 	}
 }
-
 
 
 void mmd_export_link_latex(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
@@ -1647,6 +1645,7 @@ void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * sc
 	print("\\end{document}");
 	scratch->padded = 0;
 }
+
 
 void mmd_export_citation_list_latex(DString * out, const char * source, scratch_pad * scratch) {
 	if (scratch->used_citations->size > 0) {
