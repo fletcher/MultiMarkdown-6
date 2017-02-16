@@ -59,11 +59,13 @@
 
 #include "libMultiMarkdown.h"
 
+#include "beamer.h"
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
 #include "i18n.h"
 #include "latex.h"
+#include "memoir.h"
 #include "mmd.h"
 #include "scanners.h"
 #include "token.h"
@@ -1229,7 +1231,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			if (scratch->output_format == FORMAT_HTML)
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
-			if (scratch->output_format == FORMAT_LATEX)
+			if ((scratch->output_format == FORMAT_LATEX) ||
+				(scratch->output_format == FORMAT_BEAMER) ||
+				(scratch->output_format == FORMAT_MEMOIR))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
 			if (scratch->output_format == FORMAT_ODF)
@@ -1252,6 +1256,16 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			} else {
 				scratch->language = LC_EN;
 				scratch->quotes_lang = ENGLISH;
+			}
+
+			free(temp_char);
+		} else if (strcmp(m->key, "latexmode") == 0) {
+			temp_char = label_from_string(m->value);
+
+			if (strcmp(temp_char, "beamer") == 0) {
+				scratch->output_format = FORMAT_BEAMER;
+			} else if (strcmp(temp_char, "memoir") == 0) {
+				scratch->output_format = FORMAT_MEMOIR;
 			}
 
 			free(temp_char);
@@ -1305,7 +1319,18 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	process_metadata_stack(e, scratch);
 
 
-	switch (format) {
+	switch (scratch->output_format) {
+		case FORMAT_BEAMER:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_latex(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_beamer(out, e->dstr->str, e->root, scratch);
+			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_latex(out, e->dstr->str, scratch);
+
+			break;
 		case FORMAT_HTML:
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_start_complete_html(out, e->dstr->str, scratch);
@@ -1323,6 +1348,17 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 				mmd_start_complete_latex(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_latex(out, e->dstr->str, e->root, scratch);
+			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_latex(out, e->dstr->str, scratch);
+
+			break;
+		case FORMAT_MEMOIR:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_latex(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_memoir(out, e->dstr->str, e->root, scratch);
 			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
 
 			if (scratch->extensions & EXT_COMPLETE)

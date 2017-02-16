@@ -1582,6 +1582,8 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "lang") == 0) {
 		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexheader") == 0) {
+			print(m->value);
+			print_char('\n');
 		} else if (strcmp(m->key, "latexfooter") == 0) {
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {

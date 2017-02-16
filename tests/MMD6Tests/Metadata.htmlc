@@ -1,11 +1,11 @@
-<p>latex leader:	mmd-article-header
-title:	<em>foo</em> &quot;bar&quot;
+<p>title:	<em>foo</em> &quot;bar&quot;
 css:	http://foo.com/bar.css
 HTML header:	<script type="text/javascript"
 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-latex begin:	mmd-article-begin-doc
-latex footer:	mmd-memoir-footer
+latex leader:	mmd6-article-leader
+latex begin:	mmd6-article-begin
+latex footer:	mmd6-article-footer
 foo:	bar
 foo bar
 foo bar

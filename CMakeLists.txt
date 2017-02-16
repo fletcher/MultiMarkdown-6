@@ -168,11 +168,13 @@ configure_file (
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
 	src/argtable3.c
+	src/beamer.c
 	src/char.c
 	src/d_string.c
 	src/html.c
 	src/latex.c
 	src/lexer.c
+	src/memoir.c
 	src/mmd.c
 	src/object_pool.c
 	src/parser.c
@@ -188,12 +190,14 @@ set(src_files
 # Primary header files, also for doxygen documentation
 set(header_files
 	src/argtable3.h
-	src/d_string.h
+	src/beamer.h
 	src/char.h
+	src/d_string.h
 	src/html.h
 	src/latex.h
 	src/lexer.h
 	src/libMultiMarkdown.h
+	src/memoir.h
 	src/mmd.h
 	src/object_pool.h
 	src/scanners.h

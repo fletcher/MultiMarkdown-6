@@ -292,6 +292,10 @@ int main(int argc, char** argv) {
 			format = FORMAT_HTML;
 		else if (strcmp(a_format->sval[0], "latex") == 0)
 			format = FORMAT_LATEX;
+		else if (strcmp(a_format->sval[0], "beamer") == 0)
+			format = FORMAT_BEAMER;
+		else if (strcmp(a_format->sval[0], "memoir") == 0)
+			format = FORMAT_MEMOIR;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -341,6 +345,8 @@ int main(int argc, char** argv) {
 					output_filename = filename_with_extension(a_file->filename[i], ".html");
 					break;
 				case FORMAT_LATEX:
+				case FORMAT_BEAMER:
+				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
 			}
