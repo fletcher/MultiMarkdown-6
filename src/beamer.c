@@ -63,6 +63,87 @@
 #define print_localized(x) mmd_print_localized_char_latex(out, x, scratch)
 
 
+void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratch) {
+	token * t;
+	short level;		// Header level we are adding
+	short t_level;	
+	stack * s = scratch->outline_stack;
+
+	if (current) {
+		switch (current->type) {
+			case BLOCK_SETEXT_1:
+				level = 1;
+				break;
+			case BLOCK_SETEXT_2:
+				level = 2;
+			default:
+				level = 1 + current->type - BLOCK_H1;
+		}
+
+		level += scratch->base_header_level - 1;
+	} else {
+		level = 0;
+	}
+
+	if (s->size) {
+		t = stack_peek(s);
+
+		while (t) {
+			switch (t->type) {
+				case BLOCK_SETEXT_1:
+					t_level = 1;
+					break;
+				case BLOCK_SETEXT_2:
+					t_level = 2;
+				default:
+					t_level = 1 + t->type - BLOCK_H1;
+			}
+
+			t_level += scratch->base_header_level - 1;
+
+			if (t_level >= level) {
+				// Close out level
+				switch (t_level) {
+					case 3:
+						pad(out, 2, scratch);
+						print("\\end{frame}\n\n");
+						scratch->padded = 2;
+						break;
+					case 4:
+						pad(out, 2, scratch);
+						print("}\n\n");
+						scratch->padded = 2;
+						break;
+				}
+
+				stack_pop(s);
+				t = stack_peek(s);
+			} else {
+				// Nothing to close
+				t = NULL;
+			}
+		}
+	}
+
+
+	// Add current level to stack and open
+	switch (level) {
+		case 3:
+			pad(out, 2, scratch);
+			print("\\begin{frame}[fragile]\n");
+			scratch->padded = 1;
+			stack_push(s, current);
+			break;
+		case 4:
+			pad(out, 2, scratch);
+			print("\\mode<article>{");
+			scratch->padded = 0;
+			stack_push(s, current);
+			break;
+	}
+}
+
+
 void mmd_export_token_beamer(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	if (t == NULL)
 		return;
@@ -117,6 +198,9 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 		case BLOCK_SETEXT_1:
 		case BLOCK_SETEXT_2:
 			pad(out, 2, scratch);
+
+			mmd_outline_add_beamer(out, t, scratch);
+
 			switch (t->type) {
 				case BLOCK_SETEXT_1:
 					temp_short = 1;
@@ -136,7 +220,7 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 					print("\\section{");
 					break;
 				case 3:
-					print("\\begin{frame}\n\\frametitle{");
+					print("\\frametitle{");
 					break;
 				default:
 					print("\\emph{");
@@ -190,3 +274,54 @@ void mmd_export_token_tree_beamer(DString * out, const char * source, token * t,
 	scratch->recurse_depth--;
 }
 
+
+void mmd_export_citation_list_beamer(DString * out, const char * source, scratch_pad * scratch) {
+	if (scratch->used_citations->size > 0) {
+		footnote * note;
+		token * content;
+
+		pad(out, 2, scratch);
+		print("\\part{Bibliography}\n\\begin{frame}[allowframebreaks]\n\\frametitle{Bibliography}\n\\def\\newblock{}\n\\begin{thebibliography}{0}");
+		scratch->padded = 0;
+
+		for (int i = 0; i < scratch->used_citations->size; ++i)
+		{
+			// Export footnote
+			pad(out, 2, scratch);
+
+			note = stack_peek_index(scratch->used_citations, i);
+			content = note->content;
+
+			printf("\\bibitem{%s}\n", note->label_text);
+			scratch->padded = 6;
+
+			scratch->footnote_para_counter = 0;
+
+			content = note->content;
+			scratch->citation_being_printed = i + 1;
+
+			mmd_export_token_tree_latex(out, source, content, scratch);
+		}
+
+		pad(out, 1, scratch);
+		print("\\end{thebibliography}\n\\end{frame}");
+		scratch->padded = 0;
+		scratch->citation_being_printed = 0;
+	}
+}
+
+
+void mmd_end_complete_beamer(DString * out, const char * source, scratch_pad * scratch) {
+	pad(out, 2, scratch);
+
+	print("\\mode<all>\n");
+	meta * m = extract_meta_from_stack(scratch, "latexfooter");
+
+	if (m) {
+		printf("\\input{%s}\n\n", m->value);
+	}
+
+	print("\\end{document}");
+	print("\\mode*\n");
+	scratch->padded = 0;
+}

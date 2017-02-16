@@ -63,5 +63,10 @@
 void mmd_export_token_beamer(DString * out, const char * source, token * t, scratch_pad * scratch);
 void mmd_export_token_tree_beamer(DString * out, const char * source, token * t, scratch_pad * scratch);
 
+void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratch);
+
+void mmd_export_citation_list_beamer(DString * out, const char * source, scratch_pad * scratch);
+void mmd_end_complete_beamer(DString * out, const char * source, scratch_pad * scratch);
+
 
 #endif

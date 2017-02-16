@@ -100,6 +100,8 @@ typedef struct {
 
 	stack *				header_stack;
 
+	stack *				outline_stack;
+
 	short				recurse_depth;
 	
 	short				in_table_header;

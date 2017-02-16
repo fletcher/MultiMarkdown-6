@@ -98,6 +98,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		p->header_stack = e->header_stack;
 
+		p->outline_stack = stack_new(0);
+
 		p->recurse_depth = 0;
 
 		p->base_header_level = 1;
@@ -162,6 +164,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 void scratch_pad_free(scratch_pad * scratch) {
 //	HASH_CLEAR(hh, scratch->link_hash);
+
+	stack_free(scratch->outline_stack);
 
 	link * l, * l_tmp;
 	
@@ -1325,10 +1329,13 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 				mmd_start_complete_latex(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_beamer(out, e->dstr->str, e->root, scratch);
-			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
+
+			mmd_outline_add_beamer(out, NULL, scratch);
+
+			mmd_export_citation_list_beamer(out, e->dstr->str, scratch);
 
 			if (scratch->extensions & EXT_COMPLETE)
-				mmd_end_complete_latex(out, e->dstr->str, scratch);
+				mmd_end_complete_beamer(out, e->dstr->str, scratch);
 
 			break;
 		case FORMAT_HTML:
