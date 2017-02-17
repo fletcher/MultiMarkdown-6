@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
 
 		a_rem1			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_batch			= arg_lit0("b", "batch", "process each file separately"),
@@ -296,6 +296,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_BEAMER;
 		else if (strcmp(a_format->sval[0], "memoir") == 0)
 			format = FORMAT_MEMOIR;
+		else if (strcmp(a_format->sval[0], "mmd") == 0)
+			format = FORMAT_MMD;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -351,6 +353,9 @@ int main(int argc, char** argv) {
 				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
+				case FORMAT_MMD:
+					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");
+					break;
 			}
 
 			// Perform transclusion(s)
@@ -362,7 +367,11 @@ int main(int argc, char** argv) {
 				// Don't free folder -- owned by dirname
 			}
 	
-			result = mmd_process(buffer, extensions, format, language);
+			if (FORMAT_MMD == format) {
+				result = buffer->str;
+			} else {
+				result = mmd_process(buffer, extensions, format, language);
+			}
 
 			if (!(output_stream = fopen(output_filename, "w"))) {
 				// Failed to open file
@@ -374,8 +383,10 @@ int main(int argc, char** argv) {
 			}
 
 			d_string_free(buffer, true);
-			free(result);
 			free(output_filename);
+			if (FORMAT_MMD != format) {
+				free(result);
+			}
 		}
 	} else {
 		if (a_file->count) {
@@ -411,7 +422,11 @@ int main(int argc, char** argv) {
 			// Don't free folder -- owned by dirname
 		}
 
-		result = mmd_process(buffer, extensions, format, language);
+		if (FORMAT_MMD == format) {
+			result = buffer->str;
+		} else {
+			result = mmd_process(buffer, extensions, format, language);
+		}
 
 		// Where does output go?
 		if (strcmp(a_o->filename[0], "-") == 0) {
@@ -433,8 +448,9 @@ int main(int argc, char** argv) {
 			fclose(output_stream);
 		
 		d_string_free(buffer, true);
-
-		free(result);
+		if (FORMAT_MMD != format) {
+			free(result);
+		}
 	}
 
 

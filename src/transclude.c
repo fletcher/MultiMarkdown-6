@@ -341,6 +341,8 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 						d_string_append(file_path, ".html");
 						break;
 					case FORMAT_LATEX:
+					case FORMAT_BEAMER:
+					case FORMAT_MEMOIR:
 						d_string_append(file_path, ".tex");
 						break;
 					default:
