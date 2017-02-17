@@ -67,15 +67,7 @@ void mmd_export_token_memoir(DString * out, const char * source, token * t, scra
 	if (t == NULL)
 		return;
 
-	short	temp_short;
-	short	temp_short2;
-	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
-	char *	temp_char2	= NULL;
-	char *	temp_char3	= NULL;
-	bool	temp_bool	= 0;
-	token *	temp_token	= NULL;
-	footnote * temp_note = NULL;
 
 	switch (t->type) {
 		case DOC_START_TOKEN:

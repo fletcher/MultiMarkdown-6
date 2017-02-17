@@ -1693,7 +1693,6 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 					goto handle_line;
 				}
 			default:
-				handle_block:
 				//fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
 				// This is a block, need to remove it from chain and
 				// Add to parent

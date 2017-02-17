@@ -76,6 +76,7 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 				break;
 			case BLOCK_SETEXT_2:
 				level = 2;
+				break;
 			default:
 				level = 1 + current->type - BLOCK_H1;
 		}
@@ -95,6 +96,7 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 					break;
 				case BLOCK_SETEXT_2:
 					t_level = 2;
+					break;
 				default:
 					t_level = 1 + t->type - BLOCK_H1;
 			}
@@ -149,14 +151,8 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 		return;
 
 	short	temp_short;
-	short	temp_short2;
-	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
-	char *	temp_char2	= NULL;
-	char *	temp_char3	= NULL;
-	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
-	footnote * temp_note = NULL;
 
 	switch (t->type) {
 		case DOC_START_TOKEN:
@@ -290,7 +286,6 @@ void mmd_export_citation_list_beamer(DString * out, const char * source, scratch
 			pad(out, 2, scratch);
 
 			note = stack_peek_index(scratch->used_citations, i);
-			content = note->content;
 
 			printf("\\bibitem{%s}\n", note->label_text);
 			scratch->padded = 6;

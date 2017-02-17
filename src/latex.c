@@ -204,7 +204,6 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 
 
 void mmd_export_link_latex(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
-	attr * a = link->attributes;
 	char * temp_char;
 
 	if (link->url) {
@@ -233,21 +232,6 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 		}
 	} else
 		print("\\href{}");
-
-//	if (link->title && link->title[0] != '\0') {
-//		print(" title=\"");
-//		mmd_print_string_latex(out, link->title);
-//		print("\"");
-//	}
-
-//	while (a) {
-//		print(" ");
-//		print(a->key);
-//		print("=\"");
-//		print(a->value);
-//		print("\"");
-//		a = a->next;
-//	}
 
 	print("{");
 
@@ -1367,10 +1351,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (t->next && t->next->type == TABLE_DIVIDER) {
 				t = t->next;
 
-				if (t->next && t->next->type == TABLE_CELL)
+				if (t->next && t->next->type == TABLE_CELL) {
 					print("&");
-
-				scratch->table_cell_count += t->next->len;
+					scratch->table_cell_count += t->next->len;
+				}
 			} else
 				scratch->table_cell_count++;
 
@@ -1669,7 +1653,6 @@ void mmd_export_citation_list_latex(DString * out, const char * source, scratch_
 
 			scratch->footnote_para_counter = 0;
 
-			content = note->content;
 			scratch->citation_being_printed = i + 1;
 
 			mmd_export_token_tree_latex(out, source, content, scratch);

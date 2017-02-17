@@ -258,11 +258,12 @@ char * text_inside_pair(const char * source, token * pair) {
 	char * result = NULL;
 
 	if (source && pair) {
-		if (pair->child->mate) {
+		if (pair->child && pair->child->mate) {
 			// [foo], [^foo], [#foo] should give different strings -- use closer len
 			result = strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
 		} else {
-			result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+			if (pair->child)
+				result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
 		}
 	}
 
@@ -1454,9 +1455,13 @@ void parse_brackets(const char * source, scratch_pad * scratch, token * bracket,
 
 	if (temp_link) {
 		// Don't output brackets
-		bracket->child->type = TEXT_EMPTY;
-		bracket->child->mate->type = TEXT_EMPTY;
-
+		if (bracket->child) {
+			bracket->child->type = TEXT_EMPTY;
+		
+			if (bracket->child->mate)
+				bracket->child->mate->type = TEXT_EMPTY;
+		}
+		
 		*final_link = temp_link;
 
 		// Skip over second bracket if present
@@ -1707,7 +1712,7 @@ bool table_has_caption(token * t) {
 				(t->next->type == TEXT_LINEBREAK)))
 				t = t->next;
 
-			if (t->next == NULL)
+			if (t && t->next == NULL)
 				return true;
 		}
 	}
