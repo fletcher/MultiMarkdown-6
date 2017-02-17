@@ -44,8 +44,11 @@ include_directories( ${PROJECT_SOURCE_DIR}/src )
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
 
-# Default is 256 -- needed for localization hash function
-add_definitions("-fbracket-depth=264")	
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	# using Clang
+	# Default is 256 -- needed for localization hash function
+	add_definitions("-fbracket-depth=264")	
+endif()
 
 
 # =================
