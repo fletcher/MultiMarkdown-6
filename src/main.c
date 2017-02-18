@@ -322,7 +322,7 @@ int main(int argc, char** argv) {
 	FILE * output_stream;
 	char * output_filename;
 
-	// Prepare token pool
+	// Increment counter and prepare token pool
 #ifdef kUseObjectPool
 	token_pool_init();
 #endif
@@ -333,7 +333,6 @@ int main(int argc, char** argv) {
 		// Batch process 1 or more files
 		for (int i = 0; i < a_file->count; ++i)
 		{
-			token_pool_drain();
 
 			buffer = scan_file(a_file->filename[i]);
 
@@ -366,6 +365,11 @@ int main(int argc, char** argv) {
 	
 				// Don't free folder -- owned by dirname
 			}
+
+			// Increment counter and prepare token pool
+#ifdef kUseObjectPool
+			token_pool_init();
+#endif
 	
 			if (FORMAT_MMD == format) {
 				result = buffer->str;
@@ -387,6 +391,9 @@ int main(int argc, char** argv) {
 			if (FORMAT_MMD != format) {
 				free(result);
 			}
+
+			// Decrement counter and drain
+			token_pool_drain();
 		}
 	} else {
 		if (a_file->count) {
@@ -456,7 +463,9 @@ int main(int argc, char** argv) {
 
 exit:
 
-	// Clean up token pool
+	// Decrement counter and clean up token pool
+	token_pool_drain();
+	
 #ifdef kUseObjectPool
 	token_pool_free();
 #endif

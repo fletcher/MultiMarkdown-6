@@ -59,9 +59,12 @@
 
 
 #define kUseObjectPool 1		//!< Use an object pool to allocate tokens to improve
-										//!< performance in memory allocation. Frees all
-										//!< tokens at once, however, at end of parsing.
+								//!< performance in memory allocation. Frees all
+								//!< tokens at once, however, at end of parsing.
 
+/// Should call init() once per thread/use, and drain() once per thread/use.
+/// This allows us to know when the pool is no longer being used and it is safe
+/// to free.
 
 #ifdef kUseObjectPool
 void token_pool_init(void);				//!< Initialize object pool for allocating tokens

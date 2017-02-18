@@ -69,7 +69,11 @@
 
 #include "object_pool.h"
 
-static pool * token_pool = NULL;
+static pool * token_pool = NULL;		//!< Pointer to our object pool
+
+/// Count number of uses of this pool to allow us know
+/// when it's safe to drain the pool
+static short token_pool_count = 0;
 
 /// Intialize object pool for token allocation
 void token_pool_init(void) {
@@ -77,19 +81,30 @@ void token_pool_init(void) {
 		// No pool exists
 		token_pool = pool_new(sizeof(token));
 	}
+
+	// Increment counter
+	token_pool_count++;
 }
 
 
 /// Drain token allocator pool to prepare for another parse
 void token_pool_drain(void) {
-	pool_drain(token_pool);
+	// Decrement counter
+	token_pool_count--;
+
+	if (token_pool_count == 0)
+		pool_drain(token_pool);
 }
 
 
 /// Free token allocator pool
 void token_pool_free(void) {
-	pool_free(token_pool);
-	token_pool = NULL;
+	if (token_pool_count == 0) {
+		pool_free(token_pool);
+		token_pool = NULL;
+	} else {
+		fprintf(stderr, "ERROR: Attempted to drain token pool while still in use.\n");
+	}
 }
 
 #endif
@@ -102,7 +117,6 @@ token * token_new(unsigned short type, size_t start, size_t len) {
 #ifdef kUseObjectPool
 	token * t = pool_allocate_object(token_pool);
 #else
-	//token * t = calloc(1, sizeof(token));
 	token * t = malloc(sizeof(token));
 #endif
 
