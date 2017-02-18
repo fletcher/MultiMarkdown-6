@@ -1,0 +1,44 @@
+%
+%	For setup that must follow metadata included in the document
+%
+
+\usepackage[
+	plainpages=false,
+	pdfpagelabels,
+	pdftitle={\mytitle},
+	pagebackref,
+	pdfauthor={\myauthor},
+	pdfkeywords={\mykeywords}
+	]{hyperref}
+\usepackage{memhfixc}
+
+
+\input{mmd6-title}
+
+
+\begin{document}
+
+\VerbatimFootnotes
+
+\title{\mytitle}
+\author{\myauthor}
+
+\ifx\mydate\undefined
+\else
+	\date{\mydate}
+\fi
+
+\mainmatter
+\maketitle
+
+
+% Copyright
+\setlength{\parindent}{0pt}
+
+\ifx\mycopyright\undefined
+\else
+	\textcopyright{} \mycopyright
+\fi
+
+\setlength{\parindent}{1em}
+

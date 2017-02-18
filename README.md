@@ -2,7 +2,7 @@
 
 |            |                           |  
 | ---------- | ------------------------- |  
-| Title:     | MultiMarkdown 6        |  
+| Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
 | Date:      | 2017-02-14 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  

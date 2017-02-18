@@ -1,0 +1,41 @@
+%
+% 	tufte-latex handout for MultiMarkdown
+%		http://code.google.com/p/tufte-latex/
+%
+%	Creates a basic handout emulating part of Edward Tufte's style
+%	from some of his books
+%
+%	* Only h1 and h2 are valid
+%	* \citep may be better than \cite
+%	* \autoref doesn't work properly, may get better results with \ref
+%	* footnotes don't work inside of tables
+%
+
+
+\documentclass{tufte-handout}
+%\documentclass[justified]{tufte-handout}
+
+
+% Use default packages for memoir setup
+
+\usepackage{fancyvrb}			% Allow \verbatim et al. in footnotes
+\usepackage{graphicx}			% To enable including graphics in pdf's
+\usepackage{booktabs}			% Better tables
+\usepackage{tabulary}			% Support longer table cells
+\usepackage[utf8]{inputenc}		% For UTF-8 support
+\usepackage[T1]{fontenc}		% Use T1 font encoding for accented characters
+\usepackage{xcolor}				% Allow for color (annotations)
+\usepackage{listings}			% Allow for source code highlighting
+\usepackage{subscript}
+\usepackage{acronym}			% Support acronyms
+
+
+\usepackage{glossaries}
+\glstoctrue
+\makeglossaries
+\makeindex
+
+
+% Configure default metadata to avoid errors
+\input{mmd6-default-metadata}
+
