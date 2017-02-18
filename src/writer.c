@@ -81,6 +81,25 @@ void store_link(scratch_pad * scratch, link * l);
 void store_metadata(scratch_pad * scratch, meta * m);
 
 
+/// strndup not available on all platforms
+static char * my_strndup(const char * source, size_t n) {
+	size_t len = strlen(source);
+	char * result;
+
+	if (n < len)
+		len = n;
+
+	result = malloc(len + 1);
+
+	if (result) {
+		memcpy(result, source, len);
+		result[len] = '\0';
+	}
+	
+	return result;
+}
+
+
 /// Temporary storage while exporting parse tree to output format
 scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 	scratch_pad * p = malloc(sizeof(scratch_pad));
@@ -260,10 +279,10 @@ char * text_inside_pair(const char * source, token * pair) {
 	if (source && pair) {
 		if (pair->child && pair->child->mate) {
 			// [foo], [^foo], [#foo] should give different strings -- use closer len
-			result = strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
+			result = my_strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
 		} else {
 			if (pair->child)
-				result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+				result = my_strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
 		}
 	}
 
@@ -447,14 +466,14 @@ attr * parse_attributes(char * source) {
 
 		// Get key
 		scan_len = scan_key(&source[pos]);
-		key = strndup(&source[pos], scan_len);
+		key = my_strndup(&source[pos], scan_len);
 		
 		// Skip '='
 		pos += scan_len + 1;
 
 		// Get value
 		scan_len = scan_value(&source[pos]);
-		value = strndup(&source[pos], scan_len);
+		value = my_strndup(&source[pos], scan_len);
 
 		pos += scan_len;
 
@@ -705,7 +724,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			scan_len = scan_destination(&source[start]);
 
 			// Grab destination string
-			url = strndup(&source[start], scan_len);
+			url = my_strndup(&source[start], scan_len);
 
 			// Advance remainder
 			while ((*remainder)->start < start + scan_len)
@@ -763,7 +782,7 @@ char * url_accept(const char * source, size_t start, size_t max_len, size_t * en
 			scan_len -= 2;
 		}
 
-		url = strndup(&source[start], scan_len);
+		url = my_strndup(&source[start], scan_len);
 
 		clean = clean_string(url, false);
 
@@ -802,7 +821,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 	scan_len = scan_title(&source[pos]);
 
 	if (scan_len) {
-		*title = strndup(&source[pos + 1], scan_len - 2);
+		*title = my_strndup(&source[pos + 1], scan_len - 2);
 		pos += scan_len;
 	}
 
@@ -814,7 +833,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 	attr_len = scan_attributes(&source[pos]);
 	
 	if (attr_len) {
-		*attributes = strndup(&source[pos], attr_len);
+		*attributes = my_strndup(&source[pos], attr_len);
 	}
 }
 
@@ -894,7 +913,7 @@ meta * meta_new(const char * source, size_t key_start, size_t len) {
 	char * key;
 
 	if (m) {
-		key = strndup(&source[key_start], len);
+		key = my_strndup(&source[key_start], len);
 		m->key = label_from_string(key);
 		free(key);
 		m->value = NULL;
@@ -1036,7 +1055,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 					attr_len = scan_attributes(&source[(*remainder)->start]);
 					
 					if (attr_len) {
-						attr_char = strndup(&source[(*remainder)->start], attr_len);
+						attr_char = my_strndup(&source[(*remainder)->start], attr_len);
 
 						// Skip forward
 						attr_len += (*remainder)->start;
@@ -1737,7 +1756,7 @@ char * get_fence_language_specifier(token * fence, const char * source) {
 		len++;
 
 	if (len)
-		result = strndup(&source[start], len);
+		result = my_strndup(&source[start], len);
 
 	return result;
 }
