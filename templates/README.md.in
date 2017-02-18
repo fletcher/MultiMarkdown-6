@@ -13,22 +13,22 @@
 
 * 2017-02-17 -- v 0.3.1.a:
 
-*    ADDED: 'finalize' beamer support
-*    ADDED: Add escaped newline as linebreak; start on beamer/memoir support
-*    ADDED: CriticMarkup test for LaTeX
-*    ADDED: Custom LaTeX output for CriticMarkup comments
-*    ADDED: Support mmd export format
-*    ADDED: Work on cpack installer -- change project name for compatibility
-*    CHANGED: Adjust latex metadata configuration for consistency
-*    CHANGED: Configure cmake to use C99
-*    FIXED: Add custom  implementation for cross-platform support
-*    FIXED: Fix German HTML tests
-*    FIXED: Fix cpack destination directory issue
-*    FIXED: Fix memory leaks etc
-*    FIXED: Fix warning in custom vasprintf
-*    FIXED: Modify CMakeLists.txt to test for use of clang compiler
-*    FIXED: Work on memory leaks
-*    NOTE: Adjust license width to improve display on smaller terminal windows
+	*    ADDED: 'finalize' beamer support
+	*    ADDED: Add escaped newline as linebreak; start on beamer/memoir support
+	*    ADDED: CriticMarkup test for LaTeX
+	*    ADDED: Custom LaTeX output for CriticMarkup comments
+	*    ADDED: Support mmd export format
+	*    ADDED: Work on cpack installer -- change project name for compatibility
+	*    CHANGED: Adjust latex metadata configuration for consistency
+	*    CHANGED: Configure cmake to use C99
+	*    FIXED: Add custom  implementation for cross-platform support
+	*    FIXED: Fix German HTML tests
+	*    FIXED: Fix cpack destination directory issue
+	*    FIXED: Fix memory leaks etc
+	*    FIXED: Fix warning in custom vasprintf
+	*    FIXED: Modify CMakeLists.txt to test for use of clang compiler
+	*    FIXED: Work on memory leaks
+	*    NOTE: Adjust license width to improve display on smaller terminal windows
 
 
 * 2017-02-14 -- v 0.3.0a:
