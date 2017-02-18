@@ -461,9 +461,7 @@ set (CPACK_COMPONENT_LATEX_DESCRIPTION "Install configuration files for MultiMar
 # Which groups should be installed?
 set (CPACK_COMPONENTS_ALL application scripts latex)
 
-set (CPACK_PACKAGE_NAME "MultiMarkdown6")
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${My_Project_Description}")
-#set (CPACK_PACKAGE_VENDOR "${My_Project_Author}")
 set (CPACK_PACKAGE_VENDOR "fletcherpenney.net")
 set (CPACK_PACKAGE_VERSION "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 set (CPACK_PACKAGE_VERSION_MAJOR "${My_Project_Version_Major}")
@@ -479,6 +477,7 @@ else (APPLE)
 endif (APPLE)
 
 # Use some default install locations (if appropriate)
+set(CPACK_SET_DESTDIR true)
 if (WIN32)
 	set (CPACK_INSTALL_PREFIX "")
 	set (CPACK_NSIS_MODIFY_PATH ON)
