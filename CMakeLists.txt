@@ -413,6 +413,10 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
 set_target_properties(libMultiMarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 
+# Use C99
+set_property(TARGET libMultiMarkdown PROPERTY C_STANDARD 99)
+set_property(TARGET multimarkdown PROPERTY C_STANDARD 99)
+
 
 # ==========================
 # Build Installer with CPack
