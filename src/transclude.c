@@ -68,11 +68,18 @@
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
-	size_t len = strlen(source);
+	size_t len = 0;
 	char * result;
+	const char * test = source;
 
-	if (n < len)
-		len = n;
+	// strlen is too slow is strlen(source) >> n
+	for (len = 0; len < n; ++len)
+	{
+		if (test == '\0')
+			break;
+
+		test++;
+	}
 
 	result = malloc(len + 1);
 

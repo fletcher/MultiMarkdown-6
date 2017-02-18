@@ -1714,10 +1714,6 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len) {
-#ifdef kUseObjectPool
-	// Ensure token pool is available and ready
-	token_pool_init();
-#endif
 
 	// Reset definition stack
 	e->definition_stack->size = 0;
@@ -1772,11 +1768,6 @@ bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 	// Free existing parse tree
 	if (e->root)
 		token_tree_free(e->root);
-
-#ifdef kUseObjectPool
-	// Ensure token pool is available and ready
-	token_pool_init();
-#endif
 
 	// Tokenize the string (up until first empty line)
 	token * doc = mmd_tokenize_string(e, &e->dstr->str[0], e->dstr->currentStringLength, true);

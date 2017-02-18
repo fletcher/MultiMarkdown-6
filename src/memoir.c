@@ -57,6 +57,7 @@
 #include "memoir.h"
 
 #define print(x) d_string_append(out, x)
+#define print_const(x) d_string_append_c_array(out, x, sizeof(x) - 1)
 #define print_char(x) d_string_append_c(out, x)
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
@@ -80,24 +81,24 @@ void mmd_export_token_memoir(DString * out, const char * source, token * t, scra
 			if (temp_char) {
 				printf("\\begin{adjustwidth}{2.5em}{2.5em}\n\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
-				print("\\begin{adjustwidth}{2.5em}{2.5em}\n\\begin{verbatim}\n");
+				print_const("\\begin{adjustwidth}{2.5em}{2.5em}\n\\begin{verbatim}\n");
 			}
 
 			mmd_export_token_tree_latex_raw(out, source, t->child->next, scratch);
 
 			if (temp_char) {
-				print("\\end{lstlisting}\n\\end{adjustwidth}");
+				print_const("\\end{lstlisting}\n\\end{adjustwidth}");
 				free(temp_char);
 			} else {
-				print("\\end{verbatim}\n\\end{adjustwidth}");
+				print_const("\\end{verbatim}\n\\end{adjustwidth}");
 			}
 			scratch->padded = 0;
 			break;
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
-			print("\\begin{adjustwidth}{2.5em}{2.5em}\\begin{verbatim}\n");
+			print_const("\\begin{adjustwidth}{2.5em}{2.5em}\\begin{verbatim}\n");
 			mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
-			print("\\end{verbatim}\n\\end{adjustwidth}");
+			print_const("\\end{verbatim}\n\\end{adjustwidth}");
 			scratch->padded = 0;
 			break;
 		default:

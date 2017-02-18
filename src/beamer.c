@@ -57,6 +57,7 @@
 #include "beamer.h"
 
 #define print(x) d_string_append(out, x)
+#define print_const(x) d_string_append_c_array(out, x, sizeof(x) - 1)
 #define print_char(x) d_string_append_c(out, x)
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
@@ -108,12 +109,12 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 				switch (t_level) {
 					case 3:
 						pad(out, 1, scratch);
-						print("\\end{frame}\n\n");
+						print_const("\\end{frame}\n\n");
 						scratch->padded = 2;
 						break;
 					case 4:
 						pad(out, 1, scratch);
-						print("}\n\n");
+						print_const("}\n\n");
 						scratch->padded = 2;
 						break;
 				}
@@ -132,13 +133,13 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 	switch (level) {
 		case 3:
 			pad(out, 2, scratch);
-			print("\\begin{frame}[fragile]\n");
+			print_const("\\begin{frame}[fragile]\n");
 			scratch->padded = 1;
 			stack_push(s, current);
 			break;
 		case 4:
 			pad(out, 2, scratch);
-			print("\\mode<article>{");
+			print_const("\\mode<article>{");
 			scratch->padded = 0;
 			stack_push(s, current);
 			break;
@@ -165,24 +166,24 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 			if (temp_char) {
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
-				print("\\begin{verbatim}\n");
+				print_const("\\begin{verbatim}\n");
 			}
 
 			mmd_export_token_tree_latex_raw(out, source, t->child->next, scratch);
 
 			if (temp_char) {
-				print("\\end{lstlisting}");
+				print_const("\\end{lstlisting}");
 				free(temp_char);
 			} else {
-				print("\\end{verbatim}");
+				print_const("\\end{verbatim}");
 			}
 			scratch->padded = 0;
 			break;
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
-			print("\\begin{verbatim}\n");
+			print_const("\\begin{verbatim}\n");
 			mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
-			print("\\end{verbatim}");
+			print_const("\\end{verbatim}");
 			scratch->padded = 0;
 			break;
 		case BLOCK_H1:
@@ -210,23 +211,23 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 
 			switch (temp_short + scratch->base_header_level - 1) {
 				case 1:
-					print("\\part{");
+					print_const("\\part{");
 					break;
 				case 2:
-					print("\\section{");
+					print_const("\\section{");
 					break;
 				case 3:
-					print("\\frametitle{");
+					print_const("\\frametitle{");
 					break;
 				default:
-					print("\\emph{");
+					print_const("\\emph{");
 					break;
 			}
 
 			mmd_export_token_tree_beamer(out, source, t->child, scratch);
 
 			if (scratch->extensions & EXT_NO_LABELS) {
-				print("}");
+				print_const("}");
 			} else {
 				temp_token = manual_label_from_header(t, source);
 				if (temp_token) {
@@ -277,7 +278,7 @@ void mmd_export_citation_list_beamer(DString * out, const char * source, scratch
 		token * content;
 
 		pad(out, 2, scratch);
-		print("\\part{Bibliography}\n\\begin{frame}[allowframebreaks]\n\\frametitle{Bibliography}\n\\def\\newblock{}\n\\begin{thebibliography}{0}");
+		print_const("\\part{Bibliography}\n\\begin{frame}[allowframebreaks]\n\\frametitle{Bibliography}\n\\def\\newblock{}\n\\begin{thebibliography}{0}");
 		scratch->padded = 0;
 
 		for (int i = 0; i < scratch->used_citations->size; ++i)
@@ -299,7 +300,7 @@ void mmd_export_citation_list_beamer(DString * out, const char * source, scratch
 		}
 
 		pad(out, 1, scratch);
-		print("\\end{thebibliography}\n\\end{frame}");
+		print_const("\\end{thebibliography}\n\\end{frame}");
 		scratch->padded = 0;
 		scratch->citation_being_printed = 0;
 	}
@@ -309,14 +310,14 @@ void mmd_export_citation_list_beamer(DString * out, const char * source, scratch
 void mmd_end_complete_beamer(DString * out, const char * source, scratch_pad * scratch) {
 	pad(out, 2, scratch);
 
-	print("\\mode<all>\n");
+	print_const("\\mode<all>\n");
 	meta * m = extract_meta_from_stack(scratch, "latexfooter");
 
 	if (m) {
 		printf("\\input{%s}\n\n", m->value);
 	}
 
-	print("\\end{document}");
-	print("\\mode*\n");
+	print_const("\\end{document}");
+	print_const("\\mode*\n");
 	scratch->padded = 0;
 }
