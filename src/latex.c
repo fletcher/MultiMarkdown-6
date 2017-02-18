@@ -1552,6 +1552,12 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 	m = extract_meta_from_stack(scratch, "latexleader");
 	if (m) {
 		printf("\\input{%s}\n", m->value);
+	} else {
+		m = extract_meta_from_stack(scratch, "latexconfig");
+
+		if (m) {
+			printf("\\input{mmd6-%s-leader}\n", m->value);
+		}
 	}
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
@@ -1563,6 +1569,7 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 		} else if (strcmp(m->key, "lang") == 0) {
 		} else if (strcmp(m->key, "latexbegin") == 0) {
+		} else if (strcmp(m->key, "latexconfig") == 0) {
 		} else if (strcmp(m->key, "latexheader") == 0) {
 			print(m->value);
 			print_char('\n');
@@ -1611,6 +1618,12 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 	m = extract_meta_from_stack(scratch, "latexbegin");
 	if (m) {
 		printf("\\input{%s}\n", m->value);
+	} else {
+		m = extract_meta_from_stack(scratch, "latexconfig");
+
+		if (m) {
+			printf("\\input{mmd6-%s-begin}\n", m->value);
+		}
 	}
 
 	scratch->padded = 1;
@@ -1624,6 +1637,12 @@ void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * sc
 
 	if (m) {
 		printf("\\input{%s}\n\n", m->value);
+	} else {
+		m = extract_meta_from_stack(scratch, "latexconfig");
+
+		if (m) {
+			printf("\\input{mmd6-%s-footer}\n", m->value);
+		}
 	}
 
 	print("\\end{document}");
