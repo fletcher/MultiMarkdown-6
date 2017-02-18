@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# mmd2all --- MultiMarkdown convenience script
+#	<http://fletcherpenney.net/multimarkdown/>
+#	Fletcher T. Penney
+#
+# Pass arguments on to the binary to convert text to multiple
+# formats and open them
+#
+
+# Be sure to include multimarkdown in our PATH
+export PATH="$PWD:/usr/local/bin:$PATH"
+
+which multimarkdown > /dev/null
+if [ $? = 1 ]
+then
+	echo multimarkdown executable not found! >&2
+	exit 1
+fi
+
+if [ $# = 0 ]
+then
+	echo "Can't work on stdin"
+else
+until [ "$*" = "" ]
+do
+	file_name=`echo $1| sed 's/\.[^.]*$//'`
+
+	multimarkdown -b "$1"
+#	open "$file_name.html"
+
+	multimarkdown -b -t latex "$1"
+#	mate "$file_name.tex"
+
+	multimarkdown -b -t odf "$1"
+#	open "$file_name.fodt"
+
+	multimarkdown -b -t opml "$1"
+#	open "$file_name.opml"
+
+	shift
+done
+fi

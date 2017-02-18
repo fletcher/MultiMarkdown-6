@@ -2,14 +2,65 @@
 
 |            |                           |  
 | ---------- | ------------------------- |  
-| Title:     | MultiMarkdown 6        |  
+| Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-02-14 |  
+| Date:      | 2017-02-17 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.3.0a      |  
+| Version:   | 0.3.1a      |  
 
 
 ## Updates ##
+
+* 2017-02-17 -- v 0.3.1.a:
+
+*    ADDED: 'finalize' beamer support
+*    ADDED: Add escaped newline as linebreak; start on beamer/memoir support
+*    ADDED: CriticMarkup test for LaTeX
+*    ADDED: Custom LaTeX output for CriticMarkup comments
+*    ADDED: Support mmd export format
+*    ADDED: Work on cpack installer -- change project name for compatibility
+*    CHANGED: Adjust latex metadata configuration for consistency
+*    CHANGED: Configure cmake to use C99
+*    FIXED: Add custom  implementation for cross-platform support
+*    FIXED: Fix German HTML tests
+*    FIXED: Fix cpack destination directory issue
+*    FIXED: Fix memory leaks etc
+*    FIXED: Fix warning in custom vasprintf
+*    FIXED: Modify CMakeLists.txt to test for use of clang compiler
+*    FIXED: Work on memory leaks
+*    NOTE: Adjust license width to improve display on smaller terminal windows
+
+
+* 2017-02-14 -- v 0.3.0a:
+
+	*    ADDED: Add basic image support to LaTeX
+	*    ADDED: Add file transclusion
+	*    ADDED: Add support for citation 'locators'
+	*    ADDED: Add support for manual labels on ATX Headers
+	*    ADDED: Add support for manual labels on Setext Headers
+	*    ADDED: Add support for tables in LaTeX
+	*    ADDED: HTML Comments appear as raw LaTeX
+	*    ADDED: Improved citation support in LaTeX
+	*    ADDED: Support \autoref{} in LaTeX
+	*    ADDED: Support combined options in LaTeX citations that use the '\]\[' syntax
+	*    ADDED: Support language specifier in fenced code blocks
+	*    ADDED: Support metadata in LaTeX
+	*    ADDED: Update Citations test suite
+	*    FIXED: Escaped LaTeX characters
+	*    FIXED: Fix bug in URL parsing
+	*    FIXED: Fix bug in citation links
+	*    FIXED: Fix bug when no closing divider or newline at end of last table cell
+	*    FIXED: Fix issue printing '-'
+	*    FIXED: Fix scan_url test suite
+	*    FIXED: Get Math working in LaTeX
+	*    FIXED: Improve reliability or link scanner
+	*    FIXED: Properly add id attribute to new instances of citation only
+	*    FIXED: Properly handle manual labels with TOC
+	*    FIXED: Properly print hash characters in LaTeX
+	*    FIXED: Separate LaTeX verbatim and texttt character handling
+	*    FIXED: Update Escapes test LaTeX result
+	*    FIXED: Work on escaping LaTeX characters
+
 
 * 2017-02-08 -- v 0.1.4a:
 
@@ -538,26 +589,28 @@ Suggestions welcome!
 	MMD 4 is released under both the MIT License and GPL.
 	
 	
-	CuTest is released under the zlib/libpng license. See CuTest.c for the text
-	of the license.
+	CuTest is released under the zlib/libpng license. See CuTest.c for the
+	text of the license.
 	
 	
 	## The MIT License ##
 	
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining
+	a copy of this software and associated documentation files (the
+	"Software"), to deal in the Software without restriction, including
+	without limitation the rights to use, copy, modify, merge, publish,
+	distribute, sublicense, and/or sell copies of the Software, and to
+	permit persons to whom the Software is furnished to do so, subject to
+	the following conditions:
 	
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be
+	included in all copies or substantial portions of the Software.
 	
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+	IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	

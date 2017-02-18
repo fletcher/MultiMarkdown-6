@@ -1,0 +1,79 @@
+#!/bin/sh
+#
+# mmd2pdf --- MultiMarkdown convenience script
+#	<http://fletcherpenney.net/multimarkdown/>
+#	Fletcher T. Penney
+#
+# Pass arguments on to the binary to convert text to LaTeX
+# Then use latexmk to process into PDF.
+# Requires a few extra passes of pdflatex to be sure all autorefs
+# 	are managed.
+# Then call latexmk with -c option to try and clean up some extra files.
+#
+#	NOTE: This file is included as a convenience for users - it's not 
+#		likely to fail gracefully if there are any issues in your
+#		LaTeX file.
+
+# Be sure to include multimarkdown and latex in our PATH
+export PATH="$PWD:/usr/local/bin:/usr/texbin:/Library/TeX/texbin:$PATH"
+
+which multimarkdown > /dev/null
+if [ $? = 1 ]
+then
+	echo multimarkdown executable not found! >&2
+	exit 1
+fi
+
+if [ $# = 0 ]
+then
+	multimarkdown -t latex
+else
+until [ "$*" = "" ]
+do
+	multimarkdown -b -t latex "$1"
+
+	file_name=`echo $1| sed 's/\.[^.]*$//'`
+	
+	# Check for XeLaTeX mode
+	
+	xelatex=`multimarkdown -e usexelatex "$1"`
+	
+	if [ "$xelatex" != "" ]
+	then
+		# Use XeLaTeX
+		
+		xelatex "$file_name.tex"
+
+		if [ "$?" = "127" ]
+		then
+			echo "It doesn't appear that xelatex is installed properly." 1>&2
+			echo "Be sure you have a working LaTeX installation." 1>&2
+			exit 1
+		fi
+
+		xelatex "$file_name.tex"
+		xelatex "$file_name.tex"
+		xelatex "$file_name.tex"
+		latexmk -c "$file_name.tex"
+	
+	else
+		# Use LaTeX
+		latexmk "$file_name.tex"
+	
+		if [ "$?" = "127" ]
+		then
+			echo "It doesn't appear that latexmk is installed properly." 1>&2
+			echo "Be sure you have a working LaTeX installation." 1>&2
+			exit 1
+		fi
+
+		makeglossaries "$file_name"
+		pdflatex "$file_name.tex"
+		pdflatex "$file_name.tex"
+		latexmk -c "$file_name.tex"
+
+	fi
+	
+	shift
+done
+fi

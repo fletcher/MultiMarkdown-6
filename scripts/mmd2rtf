@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# mmd2rtf --- MultiMarkdown convenience script
+#	<http://fletcherpenney.net/multimarkdown/>
+#	Fletcher T. Penney
+#
+# Pass arguments on to the binary to convert text to OpenDocument
+#
+
+# NOTE:  MultiMarkdown's RTF support is limited at best.  If you find
+# 	something that isn't working properly, submit code for a proposed 
+#	fix via github or email.  But don't just send a message letting me
+#	know it isn't working. ;)
+#
+# Be sure to include multimarkdown in our PATH
+export PATH="$PWD:/usr/local/bin:$PATH"
+
+which multimarkdown > /dev/null
+if [ $? = 1 ]
+then
+	echo multimarkdown executable not found! >&2
+	exit 1
+fi
+
+if [ $# = 0 ]
+then
+	multimarkdown -t rtf
+else
+until [ "$*" = "" ]
+do
+	multimarkdown -b -t rtf "$1"
+	shift
+done
+fi

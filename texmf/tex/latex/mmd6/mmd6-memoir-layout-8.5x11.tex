@@ -1,0 +1,35 @@
+%
+%	8.5 x 11 layout for memoir-based documents
+%
+
+
+%%% need more space for ToC page numbers
+\setpnumwidth{2.55em}
+\setrmarg{3.55em}
+
+%%% need more space for ToC section numbers
+\cftsetindents{part}{0em}{3em}
+\cftsetindents{chapter}{0em}{3em}
+\cftsetindents{section}{3em}{3em}
+\cftsetindents{subsection}{4.5em}{3.9em}
+\cftsetindents{subsubsection}{8.4em}{4.8em}
+\cftsetindents{paragraph}{10.7em}{5.7em}
+\cftsetindents{subparagraph}{12.7em}{6.7em}
+
+%%% need more space for LoF numbers
+\cftsetindents{figure}{0em}{3.0em}
+
+%%% and do the same for the LoT
+\cftsetindents{table}{0em}{3.0em}
+
+%%% set up the page layout
+\settrimmedsize{\stockheight}{\stockwidth}{*}	% Use entire page
+\settrims{0pt}{0pt}
+
+\setlrmarginsandblock{1.5in}{1.5in}{*}
+\setulmarginsandblock{1.5in}{1.5in}{*}
+
+\setmarginnotes{17pt}{51pt}{\onelineskip}
+\setheadfoot{\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{2\onelineskip}{*}
+\checkandfixthelayout

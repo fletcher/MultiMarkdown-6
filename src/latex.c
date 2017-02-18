@@ -63,7 +63,6 @@
 #include "parser.h"
 #include "scanners.h"
 
-
 #define print(x) d_string_append(out, x)
 #define print_char(x) d_string_append_c(out, x)
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
@@ -204,9 +203,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 }
 
 
-
 void mmd_export_link_latex(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
-	attr * a = link->attributes;
 	char * temp_char;
 
 	if (link->url) {
@@ -235,21 +232,6 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 		}
 	} else
 		print("\\href{}");
-
-//	if (link->title && link->title[0] != '\0') {
-//		print(" title=\"");
-//		mmd_print_string_latex(out, link->title);
-//		print("\"");
-//	}
-
-//	while (a) {
-//		print(" ");
-//		print(a->key);
-//		print("=\"");
-//		print(a->value);
-//		print("\"");
-//		a = a->next;
-//	}
 
 	print("{");
 
@@ -1190,7 +1172,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
-				print("\\todo{");
+				print("\\cmnote{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 				print("}");
 			} else {
@@ -1369,10 +1351,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (t->next && t->next->type == TABLE_DIVIDER) {
 				t = t->next;
 
-				if (t->next && t->next->type == TABLE_CELL)
+				if (t->next && t->next->type == TABLE_CELL) {
 					print("&");
-
-				scratch->table_cell_count += t->next->len;
+					scratch->table_cell_count += t->next->len;
+				}
 			} else
 				scratch->table_cell_count++;
 
@@ -1567,6 +1549,11 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 	// Iterate over metadata keys
 	meta * m;
 
+	m = extract_meta_from_stack(scratch, "latexleader");
+	if (m) {
+		printf("\\input{%s}\n", m->value);
+	}
+
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
 		} else if (strcmp(m->key, "bibtex") == 0) {
@@ -1575,11 +1562,14 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "htmlheader") == 0) {
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexheader") == 0) {
 			print(m->value);
 			print_char('\n');
 		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexleader") == 0) {
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
@@ -1617,15 +1607,29 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 			print("}\n");
 		}
 	}
+
+	m = extract_meta_from_stack(scratch, "latexbegin");
+	if (m) {
+		printf("\\input{%s}\n", m->value);
+	}
+
 	scratch->padded = 1;
 }
 
 
 void mmd_end_complete_latex(DString * out, const char * source, scratch_pad * scratch) {
 	pad(out, 2, scratch);
+
+	meta * m = extract_meta_from_stack(scratch, "latexfooter");
+
+	if (m) {
+		printf("\\input{%s}\n\n", m->value);
+	}
+
 	print("\\end{document}");
 	scratch->padded = 0;
 }
+
 
 void mmd_export_citation_list_latex(DString * out, const char * source, scratch_pad * scratch) {
 	if (scratch->used_citations->size > 0) {
@@ -1649,7 +1653,6 @@ void mmd_export_citation_list_latex(DString * out, const char * source, scratch_
 
 			scratch->footnote_para_counter = 0;
 
-			content = note->content;
 			scratch->citation_being_printed = i + 1;
 
 			mmd_export_token_tree_latex(out, source, content, scratch);

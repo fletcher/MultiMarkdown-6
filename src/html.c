@@ -1441,8 +1441,11 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 			print_char('\n');
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexleader") == 0) {
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {

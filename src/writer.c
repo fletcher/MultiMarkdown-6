@@ -59,11 +59,13 @@
 
 #include "libMultiMarkdown.h"
 
+#include "beamer.h"
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
 #include "i18n.h"
 #include "latex.h"
+#include "memoir.h"
 #include "mmd.h"
 #include "scanners.h"
 #include "token.h"
@@ -77,6 +79,25 @@ void store_footnote(scratch_pad * scratch, footnote * f);
 void store_link(scratch_pad * scratch, link * l);
 
 void store_metadata(scratch_pad * scratch, meta * m);
+
+
+/// strndup not available on all platforms
+static char * my_strndup(const char * source, size_t n) {
+	size_t len = strlen(source);
+	char * result;
+
+	if (n < len)
+		len = n;
+
+	result = malloc(len + 1);
+
+	if (result) {
+		memcpy(result, source, len);
+		result[len] = '\0';
+	}
+	
+	return result;
+}
 
 
 /// Temporary storage while exporting parse tree to output format
@@ -95,6 +116,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->language = e->language;
 
 		p->header_stack = e->header_stack;
+
+		p->outline_stack = stack_new(0);
 
 		p->recurse_depth = 0;
 
@@ -142,7 +165,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			store_citation(p, f);
 		}
 
-		// Store links in a hash for rapid retrieval when exporting
+		// Store metadata in a hash for rapid retrieval when exporting
 		p->meta_hash = NULL;
 		meta * m;
 
@@ -160,6 +183,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 void scratch_pad_free(scratch_pad * scratch) {
 //	HASH_CLEAR(hh, scratch->link_hash);
+
+	stack_free(scratch->outline_stack);
 
 	link * l, * l_tmp;
 	
@@ -252,11 +277,12 @@ char * text_inside_pair(const char * source, token * pair) {
 	char * result = NULL;
 
 	if (source && pair) {
-		if (pair->child->mate) {
+		if (pair->child && pair->child->mate) {
 			// [foo], [^foo], [#foo] should give different strings -- use closer len
-			result = strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
+			result = my_strndup(&source[pair->start + pair->child->mate->len], pair->len - (pair->child->mate->len * 2));
 		} else {
-			result = strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
+			if (pair->child)
+				result = my_strndup(&source[pair->start + pair->child->len], pair->len - (pair->child->len + 1));
 		}
 	}
 
@@ -440,14 +466,14 @@ attr * parse_attributes(char * source) {
 
 		// Get key
 		scan_len = scan_key(&source[pos]);
-		key = strndup(&source[pos], scan_len);
+		key = my_strndup(&source[pos], scan_len);
 		
 		// Skip '='
 		pos += scan_len + 1;
 
 		// Get value
 		scan_len = scan_value(&source[pos]);
-		value = strndup(&source[pos], scan_len);
+		value = my_strndup(&source[pos], scan_len);
 
 		pos += scan_len;
 
@@ -698,7 +724,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			scan_len = scan_destination(&source[start]);
 
 			// Grab destination string
-			url = strndup(&source[start], scan_len);
+			url = my_strndup(&source[start], scan_len);
 
 			// Advance remainder
 			while ((*remainder)->start < start + scan_len)
@@ -756,7 +782,7 @@ char * url_accept(const char * source, size_t start, size_t max_len, size_t * en
 			scan_len -= 2;
 		}
 
-		url = strndup(&source[start], scan_len);
+		url = my_strndup(&source[start], scan_len);
 
 		clean = clean_string(url, false);
 
@@ -795,7 +821,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 	scan_len = scan_title(&source[pos]);
 
 	if (scan_len) {
-		*title = strndup(&source[pos + 1], scan_len - 2);
+		*title = my_strndup(&source[pos + 1], scan_len - 2);
 		pos += scan_len;
 	}
 
@@ -807,7 +833,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 	attr_len = scan_attributes(&source[pos]);
 	
 	if (attr_len) {
-		*attributes = strndup(&source[pos], attr_len);
+		*attributes = my_strndup(&source[pos], attr_len);
 	}
 }
 
@@ -887,7 +913,7 @@ meta * meta_new(const char * source, size_t key_start, size_t len) {
 	char * key;
 
 	if (m) {
-		key = strndup(&source[key_start], len);
+		key = my_strndup(&source[key_start], len);
 		m->key = label_from_string(key);
 		free(key);
 		m->value = NULL;
@@ -1029,7 +1055,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 					attr_len = scan_attributes(&source[(*remainder)->start]);
 					
 					if (attr_len) {
-						attr_char = strndup(&source[(*remainder)->start], attr_len);
+						attr_char = my_strndup(&source[(*remainder)->start], attr_len);
 
 						// Skip forward
 						attr_len += (*remainder)->start;
@@ -1229,7 +1255,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			if (scratch->output_format == FORMAT_HTML)
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
-			if (scratch->output_format == FORMAT_LATEX)
+			if ((scratch->output_format == FORMAT_LATEX) ||
+				(scratch->output_format == FORMAT_BEAMER) ||
+				(scratch->output_format == FORMAT_MEMOIR))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
 			if (scratch->output_format == FORMAT_ODF)
@@ -1252,6 +1280,16 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			} else {
 				scratch->language = LC_EN;
 				scratch->quotes_lang = ENGLISH;
+			}
+
+			free(temp_char);
+		} else if (strcmp(m->key, "latexmode") == 0) {
+			temp_char = label_from_string(m->value);
+
+			if (strcmp(temp_char, "beamer") == 0) {
+				scratch->output_format = FORMAT_BEAMER;
+			} else if (strcmp(temp_char, "memoir") == 0) {
+				scratch->output_format = FORMAT_MEMOIR;
 			}
 
 			free(temp_char);
@@ -1305,7 +1343,21 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	process_metadata_stack(e, scratch);
 
 
-	switch (format) {
+	switch (scratch->output_format) {
+		case FORMAT_BEAMER:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_latex(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_beamer(out, e->dstr->str, e->root, scratch);
+
+			mmd_outline_add_beamer(out, NULL, scratch);
+
+			mmd_export_citation_list_beamer(out, e->dstr->str, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_beamer(out, e->dstr->str, scratch);
+
+			break;
 		case FORMAT_HTML:
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_start_complete_html(out, e->dstr->str, scratch);
@@ -1323,6 +1375,17 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 				mmd_start_complete_latex(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_latex(out, e->dstr->str, e->root, scratch);
+			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
+
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_end_complete_latex(out, e->dstr->str, scratch);
+
+			break;
+		case FORMAT_MEMOIR:
+			if (scratch->extensions & EXT_COMPLETE)
+				mmd_start_complete_latex(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_memoir(out, e->dstr->str, e->root, scratch);
 			mmd_export_citation_list_latex(out, e->dstr->str, scratch);
 
 			if (scratch->extensions & EXT_COMPLETE)
@@ -1411,9 +1474,13 @@ void parse_brackets(const char * source, scratch_pad * scratch, token * bracket,
 
 	if (temp_link) {
 		// Don't output brackets
-		bracket->child->type = TEXT_EMPTY;
-		bracket->child->mate->type = TEXT_EMPTY;
-
+		if (bracket->child) {
+			bracket->child->type = TEXT_EMPTY;
+		
+			if (bracket->child->mate)
+				bracket->child->mate->type = TEXT_EMPTY;
+		}
+		
 		*final_link = temp_link;
 
 		// Skip over second bracket if present
@@ -1664,7 +1731,7 @@ bool table_has_caption(token * t) {
 				(t->next->type == TEXT_LINEBREAK)))
 				t = t->next;
 
-			if (t->next == NULL)
+			if (t && t->next == NULL)
 				return true;
 		}
 	}
@@ -1689,7 +1756,7 @@ char * get_fence_language_specifier(token * fence, const char * source) {
 		len++;
 
 	if (len)
-		result = strndup(&source[start], len);
+		result = my_strndup(&source[start], len);
 
 	return result;
 }

@@ -66,6 +66,25 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 
+/// strndup not available on all platforms
+static char * my_strndup(const char * source, size_t n) {
+	size_t len = strlen(source);
+	char * result;
+
+	if (n < len)
+		len = n;
+
+	result = malloc(len + 1);
+
+	if (result) {
+		memcpy(result, source, len);
+		result[len] = '\0';
+	}
+	
+	return result;
+}
+
+
 /// Windows can use either `\` or `/` as a separator -- thanks to t-beckmann on github
 ///	for suggesting a fix for this.
 bool is_separator(char c) {
@@ -108,7 +127,7 @@ void add_trailing_sep(DString * path) {
 }
 
 /// Combine directory and base filename to create a full path */
-char * path_from_dir_base(char * dir, char * base) {
+char * path_from_dir_base(const char * dir, const char * base) {
 	if (!dir && !base)
 		return NULL;
 
@@ -184,8 +203,7 @@ void split_path_file(char ** dir, char ** file, char * path) {
     if (path != slash)
     	slash++;
 
-//    *dir = my_strndup(path, slash - path);
-    *dir = strndup(path, slash - path);
+    *dir = my_strndup(path, slash - path);
     *file = strdup(slash);
 }
 
@@ -249,7 +267,7 @@ DString * scan_file(const char * fname) {
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
-void transclude_source(DString * source, char * dir, short format, stack * parsed, stack * manifest) {
+void transclude_source(DString * source, const char * dir, short format, stack * parsed, stack * manifest) {
 	DString * file_path;
 	DString * buffer;
 
@@ -341,6 +359,8 @@ void transclude_source(DString * source, char * dir, short format, stack * parse
 						d_string_append(file_path, ".html");
 						break;
 					case FORMAT_LATEX:
+					case FORMAT_BEAMER:
+					case FORMAT_MEMOIR:
 						d_string_append(file_path, ".tex");
 						break;
 					default:

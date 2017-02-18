@@ -302,8 +302,10 @@ enum smart_quotes_language {
 
 enum output_format {
 	FORMAT_MMD,
+	FORMAT_BEAMER,
 	FORMAT_HTML,
 	FORMAT_LATEX,
+	FORMAT_MEMOIR,
 	FORMAT_ODF,
 };
 

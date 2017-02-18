@@ -353,7 +353,6 @@ size_t scan_meta_line(const char * c) {
 
 
 size_t scan_meta_key(const char * c) {
-	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c
@@ -403,7 +402,6 @@ size_t scan_alignment_string(const char * c) {
 
 
 size_t scan_destination(const char * c) {
-	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c

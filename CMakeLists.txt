@@ -5,13 +5,13 @@ cmake_minimum_required (VERSION 2.6)
 # Define Our Project
 # ==================
 
-set (My_Project_Title "MultiMarkdown 6")
+set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-02-14")
+set (My_Project_Revised_Date "2017-02-17")
 set (My_Project_Version_Major 0)
 set (My_Project_Version_Minor 3)
-set (My_Project_Version_Patch 0a)
+set (My_Project_Version_Patch 1a)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -44,8 +44,11 @@ include_directories( ${PROJECT_SOURCE_DIR}/src )
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
 
-# Default is 256 -- needed for localization hash function
-add_definitions("-fbracket-depth=264")	
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	# using Clang
+	# Default is 256 -- needed for localization hash function
+	add_definitions("-fbracket-depth=264")	
+endif()
 
 
 # =================
@@ -168,11 +171,13 @@ configure_file (
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
 	src/argtable3.c
+	src/beamer.c
 	src/char.c
 	src/d_string.c
 	src/html.c
 	src/latex.c
 	src/lexer.c
+	src/memoir.c
 	src/mmd.c
 	src/object_pool.c
 	src/parser.c
@@ -188,12 +193,14 @@ set(src_files
 # Primary header files, also for doxygen documentation
 set(header_files
 	src/argtable3.h
-	src/d_string.h
+	src/beamer.h
 	src/char.h
+	src/d_string.h
 	src/html.h
 	src/latex.h
 	src/lexer.h
 	src/libMultiMarkdown.h
+	src/memoir.h
 	src/mmd.h
 	src/object_pool.h
 	src/scanners.h
@@ -203,6 +210,35 @@ set(header_files
 	src/transclude.h
 	src/uthash.h
 	src/writer.h
+)
+
+set (scripts
+	scripts/mmd
+	scripts/mmd2all
+	scripts/mmd2opml
+	scripts/mmd2odf
+	scripts/mmd2pdf
+	scripts/mmd2tex
+	scripts/markdown
+)
+
+set (latex
+	texmf/tex/latex/mmd6/mmd6-article-begin.tex
+	texmf/tex/latex/mmd6/mmd6-article-footer.tex
+	texmf/tex/latex/mmd6/mmd6-article-leader.tex
+	texmf/tex/latex/mmd6/mmd6-criticmarkup.tex
+	texmf/tex/latex/mmd6/mmd6-default-metadata.tex
+	texmf/tex/latex/mmd6/mmd6-memoir-footer.tex
+	texmf/tex/latex/mmd6/mmd6-memoir-layout-8.5x11.tex
+	texmf/tex/latex/mmd6/mmd6-memoir-packages.tex
+	texmf/tex/latex/mmd6/mmd6-memoir-setup.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-book-begin.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-book-footer.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-book-leader.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-footer.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-handout-begin.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-handout-footer.tex
+	texmf/tex/latex/mmd6/mmd6-tufte-handout-leader.tex
 )
 
 # Public headers, will be installed in 'include'
@@ -377,6 +413,10 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
 set_target_properties(libMultiMarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 
+# Use C99
+set_property(TARGET libMultiMarkdown PROPERTY C_STANDARD 99)
+set_property(TARGET multimarkdown PROPERTY C_STANDARD 99)
+
 
 # ==========================
 # Build Installer with CPack
@@ -393,8 +433,40 @@ set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH 
 
 # install (FILES ${public_header_files} DESTINATION local/include/libFoo) 
 
+# Install MMD binary
+install (TARGETS multimarkdown
+	DESTINATION bin
+	COMPONENT application
+)
+set (CPACK_COMPONENT_APPLICATION_DISPLAY_NAME "MultiMarkdown")
+set (CPACK_COMPONENT_APPLICATION_DESCRIPTION "Install the actual `multimarkdown` program.")
+
+
+# Install utility scripts
+install (FILES ${scripts}
+	DESTINATION bin
+	COMPONENT scripts
+	PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
+set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
+set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
+
+
+# Install LaTeX support files
+install (FILES ${latex}
+	DESTINATION share/texmf/mmd6
+	COMPONENT latex
+	PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
+)
+set (CPACK_COMPONENT_LATEX_DISPLAY_NAME "LaTeX support files")
+set (CPACK_COMPONENT_LATEX_DESCRIPTION "Install configuration files for MultiMarkdown-based LaTex configurations.")
+
+
+# Which groups should be installed?
+set (CPACK_COMPONENTS_ALL application scripts latex)
+
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${My_Project_Description}")
-set (CPACK_PACKAGE_VENDOR "${My_Project_Author}")
+set (CPACK_PACKAGE_VENDOR "fletcherpenney.net")
 set (CPACK_PACKAGE_VERSION "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 set (CPACK_PACKAGE_VERSION_MAJOR "${My_Project_Version_Major}")
 set (CPACK_PACKAGE_VERSION_MINOR "${My_Project_Version_Minor}")
@@ -409,6 +481,7 @@ else (APPLE)
 endif (APPLE)
 
 # Use some default install locations (if appropriate)
+set(CPACK_SET_DESTDIR true)
 if (WIN32)
 	set (CPACK_INSTALL_PREFIX "")
 	set (CPACK_NSIS_MODIFY_PATH ON)
@@ -417,6 +490,8 @@ else (WIN32)
 endif (WIN32)
 
 set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT})
+
+set (CPACK_PACKAGE_CONTACT "fletcher@fletcherpenney.net")
 
 include (CPack)
 

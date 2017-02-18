@@ -220,6 +220,7 @@ int scan(Scanner * s, const char * stop) {
 		'.' / (SP|NL)					{ return TEXT_PERIOD; }
 
 		TEXT_LINEBREAK					{ return TEXT_LINEBREAK; }
+		'\\' NL							{ return TEXT_LINEBREAK; }
 		' '? NL							{ return TEXT_NL; }
 
 		NON_INDENT_SPACE				{ return NON_INDENT_SPACE; }

@@ -1,0 +1,31 @@
+%
+%	Generic Configuration for memoir-based documents
+%
+
+\usepackage{layouts}[2001/04/29]
+
+
+% In case we need a glossary, or index
+\usepackage{glossaries}
+\glstoctrue
+\makeglossaries
+\makeindex
+
+
+% Basic page layout configuration
+\def\mychapterstyle{default}
+\def\mypagestyle{headings}
+
+
+% Use 8.5 x 11 inch page layout
+\input{mmd6-memoir-layout-8.5x11}
+
+
+% Use default packages for memoir setup
+\input{mmd6-memoir-packages}
+
+
+% Configure default metadata to avoid errors
+\input{mmd6-default-metadata}
+
+

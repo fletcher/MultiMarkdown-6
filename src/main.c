@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
 
 		a_rem1			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_batch			= arg_lit0("b", "batch", "process each file separately"),
@@ -221,7 +221,7 @@ int main(int argc, char** argv) {
 
 	// '--help' takes precedence
 	if (a_help->count > 0) {
-		printf("\n%s v%s\n\n", MULTIMARKDOWN_6_NAME, MULTIMARKDOWN_6_VERSION);
+		printf("\n%s v%s\n\n", MULTIMARKDOWN_NAME, MULTIMARKDOWN_VERSION);
 		printf("\tUsage: %s", binname);
 		arg_print_syntax(stdout, argtable, "\n\n");
 		printf("Options:\n");
@@ -232,7 +232,7 @@ int main(int argc, char** argv) {
 
 	if (nerrors > 0) {
 		// Report errors
-		arg_print_errors(stdout, a_end, MULTIMARKDOWN_6_NAME);
+		arg_print_errors(stdout, a_end, MULTIMARKDOWN_NAME);
 		printf("Try '%s --help' for more information.\n", binname);
 		exitcode = 1;
 		goto exit;
@@ -240,9 +240,9 @@ int main(int argc, char** argv) {
 
 	// '--version' also takes precedence
 	if (a_version->count > 0) {
-		printf("\nMultiMarkdown 6 v%s\n", MULTIMARKDOWN_6_VERSION);
-		printf("%s\n\n", MULTIMARKDOWN_6_COPYRIGHT);
-		printf("%s\n", MULTIMARKDOWN_6_LICENSE);
+		printf("\nMultiMarkdown 6 v%s\n", MULTIMARKDOWN_VERSION);
+		printf("%s\n\n", MULTIMARKDOWN_COPYRIGHT);
+		printf("%s\n", MULTIMARKDOWN_LICENSE);
 		printf("\n");
 		goto exit;
 	}
@@ -292,6 +292,12 @@ int main(int argc, char** argv) {
 			format = FORMAT_HTML;
 		else if (strcmp(a_format->sval[0], "latex") == 0)
 			format = FORMAT_LATEX;
+		else if (strcmp(a_format->sval[0], "beamer") == 0)
+			format = FORMAT_BEAMER;
+		else if (strcmp(a_format->sval[0], "memoir") == 0)
+			format = FORMAT_MEMOIR;
+		else if (strcmp(a_format->sval[0], "mmd") == 0)
+			format = FORMAT_MMD;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -327,6 +333,8 @@ int main(int argc, char** argv) {
 		// Batch process 1 or more files
 		for (int i = 0; i < a_file->count; ++i)
 		{
+			token_pool_drain();
+
 			buffer = scan_file(a_file->filename[i]);
 
 			if (buffer == NULL) {
@@ -341,7 +349,12 @@ int main(int argc, char** argv) {
 					output_filename = filename_with_extension(a_file->filename[i], ".html");
 					break;
 				case FORMAT_LATEX:
+				case FORMAT_BEAMER:
+				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
+					break;
+				case FORMAT_MMD:
+					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");
 					break;
 			}
 
@@ -351,10 +364,14 @@ int main(int argc, char** argv) {
 
 				transclude_source(buffer, folder, format, NULL, NULL);
 	
-				free(folder);
+				// Don't free folder -- owned by dirname
 			}
 	
-			result = mmd_process(buffer, extensions, format, language);
+			if (FORMAT_MMD == format) {
+				result = buffer->str;
+			} else {
+				result = mmd_process(buffer, extensions, format, language);
+			}
 
 			if (!(output_stream = fopen(output_filename, "w"))) {
 				// Failed to open file
@@ -366,8 +383,10 @@ int main(int argc, char** argv) {
 			}
 
 			d_string_free(buffer, true);
-			free(result);
 			free(output_filename);
+			if (FORMAT_MMD != format) {
+				free(result);
+			}
 		}
 	} else {
 		if (a_file->count) {
@@ -400,10 +419,14 @@ int main(int argc, char** argv) {
 
 			transclude_source(buffer, folder, format, NULL, NULL);
 
-			free(folder);
+			// Don't free folder -- owned by dirname
 		}
 
-		result = mmd_process(buffer, extensions, format, language);
+		if (FORMAT_MMD == format) {
+			result = buffer->str;
+		} else {
+			result = mmd_process(buffer, extensions, format, language);
+		}
 
 		// Where does output go?
 		if (strcmp(a_o->filename[0], "-") == 0) {
@@ -425,8 +448,9 @@ int main(int argc, char** argv) {
 			fclose(output_stream);
 		
 		d_string_free(buffer, true);
-
-		free(result);
+		if (FORMAT_MMD != format) {
+			free(result);
+		}
 	}
 
 
