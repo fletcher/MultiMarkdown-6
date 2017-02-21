@@ -1,0 +1,203 @@
+a { color: #222222; }
+a:visited { color: #222222; }
+a:hover {
+  color: #ffffff;
+  background: #222222;
+}
+pre {
+  border: #777777 1px solid;
+  background-color: #cccccc;
+}
+pre .poetry {
+  border: none;
+  background: none;
+}
+img {
+  border: #777777 1px solid;
+  background-color: #cccccc;
+  color: black;
+}
+figcaption {
+  display: block;
+  text-align: center;
+}
+body {
+  font: 14px/1.5em Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman";
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  width: 35em;
+  margin: auto;
+}
+div, h1, h2, h3, h4, h5, h6 { text-align: left; }
+div.wrapper {
+  font-size: 1em;
+  max-width: 47em;
+  min-width: 580px;
+  margin: auto;
+}
+pre { padding: 0.5em; }
+img {
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-right: 2em;
+}
+body { font: 14px/1.5em Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman"; }
+p {
+  font-size: 1em;
+  line-height: 1.5em;
+  text-align: justify;
+  margin: 1.5em 0 1.5em 0;
+  max-width: 35em;
+}
+li p { margin: 1em 0 1em 0; }
+h1, h2, h3, h4 {
+  font-family: Arial, Helvetica, "Trebuchet MS", Verdana, sans-serif;
+  font-weight: normal;
+}
+h1 {
+  font-size: 1.286em;
+  line-height: 0.857em;
+  margin: 1.75em 0 0.583em 0;
+}
+h2 {
+  font-size: 1.143em;
+  line-height: 1.313em;
+  margin: 1.969em 0 0.656em 0;
+}
+h3, h4 {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin: 2.25em 0 0.75em 0;
+}
+code {
+  font-family: courier;
+  font-size: 0.857em;
+  line-height: 1.75em;
+}
+pre {
+  font-family: courier;
+  font-size: 0.857em;
+  line-height: 1.75em;
+  margin: 0 0 1.75em 0;
+  white-space: pre-wrap;
+  white-space: moz-pre-wrap !important;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+div.bibliography p { text-align: left; }
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
+.sidebar { padding-top: 3em; }
+.sidebar > h1 { margin-top: 0; }
+.sidebar h3:first-child { margin-top: 0; }
+.sidebar ul {
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.sidebar ul ul { margin-left: 15px; }
+.sidebar img {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.sidebar a { font-weight: normal; }
+.content { padding-top: 3em; }
+.content > h1 { margin-top: 0; }
+.content h3:first-child { margin-top: 0; }
+.content h1:first-child {
+  font-size: 1.75em;
+  margin-bottom: 1em;
+}
+.content img {
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-right: 2em;
+  max-width: 32em;
+}
+.content pre { padding: 0.5em; }
+.content hr {
+  height: 1px;
+  color: black;
+  background-color: black;
+  border: 0;
+}
+.content a { border-bottom: 1px dashed #888888; }
+.tags, .date {
+  font-family: Arial, Helvetica, "Trebuchet MS", Verdana, sans-serif;
+  font-weight: bold;
+  font-size: 0.75em;
+}
+.comments { margin-top: 5em; }
+.comments .comment {
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 0.5em;
+}
+.comments .comment-byline { font-size: 0.75em; }
+.comments .comment-byline a { border: none; }
+div.header {
+  background-image: none;
+  border-style: none;
+  border-bottom: 1px solid black;
+}
+span.logo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-family: Didot, AppleMyungjo, Palatino, Times;
+  font-size: 32px;
+  color: black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+span.tail { color: #888888; }
+span.logo > a > img {
+  border: none;
+  background-color: #ffffff;
+  padding: 0px;
+  margin: 0px;
+}
+table {
+  border: solid black;
+  border-width: 2px 0px;
+  empty-cells: hide;
+  border-spacing: 0px;
+  padding: 2px;
+  margin: 20px auto;
+}
+table caption {
+  margin: 5px;
+  text-align: center;
+  caption-side: bottom;
+}
+thead th {
+  border: solid gray;
+  border-width: 0 0 2px 0;
+  padding: 5px;
+}
+thead > tr:last-child > th { border-style: none; }
+tbody > tr:first-child > td {
+  border: solid gray;
+  border-width: 1px 0 0 0;
+}
+tbody > tr:first-child > th {
+  border: solid gray;
+  border-width: 1px 0 0 0;
+}
+thead + tbody > tr:first-child > td {
+  border: solid black;
+  border-width: 1px 0 0 0;
+}
+thead + tbody > tr:first-child > th {
+  border: solid black;
+  border-width: 1px 0 0 0;
+}
+figure {
+  padding: 0px;
+  margin: 0px;
+}
