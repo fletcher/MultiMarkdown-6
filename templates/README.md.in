@@ -479,6 +479,11 @@ I actually think it makes sense.  This may or may not change in the future.
 6. Table captions in MMD-6 must come immediately *after* the table, not
 before it.
 
+7. Escaped linebreaks (`\` preceding a line break) will be interpreted as
+`<br />` (even in compatibility mode).  This was previously an optional
+feature in MMD, but I don't see a problem with just making it default 
+behavior.
+
 
 ## Where Does MultiMarkdown 6 Stand? ##
 

@@ -1291,15 +1291,17 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 
 			free(temp_char);
 		} else if (strcmp(m->key, "latexmode") == 0) {
-			temp_char = label_from_string(m->value);
+			if (scratch->output_format == FORMAT_LATEX) {
+				temp_char = label_from_string(m->value);
 
-			if (strcmp(temp_char, "beamer") == 0) {
-				scratch->output_format = FORMAT_BEAMER;
-			} else if (strcmp(temp_char, "memoir") == 0) {
-				scratch->output_format = FORMAT_MEMOIR;
+				if (strcmp(temp_char, "beamer") == 0) {
+					scratch->output_format = FORMAT_BEAMER;
+				} else if (strcmp(temp_char, "memoir") == 0) {
+					scratch->output_format = FORMAT_MEMOIR;
+				}
+
+				free(temp_char);
 			}
-
-			free(temp_char);
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 			temp_char = label_from_string(m->value);
 

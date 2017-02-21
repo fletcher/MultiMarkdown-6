@@ -1377,7 +1377,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case TEXT_LINEBREAK:
 			if (t->next) {
-				print_const("\n");
+				print_const("\\\\\n");
 				scratch->padded = 1;
 			}
 			break;
