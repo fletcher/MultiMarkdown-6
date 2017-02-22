@@ -8,9 +8,6 @@
 bar
 ````
 
-
-
-
 * foo
 
 	```
@@ -24,6 +21,16 @@ bar
 
 	bar
 	````
+
+```
+\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}
+```
+
+```latex
+\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}
+```
+
+5
 
 ```
 foo

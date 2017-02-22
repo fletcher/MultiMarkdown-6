@@ -72,3 +72,9 @@ This is ___another__ test_ of __bold__ and _italics_.
 This is ___another__ test_ of _italics_ and __bold__.
 
 *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a 
+
+[foo *bar] foo* *bar*
+
+30
+
+[foo *bar]: http://foo.bar

@@ -19,5 +19,12 @@
 ````</p></li>
 </ul>
 
+<p><code>\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</code></p>
+
+<p><code>latex
+\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</code></p>
+
+<p>5</p>
+
 <p>```
 foo</p>
