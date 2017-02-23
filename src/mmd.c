@@ -1027,10 +1027,10 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 
 				// If we're in the middle of a word, then we need to be more precise
 				if (t->can_open && t->can_close) {
-					lead_count = 0;
-					lag_count = 0;
-					pre_count = 0;
-					post_count = 0;
+					lead_count = 0;			//!< '*' in run before current
+					lag_count = 0;			//!< '*' in run after current
+					pre_count = 0;			//!< '*' before word
+					post_count = 0;			//!< '*' after word
 
 					offset = t->start - 1;
 
@@ -1040,6 +1040,9 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 						offset--;
 					}
 
+					// Skip over letters/numbers
+					// TODO: Need to fix this to actually get run at beginning of word, not in middle,
+					// e.g. **foo*bar*foo*bar**
 					while (offset && (!char_is_whitespace_or_line_ending_or_punctuation(str[offset]))) {
 						offset--;
 					}
@@ -1058,6 +1061,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 						offset++;
 					}
 
+					// Skip over letters/numbers
+					// TODO: Same as above
 					while (!char_is_whitespace_or_line_ending_or_punctuation(str[offset])) {
 						offset++;
 					}
@@ -1068,26 +1073,42 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 						offset++;
 					}
 
+					// Are there '*' before/after word?
 					if (pre_count + post_count > 0) {
 						if (pre_count + post_count == lead_count + lag_count + 1) {
+							// Same number outside as in the current run
+							// **foo****bar**
 							if (pre_count == post_count) {
+								// **foo****bar**
+								// We want to wrap the word, since
+								// <strong>foo</strong><strong>bar</strong> doesn't make sense
 								t->can_open = 0;
 								t->can_close = 0;
 							} else if (pre_count == 0) {
+								// foo**bar**
+								// Open only so we don't close outside the word
 								t->can_close = 0;
 							} else if (post_count == 0) {
+								// **foo**bar
+								// Close only so we don't close outside the word
 								t->can_open = 0;
 							}
 						} else if (pre_count == lead_count + lag_count + 1 + post_count) {
+							// ***foo**bar*
+							// We want to close what's open
 							t->can_open = 0;
 						} else if (post_count == pre_count + lead_count + lag_count + 1) {
+							// *foo**bar***
+							// We want to open a set to close at the end
 							t->can_close = 0;
 						} else {
 							if (pre_count != lead_count + lag_count + 1) {
+								// **foo**bar -> close, otherwise don't
 								t->can_close = 0;
 							}
 
 							if (post_count != lead_count + lag_count + 1) {
+								// foo**bar** -> open, otherwise don't
 								t->can_open = 0;
 							}
 						}
