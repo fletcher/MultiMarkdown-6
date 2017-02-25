@@ -40,7 +40,9 @@ project (${My_Project_Title})
 # =================
 
 # Search for included files here
-include_directories( ${PROJECT_SOURCE_DIR}/src )
+include_directories( ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown)
+include_directories( ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/include)
+include_directories( ${PROJECT_SOURCE_DIR}/Sources/multimarkdown)
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
 
@@ -170,46 +172,44 @@ configure_file (
 
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
-	src/argtable3.c
-	src/beamer.c
-	src/char.c
-	src/d_string.c
-	src/html.c
-	src/latex.c
-	src/lexer.c
-	src/memoir.c
-	src/mmd.c
-	src/object_pool.c
-	src/parser.c
-	src/rng.c
-	src/scanners.c
-	src/stack.c
-	src/token.c
-	src/token_pairs.c
-	src/transclude.c
-	src/writer.c
+	Sources/libMultiMarkdown/beamer.c
+	Sources/libMultiMarkdown/char.c
+	Sources/libMultiMarkdown/d_string.c
+	Sources/libMultiMarkdown/html.c
+	Sources/libMultiMarkdown/latex.c
+	Sources/libMultiMarkdown/lexer.c
+	Sources/libMultiMarkdown/memoir.c
+	Sources/libMultiMarkdown/mmd.c
+	Sources/libMultiMarkdown/object_pool.c
+	Sources/libMultiMarkdown/parser.c
+	Sources/libMultiMarkdown/rng.c
+	Sources/libMultiMarkdown/scanners.c
+	Sources/libMultiMarkdown/stack.c
+	Sources/libMultiMarkdown/token.c
+	Sources/libMultiMarkdown/token_pairs.c
+	Sources/libMultiMarkdown/transclude.c
+	Sources/libMultiMarkdown/writer.c
 )
 
 # Primary header files, also for doxygen documentation
 set(header_files
-	src/argtable3.h
-	src/beamer.h
-	src/char.h
-	src/d_string.h
-	src/html.h
-	src/latex.h
-	src/lexer.h
-	src/libMultiMarkdown.h
-	src/memoir.h
-	src/mmd.h
-	src/object_pool.h
-	src/scanners.h
-	src/stack.h
-	src/token.h
-	src/token_pairs.h
-	src/transclude.h
-	src/uthash.h
-	src/writer.h
+	Sources/libMultiMarkdown/beamer.h
+	Sources/libMultiMarkdown/char.h
+	Sources/libMultiMarkdown/include/d_string.h
+	Sources/libMultiMarkdown/html.h
+	Sources/libMultiMarkdown/latex.h
+	Sources/libMultiMarkdown/lexer.h
+	Sources/libMultiMarkdown/include/libMultiMarkdown.h
+	Sources/libMultiMarkdown/memoir.h
+	Sources/libMultiMarkdown/mmd.h
+	Sources/libMultiMarkdown/object_pool.h
+	Sources/libMultiMarkdown/scanners.h
+	Sources/libMultiMarkdown/stack.h
+	Sources/libMultiMarkdown/include/token.h
+	Sources/libMultiMarkdown/token_pairs.h
+	Sources/libMultiMarkdown/transclude.h
+	Sources/libMultiMarkdown/uthash.h
+	Sources/libMultiMarkdown/writer.h
 )
 
 set (scripts
@@ -294,7 +294,7 @@ else()
 		# Process source files to look for tests to run
 		add_custom_command (
 			OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
-			COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/src/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
+			COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
 		)
 
 		enable_testing()
@@ -392,8 +392,8 @@ else ()
 endif ()
 
 
-ADD_PUBLIC_HEADER(libMultiMarkdown src/libMultiMarkdown.h)
-ADD_PUBLIC_HEADER(libMultiMarkdown src/d_string.h)
+ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
+ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/d_string.h)
 
 # remove the extra "lib" from "liblibFOO"
 SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
@@ -401,8 +401,9 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
 # Create a command-line app?
 # if (NOT DEFINED TEST)
 	add_executable(multimarkdown
-		src/d_string.c
-		src/main.c
+		Sources/libMultiMarkdown/d_string.c
+		Sources/multimarkdown/main.c
+		Sources/multimarkdown/argtable3.c
 	)
 # 
 #	Link the library to the app?
