@@ -391,6 +391,27 @@ else ()
 	)
 endif ()
 
+# Create a shared library if defined
+if (DEFINED SHAREDBUILD)
+
+	add_library(libMultiMarkdownShared SHARED
+		${src_files}
+		${src_utility_files}
+		${header_files}
+		${header_utility_files}
+	)
+
+	# Shared libraries require position independent code
+	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES POSITION_INDEPENDENT_CODE 1)
+
+	# Remove the extra "lib" from "liblibMultiMarkdown"
+	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES PREFIX "")
+
+	# Remove "Shared" from library name
+	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES OUTPUT_NAME libMultiMarkdown)
+
+endif (DEFINED SHAREDBUILD)
+
 
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/d_string.h)
@@ -452,6 +473,26 @@ install (FILES ${scripts}
 set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
 set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
 
+# Install Shared Library?
+if (DEFINED SHAREDBUILD)
+	install (TARGETS libMultiMarkdownShared
+		ARCHIVE DESTINATION lib
+		LIBRARY DESTINATION lib
+		COMPONENT sharedlib
+	)
+
+	install (FILES ${public_header_files}
+		DESTINATION include/multimarkdown
+		COMPONENT sharedlib
+	)
+
+	set (CPACK_COMPONENT_SHAREDLIB_DISPLAY_NAME "Shared Library")
+	set (CPACK_COMPONENT_SHAREDLIB_DESCRIPTION "MultiMarkdown shared library for use with third party software.")
+
+	set (CPACK_COMPONENTS_ALL application scripts sharedlib)
+
+	set (CPACK_COMPONENT_SHAREDLIB_GROUP "MultiMarkdown")
+endif (DEFINED SHAREDBUILD)
 
 # Install LaTeX support files
 install (FILES ${latex}
