@@ -9,6 +9,12 @@ release: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -DCMAKE_BUILD_TYPE=Release ..
 
+# Also build a shared library
+.PHONY : shared
+shared: $(BUILD_DIR)
+	cd $(BUILD_DIR); \
+	cmake -DCMAKE_BUILD_TYPE=Release -DSHAREDBUILD=1 ..
+
 # Build zip file package
 .PHONY : zip
 zip: $(BUILD_DIR)
