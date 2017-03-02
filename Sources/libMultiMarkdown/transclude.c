@@ -72,7 +72,7 @@ static char * my_strndup(const char * source, size_t n) {
 	char * result;
 	const char * test = source;
 
-	// strlen is too slow is strlen(source) >> n
+	// strlen is too slow if strlen(source) >> n
 	for (len = 0; len < n; ++len)
 	{
 		if (test == '\0')
