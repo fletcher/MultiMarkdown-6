@@ -950,12 +950,12 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 }
 
 
-footnote * footnote_new(const char * source, token * label, token * content) {
+footnote * footnote_new(const char * source, token * label, token * content, bool lowercase) {
 	footnote * f = malloc(sizeof(footnote));
 
 	if (f) {
 		f->label = label;
-		f->clean_text = (label == NULL) ? NULL : clean_inside_pair(source, label, true);
+		f->clean_text = (label == NULL) ? NULL : clean_inside_pair(source, label, lowercase);
 		f->label_text = (label == NULL) ? NULL : label_from_token(source, label);
 		f->free_para  = false;
 		f->count = -1;
@@ -1112,16 +1112,16 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 				// Store for later use
 				switch (label->type) {
 					case PAIR_BRACKET_CITATION:
-						f = footnote_new(e->dstr->str, label, title);
+						f = footnote_new(e->dstr->str, label, title, true);
 						stack_push(e->citation_stack, f);
 						break;
-					case PAIR_BRACKET_GLOSSARY:
-						f = footnote_new(e->dstr->str, label, title);
-						stack_push(e->glossary_stack, f);
-						break;
 					case PAIR_BRACKET_FOOTNOTE:
-						f = footnote_new(e->dstr->str, label, title);
+						f = footnote_new(e->dstr->str, label, title, true);
 						stack_push(e->footnote_stack, f);
+						break;
+					case PAIR_BRACKET_GLOSSARY:
+						f = footnote_new(e->dstr->str, label, title, false);
+						stack_push(e->glossary_stack, f);
 						break;
 				}
 				
@@ -1223,16 +1223,18 @@ void process_definition_block(mmd_engine * e, token * block) {
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
 		case BLOCK_DEF_GLOSSARY:
-			f = footnote_new(e->dstr->str, label, block->child);
 			switch (block->type) {
 				case BLOCK_DEF_CITATION:
+					f = footnote_new(e->dstr->str, label, block->child, true);
 					stack_push(e->citation_stack, f);
 					break;
 				case BLOCK_DEF_FOOTNOTE:
+					f = footnote_new(e->dstr->str, label, block->child, true);
 					stack_push(e->footnote_stack, f);
 					break;
 				case BLOCK_DEF_GLOSSARY:
 					// Strip leading '?' from term
+					f = footnote_new(e->dstr->str, label, block->child, false);
 					memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
 
 					stack_push(e->glossary_stack, f);
@@ -1901,7 +1903,7 @@ void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t
 		t->child->mate->type = TEXT_EMPTY;
 
 		// Create footnote
-		footnote * temp = footnote_new(source, NULL, t->child);
+		footnote * temp = footnote_new(source, NULL, t->child, true);
 
 		// Store as used
 		stack_push(scratch->used_footnotes, temp);
@@ -1931,7 +1933,7 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 		t->child->mate->type = TEXT_EMPTY;
 
 		// Create citation
-		footnote * temp = footnote_new(source, t, t->child);
+		footnote * temp = footnote_new(source, t, t->child, true);
 
 		// Store as used
 		stack_push(scratch->used_citations, temp);
@@ -1966,7 +1968,7 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 			label = label->next;
 
 		if (label) {
-			footnote * temp = footnote_new(source, label, label->next);
+			footnote * temp = footnote_new(source, label, label->next, false);
 
 			// Store as used
 			stack_push(scratch->used_glossaries, temp);
