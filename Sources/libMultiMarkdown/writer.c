@@ -76,6 +76,8 @@ void store_citation(scratch_pad * scratch, footnote * f);
 
 void store_footnote(scratch_pad * scratch, footnote * f);
 
+void store_glossary(scratch_pad * scratch, footnote * f);
+
 void store_link(scratch_pad * scratch, link * l);
 
 void store_metadata(scratch_pad * scratch, meta * m);
@@ -143,24 +145,9 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			store_link(p, l);
 		}
 
-		// Store footnotes in a hash for rapid retrieval when exporting
-		p->used_footnotes = stack_new(0);				// Store footnotes as we use them
-		p->inline_footnotes_to_free = stack_new(0);		// Inline footnotes need to be freed
-		p->footnote_being_printed = 0;
-		p->footnote_para_counter = -1;
-
-		p->footnote_hash = NULL;				// Store defined footnotes in a hash
-
+		// Store citations in a hash for rapid retrieval when exporting
 		footnote * f;
 
-		for (int i = 0; i < e->footnote_stack->size; ++i)
-		{
-			f = stack_peek_index(e->footnote_stack, i);
-
-			store_footnote(p, f);
-		}
-
-		// Store citations in a hash for rapid retrieval when exporting
 		p->used_citations = stack_new(0);
 		p->inline_citations_to_free = stack_new(0);
 		p->citation_being_printed = 0;
@@ -172,6 +159,35 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			f = stack_peek_index(e->citation_stack, i);
 
 			store_citation(p, f);
+		}
+
+		// Store footnotes in a hash for rapid retrieval when exporting
+		p->used_footnotes = stack_new(0);				// Store footnotes as we use them
+		p->inline_footnotes_to_free = stack_new(0);		// Inline footnotes need to be freed
+		p->footnote_being_printed = 0;
+		p->footnote_para_counter = -1;
+
+		p->footnote_hash = NULL;				// Store defined footnotes in a hash
+
+		for (int i = 0; i < e->footnote_stack->size; ++i)
+		{
+			f = stack_peek_index(e->footnote_stack, i);
+
+			store_footnote(p, f);
+		}
+
+		// Store glossaries in a hash for rapid retrieval when exporting
+		p->used_glossaries = stack_new(0);
+		p->inline_glossaries_to_free = stack_new(0);
+		p->glossary_being_printed = 0;
+
+		p->glossary_hash = NULL;
+
+		for (int i = 0; i < e->glossary_stack->size; ++i)
+		{
+			f = stack_peek_index(e->glossary_stack, i);
+
+			store_glossary(p, f);
 		}
 
 		// Store metadata in a hash for rapid retrieval when exporting
@@ -244,6 +260,21 @@ void scratch_pad_free(scratch_pad * scratch) {
 		footnote_free(stack_pop(scratch->inline_citations_to_free));
 	}
 	stack_free(scratch->inline_citations_to_free);
+
+
+	// Free glossary hash
+	HASH_ITER(hh, scratch->glossary_hash, f, f_tmp) {
+		HASH_DEL(scratch->glossary_hash, f);	// Remove item from hash
+		free(f);		// Free the fn_holder
+	}
+
+	stack_free(scratch->used_glossaries);
+
+	while (scratch->inline_glossaries_to_free->size) {
+		footnote_free(stack_pop(scratch->inline_glossaries_to_free));
+	}
+	stack_free(scratch->inline_glossaries_to_free);
+
 
 	// Free metadata hash
 	meta * m, * m_tmp;
@@ -663,6 +694,19 @@ void store_citation(scratch_pad * scratch, footnote * f) {
 }
 
 
+void store_glossary(scratch_pad * scratch, footnote * f) {
+	fn_holder * temp_holder;
+
+	// Store by `label_text`?
+	HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
+
+	if (!temp_holder) {
+		temp_holder = fn_holder_new(f);
+		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->label_text, strlen(f->label_text), temp_holder);
+	}
+}
+
+
 void store_metadata(scratch_pad * scratch, meta * m) {
 	meta * temp;
 
@@ -1057,28 +1101,29 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 
 	switch (label->type) {
 		case PAIR_BRACKET_CITATION:
-			if (e->extensions & EXT_NOTES) {
-				if (!token_chain_accept(remainder, COLON))
-					return false;
-
-				title = *remainder;		// Track first token of content in 'title'
-				f = footnote_new(e->dstr->str, label, title);
-
-				// Store citation for later use
-				stack_push(e->citation_stack, f);
-				
-				break;
-			}
 		case PAIR_BRACKET_FOOTNOTE:
+		case PAIR_BRACKET_GLOSSARY:
 			if (e->extensions & EXT_NOTES) {
 				if (!token_chain_accept(remainder, COLON))
 					return false;
 
 				title = *remainder;		// Track first token of content in 'title'
-				f = footnote_new(e->dstr->str, label, title);
 
-				// Store footnote for later use
-				stack_push(e->footnote_stack, f);
+				// Store for later use
+				switch (label->type) {
+					case PAIR_BRACKET_CITATION:
+						f = footnote_new(e->dstr->str, label, title);
+						stack_push(e->citation_stack, f);
+						break;
+					case PAIR_BRACKET_GLOSSARY:
+						f = footnote_new(e->dstr->str, label, title);
+						stack_push(e->glossary_stack, f);
+						break;
+					case PAIR_BRACKET_FOOTNOTE:
+						f = footnote_new(e->dstr->str, label, title);
+						stack_push(e->footnote_stack, f);
+						break;
+				}
 				
 				break;
 			}
@@ -1175,16 +1220,24 @@ void process_definition_block(mmd_engine * e, token * block) {
 		label = label->child;
 
 	switch (block->type) {
-		case BLOCK_DEF_FOOTNOTE:
-			f = footnote_new(e->dstr->str, label, block->child);
-			stack_push(e->footnote_stack, f);
-			label->type = TEXT_EMPTY;
-			label->next->type = TEXT_EMPTY;
-			strip_leading_whitespace(label, e->dstr->str);
-			break;
 		case BLOCK_DEF_CITATION:
+		case BLOCK_DEF_FOOTNOTE:
+		case BLOCK_DEF_GLOSSARY:
 			f = footnote_new(e->dstr->str, label, block->child);
-			stack_push(e->citation_stack, f);
+			switch (block->type) {
+				case BLOCK_DEF_CITATION:
+					stack_push(e->citation_stack, f);
+					break;
+				case BLOCK_DEF_FOOTNOTE:
+					stack_push(e->footnote_stack, f);
+					break;
+				case BLOCK_DEF_GLOSSARY:
+					// Strip leading '?' from term
+					memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+
+					stack_push(e->glossary_stack, f);
+					break;
+			}
 			label->type = TEXT_EMPTY;
 			label->next->type = TEXT_EMPTY;
 			strip_leading_whitespace(label, e->dstr->str);
@@ -1580,6 +1633,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, 0, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
+			mmd_export_glossary_list_html(out, e->dstr->str, scratch);
 			mmd_export_citation_list_html(out, e->dstr->str, scratch);
 
 			if (scratch->extensions & EXT_COMPLETE)
@@ -1670,6 +1724,7 @@ void parse_brackets(const char * source, scratch_pad * scratch, token * bracket,
 				case PAIR_BRACKET:
 				case PAIR_BRACKET_CITATION:
 				case PAIR_BRACKET_FOOTNOTE:
+				case PAIR_BRACKET_GLOSSARY:
 				case PAIR_BRACKET_VARIABLE:
 				case PAIR_BRACKET_ABBREVIATION:
 					*final_link = NULL;
@@ -1728,6 +1783,17 @@ void mark_footnote_as_used(scratch_pad * scratch, footnote * f) {
 
 		// Update counter
 		f->count = scratch->used_footnotes->size;
+	}
+}
+
+
+void mark_glossary_as_used(scratch_pad * scratch, footnote * c) {
+	if (c->count == -1) {
+		// Add glossary to used stack
+		stack_push(scratch->used_glossaries, c);
+
+		// Update counter
+		c->count = scratch->used_glossaries->size;
 	}
 }
 
@@ -1792,6 +1858,36 @@ size_t extract_footnote_from_stack(scratch_pad * scratch, const char * target) {
 }
 
 
+size_t extract_glossary_from_stack(scratch_pad * scratch, const char * target) {
+	char * key = clean_string(target, true);
+
+	fn_holder * h;
+
+	HASH_FIND_STR(scratch->glossary_hash, key, h);
+
+	free(key);
+
+	if (h) {
+		mark_glossary_as_used(scratch, h->note);
+		return h->note->count;
+	}
+
+	key = label_from_string(target);
+
+	HASH_FIND_STR(scratch->glossary_hash, key, h);
+
+	free(key);
+
+	if (h) {
+		mark_glossary_as_used(scratch, h->note);
+		return h->note->count;
+	}
+
+	// None found
+	return -1;
+}
+
+
 void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num) {
 	// Get text inside bracket
 	char * text = text_inside_pair(source, t);
@@ -1848,6 +1944,45 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 	} else {
 		// Citation in stack
 		*num = citation_id;
+	}
+}
+
+
+void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num) {
+	// Get text inside bracket
+	char * text = text_inside_pair(source, t);
+	short glossary_id = extract_glossary_from_stack(scratch, text);
+	
+	free(text);
+
+	if (glossary_id == -1) {
+		// No match, this is an inline glossary -- create a new glossary entry
+		t->child->type = TEXT_EMPTY;
+		t->child->mate->type = TEXT_EMPTY;
+
+		// Create glossary
+		token * label = t->child;
+		while (label && label->type != PAIR_PAREN)
+			label = label->next;
+
+		if (label) {
+			footnote * temp = footnote_new(source, label, label->next);
+
+			// Store as used
+			stack_push(scratch->used_glossaries, temp);
+			*num = scratch->used_glossaries->size;
+			temp->count = *num;
+
+			// We need to free this one later since it doesn't exist
+			// in the engine's stack, on the scratch_pad stack
+			stack_push(scratch->inline_glossaries_to_free, temp);
+		} else {
+			// Improperly formatted glossary
+			*num = -1;
+		}
+	} else {
+		// Glossary in stack
+		*num = glossary_id;
 	}
 }
 

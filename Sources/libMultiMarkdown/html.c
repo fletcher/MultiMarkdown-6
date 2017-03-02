@@ -304,6 +304,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 	char *	temp_char2	= NULL;
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
+	footnote * temp_note = NULL;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -506,12 +507,21 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case BLOCK_PARA:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
+		case BLOCK_DEF_GLOSSARY:
 			pad(out, 2, scratch);
 	
 			if (!scratch->list_is_tight)
 				print_const("<p>");
 
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+
+			if (scratch->citation_being_printed) {
+				scratch->footnote_para_counter--;
+
+				if (scratch->footnote_para_counter == 0) {
+					printf(" <a href=\"#cnref:%d\" title=\"%s\" class=\"reversecitation\">&#160;&#8617;</a>", scratch->citation_being_printed, LC("return to body"));
+				}
+			}
 
 			if (scratch->footnote_being_printed) {
 				scratch->footnote_para_counter--;
@@ -521,11 +531,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			}
 
-			if (scratch->citation_being_printed) {
+			if (scratch->glossary_being_printed) {
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#cnref:%d\" title=\"%s\" class=\"reversecitation\">&#160;&#8617;</a>", scratch->citation_being_printed, LC("return to body"));
+					printf(" <a href=\"#gnref:%d\" title=\"%s\" class=\"reverseglossary\">&#160;&#8617;</a>", scratch->glossary_being_printed, LC("return to body"));
 				}
 			}
 
@@ -744,6 +754,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		case BRACKET_FOOTNOTE_LEFT:
 			print_const("[^");
+			break;
+		case BRACKET_GLOSSARY_LEFT:
+			print_const("[?");
 			break;
 		case BRACKET_IMAGE_LEFT:
 			print_const("![");
@@ -1080,6 +1093,41 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 					// This is a new footnote
 					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
 						   temp_short, temp_short, LC("see footnote"), temp_short);
+				}
+			} else {
+				// Footnotes disabled
+				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			}
+			break;
+		case PAIR_BRACKET_GLOSSARY:
+			if (scratch->extensions & EXT_NOTES) {
+				glossary_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					print_const("[?");
+					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					print_const("]");
+					break;
+				}
+
+				temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
+
+				if (temp_short < scratch->used_glossaries->size) {
+					// Re-using previous glossary
+					printf("<a href=\"#gn:%d\" title=\"%s\" class=\"glossary\">",
+						   temp_short, LC("see glossary"));
+
+					mmd_print_string_html(out, temp_note->clean_text, false);
+
+					print_const("</a>");
+				} else {
+					// This is a new glossary
+					printf("<a href=\"#gn:%d\" id=\"gnref:%d\" title=\"%s\" class=\"glossary\">",
+						   temp_short, temp_short, LC("see glossary"));
+
+					mmd_print_string_html(out, temp_note->clean_text, false);
+
+					print_const("</a>");
 				}
 			} else {
 				// Footnotes disabled
@@ -1536,6 +1584,59 @@ void mmd_export_footnote_list_html(DString * out, const char * source, scratch_p
 		print_const("</ol>\n</div>");
 		scratch->padded = 0;
 		scratch->footnote_being_printed = 0;
+	}
+}
+
+
+void mmd_export_glossary_list_html(DString * out, const char * source, scratch_pad * scratch) {
+	if (scratch->used_glossaries->size > 0) {
+		footnote * note;
+		token * content;
+
+		pad(out, 2, scratch);
+		print_const("<div class=\"glossary\">\n<hr />\n<ol>");
+		scratch->padded = 0;
+
+		for (int i = 0; i < scratch->used_glossaries->size; ++i)
+		{
+			// Export glossary
+			pad(out, 2, scratch);
+
+			printf("<li id=\"gn:%d\">\n", i + 1);
+			scratch->padded = 6;
+
+			note = stack_peek_index(scratch->used_glossaries, i);
+			content = note->content;
+
+			// Print term
+			mmd_print_string_html(out, note->clean_text, false);
+			print_const(": ");
+
+			// Print contents
+			scratch->footnote_para_counter = 0;
+
+			// We need to know which block is the last one in the footnote
+			while(content) {
+				if (content->type == BLOCK_PARA)
+					scratch->footnote_para_counter++;
+				
+				content = content->next;
+			}
+
+			content = note->content;
+			scratch->glossary_being_printed = i + 1;
+
+			mmd_export_token_tree_html(out, source, content, 0, scratch);
+
+			pad(out, 1, scratch);
+			printf("</li>");
+			scratch->padded = 0;
+		}
+
+		pad(out, 2, scratch);
+		print_const("</ol>\n</div>");
+		scratch->padded = 0;
+		scratch->glossary_being_printed = 0;
 	}
 }
 

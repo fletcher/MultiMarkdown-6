@@ -93,6 +93,11 @@ typedef struct {
 	struct fn_holder *	citation_hash;
 	short				citation_being_printed;
 
+	stack *				used_glossaries;
+	stack *				inline_glossaries_to_free;
+	struct fn_holder *	glossary_hash;
+	short				glossary_being_printed;
+
 	struct abbr *		abbreviation_hash;
 
 	short				language;
@@ -207,8 +212,9 @@ void print_token_tree_raw(DString * out, const char * source, token * t);
 
 char * url_accept(const char * source, size_t start, size_t max_len, size_t * end_pos, bool validate);
 
-void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void citation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
+void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
+void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 
 meta * meta_new(const char * source, size_t start, size_t len);
 void meta_set_value(meta * m, const char * value);

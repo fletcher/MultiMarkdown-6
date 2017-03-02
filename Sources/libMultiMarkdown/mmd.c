@@ -103,6 +103,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->citation_stack = stack_new(0);
 		e->definition_stack = stack_new(0);
 		e->footnote_stack = stack_new(0);
+		e->glossary_stack = stack_new(0);
 		e->header_stack = stack_new(0);
 		e->link_stack = stack_new(0);
 		e->metadata_stack = stack_new(0);
@@ -127,13 +128,15 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		if (extensions & EXT_NOTES) {
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET_GLOSSARY, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		} else {
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 		
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, PAREN_LEFT, PAREN_RIGHT, PAIR_PAREN, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -232,17 +235,25 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	}
 	stack_free(e->citation_stack);
 
+	// Footnotes need to be freed
+	while (e->footnote_stack->size) {
+		footnote_free(stack_pop(e->footnote_stack));
+	}
+	stack_free(e->footnote_stack);
+
+	// Glossaries need to be freed
+	while (e->glossary_stack->size) {
+		footnote_free(stack_pop(e->glossary_stack));
+	}
+	stack_free(e->glossary_stack);
+
+
 	// Links need to be freed
 	while (e->link_stack->size) {
 		link_free(stack_pop(e->link_stack));
 	}
 	stack_free(e->link_stack);
 
-	// Footnotes need to be freed
-	while (e->footnote_stack->size) {
-		footnote_free(stack_pop(e->footnote_stack));
-	}
-	stack_free(e->footnote_stack);
 
 	// Metadata needs to be freed
 	while (e->metadata_stack->size) {
@@ -606,6 +617,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;
+		case BRACKET_GLOSSARY_LEFT:
+			if (e->extensions & EXT_NOTES) {
+				scan_len = scan_ref_glossary(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_GLOSSARY : LINE_PLAIN;
+			} else {
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
+			}
+			break;
 		case PIPE:
 			// If PIPE is first, save checking later and assign LINE_TABLE now
 			if (!(e->extensions & EXT_COMPATIBILITY)) {
@@ -917,6 +937,7 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_DEF_ABBREVIATION:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
+		case BLOCK_DEF_GLOSSARY:
 		case BLOCK_DEF_LINK:
 		case BLOCK_H1:
 		case BLOCK_H2:
@@ -1684,6 +1705,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_DEF_ABBREVIATION:
 			case LINE_DEF_CITATION:
 			case LINE_DEF_FOOTNOTE:
+			case LINE_DEF_GLOSSARY:
 			case LINE_DEF_LINK:
 			case LINE_EMPTY:
 			case LINE_LIST_BULLETED:

@@ -1,0 +1,20 @@
+latexconfig:		article
+Title:				Glossary  
+
+[?foo]
+
+[?(bar) Inline]
+
+[?foo bar]
+
+[?foo]
+
+[?bar]
+
+5
+
+[?foo]: Reference
+
+[?foo bar]: Reference
+
+	With second para.

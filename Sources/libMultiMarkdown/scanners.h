@@ -87,6 +87,7 @@ size_t scan_meta_line(const char * c);
 size_t scan_ref_abbreviation(const char * c);
 size_t scan_ref_citation(const char * c);
 size_t scan_ref_foot(const char * c);
+size_t scan_ref_glossary(const char * c);
 size_t scan_ref_link(const char * c);
 size_t scan_ref_link_no_attributes(const char * c);
 size_t scan_setext(const char * c);

@@ -68,7 +68,9 @@
 
 %fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE  LINE_TABLE.
 
-%fallback LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START.
+%fallback LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE
+LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE
+LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START.
 
 doc					::= blocks(B).								{ engine->root = B; }
 
@@ -115,6 +117,7 @@ block(A)			::= blockquote(B).			{ A = token_new_parent(B, BLOCK_BLOCKQUOTE); rec
 block(A)			::= def_abbreviation(B).	{ A = token_new_parent(B, BLOCK_DEF_ABBREVIATION); stack_push(engine->definition_stack, A); }
 block(A)			::= def_citation(B).		{ A = token_new_parent(B, BLOCK_DEF_CITATION); stack_push(engine->definition_stack, A); }
 block(A)			::= def_footnote(B).		{ A = token_new_parent(B, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, A); recursive_parse_indent(engine, A); }
+block(A)			::= def_glossary(B).		{ A = token_new_parent(B, BLOCK_DEF_GLOSSARY); stack_push(engine->definition_stack, A); recursive_parse_indent(engine, A); }
 block(A)			::= def_link(B).			{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
 block(A)			::= definition_block(B).	{ A = token_new_parent(B, BLOCK_DEFLIST); }
 block(A)			::= empty(B).				{ A = token_new_parent(B, BLOCK_EMPTY); }
@@ -193,6 +196,9 @@ def_citation		::= LINE_DEF_CITATION.
 
 def_footnote(A)		::= LINE_DEF_FOOTNOTE(B) tail(C).			{ A = B; token_chain_append(B, C); }
 def_footnote		::= LINE_DEF_FOOTNOTE.
+
+def_glossary(A)		::= LINE_DEF_GLOSSARY(B) tail(C).			{ A = B; token_chain_append(B, C); }
+def_glossary		::= LINE_DEF_GLOSSARY.
 
 def_link(A)			::= LINE_DEF_LINK(B) chunk(C).				{ A = B; token_chain_append(B, C); }
 def_link			::= LINE_DEF_LINK.

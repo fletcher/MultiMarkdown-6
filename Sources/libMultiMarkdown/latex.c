@@ -376,6 +376,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 	short	temp_short;
 	short	temp_short2;
+	short	temp_short3;
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
@@ -782,6 +783,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case BRACKET_FOOTNOTE_LEFT:
 			print_const("[^");
 			break;
+		case BRACKET_GLOSSARY_LEFT:
+			print_const("[?");
+			break;
 		case BRACKET_IMAGE_LEFT:
 			print_const("![");
 			break;
@@ -1101,16 +1105,68 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 				if (temp_short < scratch->used_footnotes->size) {
 					// Re-using previous footnote
-					printf("\\footnote{reuse");
+					print("\\footnote{reuse");
 
-					printf("}");
+					print("}");
 				} else {
 					// This is a new footnote
-					printf("\\footnote{");
+					print("\\footnote{");
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
 					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
-					printf("}");
+					print("}");
+				}
+			} else {
+				// Footnotes disabled
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_BRACKET_GLOSSARY:
+			if (scratch->extensions & EXT_NOTES) {
+				// See whether we create an inline glossary
+				temp_short2 = scratch->inline_glossaries_to_free->size;
+				glossary_from_bracket(source, scratch, t, &temp_short);
+				temp_short3 = scratch->inline_glossaries_to_free->size;
+
+				if (temp_short == -1) {
+					print_const("[?");
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					print_const("]");
+					break;
+				}
+
+				if (temp_short2 != temp_short3)
+					temp_bool = true;	// This is an inline
+				else
+					temp_bool = false;
+
+				temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
+
+				if (temp_short < scratch->used_glossaries->size) {
+					// Re-using previous glossary
+					print("\\gls{");
+					print(temp_note->label_text);
+					print("}");
+				} else {
+					// This is a new glossary
+
+					if (temp_bool) {
+						// This is an inline glossary entry
+						print_const("\\newglossaryentry{");
+						print(temp_note->label_text);
+
+						print_const("}{name=");
+						print(temp_note->clean_text);
+
+						print_const(", description={");
+						
+						// We skip over temp_note->content, since that is the term in use
+						mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
+						print_const("}}");
+					}
+					print_const("\\gls{");
+					print(temp_note->label_text);
+					print_const("}");
 				}
 			} else {
 				// Footnotes disabled
@@ -1546,6 +1602,25 @@ void mmd_export_token_tree_latex_tt(DString * out, const char * source, token * 
 }
 
 
+void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad * scratch) {
+	// Iterate through glossary definitions
+	fn_holder * f, * f_tmp;
+
+	HASH_ITER(hh, scratch->glossary_hash, f, f_tmp) {
+		// Add this glossary definition
+		print_const("\\longnewglossaryentry{");
+		print(f->note->label_text);
+
+		print_const("}{name=");
+		print(f->note->clean_text);
+		print_const("}{");
+
+		mmd_export_token_tree_latex(out, source, f->note->content, scratch);
+		print_const("}\n\n");
+	}
+}
+
+
 void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * scratch) {
 	// Iterate over metadata keys
 	meta * m;
@@ -1615,6 +1690,9 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 			print_const("}\n");
 		}
 	}
+
+	// Define glossaries in preamble for more flexibility
+	mmd_define_glossaries_latex(out, source, scratch);
 
 	m = extract_meta_from_stack(scratch, "latexbegin");
 	if (m) {

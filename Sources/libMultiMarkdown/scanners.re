@@ -95,6 +95,8 @@
 
 	ref_foot	= non_indent '[^' label ']' ':' finish_line;
 
+	ref_glossary	= non_indent '[?' label ']' ':' finish_line;
+
 	ref_link	= non_indent '[' label ']' ':' finish_line;
 
 	destination	= ('<' [^ \t\n\r\x00>]* '>') | [^ \t\n\r\x00]+;
@@ -256,12 +258,24 @@ size_t scan_ref_citation(const char * c) {
 */	
 }
 
+
 size_t scan_ref_foot(const char * c) {
 	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c
 	ref_foot	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_ref_glossary(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	ref_glossary	{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	
 }

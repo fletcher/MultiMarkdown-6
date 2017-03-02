@@ -115,6 +115,7 @@ int scan(Scanner * s, const char * stop) {
 
 		"!["							{ return BRACKET_IMAGE_LEFT; }
 		"[^"							{ return BRACKET_FOOTNOTE_LEFT; }
+		"[?"							{ return BRACKET_GLOSSARY_LEFT; }
 		"[#"							{ return BRACKET_CITATION_LEFT; }
 		"[%"							{ return BRACKET_VARIABLE_LEFT; }
 

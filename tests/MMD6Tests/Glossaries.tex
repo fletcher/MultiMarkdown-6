@@ -1,0 +1,26 @@
+\input{mmd6-article-leader}
+\def\mytitle{Glossary}
+\longnewglossaryentry{foo}{name=foo}{Reference}
+
+\longnewglossaryentry{foobar}{name=foo bar}{
+
+Reference
+
+With second para.}
+
+\input{mmd6-article-begin}
+
+\gls{foo}
+
+\newglossaryentry{bar}{name=bar, description={Inline}}\gls{bar}
+
+\gls{foobar}
+
+\gls{foo}
+
+[?bar]
+
+5
+
+\input{mmd6-article-footer}
+\end{document}
