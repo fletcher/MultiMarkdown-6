@@ -5,7 +5,7 @@ Title:				Glossary
 
 [?(bar) Inline]
 
-[?foo bar]
+[?Foo Bar]
 
 [?foo]
 
@@ -15,6 +15,6 @@ Title:				Glossary
 
 [?foo]: Reference
 
-[?foo bar]: Reference
+[?Foo Bar]: Reference
 
 	With second para.
