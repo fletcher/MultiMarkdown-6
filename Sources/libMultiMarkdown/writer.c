@@ -1419,7 +1419,7 @@ int *kmp_borders(char * needle, size_t nlen){
     return borders;
 }
 
-char * kmp_search(const char * haystack, size_t haylen, char * needle, size_t nlen, int * borders){
+const char * kmp_search(const char * haystack, size_t haylen, char * needle, size_t nlen, int * borders){
     size_t max_index = haylen-nlen, i = 0, j = 0;
     while(i <= max_index){
         while(j < nlen && *haystack && needle[j] == *haystack){
@@ -1445,7 +1445,7 @@ char * kmp_search(const char * haystack, size_t haylen, char * needle, size_t nl
     return NULL;
 }
 
-char * sstrnstr(const char * haystack, char * needle, size_t haylen){
+const char * sstrnstr(const char * haystack, char * needle, size_t haylen){
     if (!haystack || !needle){
         return NULL;
     }
@@ -1457,7 +1457,7 @@ char * sstrnstr(const char * haystack, char * needle, size_t haylen){
     if (!borders){
         return NULL;
     }
-    char *match = kmp_search(haystack, haylen, needle, nlen, borders);
+    const char *match = kmp_search(haystack, haylen, needle, nlen, borders);
     free(borders);
     return match;
 }
@@ -1471,7 +1471,7 @@ char * sstrnstr(const char * haystack, char * needle, size_t haylen){
 void abbr_search_text(mmd_engine * e, token * t) {
 	const char * str = &e->dstr->str[t->start];
 
-	char * match;
+	const char * match;
 	abbr * a;
 
 	for (int i = 0; i < e->abbreviation_stack->size; ++i)
@@ -1481,7 +1481,7 @@ void abbr_search_text(mmd_engine * e, token * t) {
 		match = sstrnstr(str, a->abbr, t->len);
 
 		if (match) {
-			fprintf(stderr, "Found match '%s' -> '%s' at %lu\n", a->abbr, a->expansion, match - e->dstr->str);
+			fprintf(stderr, "Found match '%s' -> '%s' at %lu\n", a->abbr, a->expansion, (size_t) (match - e->dstr->str));
 		}
 	}
 }
