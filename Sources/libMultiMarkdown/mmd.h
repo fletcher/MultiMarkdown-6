@@ -77,6 +77,7 @@ struct mmd_engine {
 	token_pair_engine *		pairings2;
 	token_pair_engine *		pairings3;
 
+	stack *					abbreviation_stack;
 	stack *					citation_stack;
 	stack *					definition_stack;
 	stack *					header_stack;

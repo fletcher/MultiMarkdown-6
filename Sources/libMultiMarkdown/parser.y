@@ -112,6 +112,7 @@ block(A)			::= LINE_TOC(B).			{ A = token_new_parent(B, BLOCK_TOC); }
 // Multi-line blocks
 
 block(A)			::= blockquote(B).			{ A = token_new_parent(B, BLOCK_BLOCKQUOTE); recursive_parse_blockquote(engine, A); }
+block(A)			::= def_abbreviation(B).	{ A = token_new_parent(B, BLOCK_DEF_ABBREVIATION); stack_push(engine->definition_stack, A); }
 block(A)			::= def_citation(B).		{ A = token_new_parent(B, BLOCK_DEF_CITATION); stack_push(engine->definition_stack, A); }
 block(A)			::= def_footnote(B).		{ A = token_new_parent(B, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, A); recursive_parse_indent(engine, A); }
 block(A)			::= def_link(B).			{ A = token_new_parent(B, BLOCK_DEF_LINK); stack_push(engine->definition_stack, A); }
@@ -195,6 +196,8 @@ def_footnote		::= LINE_DEF_FOOTNOTE.
 
 def_link(A)			::= LINE_DEF_LINK(B) chunk(C).				{ A = B; token_chain_append(B, C); }
 def_link			::= LINE_DEF_LINK.
+
+def_abbreviation	::= LINE_DEF_ABBREVIATION.
 
 
 // Definition lists

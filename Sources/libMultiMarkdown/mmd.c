@@ -99,6 +99,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->language = LC_EN;
 		e->quotes_lang = ENGLISH;
 
+		e->abbreviation_stack = stack_new(0);
 		e->citation_stack = stack_new(0);
 		e->definition_stack = stack_new(0);
 		e->footnote_stack = stack_new(0);
@@ -132,7 +133,8 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		}
 		
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		
+		token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, PAREN_LEFT, PAREN_RIGHT, PAIR_PAREN, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, ANGLE_LEFT, ANGLE_RIGHT, PAIR_ANGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -221,7 +223,9 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	// Pointers to blocks that are freed elsewhere
 	stack_free(e->definition_stack);
 	stack_free(e->header_stack);
+	stack_free(e->abbreviation_stack);
 
+	
 	// Citations need to be freed
 	while (e->citation_stack->size) {
 		footnote_free(stack_pop(e->citation_stack));
@@ -454,6 +458,17 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				break;
 			}
 		case STAR:
+			if (!(e->extensions & EXT_COMPATIBILITY)) {
+				if (line->child->next && line->child->next->type == BRACKET_LEFT) {
+					// Possible Abbreviation definition
+					if (scan_ref_abbreviation(&source[line->child->start])) {
+						line->type = LINE_DEF_ABBREVIATION;
+						line->child->type = TEXT_EMPTY;
+						line->child->next->type = BRACKET_ABBREVIATION_LEFT;
+						break;
+					}
+				}
+			}
 		case UL:
 			// Could this be a horizontal rule?
 			t = line->child->next;
@@ -899,6 +914,7 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_BLOCKQUOTE:
 		case BLOCK_DEFLIST:
 		case BLOCK_DEFINITION:
+		case BLOCK_DEF_ABBREVIATION:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
 		case BLOCK_DEF_LINK:
@@ -968,6 +984,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 				t->type = BLOCK_PARA;
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
+			case BLOCK_DEF_ABBREVIATION:
 			case BLOCK_DEFLIST:
 			case BLOCK_DEFINITION:
 			case BLOCK_H1:
@@ -1664,6 +1681,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_ATX_6:
 			case LINE_BLOCKQUOTE:
 			case LINE_CONTINUATION:
+			case LINE_DEF_ABBREVIATION:
 			case LINE_DEF_CITATION:
 			case LINE_DEF_FOOTNOTE:
 			case LINE_DEF_LINK:

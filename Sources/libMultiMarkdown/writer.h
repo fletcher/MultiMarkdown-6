@@ -93,6 +93,8 @@ typedef struct {
 	struct fn_holder *	citation_hash;
 	short				citation_being_printed;
 
+	struct abbr *		abbreviation_hash;
+
 	short				language;
 	short				quotes_lang;
 
@@ -161,6 +163,16 @@ struct meta {
 };
 
 typedef struct meta meta;
+
+struct abbr {
+	char *				abbr;
+	size_t				abbr_len;
+	char *				expansion;
+	size_t				expansion_len;
+	UT_hash_handle		hh;
+};
+
+typedef struct abbr abbr;
 
 
 /// Temporary storage while exporting parse tree to output format

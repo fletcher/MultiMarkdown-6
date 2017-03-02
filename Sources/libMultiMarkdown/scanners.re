@@ -89,6 +89,8 @@
 	label		= [^\]\n\r\x00]+;
 	finish_line	= [^\n\r\x00]+;
 
+	ref_abbr	= non_indent '*[' label ']' ':' finish_line;
+
 	ref_citation	= non_indent '[#' label ']' ':' finish_line;
 
 	ref_foot	= non_indent '[^' label ']' ':' finish_line;
@@ -153,6 +155,7 @@
 	setext_1	= non_indent '='{2,} nl_eof;
 
 	setext_2	= non_indent '-'{2,} nl_eof;
+
 */
 
 
@@ -227,6 +230,17 @@ size_t scan_url(const char * c) {
 /*!re2c
 	email		{ return (size_t)( c - start ); }
 	url			{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+
+size_t scan_ref_abbreviation(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	ref_abbr	{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	
 }
