@@ -39,7 +39,7 @@ analyze: $(BUILD_DIR)
 .PHONY : map
 map:
 	cd $(BUILD_DIR); \
-	../tools/enumsToPerl.pl ../src/libMultiMarkdown.h enumMap.txt;
+	../tools/enumsToPerl.pl ../Sources/libMultiMarkdown/include/libMultiMarkdown.h enumMap.txt;
 
 # Create xcode project
 # You can then build within XCode, or using the commands:
