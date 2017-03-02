@@ -1235,7 +1235,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 				case BLOCK_DEF_GLOSSARY:
 					// Strip leading '?' from term
 					f = footnote_new(e->dstr->str, label, block->child, false);
-					memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+					if (f && f->clean_text)
+						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
 
 					stack_push(e->glossary_stack, f);
 					break;
