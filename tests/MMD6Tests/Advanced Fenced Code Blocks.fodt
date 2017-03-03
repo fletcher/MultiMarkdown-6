@@ -284,6 +284,7 @@
 
 <text:p text:style-name="Preformatted Text">foo<text:line-break/></text:p>
 
-<text:p text:style-name="Preformatted Text">foo<text:line-break/></text:p></office:text>
+<text:p text:style-name="Preformatted Text">foo<text:line-break/></text:p>
+</office:text>
 </office:body>
 </office:document>

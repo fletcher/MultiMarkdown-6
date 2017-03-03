@@ -1026,6 +1026,7 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 
 
 void mmd_end_complete_odf(DString * out, const char * source, scratch_pad * scratch) {
+	pad(out, 1, scratch);
 	print_const("</office:text>\n</office:body>\n</office:document>");
 }
 
