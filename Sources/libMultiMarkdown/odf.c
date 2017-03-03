@@ -476,6 +476,27 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case COLON:
 			print_char(':');
 			break;
+		case DASH_M:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_token(t);
+			} else {
+				print_localized(DASH_M);
+			}
+			break;
+		case DASH_N:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_token(t);
+			} else {
+				print_localized(DASH_N);
+			}
+			break;
+		case ELLIPSIS:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_token(t);
+			} else {
+				print_localized(ELLIPSIS);
+			}
+			break;
 		case EMPH_START:
 			print_const("<text:span text:style-name=\"MMD-Italic\">");
 			break;
@@ -505,6 +526,44 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case MARKER_H6:
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
+			break;
+		case MATH_BRACKET_OPEN:
+			if (t->mate) {
+				print_const("<text:span text:style-name=\"math\">\\[");
+			} else
+				print_const("\\[");
+			break;
+		case MATH_BRACKET_CLOSE:
+			if (t->mate) {
+				print_const("\\]</text:span>");
+			} else
+				print_const("\\]");
+			break;
+		case MATH_DOLLAR_SINGLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("<text:span text:style-name=\"math\">\\(") ) : ( print_const("\\)</text:span>") );
+			} else {
+				print_const("$");
+			}
+			break;
+		case MATH_DOLLAR_DOUBLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("<text:span text:style-name=\"math\">\\[") ) : ( print_const("\\]</text:span>") );
+			} else {
+				print_const("$$");
+			}
+			break;
+		case MATH_PAREN_OPEN:
+			if (t->mate) {
+				print_const("<text:span text:style-name=\"math\">\\(");
+			} else
+				print_const("\\(");
+			break;
+		case MATH_PAREN_CLOSE:
+			if (t->mate) {
+				print_const("\\)</text:span>");
+			} else
+				print_const("\\)");
 			break;
 		case NON_INDENT_SPACE:
 			print_char(' ');
@@ -647,6 +706,28 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case STRONG_STOP:
 			print_const("</text:span>");
 			break;
+		case SUBSCRIPT:
+			if (t->mate) {
+				(t->start < t->mate->start) ? (print_const("<text:span text:style-name=\"MMD-Subscript\">")) : (print_const("</text:span>"));
+			} else if (t->len != 1) {
+				print_const("<text:span text:style-name=\"MMD-Subscript\">");
+				mmd_export_token_odf(out, source, t->child, scratch);
+				print_const("</text:span>");
+			} else {
+				print_const("~");
+			}
+			break;
+		case SUPERSCRIPT:
+			if (t->mate) {
+				(t->start < t->mate->start) ? (print_const("<text:span text:style-name=\"MMD-Superscript\">")) : (print_const("</text:span>"));
+			} else if (t->len != 1) {
+				print_const("<text:span text:style-name=\"MMD-Superscript\">");
+				mmd_export_token_odf(out, source, t->child, scratch);
+				print_const("</text:span>");
+			} else {
+				print_const("^");
+			}	
+			break;
 		case TEXT_EMPTY:
 			break;
 		case TEXT_LINEBREAK:
@@ -659,9 +740,16 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			if (t->next)
 				print_char('\n');
 			break;
+		case TEXT_BACKSLASH:
+		case TEXT_BRACE_LEFT:
+		case TEXT_BRACE_RIGHT:
+		case TEXT_HASH:
 		case TEXT_NUMBER_POSS_LIST:
+		case TEXT_PERCENT:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
+		case TOC:
+		case UL:
 			print_token(t);
 			break;
 		default:
