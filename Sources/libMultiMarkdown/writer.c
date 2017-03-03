@@ -67,6 +67,7 @@
 #include "latex.h"
 #include "memoir.h"
 #include "mmd.h"
+#include "odf.h"
 #include "scanners.h"
 #include "token.h"
 #include "writer.h"
@@ -133,6 +134,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->recurse_depth = 0;
 
 		p->base_header_level = 1;
+
+		p->odf_para_type = BLOCK_PARA;
 
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
@@ -1664,6 +1667,13 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_end_complete_latex(out, e->dstr->str, scratch);
 
+			break;
+		case FORMAT_ODF:
+			mmd_start_complete_odf(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_odf(out, e->dstr->str, e->root, scratch);
+
+			mmd_end_complete_odf(out, e->dstr->str, scratch);
 			break;
 	}
 

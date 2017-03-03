@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
 
 		a_rem1			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_batch			= arg_lit0("b", "batch", "process each file separately"),
@@ -298,6 +298,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_MEMOIR;
 		else if (strcmp(a_format->sval[0], "mmd") == 0)
 			format = FORMAT_MMD;
+		else if (strcmp(a_format->sval[0], "odf") == 0)
+			format = FORMAT_ODF;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -351,6 +353,9 @@ int main(int argc, char** argv) {
 				case FORMAT_BEAMER:
 				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
+					break;
+				case FORMAT_ODF:
+					output_filename = filename_with_extension(a_file->filename[i], ".fodt");
 					break;
 				case FORMAT_MMD:
 					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");

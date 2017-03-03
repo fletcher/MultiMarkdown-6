@@ -116,7 +116,7 @@ typedef struct {
 	short				table_cell_count;
 	char 				table_alignment[kMaxTableColumns];
 
-	char 				_PADDING[4];	//!< pad struct for alignment
+	short				odf_para_type;
 
 } scratch_pad;
 

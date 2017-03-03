@@ -180,6 +180,7 @@ set(src_files
 	Sources/libMultiMarkdown/lexer.c
 	Sources/libMultiMarkdown/memoir.c
 	Sources/libMultiMarkdown/mmd.c
+	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
@@ -202,6 +203,7 @@ set(header_files
 	Sources/libMultiMarkdown/include/libMultiMarkdown.h
 	Sources/libMultiMarkdown/memoir.h
 	Sources/libMultiMarkdown/mmd.h
+	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
@@ -562,6 +564,8 @@ ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
 ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 
 ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
+
+ADD_MMD_TEST(mmd-6-odf "-t odf" MMD6Tests fodt)
 
 ADD_MMD_TEST(pathologic "" ../build html)
 

@@ -110,9 +110,9 @@ void mmd_print_char_latex(DString * out, char c) {
 
 
 void mmd_print_string_latex(DString * out, const char * str) {
-    if (str == NULL)
-        return;
-    
+	if (str == NULL)
+		return;
+	
 	while (*str != '\0') {
 		mmd_print_char_latex(out, *str);
 		str++;
@@ -910,13 +910,15 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			temp_char = url_accept(source, t->start + 1, t->len - 2, NULL, true);
 
 			if (temp_char) {
+				print_const("\\href{");
+
 				if (scan_email(temp_char)) {
-					print_const("\\href{mailto:");
-					print(temp_char);
-				} else {
-					print_const("\\href{");
-					print(temp_char);
+					if (strncmp("mailto:", temp_char, 7) != 0) {
+						print_const("mailto:");
+					}
 				}
+				
+				print(temp_char);
 				print_const("}{");
 				mmd_print_string_latex(out, temp_char);
 				print_const("}");
@@ -1023,32 +1025,32 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
 			temp_bool = true;   // Track whether this is a 'not cited'
-            temp_token = t;     // Remember whether we need to skip ahead
-            
-            if (scratch->extensions & EXT_NOTES) {
-                if (t->type == PAIR_BRACKET) {
-                    // This is a locator for subsequent citation (e.g. `[foo][#bar]`
-                    temp_char = text_inside_pair(source, t);
-                    temp_char2 = label_from_string(temp_char);
+			temp_token = t;     // Remember whether we need to skip ahead
+			
+			if (scratch->extensions & EXT_NOTES) {
+				if (t->type == PAIR_BRACKET) {
+					// This is a locator for subsequent citation (e.g. `[foo][#bar]`
+					temp_char = text_inside_pair(source, t);
+					temp_char2 = label_from_string(temp_char);
 
-                    if (strcmp(temp_char2, "notcited") == 0) {
-                        free(temp_char);
-                        temp_char = strdup("");
-                        temp_bool = false;
-                    }
+					if (strcmp(temp_char2, "notcited") == 0) {
+						free(temp_char);
+						temp_char = strdup("");
+						temp_bool = false;
+					}
 
-                    free(temp_char2);
+					free(temp_char2);
 
-                    // Process the actual citation
-                    t = t->next;
-                } else {
-                    // This is just a citation (e.g. `[#foo]`)
-                    temp_char = strdup("");
-                }
+					// Process the actual citation
+					t = t->next;
+				} else {
+					// This is just a citation (e.g. `[#foo]`)
+					temp_char = strdup("");
+				}
 
-                // See if we're a citep or cite
-                temp_char2 = clean_inside_pair(source, t, false);
-                
+				// See if we're a citep or cite
+				temp_char2 = clean_inside_pair(source, t, false);
+				
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
@@ -1057,11 +1059,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					// This is not a "not cited"
 					if (temp_char[0] == '\0') {
 						// No locator
-                        if (temp_char2[strlen(temp_char2) - 1] == ';') {
-                            print_const("\\citet");
-                        } else {
-                            print_const("~\\citep");
-                        }
+						if (temp_char2[strlen(temp_char2) - 1] == ';') {
+							print_const("\\citet");
+						} else {
+							print_const("~\\citep");
+						}
 					} else {
 						// Locator present
 
@@ -1074,11 +1076,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 							memmove(temp_char3 + 1, temp_char3 + 3, strlen(temp_char3 - 3));
 						}
 
-                        if (temp_char2[strlen(temp_char2) - 1] == ';') {
-                            printf("\\citet[%s]", temp_char);
-                        } else {
-                            printf("~\\citep[%s]", temp_char);
-                        }
+						if (temp_char2[strlen(temp_char2) - 1] == ';') {
+							printf("\\citet[%s]", temp_char);
+						} else {
+							printf("~\\citep[%s]", temp_char);
+						}
 					}
 
 					printf("{%s}", temp_note->label_text);
@@ -1558,27 +1560,27 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 				t->next->type = TEXT_EMPTY;
 		case TEXT_EMPTY:
 			break;
-        case SLASH:
-            print_const("\\slash ");
-            break;
-        case TEXT_BACKSLASH:
-        	print_const("\\textbackslash{}");
-        	break;
+		case SLASH:
+			print_const("\\slash ");
+			break;
+		case TEXT_BACKSLASH:
+			print_const("\\textbackslash{}");
+			break;
 		case BRACE_DOUBLE_LEFT:
 			print_const("\\{\\{");
 			break;
 		case BRACE_DOUBLE_RIGHT:
 			print_const("\\}\\}");
 			break;
-        case TEXT_BRACE_LEFT:
+		case TEXT_BRACE_LEFT:
 			print_const("\\{");
 			break;
-        case TEXT_BRACE_RIGHT:
+		case TEXT_BRACE_RIGHT:
 			print_const("\\}");
 			break;
-        case UL:
-        	print_const("\\_");
-        	break;
+		case UL:
+			print_const("\\_");
+			break;
 		default:
 			if (t->child)
 				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);

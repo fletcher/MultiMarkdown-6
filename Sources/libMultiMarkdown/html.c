@@ -955,11 +955,18 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			temp_char = url_accept(source, t->start + 1, t->len - 2, NULL, true);
 
 			if (temp_char) {
-				if (scan_email(temp_char))
-					temp_bool = true;
-				else
-					temp_bool = false;
 				print_const("<a href=\"");
+
+				if (scan_email(temp_char)) {
+					temp_bool = true;
+
+					if (strncmp("mailto:", temp_char, 7) != 0) {
+						mmd_print_string_html(out, "mailto:", true);
+					}
+				} else {
+					temp_bool = false;
+				}
+
 				mmd_print_string_html(out, temp_char, temp_bool);
 				print_const("\">");
 				mmd_print_string_html(out, temp_char, temp_bool);
@@ -1263,10 +1270,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
 			break;
 		case PAREN_LEFT:
-			print_const("(");
+			print_char('(');
 			break;
 		case PAREN_RIGHT:
-			print_const(")");
+			print_char(')');
 			break;
 		case PIPE:
 			print_token(t);
