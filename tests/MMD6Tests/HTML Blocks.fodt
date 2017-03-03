@@ -254,27 +254,36 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar1</text:span></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">foo
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:span text:style-name="MMD-Italic">bar3</text:span>
+</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar5</text:span></text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">foo</text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar5</text:span></text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
+<text:p text:style-name="Standard">10</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:h text:outline-level="1"><text:bookmark text:name="foo2"/>foo2 <text:bookmark-end text:name="foo2"/></text:h>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#foo2">foo</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">comment</text:span> &#8211;&gt;</text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo3</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo5</text:span></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
 </office:text>
 </office:body>
 </office:document>

@@ -254,27 +254,41 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard">#foo#</text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
+<text:p text:style-name="Standard">#foo #</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
+
+<text:p text:style-name="Standard"># foo #</text:p>
+
+<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+
+<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+
+<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+
+<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+
+<text:p text:style-name="Standard">####### foo #######</text:p>
+
+<text:p text:style-name="Standard">15</text:p>
 </office:text>
 </office:body>
 </office:document>

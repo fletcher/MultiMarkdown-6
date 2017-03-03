@@ -254,27 +254,21 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard">{foo}</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">[foo]</text:p>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Standard">{{foo}}</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">[[foo]]</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">(foo)</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard">|foo|</text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
-
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">\foo</text:p>
 </office:text>
 </office:body>
 </office:document>

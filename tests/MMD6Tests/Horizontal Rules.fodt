@@ -254,27 +254,83 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard">Dashes:</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Horizontal_20_Line"/>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Horizontal_20_Line"/>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Horizontal_20_Line"/>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Horizontal_20_Line"/>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Preformatted Text">---<text:line-break/></text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
+<text:p text:style-name="Horizontal_20_Line"/>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Preformatted Text">- - -<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:p text:style-name="Standard">Asterisks:</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Preformatted Text">***<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Preformatted Text">* * *<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
+
+<text:p text:style-name="Standard">Underscores:</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Preformatted Text">___<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">25</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Preformatted Text">_ _ _<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">30</text:p>
 </office:text>
 </office:body>
 </office:document>

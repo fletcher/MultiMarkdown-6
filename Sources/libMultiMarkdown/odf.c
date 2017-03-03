@@ -88,6 +88,8 @@ void mmd_print_char_odf(DString * out, char c) {
 		case '>':
 			print_const("&gt;");
 			break;
+		case '\t':
+			print_const("<text:tab/>");
 		default:
 			print_char(c);
 			break;
@@ -287,7 +289,7 @@ void mmd_export_image_odf(DString * out, const char * source, token * text, link
 			print_const("</text:p>");
 		}
 	}
-	
+
 	print_const("\n</draw:text-box></draw:frame>\n");
 
 	scratch->padded = 1;
@@ -407,6 +409,14 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			print_const("</text:h>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_HR:
+			pad(out, 2, scratch);
+			print_const("<text:p text:style-name=\"Horizontal_20_Line\"/>");
+			scratch->padded = 0;
+			break;
+		case BLOCK_HTML:
+			// Don't print HTML
+			break;
 		case BLOCK_LIST_BULLETED_LOOSE:
 		case BLOCK_LIST_BULLETED:
 			temp_short = scratch->list_is_tight;
@@ -481,6 +491,12 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			print_const("</text:p>");
 			scratch->padded = 0;
 			break;
+		case BRACE_DOUBLE_LEFT:
+			print_const("{{");
+			break;
+		case BRACE_DOUBLE_RIGHT:
+			print_const("}}");
+			break;
 		case BRACKET_CITATION_LEFT:
 			print_const("[#");
 		case BRACKET_LEFT:
@@ -530,11 +546,19 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				mmd_print_char_odf(out, source[t->start + 1]);
 			}
 			break;
+		case HASH1:
+		case HASH2:
+		case HASH3:
+		case HASH4:
+		case HASH5:
+		case HASH6:
+			print_token(t);
+			break;
 		case INDENT_SPACE:
 			print_char(' ');
 			break;
 		case INDENT_TAB:
-			print_char('\t');
+			print_const("<text:tab/>");
 			break;
 		case LINE_LIST_BULLETED:
 		case LINE_LIST_ENUMERATED:
@@ -613,7 +637,11 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				mmd_print_string_odf(out, temp_char);
 				print_const("</text:a>");
 			} else if (scan_html(&source[t->start])) {
-				print_token(t);
+				// We ignore HTML blocks
+				if (scan_html_comment(&source[t->start])) {
+					// But allow HTML comments as raw LaTeX
+					d_string_append_c_array(out, &source[t->start + 4], t->len - 4 - 3);
+				}
 			} else {
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
@@ -705,6 +733,9 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			// No links exist, so treat as normal
 			mmd_export_token_tree_odf(out, source, t->child, scratch);
 			break;
+		case PAIR_BRACES:
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			break;
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
@@ -717,6 +748,9 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAREN_RIGHT:
 			print_char(')');
+			break;
+		case PIPE:
+			print_token(t);
 			break;
 		case QUOTE_SINGLE:
 			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
@@ -845,6 +879,9 @@ void mmd_export_token_odf_raw(DString * out, const char * source, token * t, scr
 		case ESCAPED_CHARACTER:
 			print_const("\\");
 			mmd_print_char_odf(out, source[t->start + 1]);
+			break;
+		case INDENT_TAB:
+			print_const("<text:tab/>");
 			break;
 		case QUOTE_DOUBLE:
 			print_const("&quot;");

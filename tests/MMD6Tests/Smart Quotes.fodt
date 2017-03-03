@@ -254,27 +254,75 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard">&#8216;foo&#8217;</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">&#8220;foo&#8221;</text:p>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Standard">&#8220;foo&#8221; &#8216;bar&#8217;</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">&#8216;foo&#8217; &#8220;bar&#8221;</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">&#8216;.foo&#8217;</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard">&quot;foo&quot;.</text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
+<text:p text:style-name="Standard">'foo'.</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">`foo'</text:p>
+
+<text:p text:style-name="Standard">&#8220;foo&#8221;</text:p>
+
+<text:p text:style-name="Standard">```foo'''</text:p>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:p text:style-name="Standard">&#8220;&#8221; foo &#8220;&#8221;?</text:p>
+
+<text:p text:style-name="Standard">'' foo ''?</text:p>
+
+<text:p text:style-name="Standard">isn&#8217;t</text:p>
+
+<text:p text:style-name="Standard">foo &#8211; bar</text:p>
+
+<text:p text:style-name="Standard">foo &#8212; bar</text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard">1&#8211;2</text:p>
+
+<text:p text:style-name="Standard">1&#8211;2</text:p>
+
+<text:p text:style-name="Standard">1&#8212;3</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">--</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">---</text:span></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
+
+<text:p text:style-name="Standard">&#8230;</text:p>
+
+<text:p text:style-name="Standard">&#8230;</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">...</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">. . .</text:span></text:p>
+
+<text:p text:style-name="Standard">l&#8217;année l&#8217;année</text:p>
+
+<text:p text:style-name="Standard">25</text:p>
+
+<text:p text:style-name="Standard">l&#8217;été l&#8217;année</text:p>
+
+<text:p text:style-name="Standard">l&#8217;été l&#8217;été</text:p>
+
+<text:p text:style-name="Standard">l&#8217;année l&#8217;été</text:p>
+
+<text:p text:style-name="Standard">foo&#8217;s and bar&#8217;s</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">foo</text:span>&#8217;s and <text:span text:style-name="Source_20_Text">bar</text:span>&#8217;s</text:p>
 </office:text>
 </office:body>
 </office:document>

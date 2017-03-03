@@ -254,27 +254,19 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">foo.txt</text:span>.</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">This should not be transcluded to avoid an infinite loop &#8211; {{foo.txt}}</text:p>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">bar.txt</text:span>.</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">This can be transcluded without causing an infinite loop &#8211; {{foo.txt}}</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Preformatted Text">This is a file with no metadata.<text:line-break/></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Preformatted Text">This is a file with no metadata.<text:line-break/></text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
-
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
-
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">{{transclusion/bat.*}}</text:p>
 </office:text>
 </office:body>
 </office:document>

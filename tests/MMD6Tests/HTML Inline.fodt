@@ -254,27 +254,18 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Preformatted Text">&lt;div&gt;<text:line-break/>    foo<text:line-break/>&lt;/div&gt;<text:line-break/></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">test. Comment </text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
-
-<text:p text:style-name="Quotations">foo</text:p>
-
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
-
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
-
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">test. Comment 
+with
+multiple
+line. </text:p>
 </office:text>
 </office:body>
 </office:document>

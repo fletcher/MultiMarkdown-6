@@ -254,27 +254,33 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Superscript">2</text:span>.</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Superscript">2xz</text:span>.</text:p>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Superscript">2.</text:span></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Superscript">2</text:span> 3^</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Superscript">2</text:span> 3<text:span text:style-name="MMD-Superscript">2</text:span></text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Subscript">z</text:span>.</text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Subscript">xyz</text:span>.</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard">z<text:span text:style-name="MMD-Subscript">z.</text:span></text:p>
+
+<text:p text:style-name="Standard">~/Library/MultiMarkdown</text:p>
+
+<text:p text:style-name="Standard">^test</text:p>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:p text:style-name="Standard">x^y</text:p>
+
+<text:p text:style-name="Standard">x~y</text:p>
 </office:text>
 </office:body>
 </office:document>

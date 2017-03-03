@@ -254,27 +254,99 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:p text:style-name="Quotations">foo
-bar</text:p>
+<text:p text:style-name="Standard">Just a <draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 
-<text:p text:style-name="Quotations">bar
-foo</text:p>
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 
-<text:p text:style-name="Quotations">foo</text:p>
+<text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Quotations">foo
-bar
- foo</text:p>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="">Empty</text:a>.</text:p>
 
-<text:p text:style-name="Preformatted Text"><text:tab/>bar<text:line-break/>foo<text:line-break/></text:p>
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 
-<text:p text:style-name="Quotations">bar</text:p>
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
+
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
+
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
+
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="/url/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+</draw:text-box></draw:frame>
+.</text:p>
 </office:text>
 </office:body>
 </office:document>
