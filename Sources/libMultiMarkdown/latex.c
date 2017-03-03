@@ -253,7 +253,7 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 }
 
 
-char * correct_dimension_units(char *original) {
+static char * correct_dimension_units(char *original) {
 	char *result;
 	int i;
 	
@@ -917,7 +917,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						print_const("mailto:");
 					}
 				}
-				
+
 				print(temp_char);
 				print_const("}{");
 				mmd_print_string_latex(out, temp_char);

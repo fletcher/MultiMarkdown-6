@@ -206,15 +206,6 @@ void mmd_export_link_odf(DString * out, const char * source, token * text, link 
 		print_const("\"");
 	}
 
-	while (a) {
-		print_const(" ");
-		print(a->key);
-		print_const("=\"");
-		print(a->value);
-		print_const("\"");
-		a = a->next;
-	}
-
 	print_const(">");
 
 	// If we're printing contents of bracket as text, then ensure we include it all
@@ -229,60 +220,77 @@ void mmd_export_link_odf(DString * out, const char * source, token * text, link 
 }
 
 
+static char * correct_dimension_units(char *original) {
+	char *result;
+	int i;
+	
+	result = strdup(original);
+	
+	for (i = 0; result[i]; i++)
+		result[i] = tolower(result[i]);
+	
+	if (strstr(&result[strlen(result)-2],"px")) {
+		result[strlen(result)-2] = '\0';
+		strcat(result, "pt");
+	}
+	
+	return result;
+}
+
+
 void mmd_export_image_odf(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
+	char * height = NULL;
+	char * width = NULL;
 
-	// Compatibility mode doesn't allow figures
-	if (scratch->extensions & EXT_COMPATIBILITY)
-		is_figure = false;
+	print_const("<draw:frame text:anchor-type=\"as-char\"\ndraw:z-index=\"0\" draw:style-name=\"fr1\"");
 
-	if (is_figure) {
-		// Remove wrapping <p> markers
-		d_string_erase(out, out->currentStringLength - 3, 3);
-		print_const("<figure>\n");
-		scratch->close_para = false;
-	}
-
-	if (link->url)
-		printf("<img src=\"%s\"", link->url);
-	else
-		print_const("<img src=\"\"");
-
-	if (text) {
-		print_const(" alt=\"");
-		print_token_tree_raw(out, source, text->child);
-		print_const("\"");
-	}
-
-	if (link->label && !(scratch->extensions & EXT_COMPATIBILITY)) {
-		// \todo: Need to decide on approach to id's
-		char * label = label_from_token(source, link->label);
-		printf(" id=\"%s\"", label);
-		free(label);
-	}
-
-	if (link->title && link->title[0] != '\0')
-		printf(" title=\"%s\"", link->title);
-
+	// Check attributes for dimensions
 	while (a) {
-		print_const(" ");
-		print(a->key);
-		print_const("=\"");
-		print(a->value);
-		print_const("\"");
+		if (strcmp("height", a->key) == 0) {
+			height = correct_dimension_units(a->value);
+		} else if (strcmp("width", a->key) == 0) {
+			width = correct_dimension_units(a->value);
+		}
+
 		a = a->next;
 	}
 
-	print_const(" />");
+	if (width) {
+		printf(" svg:width=\"%s\">\n", width);
+	} else {
+		print_const(" svg:width=\"95%\">\n");
+	}
+
+	print_const("<draw:text-box><text:p><draw:frame text:anchor-type=\"as-char\" draw:z-index=\"1\" ");
+
+	if (height && width) {
+		printf("svg:height=\"%s\" ", height);
+		printf("svg:width=\"%s\" ", width);
+	}
+
+	if (height)
+		free(height);
+
+	if (width)
+		free(width);
+
+	if (link->url)
+		printf(">\n<draw:image xlink:href=\"%s\"", link->url);
+
+	print_const(" xlink:type=\"simple\" xlink:show=\"embed\" xlink:actuate=\"onLoad\" draw:filter-name=\"&lt;All formats&gt;\"/>\n</draw:frame></text:p>");
 
 	if (is_figure) {
 		if (text) {
-			print_const("\n<figcaption>");
+			print_const("\n<text:p>Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
 			mmd_export_token_tree_odf(out, source, text->child, scratch);
-			print_const("</figcaption>");
+			print_const("</text:p>");
 		}
-		print_const("\n</figure>");
 	}
+	
+	print_const("\n</draw:text-box></draw:frame>\n");
+
+	scratch->padded = 1;
 }
 
 
@@ -473,6 +481,14 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			print_const("</text:p>");
 			scratch->padded = 0;
 			break;
+		case BRACKET_CITATION_LEFT:
+			print_const("[#");
+		case BRACKET_LEFT:
+			print_const("[");			
+			break;
+		case BRACKET_RIGHT:
+			print_const("]");
+			break;
 		case COLON:
 			print_char(':');
 			break;
@@ -505,6 +521,14 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case EQUAL:
 			print_char('=');
+			break;
+		case ESCAPED_CHARACTER:
+			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
+				(source[t->start + 1] == ' ')) {
+				print_const("&nbsp;");
+			} else {
+				mmd_print_char_odf(out, source[t->start + 1]);
+			}
 			break;
 		case INDENT_SPACE:
 			print_char(' ');
@@ -693,6 +717,24 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAREN_RIGHT:
 			print_char(')');
+			break;
+		case QUOTE_SINGLE:
+			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
+				print_const("'");
+			else
+				(t->start < t->mate->start) ? ( print_localized(QUOTE_LEFT_SINGLE) ) : ( print_localized(QUOTE_RIGHT_SINGLE) );
+			break;
+		case QUOTE_DOUBLE:
+			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
+				print_const("&quot;");
+			else
+				(t->start < t->mate->start) ? ( print_localized(QUOTE_LEFT_DOUBLE) ) : ( print_localized(QUOTE_RIGHT_DOUBLE) );
+			break;
+		case QUOTE_RIGHT_ALT:
+			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
+				print_const("''");
+			else
+				print_localized(QUOTE_RIGHT_DOUBLE);
 			break;
 		case SLASH:
 			print_char('/');
