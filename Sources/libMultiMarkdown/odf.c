@@ -547,6 +547,149 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			print_const("</text:p>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_TABLE:
+			pad(out, 2, scratch);
+			print_const("<table:table>\n");
+
+			scratch->padded = 2;
+			read_table_column_alignments(source, t, scratch);
+
+			for (int i = 0; i < scratch->table_column_count; ++i)
+			{
+				print_const("<table:table-column/>\n");
+//				switch (scratch->table_alignment[i]) {
+//					case 'l':
+//						print_const("<col style=\"text-align:left;\"/>\n");
+//						break;
+//					case 'L':
+//						print_const("<col style=\"text-align:left;\" class=\"extended\"/>\n");
+//						break;
+//					case 'r':
+//						print_const("<col style=\"text-align:right;\"/>\n");
+//						break;
+//					case 'R':
+//						print_const("<col style=\"text-align:right;\" class=\"extended\"/>\n");
+//						break;
+//					case 'c':
+//						print_const("<col style=\"text-align:center;\"/>\n");
+//						break;
+//					case 'C':
+//						print_const("<col style=\"text-align:center;\" class=\"extended\"/>\n");
+//						break;
+//					default:
+//						print_const("<col />\n");
+//						break;
+//				}
+			}
+			scratch->padded = 1;
+
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			pad(out, 1, scratch);
+			print_const("</table:table>\n");
+
+			// Are we followed by a caption?
+			if (table_has_caption(t)) {
+				temp_token = t->next->child;
+
+				if (temp_token->next &&
+					temp_token->next->type == PAIR_BRACKET) {
+					temp_token = temp_token->next;
+				}
+
+				temp_char = label_from_token(source, temp_token);
+				printf("<text:p><text:bookmark text:name=\"%s\"/>Table <text:sequence text:name=\"Table\" text:formula=\"ooow:Table+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>:", temp_char);
+
+				t->next->child->child->type = TEXT_EMPTY;
+				t->next->child->child->mate->type = TEXT_EMPTY;
+				mmd_export_token_tree_odf(out, source, t->next->child->child, scratch);
+
+				printf("<text:bookmark-end text:name=\"%s\"/></text:p>\n", temp_char);
+
+				free(temp_char);
+				temp_short = 1;
+			} else {
+				temp_short = 0;
+			}
+
+			scratch->padded = 0;
+			scratch->skip_token = temp_short;
+
+			break;
+		case BLOCK_TABLE_HEADER:
+			pad(out, 2, scratch);
+			scratch->in_table_header = 1;
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			scratch->in_table_header = 0;
+			scratch->padded = 1;
+			break;
+		case BLOCK_TABLE_SECTION:
+			pad(out, 2, scratch);
+			scratch->padded = 2;
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			scratch->padded = 0;
+			break;
+		case BLOCK_TOC:
+			temp_short = 0;
+			temp_short2 = 0;
+			pad(out, 2, scratch);
+
+			for (int i = 0; i < scratch->header_stack->size; ++i)
+			{
+				temp_token = stack_peek_index(scratch->header_stack, i);
+
+				if (temp_token->type == temp_short2) {
+					// Same level -- close list item
+					print_const("</text:list-item>\n");
+				}
+
+				if (temp_short == 0) {
+					// First item
+					print_const("\n<text:list text:style-name=\"L1\">\n");
+					temp_short = temp_token->type;
+					temp_short2 = temp_short;
+				}
+
+				// Indent?
+				if (temp_token->type == temp_short2) {
+					// Same level -- NTD
+				} else if (temp_token->type == temp_short2 + 1) {
+					// Indent
+					print_const("\n\n<text:list text:style-name=\"L1\">\n");
+					temp_short2++;
+				} else if (temp_token->type < temp_short2) {
+					// Outdent
+					print_const("</text:list-item>\n");
+					while (temp_short2 > temp_token->type) {
+						if (temp_short2 > temp_short)
+							print_const("</text:list></text:list-item>\n");
+						else
+							temp_short = temp_short2 - 1;
+
+						temp_short2--;
+					}
+				} else {
+					// Skipped more than one level -- ignore
+					continue;
+				}
+
+				temp_char = label_from_header(source, temp_token);
+
+				printf("<text:list-item><text:p text:style-name=\"P1\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\">", temp_char);
+				mmd_export_token_tree_odf(out, source, temp_token->child, scratch);
+				print_const("</text:a></text:p>");
+				free(temp_char);
+			}
+
+			while (temp_short2 > (temp_short)) {
+				print_const("</text:list>\n");
+				temp_short2--;
+			}
+			
+			if (temp_short)
+				print_const("</text:list-item>\n</text:list>\n");
+
+			scratch->padded = 1;
+			break;
 		case BLOCK_TERM:
 			pad(out, 2, scratch);
 			print_const("<text:p><text:span text:style-name=\"MMD-Bold\">");
@@ -1149,6 +1292,55 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			} else {
 				print_const("^");
 			}	
+			break;
+		case TABLE_CELL:
+			print_const("<table:table-cell");
+
+			if (t->next && t->next->type == TABLE_DIVIDER) {
+				if (t->next->len > 1) {
+					printf(" table:number-columns-spanned=\"%d\"", t->next->len);
+				}
+			}
+
+			if (scratch->in_table_header) {
+				print_const(">\n<text:p text:style-name=\"Table_20_Heading\"");
+			} else {
+				print_const(">\n<text:p");
+				switch (scratch->table_alignment[scratch->table_cell_count]) {
+					case 'l':
+					case 'L':
+					default:
+						print_const(" text:style-name=\"MMD-Table\"");
+						break;
+					case 'r':
+					case 'R':
+						print_const(" text:style-name=\"MMD-Table-Right\"");
+						break;
+					case 'c':
+					case 'C':
+						print_const(" text:style-name=\"MMD-Table-Center\"");
+						break;
+				}
+			}
+
+			print_const(">");
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+
+			print_const("</text:p>\n</table:table-cell>\n");
+
+			if (t->next)
+				scratch->table_cell_count += t->next->len;
+			else
+				scratch->table_cell_count++;
+			
+			break;
+		case TABLE_DIVIDER:
+			break;
+		case TABLE_ROW:
+			print_const("<table:table-row>\n");
+			scratch->table_cell_count = 0;
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			print_const("</table:table-row>\n");
 			break;
 		case TEXT_EMPTY:
 			break;
