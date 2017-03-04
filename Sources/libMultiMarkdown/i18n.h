@@ -30,7 +30,7 @@
 
 
 #define kNumberOfLanguages 3
-#define kNumberOfStrings 3
+#define kNumberOfStrings 4
 #define kLanguage 0
 
 //#define I18N_DISABLED
@@ -70,6 +70,10 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"see citation",					// English
 	"see citation",					// Español
 	"siehe Zitat",					// Deutsch
+
+	"see glossary",					// English
+	"see citation",					// Español
+	"siehe Zitat",					// Deutsch
 };
 
 
@@ -89,6 +93,8 @@ static inline const char * Translate(unsigned long x, int l) {
 			return lc_lookup[1 * kNumberOfLanguages + l];
 		case 2977473004:
 			return lc_lookup[2 * kNumberOfLanguages + l];
+		case 3851221863:
+			return lc_lookup[3 * kNumberOfLanguages + l];		
 		default:
 			return "localization error";
 	}
