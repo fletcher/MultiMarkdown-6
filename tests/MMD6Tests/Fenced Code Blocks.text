@@ -29,7 +29,7 @@ bar
 \begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}
 ```
 
-```latex
+```tex
 \begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}
 ```
 

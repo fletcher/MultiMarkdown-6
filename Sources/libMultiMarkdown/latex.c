@@ -1540,6 +1540,14 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 		case DASH_M:
 			print_const("-{}-{}-");
 			break;
+		case EMPH_START:
+		case EMPH_STOP:
+			if (source[t->start] == '_') {
+				print_const("\\_");
+			} else {
+				print_const("*");
+			}
+			break;
 		case ESCAPED_CHARACTER:
 			print_const("\\textbackslash{}");
 			mmd_print_char_latex(out, source[t->start + 1]);
