@@ -265,7 +265,7 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<title>Variables</title>
+	<dc:title>Variables</dc:title>
 	<meta:user-defined meta:name="foo">bar foo bar foo bar</meta:user-defined>
 	<meta:user-defined meta:name="bat">**foo**</meta:user-defined>
 </office:meta>

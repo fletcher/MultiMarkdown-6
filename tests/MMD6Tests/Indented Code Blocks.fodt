@@ -265,7 +265,7 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<title>Indented Code Blocks</title>
+	<dc:title>Indented Code Blocks</dc:title>
 </office:meta>
 <office:body>
 <office:text>

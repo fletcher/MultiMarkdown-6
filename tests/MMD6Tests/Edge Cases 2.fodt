@@ -265,7 +265,7 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<title>Edge Cases 2</title>
+	<dc:title>Edge Cases 2</dc:title>
 </office:meta>
 <office:body>
 <office:text>

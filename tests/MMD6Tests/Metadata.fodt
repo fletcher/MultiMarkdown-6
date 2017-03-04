@@ -265,109 +265,14 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<dc:title>Edge Cases</dc:title>
+	<dc:title>*foo* &quot;bar&quot;</dc:title>
+	<meta:user-defined meta:name="foo">bar foo bar foo bar</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>
-<text:list text:style-name="L1">
-<text:list-item>
-<text:p text:style-name="Standard">foo
-bar</text:p></text:list-item>
+<text:p text:style-name="Standard">foo:<text:tab/>bar</text:p>
 
-</text:list>
-
-<text:p text:style-name="Standard">foo</text:p>
-
-<text:list text:style-name="L1">
-<text:list-item>
-<text:p text:style-name="Standard">bar</text:p></text:list-item>
-
-</text:list>
-
-<text:p text:style-name="Standard">foo</text:p>
-
-<text:list text:style-name="L2">
-<text:list-item>
-<text:p text:style-name="Standard">bar</text:p></text:list-item>
-
-</text:list>
-
-<text:p text:style-name="Standard">foo</text:p>
-
-<text:list text:style-name="L2">
-<text:list-item>
-<text:p text:style-name="Standard">bar</text:p></text:list-item>
-
-</text:list>
-
-<text:p text:style-name="Standard">foo</text:p>
-
-<text:p text:style-name="Quotations">bar</text:p>
-
-<text:p text:style-name="Standard">5</text:p>
-
-<text:p text:style-name="Standard">foo</text:p>
-
-<text:h text:outline-level="1"><text:bookmark text:name="bar"/>bar<text:bookmark-end text:name="bar"/></text:h>
-
-<text:p text:style-name="Standard">foo
-bar</text:p>
-
-<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">quick</text:span></text:span> brown <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">fox</text:span></text:span> jumped</text:p>
-
-<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">quick</text:span></text:span> brown fox jumped</text:p>
-
-<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">quick</text:span> brown fox</text:span> jumped</text:p>
-
-<text:p text:style-name="Standard">10</text:p>
-
-<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">quick</text:span> brown fox</text:span> jumped</text:p>
-
-<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">quick</text:span> brown <text:span text:style-name="MMD-Italic">fox</text:span></text:span> jumped</text:p>
-
-<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">quick</text:span> brown <text:span text:style-name="MMD-Bold">fox</text:span></text:span> jumped</text:p>
-
-<text:p text:style-name="Standard">This <text:span text:style-name="MMD-Italic">should</text:span> be parsed &#8211; fo***o</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">test this</text:span>thing</text:p>
-
-<text:p text:style-name="Standard">15</text:p>
-
-<text:p text:style-name="Standard">_test this_thing</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">test this</text:span>thing</text:p>
-
-<text:p text:style-name="Standard">__test this__thing</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">test this</text:span></text:span>thing</text:p>
-
-<text:p text:style-name="Standard">___test this___thing</text:p>
-
-<text:p text:style-name="Standard">20</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">another</text:span> test</text:span> of <text:span text:style-name="MMD-Italic">italics</text:span> and <text:span text:style-name="MMD-Bold">bold</text:span>.</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">another</text:span> test</text:span> of <text:span text:style-name="MMD-Bold">bold</text:span> and <text:span text:style-name="MMD-Italic">italics</text:span>.</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">another</text:span> test</text:span> of <text:span text:style-name="MMD-Bold">bold</text:span> and <text:span text:style-name="MMD-Italic">italics</text:span>.</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">another</text:span> test</text:span> of <text:span text:style-name="MMD-Italic">italics</text:span> and <text:span text:style-name="MMD-Bold">bold</text:span>.</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">another</text:span> test</text:span> of <text:span text:style-name="MMD-Italic">italics</text:span> and <text:span text:style-name="MMD-Bold">bold</text:span>.</text:p>
-
-<text:p text:style-name="Standard">25</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">another</text:span> test</text:span> of <text:span text:style-name="MMD-Bold">bold</text:span> and <text:span text:style-name="MMD-Italic">italics</text:span>.</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">another</text:span> test</text:span> of <text:span text:style-name="MMD-Bold">bold</text:span> and <text:span text:style-name="MMD-Italic">italics</text:span>.</text:p>
-
-<text:p text:style-name="Standard">This is <text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">another</text:span> test</text:span> of <text:span text:style-name="MMD-Italic">italics</text:span> and <text:span text:style-name="MMD-Bold">bold</text:span>.</text:p>
-
-<text:p text:style-name="Standard">*a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a</text:p>
-
-<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://foo.bar">foo *bar</text:a> foo* <text:span text:style-name="MMD-Italic">bar</text:span></text:p>
-
-<text:p text:style-name="Standard">30</text:p>
+<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
 </office:text>
 </office:body>
 </office:document>
