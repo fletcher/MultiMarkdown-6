@@ -264,6 +264,9 @@
     <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
+<office:meta>
+	<title>Automatic Links</title>
+</office:meta>
 <office:body>
 <office:text>
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://foo.com/">http://foo.com/</text:a></text:p>

@@ -1,3 +1,6 @@
+Title:	Reference Footnotes
+latex config:	article
+
 foo.[^bar]
 
 foo.[^bar2]

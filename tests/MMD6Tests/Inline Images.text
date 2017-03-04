@@ -1,3 +1,6 @@
+Title:	Inline Images
+latex config:	article
+
 Just a ![URL](/url/).
 
 ![URL and title](/url/ "title").

@@ -1,3 +1,6 @@
+Title:	Reference Links
+latex config:	article
+
 [*foo*][bar].
 
 [*foo*][BAR].

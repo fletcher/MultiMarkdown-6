@@ -1,3 +1,6 @@
+Title:	Link Attributes
+latex config:	article
+
 foo ![image][]
 
 foo [link][]

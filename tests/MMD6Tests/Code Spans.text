@@ -1,3 +1,6 @@
+Title:	Code Spans
+latex config:	article
+
 `foo`
 
 `` foo ` bar  ``

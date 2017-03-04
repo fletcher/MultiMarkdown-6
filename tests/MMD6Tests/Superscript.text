@@ -1,3 +1,6 @@
+Title:	Superscript
+latex config:	article
+
 x^2.
 
 x^2xz.

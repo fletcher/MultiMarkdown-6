@@ -1,3 +1,6 @@
+Title:	Emph and Strong UL
+latex config:	article
+
 _foo_
 
 __foo_

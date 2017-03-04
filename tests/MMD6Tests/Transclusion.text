@@ -1,3 +1,6 @@
+Title:	Transclusion
+latex config:	article
+
 {{foo.txt}}
 
 {{bar.txt}}

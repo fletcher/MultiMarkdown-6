@@ -1,3 +1,6 @@
+Title:	Automatic Links
+latex config:	article
+
 <http://foo.com/>
 
 <foo@bar.com>

@@ -1,3 +1,6 @@
+Title:	HTML Blocks
+latex config:	article
+
 <del>*bar1*</del>
 
 <del>

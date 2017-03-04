@@ -1,3 +1,6 @@
+Title:	Inline Footnotes
+latex config:	article
+
 Inline.[^foo *bar*]
 
 Inline.[^foo *bar*

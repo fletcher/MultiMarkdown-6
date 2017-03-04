@@ -1,3 +1,6 @@
+Title:	Definition Lists
+latex config:	article
+
 foo
 bar
 :	*foo bar

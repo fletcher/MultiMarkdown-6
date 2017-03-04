@@ -264,6 +264,9 @@
     <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
+<office:meta>
+	<title>Citations</title>
+</office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="1"><text:bookmark text:name="citep"/>citep <text:bookmark-end text:name="citep"/></text:h>

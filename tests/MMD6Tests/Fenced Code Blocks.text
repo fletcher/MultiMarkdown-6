@@ -1,3 +1,6 @@
+Title:	Fenced Code Blocks
+latex config:	article
+
 ```
 *foo*
 ```
