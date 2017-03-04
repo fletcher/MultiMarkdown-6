@@ -1,3 +1,6 @@
+<p>Title:	Tables
+latex config:	article</p>
+
 <p>| foo	| bar	|<br />
 | ------	| :------:	|<br />
 | <em>foo</em>	| <em>bar</em>	|<br />

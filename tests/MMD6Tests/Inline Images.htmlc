@@ -1,3 +1,6 @@
+<p>Title:	Inline Images
+latex config:	article</p>
+
 <p>Just a <img src="/url/" alt="URL" />.</p>
 
 <p><img src="/url/" alt="URL and title" title="title" />.</p>

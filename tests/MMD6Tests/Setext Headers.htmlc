@@ -1,3 +1,6 @@
+<p>Title:	Setext Headers
+latex config:	article</p>
+
 <h1>foo bar</h1>
 
 <h2>foo <em>bar</em></h2>

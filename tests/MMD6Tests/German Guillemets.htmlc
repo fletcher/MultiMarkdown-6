@@ -1,4 +1,6 @@
-<p>language:	de
+<p>Title:	German Guillemets
+latex config:	article
+language:	de
 quotes language:	germanguillemets</p>
 
 <p>'foo'</p>

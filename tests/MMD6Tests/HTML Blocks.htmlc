@@ -1,3 +1,6 @@
+<p>Title:	HTML Blocks
+latex config:	article</p>
+
 <p><del><em>bar1</em></del></p>
 
 <del>

@@ -1,3 +1,6 @@
+<p>Title:	Reference Images
+latex config:	article</p>
+
 <p>Test <img src="http://test.1/" alt="foo" />.</p>
 
 <p>Test <img src="http://test.1/" alt="foo" />.</p>

@@ -1,4 +1,6 @@
-<p>foo:	bar
+<p>Title:	Variables
+latex config:	article
+foo:	bar
 foo bar
 foo bar
 bat:	<strong>foo</strong></p>

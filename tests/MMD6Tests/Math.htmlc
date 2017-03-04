@@ -1,3 +1,6 @@
+<p>Title:	Math
+latex config:	article</p>
+
 <p>foo \({e}^{i\pi }+1=0\) bar</p>
 
 <p>\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</p>

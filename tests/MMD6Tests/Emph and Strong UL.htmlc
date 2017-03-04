@@ -1,3 +1,6 @@
+<p>Title:	Emph and Strong UL
+latex config:	article</p>
+
 <p><em>foo</em></p>
 
 <p>_<em>foo</em></p>

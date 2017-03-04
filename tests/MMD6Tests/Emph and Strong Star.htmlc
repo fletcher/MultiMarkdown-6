@@ -1,3 +1,6 @@
+<p>Title:	Emph and Strong Star
+latex config:	article</p>
+
 <p><em>foo</em></p>
 
 <p>*<em>foo</em></p>

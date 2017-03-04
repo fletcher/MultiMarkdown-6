@@ -1,3 +1,6 @@
+<p>Title:	Advanced Emph and Strong
+latex config:	article</p>
+
 <p>foo<em>bar</em></p>
 
 <p>foo*bar**</p>
