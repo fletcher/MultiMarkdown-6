@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+     xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+     xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+     xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+     xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+     xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+     xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+     xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+     xmlns:math="http://www.w3.org/1998/Math/MathML"
+     xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+     xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+     xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0"
+     xmlns:ooo="http://openoffice.org/2004/office"
+     xmlns:ooow="http://openoffice.org/2004/writer"
+     xmlns:oooc="http://openoffice.org/2004/calc"
+     xmlns:dom="http://www.w3.org/2001/xml-events"
+     xmlns:xforms="http://www.w3.org/2002/xforms"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:rpt="http://openoffice.org/2005/report"
+     xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:grddl="http://www.w3.org/2003/g/data-view#"
+     xmlns:tableooo="http://openoffice.org/2009/table"
+     xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
+     xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
+     xmlns:css3t="http://www.w3.org/TR/css3-text/"
+     office:version="1.2"
+     grddl:transformation="http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl"
+     office:mimetype="application/vnd.oasis.opendocument.text">
+<office:font-face-decls>
+   <style:font-face style:name="Courier New" svg:font-family="'Courier New'"
+                    style:font-adornments="Regular"
+                    style:font-family-generic="modern"
+                    style:font-pitch="fixed"/>
+</office:font-face-decls>
+<office:styles>
+<style:style style:name="Standard" style:family="paragraph" style:class="text">
+      <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.15in"     fo:text-align="justify" style:justify-single-word="false"/>
+   </style:style>
+<style:style style:name="Preformatted_20_Text" style:display-name="Preformatted Text"
+             style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0in" fo:text-align="start"
+                               style:justify-single-word="false"/>
+   <style:text-properties style:font-name="Courier New" fo:font-size="11pt"
+                          style:font-name-asian="Courier New"
+                          style:font-size-asian="11pt"
+                          style:font-name-complex="Courier New"
+                          style:font-size-complex="11pt"/>
+</style:style>
+<style:style style:name="Source_20_Text" style:display-name="Source Text"
+             style:family="text">
+   <style:text-properties style:font-name="Courier New" style:font-name-asian="Courier New"
+                          style:font-name-complex="Courier New"
+                          fo:font-size="11pt"/>
+</style:style>
+<style:style style:name="List" style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="list">
+   <style:paragraph-properties fo:text-align="start" style:justify-single-word="false"/>
+   <style:text-properties style:font-size-asian="12pt"/>
+</style:style>
+<style:style style:name="Quotations" style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-left="0.3937in" fo:margin-right="0.3937in" fo:margin-top="0in"
+                               fo:margin-bottom="0.1965in"
+                               fo:text-align="justify"                               style:justify-single-word="false"                               fo:text-indent="0in"
+                               style:auto-text-indent="false"/>
+</style:style>
+<style:style style:name="Table_20_Heading" style:display-name="Table Heading"
+             style:family="paragraph"
+             style:parent-style-name="Table_20_Contents"
+             style:class="extra">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"
+                               text:number-lines="false"
+                               text:line-number="0"/>
+   <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold"
+                          style:font-weight-complex="bold"/>
+</style:style>
+<style:style style:name="Horizontal_20_Line" style:display-name="Horizontal Line"
+             style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.1965in"
+                               style:border-line-width-bottom="0.0008in 0.0138in 0.0008in"
+                               fo:padding="0in"
+                               fo:border-left="none"
+                               fo:border-right="none"
+                               fo:border-top="none"
+                               fo:border-bottom="0.0154in double #808080"
+                               text:number-lines="false"
+                               text:line-number="0"
+                               style:join-border="false"/>
+   <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
+</style:style>
+<style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+  <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
+  <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
+</office:styles>
+<office:automatic-styles>   <style:style style:name="MMD-Italic" style:family="text">
+      <style:text-properties fo:font-style="italic" style:font-style-asian="italic"
+                             style:font-style-complex="italic"/>
+   </style:style>
+   <style:style style:name="MMD-Bold" style:family="text">
+      <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold"
+                             style:font-weight-complex="bold"/>
+   </style:style>
+   <style:style style:name="MMD-Superscript" style:family="text">
+      <style:text-properties style:text-position="super 58%"/>
+   </style:style>
+   <style:style style:name="MMD-Subscript" style:family="text">
+      <style:text-properties style:text-position="sub 58%"/>
+   </style:style>
+   <style:style style:name="Strike" style:family="text">
+      <style:text-properties style:text-line-through-style="solid" />
+   </style:style>
+   <style:style style:name="Underline" style:family="text">
+      <style:text-properties style:text-underline-style="solid" style:text-underline-color="font-color"/>
+   </style:style>
+   <style:style style:name="Highlight" style:family="text">
+      <style:text-properties fo:background-color="#FFFF00" />
+   </style:style>
+   <style:style style:name="Comment" style:family="text">
+      <style:text-properties fo:color="#0000BB" />
+   </style:style>
+<style:style style:name="MMD-Table" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.05in"/>
+</style:style>
+<style:style style:name="MMD-Table-Center" style:family="paragraph" style:parent-style-name="MMD-Table">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="MMD-Table-Right" style:family="paragraph" style:parent-style-name="MMD-Table">
+   <style:paragraph-properties fo:text-align="right" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="P2" style:family="paragraph" style:parent-style-name="Standard"
+             style:list-style-name="L2">
+<style:paragraph-properties fo:text-align="start" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="fr1" style:family="graphic" style:parent-style-name="Frame">
+   <style:graphic-properties style:print-content="true" style:vertical-pos="top"
+                             style:vertical-rel="baseline"
+                             fo:padding="0in"
+                             fo:border="none"
+                             style:shadow="none"/>
+</style:style>
+<style:style style:name="P1" style:family="paragraph" style:parent-style-name="Standard"
+             style:list-style-name="L1"/>
+<text:list-style style:name="L1">
+	<text:list-level-style-bullet text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="•">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.25in" fo:margin-left="0.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-bullet text:level="2" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="◦">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.75in" fo:text-indent="-0.25in" fo:margin-left="0.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-bullet text:level="3" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="▪">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-0.25in" fo:margin-left="1in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.25in" fo:text-indent="-0.25in" fo:margin-left="1.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.5in" fo:text-indent="-0.25in" fo:margin-left="1.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.75in" fo:text-indent="-0.25in" fo:margin-left="1.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2in" fo:text-indent="-0.25in" fo:margin-left="2in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.25in" fo:text-indent="-0.25in" fo:margin-left="2.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.5in" fo:text-indent="-0.25in" fo:margin-left="2.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.75in" fo:text-indent="-0.25in" fo:margin-left="2.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+</text:list-style>
+<text:list-style style:name="L2">
+	<text:list-level-style-number text:level="1" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.25in" fo:margin-left="0.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="2" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.75in" fo:text-indent="-0.25in" fo:margin-left="0.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="3" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-0.25in" fo:margin-left="1in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="4" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.25in" fo:text-indent="-0.25in" fo:margin-left="1.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="5" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.5in" fo:text-indent="-0.25in" fo:margin-left="1.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="6" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.75in" fo:text-indent="-0.25in" fo:margin-left="1.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="7" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2in" fo:text-indent="-0.25in" fo:margin-left="2in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="8" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.25in" fo:text-indent="-0.25in" fo:margin-left="2.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="9" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.5in" fo:text-indent="-0.25in" fo:margin-left="2.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="10" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.75in" fo:text-indent="-0.25in" fo:margin-left="2.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+</text:list-style>
+</office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Endnote" >
+    <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
+  <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
+ </office:master-styles>
+<office:body>
+<office:text>
+<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax <text:bookmark-end text:name="markdown:syntax"/></text:h>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#overview">Overview</text:a></text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#philosophy">Philosophy</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#html">Inline HTML</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#autoescape">Automatic Escaping for Special Characters</text:a></text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#block">Block Elements</text:a></text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#p">Paragraphs and Line Breaks</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#header">Headers</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#blockquote">Blockquotes</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#list">Lists</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#precode">Code Blocks</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#hr">Horizontal Rules</text:a></text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#span">Span Elements</text:a></text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#link">Links</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#em">Emphasis</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#code">Code</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#img">Images</text:a></text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#misc">Miscellaneous</text:a></text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:a xlink:type="simple" xlink:href="#backslash">Backslash Escapes</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#autolink">Automatic Links</text:a></text:p></text:list-item>
+
+</text:list></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">Note:</text:span> This document is itself written using Markdown; you
+can <text:a xlink:type="simple" xlink:href="/projects/markdown/syntax.text">see the source for it by adding &#8216;.text&#8217; to the URL</text:a>.</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Standard">Markdown is intended to be as easy-to-read and easy-to-write as is feasible.</text:p>
+
+<text:p text:style-name="Standard">Readability, however, is emphasized above all else. A Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&#8217;s been marked up with tags or formatting instructions. While
+Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+filters &#8211; including <text:a xlink:type="simple" xlink:href="http://docutils.sourceforge.net/mirror/setext.html">Setext</text:a>, <text:a xlink:type="simple" xlink:href="http://www.aaronsw.com/2002/atx/">atx</text:a>, <text:a xlink:type="simple" xlink:href="http://textism.com/tools/textile/">Textile</text:a>, <text:a xlink:type="simple" xlink:href="http://docutils.sourceforge.net/rst.html">reStructuredText</text:a>,
+<text:a xlink:type="simple" xlink:href="http://www.triptico.com/software/grutatxt.html">Grutatext</text:a>, and <text:a xlink:type="simple" xlink:href="http://ettext.taint.org/doc/">EtText</text:a> &#8211; the single biggest source of
+inspiration for Markdown&#8217;s syntax is the format of plain text email.</text:p>
+
+<text:p text:style-name="Standard">To this end, Markdown&#8217;s syntax is comprised entirely of punctuation
+characters, which punctuation characters have been carefully chosen so
+as to look like what they mean. E.g., asterisks around a word actually
+look like *emphasis*. Markdown lists look like, well, lists. Even
+blockquotes look like quoted passages of text, assuming you&#8217;ve ever
+used email.</text:p>
+
+<text:p text:style-name="Standard">Markdown&#8217;s syntax is intended for one purpose: to be used as a
+format for <text:span text:style-name="MMD-Italic">writing</text:span> for the web.</text:p>
+
+<text:p text:style-name="Standard">Markdown is not a replacement for HTML, or even close to it. Its
+syntax is very small, corresponding only to a very small subset of
+HTML tags. The idea is <text:span text:style-name="MMD-Italic">not</text:span> to create a syntax that makes it easier
+to insert HTML tags. In my opinion, HTML tags are already easy to
+insert. The idea for Markdown is to make it easy to read, write, and
+edit prose. HTML is a <text:span text:style-name="MMD-Italic">publishing</text:span> format; Markdown is a <text:span text:style-name="MMD-Italic">writing</text:span>
+format. Thus, Markdown&#8217;s formatting syntax only addresses issues that
+can be conveyed in plain text.</text:p>
+
+<text:p text:style-name="Standard">For any markup that is not covered by Markdown&#8217;s syntax, you simply
+use HTML itself. There&#8217;s no need to preface it or delimit it to
+indicate that you&#8217;re switching from Markdown to HTML; you just use
+the tags.</text:p>
+
+<text:p text:style-name="Standard">The only restrictions are that block-level HTML elements &#8211; e.g. <text:span text:style-name="Source_20_Text">&lt;div&gt;</text:span>,
+<text:span text:style-name="Source_20_Text">&lt;table&gt;</text:span>, <text:span text:style-name="Source_20_Text">&lt;pre&gt;</text:span>, <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span>, etc. &#8211; must be separated from surrounding
+content by blank lines, and the start and end tags of the block should
+not be indented with tabs or spaces. Markdown is smart enough not
+to add extra (unwanted) <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tags around HTML block-level tags.</text:p>
+
+<text:p text:style-name="Standard">For example, to add an HTML table to a Markdown article:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a regular paragraph.<text:line-break/><text:line-break/>&lt;table&gt;<text:line-break/>    &lt;tr&gt;<text:line-break/>        &lt;td&gt;Foo&lt;/td&gt;<text:line-break/>    &lt;/tr&gt;<text:line-break/>&lt;/table&gt;<text:line-break/><text:line-break/>This is another regular paragraph.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Note that Markdown formatting syntax is not processed within block-level
+HTML tags. E.g., you can&#8217;t use Markdown-style <text:span text:style-name="Source_20_Text">*emphasis*</text:span> inside an
+HTML block.</text:p>
+
+<text:p text:style-name="Standard">Span-level HTML tags &#8211; e.g. <text:span text:style-name="Source_20_Text">&lt;span&gt;</text:span>, <text:span text:style-name="Source_20_Text">&lt;cite&gt;</text:span>, or <text:span text:style-name="Source_20_Text">&lt;del&gt;</text:span> &#8211; can be
+used anywhere in a Markdown paragraph, list item, or header. If you
+want, you can even use HTML tags instead of Markdown formatting; e.g. if
+you&#8217;d prefer to use HTML <text:span text:style-name="Source_20_Text">&lt;a&gt;</text:span> or <text:span text:style-name="Source_20_Text">&lt;img&gt;</text:span> tags instead of Markdown&#8217;s
+link or image syntax, go right ahead.</text:p>
+
+<text:p text:style-name="Standard">Unlike block-level HTML tags, Markdown syntax <text:span text:style-name="MMD-Italic">is</text:span> processed within
+span-level tags.</text:p>
+
+<text:p text:style-name="Standard">In HTML, there are two characters that demand special treatment: <text:span text:style-name="Source_20_Text">&lt;</text:span>
+and <text:span text:style-name="Source_20_Text">&amp;</text:span>. Left angle brackets are used to start tags; ampersands are
+used to denote HTML entities. If you want to use them as literal
+characters, you must escape them as entities, e.g. <text:span text:style-name="Source_20_Text">&amp;lt;</text:span>, and
+<text:span text:style-name="Source_20_Text">&amp;amp;</text:span>.</text:p>
+
+<text:p text:style-name="Standard">Ampersands in particular are bedeviling for web writers. If you want to
+write about &#8216;AT&amp;T&#8217;, you need to write &#8216;<text:span text:style-name="Source_20_Text">AT&amp;amp;T</text:span>&#8217;. You even need to
+escape ampersands within URLs. Thus, if you want to link to:</text:p>
+
+<text:p text:style-name="Preformatted Text">http://images.google.com/images?num=30&amp;q=larry+bird<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">you need to encode the URL as:</text:p>
+
+<text:p text:style-name="Preformatted Text">http://images.google.com/images?num=30&amp;amp;q=larry+bird<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">in your anchor tag <text:span text:style-name="Source_20_Text">href</text:span> attribute. Needless to say, this is easy to
+forget, and is probably the single most common source of HTML validation
+errors in otherwise well-marked-up web sites.</text:p>
+
+<text:p text:style-name="Standard">Markdown allows you to use these characters naturally, taking care of
+all the necessary escaping for you. If you use an ampersand as part of
+an HTML entity, it remains unchanged; otherwise it will be translated
+into <text:span text:style-name="Source_20_Text">&amp;amp;</text:span>.</text:p>
+
+<text:p text:style-name="Standard">So, if you want to include a copyright symbol in your article, you can write:</text:p>
+
+<text:p text:style-name="Preformatted Text">&amp;copy;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">and Markdown will leave it alone. But if you write:</text:p>
+
+<text:p text:style-name="Preformatted Text">AT&amp;T<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown will translate it to:</text:p>
+
+<text:p text:style-name="Preformatted Text">AT&amp;amp;T<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Similarly, because Markdown supports <text:a xlink:type="simple" xlink:href="#html">inline HTML</text:a>, if you use
+angle brackets as delimiters for HTML tags, Markdown will treat them as
+such. But if you write:</text:p>
+
+<text:p text:style-name="Preformatted Text">4 &lt; 5<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown will translate it to:</text:p>
+
+<text:p text:style-name="Preformatted Text">4 &amp;lt; 5<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">However, inside Markdown code spans and blocks, angle brackets and
+ampersands are <text:span text:style-name="MMD-Italic">always</text:span> encoded automatically. This makes it easy to use
+Markdown to write about HTML code. (As opposed to raw HTML, which is a
+terrible format for writing about HTML syntax, because every single <text:span text:style-name="Source_20_Text">&lt;</text:span>
+and <text:span text:style-name="Source_20_Text">&amp;</text:span> in your example code needs to be escaped.)</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Standard">A paragraph is simply one or more consecutive lines of text, separated
+by one or more blank lines. (A blank line is any line that looks like a
+blank line &#8211; a line containing nothing but spaces or tabs is considered
+blank.) Normal paragraphs should not be indented with spaces or tabs.</text:p>
+
+<text:p text:style-name="Standard">The implication of the &#8220;one or more consecutive lines of text&#8221; rule is
+that Markdown supports &#8220;hard-wrapped&#8221; text paragraphs. This differs
+significantly from most other text-to-HTML formatters (including Movable
+Type&#8217;s &#8220;Convert Line Breaks&#8221; option) which translate every line break
+character in a paragraph into a <text:span text:style-name="Source_20_Text">&lt;br /&gt;</text:span> tag.</text:p>
+
+<text:p text:style-name="Standard">When you <text:span text:style-name="MMD-Italic">do</text:span> want to insert a <text:span text:style-name="Source_20_Text">&lt;br /&gt;</text:span> break tag using Markdown, you
+end a line with two or more spaces, then type return.</text:p>
+
+<text:p text:style-name="Standard">Yes, this takes a tad more effort to create a <text:span text:style-name="Source_20_Text">&lt;br /&gt;</text:span>, but a simplistic
+&#8220;every line break is a <text:span text:style-name="Source_20_Text">&lt;br /&gt;</text:span>&#8221; rule wouldn&#8217;t work for Markdown.
+Markdown&#8217;s email-style <text:a xlink:type="simple" xlink:href="#blockquote">blockquoting</text:a> and multi-paragraph <text:a xlink:type="simple" xlink:href="#list">list items</text:a>
+work best &#8211; and look better &#8211; when you format them with hard breaks.</text:p>
+
+<text:p text:style-name="Standard">Markdown supports two styles of headers, <text:a xlink:type="simple" xlink:href="http://docutils.sourceforge.net/mirror/setext.html">Setext</text:a> and <text:a xlink:type="simple" xlink:href="http://www.aaronsw.com/2002/atx/">atx</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Setext-style headers are &#8220;underlined&#8221; using equal signs (for first-level
+headers) and dashes (for second-level headers). For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is an H1<text:line-break/>=============<text:line-break/><text:line-break/>This is an H2<text:line-break/>-------------<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Any number of underlining <text:span text:style-name="Source_20_Text">=</text:span>&#8217;s or <text:span text:style-name="Source_20_Text">-</text:span>&#8217;s will work.</text:p>
+
+<text:p text:style-name="Standard">Atx-style headers use 1&#8211;6 hash characters at the start of the line,
+corresponding to header levels 1&#8211;6. For example:</text:p>
+
+<text:p text:style-name="Preformatted Text"># This is an H1<text:line-break/><text:line-break/>## This is an H2<text:line-break/><text:line-break/>###### This is an H6<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Optionally, you may &#8220;close&#8221; atx-style headers. This is purely
+cosmetic &#8211; you can use this if you think it looks better. The
+closing hashes don&#8217;t even need to match the number of hashes
+used to open the header. (The number of opening hashes
+determines the header level.) :</text:p>
+
+<text:p text:style-name="Preformatted Text"># This is an H1 #<text:line-break/><text:line-break/>## This is an H2 ##<text:line-break/><text:line-break/>### This is an H3 ######<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown uses email-style <text:span text:style-name="Source_20_Text">&gt;</text:span> characters for blockquoting. If you&#8217;re
+familiar with quoting passages of text in an email message, then you
+know how to create a blockquote in Markdown. It looks best if you hard
+wrap the text and put a <text:span text:style-name="Source_20_Text">&gt;</text:span> before every line:</text:p>
+
+<text:p text:style-name="Preformatted Text">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<text:line-break/>&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<text:line-break/>&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.<text:line-break/>&gt;<text:line-break/>&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<text:line-break/>&gt; id sem consectetuer libero luctus adipiscing.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown allows you to be lazy and only put the <text:span text:style-name="Source_20_Text">&gt;</text:span> before the first
+line of a hard-wrapped paragraph:</text:p>
+
+<text:p text:style-name="Preformatted Text">&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<text:line-break/>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<text:line-break/>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.<text:line-break/><text:line-break/>&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<text:line-break/>id sem consectetuer libero luctus adipiscing.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
+adding additional levels of <text:span text:style-name="Source_20_Text">&gt;</text:span>:</text:p>
+
+<text:p text:style-name="Preformatted Text">&gt; This is the first level of quoting.<text:line-break/>&gt;<text:line-break/>&gt; &gt; This is nested blockquote.<text:line-break/>&gt;<text:line-break/>&gt; Back to the first level.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Blockquotes can contain other Markdown elements, including headers, lists,
+and code blocks:</text:p>
+
+<text:p text:style-name="Preformatted Text">&gt; ## This is a header.<text:line-break/>&gt;<text:line-break/>&gt; 1.   This is the first list item.<text:line-break/>&gt; 2.   This is the second list item.<text:line-break/>&gt;<text:line-break/>&gt; Here's some example code:<text:line-break/>&gt;<text:line-break/>&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Any decent text editor should make email-style quoting easy. For
+example, with BBEdit, you can make a selection and choose Increase
+Quote Level from the Text menu.</text:p>
+
+<text:p text:style-name="Standard">Markdown supports ordered (numbered) and unordered (bulleted) lists.</text:p>
+
+<text:p text:style-name="Standard">Unordered lists use asterisks, pluses, and hyphens &#8211; interchangably
+&#8211; as list markers:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   Red<text:line-break/>*   Green<text:line-break/>*   Blue<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">is equivalent to:</text:p>
+
+<text:p text:style-name="Preformatted Text">+   Red<text:line-break/>+   Green<text:line-break/>+   Blue<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">and:</text:p>
+
+<text:p text:style-name="Preformatted Text">-   Red<text:line-break/>-   Green<text:line-break/>-   Blue<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Ordered lists use numbers followed by periods:</text:p>
+
+<text:p text:style-name="Preformatted Text">1.  Bird<text:line-break/>2.  McHale<text:line-break/>3.  Parish<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">It&#8217;s important to note that the actual numbers you use to mark the
+list have no effect on the HTML output Markdown produces. The HTML
+Markdown produces from the above list is:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;ol&gt;<text:line-break/>&lt;li&gt;Bird&lt;/li&gt;<text:line-break/>&lt;li&gt;McHale&lt;/li&gt;<text:line-break/>&lt;li&gt;Parish&lt;/li&gt;<text:line-break/>&lt;/ol&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">If you instead wrote the list in Markdown like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">1.  Bird<text:line-break/>1.  McHale<text:line-break/>1.  Parish<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">or even:</text:p>
+
+<text:p text:style-name="Preformatted Text">3. Bird<text:line-break/>1. McHale<text:line-break/>8. Parish<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">you&#8217;d get the exact same HTML output. The point is, if you want to,
+you can use ordinal numbers in your ordered Markdown lists, so that
+the numbers in your source match the numbers in your published HTML.
+But if you want to be lazy, you don&#8217;t have to.</text:p>
+
+<text:p text:style-name="Standard">If you do use lazy list numbering, however, you should still start the
+list with the number 1. At some point in the future, Markdown may support
+starting ordered lists at an arbitrary number.</text:p>
+
+<text:p text:style-name="Standard">List markers typically start at the left margin, but may be indented by
+up to three spaces. List markers must be followed by one or more spaces
+or a tab.</text:p>
+
+<text:p text:style-name="Standard">To make lists look nice, you can wrap items with hanging indents:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<text:line-break/>    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,<text:line-break/>    viverra nec, fringilla in, laoreet vitae, risus.<text:line-break/>*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.<text:line-break/>    Suspendisse id sem consectetuer libero luctus adipiscing.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">But if you want to be lazy, you don&#8217;t have to:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.<text:line-break/>Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,<text:line-break/>viverra nec, fringilla in, laoreet vitae, risus.<text:line-break/>*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.<text:line-break/>Suspendisse id sem consectetuer libero luctus adipiscing.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">If list items are separated by blank lines, Markdown will wrap the
+items in <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tags in the HTML output. For example, this input:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   Bird<text:line-break/>*   Magic<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will turn into:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;ul&gt;<text:line-break/>&lt;li&gt;Bird&lt;/li&gt;<text:line-break/>&lt;li&gt;Magic&lt;/li&gt;<text:line-break/>&lt;/ul&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">But this:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   Bird<text:line-break/><text:line-break/>*   Magic<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will turn into:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;ul&gt;<text:line-break/>&lt;li&gt;&lt;p&gt;Bird&lt;/p&gt;&lt;/li&gt;<text:line-break/>&lt;li&gt;&lt;p&gt;Magic&lt;/p&gt;&lt;/li&gt;<text:line-break/>&lt;/ul&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">List items may consist of multiple paragraphs. Each subsequent
+paragraph in a list item must be indented by either 4 spaces
+or one tab:</text:p>
+
+<text:p text:style-name="Preformatted Text">1.  This is a list item with two paragraphs. Lorem ipsum dolor<text:line-break/>    sit amet, consectetuer adipiscing elit. Aliquam hendrerit<text:line-break/>    mi posuere lectus.<text:line-break/><text:line-break/>    Vestibulum enim wisi, viverra nec, fringilla in, laoreet<text:line-break/>    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum<text:line-break/>    sit amet velit.<text:line-break/><text:line-break/>2.  Suspendisse id sem consectetuer libero luctus adipiscing.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">It looks nice if you indent every line of the subsequent
+paragraphs, but here again, Markdown will allow you to be
+lazy:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   This is a list item with two paragraphs.<text:line-break/><text:line-break/>    This is the second paragraph in the list item. You're<text:line-break/>only required to indent the first line. Lorem ipsum dolor<text:line-break/>sit amet, consectetuer adipiscing elit.<text:line-break/><text:line-break/>*   Another item in the same list.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To put a blockquote within a list item, the blockquote&#8217;s <text:span text:style-name="Source_20_Text">&gt;</text:span>
+delimiters need to be indented:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   A list item with a blockquote:<text:line-break/><text:line-break/>    &gt; This is a blockquote<text:line-break/>    &gt; inside a list item.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To put a code block within a list item, the code block needs
+to be indented <text:span text:style-name="MMD-Italic">twice</text:span> &#8211; 8 spaces or two tabs:</text:p>
+
+<text:p text:style-name="Preformatted Text">*   A list item with a code block:<text:line-break/><text:line-break/>        &lt;code goes here&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">It&#8217;s worth noting that it&#8217;s possible to trigger an ordered list by
+accident, by writing something like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">1986. What a great season.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">In other words, a <text:span text:style-name="MMD-Italic">number-period-space</text:span> sequence at the beginning of a
+line. To avoid this, you can backslash-escape the period:</text:p>
+
+<text:p text:style-name="Preformatted Text">1986\. What a great season.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Pre-formatted code blocks are used for writing about programming or
+markup source code. Rather than forming normal paragraphs, the lines
+of a code block are interpreted literally. Markdown wraps a code block
+in both <text:span text:style-name="Source_20_Text">&lt;pre&gt;</text:span> and <text:span text:style-name="Source_20_Text">&lt;code&gt;</text:span> tags.</text:p>
+
+<text:p text:style-name="Standard">To produce a code block in Markdown, simply indent every line of the
+block by at least 4 spaces or 1 tab. For example, given this input:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a normal paragraph:<text:line-break/><text:line-break/>    This is a code block.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown will generate:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;This is a normal paragraph:&lt;/p&gt;<text:line-break/><text:line-break/>&lt;pre&gt;&lt;code&gt;This is a code block.<text:line-break/>&lt;/code&gt;&lt;/pre&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">One level of indentation &#8211; 4 spaces or 1 tab &#8211; is removed from each
+line of the code block. For example, this:</text:p>
+
+<text:p text:style-name="Preformatted Text">Here is an example of AppleScript:<text:line-break/><text:line-break/>    tell application &quot;Foo&quot;<text:line-break/>        beep<text:line-break/>    end tell<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will turn into:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;Here is an example of AppleScript:&lt;/p&gt;<text:line-break/><text:line-break/>&lt;pre&gt;&lt;code&gt;tell application &quot;Foo&quot;<text:line-break/>    beep<text:line-break/>end tell<text:line-break/>&lt;/code&gt;&lt;/pre&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">A code block continues until it reaches a line that is not indented
+(or the end of the article).</text:p>
+
+<text:p text:style-name="Standard">Within a code block, ampersands (<text:span text:style-name="Source_20_Text">&amp;</text:span>) and angle brackets (<text:span text:style-name="Source_20_Text">&lt;</text:span> and <text:span text:style-name="Source_20_Text">&gt;</text:span>)
+are automatically converted into HTML entities. This makes it very
+easy to include example HTML source code using Markdown &#8211; just paste
+it and indent it, and Markdown will handle the hassle of encoding the
+ampersands and angle brackets. For example, this:</text:p>
+
+<text:p text:style-name="Preformatted Text">    &lt;div class=&quot;footer&quot;&gt;<text:line-break/>        &amp;copy; 2004 Foo Corporation<text:line-break/>    &lt;/div&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will turn into:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;footer&quot;&amp;gt;<text:line-break/>    &amp;amp;copy; 2004 Foo Corporation<text:line-break/>&amp;lt;/div&amp;gt;<text:line-break/>&lt;/code&gt;&lt;/pre&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Regular Markdown syntax is not processed within code blocks. E.g.,
+asterisks are just literal asterisks within a code block. This means
+it&#8217;s also easy to use Markdown to write about Markdown&#8217;s own syntax.</text:p>
+
+<text:p text:style-name="Standard">You can produce a horizontal rule tag (<text:span text:style-name="Source_20_Text">&lt;hr /&gt;</text:span>) by placing three or
+more hyphens, asterisks, or underscores on a line by themselves. If you
+wish, you may use spaces between the hyphens or asterisks. Each of the
+following lines will produce a horizontal rule:</text:p>
+
+<text:p text:style-name="Preformatted Text">* * *<text:line-break/><text:line-break/>***<text:line-break/><text:line-break/>*****<text:line-break/><text:line-break/>- - -<text:line-break/><text:line-break/>---------------------------------------<text:line-break/></text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Standard">Markdown supports two style of links: <text:span text:style-name="MMD-Italic">inline</text:span> and <text:span text:style-name="MMD-Italic">reference</text:span>.</text:p>
+
+<text:p text:style-name="Standard">In both styles, the link text is delimited by [square brackets].</text:p>
+
+<text:p text:style-name="Standard">To create an inline link, use a set of regular parentheses immediately
+after the link text&#8217;s closing square bracket. Inside the parentheses,
+put the URL where you want the link to point, along with an <text:span text:style-name="MMD-Italic">optional</text:span>
+title for the link, surrounded in quotes. For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is [an example](http://example.com/ &quot;Title&quot;) inline link.<text:line-break/><text:line-break/>[This link](http://example.net/) has no title attribute.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Will produce:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot; title=&quot;Title&quot;&gt;<text:line-break/>an example&lt;/a&gt; inline link.&lt;/p&gt;<text:line-break/><text:line-break/>&lt;p&gt;&lt;a href=&quot;http://example.net/&quot;&gt;This link&lt;/a&gt; has no<text:line-break/>title attribute.&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">If you&#8217;re referring to a local resource on the same server, you can
+use relative paths:</text:p>
+
+<text:p text:style-name="Preformatted Text">See my [About](/about/) page for details.   
+</text:p>
+
+<text:p text:style-name="Standard">Reference-style links use a second set of square brackets, inside
+which you place a label of your choosing to identify the link:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is [an example][id] reference-style link.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">You can optionally use a space to separate the sets of brackets:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is [an example] [id] reference-style link.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Then, anywhere in the document, you define your link label like this,
+on a line by itself:</text:p>
+
+<text:p text:style-name="Preformatted Text">[id]: http://example.com/  &quot;Optional Title Here&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">That is:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Square brackets containing the link identifier (optionally
+indented from the left margin using up to three spaces);</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+followed by a colon;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+followed by one or more spaces (or tabs);</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+followed by the URL for the link;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">optionally followed by a title attribute for the link, enclosed
+in double or single quotes, or enclosed in parentheses.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">The following three link definitions are equivalent:</text:p>
+
+<text:p text:style-name="Preformatted Text">[foo]: http://example.com/  &quot;Optional Title Here&quot;<text:line-break/>[foo]: http://example.com/  'Optional Title Here'<text:line-break/>[foo]: http://example.com/  (Optional Title Here)<text:line-break/></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">Note:</text:span> There is a known bug in Markdown.pl 1.0.1 which prevents
+single quotes from being used to delimit link titles.</text:p>
+
+<text:p text:style-name="Standard">The link URL may, optionally, be surrounded by angle brackets:</text:p>
+
+<text:p text:style-name="Preformatted Text">[id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">You can put the title attribute on the next line and use extra spaces
+or tabs for padding, which tends to look better with longer URLs:</text:p>
+
+<text:p text:style-name="Preformatted Text">[id]: http://example.com/longish/path/to/resource/here<text:line-break/>    &quot;Optional Title Here&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Link definitions are only used for creating links during Markdown
+processing, and are stripped from your document in the HTML output.</text:p>
+
+<text:p text:style-name="Standard">Link definition names may consist of letters, numbers, spaces, and
+punctuation &#8211; but they are <text:span text:style-name="MMD-Italic">not</text:span> case sensitive. E.g. these two
+links:</text:p>
+
+<text:p text:style-name="Preformatted Text">[link text][a]<text:line-break/>[link text][A]<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">are equivalent.</text:p>
+
+<text:p text:style-name="Standard">The <text:span text:style-name="MMD-Italic">implicit link name</text:span> shortcut allows you to omit the name of the
+link, in which case the link text itself is used as the name.
+Just use an empty set of square brackets &#8211; e.g., to link the word
+&#8220;Google&#8221; to the google.com web site, you could simply write:</text:p>
+
+<text:p text:style-name="Preformatted Text">[Google][]<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">And then define the link:</text:p>
+
+<text:p text:style-name="Preformatted Text">[Google]: http://google.com/<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Because link names may contain spaces, this shortcut even works for
+multiple words in the link text:</text:p>
+
+<text:p text:style-name="Preformatted Text">Visit [Daring Fireball][] for more information.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">And then define the link:</text:p>
+
+<text:p text:style-name="Preformatted Text">[Daring Fireball]: http://daringfireball.net/<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Link definitions can be placed anywhere in your Markdown document. I
+tend to put them immediately after each paragraph in which they&#8217;re
+used, but if you want, you can put them all at the end of your
+document, sort of like footnotes.</text:p>
+
+<text:p text:style-name="Standard">Here&#8217;s an example of reference links in action:</text:p>
+
+<text:p text:style-name="Preformatted Text">I get 10 times more traffic from [Google] [1] than from<text:line-break/>[Yahoo] [2] or [MSN] [3].<text:line-break/><text:line-break/>  [1]: http://google.com/        &quot;Google&quot;<text:line-break/>  [2]: http://search.yahoo.com/  &quot;Yahoo Search&quot;<text:line-break/>  [3]: http://search.msn.com/    &quot;MSN Search&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Using the implicit link name shortcut, you could instead write:</text:p>
+
+<text:p text:style-name="Preformatted Text">I get 10 times more traffic from [Google][] than from<text:line-break/>[Yahoo][] or [MSN][].<text:line-break/><text:line-break/>  [google]: http://google.com/        &quot;Google&quot;<text:line-break/>  [yahoo]:  http://search.yahoo.com/  &quot;Yahoo Search&quot;<text:line-break/>  [msn]:    http://search.msn.com/    &quot;MSN Search&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Both of the above examples will produce the following HTML output:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;<text:line-break/>title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from<text:line-break/>&lt;a href=&quot;http://search.yahoo.com/&quot; title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt;<text:line-break/>or &lt;a href=&quot;http://search.msn.com/&quot; title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">For comparison, here is the same paragraph written using
+Markdown&#8217;s inline link style:</text:p>
+
+<text:p text:style-name="Preformatted Text">I get 10 times more traffic from [Google](http://google.com/ &quot;Google&quot;)<text:line-break/>than from [Yahoo](http://search.yahoo.com/ &quot;Yahoo Search&quot;) or<text:line-break/>[MSN](http://search.msn.com/ &quot;MSN Search&quot;).<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The point of reference-style links is not that they&#8217;re easier to
+write. The point is that with reference-style links, your document
+source is vastly more readable. Compare the above examples: using
+reference-style links, the paragraph itself is only 81 characters
+long; with inline-style links, it&#8217;s 176 characters; and as raw HTML,
+it&#8217;s 234 characters. In the raw HTML, there&#8217;s more markup than there
+is text.</text:p>
+
+<text:p text:style-name="Standard">With Markdown&#8217;s reference-style links, a source document much more
+closely resembles the final output, as rendered in a browser. By
+allowing you to move the markup-related metadata out of the paragraph,
+you can add links without interrupting the narrative flow of your
+prose.</text:p>
+
+<text:p text:style-name="Standard">Markdown treats asterisks (<text:span text:style-name="Source_20_Text">*</text:span>) and underscores (<text:span text:style-name="Source_20_Text">_</text:span>) as indicators of
+emphasis. Text wrapped with one <text:span text:style-name="Source_20_Text">*</text:span> or <text:span text:style-name="Source_20_Text">_</text:span> will be wrapped with an
+HTML <text:span text:style-name="Source_20_Text">&lt;em&gt;</text:span> tag; double <text:span text:style-name="Source_20_Text">*</text:span>&#8217;s or <text:span text:style-name="Source_20_Text">_</text:span>&#8217;s will be wrapped with an HTML
+<text:span text:style-name="Source_20_Text">&lt;strong&gt;</text:span> tag. E.g., this input:</text:p>
+
+<text:p text:style-name="Preformatted Text">*single asterisks*<text:line-break/><text:line-break/>_single underscores_<text:line-break/><text:line-break/>**double asterisks**<text:line-break/><text:line-break/>__double underscores__<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will produce:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;em&gt;single asterisks&lt;/em&gt;<text:line-break/><text:line-break/>&lt;em&gt;single underscores&lt;/em&gt;<text:line-break/><text:line-break/>&lt;strong&gt;double asterisks&lt;/strong&gt;<text:line-break/><text:line-break/>&lt;strong&gt;double underscores&lt;/strong&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">You can use whichever style you prefer; the lone restriction is that
+the same character must be used to open and close an emphasis span.</text:p>
+
+<text:p text:style-name="Standard">Emphasis can be used in the middle of a word:</text:p>
+
+<text:p text:style-name="Preformatted Text">un*frigging*believable<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">But if you surround an <text:span text:style-name="Source_20_Text">*</text:span> or <text:span text:style-name="Source_20_Text">_</text:span> with spaces, it&#8217;ll be treated as a
+literal asterisk or underscore.</text:p>
+
+<text:p text:style-name="Standard">To produce a literal asterisk or underscore at a position where it
+would otherwise be used as an emphasis delimiter, you can backslash
+escape it:</text:p>
+
+<text:p text:style-name="Preformatted Text">\*this text is surrounded by literal asterisks\*<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To indicate a span of code, wrap it with backtick quotes (<text:span text:style-name="Source_20_Text">`</text:span>).
+Unlike a pre-formatted code block, a code span indicates code within a
+normal paragraph. For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">Use the `printf()` function.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will produce:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To include a literal backtick character within a code span, you can use
+multiple backticks as the opening and closing delimiters:</text:p>
+
+<text:p text:style-name="Preformatted Text">``There is a literal backtick (`) here.``<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">which will produce this:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The backtick delimiters surrounding a code span may include spaces &#8211;
+one after the opening, one before the closing. This allows you to place
+literal backtick characters at the beginning or end of a code span:</text:p>
+
+<text:p text:style-name="Preformatted Text">A single backtick in a code span: `` ` ``<text:line-break/><text:line-break/>A backtick-delimited string in a code span: `` `foo` ``<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">will produce:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;<text:line-break/><text:line-break/>&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">With a code span, ampersands and angle brackets are encoded as HTML
+entities automatically, which makes it easy to include example HTML
+tags. Markdown will turn this:</text:p>
+
+<text:p text:style-name="Preformatted Text">Please don't use any `&lt;blink&gt;` tags.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">into:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;Please don't use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">You can write this:</text:p>
+
+<text:p text:style-name="Preformatted Text">`&amp;#8212;` is the decimal-encoded equivalent of `&amp;mdash;`.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">to produce:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;&lt;code&gt;&amp;amp;#8212;&lt;/code&gt; is the decimal-encoded<text:line-break/>equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Admittedly, it&#8217;s fairly difficult to devise a &#8220;natural&#8221; syntax for
+placing images into a plain text document format.</text:p>
+
+<text:p text:style-name="Standard">Markdown uses an image syntax that is intended to resemble the syntax
+for links, allowing for two styles: <text:span text:style-name="MMD-Italic">inline</text:span> and <text:span text:style-name="MMD-Italic">reference</text:span>.</text:p>
+
+<text:p text:style-name="Standard">Inline image syntax looks like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">![Alt text](/path/to/img.jpg)<text:line-break/><text:line-break/>![Alt text](/path/to/img.jpg &quot;Optional title&quot;)<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">That is:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+An exclamation mark: <text:span text:style-name="Source_20_Text">!</text:span>;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">followed by a set of square brackets, containing the <text:span text:style-name="Source_20_Text">alt</text:span>
+attribute text for the image;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">followed by a set of parentheses, containing the URL or path to
+the image, and an optional <text:span text:style-name="Source_20_Text">title</text:span> attribute enclosed in double
+or single quotes.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">Reference-style image syntax looks like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">![Alt text][id]<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Where &#8220;id&#8221; is the name of a defined image reference. Image references
+are defined using syntax identical to link references:</text:p>
+
+<text:p text:style-name="Preformatted Text">[id]: url/to/image  &quot;Optional title attribute&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">As of this writing, Markdown has no syntax for specifying the
+dimensions of an image; if this is important to you, you can simply
+use regular HTML <text:span text:style-name="Source_20_Text">&lt;img&gt;</text:span> tags.</text:p>
+
+<text:p text:style-name="Horizontal_20_Line"/>
+
+<text:p text:style-name="Standard">Markdown supports a shortcut style for creating &#8220;automatic&#8221; links for URLs and email addresses: simply surround the URL or email address with angle brackets. What this means is that if you want to show the actual text of a URL or email address, and also have it be a clickable link, you can do this:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;http://example.com/&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown will turn this into:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Automatic links for email addresses work similarly, except that
+Markdown will also perform a bit of randomized decimal and hex
+entity-encoding to help obscure your address from address-harvesting
+spambots. For example, Markdown will turn this:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;address@example.com&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">into something like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;a href=&quot;&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;<text:line-break/>&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;<text:line-break/>&amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;<text:line-break/>&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">which will render in a browser as a clickable link to &#8220;address@example.com&#8221;.</text:p>
+
+<text:p text:style-name="Standard">(This sort of entity-encoding trick will indeed fool many, if not
+most, address-harvesting bots, but it definitely won&#8217;t fool all of
+them. It&#8217;s better than nothing, but an address published in this way
+will probably eventually start receiving spam.)</text:p>
+
+<text:p text:style-name="Standard">Markdown allows you to use backslash escapes to generate literal
+characters which would otherwise have special meaning in Markdown&#8217;s
+formatting syntax. For example, if you wanted to surround a word
+with literal asterisks (instead of an HTML <text:span text:style-name="Source_20_Text">&lt;em&gt;</text:span> tag), you can use
+backslashes before the asterisks, like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">\*literal asterisks\*<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Markdown provides backslash escapes for the following characters:</text:p>
+
+<text:p text:style-name="Preformatted Text">\   backslash<text:line-break/>`   backtick<text:line-break/>*   asterisk<text:line-break/>_   underscore<text:line-break/>{}  curly braces<text:line-break/>[]  square brackets<text:line-break/>()  parentheses<text:line-break/>#   hash mark<text:line-break/>+   plus sign<text:line-break/>-   minus sign (hyphen)<text:line-break/>.   dot<text:line-break/>!   exclamation mark<text:line-break/></text:p>
+</office:text>
+</office:body>
+</office:document>

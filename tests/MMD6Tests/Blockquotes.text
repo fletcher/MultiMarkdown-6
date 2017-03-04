@@ -1,3 +1,6 @@
+Title:	Blockquotes
+latex config:	article
+
 > foo
 >	bar
 

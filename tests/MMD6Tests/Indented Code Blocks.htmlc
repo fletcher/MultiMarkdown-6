@@ -1,3 +1,6 @@
+<p>Title:	Indented Code Blocks
+latex config:	article</p>
+
 <pre><code>foo
 </code></pre>
 

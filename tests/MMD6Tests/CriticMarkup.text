@@ -1,3 +1,6 @@
+Title:	CriticMarkup
+latex config:	article
+
 {++foo++}
 
 {--bar--}

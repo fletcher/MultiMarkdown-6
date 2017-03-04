@@ -1,3 +1,6 @@
+<p>Title:	Fenced Code Blocks
+latex config:	article</p>
+
 <p><code>*foo*</code></p>
 
 <p>````
@@ -18,6 +21,13 @@
 <p>bar
 ````</p></li>
 </ul>
+
+<p><code>\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</code></p>
+
+<p><code>tex
+\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</code></p>
+
+<p>5</p>
 
 <p>```
 foo</p>

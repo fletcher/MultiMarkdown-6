@@ -1,3 +1,6 @@
+Title:	Special Characters
+latex config:	article
+
 {foo}
 
 [foo]

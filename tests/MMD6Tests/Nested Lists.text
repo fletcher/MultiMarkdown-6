@@ -1,3 +1,6 @@
+Title:	Nested Lists
+latex config:	article
+
 * foo
 	* bar
 * foo

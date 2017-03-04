@@ -1,3 +1,7 @@
+\input{mmd6-article-leader}
+\def\mytitle{Transclusion}
+\input{mmd6-article-begin}
+
 This text is included in \texttt{foo.txt}.
 
 This should not be transcluded to avoid an infinite loop -- \{\{foo.txt\}\}
@@ -15,3 +19,6 @@ This is a file with no metadata.
 \end{verbatim}
 
 \{\{transclusion\slash bat.*\}\}
+
+\input{mmd6-article-footer}
+\end{document}

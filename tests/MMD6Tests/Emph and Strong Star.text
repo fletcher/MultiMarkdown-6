@@ -1,3 +1,6 @@
+Title:	Emph and Strong Star
+latex config:	article
+
 *foo*
 
 **foo*

@@ -9,6 +9,12 @@ release: $(BUILD_DIR)
 	cd $(BUILD_DIR); \
 	cmake -DCMAKE_BUILD_TYPE=Release ..
 
+# Also build a shared library
+.PHONY : shared
+shared: $(BUILD_DIR)
+	cd $(BUILD_DIR); \
+	cmake -DCMAKE_BUILD_TYPE=Release -DSHAREDBUILD=1 ..
+
 # Build zip file package
 .PHONY : zip
 zip: $(BUILD_DIR)
@@ -33,7 +39,7 @@ analyze: $(BUILD_DIR)
 .PHONY : map
 map:
 	cd $(BUILD_DIR); \
-	../tools/enumsToPerl.pl ../src/libMultiMarkdown.h enumMap.txt;
+	../tools/enumsToPerl.pl ../Sources/libMultiMarkdown/include/libMultiMarkdown.h enumMap.txt;
 
 # Create xcode project
 # You can then build within XCode, or using the commands:
@@ -48,6 +54,16 @@ xcode: $(XCODE_BUILD_DIR)
 xcode-debug: $(XCODE_DEBUG_BUILD_DIR)
 	cd $(XCODE_DEBUG_BUILD_DIR); \
 	cmake -G Xcode -DTEST=1 ..
+
+# Build Swift debug variant
+.PHONY : swift
+swift: $(BUILD_DIR)
+	swift build -c debug --build-path ${BUILD_DIR} -Xcc -fbracket-depth=264
+
+# Build Swift release variant
+.PHONY : swift-release
+swift-release: $(BUILD_DIR)
+	swift build -c release --build-path ${BUILD_DIR} -Xcc -fbracket-depth=264 -Xcc -DNDEBUG=1
 
 # Cross-compile for Windows using MinGW on *nix
 .PHONY : windows

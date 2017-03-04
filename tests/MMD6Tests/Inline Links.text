@@ -1,3 +1,6 @@
+Title:	Inline Links
+latex config:	article
+
 Just a [URL](http://url/file.txt).
 
 [URL and title](/url/file.txt "title").

@@ -1,0 +1,22 @@
+<p>Title:	Linebreaks
+latex config:	article</p>
+
+<p>foo
+bar</p>
+
+<p>foo
+bar</p>
+
+<p>foo<br />
+bar</p>
+
+<p>foo<br />
+bar</p>
+
+<p>foo<br />
+bar</p>
+
+<p>5</p>
+
+<p>foo<br />
+bar</p>

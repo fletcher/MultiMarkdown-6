@@ -1,3 +1,6 @@
+<p>Title:	Advanced Fenced Code Blocks
+latex config:	article</p>
+
 <p><code>foo *2*</code></p>
 
 <p><code>foo *3*</code></p>

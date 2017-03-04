@@ -1,0 +1,17 @@
+<p>Title:	Glossaries
+latex config:	article</p>
+
+<p><a href="Reference">?foo</a></p>
+
+<p>[?(bar) Inline]</p>
+
+<p><a href="Reference">?Foo Bar</a></p>
+
+<p><a href="Reference">?foo</a></p>
+
+<p>[?bar]</p>
+
+<p>5</p>
+
+<pre><code>With second para.
+</code></pre>

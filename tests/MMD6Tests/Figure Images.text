@@ -1,3 +1,6 @@
+Title:	Figure Images
+latex config:	article
+
 ![foo]
 
 ![*bar*][foo]

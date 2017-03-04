@@ -3,11 +3,11 @@
 FILE=$1
 
 
-cp build/template.c src/$FILE.c
+cp build/template.c Sources/$FILE.c
 
-perl -pi -e "s/file\.c/$FILE\.c/;" -e "s/file\.h/$FILE\.h/;" src/$FILE.c
+perl -pi -e "s/file\.c/$FILE\.c/;" -e "s/file\.h/$FILE\.h/;" Sources/$FILE.c
 
 
-cp build/template.h src/$FILE.h
+cp build/template.h Sources/$FILE.h
 
-perl -pi -e "s/file\.c/$FILE\.c/;" -e "s/file\.h/$FILE\.h/;" -e "s/FILE\_/\U$FILE\_/;" src/$FILE.h
+perl -pi -e "s/file\.c/$FILE\.c/;" -e "s/file\.h/$FILE\.h/;" -e "s/FILE\_/\U$FILE\_/;" Sources/$FILE.h

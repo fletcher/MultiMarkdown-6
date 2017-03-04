@@ -1,3 +1,6 @@
+<p>Title:	Special Characters
+latex config:	article</p>
+
 <p>{foo}</p>
 
 <p>[foo]</p>
@@ -15,3 +18,4 @@
 <p>\foo</p>
 
 <foo>
+

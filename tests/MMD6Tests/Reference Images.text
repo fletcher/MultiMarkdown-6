@@ -1,3 +1,6 @@
+Title:	Reference Images
+latex config:	article
+
 Test ![*foo*][bar].
 
 Test ![*foo*][BAR].

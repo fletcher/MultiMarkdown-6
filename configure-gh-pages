@@ -1,8 +1,8 @@
 #!/bin/sh
 
-mkdir documentation
+mkdir manual
 
-cd documentation
+cd manual
 
 git clone .. .
 

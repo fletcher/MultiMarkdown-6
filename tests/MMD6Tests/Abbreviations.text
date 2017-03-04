@@ -1,0 +1,20 @@
+Title:	Abbreviations
+latex config:	article
+
+foo
+
+bar
+
+foo bar
+
+foobar
+
+foo
+bar
+
+5
+
+*[foo]: FOO
+*[bar]: BAR
+*[foobar]: FOOBAR
+*[foo bar]: FOO BAR

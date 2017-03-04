@@ -6,29 +6,59 @@
 | Author:    | Fletcher T. Penney       |  
 | Date:      | 2017-02-17 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.3.1a      |  
+| Version:   | 0.4.0b      |  
 
 
 ## Updates ##
 
+* 2017-03-04 -- v 0.4.0-b:
+
+	*    ADDED: Add TOC support to ODF
+	*    ADDED: Add glossary support to ODF
+	*    ADDED: Add prelim code for handling abbreviations
+	*    ADDED: Add support for Swift Package Maker; CHANGED: Restructure source directory
+	*    ADDED: Added LaTeX support for escaped characters, fenced code blocks, images, links
+	*    ADDED: Basic ODF Support
+	*    ADDED: Better document strong/emph algorithm
+	*    ADDED: Continue ODF progress
+	*    ADDED: Continue to work on ODF export
+	*    ADDED: Continue work on ODF
+	*    ADDED: Finish ODF support for lists
+	*    ADDED: Improve performance when exporting
+	*    ADDED: Improve token_pool memory handling
+	*    ADDED: Prototype support for Glossaries
+	*    ADDED: Support 'latexconfig' metadata
+	*    CHANGED: Use multiple cases in glossary tests
+	*    FIXED: Don't force glossary terms into lowercase
+	*    FIXED: Fix Makefile for new source file location
+	*    FIXED: Fix algorithm for creating TOC to properly handle 'incorrect' levels
+	*    FIXED: Fix linebreaks in LaTeX; ADDED: Add Linebreaks test file
+	*    FIXED: Fix new_source script for new directory structure
+	*    FIXED: Fix non-breaking space in ODF
+	*    FIXED: Fix padding at end of document body in ODF
+	*    FIXED: Fix underscores in raw latex
+	*    FIXED: Potential bug
+	*    NOTE: Add shared library build option
+
+
 * 2017-02-17 -- v 0.3.1.a:
 
-*    ADDED: 'finalize' beamer support
-*    ADDED: Add escaped newline as linebreak; start on beamer/memoir support
-*    ADDED: CriticMarkup test for LaTeX
-*    ADDED: Custom LaTeX output for CriticMarkup comments
-*    ADDED: Support mmd export format
-*    ADDED: Work on cpack installer -- change project name for compatibility
-*    CHANGED: Adjust latex metadata configuration for consistency
-*    CHANGED: Configure cmake to use C99
-*    FIXED: Add custom  implementation for cross-platform support
-*    FIXED: Fix German HTML tests
-*    FIXED: Fix cpack destination directory issue
-*    FIXED: Fix memory leaks etc
-*    FIXED: Fix warning in custom vasprintf
-*    FIXED: Modify CMakeLists.txt to test for use of clang compiler
-*    FIXED: Work on memory leaks
-*    NOTE: Adjust license width to improve display on smaller terminal windows
+	*    ADDED: 'finalize' beamer support
+	*    ADDED: Add escaped newline as linebreak; start on beamer/memoir support
+	*    ADDED: CriticMarkup test for LaTeX
+	*    ADDED: Custom LaTeX output for CriticMarkup comments
+	*    ADDED: Support mmd export format
+	*    ADDED: Work on cpack installer -- change project name for compatibility
+	*    CHANGED: Adjust latex metadata configuration for consistency
+	*    CHANGED: Configure cmake to use C99
+	*    FIXED: Add custom  implementation for cross-platform support
+	*    FIXED: Fix German HTML tests
+	*    FIXED: Fix cpack destination directory issue
+	*    FIXED: Fix memory leaks etc
+	*    FIXED: Fix warning in custom vasprintf
+	*    FIXED: Modify CMakeLists.txt to test for use of clang compiler
+	*    FIXED: Work on memory leaks
+	*    NOTE: Adjust license width to improve display on smaller terminal windows
 
 
 * 2017-02-14 -- v 0.3.0a:
@@ -478,6 +508,11 @@ I actually think it makes sense.  This may or may not change in the future.
 
 6. Table captions in MMD-6 must come immediately *after* the table, not
 before it.
+
+7. Escaped linebreaks (`\` preceding a line break) will be interpreted as
+`<br />` (even in compatibility mode).  This was previously an optional
+feature in MMD, but I don't see a problem with just making it default 
+behavior.
 
 
 ## Where Does MultiMarkdown 6 Stand? ##
