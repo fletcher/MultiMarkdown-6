@@ -372,6 +372,46 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			print_const("</text:p>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_DEFINITION:
+			pad(out, 2, scratch);
+			temp_short2 = scratch->odf_para_type;
+			scratch->odf_para_type = BLOCK_DEFINITION;
+
+			temp_short = scratch->list_is_tight;
+			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+				scratch->list_is_tight = true;
+
+			if (t->child && t->child->type != BLOCK_PARA) {
+				print_const("<text:p text:style-name=\"Quotations\">");
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+				print_const("</text:p>");
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);				
+			}
+			scratch->padded = 0;
+
+			scratch->list_is_tight = temp_short;
+			scratch->odf_para_type = temp_short2;
+			break;
+		case BLOCK_DEFLIST:
+			pad(out, 2, scratch);
+
+			// Group consecutive definition lists into a single list.
+			// lemon's LALR(1) parser can't properly handle this (to my understanding).
+
+//			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
+//				print_const("<dl>\n");
+	
+			scratch->padded = 2;
+
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			pad(out, 1, scratch);
+
+//			if (!(t->next && (t->next->type == BLOCK_DEFLIST)))
+//				print_const("</dl>\n");
+
+			scratch->padded = 1;
+			break;
 		case BLOCK_EMPTY:
 			break;
 		case BLOCK_H1:
@@ -467,10 +507,18 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case BLOCK_LIST_ITEM_TIGHT:
 			pad(out, 2, scratch);
-			print_const("<text:list-item>\n<text:p text:style-name=\"P1\">\n");
+			print_const("<text:list-item>\n");
+
+			if (t->child && t->child->type != BLOCK_PARA)
+				print_const("<text:p text:style-name=\"P1\">\n");
+
 			scratch->padded = 2;
 			mmd_export_token_tree_odf(out, source, t->child, scratch);
-			print_const("</text:p></text:list-item>");
+
+			if (t->child && t->child->type != BLOCK_PARA)
+			print_const("</text:p>");
+
+			print_const("</text:list-item>");
 			scratch->padded = 0;
 			break;
 		case BLOCK_META:
@@ -481,6 +529,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 			switch (scratch->odf_para_type) {
 				case BLOCK_BLOCKQUOTE:
+				case BLOCK_DEFINITION:
 					print_const(" text:style-name=\"Quotations\">");
 					break;
 				case PAIR_BRACKET_CITATION:
@@ -496,6 +545,13 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 			print_const("</text:p>");
 			scratch->padded = 0;
+			break;
+		case BLOCK_TERM:
+			pad(out, 2, scratch);
+			print_const("<text:p><text:span text:style-name=\"MMD-Bold\">");
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			print_const("</text:span></text:p>\n");
+			scratch->padded = 2;
 			break;
 		case BRACE_DOUBLE_LEFT:
 			print_const("{{");
@@ -1476,9 +1532,9 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 		} else if (strcmp(m->key, "mmdheader") == 0) {
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
-			print_const("\t<title>");
+			print_const("\t<dc:title>");
 			mmd_print_string_odf(out, m->value);
-			print_const("</title>\n");
+			print_const("</dc:title>\n");
 		} else if (strcmp(m->key, "transcludebase") == 0) {
 		} else if (strcmp(m->key, "xhtmlheader") == 0) {
 			print(m->value);
