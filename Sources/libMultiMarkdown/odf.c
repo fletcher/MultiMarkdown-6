@@ -534,6 +534,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 					break;
 				case PAIR_BRACKET_CITATION:
 				case PAIR_BRACKET_FOOTNOTE:
+				case PAIR_BRACKET_GLOSSARY:
 					print_const(" text:style-name=\"Footnote\">");
 					break;
 				default:				
@@ -909,6 +910,43 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 					// This is a new footnote
 					printf("<text:note text:id=\"fn%d\" text:note-class=\"footnote\"><text:note-body>", temp_short);
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+					print_const("</text:note-body></text:note>");
+				}
+
+				scratch->odf_para_type = temp_short2;
+			} else {
+				// Footnotes disabled
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_BRACKET_GLOSSARY:
+			if (scratch->extensions & EXT_NOTES) {
+				glossary_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					print_const("[?");
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					print_const("]");
+					break;
+				}
+
+				temp_short2 = scratch->odf_para_type;
+				scratch->odf_para_type = PAIR_BRACKET_GLOSSARY;
+
+				if (temp_short < scratch->used_glossaries->size) {
+					// Re-using previous footnote
+					print("\\footnote{reuse");
+
+					print("}");
+				} else {
+					// This is a new glossary item
+					temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
+
+					mmd_print_string_odf(out, temp_note->clean_text); 
+
+					printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
 
 					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
 					print_const("</text:note-body></text:note>");
