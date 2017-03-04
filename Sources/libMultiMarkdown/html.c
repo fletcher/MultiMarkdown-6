@@ -197,7 +197,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 }
 
 
-void mmd_export_link_html(DString * out, const char * source, token * text, link * link, size_t offset, scratch_pad * scratch) {
+void mmd_export_link_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	attr * a = link->attributes;
 
 	if (link->url) {
@@ -230,13 +230,13 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 		text->child->next->len++;
 	}
 	
-	mmd_export_token_tree_html(out, source, text->child, offset, scratch);
+	mmd_export_token_tree_html(out, source, text->child, scratch);
 
 	print_const("</a>");
 }
 
 
-void mmd_export_image_html(DString * out, const char * source, token * text, link * link, size_t offset, scratch_pad * scratch, bool is_figure) {
+void mmd_export_image_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
 
 	// Compatibility mode doesn't allow figures
@@ -285,7 +285,7 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 	if (is_figure) {
 		if (text) {
 			print_const("\n<figcaption>");
-			mmd_export_token_tree_html(out, source, text->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, text->child, scratch);
 			print_const("</figcaption>");
 		}
 		print_const("\n</figure>");
@@ -310,7 +310,7 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 			// This entry is a direct descendant of the parent
 			temp_char = label_from_header(source, entry);
 			printf("<li><a href=\"#%s\">", temp_char);
-			mmd_export_token_tree_html(out, source, entry->child, 0, scratch);
+			mmd_export_token_tree_html(out, source, entry->child, scratch);
 			print_const("</a>");
 
 			if (*counter < scratch->header_stack->size - 1) {
@@ -348,7 +348,7 @@ void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scrat
 }
 
 
-void mmd_export_token_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
+void mmd_export_token_html(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	if (t == NULL)
 		return;
 
@@ -398,7 +398,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			print_const("<blockquote>\n");
 			scratch->padded = 2;
-			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			pad(out, 1, scratch);
 			print_const("</blockquote>");
 			scratch->padded = 0;
@@ -411,7 +411,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
 				scratch->list_is_tight = true;
 
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			print_const("</dd>");
 			scratch->padded = 0;
 
@@ -428,7 +428,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 	
 			scratch->padded = 2;
 
-			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			pad(out, 1, scratch);
 
 			if (!(t->next && (t->next->type == BLOCK_DEFLIST)))
@@ -447,14 +447,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 
 			print_const(">");
-			mmd_export_token_tree_html_raw(out, source, t->child->next, t->start + offset, scratch);
+			mmd_export_token_tree_html_raw(out, source, t->child->next, scratch);
 			print_const("</code></pre>");
 			scratch->padded = 0;
 			break;
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
 			print_const("<pre><code>");
-			mmd_export_token_tree_html_raw(out, source, t->child, t->start + offset, scratch);
+			mmd_export_token_tree_html_raw(out, source, t->child, scratch);
 			print_const("</code></pre>");
 			scratch->padded = 0;
 			break;
@@ -475,7 +475,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
-			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
@@ -503,7 +503,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			print_const("<ul>");
 			scratch->padded = 0;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			pad(out, 1, scratch);
 			print_const("</ul>");
 			scratch->padded = 0;
@@ -523,7 +523,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			print_const("<ol>");
 			scratch->padded = 0;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			pad(out, 1, scratch);
 			print_const("</ol>");
 			scratch->padded = 0;
@@ -533,7 +533,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 1, scratch);
 			print_const("<li>");
 			scratch->padded = 2;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			print_const("</li>");
 			scratch->padded = 0;
 			break;
@@ -545,7 +545,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				print_const("<p>");
 
 			scratch->padded = 2;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 
 			if (scratch->close_para) {
 				if (!scratch->list_is_tight)
@@ -568,7 +568,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (!scratch->list_is_tight)
 				print_const("<p>");
 
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 
 			if (scratch->citation_being_printed) {
 				scratch->footnote_para_counter--;
@@ -617,7 +617,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
-			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
@@ -636,7 +636,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
-			mmd_export_token_tree_html(out, source, t->child, t->start + offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
@@ -659,7 +659,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 
 				t->next->child->child->type = TEXT_EMPTY;
 				t->next->child->child->mate->type = TEXT_EMPTY;
-				mmd_export_token_tree_html(out, source, t->next->child->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->next->child->child, scratch);
 				print_const("</caption>\n");
 				temp_short = 1;
 			} else {
@@ -699,7 +699,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			print_const("</colgroup>\n");
 			scratch->padded = 1;
 
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			pad(out, 1, scratch);
 			print_const("</table>");
 			scratch->padded = 0;
@@ -711,7 +711,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			print_const("<thead>\n");
 			scratch->in_table_header = 1;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			scratch->in_table_header = 0;
 			print_const("</thead>\n");
 			scratch->padded = 1;
@@ -720,14 +720,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			pad(out, 2, scratch);
 			print_const("<tbody>\n");
 			scratch->padded = 2;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			print_const("</tbody>");
 			scratch->padded = 0;
 			break;
 		case BLOCK_TERM:
 			pad(out, 2, scratch);
 			print_const("<dt>");
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			print_const("</dt>\n");
 			scratch->padded = 2;
 			break;
@@ -783,7 +783,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				temp_char = label_from_header(source, temp_token);
 
 				printf("<li><a href=\"#%s\">", temp_char);
-				mmd_export_token_tree_html(out, source, temp_token->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, temp_token->child, scratch);
 				print_const("</a>");
 				free(temp_char);
 			}
@@ -877,7 +877,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 			break;
 		case DOC_START_TOKEN:
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case ELLIPSIS:
 			if (!(scratch->extensions & EXT_SMART)) {
@@ -919,7 +919,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			break;
 		case LINE_LIST_BULLETED:
 		case LINE_LIST_ENUMERATED:
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case MARKER_BLOCKQUOTE:
 		case MARKER_H1:
@@ -1007,7 +1007,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
 			print_const("<code>");
-			mmd_export_token_tree_html_raw(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html_raw(out, source, t->child, scratch);
 			print_const("</code>");
 			break;
 		case PAIR_ANGLE:
@@ -1033,13 +1033,13 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			} else if (scan_html(&source[t->start])) {
 				print_token(t);
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 
 			free(temp_char);
 			break;
 		case PAIR_BRACES:
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
@@ -1053,7 +1053,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (temp_link) {
 				if (t->type == PAIR_BRACKET) {
 					// Link
-					mmd_export_link_html(out, source, t, temp_link, offset, scratch);
+					mmd_export_link_html(out, source, t, temp_link, scratch);
 				} else {
 					// Image -- should it be a figure (e.g. image is only thing in paragraph)?
 					temp_token = t->next;
@@ -1071,9 +1071,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 						temp_token = temp_token->next;
 
 					if (t->prev || temp_token) {
-						mmd_export_image_html(out, source, t, temp_link, offset, scratch, false);
+						mmd_export_image_html(out, source, t, temp_link, scratch, false);
 					} else {
-						mmd_export_image_html(out, source, t, temp_link, offset, scratch, true);
+						mmd_export_image_html(out, source, t, temp_link, scratch, true);
 					}
 				}
 				
@@ -1087,7 +1087,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			}
 
 			// No links exist, so treat as normal
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
@@ -1141,7 +1141,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			} else {
 				// Footnotes disabled
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 
 			free(temp_char);
@@ -1162,7 +1162,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			} else {
 				// Footnotes disabled
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
@@ -1171,7 +1171,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 
 				if (temp_short == -1) {
 					print_const("[?");
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 					print_const("]");
 					break;
 				}
@@ -1197,7 +1197,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			} else {
 				// Footnotes disabled
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_BRACKET_VARIABLE:
@@ -1207,7 +1207,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			if (temp_char2)
 				mmd_print_string_html(out, temp_char2, false);
 			else
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 
 			// Don't free temp_char2 (it belongs to meta *)
 			free(temp_char);
@@ -1220,14 +1220,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 				} else {
 					print_const("<ins>");
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 					print_const("</ins>");
 				}
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);				
+				mmd_export_token_tree_html(out, source, t->child, scratch);				
 			}
 			break;
 		case PAIR_CRITIC_DEL:
@@ -1238,14 +1238,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				if (scratch->extensions & EXT_CRITIC_REJECT) {
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 				} else {
 					print_const("<del>");
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 					print_const("</del>");
 				}
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);				
+				mmd_export_token_tree_html(out, source, t->child, scratch);				
 			}
 			break;
 		case PAIR_CRITIC_COM:
@@ -1257,10 +1257,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				print_const("<span class=\"critic comment\">");
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 				print_const("</span>");
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_CRITIC_HI:
@@ -1272,10 +1272,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				print_const("<mark>");
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 				print_const("</mark>");
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;
 		case CRITIC_SUB_DIV_A:
@@ -1292,14 +1292,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
 
 				} else if (scratch->extensions & EXT_CRITIC_REJECT) {
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 				} else {
 					print_const("<del>");
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 					print_const("</del>");
 				}
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_CRITIC_SUB_ADD:
@@ -1310,14 +1310,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				if (scratch->extensions & EXT_CRITIC_REJECT) {
 
 				} else if (scratch->extensions & EXT_CRITIC_ACCEPT) {
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 				} else {
 					print_const("<ins>");
-					mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+					mmd_export_token_tree_html(out, source, t->child, scratch);
 					print_const("</ins>");
 				}
 			} else {
-				mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_MATH:
@@ -1326,7 +1326,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case PAIR_QUOTE_SINGLE:
 		case PAIR_STAR:
 		case PAIR_UL:
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case PAREN_LEFT:
 			print_char('(');
@@ -1373,7 +1373,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				(t->start < t->mate->start) ? (print_const("<sub>")) : (print_const("</sub>"));
 			} else if (t->len != 1) {
 				print_const("<sub>");
-				mmd_export_token_html(out, source, t->child, offset, scratch);
+				mmd_export_token_html(out, source, t->child, scratch);
 				print_const("</sub>");
 			} else {
 				print_const("~");
@@ -1384,7 +1384,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				(t->start < t->mate->start) ? (print_const("<sup>")) : (print_const("</sup>"));
 			} else if (t->len != 1) {
 				print_const("<sup>");
-				mmd_export_token_html(out, source, t->child, offset, scratch);
+				mmd_export_token_html(out, source, t->child, scratch);
 				print_const("</sup>");
 			} else {
 				print_const("^");
@@ -1416,7 +1416,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 				}
 			}
 			print_const(">");
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			if (scratch->in_table_header) {
 				print_const("</th>\n");
 			} else {
@@ -1433,7 +1433,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 		case TABLE_ROW:
 			print_const("<tr>\n");
 			scratch->table_cell_count = 0;
-			mmd_export_token_tree_html(out, source, t->child, offset, scratch);
+			mmd_export_token_tree_html(out, source, t->child, scratch);
 			print_const("</tr>\n");
 			break;
 		case TEXT_LINEBREAK:
@@ -1472,7 +1472,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 }
 
 
-void mmd_export_token_tree_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
+void mmd_export_token_tree_html(DString * out, const char * source, token * t, scratch_pad * scratch) {
 
 	// Prevent stack overflow with "dangerous" input causing extreme recursion
 	if (scratch->recurse_depth == kMaxExportRecursiveDepth) {
@@ -1485,7 +1485,7 @@ void mmd_export_token_tree_html(DString * out, const char * source, token * t, s
 		if (scratch->skip_token) {
 			scratch->skip_token--;
 		} else {
-			mmd_export_token_html(out, source, t, offset, scratch);
+			mmd_export_token_html(out, source, t, scratch);
 		}
 
 		t = t->next;
@@ -1495,7 +1495,7 @@ void mmd_export_token_tree_html(DString * out, const char * source, token * t, s
 }
 
 
-void mmd_export_token_html_raw(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
+void mmd_export_token_html_raw(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	if (t == NULL)
 		return;
 
@@ -1529,7 +1529,7 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, si
 			break;
 		default:
 			if (t->child)
-				mmd_export_token_tree_html_raw(out, source, t->child, offset, scratch);
+				mmd_export_token_tree_html_raw(out, source, t->child, scratch);
 			else
 				print_token(t);
 			break;
@@ -1593,12 +1593,12 @@ void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scr
 }
 
 
-void mmd_export_token_tree_html_raw(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
+void mmd_export_token_tree_html_raw(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	while (t != NULL) {
 		if (scratch->skip_token) {
 			scratch->skip_token--;
 		} else {
-			mmd_export_token_html_raw(out, source, t, offset, scratch);
+			mmd_export_token_html_raw(out, source, t, scratch);
 		}
 
 		t = t->next;
@@ -1639,7 +1639,7 @@ void mmd_export_footnote_list_html(DString * out, const char * source, scratch_p
 			content = note->content;
 			scratch->footnote_being_printed = i + 1;
 
-			mmd_export_token_tree_html(out, source, content, 0, scratch);
+			mmd_export_token_tree_html(out, source, content, scratch);
 
 			pad(out, 1, scratch);
 			printf("</li>");
@@ -1692,7 +1692,7 @@ void mmd_export_glossary_list_html(DString * out, const char * source, scratch_p
 			content = note->content;
 			scratch->glossary_being_printed = i + 1;
 
-			mmd_export_token_tree_html(out, source, content, 0, scratch);
+			mmd_export_token_tree_html(out, source, content, scratch);
 
 			pad(out, 1, scratch);
 			printf("</li>");
@@ -1740,7 +1740,7 @@ void mmd_export_citation_list_html(DString * out, const char * source, scratch_p
 			content = note->content;
 			scratch->citation_being_printed = i + 1;
 
-			mmd_export_token_tree_html(out, source, content, 0, scratch);
+			mmd_export_token_tree_html(out, source, content, scratch);
 
 			pad(out, 1, scratch);
 			printf("</li>");

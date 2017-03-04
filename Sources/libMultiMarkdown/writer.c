@@ -1637,7 +1637,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_start_complete_html(out, e->dstr->str, scratch);
 
-			mmd_export_token_tree_html(out, e->dstr->str, e->root, 0, scratch);
+			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
 			mmd_export_glossary_list_html(out, e->dstr->str, scratch);
 			mmd_export_citation_list_html(out, e->dstr->str, scratch);
