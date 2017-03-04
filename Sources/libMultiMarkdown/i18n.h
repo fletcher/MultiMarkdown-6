@@ -5,6 +5,14 @@
 	@file i18n.h
 
 	@brief Provide rudimentary ability to provide translation string functionality.
+	This file enables calculating hash values of built in strings in order to allow
+	swapping out certain strings based on user-specified languages at runtime.
+
+	This does slow down compiling, as multiple hash strings are compiled (seemingly
+	quite slowly).  But, to my understanding and testing, it does not affect the 
+	speed when actually running MMD.  This should allow translating an arbitrary
+	number of strings into an arbitrary number of languages without a performance
+	penalty.
 
 
 	@author	Fletcher T. Penney
@@ -33,7 +41,8 @@
 #define kNumberOfStrings 4
 #define kLanguage 0
 
-//#define I18N_DISABLED
+//!< #define this in order to disable translations -- speeds up compiling
+// #define I18N_DISABLED
 
 
 // Hash function from http://lolengine.net/blog/2011/12/20/cpp-constant-string-hash
@@ -57,7 +66,9 @@
 	//#define LC(x) TranslateTest(__COUNTER__, __FILE__, __LINE__, __FUNCTION__ , x)
 
 	#define LANG_FROM_STR(x) i18n_language_from_string(x)
-	
+
+
+// Create the dictionary array
 static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"return to body",				// English
 	"return to body",				// Español
@@ -72,11 +83,13 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"siehe Zitat",					// Deutsch
 
 	"see glossary",					// English
-	"see citation",					// Español
-	"siehe Zitat",					// Deutsch
+	"see glossary",					// Español
+	"see glossary",					// Deutsch
 };
 
 
+// Used for development when a new string is added to the dictionary and
+// we need to know the hash
 static inline const char * TranslateTest(int c, char * file, int line, const char func[], char * x) {
 	fprintf(stderr, "%s: %d (%s) -> %d\n", file, line, func, c);
 	unsigned long h = HASH(x);
@@ -85,6 +98,8 @@ static inline const char * TranslateTest(int c, char * file, int line, const cha
 	return lc_lookup[(c * kNumberOfLanguages) + kLanguage];
 }
 
+
+// Given a hash and language, return the proper string
 static inline const char * Translate(unsigned long x, int l) {
 	switch (x) {
 		case 3219553713:
@@ -113,11 +128,12 @@ enum lc_languages {
 };
 
 
+// MMD expects a lower case 2 letter code in the metadata or command-line arguments`
 static inline short i18n_language_from_string(const char * l) { 
-	if (strcmp(l, "de") == 0) {
-		return LC_DE;
-	} else if (strcmp(l, "es") == 0) {
+	if (strcmp(l, "es") == 0) {
 		return LC_ES;
+	} else if (strcmp(l, "de") == 0) {
+		return LC_DE;
 	}
 
 	return 0;
