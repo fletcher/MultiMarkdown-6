@@ -357,7 +357,7 @@
 
 <text:p text:style-name="Standard">`foo`</text:p>
 
-<text:p text:style-name="Standard">foo&nbsp;bar</text:p>
+<text:p text:style-name="Standard">foo bar</text:p>
 </office:text>
 </office:body>
 </office:document>

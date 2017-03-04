@@ -785,7 +785,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case ESCAPED_CHARACTER:
 			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
 				(source[t->start + 1] == ' ')) {
-				print_const("&nbsp;");
+				print_const(" ");		// This is a non-breaking space character
 			} else {
 				mmd_print_char_odf(out, source[t->start + 1]);
 			}
