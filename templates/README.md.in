@@ -11,6 +11,36 @@
 
 ## Updates ##
 
+* 2017-03-04 -- v 0.4.0-b:
+
+	*    ADDED: Add TOC support to ODF
+	*    ADDED: Add glossary support to ODF
+	*    ADDED: Add prelim code for handling abbreviations
+	*    ADDED: Add support for Swift Package Maker; CHANGED: Restructure source directory
+	*    ADDED: Added LaTeX support for escaped characters, fenced code blocks, images, links
+	*    ADDED: Basic ODF Support
+	*    ADDED: Better document strong/emph algorithm
+	*    ADDED: Continue ODF progress
+	*    ADDED: Continue to work on ODF export
+	*    ADDED: Continue work on ODF
+	*    ADDED: Finish ODF support for lists
+	*    ADDED: Improve performance when exporting
+	*    ADDED: Improve token_pool memory handling
+	*    ADDED: Prototype support for Glossaries
+	*    ADDED: Support 'latexconfig' metadata
+	*    CHANGED: Use multiple cases in glossary tests
+	*    FIXED: Don't force glossary terms into lowercase
+	*    FIXED: Fix Makefile for new source file location
+	*    FIXED: Fix algorithm for creating TOC to properly handle 'incorrect' levels
+	*    FIXED: Fix linebreaks in LaTeX; ADDED: Add Linebreaks test file
+	*    FIXED: Fix new_source script for new directory structure
+	*    FIXED: Fix non-breaking space in ODF
+	*    FIXED: Fix padding at end of document body in ODF
+	*    FIXED: Fix underscores in raw latex
+	*    FIXED: Potential bug
+	*    NOTE: Add shared library build option
+
+
 * 2017-02-17 -- v 0.3.1.a:
 
 	*    ADDED: 'finalize' beamer support

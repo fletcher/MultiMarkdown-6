@@ -10,8 +10,8 @@ set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX
 set (My_Project_Author "Fletcher T. Penney")
 set (My_Project_Revised_Date "2017-02-17")
 set (My_Project_Version_Major 0)
-set (My_Project_Version_Minor 3)
-set (My_Project_Version_Patch 1a)
+set (My_Project_Version_Minor 4)
+set (My_Project_Version_Patch 0b)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
