@@ -11,6 +11,11 @@
 
 ## Updates ##
 
+* 2017-03-04 -- v 0.4.1-b:
+
+	*    FIXED: Add glossary localization
+
+
 * 2017-03-04 -- v 0.4.0-b:
 
 	*    ADDED: Add TOC support to ODF
