@@ -6,10 +6,15 @@
 | Author:    | Fletcher T. Penney       |  
 | Date:      | 2017-02-17 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.4.0b      |  
+| Version:   | 0.4.1b      |  
 
 
 ## Updates ##
+
+* 2017-03-04 -- v 0.4.1-b:
+
+	*    FIXED: Add glossary localization
+
 
 * 2017-03-04 -- v 0.4.0-b:
 
