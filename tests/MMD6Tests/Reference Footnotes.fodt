@@ -266,41 +266,20 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo.<text:note text:id="fn1" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote"><text:span text:style-name="MMD-Italic">foo</text:span></text:p></text:note-body></text:note></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo.<text:note text:id="fn2" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote"><text:span text:style-name="MMD-Italic">foo
+bar</text:span></text:p></text:note-body></text:note></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo.<text:note text:id="fn3" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Footnote"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
 
-<text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Footnote">bat</text:p></text:list-item>
 
-<text:p text:style-name="Standard">5</text:p>
-
-<text:p text:style-name="Standard">#foo#</text:p>
-
-<text:p text:style-name="Standard">#foo #</text:p>
-
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
-
-<text:p text:style-name="Standard"># foo #</text:p>
-
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Standard">10</text:p>
-
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Standard">####### foo #######</text:p>
-
-<text:p text:style-name="Standard">15</text:p>
+</text:list></text:note-body></text:note></text:p>
 </office:text>
 </office:body>
 </office:document>

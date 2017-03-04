@@ -473,6 +473,8 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			print_const("</text:p></text:list-item>");
 			scratch->padded = 0;
 			break;
+		case BLOCK_META:
+			break;
 		case BLOCK_PARA:
 			pad(out, 2, scratch);
 			print_const("<text:p");
@@ -480,6 +482,10 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			switch (scratch->odf_para_type) {
 				case BLOCK_BLOCKQUOTE:
 					print_const(" text:style-name=\"Quotations\">");
+					break;
+				case PAIR_BRACKET_CITATION:
+				case PAIR_BRACKET_FOOTNOTE:
+					print_const(" text:style-name=\"Footnote\">");
 					break;
 				default:				
 					print_const(" text:style-name=\"Standard\">");
@@ -505,8 +511,44 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case BRACKET_RIGHT:
 			print_const("]");
 			break;
+		case BRACKET_VARIABLE_LEFT:
+			print_const("[\%");
+			break;
 		case COLON:
 			print_char(':');
+			break;
+		case CRITIC_ADD_OPEN:
+			print_const("{++");
+			break;
+		case CRITIC_ADD_CLOSE:
+			print_const("++}");
+			break;
+		case CRITIC_COM_OPEN:
+			print_const("{&gt;&gt;");
+			break;
+		case CRITIC_COM_CLOSE:
+			print_const("&lt;&lt;}");
+			break;
+		case CRITIC_DEL_OPEN:
+			print_const("{--");
+			break;
+		case CRITIC_DEL_CLOSE:
+			print_const("--}");
+			break;
+		case CRITIC_HI_OPEN:
+			print_const("{==");
+			break;
+		case CRITIC_HI_CLOSE:
+			print_const("==}");
+			break;
+		case CRITIC_SUB_OPEN:
+			print_const("{~~");
+			break;
+		case CRITIC_SUB_DIV:
+			print_const("~&gt;");
+			break;
+		case CRITIC_SUB_CLOSE:
+			print_const("~~}");
 			break;
 		case DASH_M:
 			if (!(scratch->extensions & EXT_SMART)) {
@@ -685,10 +727,13 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			mmd_export_token_tree_odf_raw(out, source, t->child, scratch);
 			print_const("</text:span>");
 			break;
+		case PAIR_BRACES:
+			mmd_export_token_tree_odf(out, source, t->child, scratch);
+			break;
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
 				(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
-//				goto parse_citation;
+				goto parse_citation;
 			}
 
 		case PAIR_BRACKET_IMAGE:
@@ -733,9 +778,213 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			// No links exist, so treat as normal
 			mmd_export_token_tree_odf(out, source, t->child, scratch);
 			break;
-		case PAIR_BRACES:
-			mmd_export_token_tree_odf(out, source, t->child, scratch);
+		case PAIR_BRACKET_CITATION:
+			parse_citation:
+			temp_bool = true;   // Track whether this is a 'not cited'
+			temp_token = t;     // Remember whether we need to skip ahead
+			
+			if (scratch->extensions & EXT_NOTES) {
+				if (t->type == PAIR_BRACKET) {
+					// This is a locator for subsequent citation (e.g. `[foo][#bar]`
+					temp_char = text_inside_pair(source, t);
+					temp_char2 = label_from_string(temp_char);
+
+					if (strcmp(temp_char2, "notcited") == 0) {
+						free(temp_char);
+						temp_char = strdup("");
+						temp_bool = false;
+					}
+
+					free(temp_char2);
+
+					// Process the actual citation
+					t = t->next;
+				} else {
+					// This is just a citation (e.g. `[#foo]`)
+					temp_char = strdup("");
+				}
+
+				temp_short3 = scratch->used_citations->size;
+
+				citation_from_bracket(source, scratch, t, &temp_short);
+
+				temp_short2 = scratch->odf_para_type;
+				scratch->odf_para_type = PAIR_BRACKET_CITATION;
+
+				if (temp_short3 == scratch->used_citations->size) {
+					// Re-using previous citation
+					print_const("<text:span text:style-name=\"Footnote_20_anchor\"><text:note-ref text:note-class=\"endnote\" text:reference-format=\"text\" ");
+					printf("text:ref-name=\"cite%d\">%d</text:note-ref></text:span>", temp_short, temp_short);
+				} else {
+					// New citation
+					printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
+					temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
+					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+					print_const("</text:note-body></text:note>");
+				}
+
+				scratch->odf_para_type = temp_short2;
+
+				if (temp_token != t) {
+					// Skip citation on next pass
+					scratch->skip_token = 1;
+				}
+			} else {
+				// Footnotes disabled
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+
+			free(temp_char);
 			break;
+		case PAIR_BRACKET_FOOTNOTE:
+			if (scratch->extensions & EXT_NOTES) {
+				footnote_from_bracket(source, scratch, t, &temp_short);
+
+				temp_short2 = scratch->odf_para_type;
+				scratch->odf_para_type = PAIR_BRACKET_FOOTNOTE;
+
+				if (temp_short < scratch->used_footnotes->size) {
+					// Re-using previous footnote
+					print("\\footnote{reuse");
+
+					print("}");
+				} else {
+					// This is a new footnote
+					printf("<text:note text:id=\"fn%d\" text:note-class=\"footnote\"><text:note-body>", temp_short);
+					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+					print_const("</text:note-body></text:note>");
+				}
+
+				scratch->odf_para_type = temp_short2;
+			} else {
+				// Footnotes disabled
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_BRACKET_VARIABLE:
+			temp_char = text_inside_pair(source, t);
+			temp_char2 = extract_metadata(scratch, temp_char);
+
+			if (temp_char2)
+				mmd_print_string_odf(out, temp_char2);
+			else
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+
+			// Don't free temp_char2 (it belongs to meta *)
+			free(temp_char);
+			break;
+		case PAIR_CRITIC_ADD:
+			// Ignore if we're rejecting
+			if (scratch->extensions & EXT_CRITIC_REJECT)
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+				} else {
+					print_const("<text:span text:style-name=\"Underline\">");
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					print_const("</text:span>");
+				}
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);				
+			}
+			break;
+		case PAIR_CRITIC_DEL:
+			// Ignore if we're accepting
+			if (scratch->extensions & EXT_CRITIC_ACCEPT)
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_REJECT) {
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+				} else {
+					print_const("<text:span text:style-name=\"Strike\">");
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					print_const("</text:span>");
+				}
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);				
+			}
+			break;
+		case PAIR_CRITIC_COM:
+			// Ignore if we're rejecting or accepting
+			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
+				(scratch->extensions & EXT_CRITIC_ACCEPT))
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				print_const("<text:span text:style-name=\"Comment\">");
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+				print_const("</text:span>");
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_CRITIC_HI:
+			// Ignore if we're rejecting or accepting
+			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
+				(scratch->extensions & EXT_CRITIC_ACCEPT))
+				break;
+			if (scratch->extensions & EXT_CRITIC) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				print_const("<text:span text:style-name=\"Highlight\">");
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+				print_const("</text:span>");
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case CRITIC_SUB_DIV_A:
+			print_const("~");
+			break;
+		case CRITIC_SUB_DIV_B:
+			print_const("&gt;");
+			break;
+		case PAIR_CRITIC_SUB_DEL:
+			if ((scratch->extensions & EXT_CRITIC) &&
+				(t->next->type == PAIR_CRITIC_SUB_ADD)) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
+
+				} else if (scratch->extensions & EXT_CRITIC_REJECT) {
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+				} else {
+					print_const("<text:span text:style-name=\"Strike\">");
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					print_const("</text:span>");
+				}
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_CRITIC_SUB_ADD:
+			if ((scratch->extensions & EXT_CRITIC) &&
+				(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				if (scratch->extensions & EXT_CRITIC_REJECT) {
+
+				} else if (scratch->extensions & EXT_CRITIC_ACCEPT) {
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+				} else {
+					print_const("<text:span text:style-name=\"Underline\">");
+					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					print_const("</text:span>");
+				}
+			} else {
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_MATH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
@@ -751,6 +1000,9 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PIPE:
 			print_token(t);
+			break;
+		case PLUS:
+			print_char('+');
 			break;
 		case QUOTE_SINGLE:
 			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
@@ -1053,6 +1305,18 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
     "   <style:style style:name=\"MMD-Subscript\" style:family=\"text\">\n" \
     "      <style:text-properties style:text-position=\"sub 58%\"/>\n" \
     "   </style:style>\n" \
+    "   <style:style style:name=\"Strike\" style:family=\"text\">\n" \
+    "      <style:text-properties style:text-line-through-style=\"solid\" />\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"Underline\" style:family=\"text\">\n" \
+    "      <style:text-properties style:text-underline-style=\"solid\" style:text-underline-color=\"font-color\"/>\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"Highlight\" style:family=\"text\">\n" \
+    "      <style:text-properties fo:background-color=\"#FFFF00\" />\n" \
+    "   </style:style>\n" \
+    "   <style:style style:name=\"Comment\" style:family=\"text\">\n" \
+    "      <style:text-properties fo:color=\"#0000BB\" />\n" \
+    "   </style:style>\n" \
     "<style:style style:name=\"MMD-Table\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
     "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.05in\"/>\n" \
     "</style:style>\n" \
@@ -1186,7 +1450,51 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 	"  <style:master-page style:name=\"Footnote\" style:page-layout-name=\"pm2\"/>\n" \
 	" </office:master-styles>\n");
 
+		// Iterate over metadata keys
+	meta * m;
 
+	if (scratch->meta_hash)
+		print_const("<office:meta>\n");
+
+	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
+		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibtex") == 0) {
+		} else if (strcmp(m->key, "css") == 0) {
+		} else if (strcmp(m->key, "htmlfooter") == 0) {
+		} else if (strcmp(m->key, "htmlheader") == 0) {
+		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
+		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "language") == 0) {
+		} else if (strcmp(m->key, "latexbegin") == 0) {
+		} else if (strcmp(m->key, "latexconfig") == 0) {
+		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
+		} else if (strcmp(m->key, "latexinput") == 0) {
+		} else if (strcmp(m->key, "latexleader") == 0) {
+		} else if (strcmp(m->key, "latexmode") == 0) {
+		} else if (strcmp(m->key, "mmdfooter") == 0) {
+		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "quoteslanguage") == 0) {
+		} else if (strcmp(m->key, "title") == 0) {
+			print_const("\t<title>");
+			mmd_print_string_odf(out, m->value);
+			print_const("</title>\n");
+		} else if (strcmp(m->key, "transcludebase") == 0) {
+		} else if (strcmp(m->key, "xhtmlheader") == 0) {
+			print(m->value);
+			print_char('\n');
+		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
+		} else {
+			print_const("\t<meta:user-defined meta:name=\"");
+			mmd_print_string_odf(out, m->key);
+			print_const("\">");
+			mmd_print_string_odf(out, m->value);
+			print_const("</meta:user-defined>\n");
+		}
+	}
+
+	if (scratch->meta_hash)
+		print_const("</office:meta>\n");
 
 	print_const("<office:body>\n<office:text>\n");
 }

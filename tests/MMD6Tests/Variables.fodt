@@ -264,43 +264,19 @@
     <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
+<office:meta>
+	<meta:user-defined meta:name="foo">bar foo bar foo bar</meta:user-defined>
+	<meta:user-defined meta:name="bat">**foo**</meta:user-defined>
+</office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo:<text:tab/>bar</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">bar foo bar foo bar</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">[%bar]</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
-
-<text:p text:style-name="Standard">5</text:p>
-
-<text:p text:style-name="Standard">#foo#</text:p>
-
-<text:p text:style-name="Standard">#foo #</text:p>
-
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
-
-<text:p text:style-name="Standard"># foo #</text:p>
-
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Standard">10</text:p>
-
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Standard">####### foo #######</text:p>
-
-<text:p text:style-name="Standard">15</text:p>
+<text:p text:style-name="Standard">**foo**</text:p>
 </office:text>
 </office:body>
 </office:document>

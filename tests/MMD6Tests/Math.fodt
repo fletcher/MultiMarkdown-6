@@ -266,41 +266,57 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span> bar</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span> bar</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span>, bar</text:p>
 
-<text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[{x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}\]</text:span></text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Standard">#foo#</text:p>
+<text:p text:style-name="Standard">foo $ {e}^{i\pi }+1=0$ bar</text:p>
 
-<text:p text:style-name="Standard">#foo #</text:p>
+<text:p text:style-name="Standard">$$ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
+<text:p text:style-name="Standard">foo ${e}^{i\pi }+1=0 $ bar</text:p>
 
-<text:p text:style-name="Standard"># foo #</text:p>
+<text:p text:style-name="Standard">$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} $$</text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo a${e}^{i\pi }+1=0$ bar</text:p>
 
 <text:p text:style-name="Standard">10</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">a$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo ${e}^{i\pi }+1=0$b bar</text:p>
 
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$b</text:p>
 
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard"><text:span text:style-name="math">\(\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\)</text:span></text:p>
 
-<text:p text:style-name="Standard">####### foo #######</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\]</text:span></text:p>
 
 <text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\(\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\)</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\]</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\(\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\)</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\]</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\(\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\)</text:span></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\]</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>

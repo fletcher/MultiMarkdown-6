@@ -264,43 +264,27 @@
     <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
+<office:meta>
+</office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">&#8250;foo&#8249;</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">&#187;foo&#171;</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo&#8217;s</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo &#8212; bar</text:p>
 
-<text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
+<text:p text:style-name="Standard">foo &#8211; bar</text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Standard">#foo#</text:p>
+<text:p text:style-name="Standard">foo&#8230;</text:p>
 
-<text:p text:style-name="Standard">#foo #</text:p>
+<text:p text:style-name="Standard"><text:note text:id="fn1" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo</text:p></text:note-body></text:note></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
-
-<text:p text:style-name="Standard"># foo #</text:p>
-
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Standard">10</text:p>
-
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
-
-<text:p text:style-name="Standard">####### foo #######</text:p>
-
-<text:p text:style-name="Standard">15</text:p>
+<text:p text:style-name="Standard"><text:note text:id="cite1" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">foo</text:p></text:note-body></text:note></text:p>
 </office:text>
 </office:body>
 </office:document>

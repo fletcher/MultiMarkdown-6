@@ -120,6 +120,18 @@
    <style:style style:name="MMD-Subscript" style:family="text">
       <style:text-properties style:text-position="sub 58%"/>
    </style:style>
+   <style:style style:name="Strike" style:family="text">
+      <style:text-properties style:text-line-through-style="solid" />
+   </style:style>
+   <style:style style:name="Underline" style:family="text">
+      <style:text-properties style:text-underline-style="solid" style:text-underline-color="font-color"/>
+   </style:style>
+   <style:style style:name="Highlight" style:family="text">
+      <style:text-properties fo:background-color="#FFFF00" />
+   </style:style>
+   <style:style style:name="Comment" style:family="text">
+      <style:text-properties fo:color="#0000BB" />
+   </style:style>
 <style:style style:name="MMD-Table" style:family="paragraph" style:parent-style-name="Standard">
    <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.05in"/>
 </style:style>

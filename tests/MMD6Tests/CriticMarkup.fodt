@@ -266,41 +266,71 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard"><text:span text:style-name="Underline">foo</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard"><text:span text:style-name="Strike">bar</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard"><text:span text:style-name="Strike">foo</text:span><text:span text:style-name="Underline">bar</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard"><text:span text:style-name="Comment">foo</text:span></text:p>
 
-<text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="Highlight">bar</text:span></text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Standard">#foo#</text:p>
+<text:p text:style-name="Standard">foo<text:span text:style-name="Underline"> bar</text:span></text:p>
 
-<text:p text:style-name="Standard">#foo #</text:p>
+<text:p text:style-name="Standard">foo<text:span text:style-name="Strike"> bar</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="Strike">foo</text:span><text:span text:style-name="Underline">bar</text:span></text:p>
 
-<text:p text:style-name="Standard"># foo #</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="Comment">bar</text:span></text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="Highlight">bar</text:span></text:p>
 
 <text:p text:style-name="Standard">10</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo<text:span text:style-name="Underline"> <text:span text:style-name="MMD-Bold">bar</text:span></text:span></text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo<text:span text:style-name="Strike"> <text:span text:style-name="MMD-Bold">bar</text:span></text:span></text:p>
 
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="Strike"><text:span text:style-name="MMD-Bold">bar</text:span></text:span><text:span text:style-name="Underline"><text:span text:style-name="MMD-Bold">bar</text:span></text:span></text:p>
 
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:p text:style-name="Standard">foo <text:span text:style-name="Comment"><text:span text:style-name="MMD-Bold">bar</text:span></text:span></text:p>
 
-<text:p text:style-name="Standard">####### foo #######</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="Highlight"><text:span text:style-name="MMD-Bold">bar</text:span></text:span></text:p>
 
 <text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="Underline">bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="Strike">bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="Strike">foo</text:span><text:span text:style-name="Underline">bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="Comment">bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="Highlight">bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
+
+<text:p text:style-name="Standard">foo **<text:span text:style-name="Underline">bar**</text:span></text:p>
+
+<text:p text:style-name="Standard">foo **<text:span text:style-name="Strike">bar**</text:span></text:p>
+
+<text:p text:style-name="Standard">foo **<text:span text:style-name="Strike">foo**</text:span><text:span text:style-name="Underline">bar**</text:span></text:p>
+
+<text:p text:style-name="Standard">foo **<text:span text:style-name="Comment">bar**</text:span></text:p>
+
+<text:p text:style-name="Standard">foo **<text:span text:style-name="Highlight">bar**</text:span></text:p>
+
+<text:p text:style-name="Standard">25</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Underline">foo<text:span text:style-name="Underline"> bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Strike">foo<text:span text:style-name="Strike"> bar</text:span></text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Underline">foo<text:span text:style-name="Strike"> bar</text:span></text:span></text:p>
 </office:text>
 </office:body>
 </office:document>
