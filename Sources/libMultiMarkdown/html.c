@@ -293,6 +293,61 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 }
 
 
+void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level) {
+	token * entry, * next;
+	short entry_level, next_level;
+	char * temp_char;
+
+	print_const("\n<ul>\n");
+
+	// Iterate over tokens
+	while (*counter < scratch->header_stack->size) {
+		// Get token for header
+		entry = stack_peek_index(scratch->header_stack, *counter);
+		entry_level = raw_level_for_header(entry);
+
+		if (entry_level >= level) {
+			// This entry is a direct descendant of the parent
+			temp_char = label_from_header(source, entry);
+			printf("<li><a href=\"#%s\">", temp_char);
+			mmd_export_token_tree_html(out, source, entry->child, 0, scratch);
+			print_const("</a>");
+
+			if (*counter < scratch->header_stack->size - 1) {
+				next = stack_peek_index(scratch->header_stack, *counter + 1);
+				next_level = next->type - BLOCK_H1 + 1;
+				if (next_level > entry_level) {
+					// This entry has children
+					(*counter)++;
+					mmd_export_toc_entry_html(out, source, scratch, counter, entry_level + 1);
+				}
+			}
+
+			print_const("</li>\n");
+			free(temp_char);
+		} else if (entry_level < level ) {
+			// If entry < level, exit this level
+			// Decrement counter first, so that we can test it again later
+			(*counter)--;
+			break;
+		}
+		
+		// Increment counter
+		(*counter)++;
+	}
+
+	print_const("</ul>\n");
+}
+
+
+void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scratch) {
+	token * entry;
+	size_t counter = 0;
+
+	mmd_export_toc_entry_html(out, source, scratch, &counter, 0);
+}
+
+
 void mmd_export_token_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch) {
 	if (t == NULL)
 		return;
@@ -680,8 +735,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, size_t
 			temp_short = 0;
 			temp_short2 = 0;
 			pad(out, 2, scratch);
-			print_const("<div class=\"TOC\">");
+			print_const("<div class=\"TOC\">\n");
 
+			mmd_export_toc_html(out, source, scratch);
+			print_const("</div>");
+			scratch->padded = 0;
+			break;
 			for (int i = 0; i < scratch->header_stack->size; ++i)
 			{
 				temp_token = stack_peek_index(scratch->header_stack, i);

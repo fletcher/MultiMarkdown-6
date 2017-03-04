@@ -296,6 +296,61 @@ void mmd_export_image_odf(DString * out, const char * source, token * text, link
 }
 
 
+
+void mmd_export_toc_entry_odf(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level) {
+	token * entry, * next;
+	short entry_level, next_level;
+	char * temp_char;
+
+	print_const("\n<text:list text:style-name=\"L1\">\n");
+
+	// Iterate over tokens
+	while (*counter < scratch->header_stack->size) {
+		// Get token for header
+		entry = stack_peek_index(scratch->header_stack, *counter);
+		entry_level = raw_level_for_header(entry);
+
+		if (entry_level >= level) {
+			// This entry is a direct descendant of the parent
+			temp_char = label_from_header(source, entry);
+			printf("<text:list-item><text:p text:style-name=\"P1\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\">", temp_char);
+			mmd_export_token_tree_odf(out, source, entry->child, scratch);
+			print_const("</text:a></text:p>");
+
+			if (*counter < scratch->header_stack->size - 1) {
+				next = stack_peek_index(scratch->header_stack, *counter + 1);
+				next_level = next->type - BLOCK_H1 + 1;
+				if (next_level > entry_level) {
+					// This entry has children
+					(*counter)++;
+					mmd_export_toc_entry_odf(out, source, scratch, counter, entry_level + 1);
+				}
+			}
+
+			print_const("</text:list-item>\n");
+			free(temp_char);
+		} else if (entry_level < level ) {
+			// If entry < level, exit this level
+			// Decrement counter first, so that we can test it again later
+			(*counter)--;
+			break;
+		}
+		
+		// Increment counter
+		(*counter)++;
+	}
+
+	print_const("</text:list>\n");
+}
+
+void mmd_export_toc_odf(DString * out, const char * source, scratch_pad * scratch) {
+	token * entry;
+	size_t counter = 0;
+
+	mmd_export_toc_entry_odf(out, source, scratch, &counter, 0);
+}
+
+
 void mmd_export_token_odf(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	if (t == NULL)
 		return;
@@ -633,60 +688,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			temp_short2 = 0;
 			pad(out, 2, scratch);
 
-			for (int i = 0; i < scratch->header_stack->size; ++i)
-			{
-				temp_token = stack_peek_index(scratch->header_stack, i);
-
-				if (temp_token->type == temp_short2) {
-					// Same level -- close list item
-					print_const("</text:list-item>\n");
-				}
-
-				if (temp_short == 0) {
-					// First item
-					print_const("\n<text:list text:style-name=\"L1\">\n");
-					temp_short = temp_token->type;
-					temp_short2 = temp_short;
-				}
-
-				// Indent?
-				if (temp_token->type == temp_short2) {
-					// Same level -- NTD
-				} else if (temp_token->type == temp_short2 + 1) {
-					// Indent
-					print_const("\n\n<text:list text:style-name=\"L1\">\n");
-					temp_short2++;
-				} else if (temp_token->type < temp_short2) {
-					// Outdent
-					print_const("</text:list-item>\n");
-					while (temp_short2 > temp_token->type) {
-						if (temp_short2 > temp_short)
-							print_const("</text:list></text:list-item>\n");
-						else
-							temp_short = temp_short2 - 1;
-
-						temp_short2--;
-					}
-				} else {
-					// Skipped more than one level -- ignore
-					continue;
-				}
-
-				temp_char = label_from_header(source, temp_token);
-
-				printf("<text:list-item><text:p text:style-name=\"P1\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\">", temp_char);
-				mmd_export_token_tree_odf(out, source, temp_token->child, scratch);
-				print_const("</text:a></text:p>");
-				free(temp_char);
-			}
-
-			while (temp_short2 > (temp_short)) {
-				print_const("</text:list>\n");
-				temp_short2--;
-			}
-			
-			if (temp_short)
-				print_const("</text:list-item>\n</text:list>\n");
+			mmd_export_toc_odf(out, source, scratch);
 
 			scratch->padded = 1;
 			break;

@@ -370,6 +370,60 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 }
 
 
+void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level) {
+	token * entry, * next;
+	short entry_level, next_level;
+	char * temp_char;
+
+	print_const("\\begin{itemize}\n\n");
+
+	// Iterate over tokens
+	while (*counter < scratch->header_stack->size) {
+		// Get token for header
+		entry = stack_peek_index(scratch->header_stack, *counter);
+		entry_level = raw_level_for_header(entry);
+
+		if (entry_level >= level) {
+			// This entry is a direct descendant of the parent
+			temp_char = label_from_header(source, entry);
+			print_const("\\item ");
+			mmd_export_token_tree_latex(out, source, entry->child, scratch);
+			printf("(\\autoref{%s})\n\n", temp_char);
+
+			if (*counter < scratch->header_stack->size - 1) {
+				next = stack_peek_index(scratch->header_stack, *counter + 1);
+				next_level = next->type - BLOCK_H1 + 1;
+				if (next_level > entry_level) {
+					// This entry has children
+					(*counter)++;
+					mmd_export_toc_entry_latex(out, source, scratch, counter, entry_level + 1);
+				}
+			}
+
+			free(temp_char);
+		} else if (entry_level < level ) {
+			// If entry < level, exit this level
+			// Decrement counter first, so that we can test it again later
+			(*counter)--;
+			break;
+		}
+		
+		// Increment counter
+		(*counter)++;
+	}
+
+	print_const("\\end{itemize}\n\n");
+}
+
+
+void mmd_export_toc_latex(DString * out, const char * source, scratch_pad * scratch) {
+	token * entry;
+	size_t counter = 0;
+
+	mmd_export_toc_entry_latex(out, source, scratch, &counter, 0);
+}
+
+
 void mmd_export_token_latex(DString * out, const char * source, token * t, scratch_pad * scratch) {
 	if (t == NULL)
 		return;
@@ -699,72 +753,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			temp_short2 = 0;
 			pad(out, 2, scratch);
 
-			for (int i = 0; i < scratch->header_stack->size; ++i)
-			{
-				temp_token = stack_peek_index(scratch->header_stack, i);
-
-				if (temp_token->type == temp_short2) {
-					// Same level -- close list item
-					//pad(out, 2, scratch);
-				}
-
-				if (temp_short == 0) {
-					// First item
-					pad(out, 2, scratch);
-					print_const("\\begin{itemize}");
-					scratch->padded = 0;
-					temp_short = temp_token->type;
-					temp_short2 = temp_short;
-				}
-
-				// Indent?
-				if (temp_token->type == temp_short2) {
-					// Same level -- NTD
-				} else if (temp_token->type == temp_short2 + 1) {
-					// Indent
-					pad(out, 2, scratch);
-					print_const("\\begin{itemize}");
-					scratch->padded = 0;
-					temp_short2++;
-				} else if (temp_token->type < temp_short2) {
-					// Outdent
-					pad(out, 2, scratch);
-					while (temp_short2 > temp_token->type) {
-						if (temp_short2 > temp_short) {
-							pad(out, 2, scratch);
-							print_const("\\end{itemize}");
-							scratch->padded = 0;
-						} else
-							temp_short = temp_short2 - 1;
-
-						temp_short2--;
-					}
-				} else {
-					// Skipped more than one level -- ignore
-					continue;
-				}
-
-				temp_char = label_from_header(source, temp_token);
-				pad(out, 2, scratch);
-				print_const("\\item ");
-				mmd_export_token_tree_latex(out, source, temp_token->child, scratch);
-				printf("(\\autoref{%s})", temp_char);
-				scratch->padded = 0;
-				free(temp_char);
-			}
-
-			while (temp_short2 > (temp_short)) {
-				pad(out, 2, scratch);
-				print_const("\\end{itemize}");
-				scratch->padded = 0;
-				temp_short2--;
-			}
-			
-			if (temp_short) {
-				pad(out, 2, scratch);
-				print_const("\\end{itemize}");
-				scratch->padded = 0;
-			}
+			mmd_export_toc_latex(out, source, scratch);
 
 			scratch->padded = 0;
 			break;

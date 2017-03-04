@@ -120,6 +120,18 @@
    <style:style style:name="MMD-Subscript" style:family="text">
       <style:text-properties style:text-position="sub 58%"/>
    </style:style>
+   <style:style style:name="Strike" style:family="text">
+      <style:text-properties style:text-line-through-style="solid" />
+   </style:style>
+   <style:style style:name="Underline" style:family="text">
+      <style:text-properties style:text-underline-style="solid" style:text-underline-color="font-color"/>
+   </style:style>
+   <style:style style:name="Highlight" style:family="text">
+      <style:text-properties fo:background-color="#FFFF00" />
+   </style:style>
+   <style:style style:name="Comment" style:family="text">
+      <style:text-properties fo:color="#0000BB" />
+   </style:style>
 <style:style style:name="MMD-Table" style:family="paragraph" style:parent-style-name="Standard">
    <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.05in"/>
 </style:style>
@@ -253,69 +265,67 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-<dc:title>Table of Contents</dc:title>
-<meta:user-defined meta:name="latex config">article</meta:user-defined>
+	<dc:title>Table of Contents</dc:title>
 </office:meta>
 <office:body>
 <office:text>
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevel">Second Level</text:a></text:p></text:list-item>
-<text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#firstlevel">First Level</text:a></text:p>
 
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevelb">Second Level b</text:a></text:p>
-
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#thirdlevel">Third Level</text:a></text:p></text:list-item>
-</text:list></text:list-item>
-<text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevelc">Second Level c</text:a></text:p></text:list-item>
-</text:list></text:list-item>
-<text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#firstlevelb">First Level b</text:a></text:p>
-
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondleveld">Second level d</text:a></text:p>
-
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#thirdleveld">Third level d</text:a></text:p>
-
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#fourthleveld">Fourth level d</text:a></text:p></text:list-item>
-</text:list></text:list-item>
-</text:list></text:list-item>
-</text:list></text:list-item>
-<text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#firstlevele">First level</text:a></text:p>
-
-<text:list text:style-name="L1"><text:list-item>
-<text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevele">Second level</text:a></text:p></text:list-item>
-</text:list></text:list-item>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevel">Second Level </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#firstlevel">First Level </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevelb">Second Level b </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#thirdlevel">Third Level </text:a></text:p></text:list-item>
+</text:list>
+</text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevelc">Second Level c </text:a></text:p></text:list-item>
+</text:list>
+</text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#firstlevelb">First Level b </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#thirdlevelb">Third Level b </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondleveld">Second level d </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#thirdleveld">Third level d </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#fourthleveld">Fourth level d </text:a></text:p></text:list-item>
+</text:list>
+</text:list-item>
+</text:list>
+</text:list-item>
+</text:list>
+</text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#firstlevele">First level  </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#secondlevele">Second level  </text:a></text:p></text:list-item>
+</text:list>
+</text:list-item>
 </text:list>
 
-<text:h text:outline-level="2"><text:bookmark text:name="secondlevel"/>Second Level<text:bookmark-end text:name="secondlevel"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="secondlevel"/>Second Level <text:bookmark-end text:name="secondlevel"/></text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="firstlevel"/>First Level<text:bookmark-end text:name="firstlevel"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="firstlevel"/>First Level <text:bookmark-end text:name="firstlevel"/></text:h>
 
-<text:h text:outline-level="2"><text:bookmark text:name="secondlevelb"/>Second Level b<text:bookmark-end text:name="secondlevelb"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="secondlevelb"/>Second Level b <text:bookmark-end text:name="secondlevelb"/></text:h>
 
-<text:h text:outline-level="3"><text:bookmark text:name="thirdlevel"/>Third Level<text:bookmark-end text:name="thirdlevel"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="thirdlevel"/>Third Level <text:bookmark-end text:name="thirdlevel"/></text:h>
 
-<text:h text:outline-level="2"><text:bookmark text:name="secondlevelc"/>Second Level c<text:bookmark-end text:name="secondlevelc"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="secondlevelc"/>Second Level c <text:bookmark-end text:name="secondlevelc"/></text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="firstlevelb"/>First Level b<text:bookmark-end text:name="firstlevelb"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="firstlevelb"/>First Level b <text:bookmark-end text:name="firstlevelb"/></text:h>
 
-<text:h text:outline-level="3"><text:bookmark text:name="thirdlevelb"/>Third Level b<text:bookmark-end text:name="thirdlevelb"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="thirdlevelb"/>Third Level b <text:bookmark-end text:name="thirdlevelb"/></text:h>
 
-<text:h text:outline-level="2"><text:bookmark text:name="secondleveld"/>Second level d<text:bookmark-end text:name="secondleveld"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="secondleveld"/>Second level d <text:bookmark-end text:name="secondleveld"/></text:h>
 
-<text:h text:outline-level="3"><text:bookmark text:name="thirdleveld"/>Third level d<text:bookmark-end text:name="thirdleveld"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="thirdleveld"/>Third level d <text:bookmark-end text:name="thirdleveld"/></text:h>
 
-<text:h text:outline-level="4"><text:bookmark text:name="fourthleveld"/>Fourth level d<text:bookmark-end text:name="fourthleveld"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="fourthleveld"/>Fourth level d <text:bookmark-end text:name="fourthleveld"/></text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="firstlevele"/>First level<text:bookmark-end text:name="firstlevele"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="firstlevele"/>First level  <text:bookmark-end text:name="firstlevele"/></text:h>
 
-<text:h text:outline-level="2"><text:bookmark text:name="secondlevele"/>Second level<text:bookmark-end text:name="secondlevele"/></text:h></office:text>
+<text:h text:outline-level="2"><text:bookmark text:name="secondlevele"/>Second level  <text:bookmark-end text:name="secondlevele"/></text:h>
+</office:text>
 </office:body>
 </office:document>

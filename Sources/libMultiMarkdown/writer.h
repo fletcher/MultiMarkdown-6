@@ -236,5 +236,7 @@ char * label_from_string(const char * str);
 
 char * clean_string(const char * str, bool lowercase);
 
+short raw_level_for_header(token * header);
+
 #endif
 

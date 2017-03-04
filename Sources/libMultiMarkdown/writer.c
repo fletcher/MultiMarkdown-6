@@ -2126,3 +2126,25 @@ char * get_fence_language_specifier(token * fence, const char * source) {
 	return result;
 }
 
+
+short raw_level_for_header(token * header) {
+	switch (header->type) {
+		case BLOCK_H1:
+		case BLOCK_SETEXT_1:
+			return 1;
+		case BLOCK_H2:
+		case BLOCK_SETEXT_2:
+			return 2;
+		case BLOCK_H3:
+			return 3;
+		case BLOCK_H4:
+			return 4;
+		case BLOCK_H5:
+			return 5;
+		case BLOCK_H6:
+			return 6;
+	}
+
+	return 0;
+}
+
