@@ -203,6 +203,7 @@ def_glossary		::= LINE_DEF_GLOSSARY.
 def_link(A)			::= LINE_DEF_LINK(B) chunk(C).				{ A = B; token_chain_append(B, C); }
 def_link			::= LINE_DEF_LINK.
 
+def_abbreviation(A)	::= LINE_DEF_ABBREVIATION(B) chunk(C).		{ A = B; token_chain_append(B, C); }
 def_abbreviation	::= LINE_DEF_ABBREVIATION.
 
 

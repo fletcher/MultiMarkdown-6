@@ -129,13 +129,14 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET_GLOSSARY, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		} else {
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 		
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -469,17 +470,6 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				break;
 			}
 		case STAR:
-			if (!(e->extensions & EXT_COMPATIBILITY)) {
-				if (line->child->next && line->child->next->type == BRACKET_LEFT) {
-					// Possible Abbreviation definition
-					if (scan_ref_abbreviation(&source[line->child->start])) {
-						line->type = LINE_DEF_ABBREVIATION;
-						line->child->type = TEXT_EMPTY;
-						line->child->next->type = BRACKET_ABBREVIATION_LEFT;
-						break;
-					}
-				}
-			}
 		case UL:
 			// Could this be a horizontal rule?
 			t = line->child->next;
@@ -596,6 +586,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			} else {
 				scan_len = scan_ref_link(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
+			}
+			break;
+		case BRACKET_ABBREVIATION_LEFT:
+			if (e->extensions & EXT_NOTES) {
+				scan_len = scan_ref_abbreviation(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_ABBREVIATION : LINE_PLAIN;
+			} else {
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;

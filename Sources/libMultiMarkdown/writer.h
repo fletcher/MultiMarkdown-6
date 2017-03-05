@@ -98,7 +98,8 @@ typedef struct {
 	struct fn_holder *	glossary_hash;
 	short				glossary_being_printed;
 
-	struct abbr *		abbreviation_hash;
+	stack *				used_abbreviations;
+	struct fn_holder *	abbreviation_hash;
 
 	short				language;
 	short				quotes_lang;
@@ -212,6 +213,7 @@ void print_token_tree_raw(DString * out, const char * source, token * t);
 
 char * url_accept(const char * source, size_t start, size_t max_len, size_t * end_pos, bool validate);
 
+void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void citation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);
 void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num);

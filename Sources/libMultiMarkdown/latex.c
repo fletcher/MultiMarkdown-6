@@ -1011,6 +1011,24 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			// No links exist, so treat as normal
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+		case PAIR_BRACKET_ABBREVIATION:
+			if (scratch->extensions & EXT_COMPATIBILITY) {
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			} else {
+				abbreviation_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					print_const("[>");
+					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					print_char(']');
+					break;
+				}
+
+				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
+
+				printf("\\gls{%s}", temp_note->label_text);
+			}
+			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
 			temp_bool = true;   // Track whether this is a 'not cited'
@@ -1615,6 +1633,19 @@ void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad
 		print_const("}{");
 
 		mmd_export_token_tree_latex(out, source, f->note->content, scratch);
+		print_const("}\n\n");
+	}
+
+	// And abbreviations
+
+	HASH_ITER(hh, scratch->abbreviation_hash, f, f_tmp) {
+		// Add this abbreviation definition
+		print_const("\\newacronym{");
+		print(f->note->label_text);
+		print_const("}{");
+		print(f->note->label_text);
+		print_const("}{");
+		print(f->note->clean_text);
 		print_const("}\n\n");
 	}
 }

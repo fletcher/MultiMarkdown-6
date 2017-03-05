@@ -808,6 +808,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case BRACKET_LEFT:
 			print_const("[");			
 			break;
+		case BRACKET_ABBREVIATION_LEFT:
+			print_const("[>");
+			break;
 		case BRACKET_CITATION_LEFT:
 			print_const("[#");
 			break;
@@ -1088,6 +1091,31 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 			// No links exist, so treat as normal
 			mmd_export_token_tree_html(out, source, t->child, scratch);
+			break;
+		case PAIR_BRACKET_ABBREVIATION:
+			if (scratch->extensions & EXT_COMPATIBILITY) {
+				mmd_export_token_tree_html(out, source, t->child, scratch);
+			} else {
+				abbreviation_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					print_const("[>");
+					mmd_export_token_tree_html(out, source, t->child, scratch);
+					print_char(']');
+					break;
+				}
+
+				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
+
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				
+				print_const("<abbr title=\"");
+				mmd_print_string_html(out, temp_note->clean_text, false);
+				print_const("\">");
+				mmd_export_token_tree_html(out, source, t->child, scratch);
+				print_const("</abbr>");				
+			}
 			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:

@@ -89,7 +89,7 @@
 	label		= [^\]\n\r\x00]+;
 	finish_line	= [^\n\r\x00]+;
 
-	ref_abbr	= non_indent '*[' label ']' ':' finish_line;
+	ref_abbr	= non_indent '[>' label ']' ':' finish_line;
 
 	ref_citation	= non_indent '[#' label ']' ':' finish_line;
 

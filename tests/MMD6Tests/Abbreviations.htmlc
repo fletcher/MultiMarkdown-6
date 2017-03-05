@@ -1,0 +1,14 @@
+<p>Title:	Abbreviations
+latex config:	article</p>
+
+<p><a href="FOO">>foo</a></p>
+
+<p><a href="BAR">>bar</a></p>
+
+<p><a href="FOO">>foo</a> <a href="BAR">>bar</a></p>
+
+<p><a href="FOOBAR">>foobar</a></p>
+
+<p><a href="FOOBAR">>foo bar</a></p>
+
+<p>5</p>
