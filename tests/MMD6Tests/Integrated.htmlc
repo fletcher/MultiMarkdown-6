@@ -106,3 +106,13 @@ bar
 <h1>Horizontal Rules </h1>
 
 <hr />
+
+<h1>Glossary </h1>
+
+<p>[?term]</p>
+
+<p>[?term]: A term to be defined.</p>
+
+<h1>Abbreviations</h1>
+
+<p><a href="MultiMarkdown">>MMD</a></p>

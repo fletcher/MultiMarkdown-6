@@ -1892,7 +1892,7 @@ size_t extract_footnote_from_stack(scratch_pad * scratch, const char * target) {
 
 
 size_t extract_abbreviation_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, false);
 
 	fn_holder * h;
 
@@ -1922,7 +1922,7 @@ size_t extract_abbreviation_from_stack(scratch_pad * scratch, const char * targe
 
 
 size_t extract_glossary_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, false);
 
 	fn_holder * h;
 

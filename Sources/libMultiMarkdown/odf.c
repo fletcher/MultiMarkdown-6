@@ -587,6 +587,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				case BLOCK_DEFINITION:
 					print_const(" text:style-name=\"Quotations\">");
 					break;
+				case PAIR_BRACKET_ABBREVIATION:
 				case PAIR_BRACKET_CITATION:
 				case PAIR_BRACKET_FOOTNOTE:
 				case PAIR_BRACKET_GLOSSARY:
