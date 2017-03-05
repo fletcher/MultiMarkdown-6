@@ -194,6 +194,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		// Store abbreviations in a hash for rapid retrieval when exporting
 		p->used_abbreviations = stack_new(0);
+		p->inline_abbreviations_to_free = stack_new(0);
 
 		p->abbreviation_hash = NULL;
 
@@ -286,6 +287,11 @@ void scratch_pad_free(scratch_pad * scratch) {
 	}
 
 	stack_free(scratch->used_abbreviations);
+
+	while (scratch->inline_abbreviations_to_free->size) {
+		footnote_free(stack_pop(scratch->inline_abbreviations_to_free));
+	}
+	stack_free(scratch->inline_abbreviations_to_free);
 
 	// Free metadata hash
 	meta * m, * m_tmp;
@@ -2070,6 +2076,11 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 		if (label) {
 			footnote * temp = footnote_new(source, label, label->next, false);
 
+			// Adjust the properties
+			free(temp->label_text);
+			temp->label_text = temp->clean_text;
+			temp->clean_text = clean_string_from_range(source, temp->content->child->start, t->start + t->len - t->child->mate->len - temp->content->child->start, false);
+
 			// Store as used
 			stack_push(scratch->used_abbreviations, temp);
 			*num = scratch->used_abbreviations->size;
@@ -2077,7 +2088,7 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 
 			// We need to free this one later since it doesn't exist
 			// in the engine's stack, on the scratch_pad stack
-			//stack_push(scratch->inline_glossaries_to_free, temp);
+			stack_push(scratch->inline_abbreviations_to_free, temp);
 		} else {
 			// Improperly formatted glossary
 			*num = -1;

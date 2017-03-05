@@ -1069,38 +1069,60 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_abbreviations->size;
+				temp_short3 = scratch->inline_abbreviations_to_free->size;
 				abbreviation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[>");
-					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					mmd_export_token_tree_odf(out, source, t->child->next, scratch);
 					print_const("]");
 					break;
 				}
 
-				temp_short2 = scratch->odf_para_type;
-				scratch->odf_para_type = PAIR_BRACKET_ABBREVIATION;
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
 
-				if (temp_short < scratch->used_abbreviations->size) {
-					// Re-using previous footnote
-					print("\\footnote{reuse");
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
 
-					print("}");
+				if (temp_short2 == scratch->used_abbreviations->size) {
+					// This is a re-use of a previously used note
+
+					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+						// This is a reference definition
+						mmd_export_token_tree_odf(out, source, t->child, scratch);
+					} else {
+						// This is an inline definition
+						mmd_export_token_tree_odf(out, source, t->child, scratch);
+					}
 				} else {
-					// This is a new abbreviation item
-					temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
+					// This is the first time this note was used
+					temp_short2 = scratch->odf_para_type;
+					scratch->odf_para_type = PAIR_BRACKET_ABBREVIATION;
 
-					mmd_print_string_odf(out, temp_note->label_text); 
+					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+						// This is a reference definition
+						mmd_print_string_odf(out, temp_note->label_text); 
+						printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
+						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+						print_const("</text:note-body></text:note>");
+					} else {
+						// This is an inline definition
+						mmd_print_string_odf(out, temp_note->label_text); 
+						printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
+						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+						print_const("</text:note-body></text:note>");
+					}
 
-					printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
-
-					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
-					print_const("</text:note-body></text:note>");
+					scratch->odf_para_type = temp_short2;
 				}
-
-				scratch->odf_para_type = temp_short2;
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
 			break;

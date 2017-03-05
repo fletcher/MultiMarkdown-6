@@ -13,6 +13,9 @@ latex config:	article
 
 5
 
+[>(baz) BAZ (BAT)]
+
+
 [>foo]: FOO
 [>bar]: BAR
 [>foobar]: FOOBAR

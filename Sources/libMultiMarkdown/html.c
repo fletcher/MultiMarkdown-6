@@ -354,6 +354,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 	short	temp_short;
 	short	temp_short2;
+	short	temp_short3;
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
@@ -1093,28 +1094,46 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
-			if (scratch->extensions & EXT_COMPATIBILITY) {
-				mmd_export_token_tree_html(out, source, t->child, scratch);
-			} else {
+			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_abbreviations->size;
+				temp_short3 = scratch->inline_abbreviations_to_free->size;
 				abbreviation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[>");
-					mmd_export_token_tree_html(out, source, t->child, scratch);
-					print_char(']');
+					mmd_export_token_tree_html(out, source, t->child->next, scratch);
+					print_const("]");
 					break;
 				}
 
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
 
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
-				
-				print_const("<abbr title=\"");
-				mmd_print_string_html(out, temp_note->clean_text, false);
-				print_const("\">");
+
+				if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+					// This is a reference definition
+					print_const("<abbr title=\"");
+					mmd_print_string_html(out, temp_note->clean_text, false);
+					print_const("\">");
+					mmd_export_token_tree_html(out, source, t->child, scratch);
+					print_const("</abbr>");
+				} else {
+					// This is an inline definition
+					print_const("<abbr title=\"");
+					mmd_print_string_html(out, temp_note->clean_text, false);
+					print_const("\">");
+					mmd_print_string_html(out, temp_note->label_text, false);
+					print_const("</abbr>");
+				}
+			} else {
+				// Note-based syntax disabled
 				mmd_export_token_tree_html(out, source, t->child, scratch);
-				print_const("</abbr>");				
 			}
 			break;
 		case PAIR_BRACKET_CITATION:

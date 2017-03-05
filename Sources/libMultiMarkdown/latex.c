@@ -1012,21 +1012,43 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
-			if (scratch->extensions & EXT_COMPATIBILITY) {
-				mmd_export_token_tree_latex(out, source, t->child, scratch);
-			} else {
+			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_abbreviations->size;
+				temp_short3 = scratch->inline_abbreviations_to_free->size;
 				abbreviation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[>");
-					mmd_export_token_tree_latex(out, source, t->child, scratch);
-					print_char(']');
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					print_const("]");
 					break;
 				}
 
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
 
-				printf("\\gls{%s}", temp_note->label_text);
+				if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+					// This is a reference definition
+					printf("\\gls{%s}", temp_note->label_text);
+				} else {
+					// This is an inline definition
+					print_const("\\newacronym{");
+					print(temp_note->label_text);
+					print_const("}{");
+					print(temp_note->label_text);
+					print_const("}{");
+					print(temp_note->clean_text);
+					print_const("}");
+
+					printf("\\gls{%s}", temp_note->label_text);
+				}
+			} else {
+				// Note-based syntax disabled
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_BRACKET_CITATION:

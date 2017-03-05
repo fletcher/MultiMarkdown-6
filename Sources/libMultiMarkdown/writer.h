@@ -99,6 +99,7 @@ typedef struct {
 	short				glossary_being_printed;
 
 	stack *				used_abbreviations;
+	stack *				inline_abbreviations_to_free;
 	struct fn_holder *	abbreviation_hash;
 
 	short				language;
