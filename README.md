@@ -4,12 +4,28 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-02-17 |  
+| Date:      | 2017-03-05 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.4.1b      |  
+| Version:   | 0.4.2b      |  
 
 
 ## Updates ##
+
+* 2017-03-05 -- v 0.4.2-b:
+
+	*    ADDED: Add  and  utility functions; fix memory leak
+	*    ADDED: Initial abbreviation support
+	*    ADDED: Keep working on Abbreviations/Glossaries
+	*    ADDED: Refactor abbreviation code; Add inline abbreviations; Fix abbreviations in ODF
+	*    ADDED: Update Inline Footnote test
+	*    CHANGED: Add comments to i18n.h
+	*    CHANGED: Finish refactoring note-related code
+	*    CHANGED: Refactor footnotes
+	*    CHANGED: Refactor glossary code
+	*    CHANGED: Remove offset from html export functions
+	*    FIXED: latex list items need to block optional argument to allow '[' as first character
+	*    Merge branch 'release/0.4.1-b' into develop
+
 
 * 2017-03-04 -- v 0.4.1-b:
 
