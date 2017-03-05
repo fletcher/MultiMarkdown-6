@@ -64,6 +64,16 @@
 #include "token.h"
 
 
+// Convert MMD text to specified format, with specified extensions, and language
+// Returned char * must be freed
+char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language);
+
+
+// Convert MMD text to specified format, with specified extensions, and language
+// Returned char * must be freed
+char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language);
+
+
 /// MMD Engine is used for storing configuration information for MMD parser
 typedef struct mmd_engine mmd_engine;
 
