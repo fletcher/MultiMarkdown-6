@@ -1042,17 +1042,38 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_footnotes->size;
+				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
-				temp_short2 = scratch->odf_para_type;
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[?");
+					mmd_export_token_tree_odf(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
+
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+				temp_short3 = scratch->odf_para_type;
 				scratch->odf_para_type = PAIR_BRACKET_FOOTNOTE;
 
-				if (temp_short < scratch->used_footnotes->size) {
-					// Re-using previous footnote
-					print("\\footnote{reuse");
+				if (temp_short2 == scratch->used_footnotes->size) {
+					// This is a re-use of a previously used note
 
-					print("}");
+					printf("<text:note text:id=\"fn%d\" text:note-class=\"footnote\"><text:note-body>", temp_short);
+					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+					print_const("</text:note-body></text:note>");
 				} else {
+					// This is the first time this note was used
+
 					// This is a new footnote
 					printf("<text:note text:id=\"fn%d\" text:note-class=\"footnote\"><text:note-body>", temp_short);
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
@@ -1061,9 +1082,9 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 					print_const("</text:note-body></text:note>");
 				}
 
-				scratch->odf_para_type = temp_short2;
+				scratch->odf_para_type = temp_short3;
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
 			break;

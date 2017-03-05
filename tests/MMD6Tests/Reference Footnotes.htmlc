@@ -7,6 +7,8 @@ latex config:	article</p>
 
 <p>foo.<a href="foo">^bar3</a></p>
 
+<p>foo.<a href="foo">^bar3</a></p>
+
 <pre><code>*bar*
 
 * bat

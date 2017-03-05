@@ -1196,19 +1196,34 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_footnotes->size;
+				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
-				if (temp_short < scratch->used_footnotes->size) {
-					// Re-using previous footnote
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[^");
+					mmd_export_token_tree_html(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
+
+				if (temp_short2 == scratch->used_footnotes->size) {
+					// This is a re-use of a previously used note
+
 					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						   temp_short, LC("see footnote"), temp_short);
+						temp_short, LC("see footnote"), temp_short);
 				} else {
-					// This is a new footnote
+					// This is the first time this note was used
+
 					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						   temp_short, temp_short, LC("see footnote"), temp_short);
+						temp_short, temp_short, LC("see footnote"), temp_short);
 				}
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;

@@ -1132,23 +1132,52 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_footnotes->size;
+				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
-				if (temp_short < scratch->used_footnotes->size) {
-					// Re-using previous footnote
-					print("\\footnote{reuse");
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[?");
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
 
-					print("}");
-				} else {
-					// This is a new footnote
-					print("\\footnote{");
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+				if (temp_short2 == scratch->used_footnotes->size) {
+					// This is a re-use of a previously used note
+
+					// TODO: This would work, assuming no URL's are converted to 
+					// footnotes without affecting the numbering.
+					// Could add a NULL to the used_footnotes stack??
+
+					// Additionally, re-using an old footnote would require flipping back
+					// through the document to find it...
+
+					// printf("\\footnotemark[%d]", temp_short);
+
+					print_const("\\footnote{");
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
 					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
-					print("}");
+					print_const("}");
+				} else {
+					// This is the first time this note was used
+
+					print_const("\\footnote{");
+					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
+					print_const("}");
 				}
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
