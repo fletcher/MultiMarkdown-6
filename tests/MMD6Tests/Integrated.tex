@@ -1,5 +1,9 @@
 \input{mmd6-article-leader}
 \def\mytitle{Integrated}
+\longnewglossaryentry{term}{name=term}{A term to be defined.}
+
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
 \input{mmd6-article-begin}
 
 This file is a designed as a single test that incorporates most of the
@@ -13,9 +17,9 @@ when developing a new output format.
 paragraph
 
 \begin{itemize}
-\item list
+\item{} list
 
-\item items
+\item{} items
 
 \end{itemize}
 
@@ -43,11 +47,11 @@ blockquote
 \label{escaped}
 
 \begin{enumerate}
-\item \$
+\item{} \$
 
-\item \#
+\item{} \#
 
-\item [
+\item{} [
 
 \end{enumerate}
 
@@ -129,6 +133,16 @@ baz bat*
 \label{horizontalrules}
 
 \begin{center}\rule{3in}{0.4pt}\end{center}
+
+\part{Glossary }
+\label{glossary}
+
+\gls{term}
+
+\part{Abbreviations}
+\label{abbreviations}
+
+\gls{MMD}
 
 \begin{thebibliography}{0}
 

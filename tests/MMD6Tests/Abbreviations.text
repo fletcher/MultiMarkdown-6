@@ -9,8 +9,7 @@ latex config:	article
 
 [>foobar]
 
-[>foo]
-[>bar]
+[>foo bar]
 
 5
 
