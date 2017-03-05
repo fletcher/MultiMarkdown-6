@@ -1053,12 +1053,14 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
-			temp_bool = true;   // Track whether this is a 'not cited'
-			temp_token = t;     // Remember whether we need to skip ahead
-			
+			temp_bool = true;		// Track whether this is regular vs 'not cited'
+			temp_token = t;			// Remember whether we need to skip ahead
+
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
 				if (t->type == PAIR_BRACKET) {
-					// This is a locator for subsequent citation (e.g. `[foo][#bar]`
+					// This is a locator for a subsequent citation (e.g. `[foo][#bar]`)
 					temp_char = text_inside_pair(source, t);
 					temp_char2 = label_from_string(temp_char);
 
@@ -1070,25 +1072,46 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 					free(temp_char2);
 
-					// Process the actual citation
+					// Move ahead to actual citation
 					t = t->next;
 				} else {
-					// This is just a citation (e.g. `[#foo]`)
+					// This is the actual citation (e.g. `[#foo]`)
+					// No locator
 					temp_char = strdup("");
 				}
 
-				// See if we're a citep or cite
-				temp_char2 = clean_inside_pair(source, t, false);
-				
+				// Classify this use
+				temp_short2 = scratch->used_citations->size;
+				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[#");
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					print_const("]");
+
+					free(temp_char);
+					break;
+				}
+
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
 
 				if (temp_bool) {
-					// This is not a "not cited"
+					// This is a regular citation
+
+					// Are we citep vs citet?
+					temp_char2 = clean_inside_pair(source, t, false);
+					if (temp_char2[strlen(temp_char2) - 1] == ';') {
+						temp_bool = true;		// citet
+					} else {
+						temp_bool = false;		// citep
+					}
+
 					if (temp_char[0] == '\0') {
 						// No locator
-						if (temp_char2[strlen(temp_char2) - 1] == ';') {
+						if (temp_bool) {
 							print_const("\\citet");
 						} else {
 							print_const("~\\citep");
@@ -1096,7 +1119,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					} else {
 						// Locator present
 
-						// Does the locator contain two options?
+						// Are there two arguments in the locator?
 						// e.g. `[foo\]\[bar]`
 						temp_char3 = strstr(temp_char, "\\]\\[");
 						if (temp_char3) {
@@ -1105,7 +1128,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 							memmove(temp_char3 + 1, temp_char3 + 3, strlen(temp_char3 - 3));
 						}
 
-						if (temp_char2[strlen(temp_char2) - 1] == ';') {
+						if (temp_bool) {
 							printf("\\citet[%s]", temp_char);
 						} else {
 							printf("~\\citep[%s]", temp_char);
@@ -1113,22 +1136,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					}
 
 					printf("{%s}", temp_note->label_text);
+					free(temp_char2);
 				} else {
 					// This is a "nocite"
-					printf("~\\nocite{%s}",temp_note->label_text);
+					printf("~\\nocite{%s}", temp_note->label_text);
 				}
 
 				if (temp_token != t) {
 					// Skip citation on next pass
 					scratch->skip_token = 1;
 				}
+
+				free(temp_char);
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
-
-			free(temp_char);
-			free(temp_char2);
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {

@@ -1138,62 +1138,95 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
-			temp_bool = true;
-
-			if (t->type == PAIR_BRACKET) {
-				// This is a locator for subsequent citation
-				temp_char = text_inside_pair(source, t);
-				temp_char2 = label_from_string(temp_char);
-
-				if (strcmp(temp_char2, "notcited") == 0) {
-					free(temp_char2);
-					free(temp_char);
-					temp_char = strdup("");
-					temp_bool = false;
-				}
-
-				if (temp_char[0] == '\0')
-					temp_char2 = strdup("");
-				else
-					temp_char2 = strdup(", ");
-
-
-				// Process the actual citation
-				t = t->next;
-			} else {
-				temp_char = strdup("");
-				temp_char2 = strdup("");
-			}
+			temp_bool = true;		// Track whether this is regular vs 'not cited'
+			temp_token = t;			// Remember whether we need to skip ahead
 
 			if (scratch->extensions & EXT_NOTES) {
-				temp_short2 = scratch->used_citations->size;
+				// Note-based syntax enabled
 
-				citation_from_bracket(source, scratch, t, &temp_short);
+				if (t->type == PAIR_BRACKET) {
+					// This is a locator for a subsequent citation (e.g. `[foo][#bar]`)
+					temp_char = text_inside_pair(source, t);
+					temp_char2 = label_from_string(temp_char);
 
-				if (temp_bool) {
-					if (temp_short2 == scratch->used_citations->size) {
-						// Repeat of earlier citation
-						printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-								temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
-					} else {
-						// New citation
-						printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s%s%d]</a>",
-								temp_short, temp_short, LC("see citation"), temp_char, temp_char2, temp_short);
+					if (strcmp(temp_char2, "notcited") == 0) {
+						free(temp_char);
+						temp_char = strdup("");
+						temp_bool = false;
 					}
+
+					free(temp_char2);
+
+					// Move ahead to actual citation
+					t = t->next;
+				} else {
+					// This is the actual citation (e.g. `[#foo]`)
+					// No locator
+					temp_char = strdup("");
 				}
 
-				if (t->prev && (t->prev->type == PAIR_BRACKET)) {
+				// Classify this use
+				temp_short2 = scratch->used_citations->size;
+				temp_short3 = scratch->inline_citations_to_free->size;
+				citation_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[#");
+					mmd_export_token_tree_html(out, source, t->child->next, scratch);
+					print_const("]");
+
+					free(temp_char);
+					break;
+				}
+
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
+				if (temp_bool) {
+					// This is a regular citation
+
+					if (temp_char[0] == '\0') {
+						// No locator
+				
+						if (temp_short2 == scratch->used_citations->size) {
+							// This is a re-use of a previously used note
+							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
+									temp_short, LC("see citation"), temp_short);
+						} else {
+							// This is the first time this note was used
+							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
+									temp_short, temp_short, LC("see citation"), temp_short);
+						}
+					} else {
+						// Locator present
+
+						if (temp_short2 == scratch->used_citations->size) {
+							// This is a re-use of a previously used note
+							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s, %d]</a>",
+									temp_short, LC("see citation"), temp_char, temp_short);
+						} else {
+							// This is the first time this note was used
+							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s, %d]</a>",
+									temp_short, temp_short, LC("see citation"), temp_char, temp_short);
+						}
+					}
+				} else {
+					// This is a "nocite"
+				}
+
+				if (temp_token != t) {
 					// Skip citation on next pass
 					scratch->skip_token = 1;
 				}
+
+				free(temp_char);
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
-
-			free(temp_char);
-			free(temp_char2);
 			break;
+
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
