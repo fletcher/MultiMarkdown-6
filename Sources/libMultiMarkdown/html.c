@@ -1214,36 +1214,42 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			break;
 		case PAIR_BRACKET_GLOSSARY:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_glossaries->size;
+				temp_short3 = scratch->inline_glossaries_to_free->size;
 				glossary_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_html(out, source, t->child, scratch);
+					mmd_export_token_tree_html(out, source, t->child->next, scratch);
 					print_const("]");
 					break;
 				}
 
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
 
-				if (temp_short < scratch->used_glossaries->size) {
-					// Re-using previous glossary
+				if (temp_short2 == scratch->used_glossaries->size) {
+					// This is a re-use of a previously used note
+
 					printf("<a href=\"#gn:%d\" title=\"%s\" class=\"glossary\">",
 						   temp_short, LC("see glossary"));
-
 					mmd_print_string_html(out, temp_note->clean_text, false);
-
 					print_const("</a>");
 				} else {
-					// This is a new glossary
+					// This is the first time this note was used
+
+
 					printf("<a href=\"#gn:%d\" id=\"gnref:%d\" title=\"%s\" class=\"glossary\">",
 						   temp_short, temp_short, LC("see glossary"));
-
 					mmd_print_string_html(out, temp_note->clean_text, false);
-
 					print_const("</a>");
 				}
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
 			break;

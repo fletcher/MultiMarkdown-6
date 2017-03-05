@@ -1154,35 +1154,40 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_BRACKET_GLOSSARY:
 			if (scratch->extensions & EXT_NOTES) {
-				// See whether we create an inline glossary
-				temp_short2 = scratch->inline_glossaries_to_free->size;
-				glossary_from_bracket(source, scratch, t, &temp_short);
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_glossaries->size;
 				temp_short3 = scratch->inline_glossaries_to_free->size;
+				glossary_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
 					print_const("]");
 					break;
 				}
 
-				if (temp_short2 != temp_short3)
-					temp_bool = true;	// This is an inline
-				else
-					temp_bool = false;
-
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
 
-				if (temp_short < scratch->used_glossaries->size) {
-					// Re-using previous glossary
+				if (temp_short2 == scratch->used_glossaries->size) {
+					// This is a re-use of a previously used note
+
 					print("\\gls{");
 					print(temp_note->label_text);
 					print("}");
 				} else {
-					// This is a new glossary
+					// This is the first time this note was used
 
-					if (temp_bool) {
-						// This is an inline glossary entry
+					if (temp_short3 == scratch->inline_glossaries_to_free->size) {
+						// This is a reference definition
+						print_const("\\gls{");
+						print(temp_note->label_text);
+						print_const("}");
+					} else {
+						// This is an inline definition
 						print_const("\\newglossaryentry{");
 						print(temp_note->label_text);
 
@@ -1193,14 +1198,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						
 						// We skip over temp_note->content, since that is the term in use
 						mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
-						print_const("}}");
+						print_const("}}\\gls{");
+						print(temp_note->label_text);
+						print_const("}");
 					}
-					print_const("\\gls{");
-					print(temp_note->label_text);
-					print_const("}");
 				}
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
