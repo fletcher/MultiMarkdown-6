@@ -587,6 +587,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				case BLOCK_DEFINITION:
 					print_const(" text:style-name=\"Quotations\">");
 					break;
+				case PAIR_BRACKET_ABBREVIATION:
 				case PAIR_BRACKET_CITATION:
 				case PAIR_BRACKET_FOOTNOTE:
 				case PAIR_BRACKET_GLOSSARY:
@@ -982,12 +983,14 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
-			temp_bool = true;   // Track whether this is a 'not cited'
-			temp_token = t;     // Remember whether we need to skip ahead
-			
+			temp_bool = true;		// Track whether this is regular vs 'not cited'
+			temp_token = t;			// Remember whether we need to skip ahead
+
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
 				if (t->type == PAIR_BRACKET) {
-					// This is a locator for subsequent citation (e.g. `[foo][#bar]`
+					// This is a locator for a subsequent citation (e.g. `[foo][#bar]`)
 					temp_char = text_inside_pair(source, t);
 					temp_char2 = label_from_string(temp_char);
 
@@ -999,59 +1002,130 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 					free(temp_char2);
 
-					// Process the actual citation
+					// Move ahead to actual citation
 					t = t->next;
 				} else {
-					// This is just a citation (e.g. `[#foo]`)
+					// This is the actual citation (e.g. `[#foo]`)
+					// No locator
 					temp_char = strdup("");
 				}
 
-				temp_short3 = scratch->used_citations->size;
-
+				// Classify this use
+				temp_short2 = scratch->used_citations->size;
+				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
-				temp_short2 = scratch->odf_para_type;
-				scratch->odf_para_type = PAIR_BRACKET_CITATION;
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[#");
+					mmd_export_token_tree_odf(out, source, t->child->next, scratch);
+					print_const("]");
 
-				if (temp_short3 == scratch->used_citations->size) {
-					// Re-using previous citation
-					print_const("<text:span text:style-name=\"Footnote_20_anchor\"><text:note-ref text:note-class=\"endnote\" text:reference-format=\"text\" ");
-					printf("text:ref-name=\"cite%d\">%d</text:note-ref></text:span>", temp_short, temp_short);
-				} else {
-					// New citation
-					printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
-					temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
-
-					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
-					print_const("</text:note-body></text:note>");
+					free(temp_char);
+					break;
 				}
 
-				scratch->odf_para_type = temp_short2;
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
+				temp_short3 = scratch->odf_para_type;
+				scratch->odf_para_type = PAIR_BRACKET_FOOTNOTE;
+
+				if (temp_bool) {
+					// This is a regular citation
+
+					if (temp_char[0] == '\0') {
+						// No locator
+				
+						if (temp_short2 == scratch->used_citations->size) {
+							// This is a re-use of a previously used note
+							print_const("<text:span text:style-name=\"Footnote_20_anchor\"><text:note-ref text:note-class=\"endnote\" text:reference-format=\"text\" ");
+							printf("text:ref-name=\"cite%d\">%d</text:note-ref></text:span>", temp_short, temp_short);
+						} else {
+							// This is the first time this note was used
+							printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
+							temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
+							mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+							print_const("</text:note-body></text:note>");
+						}
+					} else {
+						// Locator present
+
+						if (temp_short2 == scratch->used_citations->size) {
+							// This is a re-use of a previously used note
+							print_const("<text:span text:style-name=\"Footnote_20_anchor\"><text:note-ref text:note-class=\"endnote\" text:reference-format=\"text\" ");
+							printf("text:ref-name=\"cite%d\">%d</text:note-ref></text:span>", temp_short, temp_short);
+						} else {
+							// This is the first time this note was used
+							printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
+							temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
+							mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+							print_const("</text:note-body></text:note>");
+						}
+					}
+				} else {
+						if (temp_short2 == scratch->used_citations->size) {
+							// This is a re-use of a previously used note
+						} else {
+							// This is the first time this note was used
+							// TODO: Not sure how to add an endnote without inserting a marker in the text
+							printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
+							temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+
+							mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+							print_const("</text:note-body></text:note>");
+						}
+				}
 
 				if (temp_token != t) {
 					// Skip citation on next pass
 					scratch->skip_token = 1;
 				}
+
+				scratch->odf_para_type = temp_short3;
+
+				free(temp_char);
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
-
-			free(temp_char);
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_footnotes->size;
+				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
-				temp_short2 = scratch->odf_para_type;
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[?");
+					mmd_export_token_tree_odf(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
+
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+				temp_short3 = scratch->odf_para_type;
 				scratch->odf_para_type = PAIR_BRACKET_FOOTNOTE;
 
-				if (temp_short < scratch->used_footnotes->size) {
-					// Re-using previous footnote
-					print("\\footnote{reuse");
+				if (temp_short2 == scratch->used_footnotes->size) {
+					// This is a re-use of a previously used note
 
-					print("}");
+					printf("<text:note text:id=\"fn%d\" text:note-class=\"footnote\"><text:note-body>", temp_short);
+					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+					print_const("</text:note-body></text:note>");
 				} else {
+					// This is the first time this note was used
+
 					// This is a new footnote
 					printf("<text:note text:id=\"fn%d\" text:note-class=\"footnote\"><text:note-body>", temp_short);
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
@@ -1060,46 +1134,111 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 					print_const("</text:note-body></text:note>");
 				}
 
-				scratch->odf_para_type = temp_short2;
+				scratch->odf_para_type = temp_short3;
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
+			}
+			break;
+		case PAIR_BRACKET_ABBREVIATION:
+			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_abbreviations->size;
+				temp_short3 = scratch->inline_abbreviations_to_free->size;
+				abbreviation_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[>");
+					mmd_export_token_tree_odf(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
+
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
+
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+
+				if (temp_short2 == scratch->used_abbreviations->size) {
+					// This is a re-use of a previously used note
+
+					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+						// This is a reference definition
+						mmd_export_token_tree_odf(out, source, t->child, scratch);
+					} else {
+						// This is an inline definition
+						mmd_export_token_tree_odf(out, source, t->child, scratch);
+					}
+				} else {
+					// This is the first time this note was used
+					temp_short2 = scratch->odf_para_type;
+					scratch->odf_para_type = PAIR_BRACKET_ABBREVIATION;
+
+					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+						// This is a reference definition
+						mmd_print_string_odf(out, temp_note->label_text); 
+						printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
+						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+						print_const("</text:note-body></text:note>");
+					} else {
+						// This is an inline definition
+						mmd_print_string_odf(out, temp_note->label_text); 
+						printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
+						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+						print_const("</text:note-body></text:note>");
+					}
+
+					scratch->odf_para_type = temp_short2;
+				}
+			} else {
+				// Note-based syntax disabled
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_glossaries->size;
+				temp_short3 = scratch->inline_glossaries_to_free->size;
 				glossary_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_odf(out, source, t->child, scratch);
+					mmd_export_token_tree_odf(out, source, t->child->next, scratch);
 					print_const("]");
 					break;
 				}
 
-				temp_short2 = scratch->odf_para_type;
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
+
+				temp_short3 = scratch->odf_para_type;
 				scratch->odf_para_type = PAIR_BRACKET_GLOSSARY;
 
-				if (temp_short < scratch->used_glossaries->size) {
-					// Re-using previous footnote
-					print("\\footnote{reuse");
+				if (temp_short2 == scratch->used_glossaries->size) {
+					// This is a re-use of a previously used note
 
-					print("}");
+					mmd_print_string_odf(out, temp_note->clean_text); 
 				} else {
-					// This is a new glossary item
-					temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
+					// This is the first time this note was used
 
 					mmd_print_string_odf(out, temp_note->clean_text); 
 
 					printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
-
 					mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
 					print_const("</text:note-body></text:note>");
 				}
 
-				scratch->odf_para_type = temp_short2;
+				scratch->odf_para_type = temp_short3;
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
 			break;

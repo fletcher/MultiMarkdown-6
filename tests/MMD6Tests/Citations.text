@@ -31,10 +31,11 @@ latex config:	article
 [#foo1;][#foo2;]
 
 
-[Not Cited][#foo2]
+[Not Cited][#foo3]
 
-[#foo1]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
 
-[#foo2]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+[#foo1]: John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.
 
-[#foo3]: John Doe. *A Totally Fake Book*.  Vanity Press, 2006.
+[#foo2]: John Doe. *A Totally Fake Book 2*.  Vanity Press, 2006.
+
+[#foo3]: John Doe. *A Totally Fake Book 3*.  Vanity Press, 2006.

@@ -386,7 +386,7 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
 			temp_char = label_from_header(source, entry);
-			print_const("\\item ");
+			print_const("\\item{} ");
 			mmd_export_token_tree_latex(out, source, entry->child, scratch);
 			printf("(\\autoref{%s})\n\n", temp_char);
 
@@ -639,14 +639,14 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case BLOCK_LIST_ITEM:
 			pad(out, 2, scratch);
-			print_const("\\item ");
+			print_const("\\item{} ");
 			scratch->padded = 2;
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 			break;
 		case BLOCK_LIST_ITEM_TIGHT:
 			pad(out, 2, scratch);
-			print_const("\\item ");
+			print_const("\\item{} ");
 			scratch->padded = 2;
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
@@ -1011,14 +1011,56 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			// No links exist, so treat as normal
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+		case PAIR_BRACKET_ABBREVIATION:
+			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_abbreviations->size;
+				temp_short3 = scratch->inline_abbreviations_to_free->size;
+				abbreviation_from_bracket(source, scratch, t, &temp_short);
+
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[>");
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
+
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
+
+				if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
+					// This is a reference definition
+					printf("\\gls{%s}", temp_note->label_text);
+				} else {
+					// This is an inline definition
+					print_const("\\newacronym{");
+					print(temp_note->label_text);
+					print_const("}{");
+					print(temp_note->label_text);
+					print_const("}{");
+					print(temp_note->clean_text);
+					print_const("}");
+
+					printf("\\gls{%s}", temp_note->label_text);
+				}
+			} else {
+				// Note-based syntax disabled
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
+			break;
 		case PAIR_BRACKET_CITATION:
 			parse_citation:
-			temp_bool = true;   // Track whether this is a 'not cited'
-			temp_token = t;     // Remember whether we need to skip ahead
-			
+			temp_bool = true;		// Track whether this is regular vs 'not cited'
+			temp_token = t;			// Remember whether we need to skip ahead
+
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
 				if (t->type == PAIR_BRACKET) {
-					// This is a locator for subsequent citation (e.g. `[foo][#bar]`
+					// This is a locator for a subsequent citation (e.g. `[foo][#bar]`)
 					temp_char = text_inside_pair(source, t);
 					temp_char2 = label_from_string(temp_char);
 
@@ -1030,25 +1072,46 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 					free(temp_char2);
 
-					// Process the actual citation
+					// Move ahead to actual citation
 					t = t->next;
 				} else {
-					// This is just a citation (e.g. `[#foo]`)
+					// This is the actual citation (e.g. `[#foo]`)
+					// No locator
 					temp_char = strdup("");
 				}
 
-				// See if we're a citep or cite
-				temp_char2 = clean_inside_pair(source, t, false);
-				
+				// Classify this use
+				temp_short2 = scratch->used_citations->size;
+				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[#");
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					print_const("]");
+
+					free(temp_char);
+					break;
+				}
+
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
 
 				if (temp_bool) {
-					// This is not a "not cited"
+					// This is a regular citation
+
+					// Are we citep vs citet?
+					temp_char2 = clean_inside_pair(source, t, false);
+					if (temp_char2[strlen(temp_char2) - 1] == ';') {
+						temp_bool = true;		// citet
+					} else {
+						temp_bool = false;		// citep
+					}
+
 					if (temp_char[0] == '\0') {
 						// No locator
-						if (temp_char2[strlen(temp_char2) - 1] == ';') {
+						if (temp_bool) {
 							print_const("\\citet");
 						} else {
 							print_const("~\\citep");
@@ -1056,7 +1119,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					} else {
 						// Locator present
 
-						// Does the locator contain two options?
+						// Are there two arguments in the locator?
 						// e.g. `[foo\]\[bar]`
 						temp_char3 = strstr(temp_char, "\\]\\[");
 						if (temp_char3) {
@@ -1065,7 +1128,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 							memmove(temp_char3 + 1, temp_char3 + 3, strlen(temp_char3 - 3));
 						}
 
-						if (temp_char2[strlen(temp_char2) - 1] == ';') {
+						if (temp_bool) {
 							printf("\\citet[%s]", temp_char);
 						} else {
 							printf("~\\citep[%s]", temp_char);
@@ -1073,76 +1136,110 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					}
 
 					printf("{%s}", temp_note->label_text);
+					free(temp_char2);
 				} else {
 					// This is a "nocite"
-					printf("~\\nocite{%s}",temp_note->label_text);
+					printf("~\\nocite{%s}", temp_note->label_text);
 				}
 
 				if (temp_token != t) {
 					// Skip citation on next pass
 					scratch->skip_token = 1;
 				}
+
+				free(temp_char);
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
-
-			free(temp_char);
-			free(temp_char2);
 			break;
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_footnotes->size;
+				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
-				if (temp_short < scratch->used_footnotes->size) {
-					// Re-using previous footnote
-					print("\\footnote{reuse");
+				if (temp_short == -1) {
+					// This instance is not properly formed
+					print_const("[?");
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					print_const("]");
+					break;
+				}
 
-					print("}");
-				} else {
-					// This is a new footnote
-					print("\\footnote{");
+				// Get instance of the note used
+				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+				if (temp_short2 == scratch->used_footnotes->size) {
+					// This is a re-use of a previously used note
+
+					// TODO: This would work, assuming no URL's are converted to 
+					// footnotes without affecting the numbering.
+					// Could add a NULL to the used_footnotes stack??
+
+					// Additionally, re-using an old footnote would require flipping back
+					// through the document to find it...
+
+					// printf("\\footnotemark[%d]", temp_short);
+
+					print_const("\\footnote{");
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
 					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
-					print("}");
+					print_const("}");
+				} else {
+					// This is the first time this note was used
+
+					print_const("\\footnote{");
+					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
+
+					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
+					print_const("}");
 				}
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
 			if (scratch->extensions & EXT_NOTES) {
-				// See whether we create an inline glossary
-				temp_short2 = scratch->inline_glossaries_to_free->size;
-				glossary_from_bracket(source, scratch, t, &temp_short);
+				// Note-based syntax enabled
+
+				// Classify this use
+				temp_short2 = scratch->used_glossaries->size;
 				temp_short3 = scratch->inline_glossaries_to_free->size;
+				glossary_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
+					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_latex(out, source, t->child, scratch);
+					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
 					print_const("]");
 					break;
 				}
 
-				if (temp_short2 != temp_short3)
-					temp_bool = true;	// This is an inline
-				else
-					temp_bool = false;
-
+				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_glossaries, temp_short - 1);
 
-				if (temp_short < scratch->used_glossaries->size) {
-					// Re-using previous glossary
+				if (temp_short2 == scratch->used_glossaries->size) {
+					// This is a re-use of a previously used note
+
 					print("\\gls{");
 					print(temp_note->label_text);
 					print("}");
 				} else {
-					// This is a new glossary
+					// This is the first time this note was used
 
-					if (temp_bool) {
-						// This is an inline glossary entry
+					if (temp_short3 == scratch->inline_glossaries_to_free->size) {
+						// This is a reference definition
+						print_const("\\gls{");
+						print(temp_note->label_text);
+						print_const("}");
+					} else {
+						// This is an inline definition
 						print_const("\\newglossaryentry{");
 						print(temp_note->label_text);
 
@@ -1153,14 +1250,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						
 						// We skip over temp_note->content, since that is the term in use
 						mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
-						print_const("}}");
+						print_const("}}\\gls{");
+						print(temp_note->label_text);
+						print_const("}");
 					}
-					print_const("\\gls{");
-					print(temp_note->label_text);
-					print_const("}");
 				}
 			} else {
-				// Footnotes disabled
+				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
@@ -1615,6 +1711,19 @@ void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad
 		print_const("}{");
 
 		mmd_export_token_tree_latex(out, source, f->note->content, scratch);
+		print_const("}\n\n");
+	}
+
+	// And abbreviations
+
+	HASH_ITER(hh, scratch->abbreviation_hash, f, f_tmp) {
+		// Add this abbreviation definition
+		print_const("\\newacronym{");
+		print(f->note->label_text);
+		print_const("}{");
+		print(f->note->label_text);
+		print_const("}{");
+		print(f->note->clean_text);
 		print_const("}\n\n");
 	}
 }

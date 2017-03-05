@@ -29,10 +29,10 @@ latex config:	article</p>
 
 <p>[#foo1;][#foo2;]</p>
 
-<p>[Not Cited][#foo2]</p>
+<p>[Not Cited][#foo3]</p>
 
-<p>[#foo1]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>
+<p>[#foo1]: John Doe. <em>A Totally Fake Book 1</em>. Vanity Press, 2006.</p>
 
-<p>[#foo2]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>
+<p>[#foo2]: John Doe. <em>A Totally Fake Book 2</em>. Vanity Press, 2006.</p>
 
-<p>[#foo3]: John Doe. <em>A Totally Fake Book</em>. Vanity Press, 2006.</p>
+<p>[#foo3]: John Doe. <em>A Totally Fake Book 3</em>. Vanity Press, 2006.</p>

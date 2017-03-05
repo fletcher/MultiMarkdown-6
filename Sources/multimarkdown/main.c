@@ -154,28 +154,6 @@ char * filename_with_extension(const char * original, const char * new_extension
 }
 
 
-char * mmd_process(DString * buffer, unsigned long extensions, short format, short language) {
-	char * result;
-
-	mmd_engine * e = mmd_engine_create_with_dstring(buffer, extensions);
-
-	mmd_engine_set_language(e, language);
-
-	mmd_engine_parse_string(e);
-
-	DString * output = d_string_new("");
-
-	mmd_export_token_tree(output, e, format);
-
-	result = output->str;
-
-	mmd_engine_free(e, false);
-	d_string_free(output, false);
-
-	return result;
-}
-
-
 int main(int argc, char** argv) {
 	int exitcode = EXIT_SUCCESS;
 	char * binname = "multimarkdown";
@@ -379,7 +357,7 @@ int main(int argc, char** argv) {
 			if (FORMAT_MMD == format) {
 				result = buffer->str;
 			} else {
-				result = mmd_process(buffer, extensions, format, language);
+				result = mmd_convert_d_string(buffer, extensions, format, language);
 			}
 
 			if (!(output_stream = fopen(output_filename, "w"))) {
@@ -437,7 +415,7 @@ int main(int argc, char** argv) {
 		if (FORMAT_MMD == format) {
 			result = buffer->str;
 		} else {
-			result = mmd_process(buffer, extensions, format, language);
+			result = mmd_convert_d_string(buffer, extensions, format, language);
 		}
 
 		// Where does output go?

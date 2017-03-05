@@ -129,13 +129,14 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET_GLOSSARY, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		} else {
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 		
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -226,8 +227,13 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	// Pointers to blocks that are freed elsewhere
 	stack_free(e->definition_stack);
 	stack_free(e->header_stack);
-	stack_free(e->abbreviation_stack);
 
+
+	// Abbreviations need to be freed
+	while (e->abbreviation_stack->size) {
+		footnote_free(stack_pop(e->abbreviation_stack));
+	}
+	stack_free(e->abbreviation_stack);
 	
 	// Citations need to be freed
 	while (e->citation_stack->size) {
@@ -469,17 +475,6 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				break;
 			}
 		case STAR:
-			if (!(e->extensions & EXT_COMPATIBILITY)) {
-				if (line->child->next && line->child->next->type == BRACKET_LEFT) {
-					// Possible Abbreviation definition
-					if (scan_ref_abbreviation(&source[line->child->start])) {
-						line->type = LINE_DEF_ABBREVIATION;
-						line->child->type = TEXT_EMPTY;
-						line->child->next->type = BRACKET_ABBREVIATION_LEFT;
-						break;
-					}
-				}
-			}
 		case UL:
 			// Could this be a horizontal rule?
 			t = line->child->next;
@@ -596,6 +591,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			} else {
 				scan_len = scan_ref_link(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
+			}
+			break;
+		case BRACKET_ABBREVIATION_LEFT:
+			if (e->extensions & EXT_NOTES) {
+				scan_len = scan_ref_abbreviation(&source[line->start]);
+				line->type = (scan_len) ? LINE_DEF_ABBREVIATION : LINE_PLAIN;
+			} else {
+				scan_len = scan_ref_link_no_attributes(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
 			break;
@@ -1877,6 +1881,54 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 	}
 
 	free(clean);
+	return result;
+}
+
+
+// Convert MMD text to specified format, with specified extensions, and language
+// Returned char * must be freed
+char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+
+	DString * output = d_string_new("");
+
+	mmd_export_token_tree(output, e, format);
+
+	result = output->str;
+
+	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+	d_string_free(output, false);
+
+	return result;
+}
+
+
+// Convert MMD text to specified format, with specified extensions, and language
+// Returned char * must be freed
+char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+
+	DString * output = d_string_new("");
+
+	mmd_export_token_tree(output, e, format);
+
+	result = output->str;
+
+	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
+	d_string_free(output, false);
+
 	return result;
 }
 

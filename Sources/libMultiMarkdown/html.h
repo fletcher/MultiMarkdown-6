@@ -60,12 +60,12 @@
 #include "token.h"
 #include "writer.h"
 
-void mmd_export_token_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch);
-void mmd_export_token_tree_html(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch);
+void mmd_export_token_html(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_tree_html(DString * out, const char * source, token * t, scratch_pad * scratch);
 
 
-void mmd_export_token_html_raw(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch);
-void mmd_export_token_tree_html_raw(DString * out, const char * source, token * t, size_t offset, scratch_pad * scratch);
+void mmd_export_token_html_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_tree_html_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
 
 void mmd_export_citation_list_html(DString * out, const char * source, scratch_pad * scratch);
 void mmd_export_footnote_list_html(DString * out, const char * source, scratch_pad * scratch);

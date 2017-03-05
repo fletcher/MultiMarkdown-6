@@ -83,8 +83,7 @@ void store_link(scratch_pad * scratch, link * l);
 
 void store_metadata(scratch_pad * scratch, meta * m);
 
-void store_abbreviation(scratch_pad * scratch, abbr * a);
-void abbreviation_free(abbr * a);
+void store_abbreviation(scratch_pad * scratch, footnote * a);
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
@@ -193,6 +192,19 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			store_glossary(p, f);
 		}
 
+		// Store abbreviations in a hash for rapid retrieval when exporting
+		p->used_abbreviations = stack_new(0);
+		p->inline_abbreviations_to_free = stack_new(0);
+
+		p->abbreviation_hash = NULL;
+
+		for (int i = 0; i < e->abbreviation_stack->size; ++i)
+		{
+			f = stack_peek_index(e->abbreviation_stack, i);
+
+			store_abbreviation(p, f);
+		}
+
 		// Store metadata in a hash for rapid retrieval when exporting
 		p->meta_hash = NULL;
 		meta * m;
@@ -202,17 +214,6 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			m = stack_peek_index(e->metadata_stack, i);
 
 			store_metadata(p, m);
-		}
-
-		// Store abbreviations in a hash for rapid retrieval when exporting
-		p->abbreviation_hash = NULL;
-		abbr * a;
-
-		for (int i = 0; i < e->abbreviation_stack->size; ++i)
-		{
-			a = stack_peek_index(e->abbreviation_stack, i);
-
-			store_abbreviation(p, a);
 		}
 	}
 
@@ -242,7 +243,6 @@ void scratch_pad_free(scratch_pad * scratch) {
 		HASH_DEL(scratch->footnote_hash, f);	// Remove item from hash
 		free(f);		// Free the fn_holder
 	}
-
 	stack_free(scratch->used_footnotes);
 
 	while (scratch->inline_footnotes_to_free->size) {
@@ -256,7 +256,6 @@ void scratch_pad_free(scratch_pad * scratch) {
 		HASH_DEL(scratch->citation_hash, f);	// Remove item from hash
 		free(f);		// Free the fn_holder
 	}
-
 	stack_free(scratch->used_citations);
 
 	while (scratch->inline_citations_to_free->size) {
@@ -270,13 +269,25 @@ void scratch_pad_free(scratch_pad * scratch) {
 		HASH_DEL(scratch->glossary_hash, f);	// Remove item from hash
 		free(f);		// Free the fn_holder
 	}
-
 	stack_free(scratch->used_glossaries);
 
 	while (scratch->inline_glossaries_to_free->size) {
 		footnote_free(stack_pop(scratch->inline_glossaries_to_free));
 	}
 	stack_free(scratch->inline_glossaries_to_free);
+
+
+	// Free abbreviation hash
+	HASH_ITER(hh, scratch->abbreviation_hash, f, f_tmp) {
+		HASH_DEL(scratch->abbreviation_hash, f);	// Remove item from hash
+		free(f);		// Free the fn_holder
+	}
+	stack_free(scratch->used_abbreviations);
+
+	while (scratch->inline_abbreviations_to_free->size) {
+		footnote_free(stack_pop(scratch->inline_abbreviations_to_free));
+	}
+	stack_free(scratch->inline_abbreviations_to_free);
 
 
 	// Free metadata hash
@@ -286,14 +297,6 @@ void scratch_pad_free(scratch_pad * scratch) {
 		HASH_DEL(scratch->meta_hash, m); 	// Remove item from hash
 		// Don't free meta pointer since it is freed with the mmd_engine
 		//meta_free(m);
-	}
-
-	// Free abbreviation hash
-	abbr * a, * a_tmp;
-
-	HASH_ITER(hh, scratch->abbreviation_hash, a, a_tmp) {
-		HASH_DEL(scratch->abbreviation_hash, a);	// Remove item from hash
-		abbreviation_free(a);
 	}
 
 	free(scratch);
@@ -722,13 +725,15 @@ void store_metadata(scratch_pad * scratch, meta * m) {
 }
 
 
-void store_abbreviation(scratch_pad * scratch, abbr * a) {
-	abbr * temp;
+void store_abbreviation(scratch_pad * scratch, footnote * f) {
+	fn_holder * temp_holder;
 
-	HASH_FIND_STR(scratch->abbreviation_hash, a->abbr, temp);
+	// Store by `label_text`
+	HASH_FIND_STR(scratch->abbreviation_hash, f->label_text, temp_holder);
 
-	if (!temp) {
-		HASH_ADD_KEYPTR(hh, scratch->abbreviation_hash, a->abbr, strlen(a->abbr), a);
+	if (!temp_holder) {
+		temp_holder = fn_holder_new(f);
+		HASH_ADD_KEYPTR(hh, scratch->abbreviation_hash, f->label_text, strlen(f->label_text), temp_holder);
 	}
 }
 
@@ -1216,17 +1221,30 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 
 void process_definition_block(mmd_engine * e, token * block) {
 	footnote * f;
-	abbr * a;
 
 	token * label = block->child;
 	if (label->type == BLOCK_PARA)
 		label = label->child;
 
 	switch (block->type) {
+		case BLOCK_DEF_ABBREVIATION:
 		case BLOCK_DEF_CITATION:
 		case BLOCK_DEF_FOOTNOTE:
 		case BLOCK_DEF_GLOSSARY:
 			switch (block->type) {
+				case BLOCK_DEF_ABBREVIATION:
+					// Strip leading '>'' from term
+					f = footnote_new(e->dstr->str, label, block->child, false);
+					if (f && f->clean_text)
+						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+
+					// Adjust the properties
+					free(f->label_text);
+					f->label_text = f->clean_text;
+					f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
+
+					stack_push(e->abbreviation_stack, f);
+					break;
 				case BLOCK_DEF_CITATION:
 					f = footnote_new(e->dstr->str, label, block->child, true);
 					stack_push(e->citation_stack, f);
@@ -1251,12 +1269,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 		case BLOCK_DEF_LINK:
 			definition_extract(e, &(block->child));
 			break;
-		case BLOCK_DEF_ABBREVIATION:
-			a = abbr_new(e->dstr->str, label->next, label->next->next->next);
-			stack_push(e->abbreviation_stack, a);
-			break;
 		default:
-			fprintf(stderr, "proceess %d\n", block->type);
+			fprintf(stderr, "process %d\n", block->type);
 	}
 
 	block->type = BLOCK_EMPTY;
@@ -1592,8 +1606,6 @@ void process_abbreviation_stack(mmd_engine * e, scratch_pad * scratch) {
 	for (int i = 0; i < e->abbreviation_stack->size; ++i)
 	{
 		a = stack_peek_index(e->abbreviation_stack, i);
-
-		fprintf(stderr, "Check for abbreviation: '%s'\n", a->abbr);
 	}
 
 	abbr_search(e, e->root);
@@ -1637,7 +1649,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_start_complete_html(out, e->dstr->str, scratch);
 
-			mmd_export_token_tree_html(out, e->dstr->str, e->root, 0, scratch);
+			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
 			mmd_export_glossary_list_html(out, e->dstr->str, scratch);
 			mmd_export_citation_list_html(out, e->dstr->str, scratch);
@@ -1811,6 +1823,17 @@ void mark_glossary_as_used(scratch_pad * scratch, footnote * c) {
 }
 
 
+void mark_abbreviation_as_used(scratch_pad * scratch, footnote * c) {
+	if (c->count == -1) {
+		// Add abbreviation to used stack
+		stack_push(scratch->used_abbreviations, c);
+
+		// Update counter
+		c->count = scratch->used_abbreviations->size;
+	}
+}
+
+
 size_t extract_citation_from_stack(scratch_pad * scratch, const char * target) {
 	char * key = clean_string(target, true);
 
@@ -1871,8 +1894,38 @@ size_t extract_footnote_from_stack(scratch_pad * scratch, const char * target) {
 }
 
 
+size_t extract_abbreviation_from_stack(scratch_pad * scratch, const char * target) {
+	char * key = clean_string(target, false);
+
+	fn_holder * h;
+
+	HASH_FIND_STR(scratch->abbreviation_hash, key, h);
+
+	free(key);
+
+	if (h) {
+		mark_abbreviation_as_used(scratch, h->note);
+		return h->note->count;
+	}
+
+	key = label_from_string(target);
+
+	HASH_FIND_STR(scratch->abbreviation_hash, key, h);
+
+	free(key);
+
+	if (h) {
+		mark_abbreviation_as_used(scratch, h->note);
+		return h->note->count;
+	}
+
+	// None found
+	return -1;
+}
+
+
 size_t extract_glossary_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, false);
 
 	fn_holder * h;
 
@@ -1996,6 +2049,50 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 	} else {
 		// Glossary in stack
 		*num = glossary_id;
+	}
+}
+
+
+void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num) {
+	// Get text inside bracket
+	char * text = text_inside_pair(source, t);
+	short abbr_id = extract_abbreviation_from_stack(scratch, &text[1]);
+	
+	free(text);
+
+	if (abbr_id == -1) {
+		// No match, this is an inline glossary -- create a new glossary entry
+		t->child->type = TEXT_EMPTY;
+		t->child->mate->type = TEXT_EMPTY;
+
+		// Create glossary
+		token * label = t->child;
+		while (label && label->type != PAIR_PAREN)
+			label = label->next;
+
+		if (label) {
+			footnote * temp = footnote_new(source, label, label->next, false);
+
+			// Adjust the properties
+			free(temp->label_text);
+			temp->label_text = temp->clean_text;
+			temp->clean_text = clean_string_from_range(source, temp->content->child->start, t->start + t->len - t->child->mate->len - temp->content->child->start, false);
+
+			// Store as used
+			stack_push(scratch->used_abbreviations, temp);
+			*num = scratch->used_abbreviations->size;
+			temp->count = *num;
+
+			// We need to free this one later since it doesn't exist
+			// in the engine's stack, on the scratch_pad stack
+			stack_push(scratch->inline_abbreviations_to_free, temp);
+		} else {
+			// Improperly formatted glossary
+			*num = -1;
+		}
+	} else {
+		// Glossary in stack
+		*num = abbr_id;
 	}
 }
 

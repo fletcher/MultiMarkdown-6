@@ -277,7 +277,7 @@
 
 <text:p text:style-name="Footnote">With second para.</text:p></text:note-body></text:note></text:p>
 
-<text:p text:style-name="Standard">\footnote{reuse}</text:p>
+<text:p text:style-name="Standard">foo</text:p>
 
 <text:p text:style-name="Standard">[?bar]</text:p>
 

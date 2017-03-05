@@ -274,6 +274,8 @@
 <text:p text:style-name="Standard">Inline.<text:note text:id="fn2" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo <text:span text:style-name="MMD-Italic">bar</text:span>
 <text:a xlink:type="simple" xlink:href="/bar">foo</text:a>
 <text:span text:style-name="MMD-Bold">foo</text:span>.</text:p></text:note-body></text:note></text:p>
+
+<text:p text:style-name="Standard">Inline.<text:note text:id="fn3" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo <text:span text:style-name="MMD-Italic">bar</text:span></text:p></text:note-body></text:note></text:p>
 </office:text>
 </office:body>
 </office:document>

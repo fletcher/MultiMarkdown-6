@@ -1,0 +1,28 @@
+\input{mmd6-article-leader}
+\def\mytitle{Abbreviations}
+\newacronym{foo}{foo}{FOO}
+
+\newacronym{bar}{bar}{BAR}
+
+\newacronym{foobar}{foobar}{FOOBAR}
+
+\newacronym{foo bar}{foo bar}{FOO BAR}
+
+\input{mmd6-article-begin}
+
+\gls{foo}
+
+\gls{bar}
+
+\gls{foo} \gls{bar}
+
+\gls{foobar}
+
+\gls{foo bar}
+
+5
+
+\newacronym{baz}{baz}{BAZ (BAT)}\gls{baz}
+
+\input{mmd6-article-footer}
+\end{document}

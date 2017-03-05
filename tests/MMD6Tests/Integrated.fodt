@@ -386,6 +386,14 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 <text:h text:outline-level="1"><text:bookmark text:name="horizontalrules"/>Horizontal Rules <text:bookmark-end text:name="horizontalrules"/></text:h>
 
 <text:p text:style-name="Horizontal_20_Line"/>
+
+<text:h text:outline-level="1"><text:bookmark text:name="glossary"/>Glossary <text:bookmark-end text:name="glossary"/></text:h>
+
+<text:p text:style-name="Standard">term<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">A term to be defined.</text:p></text:note-body></text:note></text:p>
+
+<text:h text:outline-level="1"><text:bookmark text:name="abbreviations"/>Abbreviations<text:bookmark-end text:name="abbreviations"/></text:h>
+
+<text:p text:style-name="Standard">MMD<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">MultiMarkdown</text:p></text:note-body></text:note></text:p>
 </office:text>
 </office:body>
 </office:document>

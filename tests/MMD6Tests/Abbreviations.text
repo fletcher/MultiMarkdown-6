@@ -1,20 +1,22 @@
 Title:	Abbreviations
 latex config:	article
 
-foo
+[>foo]
 
-bar
+[>bar]
 
-foo bar
+[>foo] [>bar]
 
-foobar
+[>foobar]
 
-foo
-bar
+[>foo bar]
 
 5
 
-*[foo]: FOO
-*[bar]: BAR
-*[foobar]: FOOBAR
-*[foo bar]: FOO BAR
+[>(baz) BAZ (BAT)]
+
+
+[>foo]: FOO
+[>bar]: BAR
+[>foobar]: FOOBAR
+[>foo bar]: FOO BAR
