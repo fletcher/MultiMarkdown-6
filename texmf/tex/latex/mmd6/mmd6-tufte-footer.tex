@@ -1,5 +1,15 @@
 
 
+% Back Matter
+\if@mainmatter
+	we're in main
+	\backmatter
+\else
+\newpage
+\fi
+
+
+
 % Bibliography
 
 \ifx\bibliocommand\undefined
@@ -7,4 +17,9 @@
 	\bibliographystyle{\bibliostyle}
 	\bibliocommand
 \fi
+
+
+% Glossary
+\renewcommand*{\acronymname}{Abbreviations}
+\printglossaries
 
