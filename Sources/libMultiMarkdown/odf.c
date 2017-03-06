@@ -706,8 +706,12 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case BRACE_DOUBLE_RIGHT:
 			print_const("}}");
 			break;
+		case BRACKET_ABBREVIATION_LEFT:
+			print_const("[>");
+			break;
 		case BRACKET_CITATION_LEFT:
 			print_const("[#");
+			break;
 		case BRACKET_LEFT:
 			print_const("[");			
 			break;
@@ -1180,16 +1184,16 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
+						mmd_print_string_odf(out, temp_note->clean_text);
+						print_const(" (");
 						mmd_print_string_odf(out, temp_note->label_text); 
-						printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
-						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
-						print_const("</text:note-body></text:note>");
+						print_const(")");
 					} else {
 						// This is an inline definition
-						mmd_print_string_odf(out, temp_note->label_text); 
-						printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
 						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
-						print_const("</text:note-body></text:note>");
+						print_const(" (");
+						mmd_print_string_odf(out, temp_note->label_text); 
+						print_const(")");
 					}
 
 					scratch->odf_para_type = temp_short2;
