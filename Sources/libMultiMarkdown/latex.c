@@ -1671,6 +1671,9 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 		case TEXT_BRACE_RIGHT:
 			print_const("\\}");
 			break;
+		case TOC:
+			print_const("\\{\\{TOC\\}\\}");
+			break;
 		case UL:
 			print_const("\\_");
 			break;
