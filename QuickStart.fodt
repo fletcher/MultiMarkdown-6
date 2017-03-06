@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+     xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+     xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+     xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+     xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+     xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+     xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+     xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+     xmlns:math="http://www.w3.org/1998/Math/MathML"
+     xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+     xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+     xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0"
+     xmlns:ooo="http://openoffice.org/2004/office"
+     xmlns:ooow="http://openoffice.org/2004/writer"
+     xmlns:oooc="http://openoffice.org/2004/calc"
+     xmlns:dom="http://www.w3.org/2001/xml-events"
+     xmlns:xforms="http://www.w3.org/2002/xforms"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:rpt="http://openoffice.org/2005/report"
+     xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:grddl="http://www.w3.org/2003/g/data-view#"
+     xmlns:tableooo="http://openoffice.org/2009/table"
+     xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
+     xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
+     xmlns:css3t="http://www.w3.org/TR/css3-text/"
+     office:version="1.2"
+     grddl:transformation="http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl"
+     office:mimetype="application/vnd.oasis.opendocument.text">
+<office:font-face-decls>
+   <style:font-face style:name="Courier New" svg:font-family="'Courier New'"
+                    style:font-adornments="Regular"
+                    style:font-family-generic="modern"
+                    style:font-pitch="fixed"/>
+</office:font-face-decls>
+<office:styles>
+<style:style style:name="Standard" style:family="paragraph" style:class="text">
+      <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.15in"     fo:text-align="justify" style:justify-single-word="false"/>
+   </style:style>
+<style:style style:name="Preformatted_20_Text" style:display-name="Preformatted Text"
+             style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0in" fo:text-align="start"
+                               style:justify-single-word="false"/>
+   <style:text-properties style:font-name="Courier New" fo:font-size="11pt"
+                          style:font-name-asian="Courier New"
+                          style:font-size-asian="11pt"
+                          style:font-name-complex="Courier New"
+                          style:font-size-complex="11pt"/>
+</style:style>
+<style:style style:name="Source_20_Text" style:display-name="Source Text"
+             style:family="text">
+   <style:text-properties style:font-name="Courier New" style:font-name-asian="Courier New"
+                          style:font-name-complex="Courier New"
+                          fo:font-size="11pt"/>
+</style:style>
+<style:style style:name="List" style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="list">
+   <style:paragraph-properties fo:text-align="start" style:justify-single-word="false"/>
+   <style:text-properties style:font-size-asian="12pt"/>
+</style:style>
+<style:style style:name="Quotations" style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-left="0.3937in" fo:margin-right="0.3937in" fo:margin-top="0in"
+                               fo:margin-bottom="0.1965in"
+                               fo:text-align="justify"                               style:justify-single-word="false"                               fo:text-indent="0in"
+                               style:auto-text-indent="false"/>
+</style:style>
+<style:style style:name="Table_20_Heading" style:display-name="Table Heading"
+             style:family="paragraph"
+             style:parent-style-name="Table_20_Contents"
+             style:class="extra">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"
+                               text:number-lines="false"
+                               text:line-number="0"/>
+   <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold"
+                          style:font-weight-complex="bold"/>
+</style:style>
+<style:style style:name="Horizontal_20_Line" style:display-name="Horizontal Line"
+             style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.1965in"
+                               style:border-line-width-bottom="0.0008in 0.0138in 0.0008in"
+                               fo:padding="0in"
+                               fo:border-left="none"
+                               fo:border-right="none"
+                               fo:border-top="none"
+                               fo:border-bottom="0.0154in double #808080"
+                               text:number-lines="false"
+                               text:line-number="0"
+                               style:join-border="false"/>
+   <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
+</style:style>
+<style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+  <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
+  <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
+</office:styles>
+<office:automatic-styles>   <style:style style:name="MMD-Italic" style:family="text">
+      <style:text-properties fo:font-style="italic" style:font-style-asian="italic"
+                             style:font-style-complex="italic"/>
+   </style:style>
+   <style:style style:name="MMD-Bold" style:family="text">
+      <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold"
+                             style:font-weight-complex="bold"/>
+   </style:style>
+   <style:style style:name="MMD-Superscript" style:family="text">
+      <style:text-properties style:text-position="super 58%"/>
+   </style:style>
+   <style:style style:name="MMD-Subscript" style:family="text">
+      <style:text-properties style:text-position="sub 58%"/>
+   </style:style>
+   <style:style style:name="Strike" style:family="text">
+      <style:text-properties style:text-line-through-style="solid" />
+   </style:style>
+   <style:style style:name="Underline" style:family="text">
+      <style:text-properties style:text-underline-style="solid" style:text-underline-color="font-color"/>
+   </style:style>
+   <style:style style:name="Highlight" style:family="text">
+      <style:text-properties fo:background-color="#FFFF00" />
+   </style:style>
+   <style:style style:name="Comment" style:family="text">
+      <style:text-properties fo:color="#0000BB" />
+   </style:style>
+<style:style style:name="MMD-Table" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.05in"/>
+</style:style>
+<style:style style:name="MMD-Table-Center" style:family="paragraph" style:parent-style-name="MMD-Table">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="MMD-Table-Right" style:family="paragraph" style:parent-style-name="MMD-Table">
+   <style:paragraph-properties fo:text-align="right" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="P2" style:family="paragraph" style:parent-style-name="Standard"
+             style:list-style-name="L2">
+<style:paragraph-properties fo:text-align="start" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="fr1" style:family="graphic" style:parent-style-name="Frame">
+   <style:graphic-properties style:print-content="true" style:vertical-pos="top"
+                             style:vertical-rel="baseline"
+                             fo:padding="0in"
+                             fo:border="none"
+                             style:shadow="none"/>
+</style:style>
+<style:style style:name="P1" style:family="paragraph" style:parent-style-name="Standard"
+             style:list-style-name="L1"/>
+<text:list-style style:name="L1">
+	<text:list-level-style-bullet text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="•">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.25in" fo:margin-left="0.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-bullet text:level="2" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="◦">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.75in" fo:text-indent="-0.25in" fo:margin-left="0.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-bullet text:level="3" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="▪">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-0.25in" fo:margin-left="1in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.25in" fo:text-indent="-0.25in" fo:margin-left="1.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.5in" fo:text-indent="-0.25in" fo:margin-left="1.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.75in" fo:text-indent="-0.25in" fo:margin-left="1.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2in" fo:text-indent="-0.25in" fo:margin-left="2in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.25in" fo:text-indent="-0.25in" fo:margin-left="2.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.5in" fo:text-indent="-0.25in" fo:margin-left="2.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.75in" fo:text-indent="-0.25in" fo:margin-left="2.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+</text:list-style>
+<text:list-style style:name="L2">
+	<text:list-level-style-number text:level="1" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.25in" fo:margin-left="0.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="2" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.75in" fo:text-indent="-0.25in" fo:margin-left="0.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="3" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-0.25in" fo:margin-left="1in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="4" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.25in" fo:text-indent="-0.25in" fo:margin-left="1.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="5" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.5in" fo:text-indent="-0.25in" fo:margin-left="1.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="6" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.75in" fo:text-indent="-0.25in" fo:margin-left="1.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="7" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2in" fo:text-indent="-0.25in" fo:margin-left="2in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="8" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.25in" fo:text-indent="-0.25in" fo:margin-left="2.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="9" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.5in" fo:text-indent="-0.25in" fo:margin-left="2.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="10" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.75in" fo:text-indent="-0.25in" fo:margin-left="2.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+</text:list-style>
+</office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Endnote" >
+    <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
+  <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
+ </office:master-styles>
+<office:meta>
+	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
+	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
+	<meta:user-defined meta:name="version">6.0-b</meta:user-defined>
+</office:meta>
+<office:body>
+<office:text>
+
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#introduction">Introduction </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#performance">Performance </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#parsetree">Parse Tree </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#features">Features </text:a></text:p>
+<text:list text:style-name="L1">
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms">Abbreviations (Or Acronyms) </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#citations">Citations </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#criticmarkup">CriticMarkup </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#emphandstrong">Emph and Strong </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks">Fenced Code Blocks </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#glossaryterms">Glossary Terms </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#internationalization">Internationalization </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#metadata">Metadata </text:a></text:p></text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#tableofcontents">Table of Contents </text:a></text:p></text:list-item>
+</text:list>
+</text:list-item>
+<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#futuresteps">Future Steps </text:a></text:p></text:list-item>
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction <text:bookmark-end text:name="introduction"/></text:h>
+
+<text:p text:style-name="Standard">Version: 6.0-b</text:p>
+
+<text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
+document to demonstrate the various features. Specifically, differences from
+MMD v5 will be pointed out.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="performance"/>Performance <text:bookmark-end text:name="performance"/></text:h>
+
+<text:p text:style-name="Standard">A big motivating factor leading to the development of MMD v6 was
+performance. When MMD first migrated from Perl to C (based on <text:a xlink:type="simple" xlink:href="https://github.com/jgm/peg-markdown">peg-
+markdown</text:a>), it was among the fastest
+Markdown parsers available. That was many years ago, and the &#8220;competition&#8221;
+has made a great deal of progress since that time.</text:p>
+
+<text:p text:style-name="Standard">When developing MMD v6, one of my goals was to keep MMD at least in the
+ballpark of the fastest processors. Of course, being <text:span text:style-name="MMD-Italic">the</text:span> fastest would be
+fantastic, but I was more concerned with ensuring that the code was easily
+understood, and easily updated with new features in the future.</text:p>
+
+<text:p text:style-name="Standard">MMD v3 &#8211; v5 used a PEG<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">Parsing Expression Grammar <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">https://en.wikipedia.org/wiki/Parsing_expression_grammar</text:a></text:p></text:note-body></text:note> to handle the parsing. This made it easy to
+understand the relationship between the MMD grammar and the parsing code,
+since they were one and the same. However, the parsing code generated by
+the parsers was not particularly fast, and was prone to troublesome edge
+cases with terrible performance characteristics.</text:p>
+
+<text:p text:style-name="Standard">The first step in MMD v6 parsing is to break the source text into a series
+of tokens, which may consist of plain text, whitespace, or special characters
+such as &#8216;*&#8217;, &#8216;[&#8217;, etc. This chain of tokens is then used to perform the
+actual parsing.</text:p>
+
+<text:p text:style-name="Standard">MMD v6 divides the parsing into two separate phases, which actually fits
+more with Markdown&#8217;s design philosophically.</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">Block parsing consists of identifying the &#8220;type&#8221; of each line of the
+source text, and grouping the lines into blocks (e.g. paragraphs, lists,
+blockquotes, etc.) Some blocks are a single line (e.g. ATX headers), and
+others can be many lines long. The block parsing in MMD v6 is handled
+by a parser generated by <text:a xlink:type="simple" xlink:href="http://www.hwaci.com/sw/lemon/">lemon</text:a>. This
+parser allows the block structure to be more readily understood by
+non-programmers, but the generated parser is still fast.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Span parsing consists of identifying Markdown/MMD structures that occur
+inside of blocks, such as links, images, strong, emph, etc. Most of these
+structures require matching pairs of tokens to specify where the span starts
+and where it ends. Most of these spans allow arbitrary levels of nesting as
+well. This made parsing them correctly in the PEG-based code difficult and
+slow. MMD v6 uses a different approach that is accurate and has good
+performance characteristics even with edge cases. Basically, it keeps a stack
+of each &#8220;opening&#8221; token as it steps through the token chain. When a &#8220;closing&#8221;
+token is found, it is paired with the most recent appropriate opener on the
+stack. Any tokens in between the opener and closer are removed, as they are
+not able to be matched any more. To avoid unnecessary searches for non-
+existent openers, the parser keeps track of which opening tokens have been
+discovered. This allows the parser to continue moving forwards without having
+to go backwards and re-parse any previously visited tokens.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">The result of this redesigned MMD parser is that it can parse short
+documents more quickly than <text:a xlink:type="simple" xlink:href="http://commonmark.org/">CommonMark</text:a>, and takes
+only 15% &#8211; 20% longer to parse long documents. I have not delved too deeply
+into this, but I presume that CommonMark has a bit more &#8220;set-up&#8221; time that
+becomes expensive when parsing a short document (e.g. a paragraph or two). But
+this cost becomes negligible when parsing longer documents (e.g. file sizes of
+1 MB). So depending on your use case, CommonMark may well be faster than
+MMD, but we&#8217;re talking about splitting hairs here&#8230;. Recent comparisons
+show MMD v6 taking approximately 4.37 seconds to parse a 108 MB file
+(approximately 24.8 MB/second), and CommonMark took 3.72 seconds for the same
+file (29.2 MB/second). For comparison, MMD v5.4 took approximately 94
+second for the same file (1.15 MB/second).</text:p>
+
+<text:p text:style-name="Standard">For a more realistic file of approx 28 kb (the source of the Markdown Syntax
+web page), both MMD and CommonMark parse it too quickly to accurately
+measure. In fact, it requires a file consisting of the original file copied
+32 times over (0.85 MB) before <text:span text:style-name="Source_20_Text">/usr/bin/env time</text:span> reports a time over the
+minimum threshold of 0.01 seconds for either program.</text:p>
+
+<text:p text:style-name="Standard">There is still potentially room for additional optimization in MMD.
+However, even if I can&#8217;t close the performance gap with CommonMark on longer
+files, the additional features of MMD compared with Markdown in addition to
+the increased legibility of the source code of MMD (in my biased opinion
+anyway) make this project worthwhile.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="parsetree"/>Parse Tree <text:bookmark-end text:name="parsetree"/></text:h>
+
+<text:p text:style-name="Standard">MMD v6 performs its parsing in the following steps:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">Start with a null-terminated string of source text (C style string)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Lex string into token chain</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Parse token chain into blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Parse tokens within each block into span level structures (e.g. strong,
+emph, etc.)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Export the token tree into the desired output format (e.g. HTML, LaTeX,
+etc.) and return the resulting C style string</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">OR</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Use the resulting token tree for your own purposes.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">The token tree (AST<text:note text:id="gn2" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">Abstract Syntax Tree <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Abstract_syntax_tree">https://en.wikipedia.org/wiki/Abstract_syntax_tree</text:a></text:p></text:note-body></text:note>) includes starting offsets and length of each token,
+allowing you to use MMD as part of a syntax highlighter. MMD v5 did not
+have this functionality in the public version, in part because the PEG parsers
+used did not provide reliable offset positions, requiring a great deal of
+effort when I adapted MMD for use in <text:a xlink:type="simple" xlink:href="http://multimarkdown.com/">MultiMarkdown
+Composer</text:a>.</text:p>
+
+<text:p text:style-name="Standard">These steps are managed using the <text:span text:style-name="Source_20_Text">mmd_engine</text:span> &#8220;object&#8221;. An individual
+<text:span text:style-name="Source_20_Text">mmd_engine</text:span> cannot be used by multiple threads simultaneously, so if
+libMultiMarkdown is to be used in a multithreaded program, a separate
+<text:span text:style-name="Source_20_Text">mmd_engine</text:span> should be created for each thread. Alternatively, just use the
+slightly more abstracted <text:span text:style-name="Source_20_Text">mmd_convert_string()</text:span> function that handles creating
+and destroying the <text:span text:style-name="Source_20_Text">mmd_engine</text:span> automatically.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="features"/>Features <text:bookmark-end text:name="features"/></text:h>
+
+<text:h text:outline-level="4"><text:bookmark text:name="abbreviationsoracronyms"/>Abbreviations (Or Acronyms) <text:bookmark-end text:name="abbreviationsoracronyms"/></text:h>
+
+<text:p text:style-name="Standard">This file includes the use of MMD as an abbreviation for MultiMarkdown. The
+abbreviation will be expanded on the first use, and the shortened form will be
+used on subsequent occurrences.</text:p>
+
+<text:p text:style-name="Standard">Abbreviations can be specified using inline or reference syntax. The inline
+variant requires that the abbreviation be wrapped in parentheses and
+immediately follows the <text:span text:style-name="Source_20_Text">&gt;</text:span>.</text:p>
+
+<text:p text:style-name="Preformatted Text">[>MMD] is an abbreviation.  So is [>(MD) Markdown].<text:line-break/><text:line-break/>[>MMD]: MultiMarkdown<text:line-break/></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="citations"/>Citations <text:bookmark-end text:name="citations"/></text:h>
+
+<text:p text:style-name="Standard">Citations can be specified using an inline syntax, just like inline footnotes.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="criticmarkup"/>CriticMarkup <text:bookmark-end text:name="criticmarkup"/></text:h>
+
+<text:p text:style-name="Standard">MMD v6 has improved support for <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a>, both in terms of parsing, and
+in terms of support for each output format. You can <text:span text:style-name="Underline">insert text</text:span>,
+<text:span text:style-name="Strike">delete text</text:span>, substitute <text:span text:style-name="Strike">one thing</text:span><text:span text:style-name="Underline">for another</text:span>, <text:span text:style-name="Highlight">highlight text</text:span>,
+and <text:span text:style-name="Comment">leave comments</text:span> in the text.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="emphandstrong"/>Emph and Strong <text:bookmark-end text:name="emphandstrong"/></text:h>
+
+<text:p text:style-name="Standard">The basics of emphasis and strong emphasis are unchanged, but the parsing
+engine has been improved to be more accurate, particularly in various edge
+cases where proper parsing can be difficult.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks <text:bookmark-end text:name="fencedcodeblocks"/></text:h>
+
+<text:p text:style-name="Standard">Fenced code blocks are fundamentally the same as MMD v5, except:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">The leading and trailing fences can be 3, 4, or 5 backticks in length. That
+should be sufficient to account for complex documents without requiring a more
+complex parser.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">If there is no trailing fence, then everything after the leading fence is
+considered to be part of the code block.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="4"><text:bookmark text:name="glossaryterms"/>Glossary Terms <text:bookmark-end text:name="glossaryterms"/></text:h>
+
+<text:p text:style-name="Standard">If there are terms in your document you wish to define in a glossary<text:note text:id="gn3" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">The
+glossary collects information about important terms used in your document</text:p></text:note-body></text:note>. at
+the end, you can define them using the glossary syntax.</text:p>
+
+<text:p text:style-name="Standard">Glossary terms can be specified using inline or reference syntax. The inline
+variant requires that the abbreviation be wrapped in parentheses and
+immediately follows the <text:span text:style-name="Source_20_Text">?</text:span>.</text:p>
+
+<text:p text:style-name="Preformatted Text">[?(glossary) The glossary collects information about important<text:line-break/>terms used in your document] is a glossary term.<text:line-break/><text:line-break/>[?glossary] is also a glossary term.<text:line-break/><text:line-break/>[?glossary]: The glossary collects information about important<text:line-break/>terms used in your document<text:line-break/></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="internationalization"/>Internationalization <text:bookmark-end text:name="internationalization"/></text:h>
+
+<text:p text:style-name="Standard">MMD v6 includes support for substituting certain text phrases in other
+languages. This only affects the HTML format.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata <text:bookmark-end text:name="metadata"/></text:h>
+
+<text:p text:style-name="Standard">Metadata in MMD v6 includes new support for LaTeX &#8211; the <text:span text:style-name="Source_20_Text">latex config</text:span> key
+allows you to automatically setup of multiple <text:span text:style-name="Source_20_Text">latex include</text:span> files at once.
+The default setups that I use would typically consist of one LaTeX file to be
+included at the top of the file, one to be included right at the beginning of
+the document, and one to be included at the end of the document. If you want
+to specify the latex files separately, you can use <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex<text:line-break/>begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span>.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="tableofcontents"/>Table of Contents <text:bookmark-end text:name="tableofcontents"/></text:h>
+
+<text:p text:style-name="Standard">By placing <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> in your document, you can insert an automatically
+generated Table of Contents in your document.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="futuresteps"/>Future Steps <text:bookmark-end text:name="futuresteps"/></text:h>
+
+<text:p text:style-name="Standard">Some features I plan to implement at some point:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">MMD v5 used to automatically identify abbreviated terms throughout the
+document and substitute them automatically. I plan to reimplement this
+functionality, but will probably improve upon it to include glossary terms,
+and possibly even support for indexing documents in LaTeX (and possibly
+OpenOffice).</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">OPML export support is not available in v6. I plan on adding improved
+support for this at some point. I was hoping to be able to re-use the
+existing v6 parser but it might be simpler to use the approach from v5 and
+earlier, which was to have a separate parser tuned to only identify headers
+and &#8220;stuff between headers&#8221;.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Improved EPUB support. Currently, EPUB support is provided by a separate
+<text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MMD-ePub">tool</text:a>. At some point, I would like to
+better integrate this into MMD itself.</text:p></text:list-item>
+
+</text:list>
+</office:text>
+</office:body>
+</office:document>
