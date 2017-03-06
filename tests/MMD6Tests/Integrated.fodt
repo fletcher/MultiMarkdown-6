@@ -393,7 +393,7 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:h text:outline-level="1"><text:bookmark text:name="abbreviations"/>Abbreviations<text:bookmark-end text:name="abbreviations"/></text:h>
 
-<text:p text:style-name="Standard">MMD<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">MultiMarkdown</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">MultiMarkdown (MMD)</text:p>
 </office:text>
 </office:body>
 </office:document>
