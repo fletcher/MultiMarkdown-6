@@ -136,7 +136,7 @@
 
 	fence_end	= non_indent [`~]{3,} sp nl_eof;
 
-	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ -\.]*;
+	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \t\-\.]*;
 
 	meta_value	= [^\n\r\x00]+;
 

@@ -567,6 +567,6 @@ ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
 ADD_MMD_TEST(mmd-6-odf "-t odf" MMD6Tests fodt)
 
-ADD_MMD_TEST(pathologic "" ../build html)
-
 ADD_MMD_TEST(pathologic-compat "-c" ../build html)
+
+ADD_MMD_TEST(pathologic "" ../build html)

@@ -1830,6 +1830,14 @@ void mmd_engine_parse_string(mmd_engine * e) {
 bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
 
+	if (!(scan_meta_line(&e->dstr->str[0]))) {
+		// First line is not metadata, so can't have metadata
+		// Saves the time of an unnecessary parse 
+		// TODO:  Need faster confirmation of actual metadata than full tokenizing
+		
+		return false;
+	}
+
 	// Free existing parse tree
 	if (e->root)
 		token_tree_free(e->root);
