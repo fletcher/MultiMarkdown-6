@@ -766,6 +766,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case BRACKET_LEFT:
 			print_const("[");			
 			break;
+		case BRACKET_ABBREVIATION_LEFT:
+			print_const("[>");
+			break;
 		case BRACKET_CITATION_LEFT:
 			print_const("[#");
 			break;
