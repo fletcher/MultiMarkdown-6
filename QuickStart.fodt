@@ -103,6 +103,13 @@
    <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
 </style:style>
 <style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+<style:style style:name="TOC_Item" style:family="paragraph" style:parent-style-name="Standard">
+ <style:paragraph-properties>
+  <style:tab-stops>
+   <style:tab-stop style:position="6.7283in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+  </style:tab-stops>
+ </style:paragraph-properties>
+</style:style>
   <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
   <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
 </office:styles>
@@ -271,28 +278,33 @@
 </office:meta>
 <office:body>
 <office:text>
+<text:table-of-content text:style-name="Sect1" text:protected="true" text:name="Table of Contents1">
+<text:table-of-content-source text:outline-level="10">
+<text:index-title-template text:style-name="Contents_20_Heading">Table of Contents</text:index-title-template>
+</text:table-of-content-source>
+<text:index-body>
+<text:index-title text:style-name="Sect1" text:name="Table of Contents1_Head">
+<text:p text:style-name="Contents_20_Heading">Table of Contents</text:p>
+</text:index-title>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#introduction" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Introduction  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#performance" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Performance  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#parsetree" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Parse Tree  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#features" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Features  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (Or Acronyms)  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#emphandstrong" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Emph and Strong  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaryterms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossary Terms  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
+</text:index-body>
+</text:table-of-content>
 
-<text:list text:style-name="L1">
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#introduction">Introduction </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#performance">Performance </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#parsetree">Parse Tree </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#features">Features </text:a></text:p>
-<text:list text:style-name="L1">
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms">Abbreviations (Or Acronyms) </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#citations">Citations </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#criticmarkup">CriticMarkup </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#emphandstrong">Emph and Strong </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks">Fenced Code Blocks </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#glossaryterms">Glossary Terms </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#internationalization">Internationalization </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#metadata">Metadata </text:a></text:p></text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#tableofcontents">Table of Contents </text:a></text:p></text:list-item>
-</text:list>
-</text:list-item>
-<text:list-item><text:p text:style-name="P1"><text:a xlink:type="simple" xlink:href="#futuresteps">Future Steps </text:a></text:p></text:list-item>
-</text:list>
 
-<text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction <text:bookmark-end text:name="introduction"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
 <text:p text:style-name="Standard">Version: 6.0-b</text:p>
 
@@ -300,7 +312,7 @@
 document to demonstrate the various features. Specifically, differences from
 MMD v5 will be pointed out.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="performance"/>Performance <text:bookmark-end text:name="performance"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="performance"/>Performance </text:h>
 
 <text:p text:style-name="Standard">A big motivating factor leading to the development of MMD v6 was
 performance. When MMD first migrated from Perl to C (based on <text:a xlink:type="simple" xlink:href="https://github.com/jgm/peg-markdown">peg-
@@ -380,7 +392,7 @@ files, the additional features of MMD compared with Markdown in addition to
 the increased legibility of the source code of MMD (in my biased opinion
 anyway) make this project worthwhile.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="parsetree"/>Parse Tree <text:bookmark-end text:name="parsetree"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="parsetree"/>Parse Tree </text:h>
 
 <text:p text:style-name="Standard">MMD v6 performs its parsing in the following steps:</text:p>
 
@@ -423,9 +435,9 @@ libMultiMarkdown is to be used in a multithreaded program, a separate
 slightly more abstracted <text:span text:style-name="Source_20_Text">mmd_convert_string()</text:span> function that handles creating
 and destroying the <text:span text:style-name="Source_20_Text">mmd_engine</text:span> automatically.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="features"/>Features <text:bookmark-end text:name="features"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="features"/>Features </text:h>
 
-<text:h text:outline-level="4"><text:bookmark text:name="abbreviationsoracronyms"/>Abbreviations (Or Acronyms) <text:bookmark-end text:name="abbreviationsoracronyms"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="abbreviationsoracronyms"/>Abbreviations (Or Acronyms) </text:h>
 
 <text:p text:style-name="Standard">This file includes the use of MMD as an abbreviation for MultiMarkdown. The
 abbreviation will be expanded on the first use, and the shortened form will be
@@ -437,24 +449,24 @@ immediately follows the <text:span text:style-name="Source_20_Text">&gt;</text:s
 
 <text:p text:style-name="Preformatted Text">[>MMD] is an abbreviation.  So is [>(MD) Markdown].<text:line-break/><text:line-break/>[>MMD]: MultiMarkdown<text:line-break/></text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="citations"/>Citations <text:bookmark-end text:name="citations"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="citations"/>Citations </text:h>
 
 <text:p text:style-name="Standard">Citations can be specified using an inline syntax, just like inline footnotes.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="criticmarkup"/>CriticMarkup <text:bookmark-end text:name="criticmarkup"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="criticmarkup"/>CriticMarkup </text:h>
 
 <text:p text:style-name="Standard">MMD v6 has improved support for <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a>, both in terms of parsing, and
 in terms of support for each output format. You can <text:span text:style-name="Underline">insert text</text:span>,
 <text:span text:style-name="Strike">delete text</text:span>, substitute <text:span text:style-name="Strike">one thing</text:span><text:span text:style-name="Underline">for another</text:span>, <text:span text:style-name="Highlight">highlight text</text:span>,
 and <text:span text:style-name="Comment">leave comments</text:span> in the text.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="emphandstrong"/>Emph and Strong <text:bookmark-end text:name="emphandstrong"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="emphandstrong"/>Emph and Strong </text:h>
 
 <text:p text:style-name="Standard">The basics of emphasis and strong emphasis are unchanged, but the parsing
 engine has been improved to be more accurate, particularly in various edge
 cases where proper parsing can be difficult.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks <text:bookmark-end text:name="fencedcodeblocks"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks </text:h>
 
 <text:p text:style-name="Standard">Fenced code blocks are fundamentally the same as MMD v5, except:</text:p>
 
@@ -470,11 +482,11 @@ considered to be part of the code block.</text:p></text:list-item>
 
 </text:list>
 
-<text:h text:outline-level="4"><text:bookmark text:name="glossaryterms"/>Glossary Terms <text:bookmark-end text:name="glossaryterms"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="glossaryterms"/>Glossary Terms </text:h>
 
 <text:p text:style-name="Standard">If there are terms in your document you wish to define in a glossary<text:note text:id="gn3" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">The
-glossary collects information about important terms used in your document</text:p></text:note-body></text:note>. at
-the end, you can define them using the glossary syntax.</text:p>
+glossary collects information about important terms used in your document</text:p></text:note-body></text:note> at
+the end of your document, you can define them using the glossary syntax.</text:p>
 
 <text:p text:style-name="Standard">Glossary terms can be specified using inline or reference syntax. The inline
 variant requires that the abbreviation be wrapped in parentheses and
@@ -482,12 +494,12 @@ immediately follows the <text:span text:style-name="Source_20_Text">?</text:span
 
 <text:p text:style-name="Preformatted Text">[?(glossary) The glossary collects information about important<text:line-break/>terms used in your document] is a glossary term.<text:line-break/><text:line-break/>[?glossary] is also a glossary term.<text:line-break/><text:line-break/>[?glossary]: The glossary collects information about important<text:line-break/>terms used in your document<text:line-break/></text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="internationalization"/>Internationalization <text:bookmark-end text:name="internationalization"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="internationalization"/>Internationalization </text:h>
 
 <text:p text:style-name="Standard">MMD v6 includes support for substituting certain text phrases in other
 languages. This only affects the HTML format.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata <text:bookmark-end text:name="metadata"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata </text:h>
 
 <text:p text:style-name="Standard">Metadata in MMD v6 includes new support for LaTeX &#8211; the <text:span text:style-name="Source_20_Text">latex config</text:span> key
 allows you to automatically setup of multiple <text:span text:style-name="Source_20_Text">latex include</text:span> files at once.
@@ -496,12 +508,14 @@ included at the top of the file, one to be included right at the beginning of
 the document, and one to be included at the end of the document. If you want
 to specify the latex files separately, you can use <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex<text:line-break/>begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span>.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="tableofcontents"/>Table of Contents <text:bookmark-end text:name="tableofcontents"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="tableofcontents"/>Table of Contents </text:h>
 
 <text:p text:style-name="Standard">By placing <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> in your document, you can insert an automatically
-generated Table of Contents in your document.</text:p>
+generated Table of Contents in your document. As of MMD v6, the native
+Table of Contents functionality is used when exporting to LaTeX or
+OpenDocument formats.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="futuresteps"/>Future Steps <text:bookmark-end text:name="futuresteps"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="futuresteps"/>Future Steps </text:h>
 
 <text:p text:style-name="Standard">Some features I plan to implement at some point:</text:p>
 

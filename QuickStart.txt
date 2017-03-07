@@ -181,8 +181,8 @@ considered to be part of the code block.
 ## Glossary Terms ##
 
 If there are terms in your document you wish to define in a [?(glossary) The
-glossary collects information about important terms used in your document]. at
-the end, you can define them using the glossary syntax.
+glossary collects information about important terms used in your document] at
+the end of your document, you can define them using the glossary syntax.
 
 Glossary terms can be specified using inline or reference syntax. The inline
 variant requires that the abbreviation be wrapped in parentheses and
@@ -217,7 +217,9 @@ begin`, and `latex footer`.
 ## Table of Contents ##
 
 By placing `{{TOC}}` in your document, you can insert an automatically
-generated Table of Contents in your document.
+generated Table of Contents in your document.  As of [>MMD] v6, the native
+Table of Contents functionality is used when exporting to LaTeX or
+OpenDocument formats.
 
 
 # Future Steps #
