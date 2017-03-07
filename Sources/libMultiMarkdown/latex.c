@@ -752,9 +752,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			temp_short = 0;
 			temp_short2 = 0;
 			pad(out, 2, scratch);
-
-			mmd_export_toc_latex(out, source, scratch);
-
+			print_const("\\tableofcontents");
 			scratch->padded = 0;
 			break;
 		case BRACE_DOUBLE_LEFT:
