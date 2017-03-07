@@ -103,6 +103,13 @@
    <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
 </style:style>
 <style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+<style:style style:name="TOC_Item" style:family="paragraph" style:parent-style-name="Standard">
+ <style:paragraph-properties>
+  <style:tab-stops>
+   <style:tab-stop style:position="6.7283in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+  </style:tab-stops>
+ </style:paragraph-properties>
+</style:style>
   <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
   <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
 </office:styles>
@@ -269,13 +276,13 @@
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
 
 <text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
 
@@ -285,21 +292,21 @@
 
 <text:p text:style-name="Standard">#foo #</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar<text:bookmark-end text:name="foobar"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo # bar</text:h>
 
 <text:p text:style-name="Standard"># foo #</text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo </text:h>
 
 <text:p text:style-name="Standard">10</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo </text:h>
 
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo </text:h>
 
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo </text:h>
 
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo <text:bookmark-end text:name="foo"/></text:h>
+<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo </text:h>
 
 <text:p text:style-name="Standard">####### foo #######</text:p>
 

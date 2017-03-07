@@ -302,8 +302,6 @@ void mmd_export_toc_entry_odf(DString * out, const char * source, scratch_pad * 
 	short entry_level, next_level;
 	char * temp_char;
 
-	print_const("\n<text:list text:style-name=\"L1\">\n");
-
 	// Iterate over tokens
 	while (*counter < scratch->header_stack->size) {
 		// Get token for header
@@ -313,9 +311,9 @@ void mmd_export_toc_entry_odf(DString * out, const char * source, scratch_pad * 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
 			temp_char = label_from_header(source, entry);
-			printf("<text:list-item><text:p text:style-name=\"P1\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\">", temp_char);
+			printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
 			mmd_export_token_tree_odf(out, source, entry->child, scratch);
-			print_const("</text:a></text:p>");
+			print_const(" <text:tab/>1</text:a></text:p>\n");
 
 			if (*counter < scratch->header_stack->size - 1) {
 				next = stack_peek_index(scratch->header_stack, *counter + 1);
@@ -327,7 +325,6 @@ void mmd_export_toc_entry_odf(DString * out, const char * source, scratch_pad * 
 				}
 			}
 
-			print_const("</text:list-item>\n");
 			free(temp_char);
 		} else if (entry_level < level ) {
 			// If entry < level, exit this level
@@ -339,15 +336,24 @@ void mmd_export_toc_entry_odf(DString * out, const char * source, scratch_pad * 
 		// Increment counter
 		(*counter)++;
 	}
-
-	print_const("</text:list>\n");
 }
 
 void mmd_export_toc_odf(DString * out, const char * source, scratch_pad * scratch) {
 	token * entry;
 	size_t counter = 0;
 
+	// TODO: Could use LC to internationalize this
+	print_const("<text:table-of-content text:style-name=\"Sect1\" text:protected=\"true\" text:name=\"Table of Contents1\">\n");
+	print_const("<text:table-of-content-source text:outline-level=\"10\">\n");
+	print_const("<text:index-title-template text:style-name=\"Contents_20_Heading\">Table of Contents</text:index-title-template>\n");
+	print_const("</text:table-of-content-source>\n<text:index-body>\n");
+	print_const("<text:index-title text:style-name=\"Sect1\" text:name=\"Table of Contents1_Head\">\n");
+	print_const("<text:p text:style-name=\"Contents_20_Heading\">Table of Contents</text:p>\n");
+	print_const("</text:index-title>\n");
+
 	mmd_export_toc_entry_odf(out, source, scratch, &counter, 0);
+
+	print_const("</text:index-body>\n</text:table-of-content>\n\n");
 }
 
 
@@ -497,7 +503,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				temp_char = label_from_header(source, t);
 				printf("<text:bookmark text:name=\"%s\"/>", temp_char);
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
-				printf("<text:bookmark-end text:name=\"%s\"/>", temp_char);
+				//printf("<text:bookmark-end text:name=\"%s\"/>", temp_char);
 				free(temp_char);
 			}
 
@@ -1716,6 +1722,13 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 	"              style:family=\"text\">" \
 	"    <style:text-properties style:text-position=\"super 58%\"/>" \
 	" </style:style>\n" \
+  	"<style:style style:name=\"TOC_Item\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
+  	" <style:paragraph-properties>\n" \
+  	"  <style:tab-stops>\n" \
+  	"   <style:tab-stop style:position=\"6.7283in\" style:type=\"right\" style:leader-style=\"dotted\" style:leader-text=\".\"/>\n" \
+  	"  </style:tab-stops>\n" \
+  	" </style:paragraph-properties>\n" \
+  	"</style:style>\n" \
 	"  <text:notes-configuration text:note-class=\"footnote\" text:default-style-name=\"Footnote\" text:citation-style-name=\"Footnote_20_Symbol\" text:citation-body-style-name=\"Footnote_20_anchor\" text:master-page-name=\"Footnote\" style:num-format=\"a\" text:start-value=\"0\" text:footnotes-position=\"page\" text:start-numbering-at=\"page\"/>\n" \
 	"  <text:notes-configuration text:note-class=\"endnote\" text:default-style-name=\"Endnote\" text:citation-style-name=\"Endnote_20_Symbol\" text:citation-body-style-name=\"Endnote_20_anchor\" text:master-page-name=\"Endnote\" style:num-format=\"1\" text:start-value=\"0\"/>\n" \
     "</office:styles>\n");

@@ -103,6 +103,13 @@
    <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
 </style:style>
 <style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+<style:style style:name="TOC_Item" style:family="paragraph" style:parent-style-name="Standard">
+ <style:paragraph-properties>
+  <style:tab-stops>
+   <style:tab-stop style:position="6.7283in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+  </style:tab-stops>
+ </style:paragraph-properties>
+</style:style>
   <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
   <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
 </office:styles>
@@ -266,7 +273,7 @@
  </office:master-styles>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax <text:bookmark-end text:name="markdown:syntax"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax </text:h>
 
 <text:list text:style-name="L1">
 <text:list-item>
