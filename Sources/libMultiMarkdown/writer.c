@@ -1336,15 +1336,16 @@ token * manual_label_from_header(token * h, const char * source) {
 
 
 void process_header_to_links(mmd_engine * e, token * h) {
-	char * label = label_from_token(e->dstr->str, h);
+	char * label;
 
 	// See if we have a manual label
 	token * manual = manual_label_from_header(h, e->dstr->str);
 
 	if (manual) {
-		free(label);
 		label = label_from_token(e->dstr->str, manual);
 		h = manual;
+	} else {
+		label = label_from_token(e->dstr->str, h);		
 	}
 
 	DString * url = d_string_new("#");
