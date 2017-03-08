@@ -72,11 +72,11 @@
 static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"return to body",				// English
 	"return to body",				// Español
-	"zum Haupttext",				// Deutsch
+	"Zum Haupttext",				// Deutsch
 
 	"see footnote",					// English
 	"Ver nota de pie",				// Español
-	"siehe Fußnote",				// Deutsch
+	"Siehe Fußnote",				// Deutsch
 
 	"see citation",					// English
 	"see citation",					// Español
@@ -84,7 +84,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 
 	"see glossary",					// English
 	"see glossary",					// Español
-	"see glossary",					// Deutsch
+	"Siehe Glossar",				// Deutsch
 };
 
 
