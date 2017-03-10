@@ -1181,11 +1181,11 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
-						mmd_print_string_odf(out, temp_note->clean_text);
+						mmd_print_string_odf(out, temp_note->label_text);
 //						mmd_export_token_tree_odf(out, source, t->child, scratch);
 					} else {
 						// This is an inline definition
-						mmd_print_string_odf(out, temp_note->clean_text);
+						mmd_print_string_odf(out, temp_note->label_text);
 //						mmd_export_token_tree_odf(out, source, t->child, scratch);
 					}
 				} else {

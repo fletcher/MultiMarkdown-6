@@ -1,24 +1,35 @@
 <p>Title:	Abbreviations
 latex config:	article</p>
 
-<p><a href="FOO">>foo</a></p>
+<p>foo foo</p>
 
-<p><a href="BAR">>bar</a></p>
+<p>f.o.o. f.o.o.</p>
 
-<p><a href="FOO">>foo</a> <a href="BAR">>bar</a></p>
+<p>f-o-o f-o-o</p>
 
-<p><a href="FOOBAR">>foobar</a></p>
+<p>f o o f o o</p>
 
-<p><a href="FOOBAR">>foo bar</a></p>
+<p>fo'o fo'o</p>
 
 <p>5</p>
 
-<p>[>(baz) BAZ (BAT)]</p>
+<p><a href="BAR">>bar</a> <a href="BAR">>bar</a></p>
 
-<p>foo</p>
+<p><a href="B.A.R.">>b.a.r.</a> <a href="B.A.R.">>b.a.r.</a></p>
 
-<p>bar</p>
+<p><a href="B-A-R">>b-a-r</a> <a href="B-A-R">>b-a-r</a></p>
 
-<p>foobar</p>
+<p><a href="BAR">>b a r</a> <a href="BAR">>b a r</a></p>
 
-<p>foo bar baz</p>
+<p><a href="BA'R">>ba'r</a> <a href="BA'R">>ba'r</a></p>
+
+<p>10</p>
+
+<p>foo bar</p>
+
+<p>foo
+bar</p>
+
+<p>foo bar</p>
+
+<p>[>foo bar]: FOO BAR</p>
