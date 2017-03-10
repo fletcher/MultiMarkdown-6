@@ -1707,22 +1707,35 @@ void mmd_export_token_tree_latex_tt(DString * out, const char * source, token * 
 	}
 }
 
+int clean_text_sort(fn_holder * a, fn_holder * b) {
+	return strcmp(a->note->clean_text, b->note->clean_text);
+}
+
+
 
 void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad * scratch) {
 	// Iterate through glossary definitions
 	fn_holder * f, * f_tmp;
 
+	// Sort glossary entries
+	HASH_SORT(scratch->glossary_hash, clean_text_sort);
+
+	char * last_key = NULL;
+
 	HASH_ITER(hh, scratch->glossary_hash, f, f_tmp) {
-		// Add this glossary definition
-		print_const("\\longnewglossaryentry{");
-		print(f->note->clean_text);
+		if (!last_key || strcmp(last_key, f->note->clean_text) != 0) {
+			// Add this glossary definition
+			print_const("\\longnewglossaryentry{");
+			print(f->note->clean_text);
 
-		print_const("}{name=");
-		print(f->note->clean_text);
-		print_const("}{");
+			print_const("}{name=");
+			print(f->note->clean_text);
+			print_const("}{");
 
-		mmd_export_token_tree_latex(out, source, f->note->content, scratch);
-		print_const("}\n\n");
+			mmd_export_token_tree_latex(out, source, f->note->content, scratch);
+			print_const("}\n\n");
+		}
+		last_key = f->note->clean_text;
 	}
 
 	// And abbreviations
