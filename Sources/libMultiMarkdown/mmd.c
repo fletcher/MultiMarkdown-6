@@ -418,39 +418,28 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			break;
 		case TEXT_NUMBER_POSS_LIST:
 			switch(source[line->child->next->start]) {
-				case '.':
-					switch(source[line->child->next->start + 1]) {
-						case ' ':
-						case '\t':
-							line->type = LINE_LIST_ENUMERATED;
-							line->child->type = MARKER_LIST_ENUMERATOR;
+				case ' ':
+				case '\t':
+					line->type = LINE_LIST_ENUMERATED;
+					line->child->type = MARKER_LIST_ENUMERATOR;
 
-							// Strip period
-							line->child->next->type = TEXT_EMPTY;
-
-							switch (line->child->next->next->type) {
-								case TEXT_PLAIN:
-									// Strip whitespace between bullet and text
-									while (char_is_whitespace(source[line->child->next->next->start])) {
-										line->child->next->next->start++;
-										line->child->next->next->len--;
-									}
-									break;
-								case INDENT_SPACE:
-								case INDENT_TAB:
-								case NON_INDENT_SPACE:
-									t = line->child->next;
-									while(t->next && ((t->next->type == INDENT_SPACE) ||
-										(t->next->type == INDENT_TAB) ||
-										(t->next->type == NON_INDENT_SPACE))) {
-										tokens_prune(t->next, t->next);
-									}
-									break;
+					switch (line->child->next->type) {
+						case TEXT_PLAIN:
+							// Strip whitespace between bullet and text
+							while (char_is_whitespace(source[line->child->next->start])) {
+								line->child->next->start++;
+								line->child->next->len--;
 							}
 							break;
-						default:
-							line->type = LINE_PLAIN;
-							line->child->type = TEXT_PLAIN;
+						case INDENT_SPACE:
+						case INDENT_TAB:
+						case NON_INDENT_SPACE:
+							t = line->child;
+							while(t->next && ((t->next->type == INDENT_SPACE) ||
+								(t->next->type == INDENT_TAB) ||
+								(t->next->type == NON_INDENT_SPACE))) {
+								tokens_prune(t->next, t->next);
+							}
 							break;
 					}
 					break;

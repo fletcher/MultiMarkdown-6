@@ -631,3 +631,28 @@ void token_split_on_char(token * t, const char * source, const char c) {
 	}
 }
 
+
+// Split a token and create 
+void token_split(token * t, size_t start, size_t len, unsigned short new_type) {
+	if (!t)
+		return;
+
+	token * u = token_new(new_type, start, len);
+	size_t stop = start + len;
+
+	if (t->start + t->len > stop) {
+		token * v = token_new(t->type, stop, t->start + t->len - stop);
+
+		u->next = v;
+		v->prev = u;
+		v->next = t->next;
+	} else {
+		u->next = t->next;
+	}
+
+	t->next = u;
+	u->prev = t;
+
+	t->len = start - t->start;
+}
+

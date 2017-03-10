@@ -59,6 +59,7 @@
 
 #include "libMultiMarkdown.h"
 
+#include "aho-corasick.h"
 #include "beamer.h"
 #include "char.h"
 #include "d_string.h"
@@ -1473,108 +1474,40 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 		scratch->base_header_level = header_level;
 }
 
-/// kmp from http://stackoverflow.com/questions/8584644/strstr-for-a-string-that-is-not-null-terminated
-/// Search for a string within certain bounds (so we don't go past the end of the token)
-int *kmp_borders(char * needle, size_t nlen){
-    if (!needle) return NULL;
-    int i, j, *borders = malloc((nlen+1)*sizeof(*borders));
-    if (!borders) return NULL;
-    i = 0;
-    j = -1;
-    borders[i] = j;
-    while((size_t)i < nlen){
-        while(j >= 0 && needle[i] != needle[j]){
-            j = borders[j];
-        }
-        ++i;
-        ++j;
-        borders[i] = j;
-    }
-    return borders;
-}
 
-const char * kmp_search(const char * haystack, size_t haylen, char * needle, size_t nlen, int * borders){
-    size_t max_index = haylen-nlen, i = 0, j = 0;
-    while(i <= max_index){
-        while(j < nlen && *haystack && needle[j] == *haystack){
-            ++j;
-            ++haystack;
-        }
-        if (j == nlen){
-            return haystack-nlen;
-        }
-        if (!(*haystack)){
-            return NULL;
-        }
-        if (j == 0){
-            ++haystack;
-            ++i;
-        } else {
-            do{
-                i += j - (size_t)borders[j];
-                j = borders[j];
-            }while(j > 0 && needle[j] != *haystack);
-        }
-    }
-    return NULL;
-}
+void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
+	match * m = ac_trie_leftmost_longest_search(ac, &e->dstr->str[t->start], t->len);
 
-const char * sstrnstr(const char * haystack, char * needle, size_t haylen){
-    if (!haystack || !needle){
-        return NULL;
-    }
-    size_t nlen = strlen(needle);
-    if (haylen < nlen){
-        return NULL;
-    }
-    int *borders = kmp_borders(needle, nlen);
-    if (!borders){
-        return NULL;
-    }
-    const char *match = kmp_search(haystack, haylen, needle, nlen, borders);
-    free(borders);
-    return match;
-}
+	match * walker;
 
+	token * tok = t;
 
-/// Search a text node for abbreviation matches
-/// TODO: This is an inefficient algorithm, searching
-/// each node once for *each* abbreviation.  A more
-/// advanced algorithm would search for all abbreviations
-/// simultaneously but require more setup (e.g. Aho-Corasick)
-void abbr_search_text(mmd_engine * e, token * t) {
-	const char * str = &e->dstr->str[t->start];
+	if (m) {
+		walker = m->next;
 
-	const char * match;
-	abbr * a;
+		while (walker) {
+			token_split(tok, walker->start + t->start, walker->len, walker->match_type);
 
-	for (int i = 0; i < e->abbreviation_stack->size; ++i)
-	{
-		a = stack_peek_index(e->abbreviation_stack, i);
+			// Advance token to section after the split (if present)
+			tok = tok->next->next;
 
-		match = sstrnstr(str, a->abbr, t->len);
-
-		if (match) {
-			fprintf(stderr, "Found match '%s' -> '%s' at %lu\n", a->abbr, a->expansion, (size_t) (match - e->dstr->str));
+			// Advance to next match (if present)
+			walker = walker->next;
 		}
 	}
+
+	match_free(m);
 }
 
 
 /// Determine which nodes to descend into to search for abbreviations
-void abbr_search(mmd_engine * e, token * t) {
+void automatic_search(mmd_engine * e, token * t, trie * ac) {
 	while (t) {
 		switch (t->type) {
 			case TEXT_PLAIN:
-				abbr_search_text(e, t);
+				automatic_search_text(e, t, ac);
 				break;
 			case DOC_START_TOKEN:
-			case BLOCK_LIST_BULLETED:
-			case BLOCK_LIST_BULLETED_LOOSE:
-			case BLOCK_LIST_ENUMERATED:
-			case BLOCK_LIST_ENUMERATED_LOOSE:
-				abbr_search(e, t->child);
-				break;
 			case BLOCK_PARA:
 			case BLOCK_H1:
 			case BLOCK_H2:
@@ -1582,6 +1515,10 @@ void abbr_search(mmd_engine * e, token * t) {
 			case BLOCK_H4:
 			case BLOCK_H5:
 			case BLOCK_H6:
+			case BLOCK_LIST_BULLETED:
+			case BLOCK_LIST_BULLETED_LOOSE:
+			case BLOCK_LIST_ENUMERATED:
+			case BLOCK_LIST_ENUMERATED_LOOSE:
 			case BLOCK_LIST_ITEM_TIGHT:
 			case BLOCK_LIST_ITEM:
 			case BLOCK_SETEXT_1:
@@ -1589,8 +1526,13 @@ void abbr_search(mmd_engine * e, token * t) {
 			case BLOCK_TABLE:
 			case BLOCK_TABLE_HEADER:
 			case BLOCK_TABLE_SECTION:
-				abbr_search_text(e, t);
+			case PAIR_QUOTE_DOUBLE:
+			case PAIR_QUOTE_SINGLE:
+			case PAIR_STAR:
+			case PAIR_UL:
+				automatic_search(e, t->child, ac);
 				break;			
+//			case PAIR_PAREN:
 			default:
 				break;
 		}
@@ -1600,16 +1542,34 @@ void abbr_search(mmd_engine * e, token * t) {
 }
 
 
-void process_abbreviation_stack(mmd_engine * e, scratch_pad * scratch) {
-	abbr * a;
+void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
+	// Only search if we have a target
+	int count = e->abbreviation_stack->size + e->glossary_stack->size;
 
-	// Describe which abbreviations we are searching for
-	for (int i = 0; i < e->abbreviation_stack->size; ++i)
-	{
-		a = stack_peek_index(e->abbreviation_stack, i);
+	if (count == 0) {
+		return;
 	}
 
-	abbr_search(e, e->root);
+	trie * ac = trie_new(0);
+	footnote * f;
+
+	// Add abbreviations to search trie
+	for (int i = 0; i < e->abbreviation_stack->size; ++i)
+	{
+		f = stack_peek_index(e->abbreviation_stack, i);
+		trie_insert(ac, f->label_text, PAIR_BRACKET_ABBREVIATION);
+	}
+
+	// Add glossary to search trie
+	for (int i = 0; i < e->glossary_stack->size; ++i)
+	{
+		f = stack_peek_index(e->glossary_stack, i);
+		trie_insert(ac, f->clean_text, PAIR_BRACKET_GLOSSARY);
+	}
+
+	ac_trie_prepare(ac);
+	automatic_search(e, e->root, ac);
+	trie_free(ac);
 }
 
 
@@ -1627,8 +1587,9 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	// Process metadata
 	process_metadata_stack(e, scratch);
 
-	// Process abbreviations
-	// process_abbreviation_stack(e, scratch);
+	// Process abbreviations, glossary, etc.
+	if (!(e->extensions & EXT_COMPATIBILITY)) 
+		identify_global_search_terms(e, scratch);
 
 
 	switch (scratch->output_format) {
@@ -2017,15 +1978,27 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 
 void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num) {
 	// Get text inside bracket
-	char * text = text_inside_pair(source, t);
+	char * text;
+
+	if (t->child) {
+		text = text_inside_pair(source, t);
+	} else {
+		text = malloc(t->len + 2);
+		text[0] = '?';
+		memcpy(&text[1], &source[t->start], t->len);
+		text[t->len + 1] = '\0';
+	}
+
 	short glossary_id = extract_glossary_from_stack(scratch, text);
 	
 	free(text);
 
 	if (glossary_id == -1) {
 		// No match, this is an inline glossary -- create a new glossary entry
-		t->child->type = TEXT_EMPTY;
-		t->child->mate->type = TEXT_EMPTY;
+		if (t->child) {
+			t->child->type = TEXT_EMPTY;
+			t->child->mate->type = TEXT_EMPTY;
+		}
 
 		// Create glossary
 		token * label = t->child;
@@ -2056,16 +2029,28 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 
 void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token * t, short * num) {
 	// Get text inside bracket
-	char * text = text_inside_pair(source, t);
+	char * text;
+
+	if (t->child) {
+		text = text_inside_pair(source, t);
+	} else {
+		text = malloc(t->len + 2);
+		text[0] = '>';
+		memcpy(&text[1], &source[t->start], t->len);
+		text[t->len + 1] = '\0';
+	}
+
 	short abbr_id = extract_abbreviation_from_stack(scratch, &text[1]);
 	
 	free(text);
 
 	if (abbr_id == -1) {
 		// No match, this is an inline glossary -- create a new glossary entry
-		t->child->type = TEXT_EMPTY;
-		t->child->mate->type = TEXT_EMPTY;
-
+		if (t->child) {
+			t->child->type = TEXT_EMPTY;
+			t->child->mate->type = TEXT_EMPTY;
+		}
+		
 		// Create glossary
 		token * label = t->child;
 		while (label && label->type != PAIR_PAREN)

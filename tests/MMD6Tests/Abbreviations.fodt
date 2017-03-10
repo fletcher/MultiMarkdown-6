@@ -280,7 +280,7 @@
 
 <text:p text:style-name="Standard">BAR (bar)</text:p>
 
-<text:p text:style-name="Standard">foo bar</text:p>
+<text:p text:style-name="Standard">FOO BAR</text:p>
 
 <text:p text:style-name="Standard">FOOBAR (foobar)</text:p>
 
@@ -289,6 +289,14 @@
 <text:p text:style-name="Standard">5</text:p>
 
 <text:p text:style-name="Standard"><text:p text:style-name="Footnote">BAZ (BAT)</text:p> (baz)</text:p>
+
+<text:p text:style-name="Standard">FOO</text:p>
+
+<text:p text:style-name="Standard">BAR</text:p>
+
+<text:p text:style-name="Standard">FOOBAR</text:p>
+
+<text:p text:style-name="Standard">FOO BAR baz</text:p>
 </office:text>
 </office:body>
 </office:document>

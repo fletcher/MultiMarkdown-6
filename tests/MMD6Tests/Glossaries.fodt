@@ -289,6 +289,10 @@
 <text:p text:style-name="Standard">[?bar]</text:p>
 
 <text:p text:style-name="Standard">5</text:p>
+
+<text:p text:style-name="Standard">foo</text:p>
+
+<text:p text:style-name="Standard">Foo Bar</text:p>
 </office:text>
 </office:body>
 </office:document>

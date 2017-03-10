@@ -1151,6 +1151,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			}
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
+			// Which might also be an "auto-tagged" abbreviation
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 
@@ -1170,18 +1171,22 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
 
-				t->child->type = TEXT_EMPTY;
-				t->child->mate->type = TEXT_EMPTY;
+				if (t->child) {
+					t->child->type = TEXT_EMPTY;
+					t->child->mate->type = TEXT_EMPTY;
+				}
 
 				if (temp_short2 == scratch->used_abbreviations->size) {
 					// This is a re-use of a previously used note
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
-						mmd_export_token_tree_odf(out, source, t->child, scratch);
+						mmd_print_string_odf(out, temp_note->clean_text);
+//						mmd_export_token_tree_odf(out, source, t->child, scratch);
 					} else {
 						// This is an inline definition
-						mmd_export_token_tree_odf(out, source, t->child, scratch);
+						mmd_print_string_odf(out, temp_note->clean_text);
+//						mmd_export_token_tree_odf(out, source, t->child, scratch);
 					}
 				} else {
 					// This is the first time this note was used
@@ -1210,6 +1215,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
+			// Which might also be an "auto-tagged" glossary
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 

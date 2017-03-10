@@ -1013,6 +1013,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
+			// Which might also be an "auto-tagged" abbreviation
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 
@@ -1206,6 +1207,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
+			// Which might also be an "auto-tagged" glossary
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 

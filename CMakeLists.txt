@@ -172,6 +172,7 @@ configure_file (
 
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
+	Sources/libMultiMarkdown/aho-corasick.c
 	Sources/libMultiMarkdown/beamer.c
 	Sources/libMultiMarkdown/char.c
 	Sources/libMultiMarkdown/d_string.c
@@ -194,6 +195,7 @@ set(src_files
 
 # Primary header files, also for doxygen documentation
 set(header_files
+	Sources/libMultiMarkdown/aho-corasick.h
 	Sources/libMultiMarkdown/beamer.h
 	Sources/libMultiMarkdown/char.h
 	Sources/libMultiMarkdown/include/d_string.h
