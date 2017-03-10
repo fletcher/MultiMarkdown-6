@@ -4,12 +4,32 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-03-05 |  
+| Date:      | 2017-03-09 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 0.4.2b      |  
+| Version:   | 6.0.-b1      |  
 
 
 ## Updates ##
+
+* 2017-03-09 -- v 6.0.0-b1:
+
+	*    ADDED: Add French translations; fix typo in German
+	*    ADDED: Add Quick Start guide
+	*    ADDED: Add functionality to automatically identify abbreviations and glossary terms in source
+	*    ADDED: Improve LaTeX configuration files
+	*    ADDED: Update German translations
+	*    ADDED: Use native ODF table of contents instead of a manual list
+	*    ADDED: Use native command for table of contents in LaTeX
+	*    CHANGED: Bring HTML and ODF into line with LaTeX as to output of abbreviatinos on first and subsequent uses
+	*    CHANGED: Slight performance tweak
+	*    CHANGED: Update German test suite
+	*    FIXED: Allow {{TOC}} in latex verbatim
+	*    FIXED: Don't free token_pool if never initialized
+	*    FIXED: Fix German typo
+	*    FIXED: Fix missing token type
+	*    FIXED: Improve performance of checking document for metadata, which improves performance when checking for possible transclusion
+	*    FIXED: Update test suite for abbreviation changes
+
 
 * 2017-03-05 -- v 0.4.2-b:
 
