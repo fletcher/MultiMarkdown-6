@@ -1219,7 +1219,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_short == -1) {
 					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					
+					if (t->child)
+						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					else
+						print_token(t);
+
 					print_const("]");
 					break;
 				}
@@ -1231,7 +1236,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					// This is a re-use of a previously used note
 
 					print("\\gls{");
-					print(temp_note->label_text);
+					print(temp_note->clean_text);
 					print("}");
 				} else {
 					// This is the first time this note was used
@@ -1239,12 +1244,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					if (temp_short3 == scratch->inline_glossaries_to_free->size) {
 						// This is a reference definition
 						print_const("\\gls{");
-						print(temp_note->label_text);
+						print(temp_note->clean_text);
 						print_const("}");
 					} else {
 						// This is an inline definition
 						print_const("\\newglossaryentry{");
-						print(temp_note->label_text);
+						print(temp_note->clean_text);
 
 						print_const("}{name=");
 						print(temp_note->clean_text);
@@ -1254,7 +1259,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						// We skip over temp_note->content, since that is the term in use
 						mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
 						print_const("}}\\gls{");
-						print(temp_note->label_text);
+						print(temp_note->clean_text);
 						print_const("}");
 					}
 				}
@@ -1710,7 +1715,7 @@ void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad
 	HASH_ITER(hh, scratch->glossary_hash, f, f_tmp) {
 		// Add this glossary definition
 		print_const("\\longnewglossaryentry{");
-		print(f->note->label_text);
+		print(f->note->clean_text);
 
 		print_const("}{name=");
 		print(f->note->clean_text);

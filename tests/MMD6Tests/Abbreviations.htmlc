@@ -32,4 +32,6 @@ bar</p>
 
 <p>foo bar</p>
 
+<p>[>(baz) BAZ]</p>
+
 <p>[>foo bar]: FOO BAR</p>

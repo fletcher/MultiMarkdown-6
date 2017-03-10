@@ -78,7 +78,7 @@ non-programmers, but the generated parser is still fast.</p></li>
 inside of blocks, such as links, images, strong, emph, etc. Most of these
 structures require matching pairs of tokens to specify where the span starts
 and where it ends. Most of these spans allow arbitrary levels of nesting as
-well. This made parsing them correctly in the PEG-based code difficult and
+well. This made parsing them correctly in the <a href="#gn:1" title="see glossary" class="glossary">PEG</a>-based code difficult and
 slow. <abbr title="MultiMarkdown">MMD</abbr> v6 uses a different approach that is accurate and has good
 performance characteristics even with edge cases. Basically, it keeps a stack
 of each &#8220;opening&#8221; token as it steps through the token chain. When a &#8220;closing&#8221;
@@ -134,9 +134,9 @@ etc.) and return the resulting C style string</p>
 
 <p>The token tree (<a href="#gn:2" id="gnref:2" title="see glossary" class="glossary">AST</a>) includes starting offsets and length of each token,
 allowing you to use <abbr title="MultiMarkdown">MMD</abbr> as part of a syntax highlighter. <abbr title="MultiMarkdown">MMD</abbr> v5 did not
-have this functionality in the public version, in part because the PEG parsers
+have this functionality in the public version, in part because the <a href="#gn:1" title="see glossary" class="glossary">PEG</a> parsers
 used did not provide reliable offset positions, requiring a great deal of
-effort when I adapted MMD for use in <a href="http://multimarkdown.com/">MultiMarkdown
+effort when I adapted <abbr title="MultiMarkdown">MMD</abbr> for use in <a href="http://multimarkdown.com/">MultiMarkdown
 Composer</a>.</p>
 
 <p>These steps are managed using the <code>mmd_engine</code> &#8220;object&#8221;. An individual
@@ -162,6 +162,14 @@ immediately follows the <code>&gt;</code>.</p>
 
 [>MMD]: MultiMarkdown
 </code></pre>
+
+<p>There is also a &#8220;shortcut&#8221; method for abbreviations that is similar to the
+approach used in prior versions of <abbr title="MultiMarkdown">MMD</abbr>. You specify the definition for the
+abbreviation in the usual manner, but <abbr title="MultiMarkdown">MMD</abbr> will automatically identify each
+instance where the abbreviation is used and substitute it automatically. In
+this case, the abbreviation is limited to a more basic character set which
+includes letters, numbers, periods, and hyphens, but not much else. For more
+complex abbreviations, you must explicitly mark uses of the abbreviation.</p>
 
 <h4 id="citations">Citations </h4>
 
@@ -209,6 +217,14 @@ terms used in your document] is a glossary term.
 [?glossary]: The glossary collects information about important
 terms used in your document
 </code></pre>
+
+<p>Much like abbreviations, there is also a &#8220;shortcut&#8221; method that is similar to
+the approach used in prior versions of <abbr title="MultiMarkdown">MMD</abbr>. You specify the definition for
+the glossary term in the usual manner, but <abbr title="MultiMarkdown">MMD</abbr> will automatically identify
+each instance where the term is used and substitute it automatically. In this
+case, the term is limited to a more basic character set which includes
+letters, numbers, periods, and hyphens, but not much else. For more complex
+glossary terms, you must explicitly mark uses of the term.</p>
 
 <h4 id="internationalization">Internationalization </h4>
 

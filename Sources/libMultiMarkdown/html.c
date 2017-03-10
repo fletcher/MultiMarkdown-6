@@ -1295,7 +1295,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				if (temp_short == -1) {
 					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_html(out, source, t->child->next, scratch);
+
+                    if (t->child)
+                        mmd_export_token_tree_html(out, source, t->child->next, scratch);
+                    else
+                        print_token(t);
+                        
 					print_const("]");
 					break;
 				}

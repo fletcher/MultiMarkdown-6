@@ -704,6 +704,14 @@ void store_citation(scratch_pad * scratch, footnote * f) {
 void store_glossary(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
+	// Store by `clean_text`?
+	HASH_FIND_STR(scratch->glossary_hash, f->clean_text, temp_holder);
+
+	if (!temp_holder) {
+		temp_holder = fn_holder_new(f);
+		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+	}
+
 	// Store by `label_text`?
 	HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
 
@@ -1259,6 +1267,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 					f = footnote_new(e->dstr->str, label, block->child, false);
 					if (f && f->clean_text)
 						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+					//if (f && f->label_text)
+				//		memmove(f->label_text, &(f->label_text)[1],strlen(f->label_text));
 
 					stack_push(e->glossary_stack, f);
 					break;
@@ -1560,7 +1570,7 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 		trie_insert(ac, f->label_text, PAIR_BRACKET_ABBREVIATION);
 	}
 
-	// Add glossary to search trie
+	// Add glossary to search trie (without leading '?')
 	for (int i = 0; i < e->glossary_stack->size; ++i)
 	{
 		f = stack_peek_index(e->glossary_stack, i);
@@ -1982,11 +1992,11 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 
 	if (t->child) {
 		text = text_inside_pair(source, t);
+        memmove(text, &text[1], strlen(text));
 	} else {
-		text = malloc(t->len + 2);
-		text[0] = '?';
-		memcpy(&text[1], &source[t->start], t->len);
-		text[t->len + 1] = '\0';
+		text = malloc(t->len + 1);
+		memcpy(text, &source[t->start], t->len);
+		text[t->len] = '\0';
 	}
 
 	short glossary_id = extract_glossary_from_stack(scratch, text);

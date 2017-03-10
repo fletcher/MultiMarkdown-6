@@ -1,21 +1,39 @@
 <p>Title:	Glossaries
 latex config:	article</p>
 
-<p><a href="Reference">?foo</a></p>
+<p>foo foo</p>
 
-<p>[?(bar) Inline]</p>
+<p>f.o.o. f.o.o.</p>
 
-<p><a href="Reference">?Foo Bar</a></p>
+<p>f-o-o f-o-o</p>
 
-<p><a href="Reference">?foo</a></p>
+<p>f o o f o o</p>
 
-<p>[?bar]</p>
+<p>fo'o fo'o</p>
 
 <p>5</p>
 
-<p>foo</p>
+<p><a href="BAR">?bar</a> <a href="BAR">?bar</a></p>
 
-<p>Foo Bar</p>
+<p><a href="B.A.R.">?b.a.r.</a> <a href="B.A.R.">?b.a.r.</a></p>
 
-<pre><code>With second para.
-</code></pre>
+<p><a href="B-A-R">?b-a-r</a> <a href="B-A-R">?b-a-r</a></p>
+
+<p><a href="BAR">?b a r</a> <a href="BAR">?b a r</a></p>
+
+<p><a href="BA'R">?ba'r</a> <a href="BA'R">?ba'r</a></p>
+
+<p>10</p>
+
+<p>foo bar</p>
+
+<p>foo
+bar</p>
+
+<p>foo bar</p>
+
+<p>[?(baz) BAZ]</p>
+
+<p>[?foo bar]: FOO BAR</p>
+
+<pre><code>BAR FOO</code></pre>

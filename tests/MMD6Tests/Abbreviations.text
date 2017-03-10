@@ -32,6 +32,8 @@ bar
 
 foo  bar
 
+[>(baz) BAZ]
+
 
 [>foo]: FOO
 [>f.o.o.]: F.O.O.

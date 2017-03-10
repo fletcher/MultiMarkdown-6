@@ -1201,7 +1201,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 						print_const(")");
 					} else {
 						// This is an inline definition
-						mmd_export_token_tree_odf(out, source, temp_note->content, scratch);
+						mmd_print_string_odf(out, temp_note->clean_text);
 						print_const(" (");
 						mmd_print_string_odf(out, temp_note->label_text); 
 						print_const(")");

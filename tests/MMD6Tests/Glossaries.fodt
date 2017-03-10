@@ -276,23 +276,40 @@
 </office:meta>
 <office:body>
 <office:text>
-<text:p text:style-name="Standard">foo<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">Reference</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">foo<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">FOO</text:p></text:note-body></text:note> foo</text:p>
 
-<text:p text:style-name="Standard">bar<text:note text:id="gn2" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">Inline</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">f.o.o.<text:note text:id="gn2" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">F.O.O.</text:p></text:note-body></text:note> f.o.o.</text:p>
 
-<text:p text:style-name="Standard">Foo Bar<text:note text:id="gn3" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">Reference</text:p>
+<text:p text:style-name="Standard">f-o-o f-o-o</text:p>
 
-<text:p text:style-name="Footnote">With second para.</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">f o o<text:note text:id="gn3" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">F O O</text:p></text:note-body></text:note> f o o</text:p>
 
-<text:p text:style-name="Standard">foo</text:p>
-
-<text:p text:style-name="Standard">[?bar]</text:p>
+<text:p text:style-name="Standard">fo&#8217;o fo&#8217;o</text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Standard">foo</text:p>
+<text:p text:style-name="Standard">bar<text:note text:id="gn4" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">BAR</text:p></text:note-body></text:note> bar</text:p>
 
-<text:p text:style-name="Standard">Foo Bar</text:p>
+<text:p text:style-name="Standard">b.a.r.<text:note text:id="gn5" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B.A.R.</text:p></text:note-body></text:note> b.a.r.</text:p>
+
+<text:p text:style-name="Standard">b-a-r<text:note text:id="gn6" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B&#8211;A&#8211;R</text:p></text:note-body></text:note> b-a-r</text:p>
+
+<text:p text:style-name="Standard">b a r<text:note text:id="gn7" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B A R</text:p></text:note-body></text:note> b a r</text:p>
+
+<text:p text:style-name="Standard">ba'r<text:note text:id="gn8" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">BA'R</text:p></text:note-body></text:note> ba'r</text:p>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:p text:style-name="Standard">foo bar<text:note text:id="gn9" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">FOO BAR</text:p>
+
+<text:p text:style-name="Footnote">BAR FOO</text:p></text:note-body></text:note></text:p>
+
+<text:p text:style-name="Standard">foo
+bar</text:p>
+
+<text:p text:style-name="Standard">foo bar</text:p>
+
+<text:p text:style-name="Standard">baz<text:note text:id="gn10" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">BAZ</text:p></text:note-body></text:note></text:p>
 </office:text>
 </office:body>
 </office:document>

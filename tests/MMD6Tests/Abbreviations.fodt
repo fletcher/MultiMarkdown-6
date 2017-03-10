@@ -306,6 +306,8 @@
 bar</text:p>
 
 <text:p text:style-name="Standard">foo bar</text:p>
+
+<text:p text:style-name="Standard">BAZ (baz)</text:p>
 </office:text>
 </office:body>
 </office:document>
