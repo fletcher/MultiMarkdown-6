@@ -80,7 +80,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 
 	"see citation",					// English
 	"see citation",					// Español
-	"siehe Zitat",					// Deutsch
+	"Siehe Zitat",					// Deutsch
 
 	"see glossary",					// English
 	"see glossary",					// Español
