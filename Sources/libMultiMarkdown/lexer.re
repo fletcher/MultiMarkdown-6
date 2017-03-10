@@ -218,7 +218,7 @@ int scan(Scanner * s, const char * stop) {
 		'}'								{ return TEXT_BRACE_RIGHT; }
 		'\\'							{ return TEXT_BACKSLASH; }
 
-		[0-9]+ / ('.' (SP|NL))			{ return TEXT_NUMBER_POSS_LIST; }
+		[0-9]+ '.' / (SP|NL)			{ return TEXT_NUMBER_POSS_LIST; }
 		'.' / (SP|NL)					{ return TEXT_PERIOD; }
 
 		TEXT_LINEBREAK					{ return TEXT_LINEBREAK; }

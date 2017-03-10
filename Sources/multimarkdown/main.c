@@ -205,7 +205,7 @@ int main(int argc, char** argv) {
 		printf("Options:\n");
 		arg_print_glossary(stdout, argtable, "\t%-25s %s\n");
 		printf("\n");
-		goto exit;
+		goto exit2;
 	}
 
 	if (nerrors > 0) {
@@ -213,7 +213,7 @@ int main(int argc, char** argv) {
 		arg_print_errors(stdout, a_end, MULTIMARKDOWN_NAME);
 		printf("Try '%s --help' for more information.\n", binname);
 		exitcode = 1;
-		goto exit;
+		goto exit2;
 	}
 
 	// '--version' also takes precedence
@@ -222,7 +222,7 @@ int main(int argc, char** argv) {
 		printf("%s\n\n", MULTIMARKDOWN_COPYRIGHT);
 		printf("%s\n", MULTIMARKDOWN_LICENSE);
 		printf("\n");
-		goto exit;
+		goto exit2;
 	}
 
 
@@ -282,7 +282,7 @@ int main(int argc, char** argv) {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
 			exitcode = 1;
-			goto exit;
+			goto exit2;
 		}
 	}
 
@@ -319,7 +319,7 @@ int main(int argc, char** argv) {
 			if (buffer == NULL) {
 				fprintf(stderr, "Error reading file '%s'\n", a_file->filename[i]);
 				exitcode = 1;
-				goto exit;
+				goto exit2;
 			}
 
 			// Append output file extension
@@ -452,6 +452,8 @@ exit:
 #ifdef kUseObjectPool
 	token_pool_free();
 #endif
+
+exit2:
 
 	// Clean up after argtable
 	arg_freetable(argtable, sizeof(argtable) / sizeof(argtable[0]));

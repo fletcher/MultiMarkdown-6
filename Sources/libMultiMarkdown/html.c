@@ -1094,6 +1094,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
+			// Which might also be an "auto-tagged" abbreviation
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 
@@ -1113,23 +1114,44 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				// Get instance of the note used
 				temp_note = stack_peek_index(scratch->used_abbreviations, temp_short - 1);
 
-				t->child->type = TEXT_EMPTY;
-				t->child->mate->type = TEXT_EMPTY;
+				if (t->child) {
+					t->child->type = TEXT_EMPTY;
+					t->child->mate->type = TEXT_EMPTY;
+				}
 
 				if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 					// This is a reference definition
-					print_const("<abbr title=\"");
-					mmd_print_string_html(out, temp_note->clean_text, false);
-					print_const("\">");
-					mmd_export_token_tree_html(out, source, t->child, scratch);
-					print_const("</abbr>");
+
+					if (temp_short2 == scratch->used_abbreviations->size) {
+						// This is a re-use of a previously used note
+						print_const("<abbr title=\"");
+						mmd_print_string_html(out, temp_note->clean_text, false);
+						print_const("\">");
+						if (t->child)
+							mmd_export_token_tree_html(out, source, t->child, scratch);
+						else
+							print_token(t);
+						print_const("</abbr>");
+					} else {
+						// This is the first time this note was used
+						mmd_print_string_html(out, temp_note->clean_text, false);
+						print_const(" (<abbr title=\"");
+						mmd_print_string_html(out, temp_note->clean_text, false);
+						print_const("\">");
+						if (t->child)
+							mmd_export_token_tree_html(out, source, t->child, scratch);
+						else
+							print_token(t);
+						print_const("</abbr>)");
+					}
 				} else {
-					// This is an inline definition
-					print_const("<abbr title=\"");
+					// This is an inline definition (and therefore the first use)
+					mmd_print_string_html(out, temp_note->clean_text, false);
+					print_const(" (<abbr title=\"");
 					mmd_print_string_html(out, temp_note->clean_text, false);
 					print_const("\">");
 					mmd_print_string_html(out, temp_note->label_text, false);
-					print_const("</abbr>");
+					print_const("</abbr>)");
 				}
 			} else {
 				// Note-based syntax disabled
@@ -1261,6 +1283,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
+			// Which might also be an "auto-tagged" glossary
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 

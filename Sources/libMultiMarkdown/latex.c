@@ -752,9 +752,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			temp_short = 0;
 			temp_short2 = 0;
 			pad(out, 2, scratch);
-
-			mmd_export_toc_latex(out, source, scratch);
-
+			print_const("\\tableofcontents");
 			scratch->padded = 0;
 			break;
 		case BRACE_DOUBLE_LEFT:
@@ -765,6 +763,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case BRACKET_LEFT:
 			print_const("[");			
+			break;
+		case BRACKET_ABBREVIATION_LEFT:
+			print_const("[>");
 			break;
 		case BRACKET_CITATION_LEFT:
 			print_const("[#");
@@ -1012,6 +1013,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_ABBREVIATION:
+			// Which might also be an "auto-tagged" abbreviation
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 
@@ -1205,6 +1207,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			break;
 		case PAIR_BRACKET_GLOSSARY:
+			// Which might also be an "auto-tagged" glossary
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
 
@@ -1670,6 +1673,9 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			break;
 		case TEXT_BRACE_RIGHT:
 			print_const("\\}");
+			break;
+		case TOC:
+			print_const("\\{\\{TOC\\}\\}");
 			break;
 		case UL:
 			print_const("\\_");

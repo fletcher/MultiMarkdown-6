@@ -13,6 +13,11 @@ latex config:	article
 
 5
 
+foo
+
+Foo Bar
+
+
 [?foo]: Reference
 
 [?Foo Bar]: Reference

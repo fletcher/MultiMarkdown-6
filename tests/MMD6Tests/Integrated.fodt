@@ -103,6 +103,13 @@
    <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
 </style:style>
 <style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+<style:style style:name="TOC_Item" style:family="paragraph" style:parent-style-name="Standard">
+ <style:paragraph-properties>
+  <style:tab-stops>
+   <style:tab-stop style:position="6.7283in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+  </style:tab-stops>
+ </style:paragraph-properties>
+</style:style>
   <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
   <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
 </office:styles>
@@ -274,7 +281,7 @@
 identify common structures that are not supported yet &#8211; particularly useful
 when developing a new output format.</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="basicblocks"/>Basic Blocks <text:bookmark-end text:name="basicblocks"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="basicblocks"/>Basic Blocks </text:h>
 
 <text:p text:style-name="Standard">paragraph</text:p>
 
@@ -300,7 +307,7 @@ list</text:p></text:list-item>
 
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">emph</text:span> and <text:span text:style-name="MMD-Bold">strong</text:span> and <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">both</text:span></text:span></text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="escaped"/>Escapes <text:bookmark-end text:name="escaped"/></text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="escaped"/>Escapes </text:h>
 
 <text:list text:style-name="L2">
 <text:list-item>
@@ -314,7 +321,7 @@ list</text:p></text:list-item>
 
 </text:list>
 
-<text:h text:outline-level="1"><text:bookmark text:name="footnotes"/>Footnotes <text:bookmark-end text:name="footnotes"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="footnotes"/>Footnotes </text:h>
 
 <text:p text:style-name="Standard">Foo.<text:note text:id="fn1" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">This is an inline footnote</text:p></text:note-body></text:note></text:p>
 
@@ -326,7 +333,7 @@ list</text:p></text:list-item>
 
 </text:p></text:note-body></text:note></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="linksandimages"/>Links and Images <text:bookmark-end text:name="linksandimages"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="linksandimages"/>Links and Images </text:h>
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://foo.net/">link</text:a> and <text:a xlink:type="simple" xlink:href="http://bar.net" office:name="title">link</text:a></text:p>
 
@@ -347,7 +354,7 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#bar">bar</text:a></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="math"/>Math <text:bookmark-end text:name="math"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="math"/>Math </text:h>
 
 <text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span> bar</text:p>
 
@@ -359,11 +366,11 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Standard"><text:span text:style-name="math">\[{x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}\]</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="smartquotes"/>Smart Quotes <text:bookmark-end text:name="smartquotes"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="smartquotes"/>Smart Quotes </text:h>
 
 <text:p text:style-name="Standard">&#8220;foo&#8221; and &#8216;bar&#8217; &#8211; with &#8212; dashes&#8230;</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="criticmarkup"/>CriticMarkup <text:bookmark-end text:name="criticmarkup"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="criticmarkup"/>CriticMarkup </text:h>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Underline">foo</text:span></text:p>
 
@@ -375,7 +382,7 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Standard"><text:span text:style-name="Highlight">bar</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="definitionlists"/>Definition Lists <text:bookmark-end text:name="definitionlists"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="definitionlists"/>Definition Lists </text:h>
 
 <text:p><text:span text:style-name="MMD-Bold">foo</text:span></text:p>
 <text:p><text:span text:style-name="MMD-Bold">bar</text:span></text:p>
@@ -383,17 +390,17 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Quotations">baz bat*</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="horizontalrules"/>Horizontal Rules <text:bookmark-end text:name="horizontalrules"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="horizontalrules"/>Horizontal Rules </text:h>
 
 <text:p text:style-name="Horizontal_20_Line"/>
 
-<text:h text:outline-level="1"><text:bookmark text:name="glossary"/>Glossary <text:bookmark-end text:name="glossary"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="glossary"/>Glossary </text:h>
 
 <text:p text:style-name="Standard">term<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">A term to be defined.</text:p></text:note-body></text:note></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="abbreviations"/>Abbreviations<text:bookmark-end text:name="abbreviations"/></text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="abbreviations"/>Abbreviations</text:h>
 
-<text:p text:style-name="Standard">MMD<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">MultiMarkdown</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">MultiMarkdown (MMD)</text:p>
 </office:text>
 </office:body>
 </office:document>

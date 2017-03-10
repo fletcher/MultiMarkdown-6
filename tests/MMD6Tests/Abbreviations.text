@@ -15,6 +15,14 @@ latex config:	article
 
 [>(baz) BAZ (BAT)]
 
+foo
+
+bar
+
+foobar
+
+foo bar baz
+
 
 [>foo]: FOO
 [>bar]: BAR

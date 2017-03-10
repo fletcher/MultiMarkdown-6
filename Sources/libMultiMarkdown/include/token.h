@@ -222,5 +222,7 @@ void token_skip_until_type_multiple(token ** t, int n, ...);
 
 void token_split_on_char(token * t, const char * source, const char c);
 
+void token_split(token * t, size_t start, size_t len, unsigned short new_type);
+
 #endif
 

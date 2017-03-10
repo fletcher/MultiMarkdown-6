@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-03-05")
-set (My_Project_Version_Major 0)
-set (My_Project_Version_Minor 4)
-set (My_Project_Version_Patch 2b)
+set (My_Project_Revised_Date "2017-03-09")
+set (My_Project_Version_Major 6)
+set (My_Project_Version_Minor 0)
+set (My_Project_Version_Patch -b1)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -172,6 +172,7 @@ configure_file (
 
 # src_files are the primary files, and will be included in doxygen documentation
 set(src_files
+	Sources/libMultiMarkdown/aho-corasick.c
 	Sources/libMultiMarkdown/beamer.c
 	Sources/libMultiMarkdown/char.c
 	Sources/libMultiMarkdown/d_string.c
@@ -194,6 +195,7 @@ set(src_files
 
 # Primary header files, also for doxygen documentation
 set(header_files
+	Sources/libMultiMarkdown/aho-corasick.h
 	Sources/libMultiMarkdown/beamer.h
 	Sources/libMultiMarkdown/char.h
 	Sources/libMultiMarkdown/include/d_string.h
@@ -567,6 +569,6 @@ ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
 ADD_MMD_TEST(mmd-6-odf "-t odf" MMD6Tests fodt)
 
-ADD_MMD_TEST(pathologic "" ../build html)
-
 ADD_MMD_TEST(pathologic-compat "-c" ../build html)
+
+ADD_MMD_TEST(pathologic "" ../build html)
