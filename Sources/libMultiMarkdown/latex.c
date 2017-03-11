@@ -417,7 +417,6 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 
 
 void mmd_export_toc_latex(DString * out, const char * source, scratch_pad * scratch) {
-	token * entry;
 	size_t counter = 0;
 
 	mmd_export_toc_entry_latex(out, source, scratch, &counter, 0);
@@ -749,8 +748,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			scratch->padded = 0;
 			break;
 		case BLOCK_TOC:
-			temp_short = 0;
-			temp_short2 = 0;
 			pad(out, 2, scratch);
 			print_const("\\tableofcontents");
 			scratch->padded = 0;
@@ -1018,7 +1015,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				// Note-based syntax enabled
 
 				// Classify this use
-				temp_short2 = scratch->used_abbreviations->size;
 				temp_short3 = scratch->inline_abbreviations_to_free->size;
 				abbreviation_from_bracket(source, scratch, t, &temp_short);
 
@@ -1083,8 +1079,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 
 				// Classify this use
-				temp_short2 = scratch->used_citations->size;
-				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1161,7 +1155,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 				// Classify this use
 				temp_short2 = scratch->used_footnotes->size;
-				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1171,9 +1164,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					print_const("]");
 					break;
 				}
-
-				// Get instance of the note used
-				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
 				if (temp_short2 == scratch->used_footnotes->size) {
 					// This is a re-use of a previously used note

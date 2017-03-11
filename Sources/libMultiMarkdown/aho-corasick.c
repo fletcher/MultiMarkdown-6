@@ -195,13 +195,13 @@ size_t trie_node_search(trie * a, size_t s, const char * query) {
 		return s;
 	}
 
-	if (a->node[s].child[query[0]] == 0) {
+	if (a->node[s].child[(int)query[0]] == 0) {
 		// Failed to match
 		return -1;
 	}
 
 	// Partial match, keep going
-	return trie_node_search(a, a->node[s].child[query[0]], query + 1);
+	return trie_node_search(a, a->node[s].child[(int)query[0]], query + 1);
 }
 
 
@@ -258,13 +258,6 @@ void ac_trie_node_prepare(trie * a, size_t s, char * buffer, unsigned short dept
 	trie_node * n = &(a->node[s]);
 
 	char * suffix = buffer;
-
-	// No suffix for first level matches
-	unsigned short last_match_depth = a->node[last_match_state].len;
-
-	if (depth == 1) {
-		last_match_depth = 1;
-	}
 
 	// Longest match seen so far??
 	suffix += 1;
@@ -380,12 +373,12 @@ match * ac_trie_search(trie * a, const char * source, size_t len) {
 	size_t temp_state;
 
 	// Character being compared
-	char test_value;
+	int test_value;
 	size_t counter = 0;
 
 	while ((counter < len) && (source[counter] != '\0')) {
 		// Read next character
-		test_value = source[counter++];
+		test_value = (int)source[counter++];
 
 		// Check for path that allows us to match next character
 		while (state != 0 && a->node[state].child[test_value] == 0) {

@@ -193,8 +193,6 @@ void mmd_print_localized_char_odf(DString * out, unsigned short type, scratch_pa
 
 
 void mmd_export_link_odf(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
-	attr * a = link->attributes;
-
 	if (link->url) {
 		print_const("<text:a xlink:type=\"simple\" xlink:href=\"");
 		mmd_print_string_odf(out, link->url);
@@ -339,7 +337,6 @@ void mmd_export_toc_entry_odf(DString * out, const char * source, scratch_pad * 
 }
 
 void mmd_export_toc_odf(DString * out, const char * source, scratch_pad * scratch) {
-	token * entry;
 	size_t counter = 0;
 
 	// TODO: Could use LC to internationalize this
@@ -691,8 +688,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			scratch->padded = 0;
 			break;
 		case BLOCK_TOC:
-			temp_short = 0;
-			temp_short2 = 0;
 			pad(out, 2, scratch);
 
 			mmd_export_toc_odf(out, source, scratch);
@@ -1022,7 +1017,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 				// Classify this use
 				temp_short2 = scratch->used_citations->size;
-				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1035,8 +1029,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 					break;
 				}
 
-				// Get instance of the note used
-				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
 
 				temp_short3 = scratch->odf_para_type;
 				scratch->odf_para_type = PAIR_BRACKET_FOOTNOTE;
@@ -1108,7 +1100,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 				// Classify this use
 				temp_short2 = scratch->used_footnotes->size;
-				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1118,9 +1109,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 					print_const("]");
 					break;
 				}
-
-				// Get instance of the note used
-				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
 				temp_short3 = scratch->odf_para_type;
 				scratch->odf_para_type = PAIR_BRACKET_FOOTNOTE;
@@ -1221,7 +1209,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 				// Classify this use
 				temp_short2 = scratch->used_glossaries->size;
-				temp_short3 = scratch->inline_glossaries_to_free->size;
 				glossary_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
