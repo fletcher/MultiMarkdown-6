@@ -242,19 +242,13 @@ OpenDocument formats.
 
 Some features I plan to implement at some point:
 
-1. MMD v5 used to automatically identify abbreviated terms throughout the
-document and substitute them automatically.  I plan to reimplement this
-functionality, but will probably improve upon it to include glossary terms,
-and possibly even support for indexing documents in LaTeX (and possibly
-OpenOffice).
-
-2. OPML export support is not available in v6.  I plan on adding improved
+1. OPML export support is not available in v6.  I plan on adding improved
 support for this at some point.  I was hoping to be able to re-use the
 existing v6 parser but it might be simpler to use the approach from v5 and
 earlier, which was to have a separate parser tuned to only identify headers
 and "stuff between headers".
 
-3. Improved EPUB support.  Currently, EPUB support is provided by a separate
+2. Improved EPUB support.  Currently, EPUB support is provided by a separate
 [tool](https://github.com/fletcher/MMD-ePub).  At some point, I would like to
 better integrate this into MMD itself.
 
@@ -267,4 +261,3 @@ better integrate this into MMD itself.
 [?PEG]:	Parsing Expression Grammar <https://en.wikipedia.org/wiki/Parsing_expression_grammar>
 
 [?AST]: Abstract Syntax Tree <https://en.wikipedia.org/wiki/Abstract_syntax_tree>
-
