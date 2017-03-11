@@ -1,0 +1,7 @@
+Title:  bar
+
+This text is included in `transclusion/baz.txt`.
+
+This should pull in `bar.txt`, *if* run from the parent directory.
+
+{{bar.txt}}

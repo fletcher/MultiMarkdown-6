@@ -303,6 +303,10 @@
 <text:p text:style-name="Standard">x^y</text:p>
 
 <text:p text:style-name="Standard">x~y</text:p>
+
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Subscript">2</text:span> 3~</text:p>
+
+<text:p text:style-name="Standard">x<text:span text:style-name="MMD-Subscript">2</text:span> 3<text:span text:style-name="MMD-Subscript">2</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>
