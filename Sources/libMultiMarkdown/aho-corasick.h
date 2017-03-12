@@ -96,9 +96,9 @@ bool trie_insert(trie * a, const char * key, unsigned short match_type);
 
 void ac_trie_prepare(trie * a);
 
-match * ac_trie_search(trie * a, const char * source, size_t len);
+match * ac_trie_search(trie * a, const char * source, size_t start, size_t len);
 
-match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t len);
+match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t start, size_t len);
 
 void trie_free(trie * a);
 
@@ -107,6 +107,9 @@ void match_set_describe(match * m, const char * source);
 void match_set_filter_leftmost_longest(match * header);
 
 void match_free(match * m);
+
+
+void trie_to_graphviz(trie * a);
 
 
 #ifdef TEST

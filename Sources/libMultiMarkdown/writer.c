@@ -1486,7 +1486,7 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 
 
 void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
-	match * m = ac_trie_leftmost_longest_search(ac, &e->dstr->str[t->start], t->len);
+	match * m = ac_trie_leftmost_longest_search(ac, e->dstr->str, t->start, t->len);
 
 	match * walker;
 
@@ -1496,7 +1496,7 @@ void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
 		walker = m->next;
 
 		while (walker) {
-			token_split(tok, walker->start + t->start, walker->len, walker->match_type);
+			token_split(tok, walker->start, walker->len, walker->match_type);
 
 			// Advance token to section after the split (if present)
 			tok = tok->next->next;

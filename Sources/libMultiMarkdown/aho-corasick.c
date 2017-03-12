@@ -361,7 +361,7 @@ match * match_add(match * last, size_t start, size_t len, unsigned short match_t
 }
 
 
-match * ac_trie_search(trie * a, const char * source, size_t len) {
+match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) {
 
 	// Store results in a linked list
 //	match * result = match_new(0, 0, 0);
@@ -374,9 +374,10 @@ match * ac_trie_search(trie * a, const char * source, size_t len) {
 
 	// Character being compared
 	int test_value;
-	size_t counter = 0;
+	size_t counter = start;
+	size_t stop = start + len;
 
-	while ((counter < len) && (source[counter] != '\0')) {
+	while ((counter < stop) && (source[counter] != '\0')) {
 		// Read next character
 		test_value = (int)source[counter++];
 
@@ -494,8 +495,8 @@ void match_set_filter_leftmost_longest(match * header) {
 }
 
 
-match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t len) {
-	match * result = ac_trie_search(a, source, len);
+match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t start, size_t len) {
+	match * result = ac_trie_search(a, source, start, len);
 
 	if (result)
 		match_set_filter_leftmost_longest(result);
@@ -535,12 +536,12 @@ void Test_aho_trie_search(CuTest* tc) {
 
 	ac_trie_prepare(a);
 
-	m = ac_trie_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 26);
+	m = ac_trie_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 0, 26);
 	fprintf(stderr, "Finish with %d matches\n", match_count(m));
 	match_set_describe(m, "ABCDEFGGGAZABCABCDZABCABCZ");
 	match_free(m);
 
-	m = ac_trie_leftmost_longest_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 26);
+	m = ac_trie_leftmost_longest_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 0, 26);
 	fprintf(stderr, "Finish with %d matches\n", match_count(m));
 	match_set_describe(m, "ABCDEFGGGAZABCABCDZABCABCZ");
 	match_free(m);

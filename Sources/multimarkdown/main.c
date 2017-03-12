@@ -61,6 +61,7 @@
 
 
 #include "argtable3.h"
+#include "critic_markup.h"
 #include "d_string.h"
 #include "i18n.h"
 #include "libMultiMarkdown.h"
@@ -73,7 +74,8 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
-struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch, *a_accept, *a_reject, *a_full, *a_snippet;
+struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
+		*a_accept, *a_reject, *a_full, *a_snippet;
 struct arg_str *a_format, *a_lang;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -349,6 +351,15 @@ int main(int argc, char** argv) {
 				// Don't free folder -- owned by dirname
 			}
 
+			// Perform block level CriticMarkup?
+			if (extensions & EXT_CRITIC_ACCEPT) {
+				critic_markup_accept(buffer);
+			}
+
+			if (extensions & EXT_CRITIC_REJECT) {
+				critic_markup_reject(buffer);
+			}
+
 			// Increment counter and prepare token pool
 #ifdef kUseObjectPool
 			token_pool_init();
@@ -410,6 +421,15 @@ int main(int argc, char** argv) {
 			transclude_source(buffer, folder, format, NULL, NULL);
 
 			// Don't free folder -- owned by dirname
+		}
+
+		// Perform block level CriticMarkup?
+		if (extensions & EXT_CRITIC_ACCEPT) {
+			critic_markup_accept(buffer);
+		}
+
+		if (extensions & EXT_CRITIC_REJECT) {
+			critic_markup_reject(buffer);
 		}
 
 		if (FORMAT_MMD == format) {

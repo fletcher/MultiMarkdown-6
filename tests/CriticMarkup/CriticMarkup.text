@@ -1,0 +1,18 @@
+Title:	Extended CriticMarkup
+latex config:	article
+
+This is a *single* paragraph {++
+
+++}that was split in two.
+
+This is *two* paragraphs {--
+
+--}joined together.
+
+This is two paragraphs{~~
+
+with nothing ~>
+
+With a *new* paragraph inserted
+
+~~}between them.
