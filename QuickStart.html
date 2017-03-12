@@ -182,6 +182,14 @@ in terms of support for each output format. You can <ins>insert text</ins>,
 <del>delete text</del>, substitute <del>one thing</del><ins>for another</ins>, <mark>highlight text</mark>,
 and <span class="critic comment">leave comments</span> in the text.</p>
 
+<p>If you don&#8217;t specify any command line options, then <abbr title="MultiMarkdown">MMD</abbr> will apply special
+formatting to the CriticMarkup formatting as in the preceding paragraph.
+Alternatively, you can use the <code>-a\--accept</code> or <code>-r\--reject</code> options to cause
+<abbr title="MultiMarkdown">MMD</abbr> to accept or reject, respectively, the proposed changes within the CM
+markup. When doing this, CM will work across blank lines. Without either of
+these two options, then CriticMarkup that spans a blank line is not recognized
+as such. I working on options for this for the future.</p>
+
 <h4 id="emphandstrong">Emph and Strong </h4>
 
 <p>The basics of emphasis and strong emphasis are unchanged, but the parsing

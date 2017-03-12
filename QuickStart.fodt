@@ -468,6 +468,14 @@ in terms of support for each output format. You can <text:span text:style-name="
 <text:span text:style-name="Strike">delete text</text:span>, substitute <text:span text:style-name="Strike">one thing</text:span><text:span text:style-name="Underline">for another</text:span>, <text:span text:style-name="Highlight">highlight text</text:span>,
 and <text:span text:style-name="Comment">leave comments</text:span> in the text.</text:p>
 
+<text:p text:style-name="Standard">If you don&#8217;t specify any command line options, then MMD will apply special
+formatting to the CriticMarkup formatting as in the preceding paragraph.
+Alternatively, you can use the <text:span text:style-name="Source_20_Text">-a\--accept</text:span> or <text:span text:style-name="Source_20_Text">-r\--reject</text:span> options to cause
+MMD to accept or reject, respectively, the proposed changes within the CM
+markup. When doing this, CM will work across blank lines. Without either of
+these two options, then CriticMarkup that spans a blank line is not recognized
+as such. I working on options for this for the future.</text:p>
+
 <text:h text:outline-level="4"><text:bookmark text:name="emphandstrong"/>Emph and Strong </text:h>
 
 <text:p text:style-name="Standard">The basics of emphasis and strong emphasis are unchanged, but the parsing

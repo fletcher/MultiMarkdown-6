@@ -166,6 +166,14 @@ in terms of support for each output format.  You can {++insert text++},
 {--delete text--}, substitute {~~one thing~>for another~~}, {==highlight text==},
 and {>>leave comments<<} in the text.
 
+If you don't specify any command line options, then MMD will apply special
+formatting to the CriticMarkup formatting as in the preceding paragraph.
+Alternatively, you can use the `-a\--accept` or `-r\--reject` options to cause
+MMD to accept or reject, respectively, the proposed changes within the CM
+markup.  When doing this, CM will work across blank lines.  Without either of
+these two options, then CriticMarkup that spans a blank line is not recognized
+as such.  I working on options for this for the future.
+
 
 ## Emph and Strong ##
 
