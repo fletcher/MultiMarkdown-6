@@ -1605,10 +1605,18 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 
 void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch) {
-	print_const("<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+	meta * m;
+
+	print_const("<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\"");
+	HASH_FIND_STR(scratch->meta_hash, "language", m);
+	if (m) {
+		printf(" lang=\"%s\"", m->value);
+	} else {
+		print_const(" lang=\"en\"");
+	}
+	print_const(">\n<head>\n\t<meta charset=\"utf-8\"/>\n");
 
 	// Iterate over metadata keys
-	meta * m;
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {

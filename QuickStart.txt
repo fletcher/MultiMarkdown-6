@@ -183,6 +183,31 @@ engine has been improved to be more accurate, particularly in various edge
 cases where proper parsing can be difficult.  
 
 
+## EPUB 3 Support ##
+
+MMD v6 now provides support for direct creation of [EPUB 3] files.  Previously
+a separate tool was required to create EPUB files from MMD.  It's now built-
+in.  Currently, EPUB 3 files are built using the usual HTML 5 output.  No
+extra CSS is applied, so the default from the reader will be used.  Images are
+not yet supported, but are planned for the future.
+
+EPUB files can be highly customized with other tools, and I recommend doing
+that for production quality files.  For example, apparently performance is
+improved when the content is divided into multiple files (e.g. one file per
+chapter).  MMD creates EPUB 3 files using a single file.  Tools like [Sigil]
+are useful for improving your EPUB files, and I recommend doing that.
+
+Not all EPUB readers support v3 files.  I don't plan on adding support for
+older versions of the EPUB format, but other tools can convert to other
+document formats you need.  Same goes for Amazon's ebook formats -- the
+[Calibre] program can also be used to interconvert between formats.
+
+**NOTE: Because EPUB documents are binary files, MMD only creates them when
+**run in batch mode (using the `-b\--batch` options).  Otherwise, it simply
+**outputs the HTML 5 file that would serve as the primary content for the
+**EPUB.
+
+
 ## Fenced Code Blocks ##
 
 Fenced code blocks are fundamentally the same as MMD v5, except:
@@ -270,3 +295,9 @@ better integrate this into MMD itself.
 [?PEG]:	Parsing Expression Grammar <https://en.wikipedia.org/wiki/Parsing_expression_grammar>
 
 [?AST]: Abstract Syntax Tree <https://en.wikipedia.org/wiki/Abstract_syntax_tree>
+
+[EPUB 3]: https://en.wikipedia.org/wiki/EPUB
+
+[Sigil]: https://sigil-ebook.com/
+
+[Calibre]: https://calibre-ebook.com/
