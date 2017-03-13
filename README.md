@@ -4,12 +4,27 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-03-09 |  
+| Date:      | 2017-03-13 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 6.0.-b1      |  
+| Version:   | 6.0.0-b2      |  
 
 
 ## Updates ##
+
+* 2017-03-13 -- v 6.0.0-b2:
+
+	*    ADDED: Add CriticMarkup preprocessor that works across empty lines when accepting/rejecting markup
+	*    ADDED: Add back the mmd6 latex title file
+	*    ADDED: Basic EPUB 3 support -- uses 'miniz' library to zip creation
+	*    ADDED: Update QuickStart and EPUB code
+	*    CHANGED: Update QuickStart guide
+	*    CHANGED: Update test suite
+	*    FIXED: Don't duplicate LaTeX glossary definitions
+	*    FIXED: Fix abbreviations in ODF; Improve test suite
+	*    FIXED: Improve glossaries and abbreviations; Update QuickStart
+	*    FIXED: Tidy up some compiler warnings in code
+	*    FIXED: Use custom UUID code to minimize external dependencies
+
 
 * 2017-03-09 -- v 6.0.0-b1:
 
