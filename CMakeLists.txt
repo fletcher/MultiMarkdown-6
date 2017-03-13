@@ -193,6 +193,7 @@ set(src_files
 	Sources/libMultiMarkdown/token.c
 	Sources/libMultiMarkdown/token_pairs.c
 	Sources/libMultiMarkdown/transclude.c
+	Sources/libMultiMarkdown/uuid.c
 	Sources/libMultiMarkdown/writer.c
 )
 
@@ -219,6 +220,7 @@ set(header_files
 	Sources/libMultiMarkdown/token_pairs.h
 	Sources/libMultiMarkdown/transclude.h
 	Sources/libMultiMarkdown/uthash.h
+	Sources/libMultiMarkdown/uuid.h
 	Sources/libMultiMarkdown/writer.h
 )
 

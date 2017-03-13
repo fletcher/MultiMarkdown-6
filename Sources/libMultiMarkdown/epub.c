@@ -58,13 +58,14 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <time.h>
-#include <uuid/uuid.h>
+
 
 #include "d_string.h"
 #include "epub.h"
 #include "html.h"
 #include "miniz.h"
 #include "mmd.h"
+#include "uuid.h"
 #include "writer.h"
 
 
@@ -97,6 +98,22 @@ char * epub_container_xml(void) {
 }
 
 
+// http://stackoverflow.com/questions/322938/recommended-way-to-initialize-srand
+// http://www.concentric.net/~Ttwang/tech/inthash.htm
+unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
+{
+    a=a-b;  a=a-c;  a=a^(c >> 13);
+    b=b-c;  b=b-a;  b=b^(a << 8);
+    c=c-a;  c=c-b;  c=c^(b >> 13);
+    a=a-b;  a=a-c;  a=a^(c >> 12);
+    b=b-c;  b=b-a;  b=b^(a << 16);
+    c=c-a;  c=c-b;  c=c^(b >> 5);
+    a=a-b;  a=a-c;  a=a^(c >> 3);
+    b=b-c;  b=b-a;  b=b^(a << 10);
+    c=c-a;  c=c-b;  c=c^(b >> 15);
+    return c;
+}
+
 char * epub_package_document(scratch_pad * scratch) {
 	DString * out = d_string_new("");
 
@@ -117,12 +134,16 @@ char * epub_package_document(scratch_pad * scratch) {
 		print_const("</dc:identifier>\n");
 	} else {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
-		uuid_t u;
-		uuid_generate_random(u);
-		char id[36] = "";
-		uuid_unparse_lower(u, id);
+		// Seed random number generator
+		// This is not a "cryptographically secure" random seed,
+		// but good enough for an EPUB id....
+		unsigned long seed = mix(clock(), time(NULL), clock());
+		srand(seed);
+
+		char * id = uuid_new();
 		print(id);
 		print_const("</dc:identifier>\n");
+		free(id);
 	}
 
 	// Title
