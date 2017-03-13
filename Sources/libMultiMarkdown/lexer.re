@@ -219,7 +219,7 @@ int scan(Scanner * s, const char * stop) {
 		'\\'							{ return TEXT_BACKSLASH; }
 
 		[0-9]+ '.' / (SP|NL)			{ return TEXT_NUMBER_POSS_LIST; }
-		'.' / (SP|NL)					{ return TEXT_PERIOD; }
+//		'.' / (SP|NL)					{ return TEXT_PERIOD; }
 
 		TEXT_LINEBREAK					{ return TEXT_LINEBREAK; }
 		'\\' NL							{ return TEXT_LINEBREAK; }

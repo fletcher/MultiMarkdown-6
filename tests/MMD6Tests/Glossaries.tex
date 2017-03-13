@@ -1,30 +1,83 @@
 \input{mmd6-article-leader}
 \def\mytitle{Glossaries}
-\longnewglossaryentry{foo}{name=foo}{Reference}
+\longnewglossaryentry{b a r}{name=b a r}{B A R}
 
-\longnewglossaryentry{foobar}{name=Foo Bar}{
+\longnewglossaryentry{b-a-r}{name=b-a-r}{
 
-Reference
+B--A--R}
 
-With second para.}
+\longnewglossaryentry{b.a.r.}{name=b.a.r.}{
+
+B.A.R.}
+
+\longnewglossaryentry{ba'r}{name=ba'r}{
+
+BA'R}
+
+\longnewglossaryentry{bar}{name=bar}{
+
+BAR}
+
+\longnewglossaryentry{f o o}{name=f o o}{
+
+F O O}
+
+\longnewglossaryentry{f-o-o}{name=f-o-o}{
+
+F--O--O}
+
+\longnewglossaryentry{f.o.o.}{name=f.o.o.}{
+
+F.O.O.}
+
+\longnewglossaryentry{fo'o}{name=fo'o}{
+
+FO'O}
+
+\longnewglossaryentry{foo}{name=foo}{
+
+FOO}
+
+\longnewglossaryentry{foo bar}{name=foo bar}{
+
+FOO BAR
+
+BAR FOO}
 
 \input{mmd6-article-begin}
 
-\gls{foo}
+\gls{foo} \gls{foo}
 
-\newglossaryentry{bar}{name=bar, description={Inline}}\gls{bar}
+\gls{f.o.o.} \gls{f.o.o.}
 
-\gls{foobar}
+f-o-o f-o-o
 
-\gls{foo}
+\gls{f o o} \gls{f o o}
 
-[?bar]
+fo'o fo'o
 
 5
 
-\gls{foo}
+\gls{bar} \gls{bar}
 
-\gls{foobar}
+\gls{b.a.r.} \gls{b.a.r.}
+
+\gls{b-a-r} \gls{b-a-r}
+
+\gls{b a r} \gls{b a r}
+
+\gls{ba'r} \gls{ba'r}
+
+10
+
+\gls{foo bar}
+
+\gls{foo}
+\gls{bar}
+
+\gls{foo} \gls{bar}
+
+\newglossaryentry{baz}{name=baz, description={BAZ}}\gls{baz}
 
 \input{mmd6-article-footer}
 \end{document}

@@ -61,7 +61,9 @@
 
 
 #include "argtable3.h"
+#include "critic_markup.h"
 #include "d_string.h"
+#include "epub.h"
 #include "i18n.h"
 #include "libMultiMarkdown.h"
 #include "html.h"
@@ -73,7 +75,8 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
-struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch, *a_accept, *a_reject, *a_full, *a_snippet;
+struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
+		*a_accept, *a_reject, *a_full, *a_snippet;
 struct arg_str *a_format, *a_lang;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -167,7 +170,7 @@ int main(int argc, char** argv) {
 
 		a_rem1			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_batch			= arg_lit0("b", "batch", "process each file separately"),
@@ -278,6 +281,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_MMD;
 		else if (strcmp(a_format->sval[0], "odf") == 0)
 			format = FORMAT_ODF;
+		else if (strcmp(a_format->sval[0], "epub") == 0)
+			format = FORMAT_EPUB;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -338,6 +343,9 @@ int main(int argc, char** argv) {
 				case FORMAT_MMD:
 					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");
 					break;
+				case FORMAT_EPUB:
+					output_filename = filename_with_extension(a_file->filename[i], ".epub");
+					break;
 			}
 
 			// Perform transclusion(s)
@@ -349,24 +357,38 @@ int main(int argc, char** argv) {
 				// Don't free folder -- owned by dirname
 			}
 
+			// Perform block level CriticMarkup?
+			if (extensions & EXT_CRITIC_ACCEPT) {
+				critic_markup_accept(buffer);
+			}
+
+			if (extensions & EXT_CRITIC_REJECT) {
+				critic_markup_reject(buffer);
+			}
+
 			// Increment counter and prepare token pool
 #ifdef kUseObjectPool
 			token_pool_init();
 #endif
 	
-			if (FORMAT_MMD == format) {
+			if (FORMAT_EPUB == format) {
+				mmd_write_to_file(buffer, extensions, format, language, output_filename);
+				result = NULL;
+			} else if (FORMAT_MMD == format) {
 				result = buffer->str;
 			} else {
 				result = mmd_convert_d_string(buffer, extensions, format, language);
 			}
 
-			if (!(output_stream = fopen(output_filename, "w"))) {
-				// Failed to open file
-				perror(output_filename);
-			} else {
-				fputs(result, output_stream);
-				fputc('\n', output_stream);
-				fclose(output_stream);
+			if (result) {
+				if (!(output_stream = fopen(output_filename, "w"))) {
+					// Failed to open file
+					perror(output_filename);
+				} else {
+					fputs(result, output_stream);
+					fputc('\n', output_stream);
+					fclose(output_stream);
+				}
 			}
 
 			d_string_free(buffer, true);
@@ -410,6 +432,15 @@ int main(int argc, char** argv) {
 			transclude_source(buffer, folder, format, NULL, NULL);
 
 			// Don't free folder -- owned by dirname
+		}
+
+		// Perform block level CriticMarkup?
+		if (extensions & EXT_CRITIC_ACCEPT) {
+			critic_markup_accept(buffer);
+		}
+
+		if (extensions & EXT_CRITIC_REJECT) {
+			critic_markup_reject(buffer);
 		}
 
 		if (FORMAT_MMD == format) {

@@ -417,7 +417,6 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 
 
 void mmd_export_toc_latex(DString * out, const char * source, scratch_pad * scratch) {
-	token * entry;
 	size_t counter = 0;
 
 	mmd_export_toc_entry_latex(out, source, scratch, &counter, 0);
@@ -749,8 +748,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			scratch->padded = 0;
 			break;
 		case BLOCK_TOC:
-			temp_short = 0;
-			temp_short2 = 0;
 			pad(out, 2, scratch);
 			print_const("\\tableofcontents");
 			scratch->padded = 0;
@@ -1018,7 +1015,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				// Note-based syntax enabled
 
 				// Classify this use
-				temp_short2 = scratch->used_abbreviations->size;
 				temp_short3 = scratch->inline_abbreviations_to_free->size;
 				abbreviation_from_bracket(source, scratch, t, &temp_short);
 
@@ -1083,8 +1079,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 
 				// Classify this use
-				temp_short2 = scratch->used_citations->size;
-				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1161,7 +1155,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 				// Classify this use
 				temp_short2 = scratch->used_footnotes->size;
-				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1171,9 +1164,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					print_const("]");
 					break;
 				}
-
-				// Get instance of the note used
-				temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
 
 				if (temp_short2 == scratch->used_footnotes->size) {
 					// This is a re-use of a previously used note
@@ -1219,7 +1209,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_short == -1) {
 					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					
+					if (t->child)
+						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+					else
+						print_token(t);
+
 					print_const("]");
 					break;
 				}
@@ -1231,7 +1226,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					// This is a re-use of a previously used note
 
 					print("\\gls{");
-					print(temp_note->label_text);
+					print(temp_note->clean_text);
 					print("}");
 				} else {
 					// This is the first time this note was used
@@ -1239,12 +1234,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					if (temp_short3 == scratch->inline_glossaries_to_free->size) {
 						// This is a reference definition
 						print_const("\\gls{");
-						print(temp_note->label_text);
+						print(temp_note->clean_text);
 						print_const("}");
 					} else {
 						// This is an inline definition
 						print_const("\\newglossaryentry{");
-						print(temp_note->label_text);
+						print(temp_note->clean_text);
 
 						print_const("}{name=");
 						print(temp_note->clean_text);
@@ -1254,7 +1249,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						// We skip over temp_note->content, since that is the term in use
 						mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
 						print_const("}}\\gls{");
-						print(temp_note->label_text);
+						print(temp_note->clean_text);
 						print_const("}");
 					}
 				}
@@ -1702,22 +1697,35 @@ void mmd_export_token_tree_latex_tt(DString * out, const char * source, token * 
 	}
 }
 
+int clean_text_sort(fn_holder * a, fn_holder * b) {
+	return strcmp(a->note->clean_text, b->note->clean_text);
+}
+
+
 
 void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad * scratch) {
 	// Iterate through glossary definitions
 	fn_holder * f, * f_tmp;
 
+	// Sort glossary entries
+	HASH_SORT(scratch->glossary_hash, clean_text_sort);
+
+	char * last_key = NULL;
+
 	HASH_ITER(hh, scratch->glossary_hash, f, f_tmp) {
-		// Add this glossary definition
-		print_const("\\longnewglossaryentry{");
-		print(f->note->label_text);
+		if (!last_key || strcmp(last_key, f->note->clean_text) != 0) {
+			// Add this glossary definition
+			print_const("\\longnewglossaryentry{");
+			print(f->note->clean_text);
 
-		print_const("}{name=");
-		print(f->note->clean_text);
-		print_const("}{");
+			print_const("}{name=");
+			print(f->note->clean_text);
+			print_const("}{");
 
-		mmd_export_token_tree_latex(out, source, f->note->content, scratch);
-		print_const("}\n\n");
+			mmd_export_token_tree_latex(out, source, f->note->content, scratch);
+			print_const("}\n\n");
+		}
+		last_key = f->note->clean_text;
 	}
 
 	// And abbreviations

@@ -2,35 +2,60 @@
 \def\mytitle{Abbreviations}
 \newacronym{foo}{foo}{FOO}
 
+\newacronym{f.o.o.}{f.o.o.}{F.O.O.}
+
+\newacronym{f-o-o}{f-o-o}{F-O-O}
+
+\newacronym{f o o}{f o o}{F O O}
+
+\newacronym{fo'o}{fo'o}{FO'O}
+
 \newacronym{bar}{bar}{BAR}
 
-\newacronym{foobar}{foobar}{FOOBAR}
+\newacronym{b.a.r.}{b.a.r.}{B.A.R.}
+
+\newacronym{b-a-r}{b-a-r}{B-A-R}
+
+\newacronym{b a r}{b a r}{B A R}
+
+\newacronym{ba'r}{ba'r}{BA'R}
 
 \newacronym{foo bar}{foo bar}{FOO BAR}
 
 \input{mmd6-article-begin}
 
-\gls{foo}
+\gls{foo} \gls{foo}
 
+\gls{f.o.o.} \gls{f.o.o.}
+
+f-o-o f-o-o
+
+\gls{f o o} \gls{f o o}
+
+fo'o fo'o
+
+5
+
+\gls{bar} \gls{bar}
+
+\gls{b.a.r.} \gls{b.a.r.}
+
+\gls{b-a-r} \gls{b-a-r}
+
+\gls{b a r} \gls{b a r}
+
+\gls{ba'r} \gls{ba'r}
+
+10
+
+\gls{foo bar}
+
+\gls{foo}
 \gls{bar}
 
 \gls{foo} \gls{bar}
 
-\gls{foobar}
-
-\gls{foo bar}
-
-5
-
-\newacronym{baz}{baz}{BAZ (BAT)}\gls{baz}
-
-\gls{foo}
-
-\gls{bar}
-
-\gls{foobar}
-
-\gls{foo bar} baz
+\newacronym{baz}{baz}{BAZ}\gls{baz}
 
 \input{mmd6-article-footer}
 \end{document}

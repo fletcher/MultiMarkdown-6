@@ -74,5 +74,7 @@ void mmd_export_glossary_list_html(DString * out, const char * source, scratch_p
 void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch);
 void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch);
 
+void mmd_print_string_html(DString * out, const char * str, bool obfuscate);
+
 
 #endif

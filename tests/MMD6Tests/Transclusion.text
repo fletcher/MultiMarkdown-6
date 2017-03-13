@@ -6,3 +6,5 @@ latex config:	article
 {{bar.txt}}
 
 {{transclusion/bat.*}}
+
+{{transclusion/baz.txt}}

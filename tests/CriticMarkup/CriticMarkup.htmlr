@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Extended CriticMarkup</title>
+</head>
+<body>
+
+<p>This is a <em>single</em> paragraph that was split in two.</p>
+
+<p>This is <em>two</em> paragraphs</p>
+
+<p>joined together.</p>
+
+<p>This is two paragraphs</p>
+
+<p>with nothing between them.</p>
+
+</body>
+</html>
+

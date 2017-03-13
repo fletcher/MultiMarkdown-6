@@ -175,11 +175,14 @@ set(src_files
 	Sources/libMultiMarkdown/aho-corasick.c
 	Sources/libMultiMarkdown/beamer.c
 	Sources/libMultiMarkdown/char.c
+	Sources/libMultiMarkdown/critic_markup.c
 	Sources/libMultiMarkdown/d_string.c
+	Sources/libMultiMarkdown/epub.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
 	Sources/libMultiMarkdown/memoir.c
+	Sources/libMultiMarkdown/miniz.c
 	Sources/libMultiMarkdown/mmd.c
 	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.c
@@ -190,6 +193,7 @@ set(src_files
 	Sources/libMultiMarkdown/token.c
 	Sources/libMultiMarkdown/token_pairs.c
 	Sources/libMultiMarkdown/transclude.c
+	Sources/libMultiMarkdown/uuid.c
 	Sources/libMultiMarkdown/writer.c
 )
 
@@ -198,12 +202,15 @@ set(header_files
 	Sources/libMultiMarkdown/aho-corasick.h
 	Sources/libMultiMarkdown/beamer.h
 	Sources/libMultiMarkdown/char.h
+	Sources/libMultiMarkdown/critic_markup.h
 	Sources/libMultiMarkdown/include/d_string.h
+	Sources/libMultiMarkdown/epub.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
 	Sources/libMultiMarkdown/include/libMultiMarkdown.h
 	Sources/libMultiMarkdown/memoir.h
+	Sources/libMultiMarkdown/miniz.h
 	Sources/libMultiMarkdown/mmd.h
 	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.h
@@ -213,6 +220,7 @@ set(header_files
 	Sources/libMultiMarkdown/token_pairs.h
 	Sources/libMultiMarkdown/transclude.h
 	Sources/libMultiMarkdown/uthash.h
+	Sources/libMultiMarkdown/uuid.h
 	Sources/libMultiMarkdown/writer.h
 )
 
@@ -568,6 +576,10 @@ ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
 ADD_MMD_TEST(mmd-6-odf "-t odf" MMD6Tests fodt)
+
+ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)
+
+ADD_MMD_TEST(mmd-6-critic-reject "-r" CriticMarkup htmlr)
 
 ADD_MMD_TEST(pathologic-compat "-c" ../build html)
 

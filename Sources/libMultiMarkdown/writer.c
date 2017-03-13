@@ -704,6 +704,14 @@ void store_citation(scratch_pad * scratch, footnote * f) {
 void store_glossary(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
+	// Store by `clean_text`?
+	HASH_FIND_STR(scratch->glossary_hash, f->clean_text, temp_holder);
+
+	if (!temp_holder) {
+		temp_holder = fn_holder_new(f);
+		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+	}
+
 	// Store by `label_text`?
 	HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
 
@@ -1259,6 +1267,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 					f = footnote_new(e->dstr->str, label, block->child, false);
 					if (f && f->clean_text)
 						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+					//if (f && f->label_text)
+				//		memmove(f->label_text, &(f->label_text)[1],strlen(f->label_text));
 
 					stack_push(e->glossary_stack, f);
 					break;
@@ -1393,6 +1403,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
 			if (header_level == -10)
 				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "epubheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_EPUB)
+				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 			if (scratch->output_format == FORMAT_HTML)
 				header_level = atoi(m->value);
@@ -1476,7 +1489,7 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 
 
 void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
-	match * m = ac_trie_leftmost_longest_search(ac, &e->dstr->str[t->start], t->len);
+	match * m = ac_trie_leftmost_longest_search(ac, e->dstr->str, t->start, t->len);
 
 	match * walker;
 
@@ -1486,7 +1499,7 @@ void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
 		walker = m->next;
 
 		while (walker) {
-			token_split(tok, walker->start + t->start, walker->len, walker->match_type);
+			token_split(tok, walker->start, walker->len, walker->match_type);
 
 			// Advance token to section after the split (if present)
 			tok = tok->next->next;
@@ -1560,7 +1573,7 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 		trie_insert(ac, f->label_text, PAIR_BRACKET_ABBREVIATION);
 	}
 
-	// Add glossary to search trie
+	// Add glossary to search trie (without leading '?')
 	for (int i = 0; i < e->glossary_stack->size; ++i)
 	{
 		f = stack_peek_index(e->glossary_stack, i);
@@ -1605,6 +1618,17 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_end_complete_beamer(out, e->dstr->str, scratch);
+
+			break;
+		case FORMAT_EPUB:
+			mmd_start_complete_html(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
+			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
+			mmd_export_glossary_list_html(out, e->dstr->str, scratch);
+			mmd_export_citation_list_html(out, e->dstr->str, scratch);
+
+			mmd_end_complete_html(out, e->dstr->str, scratch);
 
 			break;
 		case FORMAT_HTML:
@@ -1982,11 +2006,11 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 
 	if (t->child) {
 		text = text_inside_pair(source, t);
+        memmove(text, &text[1], strlen(text));
 	} else {
-		text = malloc(t->len + 2);
-		text[0] = '?';
-		memcpy(&text[1], &source[t->start], t->len);
-		text[t->len + 1] = '\0';
+		text = malloc(t->len + 1);
+		memcpy(text, &source[t->start], t->len);
+		text[t->len] = '\0';
 	}
 
 	short glossary_id = extract_glossary_from_stack(scratch, text);

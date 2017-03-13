@@ -20,5 +20,21 @@ This is a file with no metadata.
 
 \{\{transclusion\slash bat.*\}\}
 
+This text is included in \texttt{transclusion\slash baz.txt}.
+
+This should pull in \texttt{bar.txt}, \emph{if} run from the parent directory.
+
+This text is included in \texttt{bar.txt}.
+
+This can be transcluded without causing an infinite loop -- \{\{foo.txt\}\}
+
+\begin{verbatim}
+This is a file with no metadata.
+\end{verbatim}
+
+\begin{verbatim}
+This is a file with no metadata.
+\end{verbatim}
+
 \input{mmd6-article-footer}
 \end{document}

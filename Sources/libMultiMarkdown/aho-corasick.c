@@ -195,13 +195,13 @@ size_t trie_node_search(trie * a, size_t s, const char * query) {
 		return s;
 	}
 
-	if (a->node[s].child[query[0]] == 0) {
+	if (a->node[s].child[(int)query[0]] == 0) {
 		// Failed to match
 		return -1;
 	}
 
 	// Partial match, keep going
-	return trie_node_search(a, a->node[s].child[query[0]], query + 1);
+	return trie_node_search(a, a->node[s].child[(int)query[0]], query + 1);
 }
 
 
@@ -258,13 +258,6 @@ void ac_trie_node_prepare(trie * a, size_t s, char * buffer, unsigned short dept
 	trie_node * n = &(a->node[s]);
 
 	char * suffix = buffer;
-
-	// No suffix for first level matches
-	unsigned short last_match_depth = a->node[last_match_state].len;
-
-	if (depth == 1) {
-		last_match_depth = 1;
-	}
 
 	// Longest match seen so far??
 	suffix += 1;
@@ -368,7 +361,7 @@ match * match_add(match * last, size_t start, size_t len, unsigned short match_t
 }
 
 
-match * ac_trie_search(trie * a, const char * source, size_t len) {
+match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) {
 
 	// Store results in a linked list
 //	match * result = match_new(0, 0, 0);
@@ -380,12 +373,13 @@ match * ac_trie_search(trie * a, const char * source, size_t len) {
 	size_t temp_state;
 
 	// Character being compared
-	char test_value;
-	size_t counter = 0;
+	int test_value;
+	size_t counter = start;
+	size_t stop = start + len;
 
-	while ((counter < len) && (source[counter] != '\0')) {
+	while ((counter < stop) && (source[counter] != '\0')) {
 		// Read next character
-		test_value = source[counter++];
+		test_value = (int)source[counter++];
 
 		// Check for path that allows us to match next character
 		while (state != 0 && a->node[state].child[test_value] == 0) {
@@ -501,8 +495,8 @@ void match_set_filter_leftmost_longest(match * header) {
 }
 
 
-match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t len) {
-	match * result = ac_trie_search(a, source, len);
+match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t start, size_t len) {
+	match * result = ac_trie_search(a, source, start, len);
 
 	if (result)
 		match_set_filter_leftmost_longest(result);
@@ -542,12 +536,12 @@ void Test_aho_trie_search(CuTest* tc) {
 
 	ac_trie_prepare(a);
 
-	m = ac_trie_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 26);
+	m = ac_trie_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 0, 26);
 	fprintf(stderr, "Finish with %d matches\n", match_count(m));
 	match_set_describe(m, "ABCDEFGGGAZABCABCDZABCABCZ");
 	match_free(m);
 
-	m = ac_trie_leftmost_longest_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 26);
+	m = ac_trie_leftmost_longest_search(a, "ABCDEFGGGAZABCABCDZABCABCZ", 0, 26);
 	fprintf(stderr, "Finish with %d matches\n", match_count(m));
 	match_set_describe(m, "ABCDEFGGGAZABCABCDZABCABCZ");
 	match_free(m);

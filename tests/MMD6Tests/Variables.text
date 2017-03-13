@@ -12,3 +12,5 @@ foo:	bar
 [%bar]
 
 [%bat]
+
+[%latex config]

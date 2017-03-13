@@ -285,6 +285,8 @@
 <text:p text:style-name="Standard">[%bar]</text:p>
 
 <text:p text:style-name="Standard">**foo**</text:p>
+
+<text:p text:style-name="Standard">article</text:p>
 </office:text>
 </office:body>
 </office:document>

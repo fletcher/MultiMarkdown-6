@@ -139,7 +139,7 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 
 	// Counter
 	size_t start_counter = s->size;
-	size_t i = start_counter;			// We're sharing one stack, so any opener earlier than this belongs to a parent
+	size_t i;				// We're sharing one stack, so any opener earlier than this belongs to a parent
 
 	token * peek;
 	unsigned short pair_type;

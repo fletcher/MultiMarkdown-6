@@ -1,30 +1,50 @@
 Title:	Abbreviations
 latex config:	article
 
-[>foo]
+foo foo
 
-[>bar]
+f.o.o. f.o.o.
 
-[>foo] [>bar]
+f-o-o f-o-o
 
-[>foobar]
+f o o f o o
 
-[>foo bar]
+fo'o fo'o
 
 5
 
-[>(baz) BAZ (BAT)]
+[>bar] [>bar]
+
+[>b.a.r.] [>b.a.r.]
+
+[>b-a-r] [>b-a-r]
+
+[>b a r] [>b a r]
+
+[>ba'r] [>ba'r]
+
+10
+
+foo bar
 
 foo
-
 bar
 
-foobar
+foo  bar
 
-foo bar baz
+[>(baz) BAZ]
 
 
 [>foo]: FOO
+[>f.o.o.]: F.O.O.
+[>f-o-o]: F-O-O
+[>f o o]: F O O
+[>fo'o]: FO'O
+
 [>bar]: BAR
-[>foobar]: FOOBAR
+[>b.a.r.]: B.A.R.
+[>b-a-r]: B-A-R
+[>b a r]: B A R
+[>ba'r]: BA'R
+
 [>foo bar]: FOO BAR

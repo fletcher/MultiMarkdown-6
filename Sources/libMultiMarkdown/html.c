@@ -229,8 +229,9 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 		text->child->next->start--;
 		text->child->next->len++;
 	}
-	
-	mmd_export_token_tree_html(out, source, text->child, scratch);
+
+	if (text->child)
+		mmd_export_token_tree_html(out, source, text->child, scratch);
 
 	print_const("</a>");
 }
@@ -341,7 +342,6 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 
 
 void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scratch) {
-	token * entry;
 	size_t counter = 0;
 
 	mmd_export_toc_entry_html(out, source, scratch, &counter, 0);
@@ -733,70 +733,14 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			scratch->padded = 2;
 			break;
 		case BLOCK_TOC:
-			temp_short = 0;
-			temp_short2 = 0;
+			// EPUB uses a separate TOC
+			if (scratch->output_format == FORMAT_EPUB)
+				break;
+
 			pad(out, 2, scratch);
 			print_const("<div class=\"TOC\">\n");
 
 			mmd_export_toc_html(out, source, scratch);
-			print_const("</div>");
-			scratch->padded = 0;
-			break;
-			for (int i = 0; i < scratch->header_stack->size; ++i)
-			{
-				temp_token = stack_peek_index(scratch->header_stack, i);
-
-				if (temp_token->type == temp_short2) {
-					// Same level -- close list item
-					print_const("</li>\n");
-				}
-
-				if (temp_short == 0) {
-					// First item
-					print_const("\n<ul>\n");
-					temp_short = temp_token->type;
-					temp_short2 = temp_short;
-				}
-
-				// Indent?
-				if (temp_token->type == temp_short2) {
-					// Same level -- NTD
-				} else if (temp_token->type == temp_short2 + 1) {
-					// Indent
-					print_const("\n\n<ul>\n");
-					temp_short2++;
-				} else if (temp_token->type < temp_short2) {
-					// Outdent
-					print_const("</li>\n");
-					while (temp_short2 > temp_token->type) {
-						if (temp_short2 > temp_short)
-							print_const("</ul></li>\n");
-						else
-							temp_short = temp_short2 - 1;
-
-						temp_short2--;
-					}
-				} else {
-					// Skipped more than one level -- ignore
-					continue;
-				}
-
-				temp_char = label_from_header(source, temp_token);
-
-				printf("<li><a href=\"#%s\">", temp_char);
-				mmd_export_token_tree_html(out, source, temp_token->child, scratch);
-				print_const("</a>");
-				free(temp_char);
-			}
-
-			while (temp_short2 > (temp_short)) {
-				print_const("</ul>\n");
-				temp_short2--;
-			}
-			
-			if (temp_short)
-				print_const("</li>\n</ul>\n");
-
 			print_const("</div>");
 			scratch->padded = 0;
 			break;
@@ -1189,7 +1133,6 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 				// Classify this use
 				temp_short2 = scratch->used_citations->size;
-				temp_short3 = scratch->inline_citations_to_free->size;
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1201,9 +1144,6 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 					free(temp_char);
 					break;
 				}
-
-				// Get instance of the note used
-				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
 
 				if (temp_bool) {
 					// This is a regular citation
@@ -1255,7 +1195,6 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 				// Classify this use
 				temp_short2 = scratch->used_footnotes->size;
-				temp_short3 = scratch->inline_footnotes_to_free->size;
 				footnote_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
@@ -1289,13 +1228,17 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 				// Classify this use
 				temp_short2 = scratch->used_glossaries->size;
-				temp_short3 = scratch->inline_glossaries_to_free->size;
 				glossary_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
 					// This instance is not properly formed
 					print_const("[?");
-					mmd_export_token_tree_html(out, source, t->child->next, scratch);
+
+                    if (t->child)
+                        mmd_export_token_tree_html(out, source, t->child->next, scratch);
+                    else
+                        print_token(t);
+                        
 					print_const("]");
 					break;
 				}
@@ -1662,10 +1605,18 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 
 void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch) {
-	print_const("<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+	meta * m;
+
+	print_const("<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\"");
+	HASH_FIND_STR(scratch->meta_hash, "language", m);
+	if (m) {
+		printf(" lang=\"%s\"", m->value);
+	} else {
+		print_const(" lang=\"en\"");
+	}
+	print_const(">\n<head>\n\t<meta charset=\"utf-8\"/>\n");
 
 	// Iterate over metadata keys
-	meta * m;
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {

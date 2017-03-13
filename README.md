@@ -668,6 +668,17 @@ Suggestions welcome!
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
 	
+	uthash library:
+		Copyright (c) 2005-2016, Troy D. Hanson
+	
+		Licensed under BSD Revised license
+	
+	miniz library:
+		Copyright 2013-2014 RAD Game Tools and Valve Software
+		Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
+	
+		Licensed under the MIT license
+	
 	
 	## The MIT License ##
 	

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta charset="utf-8"/>
 	<title>Transclusion</title>
@@ -22,6 +22,19 @@
 
 <p>This is <em>HTML</em>.</p>
 
+<p>This text is included in <code>transclusion/baz.txt</code>.</p>
+
+<p>This should pull in <code>bar.txt</code>, <em>if</em> run from the parent directory.</p>
+
+<p>This text is included in <code>bar.txt</code>.</p>
+
+<p>This can be transcluded without causing an infinite loop &#8211; {{foo.txt}}</p>
+
+<pre><code>This is a file with no metadata.
+</code></pre>
+
+<pre><code>This is a file with no metadata.
+</code></pre>
 
 </body>
 </html>

@@ -73,6 +73,10 @@ char * mmd_convert_string(const char * source, unsigned long extensions, short f
 // Returned char * must be freed
 char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language);
 
+// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+// multiple documents (e.g. EPUB)
+void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * filepath);
+
 
 /// MMD Engine is used for storing configuration information for MMD parser
 typedef struct mmd_engine mmd_engine;
@@ -323,6 +327,7 @@ enum output_format {
 	FORMAT_LATEX,
 	FORMAT_MEMOIR,
 	FORMAT_ODF,
+	FORMAT_EPUB,
 };
 
 

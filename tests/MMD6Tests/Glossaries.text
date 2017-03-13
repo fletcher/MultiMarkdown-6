@@ -1,25 +1,53 @@
 Title:	Glossaries
 latex config:	article
 
-[?foo]
+foo foo
 
-[?(bar) Inline]
+f.o.o. f.o.o.
 
-[?Foo Bar]
+f-o-o f-o-o
 
-[?foo]
+f o o f o o
 
-[?bar]
+fo'o fo'o
 
 5
 
+[?bar] [?bar]
+
+[?b.a.r.] [?b.a.r.]
+
+[?b-a-r] [?b-a-r]
+
+[?b a r] [?b a r]
+
+[?ba'r] [?ba'r]
+
+10
+
+foo bar
+
 foo
+bar
 
-Foo Bar
+foo  bar
+
+[?(baz) BAZ]
 
 
-[?foo]: Reference
 
-[?Foo Bar]: Reference
+[?foo]: FOO
+[?f.o.o.]: F.O.O.
+[?f-o-o]: F-O-O
+[?f o o]: F O O
+[?fo'o]: FO'O
 
-	With second para.
+[?bar]: BAR
+[?b.a.r.]: B.A.R.
+[?b-a-r]: B-A-R
+[?b a r]: B A R
+[?ba'r]: BA'R
+
+[?foo bar]: FOO BAR
+
+	BAR FOO
