@@ -177,10 +177,12 @@ set(src_files
 	Sources/libMultiMarkdown/char.c
 	Sources/libMultiMarkdown/critic_markup.c
 	Sources/libMultiMarkdown/d_string.c
+	Sources/libMultiMarkdown/epub.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
 	Sources/libMultiMarkdown/memoir.c
+	Sources/libMultiMarkdown/miniz.c
 	Sources/libMultiMarkdown/mmd.c
 	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.c
@@ -201,11 +203,13 @@ set(header_files
 	Sources/libMultiMarkdown/char.h
 	Sources/libMultiMarkdown/critic_markup.h
 	Sources/libMultiMarkdown/include/d_string.h
+	Sources/libMultiMarkdown/epub.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
 	Sources/libMultiMarkdown/include/libMultiMarkdown.h
 	Sources/libMultiMarkdown/memoir.h
+	Sources/libMultiMarkdown/miniz.h
 	Sources/libMultiMarkdown/mmd.h
 	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.h

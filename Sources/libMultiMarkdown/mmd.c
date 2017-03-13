@@ -58,6 +58,7 @@
 
 #include "char.h"
 #include "d_string.h"
+#include "epub.h"
 #include "i18n.h"
 #include "lexer.h"
 #include "libMultiMarkdown.h"
@@ -1930,5 +1931,42 @@ char * mmd_convert_d_string(DString * source, unsigned long extensions, short fo
 	d_string_free(output, false);
 
 	return result;
+}
+
+
+void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * filepath) {
+	FILE * output_stream;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+
+	DString * output = d_string_new("");
+
+	mmd_export_token_tree(output, e, format);
+
+	// Now we have the input source string, the output string, the (modified) parse tree, and engine stacks
+
+	switch (format) {
+		case FORMAT_EPUB:
+			epub_write_wrapper(filepath, output->str, e);
+			break;
+		default:
+			// Basic formats just write to file
+			if (!(output_stream = fopen(filepath, "w"))) {
+				// Failed to open file
+				perror(filepath);
+			} else {
+				fputs(output->str, output_stream);
+				fputc('\n', output_stream);
+				fclose(output_stream);
+			}
+			break;
+	}
+
+	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
+	d_string_free(output, true);
 }
 

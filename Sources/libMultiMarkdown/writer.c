@@ -1403,6 +1403,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
 			if (header_level == -10)
 				header_level = atoi(m->value);
+		} else if (strcmp(m->key, "epubheaderlevel") == 0) {
+			if (scratch->output_format == FORMAT_EPUB)
+				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
 			if (scratch->output_format == FORMAT_HTML)
 				header_level = atoi(m->value);
@@ -1615,6 +1618,17 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			if (scratch->extensions & EXT_COMPLETE)
 				mmd_end_complete_beamer(out, e->dstr->str, scratch);
+
+			break;
+		case FORMAT_EPUB:
+			mmd_start_complete_html(out, e->dstr->str, scratch);
+
+			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
+			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
+			mmd_export_glossary_list_html(out, e->dstr->str, scratch);
+			mmd_export_citation_list_html(out, e->dstr->str, scratch);
+
+			mmd_end_complete_html(out, e->dstr->str, scratch);
 
 			break;
 		case FORMAT_HTML:

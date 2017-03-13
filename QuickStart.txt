@@ -3,6 +3,7 @@ Author:	Fletcher T. Penney
 Version:	6.0-b
 LaTeX Config:	tufte-handout
 Base Header Level:	3
+uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
 
 
 {{TOC}}

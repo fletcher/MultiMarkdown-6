@@ -733,6 +733,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			scratch->padded = 2;
 			break;
 		case BLOCK_TOC:
+			// EPUB uses a separate TOC
+			if (scratch->output_format == FORMAT_EPUB)
+				break;
+
 			pad(out, 2, scratch);
 			print_const("<div class=\"TOC\">\n");
 
@@ -1601,7 +1605,7 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 
 void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch) {
-	print_const("<!DOCTYPE html>\n<html>\n<head>\n\t<meta charset=\"utf-8\"/>\n");
+	print_const("<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n\t<meta charset=\"utf-8\"/>\n");
 
 	// Iterate over metadata keys
 	meta * m;
