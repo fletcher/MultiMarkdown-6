@@ -373,13 +373,13 @@ match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) 
 	size_t temp_state;
 
 	// Character being compared
-	int test_value;
+	unsigned char test_value;
 	size_t counter = start;
 	size_t stop = start + len;
 
 	while ((counter < stop) && (source[counter] != '\0')) {
 		// Read next character
-		test_value = (int)source[counter++];
+		test_value = (unsigned char)source[counter++];
 
 		// Check for path that allows us to match next character
 		while (state != 0 && a->node[state].child[test_value] == 0) {
