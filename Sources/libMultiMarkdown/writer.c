@@ -612,21 +612,25 @@ void store_link(scratch_pad * scratch, link * l) {
 	link * temp_link;
 
 	// Add link via `clean_text`?
-	HASH_FIND_STR(scratch->link_hash, l->clean_text, temp_link);
-	
-	if (!temp_link) {
-		// Only add if another link is not found with clean_text
-		temp_link = link_shallow_copy(l);
-		HASH_ADD_KEYPTR(hh, scratch->link_hash, l->clean_text, strlen(l->clean_text), temp_link);
+	if (l->clean_text && l->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->link_hash, l->clean_text, temp_link);
+		
+		if (!temp_link) {
+			// Only add if another link is not found with clean_text
+			temp_link = link_shallow_copy(l);
+			HASH_ADD_KEYPTR(hh, scratch->link_hash, l->clean_text, strlen(l->clean_text), temp_link);
+		}
 	}
 
 	// Add link via `label_text`?
-	HASH_FIND_STR(scratch->link_hash, l->label_text, temp_link);
+	if (l->label_text && l->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->link_hash, l->label_text, temp_link);
 
-	if (!temp_link) {
-		// Only add if another link is not found with label_text
-		temp_link = link_shallow_copy(l);
-		HASH_ADD_KEYPTR(hh, scratch->link_hash, l->label_text, strlen(l->label_text), temp_link);
+		if (!temp_link) {
+			// Only add if another link is not found with label_text
+			temp_link = link_shallow_copy(l);
+			HASH_ADD_KEYPTR(hh, scratch->link_hash, l->label_text, strlen(l->label_text), temp_link);
+		}
 	}
 }
 
@@ -663,19 +667,23 @@ void store_footnote(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `clean_text`?
-	HASH_FIND_STR(scratch->footnote_hash, f->clean_text, temp_holder);
+	if (f->clean_text && f->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->footnote_hash, f->clean_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		}
 	}
 
 	// Store by `label_text`?
-	HASH_FIND_STR(scratch->footnote_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->footnote_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -684,19 +692,23 @@ void store_citation(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `clean_text`?
-	HASH_FIND_STR(scratch->citation_hash, f->clean_text, temp_holder);
+	if (f->clean_text && f->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->citation_hash, f->clean_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		}
 	}
 
 	// Store by `label_text`?
-	HASH_FIND_STR(scratch->citation_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->citation_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -705,19 +717,23 @@ void store_glossary(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `clean_text`?
-	HASH_FIND_STR(scratch->glossary_hash, f->clean_text, temp_holder);
+	if (f->clean_text && f->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->glossary_hash, f->clean_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		}
 	}
 
 	// Store by `label_text`?
-	HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -726,10 +742,12 @@ void store_metadata(scratch_pad * scratch, meta * m) {
 	meta * temp;
 
 	// Store by `key`
-	HASH_FIND_STR(scratch->meta_hash, m->key, temp);
+	if (m->key && m->key[0] != '\0') {
+		HASH_FIND_STR(scratch->meta_hash, m->key, temp);
 
-	if (!temp) {
-		HASH_ADD_KEYPTR(hh, scratch->meta_hash, m->key, strlen(m->key), m);
+		if (!temp) {
+			HASH_ADD_KEYPTR(hh, scratch->meta_hash, m->key, strlen(m->key), m);
+		}
 	}
 }
 
@@ -738,11 +756,13 @@ void store_abbreviation(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `label_text`
-	HASH_FIND_STR(scratch->abbreviation_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->abbreviation_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->abbreviation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->abbreviation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
