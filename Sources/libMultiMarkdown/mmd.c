@@ -1316,12 +1316,17 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 						t->can_close = 0;
 
 						// Shift next token right and move those characters as child node
-						if ((t->next != NULL) && ((t->next->type == TEXT_PLAIN) || (t->next->type == TEXT_NUMBER_POSS_LIST))) {
-							t->next->start += t->len - 1;
-							t->next->len -= t->len - 1;
-
-							t->child = token_new(TEXT_PLAIN, t->start + 1, t->len - 1);
+						// It's possible that one (or more?) tokens are entirely subsumed.
+						while (t->next && t->next->start + t->next->len < offset) {
+							tokens_prune(t->next, t->next);
 						}
+
+						if ((t->next != NULL) && ((t->next->type == TEXT_PLAIN) || (t->next->type == TEXT_NUMBER_POSS_LIST))) {
+							t->next->len = t->next->start + t->next->len - offset;
+							t->next->start = offset;
+						}
+
+						t->child = token_new(TEXT_PLAIN, t->start + 1, t->len - 1);
 					}
 				}
 
