@@ -299,6 +299,9 @@ bar foo</text:p>
 <text:p text:style-name="Quotations">baz* bat</text:p>
 
 <text:p text:style-name="Standard">foo</text:p>
+
+<text:p text:style-name="Standard">:foo
+</text:p>
 </office:text>
 </office:body>
 </office:document>
