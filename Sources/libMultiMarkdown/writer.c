@@ -532,7 +532,7 @@ attr * parse_attributes(char * source) {
 	size_t scan_len;
 	size_t pos = 0;
 
-	while (scan_attr(&source[pos])) {
+	while (source[pos] != '\0' && scan_attr(&source[pos])) {
 		pos +=  scan_spnl(&source[pos]);
 
 		// Get key
@@ -556,7 +556,7 @@ attr * parse_attributes(char * source) {
 			attributes = a;
 		}
 
-		free(value);	// We stored a copy
+		free(value);	// We stored a modified copy
 	}
 
 	return attributes;
