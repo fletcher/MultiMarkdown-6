@@ -69,11 +69,13 @@
 
 %fallback LINE_HR LINE_SETEXT_1 LINE_SETEXT_2.
 
-%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
+//%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
 
-%fallback LINE_CONTINUATION LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE  LINE_TABLE.
+%fallback LINE_CONTINUATION LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_TABLE_SEPARATOR.
 
-%fallback LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_HR LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START.
+%fallback LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE
+LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE
+LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_FENCE_BACKTICK LINE_FENCE_BACKTICK_START.
 
 
 // Copy clean grammar via `lemon -g parser.y` here
@@ -90,8 +92,10 @@ block ::= LINE_ATX_6.
 block ::= LINE_HR.
 block ::= LINE_TOC.
 block ::= blockquote.
+block ::= def_abbreviation.
 block ::= def_citation.
 block ::= def_footnote.
+block ::= def_glossary.
 block ::= def_link.
 block ::= definition_block.
 block ::= empty.
@@ -114,7 +118,9 @@ opt_ext_chunk ::= chunk nested_chunks.
 blockquote ::= blockquote quote_line.
 def_citation ::= LINE_DEF_CITATION tail.
 def_footnote ::= LINE_DEF_FOOTNOTE tail.
+def_glossary ::= LINE_DEF_GLOSSARY tail.
 def_link ::= LINE_DEF_LINK chunk.
+def_abbreviation ::= LINE_DEF_ABBREVIATION chunk.
 definition_block ::= para defs.
 defs ::= defs def.
 def ::= LINE_DEFINITION tail.
@@ -174,7 +180,9 @@ quote_line ::= LINE_BLOCKQUOTE.
 quote_line ::= LINE_CONTINUATION.
 def_citation ::= LINE_DEF_CITATION.
 def_footnote ::= LINE_DEF_FOOTNOTE.
+def_glossary ::= LINE_DEF_GLOSSARY.
 def_link ::= LINE_DEF_LINK.
+def_abbreviation ::= LINE_DEF_ABBREVIATION.
 defs ::= def.
 empty ::= LINE_EMPTY.
 fenced_block ::= fenced_3.
@@ -225,7 +233,7 @@ para ::= defs.
 	void ParseFree();
 	void ParseTrace();
 
-	#define kMaxToken 34
+	#define kMaxToken 36
 
 	int i,j,k,l,m, n;
 

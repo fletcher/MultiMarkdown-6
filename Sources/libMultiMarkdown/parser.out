@@ -110,10 +110,10 @@ State 0:
 
                        LINE_HR shift-reduce 9      block ::= LINE_HR
                     LINE_PLAIN shift        16     
-          LINE_TABLE_SEPARATOR shift-reduce 133    row ::= LINE_TABLE_SEPARATOR
              LINE_INDENTED_TAB shift-reduce 90     indented_line ::= LINE_INDENTED_TAB
            LINE_INDENTED_SPACE shift-reduce 91     indented_line ::= LINE_INDENTED_SPACE
-                    LINE_TABLE shift-reduce 129    header_rows ::= LINE_TABLE
+                    LINE_TABLE shift-reduce 130    header_rows ::= LINE_TABLE
+          LINE_TABLE_SEPARATOR shift-reduce 134    row ::= LINE_TABLE_SEPARATOR
                      LINE_HTML shift-reduce 118    html_block ::= LINE_HTML
                     LINE_ATX_1 shift-reduce 3      block ::= LINE_ATX_1
                     LINE_ATX_2 shift-reduce 4      block ::= LINE_ATX_2
@@ -138,7 +138,7 @@ State 0:
    LINE_FENCE_BACKTICK_START_3 shift-reduce 107    fenced_3 ::= LINE_FENCE_BACKTICK_START_3
    LINE_FENCE_BACKTICK_START_4 shift-reduce 110    fenced_4 ::= LINE_FENCE_BACKTICK_START_4
    LINE_FENCE_BACKTICK_START_5 shift-reduce 113    fenced_5 ::= LINE_FENCE_BACKTICK_START_5
-                     LINE_META shift-reduce 124    meta_block ::= LINE_META
+                     LINE_META shift-reduce 125    meta_block ::= LINE_META
                            doc accept
                         blocks shift        1      
                          block shift-reduce 2      blocks ::= block
@@ -151,11 +151,11 @@ State 0:
               definition_block shift-reduce 17     block ::= definition_block
                          empty shift        43     
                   fenced_block shift-reduce 19     block ::= fenced_block
-                    html_block shift        31     
+                    html_block shift        30     
                  indented_code shift        29     
                    list_bullet shift        40     
                      list_enum shift        38     
-                    meta_block shift        30     
+                    meta_block shift        31     
                           para shift        14     
                       setext_1 shift-reduce 26     block ::= setext_1
                       setext_2 shift-reduce 27     block ::= setext_2
@@ -285,10 +285,10 @@ State 1:
                              $ reduce       0      doc ::= blocks
                        LINE_HR shift-reduce 9      block ::= LINE_HR
                     LINE_PLAIN shift        16     
-          LINE_TABLE_SEPARATOR shift-reduce 133    row ::= LINE_TABLE_SEPARATOR
              LINE_INDENTED_TAB shift-reduce 90     indented_line ::= LINE_INDENTED_TAB
            LINE_INDENTED_SPACE shift-reduce 91     indented_line ::= LINE_INDENTED_SPACE
-                    LINE_TABLE shift-reduce 129    header_rows ::= LINE_TABLE
+                    LINE_TABLE shift-reduce 130    header_rows ::= LINE_TABLE
+          LINE_TABLE_SEPARATOR shift-reduce 134    row ::= LINE_TABLE_SEPARATOR
                      LINE_HTML shift-reduce 118    html_block ::= LINE_HTML
                     LINE_ATX_1 shift-reduce 3      block ::= LINE_ATX_1
                     LINE_ATX_2 shift-reduce 4      block ::= LINE_ATX_2
@@ -313,7 +313,7 @@ State 1:
    LINE_FENCE_BACKTICK_START_3 shift-reduce 107    fenced_3 ::= LINE_FENCE_BACKTICK_START_3
    LINE_FENCE_BACKTICK_START_4 shift-reduce 110    fenced_4 ::= LINE_FENCE_BACKTICK_START_4
    LINE_FENCE_BACKTICK_START_5 shift-reduce 113    fenced_5 ::= LINE_FENCE_BACKTICK_START_5
-                     LINE_META shift-reduce 124    meta_block ::= LINE_META
+                     LINE_META shift-reduce 125    meta_block ::= LINE_META
                          block shift-reduce 1      blocks ::= blocks block
                     blockquote shift        32     
               def_abbreviation shift-reduce 12     block ::= def_abbreviation
@@ -324,11 +324,11 @@ State 1:
               definition_block shift-reduce 17     block ::= definition_block
                          empty shift        43     
                   fenced_block shift-reduce 19     block ::= fenced_block
-                    html_block shift        31     
+                    html_block shift        30     
                  indented_code shift        29     
                    list_bullet shift        40     
                      list_enum shift        38     
-                    meta_block shift        30     
+                    meta_block shift        31     
                           para shift        14     
                       setext_1 shift-reduce 26     block ::= setext_1
                       setext_2 shift-reduce 27     block ::= setext_2
@@ -524,7 +524,7 @@ State 7:
 
 State 8:
           table ::= table_header * table_body
-    (128) table ::= table_header *
+    (129) table ::= table_header *
           header_rows ::= * header_rows LINE_TABLE
           header_rows ::= * LINE_TABLE
           table_body ::= * table_body table_section
@@ -536,16 +536,16 @@ State 8:
           row ::= * header_rows
           row ::= * LINE_TABLE_SEPARATOR
 
-          LINE_TABLE_SEPARATOR shift-reduce 133    row ::= LINE_TABLE_SEPARATOR
-          LINE_TABLE_SEPARATOR reduce       128     ** Parsing conflict **
-                    LINE_TABLE shift-reduce 129    header_rows ::= LINE_TABLE
-                    LINE_TABLE reduce       128     ** Parsing conflict **
+                    LINE_TABLE shift-reduce 130    header_rows ::= LINE_TABLE
+                    LINE_TABLE reduce       129     ** Parsing conflict **
+          LINE_TABLE_SEPARATOR shift-reduce 134    row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       129     ** Parsing conflict **
                     table_body shift        9      
                    header_rows shift        42     
                  table_section shift        9        /* because table_section==table_body */
                       all_rows shift        13     
                            row shift        13       /* because row==all_rows */
-                     {default} reduce       128    table ::= table_header
+                     {default} reduce       129    table ::= table_header
 
 State 9:
      (78) table ::= table_header table_body *
@@ -559,10 +559,10 @@ State 9:
           row ::= * header_rows
           row ::= * LINE_TABLE_SEPARATOR
 
-          LINE_TABLE_SEPARATOR shift-reduce 133    row ::= LINE_TABLE_SEPARATOR
-          LINE_TABLE_SEPARATOR reduce       78      ** Parsing conflict **
-                    LINE_TABLE shift-reduce 129    header_rows ::= LINE_TABLE
+                    LINE_TABLE shift-reduce 130    header_rows ::= LINE_TABLE
                     LINE_TABLE reduce       78      ** Parsing conflict **
+          LINE_TABLE_SEPARATOR shift-reduce 134    row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       78      ** Parsing conflict **
                    header_rows shift        42     
                  table_section shift-reduce 81     table_body ::= table_body table_section
                       all_rows shift        13     
@@ -644,10 +644,10 @@ State 13:
           row ::= * header_rows
           row ::= * LINE_TABLE_SEPARATOR
 
-          LINE_TABLE_SEPARATOR shift-reduce 133    row ::= LINE_TABLE_SEPARATOR
-          LINE_TABLE_SEPARATOR reduce       83      ** Parsing conflict **
-                    LINE_TABLE shift-reduce 129    header_rows ::= LINE_TABLE
+                    LINE_TABLE shift-reduce 130    header_rows ::= LINE_TABLE
                     LINE_TABLE reduce       83      ** Parsing conflict **
+          LINE_TABLE_SEPARATOR shift-reduce 134    row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       83      ** Parsing conflict **
                     LINE_EMPTY shift-reduce 82     table_section ::= all_rows LINE_EMPTY
                     LINE_EMPTY reduce       83      ** Parsing conflict **
                    header_rows shift        42     
@@ -680,10 +680,10 @@ State 15:
           row ::= * LINE_TABLE_SEPARATOR
      (85) para ::= all_rows *
 
-          LINE_TABLE_SEPARATOR shift-reduce 133    row ::= LINE_TABLE_SEPARATOR
-          LINE_TABLE_SEPARATOR reduce       85      ** Parsing conflict **
-                    LINE_TABLE shift-reduce 129    header_rows ::= LINE_TABLE
+                    LINE_TABLE shift-reduce 130    header_rows ::= LINE_TABLE
                     LINE_TABLE reduce       85      ** Parsing conflict **
+          LINE_TABLE_SEPARATOR shift-reduce 134    row ::= LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       85      ** Parsing conflict **
                    header_rows shift        42     
                            row shift-reduce 84     all_rows ::= all_rows row
                      {default} reduce       85     para ::= all_rows
@@ -693,12 +693,12 @@ State 16:
           chunk ::= * chunk_line
           chunk_line ::= * LINE_CONTINUATION
           para ::= LINE_PLAIN * chunk
-    (127) para ::= LINE_PLAIN *
+    (128) para ::= LINE_PLAIN *
 
              LINE_CONTINUATION shift-reduce 87     chunk_line ::= LINE_CONTINUATION
                          chunk shift        33     
                     chunk_line shift        33       /* because chunk_line==chunk */
-                     {default} reduce       127    para ::= LINE_PLAIN
+                     {default} reduce       128    para ::= LINE_PLAIN
 
 State 17:
           chunk ::= * chunk chunk_line
@@ -929,28 +929,31 @@ State 29:
                      {default} reduce       21     block ::= indented_code
 
 State 30:
-     (24) block ::= meta_block *
-          meta_block ::= meta_block * meta_line
-          meta_line ::= * LINE_META
-          meta_line ::= * LINE_CONTINUATION
-
-             LINE_CONTINUATION shift-reduce 126    meta_line ::= LINE_CONTINUATION
-                     LINE_META shift-reduce 125    meta_line ::= LINE_META
-                     LINE_META reduce       24      ** Parsing conflict **
-                     meta_line shift-reduce 74     meta_block ::= meta_block meta_line
-                     {default} reduce       24     block ::= meta_block
-
-State 31:
      (20) block ::= html_block *
           html_block ::= html_block * html_line
           html_line ::= * LINE_CONTINUATION
           html_line ::= * LINE_HTML
+          html_line ::= * LINE_HR
 
+                       LINE_HR shift-reduce 121    html_line ::= LINE_HR
+                       LINE_HR reduce       20      ** Parsing conflict **
              LINE_CONTINUATION shift-reduce 119    html_line ::= LINE_CONTINUATION
                      LINE_HTML shift-reduce 120    html_line ::= LINE_HTML
                      LINE_HTML reduce       20      ** Parsing conflict **
                      html_line shift-reduce 61     html_block ::= html_block html_line
                      {default} reduce       20     block ::= html_block
+
+State 31:
+     (24) block ::= meta_block *
+          meta_block ::= meta_block * meta_line
+          meta_line ::= * LINE_META
+          meta_line ::= * LINE_CONTINUATION
+
+             LINE_CONTINUATION shift-reduce 127    meta_line ::= LINE_CONTINUATION
+                     LINE_META shift-reduce 126    meta_line ::= LINE_META
+                     LINE_META reduce       24      ** Parsing conflict **
+                     meta_line shift-reduce 74     meta_block ::= meta_block meta_line
+                     {default} reduce       24     block ::= meta_block
 
 State 32:
      (11) block ::= blockquote *
@@ -977,12 +980,12 @@ State 34:
           defs ::= defs * def
           def ::= * LINE_DEFINITION tail
           def ::= * LINE_DEFINITION
-    (134) para ::= defs *
+    (135) para ::= defs *
 
                LINE_DEFINITION shift        5      
-               LINE_DEFINITION reduce       134     ** Parsing conflict **
+               LINE_DEFINITION reduce       135     ** Parsing conflict **
                            def shift-reduce 42     defs ::= defs def
-                     {default} reduce       134    para ::= defs
+                     {default} reduce       135    para ::= defs
 
 State 35:
           chunk ::= chunk * chunk_line
@@ -1051,21 +1054,21 @@ State 40:
 State 41:
           table_header ::= header_rows * LINE_TABLE_SEPARATOR
           header_rows ::= header_rows * LINE_TABLE
-    (132) row ::= header_rows *
+    (133) row ::= header_rows *
 
-          LINE_TABLE_SEPARATOR shift-reduce 79     table_header ::= header_rows LINE_TABLE_SEPARATOR
-          LINE_TABLE_SEPARATOR reduce       132     ** Parsing conflict **
                     LINE_TABLE shift-reduce 80     header_rows ::= header_rows LINE_TABLE
-                    LINE_TABLE reduce       132     ** Parsing conflict **
-                     {default} reduce       132    row ::= header_rows
+                    LINE_TABLE reduce       133     ** Parsing conflict **
+          LINE_TABLE_SEPARATOR shift-reduce 79     table_header ::= header_rows LINE_TABLE_SEPARATOR
+          LINE_TABLE_SEPARATOR reduce       133     ** Parsing conflict **
+                     {default} reduce       133    row ::= header_rows
 
 State 42:
           header_rows ::= header_rows * LINE_TABLE
-    (132) row ::= header_rows *
+    (133) row ::= header_rows *
 
                     LINE_TABLE shift-reduce 80     header_rows ::= header_rows LINE_TABLE
-                    LINE_TABLE reduce       132     ** Parsing conflict **
-                     {default} reduce       132    row ::= header_rows
+                    LINE_TABLE reduce       133     ** Parsing conflict **
+                     {default} reduce       133    row ::= header_rows
 
 State 43:
      (18) block ::= empty *
@@ -1081,12 +1084,12 @@ Symbols:
     1: LINE_HR
     2: LINE_SETEXT_1
     3: LINE_SETEXT_2
-    4: LINE_PLAIN
-    5: LINE_TABLE_SEPARATOR
-    6: LINE_CONTINUATION
-    7: LINE_INDENTED_TAB
-    8: LINE_INDENTED_SPACE
-    9: LINE_TABLE
+    4: LINE_CONTINUATION
+    5: LINE_PLAIN
+    6: LINE_INDENTED_TAB
+    7: LINE_INDENTED_SPACE
+    8: LINE_TABLE
+    9: LINE_TABLE_SEPARATOR
    10: LINE_HTML
    11: LINE_ATX_1
    12: LINE_ATX_2
@@ -1115,16 +1118,16 @@ Symbols:
    35: LINE_FENCE_BACKTICK_START_5
    36: LINE_META
    37: error:
-   38: doc: LINE_HR LINE_PLAIN LINE_TABLE_SEPARATOR LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_TOC LINE_DEFINITION LINE_EMPTY LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5 LINE_META
-   39: blocks: LINE_HR LINE_PLAIN LINE_TABLE_SEPARATOR LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_TOC LINE_DEFINITION LINE_EMPTY LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5 LINE_META
-   40: block: LINE_HR LINE_PLAIN LINE_TABLE_SEPARATOR LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_TOC LINE_DEFINITION LINE_EMPTY LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5 LINE_META
+   38: doc: LINE_HR LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_TABLE_SEPARATOR LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_TOC LINE_DEFINITION LINE_EMPTY LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5 LINE_META
+   39: blocks: LINE_HR LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_TABLE_SEPARATOR LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_TOC LINE_DEFINITION LINE_EMPTY LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5 LINE_META
+   40: block: LINE_HR LINE_PLAIN LINE_INDENTED_TAB LINE_INDENTED_SPACE LINE_TABLE LINE_TABLE_SEPARATOR LINE_HTML LINE_ATX_1 LINE_ATX_2 LINE_ATX_3 LINE_ATX_4 LINE_ATX_5 LINE_ATX_6 LINE_BLOCKQUOTE LINE_LIST_BULLETED LINE_LIST_ENUMERATED LINE_DEF_ABBREVIATION LINE_DEF_CITATION LINE_DEF_FOOTNOTE LINE_DEF_GLOSSARY LINE_DEF_LINK LINE_TOC LINE_DEFINITION LINE_EMPTY LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5 LINE_META
    41: blockquote: LINE_BLOCKQUOTE
    42: def_abbreviation: LINE_DEF_ABBREVIATION
    43: def_citation: LINE_DEF_CITATION
    44: def_footnote: LINE_DEF_FOOTNOTE
    45: def_glossary: LINE_DEF_GLOSSARY
    46: def_link: LINE_DEF_LINK
-   47: definition_block: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_TABLE LINE_DEFINITION
+   47: definition_block: LINE_PLAIN LINE_TABLE LINE_TABLE_SEPARATOR LINE_DEFINITION
    48: empty: LINE_EMPTY
    49: fenced_block: LINE_FENCE_BACKTICK_3 LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_3 LINE_FENCE_BACKTICK_START_4 LINE_FENCE_BACKTICK_START_5
    50: html_block: LINE_HTML
@@ -1132,9 +1135,9 @@ Symbols:
    52: list_bullet: LINE_LIST_BULLETED
    53: list_enum: LINE_LIST_ENUMERATED
    54: meta_block: LINE_META
-   55: para: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_TABLE LINE_DEFINITION
-   56: setext_1: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_TABLE LINE_DEFINITION
-   57: setext_2: LINE_PLAIN LINE_TABLE_SEPARATOR LINE_TABLE LINE_DEFINITION
+   55: para: LINE_PLAIN LINE_TABLE LINE_TABLE_SEPARATOR LINE_DEFINITION
+   56: setext_1: LINE_PLAIN LINE_TABLE LINE_TABLE_SEPARATOR LINE_DEFINITION
+   57: setext_2: LINE_PLAIN LINE_TABLE LINE_TABLE_SEPARATOR LINE_DEFINITION
    58: table: LINE_TABLE
    59: chunk: LINE_CONTINUATION
    60: chunk_line: LINE_CONTINUATION
@@ -1151,13 +1154,13 @@ Symbols:
    71: fenced_line: LINE_SETEXT_1 LINE_SETEXT_2 LINE_CONTINUATION LINE_EMPTY
    72: fenced_4: LINE_FENCE_BACKTICK_4 LINE_FENCE_BACKTICK_START_4
    73: fenced_5: LINE_FENCE_BACKTICK_5 LINE_FENCE_BACKTICK_START_5
-   74: html_line: LINE_CONTINUATION LINE_HTML
+   74: html_line: LINE_HR LINE_CONTINUATION LINE_HTML
    75: item_bullet: LINE_LIST_BULLETED
    76: item_enum: LINE_LIST_ENUMERATED
    77: meta_line: LINE_CONTINUATION LINE_META
    78: table_header: LINE_TABLE
-   79: table_body: LINE_TABLE_SEPARATOR LINE_TABLE
+   79: table_body: LINE_TABLE LINE_TABLE_SEPARATOR
    80: header_rows: LINE_TABLE
-   81: table_section: LINE_TABLE_SEPARATOR LINE_TABLE
-   82: all_rows: LINE_TABLE_SEPARATOR LINE_TABLE
-   83: row: LINE_TABLE_SEPARATOR LINE_TABLE
+   81: table_section: LINE_TABLE LINE_TABLE_SEPARATOR
+   82: all_rows: LINE_TABLE LINE_TABLE_SEPARATOR
+   83: row: LINE_TABLE LINE_TABLE_SEPARATOR
