@@ -1739,6 +1739,21 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				// Advance to next line
 				l = l->next;
 				break;
+			case BLOCK_DEFINITION:
+				// Sometimes these get created unintentionally inside other blocks
+				// Process inside it, then treat it like a line to be stripped
+
+				// Change to plain line
+				l->child->type = LINE_PLAIN;
+				strip_line_tokens_from_block(e, l);
+
+				// Move children to parent
+				token_append_child(block, l->child);
+				l->child = NULL;
+				if (children == NULL)
+					children = l;
+				l = l->next;
+				break;
 			case LINE_TABLE_SEPARATOR:
 			case LINE_TABLE:
 				if (block->type == BLOCK_TABLE_HEADER) {
@@ -1751,7 +1766,8 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 					goto handle_line;
 				}
 			default:
-				//fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
+				// token_describe(block, e->dstr->str);
+				// fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
 				// This is a block, need to remove it from chain and
 				// Add to parent
 				temp = l->next;
