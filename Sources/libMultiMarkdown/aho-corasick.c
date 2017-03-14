@@ -195,13 +195,13 @@ size_t trie_node_search(trie * a, size_t s, const char * query) {
 		return s;
 	}
 
-	if (a->node[s].child[(int)query[0]] == 0) {
+	if (a->node[s].child[(unsigned char)query[0]] == 0) {
 		// Failed to match
 		return -1;
 	}
 
 	// Partial match, keep going
-	return trie_node_search(a, a->node[s].child[(int)query[0]], query + 1);
+	return trie_node_search(a, a->node[s].child[(unsigned char)query[0]], query + 1);
 }
 
 
