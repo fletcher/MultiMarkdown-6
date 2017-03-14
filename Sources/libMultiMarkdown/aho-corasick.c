@@ -515,7 +515,7 @@ void Test_aho_trie_search(CuTest* tc) {
 
 	ac_trie_prepare(a);
 
-	match * m = ac_trie_search(a, "this is a bar that serves food.", 31);
+	match * m = ac_trie_search(a, "this is a bar that serves food.", 0, 31);
 
 	match_free(m);
 	trie_free(a);
