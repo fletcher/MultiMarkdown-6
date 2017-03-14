@@ -226,6 +226,7 @@ int scan(Scanner * s, const char * stop) {
 		' '? NL							{ return TEXT_NL; }
 
 		NON_INDENT_SPACE				{ return NON_INDENT_SPACE; }
+		' ' / '\t'						{ return NON_INDENT_SPACE; }
 
 		"*"								{ return STAR; }
 		"+"								{ return PLUS; }
