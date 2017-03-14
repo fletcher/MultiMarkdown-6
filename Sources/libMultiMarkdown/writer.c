@@ -1349,7 +1349,7 @@ token * manual_label_from_header(token * h, const char * source) {
 				break;
 			case PAIR_BRACKET:
 				label = walker;
-				while(walker->type == PAIR_BRACKET) {
+				while(walker && walker->type == PAIR_BRACKET) {
 					walker = walker->prev;
 					count++;
 				}
