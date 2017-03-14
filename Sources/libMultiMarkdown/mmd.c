@@ -1748,6 +1748,11 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				strip_line_tokens_from_block(e, l);
 
 				// Move children to parent
+				// Add ':' back
+				if (e->dstr->str[l->child->start - 1] == ':') {
+					temp = token_new(COLON, l->child->start - 1, 1);
+					token_append_child(block, temp);
+				}
 				token_append_child(block, l->child);
 				l->child = NULL;
 				if (children == NULL)
