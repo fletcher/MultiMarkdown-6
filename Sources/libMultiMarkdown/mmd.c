@@ -813,7 +813,12 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 					token_append_child(line, t);
 				}
             }
+		} else if (type == 0 && stop > last_stop) {
+			// Source text ends without newline
+			t = token_new(TEXT_PLAIN, (size_t)(last_stop - str), (size_t)(stop - last_stop));
+			token_append_child(line, t);
 		}
+
 
 		switch (type) {
 			case 0:
