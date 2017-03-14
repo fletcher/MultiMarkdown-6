@@ -851,12 +851,15 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			// Grab destination string
 			url = my_strndup(&source[start], scan_len);
 
-			// Advance remainder
-			while ((*remainder)->start < start + scan_len)
+			// Advance remainder to end of destination
+			while ((*remainder)->next &&
+				   (*remainder)->next->start < start + scan_len) {
 				*remainder = (*remainder)->next;
+			}
 
-
-			t = (*remainder)->prev;
+			t = (*remainder);	// We need to remember this for below
+			// Move remainder beyond destination
+			*remainder = (*remainder)->next;
 
 			// Is there a space in a URL concatenated with a title or attribute?
 			// e.g. [foo]: http://foo.bar/ class="foo"
