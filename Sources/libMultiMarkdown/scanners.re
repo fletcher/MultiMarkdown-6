@@ -86,7 +86,7 @@
 	attributes	= (attr)+;
 	title		= (quoted_d | quoted_s | quoted_p);
 
-	label		= [^\]\n\r\x00]+;
+	label		= [^\]\n\r\x00]* [^\]\n\r\x00\\];
 	finish_line	= [^\n\r\x00]+;
 
 	ref_abbr	= non_indent '[>' label ']' ':' finish_line;
