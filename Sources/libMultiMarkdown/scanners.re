@@ -59,21 +59,21 @@
 
 /*!re2c
 
-	re2c:define:YYCTYPE = "char";
+	re2c:define:YYCTYPE = "unsigned char";
 	re2c:define:YYCURSOR = c;
 	re2c:define:YYMARKER = marker;
 	re2c:define:YYCTXMARKER = marker;
 	re2c:yyfill:enable = 0;
 
 	nl 			= ( '\n' | '\r' '\n'?);
-	sp 			= [ \t]*;
+	sp 			= [ \t\240]*;
 	spnl		= sp (nl sp)?;
-	non_indent	= ' '{0,3};
+	non_indent	= [ \240]{0,3};
 	nl_eof		= nl | '\x00';
 
-	email		= 'mailto:'? [-A-Za-z0-9+_./!%~$]+ '@' [^ \t\n\r\x00>]+;
+	email		= 'mailto:'? [-A-Za-z0-9+_./!%~$]+ '@' [^ \240\t\n\r\x00>]+;
 
-	url			= [A-Za-z\-]+ '://' [^ \t\n\r\x00>]+;
+	url			= [A-Za-z\-]+ '://' [^ \240\t\n\r\x00>]+;
 
 	name		= [A-Za-z_:] [A-Za-z0-9_.:-]*;
 	quoted_d	= '"' [^"\n\r\x00]* '"';
@@ -99,7 +99,7 @@
 
 	ref_link	= non_indent '[' label ']' ':' finish_line;
 
-	destination	= ('<' [^ \t\n\r\x00>]* '>') | [^ \t\n\r\x00]+;
+	destination	= ('<' [^ \240\t\n\r\x00>]* '>') | [^ \240\t\n\r\x00]+;
 
 	ref_link_no_attributes	= non_indent '[' label ']' ':' spnl destination sp (nl_eof | (nl? (title) sp) nl_eof);
 
@@ -136,7 +136,7 @@
 
 	fence_end	= non_indent [`~]{3,} sp nl_eof;
 
-	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \t\-\.]*;
+	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \240\t\-\.]*;
 
 	meta_value	= [^\n\r\x00]+;
 
@@ -144,7 +144,7 @@
 
 	definition	= non_indent ':' sp [^\n\r\x00];
 
-	table_separator	= (('|' [:\-= \t|+]*) | ([:\-= \t+]+ '|' [:\-= \t|+]*)) nl_eof;
+	table_separator	= (('|' [:\-= \240\t|+]*) | ([:\-= \240\t+]+ '|' [:\-= \240\t|+]*)) nl_eof;
 
 	align		= [\-=]+;
 	align_left	= sp ':' align sp ('|' | nl_eof);
@@ -158,7 +158,7 @@
 
 	setext_2	= non_indent '-'{2,} nl_eof;
 
-	atx			= '#'+ [ \t]+ [^ \t\n\r\x00];
+	atx			= '#'+ [ \240\t]+ [^ \240\t\n\r\x00];
 */
 
 

@@ -60,11 +60,10 @@
 
 // Basic scanner struct
 
-#define YYCTYPE		char
+#define YYCTYPE		unsigned char
 #define YYCURSOR	s->cur
 #define YYMARKER	s->ptr
 #define YYCTXMARKER	s->ctx
-
 
 int scan(Scanner * s, const char * stop) {
 
@@ -80,15 +79,16 @@ int scan(Scanner * s, const char * stop) {
 		re2c:yyfill:enable = 0;
 
 		NL								= "\r\n" | '\n' | '\r';
-		SP								= [ \t]+;
+		WS 								= [ \t\240];	// Whitespace from char_lookup.c
+		SP								= WS+;
 
-		SPNL							= [ \t]* NL;
+		SPNL							= WS* NL;
 
 		INDENT_TAB 						= '\t';
-		INDENT_SPACE 					= ' '{4};
-		NON_INDENT_SPACE				= ' '{2,3};
+		INDENT_SPACE 					= [ \240]{4};
+		NON_INDENT_SPACE				= [ \240]{2,3};
 
-		TEXT_LINEBREAK					= ' '{2,} NL;
+		TEXT_LINEBREAK					= [ \240]{2,} NL;
 
 		// The order of these seems to matter
 
@@ -226,7 +226,7 @@ int scan(Scanner * s, const char * stop) {
 		' '? NL							{ return TEXT_NL; }
 
 		NON_INDENT_SPACE				{ return NON_INDENT_SPACE; }
-		' ' / '\t'						{ return NON_INDENT_SPACE; }
+		[ \240] / '\t'					{ return NON_INDENT_SPACE; }
 
 		"*"								{ return STAR; }
 		"+"								{ return PLUS; }
