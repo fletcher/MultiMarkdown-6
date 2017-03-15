@@ -227,8 +227,9 @@ set(header_files
 set (scripts
 	scripts/mmd
 	scripts/mmd2all
-	scripts/mmd2opml
+	scripts/mmd2epub
 	scripts/mmd2odf
+	scripts/mmd2opml
 	scripts/mmd2pdf
 	scripts/mmd2tex
 	scripts/markdown
@@ -508,7 +509,7 @@ endif (DEFINED SHAREDBUILD)
 
 # Install LaTeX support files
 install (FILES ${latex}
-	DESTINATION share/texmf/mmd6
+	DESTINATION share/texmf/tex/latex/mmd6
 	COMPONENT latex
 	PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
 )
