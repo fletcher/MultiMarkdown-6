@@ -415,7 +415,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 						(line->child->tail->prev->type <= HASH6))
 						line->child->tail->prev->type = TEXT_EMPTY;
 				} else {
-					token_describe(line->child->tail, NULL);
+//					token_describe(line->child->tail, NULL);
 					if ((line->child->tail->type >= HASH1) &&
 						(line->child->tail->type <= HASH6))
 						line->child->tail->type = TEXT_EMPTY;
