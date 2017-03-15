@@ -163,7 +163,7 @@ the Aho-Corasick stuff around, and will probably experiment more with it
 later.  But I didn't need it for MMD now.  `lexer.re` contains the source for
 the tokenizer.
 
-[Aho–Corasick algorithm]: https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm
+[Aho–Corasick algorithm]: https://en.wikipedia.org/wiki/Aho-Corasick_algorithm
 
 I looked long and hard for a way to simplify the parsing algorithm to try and
 "touch" each token only once.  Ideally, the program could step through each
@@ -180,7 +180,7 @@ lists, etc.
 3. The tokens inside each block can then be paired together to create more
 complex syntax such as links, strong, emphasis, etc.
 
-To handle the block parsing, I started off using the [Aho-Corasick] code to
+To handle the block parsing, I started off using the Aho-Corasick code to
 handle my first attempt.  I had actually implemented some basic regex
 functionality, and used that to group lines together to create blocks.  But
 this quickly fell apart in the face of more complex structures such as
@@ -428,4 +428,184 @@ the code or used during the development.
 [?PEG]:	Parsing Expression Grammar <https://en.wikipedia.org/wiki/Parsing_expression_grammar>
 
 [?AST]: Abstract Syntax Tree <https://en.wikipedia.org/wiki/Abstract_syntax_tree>
+
+
+# Changelog #
+
+
+* 2017-03-13 -- v 6.0.0-b2:
+
+	*    ADDED: Add CriticMarkup preprocessor that works across empty lines when accepting/rejecting markup
+	*    ADDED: Add back the mmd6 latex title file
+	*    ADDED: Basic EPUB 3 support -- uses 'miniz' library to zip creation
+	*    ADDED: Update QuickStart and EPUB code
+	*    CHANGED: Update QuickStart guide
+	*    CHANGED: Update test suite
+	*    FIXED: Don't duplicate LaTeX glossary definitions
+	*    FIXED: Fix abbreviations in ODF; Improve test suite
+	*    FIXED: Improve glossaries and abbreviations; Update QuickStart
+	*    FIXED: Tidy up some compiler warnings in code
+	*    FIXED: Use custom UUID code to minimize external dependencies
+
+
+* 2017-03-09 -- v 6.0.0-b1:
+
+	*    ADDED: Add French translations; fix typo in German
+	*    ADDED: Add Quick Start guide
+	*    ADDED: Add functionality to automatically identify abbreviations and glossary terms in source
+	*    ADDED: Improve LaTeX configuration files
+	*    ADDED: Update German translations
+	*    ADDED: Use native ODF table of contents instead of a manual list
+	*    ADDED: Use native command for table of contents in LaTeX
+	*    CHANGED: Bring HTML and ODF into line with LaTeX as to output of abbreviatinos on first and subsequent uses
+	*    CHANGED: Slight performance tweak
+	*    CHANGED: Update German test suite
+	*    FIXED: Allow `{{TOC}}` in latex verbatim
+	*    FIXED: Don't free token_pool if never initialized
+	*    FIXED: Fix German typo
+	*    FIXED: Fix missing token type
+	*    FIXED: Improve performance of checking document for metadata, which improves performance when checking for possible transclusion
+	*    FIXED: Update test suite for abbreviation changes
+
+
+* 2017-03-05 -- v 0.4.2-b:
+
+	*    ADDED: Add  and  utility functions; fix memory leak
+	*    ADDED: Initial abbreviation support
+	*    ADDED: Keep working on Abbreviations/Glossaries
+	*    ADDED: Refactor abbreviation code; Add inline abbreviations; Fix abbreviations in ODF
+	*    ADDED: Update Inline Footnote test
+	*    CHANGED: Add comments to i18n.h
+	*    CHANGED: Finish refactoring note-related code
+	*    CHANGED: Refactor footnotes
+	*    CHANGED: Refactor glossary code
+	*    CHANGED: Remove offset from html export functions
+	*    FIXED: latex list items need to block optional argument to allow '[' as first character
+	*    Merge branch 'release/0.4.1-b' into develop
+
+
+* 2017-03-04 -- v 0.4.1-b:
+
+	*    FIXED: Add glossary localization
+
+
+* 2017-03-04 -- v 0.4.0-b:
+
+	*    ADDED: Add TOC support to ODF
+	*    ADDED: Add glossary support to ODF
+	*    ADDED: Add prelim code for handling abbreviations
+	*    ADDED: Add support for Swift Package Maker; CHANGED: Restructure source directory
+	*    ADDED: Added LaTeX support for escaped characters, fenced code blocks, images, links
+	*    ADDED: Basic ODF Support
+	*    ADDED: Better document strong/emph algorithm
+	*    ADDED: Continue ODF progress
+	*    ADDED: Continue to work on ODF export
+	*    ADDED: Continue work on ODF
+	*    ADDED: Finish ODF support for lists
+	*    ADDED: Improve performance when exporting
+	*    ADDED: Improve token_pool memory handling
+	*    ADDED: Prototype support for Glossaries
+	*    ADDED: Support 'latexconfig' metadata
+	*    CHANGED: Use multiple cases in glossary tests
+	*    FIXED: Don't force glossary terms into lowercase
+	*    FIXED: Fix Makefile for new source file location
+	*    FIXED: Fix algorithm for creating TOC to properly handle 'incorrect' levels
+	*    FIXED: Fix linebreaks in LaTeX; ADDED: Add Linebreaks test file
+	*    FIXED: Fix new_source script for new directory structure
+	*    FIXED: Fix non-breaking space in ODF
+	*    FIXED: Fix padding at end of document body in ODF
+	*    FIXED: Fix underscores in raw latex
+	*    FIXED: Potential bug
+	*    NOTE: Add shared library build option
+
+
+* 2017-02-17 -- v 0.3.1.a:
+
+	*    ADDED: 'finalize' beamer support
+	*    ADDED: Add escaped newline as linebreak; start on beamer/memoir support
+	*    ADDED: CriticMarkup test for LaTeX
+	*    ADDED: Custom LaTeX output for CriticMarkup comments
+	*    ADDED: Support mmd export format
+	*    ADDED: Work on cpack installer -- change project name for compatibility
+	*    CHANGED: Adjust latex metadata configuration for consistency
+	*    CHANGED: Configure cmake to use C99
+	*    FIXED: Add custom  implementation for cross-platform support
+	*    FIXED: Fix German HTML tests
+	*    FIXED: Fix cpack destination directory issue
+	*    FIXED: Fix memory leaks etc
+	*    FIXED: Fix warning in custom vasprintf
+	*    FIXED: Modify CMakeLists.txt to test for use of clang compiler
+	*    FIXED: Work on memory leaks
+	*    NOTE: Adjust license width to improve display on smaller terminal windows
+
+
+* 2017-02-14 -- v 0.3.0a:
+
+	*    ADDED: Add basic image support to LaTeX
+	*    ADDED: Add file transclusion
+	*    ADDED: Add support for citation 'locators'
+	*    ADDED: Add support for manual labels on ATX Headers
+	*    ADDED: Add support for manual labels on Setext Headers
+	*    ADDED: Add support for tables in LaTeX
+	*    ADDED: HTML Comments appear as raw LaTeX
+	*    ADDED: Improved citation support in LaTeX
+	*    ADDED: Support \autoref{} in LaTeX
+	*    ADDED: Support combined options in LaTeX citations that use the '\]\[' syntax
+	*    ADDED: Support language specifier in fenced code blocks
+	*    ADDED: Support metadata in LaTeX
+	*    ADDED: Update Citations test suite
+	*    FIXED: Escaped LaTeX characters
+	*    FIXED: Fix bug in URL parsing
+	*    FIXED: Fix bug in citation links
+	*    FIXED: Fix bug when no closing divider or newline at end of last table cell
+	*    FIXED: Fix issue printing '-'
+	*    FIXED: Fix scan_url test suite
+	*    FIXED: Get Math working in LaTeX
+	*    FIXED: Improve reliability or link scanner
+	*    FIXED: Properly add id attribute to new instances of citation only
+	*    FIXED: Properly handle manual labels with TOC
+	*    FIXED: Properly print hash characters in LaTeX
+	*    FIXED: Separate LaTeX verbatim and texttt character handling
+	*    FIXED: Update Escapes test LaTeX result
+	*    FIXED: Work on escaping LaTeX characters
+
+
+* 2017-02-08 -- v 0.1.4a:
+
+	*    ADDED: Add smart quote support for other languages (resolves #15)
+
+
+* 2017-02-08 -- v 0.1.3a:
+
+	*    ADDED: Add support for reference image id attributes
+	*    ADDED: Add support for table captions
+	*    ADDED: Metadata support for base header level
+	*    ADDED: Support distinction between 3 and 5 backticks in fenced code blocks
+	*    ADDED: Support Setext headers
+	*    FIXED: Fix issue with metadata disrupting smart quotes
+
+* 2017-02-07 --  v 0.1.2a:
+
+	* "pathologic" test suite -- fix handling of nested brackets, e.g.
+	`[[[[foo]]]]` to avoid bogging down checking for reference links that
+	don't exist.  
+	* Table support -- a single blank line separates sections of tables, so
+	at least two blank lines are needed between adjacent tables.
+	* Definition list support
+	* "fuzz testing" -- stress test the parser for unexpected failures
+	* Table of Contents support
+	* Improved compatibility mode parsing
+
+* 2017-01-28 -- v 0.1.1a includes a few updates:
+
+	* Metadata support
+	* Metadata variables support
+	* Extended ASCII range character checking
+	* Rudimentary language translations, including German
+	* Improved performance
+	* Additional testing:
+		* CriticMarkup
+		* HTML Blokcs
+		* Metadata/Variables
+		* "pathologic" test cases from CommonMark
 

@@ -1,0 +1,1311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+     xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+     xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+     xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+     xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+     xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+     xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+     xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+     xmlns:math="http://www.w3.org/1998/Math/MathML"
+     xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+     xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+     xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0"
+     xmlns:ooo="http://openoffice.org/2004/office"
+     xmlns:ooow="http://openoffice.org/2004/writer"
+     xmlns:oooc="http://openoffice.org/2004/calc"
+     xmlns:dom="http://www.w3.org/2001/xml-events"
+     xmlns:xforms="http://www.w3.org/2002/xforms"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:rpt="http://openoffice.org/2005/report"
+     xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     xmlns:grddl="http://www.w3.org/2003/g/data-view#"
+     xmlns:tableooo="http://openoffice.org/2009/table"
+     xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
+     xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
+     xmlns:css3t="http://www.w3.org/TR/css3-text/"
+     office:version="1.2"
+     grddl:transformation="http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl"
+     office:mimetype="application/vnd.oasis.opendocument.text">
+<office:font-face-decls>
+   <style:font-face style:name="Courier New" svg:font-family="'Courier New'"
+                    style:font-adornments="Regular"
+                    style:font-family-generic="modern"
+                    style:font-pitch="fixed"/>
+</office:font-face-decls>
+<office:styles>
+<style:style style:name="Standard" style:family="paragraph" style:class="text">
+      <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.15in"     fo:text-align="justify" style:justify-single-word="false"/>
+   </style:style>
+<style:style style:name="Preformatted_20_Text" style:display-name="Preformatted Text"
+             style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0in" fo:text-align="start"
+                               style:justify-single-word="false"/>
+   <style:text-properties style:font-name="Courier New" fo:font-size="11pt"
+                          style:font-name-asian="Courier New"
+                          style:font-size-asian="11pt"
+                          style:font-name-complex="Courier New"
+                          style:font-size-complex="11pt"/>
+</style:style>
+<style:style style:name="Source_20_Text" style:display-name="Source Text"
+             style:family="text">
+   <style:text-properties style:font-name="Courier New" style:font-name-asian="Courier New"
+                          style:font-name-complex="Courier New"
+                          fo:font-size="11pt"/>
+</style:style>
+<style:style style:name="List" style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="list">
+   <style:paragraph-properties fo:text-align="start" style:justify-single-word="false"/>
+   <style:text-properties style:font-size-asian="12pt"/>
+</style:style>
+<style:style style:name="Quotations" style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-left="0.3937in" fo:margin-right="0.3937in" fo:margin-top="0in"
+                               fo:margin-bottom="0.1965in"
+                               fo:text-align="justify"                               style:justify-single-word="false"                               fo:text-indent="0in"
+                               style:auto-text-indent="false"/>
+</style:style>
+<style:style style:name="Table_20_Heading" style:display-name="Table Heading"
+             style:family="paragraph"
+             style:parent-style-name="Table_20_Contents"
+             style:class="extra">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"
+                               text:number-lines="false"
+                               text:line-number="0"/>
+   <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold"
+                          style:font-weight-complex="bold"/>
+</style:style>
+<style:style style:name="Horizontal_20_Line" style:display-name="Horizontal Line"
+             style:family="paragraph"
+             style:parent-style-name="Standard"
+             style:class="html">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.1965in"
+                               style:border-line-width-bottom="0.0008in 0.0138in 0.0008in"
+                               fo:padding="0in"
+                               fo:border-left="none"
+                               fo:border-right="none"
+                               fo:border-top="none"
+                               fo:border-bottom="0.0154in double #808080"
+                               text:number-lines="false"
+                               text:line-number="0"
+                               style:join-border="false"/>
+   <style:text-properties fo:font-size="6pt" style:font-size-asian="6pt" style:font-size-complex="6pt"/>
+</style:style>
+<style:style style:name="Footnote_20_anchor" style:display-name="Footnote anchor"              style:family="text">    <style:text-properties style:text-position="super 58%"/> </style:style>
+<style:style style:name="TOC_Item" style:family="paragraph" style:parent-style-name="Standard">
+ <style:paragraph-properties>
+  <style:tab-stops>
+   <style:tab-stop style:position="6.7283in" style:type="right" style:leader-style="dotted" style:leader-text="."/>
+  </style:tab-stops>
+ </style:paragraph-properties>
+</style:style>
+  <text:notes-configuration text:note-class="footnote" text:default-style-name="Footnote" text:citation-style-name="Footnote_20_Symbol" text:citation-body-style-name="Footnote_20_anchor" text:master-page-name="Footnote" style:num-format="a" text:start-value="0" text:footnotes-position="page" text:start-numbering-at="page"/>
+  <text:notes-configuration text:note-class="endnote" text:default-style-name="Endnote" text:citation-style-name="Endnote_20_Symbol" text:citation-body-style-name="Endnote_20_anchor" text:master-page-name="Endnote" style:num-format="1" text:start-value="0"/>
+</office:styles>
+<office:automatic-styles>   <style:style style:name="MMD-Italic" style:family="text">
+      <style:text-properties fo:font-style="italic" style:font-style-asian="italic"
+                             style:font-style-complex="italic"/>
+   </style:style>
+   <style:style style:name="MMD-Bold" style:family="text">
+      <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold"
+                             style:font-weight-complex="bold"/>
+   </style:style>
+   <style:style style:name="MMD-Superscript" style:family="text">
+      <style:text-properties style:text-position="super 58%"/>
+   </style:style>
+   <style:style style:name="MMD-Subscript" style:family="text">
+      <style:text-properties style:text-position="sub 58%"/>
+   </style:style>
+   <style:style style:name="Strike" style:family="text">
+      <style:text-properties style:text-line-through-style="solid" />
+   </style:style>
+   <style:style style:name="Underline" style:family="text">
+      <style:text-properties style:text-underline-style="solid" style:text-underline-color="font-color"/>
+   </style:style>
+   <style:style style:name="Highlight" style:family="text">
+      <style:text-properties fo:background-color="#FFFF00" />
+   </style:style>
+   <style:style style:name="Comment" style:family="text">
+      <style:text-properties fo:color="#0000BB" />
+   </style:style>
+<style:style style:name="MMD-Table" style:family="paragraph" style:parent-style-name="Standard">
+   <style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.05in"/>
+</style:style>
+<style:style style:name="MMD-Table-Center" style:family="paragraph" style:parent-style-name="MMD-Table">
+   <style:paragraph-properties fo:text-align="center" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="MMD-Table-Right" style:family="paragraph" style:parent-style-name="MMD-Table">
+   <style:paragraph-properties fo:text-align="right" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="P2" style:family="paragraph" style:parent-style-name="Standard"
+             style:list-style-name="L2">
+<style:paragraph-properties fo:text-align="start" style:justify-single-word="false"/>
+</style:style>
+<style:style style:name="fr1" style:family="graphic" style:parent-style-name="Frame">
+   <style:graphic-properties style:print-content="true" style:vertical-pos="top"
+                             style:vertical-rel="baseline"
+                             fo:padding="0in"
+                             fo:border="none"
+                             style:shadow="none"/>
+</style:style>
+<style:style style:name="P1" style:family="paragraph" style:parent-style-name="Standard"
+             style:list-style-name="L1"/>
+<text:list-style style:name="L1">
+	<text:list-level-style-bullet text:level="1" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="•">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.25in" fo:margin-left="0.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-bullet text:level="2" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="◦">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.75in" fo:text-indent="-0.25in" fo:margin-left="0.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-bullet text:level="3" text:style-name="Numbering_20_Symbols" style:num-suffix="." text:bullet-char="▪">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-0.25in" fo:margin-left="1in"/>
+		</style:list-level-properties>
+	</text:list-level-style-bullet>
+	<text:list-level-style-number text:level="4" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.25in" fo:text-indent="-0.25in" fo:margin-left="1.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="5" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.5in" fo:text-indent="-0.25in" fo:margin-left="1.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="6" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.75in" fo:text-indent="-0.25in" fo:margin-left="1.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="7" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2in" fo:text-indent="-0.25in" fo:margin-left="2in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="8" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.25in" fo:text-indent="-0.25in" fo:margin-left="2.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="9" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.5in" fo:text-indent="-0.25in" fo:margin-left="2.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="10" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.75in" fo:text-indent="-0.25in" fo:margin-left="2.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+</text:list-style>
+<text:list-style style:name="L2">
+	<text:list-level-style-number text:level="1" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.5in" fo:text-indent="-0.25in" fo:margin-left="0.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="2" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="0.75in" fo:text-indent="-0.25in" fo:margin-left="0.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="3" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1in" fo:text-indent="-0.25in" fo:margin-left="1in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="4" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.25in" fo:text-indent="-0.25in" fo:margin-left="1.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="5" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.5in" fo:text-indent="-0.25in" fo:margin-left="1.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="6" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="1.75in" fo:text-indent="-0.25in" fo:margin-left="1.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="7" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2in" fo:text-indent="-0.25in" fo:margin-left="2in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="8" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.25in" fo:text-indent="-0.25in" fo:margin-left="2.25in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="9" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.5in" fo:text-indent="-0.25in" fo:margin-left="2.5in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+	<text:list-level-style-number text:level="10" text:style-name="Standard" style:num-suffix="." style:num-format="1">
+		<style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+			<style:list-level-label-alignment text:label-followed-by="listtab" text:list-tab-stop-position="2.75in" fo:text-indent="-0.25in" fo:margin-left="2.75in"/>
+		</style:list-level-properties>
+	</text:list-level-style-number>
+</text:list-style>
+</office:automatic-styles>
+ <office:master-styles>
+  <style:master-page style:name="Endnote" >
+    <style:header><text:h text:outline-level="2">Bibliography</text:h></style:header></style:master-page>
+  <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
+ </office:master-styles>
+<office:meta>
+	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
+	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-03-14</meta:user-defined>
+</office:meta>
+<office:body>
+<office:text>
+<text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
+
+<text:p text:style-name="Standard">This document includes some notes on the development of MultiMarkdown (MMD) v6. Most of it
+will be interesting only to other developers or those needing to choose the
+absolute &#8220;best&#8221; Markdown (MD) implementation for their needs &#8211; it is not required
+reading to understand how the software works.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="whyanewversion"/>Why a New Version? </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown version 5 was released in November of 2015, but the codebase was
+essentially the same as that of v4 &#8211; and that was released in beta in April
+of 2013. A few key things prompted work on a new version:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Accuracy &#8211; MMD v4 and v5 were the most accurate versions yet, and a lot of
+effort went into finding and resolving various edge cases. However, it began
+to feel like a game of whack-a-mole where new bugs would creep in every time I
+fixed an old one. The PEG<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">Parsing Expression Grammar <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">https://en.wikipedia.org/wiki/Parsing_expression_grammar</text:a></text:p></text:note-body></text:note> began to feel rather convoluted in spots, even
+though it did allow for a precise (if not always accurate) specification of
+the grammar.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Performance &#8211; &#8220;Back in the day&#8221; <text:a xlink:type="simple" xlink:href="https://github.com/jgm/peg-markdown">peg-markdown</text:a> was one of the fastest
+Markdown parsers around. MMD v3 was based on peg-markdown, and would leap-
+frog with it in terms of performance. Then <text:a xlink:type="simple" xlink:href="http://commonmark.org/">CommonMark</text:a> was released, which
+was a bit faster. Then a couple of years went by and CommonMark became <text:span text:style-name="MMD-Italic">much</text:span>
+faster &#8211; in one of my test suites, MMD v 5.4.0 takes about 25 times longer to
+process a long document than CommonMark 0.27.0.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">In the spring of 2016, I decided I wanted to rewrite MultiMarkdown from scratch,
+building the parser myself rather than relying on a pre-rolled solution. (I
+had been using <text:a xlink:type="simple" xlink:href="https://github.com/ooc-lang/greg">greg</text:a> to compile the PEG
+into parser code. It worked well overall, but lacked some features I needed,
+requiring a lot of workarounds.)</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="firstattempt"/>First Attempt </text:h>
+
+<text:p text:style-name="Standard">My first attempt started by hand-crafting a parser that scanned through the
+document a line at a time, deciding what to do with each line as it found
+them. I used regex parsers made with <text:a xlink:type="simple" xlink:href="http://re2c.org/index.html">re2c</text:a> to
+help classify each line, and then a separate parser layer to process groups of
+lines into blocks. Initially this approach worked well, and was really
+efficient. But I quickly began to code my way into a dead-end &#8211; the strategy
+was not elegant enough to handle things like nested lists, etc.</text:p>
+
+<text:p text:style-name="Standard">One thing that did turn out well from the first attempt, however, was an
+approach for handling <text:span text:style-name="Source_20_Text">&lt;emph&gt;</text:span> and <text:span text:style-name="Source_20_Text">&lt;strong&gt;</text:span> parsing. I&#8217;ve learned over the
+years that this can be one of the hardest parts of coding accurately for
+Markdown. There are many examples that are obvious to a person, but difficult
+to properly &#8220;explain&#8221; how to parse to a computer.</text:p>
+
+<text:p text:style-name="Standard">No solution is perfect, but I developed an approach that seems to accurately
+handle a wide range of situations without a great deal of complexity:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">Scan the documents for asterisks (<text:span text:style-name="Source_20_Text">*</text:span>). Each one will be handled one at a
+time.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Unlike brackets (<text:span text:style-name="Source_20_Text">[</text:span> and <text:span text:style-name="Source_20_Text">]</text:span>), an asterisk is &#8220;ambidextrous&#8221;, in that it
+may be able to open a matched pair of asterisks, close a pair, or both. For
+example, in <text:span text:style-name="Source_20_Text">foo *bar* foo</text:span>:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">The first asterisk can open a pair, but not close one.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The second asterisk can close a pair, but not open one.</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">So, once the asterisks have been identified, each has to be examined to
+determine whether it can open/close/both. The algorithm is not that complex,
+but I&#8217;ll describe it in general terms. Check the code for more specifics.
+This approach seems to work, but might still need some slight tweaking. In
+the future, I&#8217;ll codify this better in language rather than just in code.</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">If there is whitespace to the left of an asterisk, it can&#8217;t close.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">If there is whitespace or punctuation to the right it can&#8217;t open.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">&#8220;Runs&#8221; of asterisks, e.g. <text:span text:style-name="Source_20_Text">**bar</text:span> are treated as a unit in terms of
+looking left/right.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Asterisks inside a word are a bit trickier &#8211; we look at the number of
+asterisks before the word, the number in the current run, and the number
+of asterisks after the word to determine which combinations, if any, are
+permitted.</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Once all asterisks have been tagged as able to open/close/both, we proceed
+through them in order:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">When we encounter a tag that can close, we look to see if there is a
+previous opener that has not been paired off. If so, pair the two and
+remove the opener from the list of available asterisks.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">When we encounter an opener, add it to the stack of available openers.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">When encounter an asterisk that can do both, see if it can close an
+existing opener. If not, then add it to the stack.</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">After all tokens in the block have been paired, then we look for nesting
+pairs of asterisks in order to create <text:span text:style-name="Source_20_Text">&lt;emph&gt;</text:span> and <text:span text:style-name="Source_20_Text">&lt;strong&gt;</text:span> sets. For
+example, assume we have six asterisks wrapped around a word, three in front,
+and three after. The asterisks are indicated with numbers: <text:span text:style-name="Source_20_Text">123foo456</text:span>. We
+proceed in the following manner:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">Based on the pairing algorithm above, these asterisks would be paired as
+follows, with matching asterisks sharing numbers &#8211; <text:span text:style-name="Source_20_Text">123foo321</text:span>.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Moving forwards, we come to asterisk &#8220;1&#8221;. It is followed by an
+asterisk, so we check to see if they should be grouped as a <text:span text:style-name="Source_20_Text">&lt;strong&gt;</text:span>.
+Since the &#8220;1&#8221; asterisks are wrapped immediately outside the &#8220;2&#8221; asterisks,
+they are joined together. More than two pairs can&#8217;t be joined, so we now
+get the following &#8211; <text:span text:style-name="Source_20_Text">112foo211</text:span>, where the &#8220;11&#8221; represents the opening
+and closing of a <text:span text:style-name="Source_20_Text">&lt;strong&gt;</text:span>, and the &#8220;2&#8221; represents a <text:span text:style-name="Source_20_Text">&lt;emph&gt;</text:span>.</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">When matching a pair, any unclosed openers that are on the stack are
+removed, preventing pairs from &#8220;crossing&#8221; or &#8220;intersecting&#8221;. Pairs can wrap
+around each other, e.g. <text:span text:style-name="Source_20_Text">[(foo)]</text:span>, but not intersect like <text:span text:style-name="Source_20_Text">[(foo])</text:span>. In the
+second case, the brackets would close, removing the <text:span text:style-name="Source_20_Text">(</text:span> from the stack.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">This same approach is used in all tokens that are matched in pairs&#8211;
+<text:span text:style-name="Source_20_Text">[foo]</text:span>, <text:span text:style-name="Source_20_Text">(foo)</text:span>, <text:span text:style-name="Source_20_Text">_foo_</text:span>, etc. There&#8217;s slightly more to it, but once you
+figure out how to assign opening/closing ability, the rest is easy. By using
+a stack to track available openers, it can be performed efficiently.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">In my testing, this approach has worked quite well. It handles all the basic
+scenarios I&#8217;ve thrown at it, and all of the &#8220;basic&#8221; and &#8220;devious&#8221; edge cases I
+have thought of (some of these don&#8217;t necessarily have a &#8220;right&#8221; answer &#8211; but
+v6 gives consistency answers that seem as reasonable as any others to me).
+There are also three more edge cases I&#8217;ve come up can still stump it, and
+ironically they are handled correctly by most implementations. They just
+don&#8217;t follow the rules above. I&#8217;ll continue to work on this.</text:p>
+
+<text:p text:style-name="Standard">In the end, I scrapped this effort, but kept the lessons learned in the token
+pairing algorithm.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="secondattempt"/>Second Attempt </text:h>
+
+<text:p text:style-name="Standard">I tried again this past Fall. This time, I approached the problem with lots
+of reading. <text:span text:style-name="MMD-Italic">Lots and lots</text:span> of reading &#8211; tons of websites, computer science
+journal articles, PhD theses, etc. Learned a lot about lexers, and a lot
+about parsers, including hand-crafting vs using parser generators. In brief:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">I learned about the <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Aho-Corasick_algorithm">Aho–Corasick algorithm</text:a>, which is a great way to
+efficiently search a string for multiple target strings at once. I used this
+to create a custom lexer to identify tokens in a MultiMarkdown text document
+(e.g. <text:span text:style-name="Source_20_Text">*</text:span>, <text:span text:style-name="Source_20_Text">[</text:span>, <text:span text:style-name="Source_20_Text">{++</text:span>, etc.). I learned a lot, and had a good time working
+out the implementation. This code efficiently allowed me to break a string of
+text into the tokens that mattered for Markdown parsing.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">However, in a few instances I really needed some features of regular
+expressions to simplify more complex structures. After a quick bit of testing,
+using re2c to create a tokenizer was just as efficient, and allowed me to
+incorporate some regex functionality that simplified later parsing. I&#8217;ll keep
+the Aho-Corasick stuff around, and will probably experiment more with it
+later. But I didn&#8217;t need it for MMD now. <text:span text:style-name="Source_20_Text">lexer.re</text:span> contains the source for
+the tokenizer.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">I looked long and hard for a way to simplify the parsing algorithm to try and
+&#8220;touch&#8221; each token only once. Ideally, the program could step through each
+token, and decide when to create a new block, when to pair things together,
+etc. But I&#8217;m not convinced it&#8217;s possible. Since Markdown&#8217;s grammar varies
+based on context, it seems to work best when handled in distinct phases:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">Tokenize the string to identify key sections of text. This includes line
+breaks, allowing the text to be examined one line at time.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Join series of lines together into blocks, such as paragraphs, code blocks,
+lists, etc.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The tokens inside each block can then be paired together to create more
+complex syntax such as links, strong, emphasis, etc.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">To handle the block parsing, I started off using the Aho-Corasick code to
+handle my first attempt. I had actually implemented some basic regex
+functionality, and used that to group lines together to create blocks. But
+this quickly fell apart in the face of more complex structures such as
+recursive lists. After a lot of searching, and <text:span text:style-name="MMD-Italic">tons</text:span> more reading, I
+ultimately decided to use a parser generator to handle the task of group lines
+into blocks. <text:span text:style-name="Source_20_Text">parser.y</text:span> has the source for this, and it is processed by the
+<text:a xlink:type="simple" xlink:href="http://www.hwaci.com/sw/lemon/">lemon</text:a> parser generator to create the actual
+code.</text:p>
+
+<text:p text:style-name="Standard">I chose to do this because hand-crafting the block parser would be complex.
+The end result would likely be difficult to read and understand, which would
+make it difficult to update later on. Using the parser generator allows me to
+write things out in a way that can more easily be understood by a person. In
+all likelihood, the performance is probably as good as anything I could do
+anyway, if not better.</text:p>
+
+<text:p text:style-name="Standard">Because lemon is a LALR(1) parser, it does require a bit of thinking ahead
+about how to create the grammar used. But so far, it has been able to handle
+everything I have thrown at it.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="optimization"/>Optimization </text:h>
+
+<text:p text:style-name="Standard">One of my goals for MMD 6 was performance. So I&#8217;ve paid attention to speed
+along the way, and have tried to use a few tricks to keep things fast. Here
+are some things I&#8217;ve learned along the way. In no particular order:</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="memoryallocation"/>Memory Allocation </text:h>
+
+<text:p text:style-name="Standard">When parsing a long document, a <text:span text:style-name="MMD-Italic">lot</text:span> of token structures are created. Each
+one requires a small bit of memory to be allocated. In aggregate, that time
+added up and slowed down performance.</text:p>
+
+<text:p text:style-name="Standard">After reading for a bit, I ended up coming up with an approach that uses
+larger chunks of memory. I allocate pools of of memory in large slabs for
+smaller &#8220;objects&#8221;&quot;. For example, I allocate memory for 1024 tokens at a
+single time, and then dole that memory out as needed. When the slab is empty,
+a new one is allocated. This dramatically improved performance.</text:p>
+
+<text:p text:style-name="Standard">When pairing tokens, I created a new stack for each block. I realized that an
+empty stack didn&#8217;t have any &#8220;leftover&#8221; cruft to interfere with re-use, so I
+just used one for the entire document. Again a sizeable improvement in
+performance from only allocating one object instead of many. When recursing
+to a deeper level, the stack just gets deeper, but earlier levels aren&#8217;t
+modified.</text:p>
+
+<text:p text:style-name="Standard">Speaking of tokens, I realized that the average document contains a lot of
+single spaces (there&#8217;s one between every two words I have written, for
+example.) The vast majority of the time, these single spaces have no effect
+on the output of Markdown documents. I changed my whitespace token search to
+only flag runs of 2 or more spaces, dramatically reducing the number of
+tokens. This gives the benefit of needing fewer memory allocations, and also
+reduces the number of tokens that need to be processed later on. The only
+downside is remember to check for a single space character in a few instances
+where it matters.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="properinputbuffering"/>Proper input buffering </text:h>
+
+<text:p text:style-name="Standard">When I first began last spring, I was amazed to see how much time was being
+spent by MultiMarkdown simply reading the input file. Then I discovered it
+was because I was reading it one character at a time. I switched to using a
+buffered read approach and the time to read the file went to almost nothing. I
+experimented with different buffer sizes, but they did not seem to make a
+measurable difference.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="outputbuffering"/>Output Buffering </text:h>
+
+<text:p text:style-name="Standard">I experimented with different approaches to creating the output after parsing.
+I tried printing directly to <text:span text:style-name="Source_20_Text">stdout</text:span>, and even played with different
+buffering settings. None of those seemed to work well, and all were slower
+than using the <text:span text:style-name="Source_20_Text">d_string</text:span> approach (formerly call <text:span text:style-name="Source_20_Text">GString</text:span> in MMD 5).</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="fastsearches"/>Fast Searches </text:h>
+
+<text:p text:style-name="Standard">After getting basic Markdown functionality complete, I discovered during
+testing that the time required to parse a document grew exponentially as the
+document grew longer. Performance was on par with CommonMark for shorter
+documents, but fell increasingly behind in larger tests. Time profiling found
+that the culprit was searching for link definitions when they didn&#8217;t exist.
+My first approach was to keep a stack of used link definitions, and to iterate
+through them when necessary. In long documents, this performs very poorly.
+More research and I ended up using
+<text:a xlink:type="simple" xlink:href="http://troydhanson.github.io/uthash/">uthash</text:a>. This allows me to search for
+a link (or footnote, etc.) by &#8220;name&#8221; rather than searching through an array.
+This allowed me to get MMD&#8217;s performance back to O(n), taking roughly twice as
+much time to process a document that is twice as long.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="efficientutilityfunctions"/>Efficient Utility Functions </text:h>
+
+<text:p text:style-name="Standard">It is frequently necessary when parsing Markdown to check what sort of
+character we are dealing with at a certain position &#8211; a letter, whitespace,
+punctuation, etc. I created a lookup table for this via <text:span text:style-name="Source_20_Text">char_lookup.c</text:span> and
+hard-coded it in <text:span text:style-name="Source_20_Text">char.c</text:span>. These routines allow me to quickly, and
+consistently, classify any byte within a document. This saved a lot of
+programming time, and saved time tracking down bugs from handling things
+slightly differently under different circumstances. I also suspect it
+improved performance, but don&#8217;t have the data to back it up.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="testingwhilewriting"/>Testing While Writing </text:h>
+
+<text:p text:style-name="Standard">I developed several chunks of code in parallel while creating MMD 6. The vast
+majority of it was developed largely in a <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven development</text:a> approach.
+The other code was largely created with extensive unit testing to accomplish
+this.</text:p>
+
+<text:p text:style-name="Standard">MMD isn&#8217;t particularly amenable to this approach at the small level, but
+instead I relied more on integration testing with an ever-growing collection
+of text files and the corresponding HTML files in the MMD 6 test suite. This
+allowed me to ensure new features work properly and that old features aren&#8217;t
+broken. At this time, there are 29 text files in the test suite, and many
+more to come.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="otherlessons"/>Other Lessons </text:h>
+
+<text:p text:style-name="Standard">Some things that didn&#8217;t do me any good&#8230;.</text:p>
+
+<text:p text:style-name="Standard">I considered differences between using <text:span text:style-name="Source_20_Text">malloc</text:span> and <text:span text:style-name="Source_20_Text">calloc</text:span> when initializing
+tokens. The time saved by using <text:span text:style-name="Source_20_Text">malloc</text:span> was basically exactly offset by the
+initial time required to initialize the token to default null values as
+compared to using <text:span text:style-name="Source_20_Text">calloc</text:span>. When trying <text:span text:style-name="Source_20_Text">calloc</text:span> failed to help me out
+(thinking that clearing a single slab in the object pool would be faster), I
+stuck with <text:span text:style-name="Source_20_Text">malloc</text:span> as it makes more sense to me in my workflow.</text:p>
+
+<text:p text:style-name="Standard">I read a bit about <text:a xlink:type="simple" xlink:href="http://www.catb.org/esr/structure-packing/">struct padding</text:a> and reordered some of my structs. It was
+until later that I discovered the <text:span text:style-name="Source_20_Text">-Wpadded</text:span> option, and it&#8217;s not clear
+whether my changes modified anything. Since the structs were being padded
+automatically, there was no noticeable performance change, and I didn&#8217;t have
+the tools to measure whether I could have improved memory usage at all. Not
+sure this would be worth the effort &#8211; much lower hanging fruit available.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="performance"/>Performance </text:h>
+
+<text:p text:style-name="Standard">Basic tests show that currently MMD 6 takes about 20&#8211;25% longer the CommonMark
+0.27.0 to process long files (e.g. 0.2 MB). However, it is around 5% <text:span text:style-name="MMD-Italic">faster</text:span>
+than CommonMark when parsing a shorter file (27 kB) (measured by parsing the
+same file 200 times over). This test suite is performed by using the Markdown
+[syntax page], modified to avoid the use of the Setext header at the top. The
+longer files tested are created by copying the same syntax page onto itself,
+thereby doubling the length of the file with each iteration.</text:p>
+
+<text:p text:style-name="Standard">The largest file I test is approximately 108 MB (4096 copies of the syntax
+page). On my machine (2012 Mac mini with 2.3 GHz Intel Core i7, 16 GB RAM),
+it takes approximately 4.4 seconds to parse with MMD 6 and 3.7 seconds with
+CommonMark. MMD 6 processes approximately 25 MB/s on this test file.
+CommonMark 0.27.0 gets about 29 MB/s on the same machine.</text:p>
+
+<text:p text:style-name="Standard">There are some slight variations with the smaller test files (8&#8211;32 copies),
+but overall the performance of both programs (MMD 6 and CommonMark) are
+roughly linear as the test file gets bigger (double the file size and it takes
+twice as long to parse, aka O(n)).</text:p>
+
+<text:p text:style-name="Standard">Out of curiosity, I ran the same tests on the original Markdown.pl by Gruber
+(v 1.0.2b8). It took approximately 178 seconds to parse 128 copies of the
+file (3.4 MB) and was demonstrating quadratic performance characteristics
+(double the file size and it takes 2<text:span text:style-name="MMD-Superscript">2</text:span> or 4 times longer to process, aka
+O(n<text:span text:style-name="MMD-Superscript">2</text:span>)). I didn&#8217;t bother running it on larger versions of the test file. For
+comparison, MMD 6 can process 128 copies in approximately 140 msec.</text:p>
+
+<text:p text:style-name="Standard">Of note, the throughput speed drops when testing more complicated files
+containing more advanced MultiMarkdown features, though it still seems to
+maintain linear performance characteristics. A second test file is created by
+concatenating all of the test suite files (including the Markdown syntax
+file). In this case, MMD gets about 13 MB/s. CommonMark doesn&#8217;t support
+these additional features, so testing it with that file is not relevant. I
+will work to see whether there are certain features in particular that are
+more challenging and see whether they can be reworked to improve performance.</text:p>
+
+<text:p text:style-name="Standard">As above, I have done some high level optimization of the parse strategy, but
+I&#8217;m sure there&#8217;s still a lot of room for further improvement to be made.
+Suggestions welcome!</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="testing"/>Testing </text:h>
+
+<text:h text:outline-level="4"><text:bookmark text:name="testsuite"/>Test Suite </text:h>
+
+<text:p text:style-name="Standard">The development of MMD v6 was heavily, but not absolutely, influenced by the
+philosophy of test-driven development. While coding, I made use of test
+suites to verify successful implementation of new features, to avoid
+regression problems when adding new features, and to identify known edge cases
+in need of proper handling.</text:p>
+
+<text:p text:style-name="Standard">The test suite (located in <text:span text:style-name="Source_20_Text">tests/MMD6Tests</text:span>) is a &#8220;living&#8221; collection of
+documents that will continue to be updated as new bugs and edge cases are
+identified. This helps make proper integration testing of the entire
+application with every release.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="fuzztesting"/>Fuzz Testing </text:h>
+
+<text:p text:style-name="Standard">I was not familiar with the concept of <text:a xlink:type="simple" xlink:href="#fuzztesting">Fuzz Testing</text:a>
+(https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned something about
+it to me a year or two ago. I had never used it before, but it seemed like a
+good idea. I implement it in two ways.</text:p>
+
+<text:p text:style-name="Standard">The first is that I created a simplified version of the line parser that
+simply accepts various combinations of line type identifiers to see if they
+would successfully parse. The line parser is responsible for taking a series
+of line types (e.g. plain text, indented line, etc.) and determining what sort
+of block they should become. The file <text:span text:style-name="Source_20_Text">test/parser_text.y</text:span> is run through the
+<text:span text:style-name="Source_20_Text">lemon</text:span> program, compiled (with or without the <text:span text:style-name="Source_20_Text">-DNDEBUG</text:span> flag) and then run.
+It sequentially throws every combination of line types at the simplified line
+parser to make sure that it doesn&#8217;t choke. When I first did this, I found
+several combinations of lines that did not pass.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: This does not verify accurate parsing, simply that the parser does
+not crash by an unacceptable combination of lines.</text:p>
+
+<text:p text:style-name="Standard">The second form of fuzz testing I have started using more recently. This is
+using the <text:a xlink:type="simple" xlink:href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</text:a> program to try
+to find text input that crashes MMD. This works by taking sample input (e.g.
+files from the test suite), modifying them slightly, and trying the modified
+versions. Do this over and over and over, and some interesting edge cases are
+sometimes identified. I have found some interesting edge cases this way.
+Definitely a very useful tool!</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="unittesting"/>Unit Testing </text:h>
+
+<text:p text:style-name="Standard">Some of the original development was done with unit testing in some other
+tools I developed. This code formed the basis of a few parts of MMD.
+Otherwise, it was hard to see how to really create very good unit tests for
+the development of MMD. So there is really not much unit testing built into
+the code or used during the development.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;13 &#8211; v 6.0.0-b2:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add CriticMarkup preprocessor that works across empty lines when accepting/rejecting markup</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add back the mmd6 latex title file</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Basic EPUB 3 support &#8211; uses &#8216;miniz&#8217; library to zip creation</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Update QuickStart and EPUB code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Update QuickStart guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Update test suite</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don't duplicate LaTeX glossary definitions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix abbreviations in ODF; Improve test suite</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve glossaries and abbreviations; Update QuickStart</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Tidy up some compiler warnings in code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Use custom UUID code to minimize external dependencies</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;09 &#8211; v 6.0.0-b1:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add French translations; fix typo in German</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add Quick Start guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add functionality to automatically identify abbreviations and glossary terms in source</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Improve LaTeX configuration files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Update German translations</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Use native ODF table of contents instead of a manual list</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Use native command for table of contents in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Bring HTML and ODF into line with LaTeX as to output of abbreviatinos on first and subsequent uses</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Slight performance tweak</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Update German test suite</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Allow <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> in latex verbatim</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don't free token_pool if never initialized</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix German typo</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix missing token type</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve performance of checking document for metadata, which improves performance when checking for possible transclusion</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Update test suite for abbreviation changes</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;05 &#8211; v 0.4.2-b:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add and utility functions; fix memory leak</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Initial abbreviation support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Keep working on Abbreviations/Glossaries</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Refactor abbreviation code; Add inline abbreviations; Fix abbreviations in ODF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Update Inline Footnote test</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Add comments to i18n.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Finish refactoring note&#8211;related code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor footnotes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor glossary code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Remove offset from html export functions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: latex list items need to block optional argument to allow &#8216;[&#8217; as first character</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Merge branch &#8216;release/0.4.1-b&#8217; into develop</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;04 &#8211; v 0.4.1-b:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Add glossary localization</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;04 &#8211; v 0.4.0-b:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add TOC support to ODF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add glossary support to ODF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add prelim code for handling abbreviations</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for Swift Package Maker; CHANGED: Restructure source directory</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Added LaTeX support for escaped characters, fenced code blocks, images, links</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Basic ODF Support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Better document strong/emph algorithm</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Continue ODF progress</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Continue to work on ODF export</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Continue work on ODF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Finish ODF support for lists</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Improve performance when exporting</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Improve token_pool memory handling</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Prototype support for Glossaries</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support &#8216;latexconfig&#8217; metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Use multiple cases in glossary tests</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don't force glossary terms into lowercase</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix Makefile for new source file location</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix algorithm for creating TOC to properly handle &#8216;incorrect&#8217; levels</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix linebreaks in LaTeX; ADDED: Add Linebreaks test file</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix new_source script for new directory structure</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix non&#8211;breaking space in ODF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix padding at end of document body in ODF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix underscores in raw latex</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Potential bug</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">NOTE: Add shared library build option</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;02&#8211;17 &#8211; v 0.3.1.a:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: &#8216;finalize&#8217; beamer support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add escaped newline as linebreak; start on beamer/memoir support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: CriticMarkup test for LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Custom LaTeX output for CriticMarkup comments</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support mmd export format</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Work on cpack installer &#8211; change project name for compatibility</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Adjust latex metadata configuration for consistency</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Configure cmake to use C99</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Add custom implementation for cross&#8211;platform support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix German HTML tests</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix cpack destination directory issue</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix memory leaks etc</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix warning in custom vasprintf</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Modify CMakeLists.txt to test for use of clang compiler</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Work on memory leaks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">NOTE: Adjust license width to improve display on smaller terminal windows</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;02&#8211;14 &#8211; v 0.3.0a:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add basic image support to LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add file transclusion</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for citation &#8216;locators&#8217;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for manual labels on ATX Headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for manual labels on Setext Headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for tables in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: HTML Comments appear as raw LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Improved citation support in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support \autoref{} in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support combined options in LaTeX citations that use the &#8216;][&#8217; syntax</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support language specifier in fenced code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support metadata in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Update Citations test suite</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Escaped LaTeX characters</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in URL parsing</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in citation links</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug when no closing divider or newline at end of last table cell</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue printing &#8216;&#8211;&#8217;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix scan_url test suite</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Get Math working in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve reliability or link scanner</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Properly add id attribute to new instances of citation only</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Properly handle manual labels with TOC</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Properly print hash characters in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Separate LaTeX verbatim and texttt character handling</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Update Escapes test LaTeX result</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Work on escaping LaTeX characters</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;02&#8211;08 &#8211; v 0.1.4a:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">ADDED: Add smart quote support for other languages (resolves #15)</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;02&#8211;08 &#8211; v 0.1.3a:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for reference image id attributes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for table captions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Metadata support for base header level</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support distinction between 3 and 5 backticks in fenced code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Support Setext headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Fix issue with metadata disrupting smart quotes</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;02&#8211;07 &#8211; v 0.1.2a:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">&#8220;pathologic&#8221; test suite &#8211; fix handling of nested brackets, e.g.
+<text:span text:style-name="Source_20_Text">[[[[foo]]]]</text:span> to avoid bogging down checking for reference links that
+don&#8217;t exist.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Table support &#8211; a single blank line separates sections of tables, so
+at least two blank lines are needed between adjacent tables.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Definition list support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+&#8220;fuzz testing&#8221; &#8211; stress test the parser for unexpected failures</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Table of Contents support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Improved compatibility mode parsing</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;01&#8211;28 &#8211; v 0.1.1a includes a few updates:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+Metadata support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Metadata variables support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Extended ASCII range character checking</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Rudimentary language translations, including German</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Improved performance</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Additional testing:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+CriticMarkup</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+HTML Blokcs</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Metadata/Variables</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">&#8220;pathologic&#8221; test cases from CommonMark</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+</text:list></text:list-item>
+
+</text:list>
+</office:text>
+</office:body>
+</office:document>
