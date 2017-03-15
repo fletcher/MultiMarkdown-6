@@ -187,8 +187,7 @@ this quickly fell apart in the face of more complex structures such as
 recursive lists.   After a lot of searching, and *tons* more reading, I
 ultimately decided to use a parser generator to handle the task of group lines
 into blocks.  `parser.y` has the source for this, and it is processed by the
-[lemon](http://www.hwaci.com/sw/lemon/) parser generator to create the actual
-code.
+[lemon] parser generator to create the actual code.
 
 I chose to do this because hand-crafting the block parser would be complex.
 The end result would likely be difficult to read and understand, which would
@@ -419,15 +418,49 @@ the development of MMD.  So there is really not much unit testing built into
 the code or used during the development. 
 
 
+# Dependencies/Libraries #
+
+MMD v6 has no external dependencies when compiling, aside from the standard
+libraries for C development.
+
+MMD can be compiled without any other tools beside the build system (cmake).
+
+If you want to edit the block parser, you need to modify the `parser.y` file
+and process that using [lemon] in order to update the `parser.c` file.  The
+lemon parser source is actually included in MMD and needs to be compiled to be
+used.
+
+If you want to update the lexer or scanner utility functions, then you can
+modify `lexer.re` or `scanners.re`.  These need to be processed using [re2c],
+which has to be installed separately.
+
+MMD v6 makes use of several other projects to improve performance and ease of
+use:
+
+* [uthash] -- provides support for hashes to quickly locate specific "objects"
+based on text keys.  These are used for matching footnotes, links, images and
+the like when created with the reference syntax.  Much faster than searching
+through each one sequentially.
+
+* [miniz] -- provides zip archive support to enable creation of EPUB 3 files,
+which are zip files with a specific file structure inside them.
+
+* [argtable3] -- provides more advanced command-line argument processing in a
+more cross-platform approach than that used by MMD v5.
+
 
 [>MMD]: MultiMarkdown
 [>MD]: Markdown
 
-[CriticMarkup]: http://criticmarkup.com/
-
 [?PEG]:	Parsing Expression Grammar <https://en.wikipedia.org/wiki/Parsing_expression_grammar>
-
 [?AST]: Abstract Syntax Tree <https://en.wikipedia.org/wiki/Abstract_syntax_tree>
+
+[CriticMarkup]: http://criticmarkup.com/
+[lemon]:	http://www.hwaci.com/sw/lemon/
+[re2c]:	http://re2c.org/
+[uthash]:	https://troydhanson.github.io/uthash/
+[miniz]:	https://github.com/richgel999/miniz
+[argtable3]:	https://github.com/argtable/argtable3
 
 
 # Changelog #
