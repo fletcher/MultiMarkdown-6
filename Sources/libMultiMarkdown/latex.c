@@ -788,37 +788,37 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const(":");
 			break;
 		case CRITIC_ADD_OPEN:
-			print_const("{++");
+			print_const("\\{++");
 			break;
 		case CRITIC_ADD_CLOSE:
-			print_const("++}");
+			print_const("++\\}");
 			break;
 		case CRITIC_COM_OPEN:
-			print_const("{>>");
+			print_const("\\{>>");
 			break;
 		case CRITIC_COM_CLOSE:
-			print_const("<<}");
+			print_const("<<\\}");
 			break;
 		case CRITIC_DEL_OPEN:
-			print_const("{--");
+			print_const("\\{--");
 			break;
 		case CRITIC_DEL_CLOSE:
-			print_const("--}");
+			print_const("--\\}");
 			break;
 		case CRITIC_HI_OPEN:
-			print_const("{==");
+			print_const("\\{==");
 			break;
 		case CRITIC_HI_CLOSE:
-			print_const("==}");
+			print_const("==\\}");
 			break;
 		case CRITIC_SUB_OPEN:
-			print_const("{~~");
+			print_const("\\{~~");
 			break;
 		case CRITIC_SUB_DIV:
 			print_const("~>");
 			break;
 		case CRITIC_SUB_CLOSE:
-			print_const("~~}");
+			print_const("~~\\}");
 			break;
 		case DASH_M:
 			if (!(scratch->extensions & EXT_SMART)) {
@@ -1454,7 +1454,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case QUOTE_DOUBLE:
 			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
-				print_const("&quot;");
+				print_const("''");
 			else
 				(t->start < t->mate->start) ? ( print_localized(QUOTE_LEFT_DOUBLE) ) : ( print_localized(QUOTE_RIGHT_DOUBLE) );
 			break;
@@ -1572,6 +1572,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case TEXT_PLAIN:
 			print_token(t);
 			break;
+		case TOC:
+			print_const("\\{\\{TOC\\}\\}");
+			break;
 		case UL:
 			print_const("\\_");
 			break;
@@ -1658,6 +1661,39 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			break;
 		case ANGLE_RIGHT:
 			print_const("$>$");
+			break;
+		case CRITIC_ADD_OPEN:
+			print_const("\\{++");
+			break;
+		case CRITIC_ADD_CLOSE:
+			print_const("++\\}");
+			break;
+		case CRITIC_COM_OPEN:
+			print_const("\\{>>");
+			break;
+		case CRITIC_COM_CLOSE:
+			print_const("<<\\}");
+			break;
+		case CRITIC_DEL_OPEN:
+			print_const("\\{--");
+			break;
+		case CRITIC_DEL_CLOSE:
+			print_const("--\\}");
+			break;
+		case CRITIC_HI_OPEN:
+			print_const("\\{==");
+			break;
+		case CRITIC_HI_CLOSE:
+			print_const("==\\}");
+			break;
+		case CRITIC_SUB_OPEN:
+			print_const("\\{~~");
+			break;
+		case CRITIC_SUB_DIV:
+			print_const("~>");
+			break;
+		case CRITIC_SUB_CLOSE:
+			print_const("~~\\}");
 			break;
 		case DASH_N:
 			if (t->len == 1) {
