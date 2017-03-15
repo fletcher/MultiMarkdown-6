@@ -72,6 +72,7 @@ enum alignments {
 size_t scan_alignment_string(const char * c);
 size_t scan_attr(const char * c);
 size_t scan_attributes(const char * c);
+size_t scan_atx(const char * c);
 size_t scan_definition(const char * c);
 size_t scan_destination(const char * c);
 size_t scan_email(const char * c);

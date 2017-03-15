@@ -402,22 +402,26 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 		case HASH4:
 		case HASH5:
 		case HASH6:
-			line->type = (line->child->type - HASH1) + LINE_ATX_1;
-			line->child->type = (line->type - LINE_ATX_1) + MARKER_H1;
+			if (scan_atx(&source[line->child->start])) {
+				line->type = (line->child->type - HASH1) + LINE_ATX_1;
+				line->child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
-			// Strip trailing whitespace from '#' sequence
-			line->child->len = line->child->type - MARKER_H1 + 1;
+				// Strip trailing whitespace from '#' sequence
+				line->child->len = line->child->type - MARKER_H1 + 1;
 
-			// Strip trailing '#' sequence if present
-			if (line->child->tail->type == TEXT_NL) {
-				if ((line->child->tail->prev->type >= HASH1) &&
-					(line->child->tail->prev->type <= HASH6))
-					line->child->tail->prev->type = TEXT_EMPTY;
+				// Strip trailing '#' sequence if present
+				if (line->child->tail->type == TEXT_NL) {
+					if ((line->child->tail->prev->type >= HASH1) &&
+						(line->child->tail->prev->type <= HASH6))
+						line->child->tail->prev->type = TEXT_EMPTY;
+				} else {
+					token_describe(line->child->tail, NULL);
+					if ((line->child->tail->type >= HASH1) &&
+						(line->child->tail->type <= HASH6))
+						line->child->tail->type = TEXT_EMPTY;
+				}
 			} else {
-				token_describe(line->child->tail, NULL);
-				if ((line->child->tail->type >= HASH1) &&
-					(line->child->tail->type <= HASH6))
-					line->child->tail->type = TEXT_EMPTY;
+				line->type = LINE_PLAIN;
 			}
 			break;
 		case TEXT_NUMBER_POSS_LIST:

@@ -158,6 +158,7 @@
 
 	setext_2	= non_indent '-'{2,} nl_eof;
 
+	atx			= '#'+ [ \t]+ [^ \t\n\r\x00];
 */
 
 
@@ -456,6 +457,16 @@ size_t scan_setext(const char * c) {
 /*!re2c
 	setext_1	{ return (size_t)( c - start ); }
 	setext_2	{ return (size_t)( c - start ); }
+	.?			{ return 0; }
+*/	
+}
+
+size_t scan_atx(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	atx			{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	
 }
