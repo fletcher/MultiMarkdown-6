@@ -787,6 +787,39 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case COLON:
 			print_const(":");
 			break;
+		case CRITIC_ADD_OPEN:
+			print_const("{++");
+			break;
+		case CRITIC_ADD_CLOSE:
+			print_const("++}");
+			break;
+		case CRITIC_COM_OPEN:
+			print_const("{>>");
+			break;
+		case CRITIC_COM_CLOSE:
+			print_const("<<}");
+			break;
+		case CRITIC_DEL_OPEN:
+			print_const("{--");
+			break;
+		case CRITIC_DEL_CLOSE:
+			print_const("--}");
+			break;
+		case CRITIC_HI_OPEN:
+			print_const("{==");
+			break;
+		case CRITIC_HI_CLOSE:
+			print_const("==}");
+			break;
+		case CRITIC_SUB_OPEN:
+			print_const("{~~");
+			break;
+		case CRITIC_SUB_DIV:
+			print_const("~>");
+			break;
+		case CRITIC_SUB_CLOSE:
+			print_const("~~}");
+			break;
 		case DASH_M:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_token(t);
