@@ -1267,8 +1267,12 @@ void process_definition_block(mmd_engine * e, token * block) {
 				case BLOCK_DEF_ABBREVIATION:
 					// Strip leading '>'' from term
 					f = footnote_new(e->dstr->str, label, block->child, false);
-					if (f && f->clean_text)
+					if (f && f->clean_text) {
 						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+						while (char_is_whitespace((f->clean_text)[0])) {
+							memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+						}
+					}
 
 					// Adjust the properties
 					free(f->label_text);
