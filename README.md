@@ -39,7 +39,7 @@ You can optionally test using the test suite:
 	ctest
 
 
-## Differences in MultiMarkdown Itself ##
+## Differences in the MultiMarkdown Syntax ##
 
 MultiMarkdown v6 is mostly about making a better MMD parser, but it involves a
 few changes to the MultiMarkdown syntax itself.
