@@ -2211,7 +2211,8 @@ void strip_leading_whitespace(token * chain, const char * source) {
 				return;
 		}
 
-		chain = chain->next;
+		if (chain)
+			chain = chain->next;
 	}
 }
 
