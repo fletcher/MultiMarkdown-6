@@ -195,13 +195,13 @@ size_t trie_node_search(trie * a, size_t s, const char * query) {
 		return s;
 	}
 
-	if (a->node[s].child[(int)query[0]] == 0) {
+	if (a->node[s].child[(unsigned char)query[0]] == 0) {
 		// Failed to match
 		return -1;
 	}
 
 	// Partial match, keep going
-	return trie_node_search(a, a->node[s].child[(int)query[0]], query + 1);
+	return trie_node_search(a, a->node[s].child[(unsigned char)query[0]], query + 1);
 }
 
 
@@ -331,6 +331,7 @@ match * match_new(size_t start, size_t len, unsigned short match_type) {
 		m->len = len;
 		m->match_type = match_type;
 		m->next = NULL;
+		m->prev = NULL;
 	}
 
 	return m;
@@ -373,13 +374,13 @@ match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) 
 	size_t temp_state;
 
 	// Character being compared
-	int test_value;
+	unsigned char test_value;
 	size_t counter = start;
 	size_t stop = start + len;
 
 	while ((counter < stop) && (source[counter] != '\0')) {
 		// Read next character
-		test_value = (int)source[counter++];
+		test_value = (unsigned char)source[counter++];
 
 		// Check for path that allows us to match next character
 		while (state != 0 && a->node[state].child[test_value] == 0) {
@@ -483,7 +484,8 @@ void match_set_filter_leftmost_longest(match * header) {
 			}
 		}
 
-		while (m->prev->len && 
+		while (m->prev &&
+			m->prev->len &&
 			m->prev->start >= m->start) {
 			// We are "lefter" than previous
 			n = m->prev;
@@ -515,7 +517,7 @@ void Test_aho_trie_search(CuTest* tc) {
 
 	ac_trie_prepare(a);
 
-	match * m = ac_trie_search(a, "this is a bar that serves food.", 31);
+	match * m = ac_trie_search(a, "this is a bar that serves food.", 0, 31);
 
 	match_free(m);
 	trie_free(a);

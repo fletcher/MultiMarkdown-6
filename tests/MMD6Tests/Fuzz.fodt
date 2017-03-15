@@ -272,36 +272,51 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<dc:title>Definition Lists</dc:title>
+	<dc:title>Fuzz Testing</dc:title>
 </office:meta>
 <office:body>
 <office:text>
-<text:p><text:span text:style-name="MMD-Bold">foo</text:span></text:p>
-<text:p><text:span text:style-name="MMD-Bold">bar</text:span></text:p>
-<text:p text:style-name="Quotations">*foo bar</text:p>
+<text:p text:style-name="Standard">Collection of test cases identified by <text:a xlink:type="simple" xlink:href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</text:a>.</text:p>
 
-<text:p text:style-name="Quotations">baz bat*</text:p>
+<text:p text:style-name="Standard">&gt;bar~~}</text:p>
 
-<text:p><text:span text:style-name="MMD-Bold">foo</text:span></text:p>
-<text:p><text:span text:style-name="MMD-Bold">bar</text:span></text:p>
-<text:p text:style-name="Quotations"><text:span text:style-name="MMD-Italic">foo bar
-bar foo</text:span></text:p>
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+list</text:p></text:list-item>
 
-<text:p text:style-name="Quotations">baz bat</text:p>
+<text:list-item>
+<text:p text:style-name="Standard">tems</text:p></text:list-item>
 
-<text:p><text:span text:style-name="MMD-Bold">bat</text:span></text:p>
-<text:p text:style-name="Quotations"><text:span text:style-name="MMD-Italic">foo</text:span></text:p>
+</text:list>
 
-<text:p><text:span text:style-name="MMD-Bold">foo</text:span></text:p>
-<text:p text:style-name="Quotations">*foo bar
-bar foo</text:p>
+<text:h text:outline-level="2"><text:bookmark text:name="escaped"/>:Escapes </text:h>
 
-<text:p text:style-name="Quotations">baz* bat</text:p>
+<text:p text:style-name="Standard">[>MM]: MultiMarkdown</text:p>
 
-<text:p text:style-name="Standard">foo</text:p>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#ba\">foo1</text:a></text:p>
 
-<text:p text:style-name="Standard">:foo
-</text:p>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#bar">foo2</text:a></text:p>
+
+<text:p text:style-name="Standard">]: And aÃ„e footn.I<text:span text:style-name="MMD-Superscript">Thi1</text:span>. $</text:p>
+
+<text:p text:style-name="Standard">[MMD]:</text:p>
+
+<text:p text:style-name="Standard">f F O O (o o) f o o</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+foo</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Â  foo</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">(This must be at end of file without trailing newline)</text:p>
+
+<text:h text:outline-level="1"><text:bookmark text:name="a"/>A</text:h>
 </office:text>
 </office:body>
 </office:document>

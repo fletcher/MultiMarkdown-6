@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>MultiMarkdown v6 Development Notes</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="date" content="2017-03-15"/>
+</head>
+<body>
+
+<h3 id="introduction">Introduction </h3>
+
+<p>This document includes some notes on the development of MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) v6. Most of it
+will be interesting only to other developers or those needing to choose the
+absolute &#8220;best&#8221; Markdown (<abbr title="Markdown">MD</abbr>) implementation for their needs &#8211; it is not required
+reading to understand how the software works.</p>
+
+<h4 id="whyanewversion">Why a New Version? </h4>
+
+<p>MultiMarkdown version 5 was released in November of 2015, but the codebase was
+essentially the same as that of v4 &#8211; and that was released in beta in April
+of 2013. A few key things prompted work on a new version:</p>
+
+<ul>
+<li><p>Accuracy &#8211; <abbr title="MultiMarkdown">MMD</abbr> v4 and v5 were the most accurate versions yet, and a lot of
+effort went into finding and resolving various edge cases. However, it began
+to feel like a game of whack-a-mole where new bugs would creep in every time I
+fixed an old one. The <a href="#gn:1" id="gnref:1" title="see glossary" class="glossary">PEG</a> began to feel rather convoluted in spots, even
+though it did allow for a precise (if not always accurate) specification of
+the grammar.</p></li>
+<li><p>Performance &#8211; &#8220;Back in the day&#8221; <a href="https://github.com/jgm/peg-markdown">peg-markdown</a> was one of the fastest
+Markdown parsers around. <abbr title="MultiMarkdown">MMD</abbr> v3 was based on peg-markdown, and would leap-
+frog with it in terms of performance. Then <a href="http://commonmark.org/">CommonMark</a> was released, which
+was a bit faster. Then a couple of years went by and CommonMark became <em>much</em>
+faster &#8211; in one of my test suites, <abbr title="MultiMarkdown">MMD</abbr> v 5.4.0 takes about 25 times longer to
+process a long document than CommonMark 0.27.0.</p></li>
+</ul>
+
+<p>In the spring of 2016, I decided I wanted to rewrite MultiMarkdown from scratch,
+building the parser myself rather than relying on a pre-rolled solution. (I
+had been using <a href="https://github.com/ooc-lang/greg">greg</a> to compile the PEG
+into parser code. It worked well overall, but lacked some features I needed,
+requiring a lot of workarounds.)</p>
+
+<h3 id="firstattempt">First Attempt </h3>
+
+<p>My first attempt started by hand-crafting a parser that scanned through the
+document a line at a time, deciding what to do with each line as it found
+them. I used regex parsers made with <a href="http://re2c.org/index.html">re2c</a> to
+help classify each line, and then a separate parser layer to process groups of
+lines into blocks. Initially this approach worked well, and was really
+efficient. But I quickly began to code my way into a dead-end &#8211; the strategy
+was not elegant enough to handle things like nested lists, etc.</p>
+
+<p>One thing that did turn out well from the first attempt, however, was an
+approach for handling <code>&lt;emph&gt;</code> and <code>&lt;strong&gt;</code> parsing. I&#8217;ve learned over the
+years that this can be one of the hardest parts of coding accurately for
+Markdown. There are many examples that are obvious to a person, but difficult
+to properly &#8220;explain&#8221; how to parse to a computer.</p>
+
+<p>No solution is perfect, but I developed an approach that seems to accurately
+handle a wide range of situations without a great deal of complexity:</p>
+
+<ol>
+<li><p>Scan the documents for asterisks (<code>*</code>). Each one will be handled one at a
+time.</p></li>
+<li><p>Unlike brackets (<code>[</code> and <code>]</code>), an asterisk is &#8220;ambidextrous&#8221;, in that it
+may be able to open a matched pair of asterisks, close a pair, or both. For
+example, in <code>foo *bar* foo</code>:</p>
+
+<ol>
+<li><p>The first asterisk can open a pair, but not close one.</p></li>
+<li><p>The second asterisk can close a pair, but not open one.</p></li>
+</ol></li>
+<li><p>So, once the asterisks have been identified, each has to be examined to
+determine whether it can open/close/both. The algorithm is not that complex,
+but I&#8217;ll describe it in general terms. Check the code for more specifics.
+This approach seems to work, but might still need some slight tweaking. In
+the future, I&#8217;ll codify this better in language rather than just in code.</p>
+
+<ol>
+<li><p>If there is whitespace to the left of an asterisk, it can&#8217;t close.</p></li>
+<li><p>If there is whitespace or punctuation to the right it can&#8217;t open.</p></li>
+<li><p>&#8220;Runs&#8221; of asterisks, e.g. <code>**bar</code> are treated as a unit in terms of
+looking left/right.</p></li>
+<li><p>Asterisks inside a word are a bit trickier &#8211; we look at the number of
+asterisks before the word, the number in the current run, and the number
+of asterisks after the word to determine which combinations, if any, are
+permitted.</p></li>
+</ol></li>
+<li><p>Once all asterisks have been tagged as able to open/close/both, we proceed
+through them in order:</p>
+
+<ol>
+<li><p>When we encounter a tag that can close, we look to see if there is a
+previous opener that has not been paired off. If so, pair the two and
+remove the opener from the list of available asterisks.</p></li>
+<li><p>When we encounter an opener, add it to the stack of available openers.</p></li>
+<li><p>When encounter an asterisk that can do both, see if it can close an
+existing opener. If not, then add it to the stack.</p></li>
+</ol></li>
+<li><p>After all tokens in the block have been paired, then we look for nesting
+pairs of asterisks in order to create <code>&lt;emph&gt;</code> and <code>&lt;strong&gt;</code> sets. For
+example, assume we have six asterisks wrapped around a word, three in front,
+and three after. The asterisks are indicated with numbers: <code>123foo456</code>. We
+proceed in the following manner:</p>
+
+<ol>
+<li><p>Based on the pairing algorithm above, these asterisks would be paired as
+follows, with matching asterisks sharing numbers &#8211; <code>123foo321</code>.</p></li>
+<li><p>Moving forwards, we come to asterisk &#8220;1&#8221;. It is followed by an
+asterisk, so we check to see if they should be grouped as a <code>&lt;strong&gt;</code>.
+Since the &#8220;1&#8221; asterisks are wrapped immediately outside the &#8220;2&#8221; asterisks,
+they are joined together. More than two pairs can&#8217;t be joined, so we now
+get the following &#8211; <code>112foo211</code>, where the &#8220;11&#8221; represents the opening
+and closing of a <code>&lt;strong&gt;</code>, and the &#8220;2&#8221; represents a <code>&lt;emph&gt;</code>.</p></li>
+</ol></li>
+<li><p>When matching a pair, any unclosed openers that are on the stack are
+removed, preventing pairs from &#8220;crossing&#8221; or &#8220;intersecting&#8221;. Pairs can wrap
+around each other, e.g. <code>[(foo)]</code>, but not intersect like <code>[(foo])</code>. In the
+second case, the brackets would close, removing the <code>(</code> from the stack.</p></li>
+<li><p>This same approach is used in all tokens that are matched in pairs&#8211;
+<code>[foo]</code>, <code>(foo)</code>, <code>_foo_</code>, etc. There&#8217;s slightly more to it, but once you
+figure out how to assign opening/closing ability, the rest is easy. By using
+a stack to track available openers, it can be performed efficiently.</p></li>
+</ol>
+
+<p>In my testing, this approach has worked quite well. It handles all the basic
+scenarios I&#8217;ve thrown at it, and all of the &#8220;basic&#8221; and &#8220;devious&#8221; edge cases I
+have thought of (some of these don&#8217;t necessarily have a &#8220;right&#8221; answer &#8211; but
+v6 gives consistency answers that seem as reasonable as any others to me).
+There are also three more edge cases I&#8217;ve come up can still stump it, and
+ironically they are handled correctly by most implementations. They just
+don&#8217;t follow the rules above. I&#8217;ll continue to work on this.</p>
+
+<p>In the end, I scrapped this effort, but kept the lessons learned in the token
+pairing algorithm.</p>
+
+<h3 id="secondattempt">Second Attempt </h3>
+
+<p>I tried again this past Fall. This time, I approached the problem with lots
+of reading. <em>Lots and lots</em> of reading &#8211; tons of websites, computer science
+journal articles, PhD theses, etc. Learned a lot about lexers, and a lot
+about parsers, including hand-crafting vs using parser generators. In brief:</p>
+
+<ol>
+<li><p>I learned about the <a href="https://en.wikipedia.org/wiki/Aho-Corasick_algorithm">Aho–Corasick algorithm</a>, which is a great way to
+efficiently search a string for multiple target strings at once. I used this
+to create a custom lexer to identify tokens in a MultiMarkdown text document
+(e.g. <code>*</code>, <code>[</code>, <code>{++</code>, etc.). I learned a lot, and had a good time working
+out the implementation. This code efficiently allowed me to break a string of
+text into the tokens that mattered for Markdown parsing.</p></li>
+<li><p>However, in a few instances I really needed some features of regular
+expressions to simplify more complex structures. After a quick bit of testing,
+using re2c to create a tokenizer was just as efficient, and allowed me to
+incorporate some regex functionality that simplified later parsing. I&#8217;ll keep
+the Aho-Corasick stuff around, and will probably experiment more with it
+later. But I didn&#8217;t need it for <abbr title="MultiMarkdown">MMD</abbr> now. <code>lexer.re</code> contains the source for
+the tokenizer.</p></li>
+</ol>
+
+<p>I looked long and hard for a way to simplify the parsing algorithm to try and
+&#8220;touch&#8221; each token only once. Ideally, the program could step through each
+token, and decide when to create a new block, when to pair things together,
+etc. But I&#8217;m not convinced it&#8217;s possible. Since Markdown&#8217;s grammar varies
+based on context, it seems to work best when handled in distinct phases:</p>
+
+<ol>
+<li><p>Tokenize the string to identify key sections of text. This includes line
+breaks, allowing the text to be examined one line at time.</p></li>
+<li><p>Join series of lines together into blocks, such as paragraphs, code blocks,
+lists, etc.</p></li>
+<li><p>The tokens inside each block can then be paired together to create more
+complex syntax such as links, strong, emphasis, etc.</p></li>
+</ol>
+
+<p>To handle the block parsing, I started off using the Aho-Corasick code to
+handle my first attempt. I had actually implemented some basic regex
+functionality, and used that to group lines together to create blocks. But
+this quickly fell apart in the face of more complex structures such as
+recursive lists. After a lot of searching, and <em>tons</em> more reading, I
+ultimately decided to use a parser generator to handle the task of group lines
+into blocks. <code>parser.y</code> has the source for this, and it is processed by the
+<a href="http://www.hwaci.com/sw/lemon/">lemon</a> parser generator to create the actual
+code.</p>
+
+<p>I chose to do this because hand-crafting the block parser would be complex.
+The end result would likely be difficult to read and understand, which would
+make it difficult to update later on. Using the parser generator allows me to
+write things out in a way that can more easily be understood by a person. In
+all likelihood, the performance is probably as good as anything I could do
+anyway, if not better.</p>
+
+<p>Because lemon is a LALR(1) parser, it does require a bit of thinking ahead
+about how to create the grammar used. But so far, it has been able to handle
+everything I have thrown at it.</p>
+
+<h3 id="optimization">Optimization </h3>
+
+<p>One of my goals for <abbr title="MultiMarkdown">MMD</abbr> 6 was performance. So I&#8217;ve paid attention to speed
+along the way, and have tried to use a few tricks to keep things fast. Here
+are some things I&#8217;ve learned along the way. In no particular order:</p>
+
+<h4 id="memoryallocation">Memory Allocation </h4>
+
+<p>When parsing a long document, a <em>lot</em> of token structures are created. Each
+one requires a small bit of memory to be allocated. In aggregate, that time
+added up and slowed down performance.</p>
+
+<p>After reading for a bit, I ended up coming up with an approach that uses
+larger chunks of memory. I allocate pools of of memory in large slabs for
+smaller &#8220;objects&#8221;&quot;. For example, I allocate memory for 1024 tokens at a
+single time, and then dole that memory out as needed. When the slab is empty,
+a new one is allocated. This dramatically improved performance.</p>
+
+<p>When pairing tokens, I created a new stack for each block. I realized that an
+empty stack didn&#8217;t have any &#8220;leftover&#8221; cruft to interfere with re-use, so I
+just used one for the entire document. Again a sizeable improvement in
+performance from only allocating one object instead of many. When recursing
+to a deeper level, the stack just gets deeper, but earlier levels aren&#8217;t
+modified.</p>
+
+<p>Speaking of tokens, I realized that the average document contains a lot of
+single spaces (there&#8217;s one between every two words I have written, for
+example.) The vast majority of the time, these single spaces have no effect
+on the output of Markdown documents. I changed my whitespace token search to
+only flag runs of 2 or more spaces, dramatically reducing the number of
+tokens. This gives the benefit of needing fewer memory allocations, and also
+reduces the number of tokens that need to be processed later on. The only
+downside is remember to check for a single space character in a few instances
+where it matters.</p>
+
+<h4 id="properinputbuffering">Proper input buffering </h4>
+
+<p>When I first began last spring, I was amazed to see how much time was being
+spent by MultiMarkdown simply reading the input file. Then I discovered it
+was because I was reading it one character at a time. I switched to using a
+buffered read approach and the time to read the file went to almost nothing. I
+experimented with different buffer sizes, but they did not seem to make a
+measurable difference.</p>
+
+<h4 id="outputbuffering">Output Buffering </h4>
+
+<p>I experimented with different approaches to creating the output after parsing.
+I tried printing directly to <code>stdout</code>, and even played with different
+buffering settings. None of those seemed to work well, and all were slower
+than using the <code>d_string</code> approach (formerly call <code>GString</code> in MMD 5).</p>
+
+<h4 id="fastsearches">Fast Searches </h4>
+
+<p>After getting basic Markdown functionality complete, I discovered during
+testing that the time required to parse a document grew exponentially as the
+document grew longer. Performance was on par with CommonMark for shorter
+documents, but fell increasingly behind in larger tests. Time profiling found
+that the culprit was searching for link definitions when they didn&#8217;t exist.
+My first approach was to keep a stack of used link definitions, and to iterate
+through them when necessary. In long documents, this performs very poorly.
+More research and I ended up using
+<a href="http://troydhanson.github.io/uthash/">uthash</a>. This allows me to search for
+a link (or footnote, etc.) by &#8220;name&#8221; rather than searching through an array.
+This allowed me to get <abbr title="MultiMarkdown">MMD</abbr>&#8217;s performance back to O(n), taking roughly twice as
+much time to process a document that is twice as long.</p>
+
+<h4 id="efficientutilityfunctions">Efficient Utility Functions </h4>
+
+<p>It is frequently necessary when parsing Markdown to check what sort of
+character we are dealing with at a certain position &#8211; a letter, whitespace,
+punctuation, etc. I created a lookup table for this via <code>char_lookup.c</code> and
+hard-coded it in <code>char.c</code>. These routines allow me to quickly, and
+consistently, classify any byte within a document. This saved a lot of
+programming time, and saved time tracking down bugs from handling things
+slightly differently under different circumstances. I also suspect it
+improved performance, but don&#8217;t have the data to back it up.</p>
+
+<h4 id="testingwhilewriting">Testing While Writing </h4>
+
+<p>I developed several chunks of code in parallel while creating <abbr title="MultiMarkdown">MMD</abbr> 6. The vast
+majority of it was developed largely in a <a href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven development</a> approach.
+The other code was largely created with extensive unit testing to accomplish
+this.</p>
+
+<p><abbr title="MultiMarkdown">MMD</abbr> isn&#8217;t particularly amenable to this approach at the small level, but
+instead I relied more on integration testing with an ever-growing collection
+of text files and the corresponding HTML files in the <abbr title="MultiMarkdown">MMD</abbr> 6 test suite. This
+allowed me to ensure new features work properly and that old features aren&#8217;t
+broken. At this time, there are 29 text files in the test suite, and many
+more to come.</p>
+
+<h4 id="otherlessons">Other Lessons </h4>
+
+<p>Some things that didn&#8217;t do me any good&#8230;.</p>
+
+<p>I considered differences between using <code>malloc</code> and <code>calloc</code> when initializing
+tokens. The time saved by using <code>malloc</code> was basically exactly offset by the
+initial time required to initialize the token to default null values as
+compared to using <code>calloc</code>. When trying <code>calloc</code> failed to help me out
+(thinking that clearing a single slab in the object pool would be faster), I
+stuck with <code>malloc</code> as it makes more sense to me in my workflow.</p>
+
+<p>I read a bit about <a href="http://www.catb.org/esr/structure-packing/">struct padding</a> and reordered some of my structs. It was
+until later that I discovered the <code>-Wpadded</code> option, and it&#8217;s not clear
+whether my changes modified anything. Since the structs were being padded
+automatically, there was no noticeable performance change, and I didn&#8217;t have
+the tools to measure whether I could have improved memory usage at all. Not
+sure this would be worth the effort &#8211; much lower hanging fruit available.</p>
+
+<h3 id="performance">Performance </h3>
+
+<p>Basic tests show that currently <abbr title="MultiMarkdown">MMD</abbr> 6 takes about 20&#8211;25% longer the CommonMark
+0.27.0 to process long files (e.g. 0.2 MB). However, it is around 5% <em>faster</em>
+than CommonMark when parsing a shorter file (27 kB) (measured by parsing the
+same file 200 times over). This test suite is performed by using the Markdown
+[syntax page], modified to avoid the use of the Setext header at the top. The
+longer files tested are created by copying the same syntax page onto itself,
+thereby doubling the length of the file with each iteration.</p>
+
+<p>The largest file I test is approximately 108 MB (4096 copies of the syntax
+page). On my machine (2012 Mac mini with 2.3 GHz Intel Core i7, 16 GB RAM),
+it takes approximately 4.4 seconds to parse with <abbr title="MultiMarkdown">MMD</abbr> 6 and 3.7 seconds with
+CommonMark. <abbr title="MultiMarkdown">MMD</abbr> 6 processes approximately 25 MB/s on this test file.
+CommonMark 0.27.0 gets about 29 MB/s on the same machine.</p>
+
+<p>There are some slight variations with the smaller test files (8&#8211;32 copies),
+but overall the performance of both programs (MMD 6 and CommonMark) are
+roughly linear as the test file gets bigger (double the file size and it takes
+twice as long to parse, aka O(n)).</p>
+
+<p>Out of curiosity, I ran the same tests on the original Markdown.pl by Gruber
+(v 1.0.2b8). It took approximately 178 seconds to parse 128 copies of the
+file (3.4 MB) and was demonstrating quadratic performance characteristics
+(double the file size and it takes 2<sup>2</sup> or 4 times longer to process, aka
+O(n<sup>2</sup>)). I didn&#8217;t bother running it on larger versions of the test file. For
+comparison, <abbr title="MultiMarkdown">MMD</abbr> 6 can process 128 copies in approximately 140 msec.</p>
+
+<p>Of note, the throughput speed drops when testing more complicated files
+containing more advanced MultiMarkdown features, though it still seems to
+maintain linear performance characteristics. A second test file is created by
+concatenating all of the test suite files (including the Markdown syntax
+file). In this case, <abbr title="MultiMarkdown">MMD</abbr> gets about 13 MB/s. CommonMark doesn&#8217;t support
+these additional features, so testing it with that file is not relevant. I
+will work to see whether there are certain features in particular that are
+more challenging and see whether they can be reworked to improve performance.</p>
+
+<p>As above, I have done some high level optimization of the parse strategy, but
+I&#8217;m sure there&#8217;s still a lot of room for further improvement to be made.
+Suggestions welcome!</p>
+
+<h3 id="testing">Testing </h3>
+
+<h4 id="testsuite">Test Suite </h4>
+
+<p>The development of <abbr title="MultiMarkdown">MMD</abbr> v6 was heavily, but not absolutely, influenced by the
+philosophy of test-driven development. While coding, I made use of test
+suites to verify successful implementation of new features, to avoid
+regression problems when adding new features, and to identify known edge cases
+in need of proper handling.</p>
+
+<p>The test suite (located in <code>tests/MMD6Tests</code>) is a &#8220;living&#8221; collection of
+documents that will continue to be updated as new bugs and edge cases are
+identified. This helps make proper integration testing of the entire
+application with every release.</p>
+
+<h4 id="fuzztesting">Fuzz Testing </h4>
+
+<p>I was not familiar with the concept of <a href="#fuzztesting">Fuzz Testing</a>
+(https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned something about
+it to me a year or two ago. I had never used it before, but it seemed like a
+good idea. I implement it in two ways.</p>
+
+<p>The first is that I created a simplified version of the line parser that
+simply accepts various combinations of line type identifiers to see if they
+would successfully parse. The line parser is responsible for taking a series
+of line types (e.g. plain text, indented line, etc.) and determining what sort
+of block they should become. The file <code>test/parser_text.y</code> is run through the
+<code>lemon</code> program, compiled (with or without the <code>-DNDEBUG</code> flag) and then run.
+It sequentially throws every combination of line types at the simplified line
+parser to make sure that it doesn&#8217;t choke. When I first did this, I found
+several combinations of lines that did not pass.</p>
+
+<p><strong>NOTE</strong>: This does not verify accurate parsing, simply that the parser does
+not crash by an unacceptable combination of lines.</p>
+
+<p>The second form of fuzz testing I have started using more recently. This is
+using the <a href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</a> program to try
+to find text input that crashes <abbr title="MultiMarkdown">MMD</abbr>. This works by taking sample input (e.g.
+files from the test suite), modifying them slightly, and trying the modified
+versions. Do this over and over and over, and some interesting edge cases are
+sometimes identified. I have found some interesting edge cases this way.
+Definitely a very useful tool!</p>
+
+<h4 id="unittesting">Unit Testing </h4>
+
+<p>Some of the original development was done with unit testing in some other
+tools I developed. This code formed the basis of a few parts of <abbr title="MultiMarkdown">MMD</abbr>.
+Otherwise, it was hard to see how to really create very good unit tests for
+the development of <abbr title="MultiMarkdown">MMD</abbr>. So there is really not much unit testing built into
+the code or used during the development.</p>
+
+<h3 id="changelog">Changelog </h3>
+
+<ul>
+<li><p>2017&#8211;03&#8211;15 &#8211; v 6.0.0-rc1:</p>
+
+<ul>
+<li>FIXED: Add missing CriticMarkup tokens to LaTeX</li>
+<li>FIXED: Don&#8216;t let labels end on &#8217;' that is escaping the closing &#8216;]&#8217;</li>
+<li>FIXED: Fix NULL pointer dereference</li>
+<li>FIXED: Fix bug in Aho&#8211;Corasick implementation</li>
+<li>FIXED: Fix bug with ATX Headers without newline</li>
+<li>FIXED: Fix bug with Setext header starting with &#8216;:&#8217;</li>
+<li>FIXED: Fix bug with leading spaces in abbreviation references</li>
+<li>FIXED: Fix crash with empty definition</li>
+<li>FIXED: Fix edge case with URL definitions</li>
+<li>FIXED: Fix edge case with superscripts</li>
+<li>FIXED: Fix null dereference error in CriticMarkup substitution</li>
+<li>FIXED: Fix potential bug in Aho&#8211;Corasick search:</li>
+<li>FIXED: Fix potential bug in storing items to hash</li>
+<li>FIXED: Fix potential bug with line&#8211;&gt;block parser</li>
+<li>FIXED: Fix potential crash in attribute parsing</li>
+<li>FIXED: Fix printing raw CriticMarkup tokens in LaTeX</li>
+<li>FIXED: Fix signedness bug in Aho&#8211;Corasick</li>
+<li>FIXED: Improve metadata edge cases; Fix NULL pointer dereference</li>
+<li>FIXED: Include non&#8211;breaking space (ASCII 160) in re2c patterns</li>
+<li>FIXED: Keep &#8216;:&#8217; in false positive definitions</li>
+<li>FIXED: Lex space followed by tab as space, not text</li>
+<li>FIXED: Limit lines treated as ATX headers</li>
+<li>FIXED: Update test code</li>
+</ul></li>
+<li><p>2017&#8211;03&#8211;13 &#8211; v 6.0.0-b2:</p>
+
+<ul>
+<li>ADDED: Add CriticMarkup preprocessor that works across empty lines when accepting/rejecting markup</li>
+<li>ADDED: Add back the mmd6 latex title file</li>
+<li>ADDED: Basic EPUB 3 support &#8211; uses &#8216;miniz&#8217; library to zip creation</li>
+<li>ADDED: Update QuickStart and EPUB code</li>
+<li>CHANGED: Update QuickStart guide</li>
+<li>CHANGED: Update test suite</li>
+<li>FIXED: Don't duplicate LaTeX glossary definitions</li>
+<li>FIXED: Fix abbreviations in ODF; Improve test suite</li>
+<li>FIXED: Improve glossaries and abbreviations; Update QuickStart</li>
+<li>FIXED: Tidy up some compiler warnings in code</li>
+<li>FIXED: Use custom UUID code to minimize external dependencies</li>
+</ul></li>
+<li><p>2017&#8211;03&#8211;09 &#8211; v 6.0.0-b1:</p>
+
+<ul>
+<li>ADDED: Add French translations; fix typo in German</li>
+<li>ADDED: Add Quick Start guide</li>
+<li>ADDED: Add functionality to automatically identify abbreviations and glossary terms in source</li>
+<li>ADDED: Improve LaTeX configuration files</li>
+<li>ADDED: Update German translations</li>
+<li>ADDED: Use native ODF table of contents instead of a manual list</li>
+<li>ADDED: Use native command for table of contents in LaTeX</li>
+<li>CHANGED: Bring HTML and ODF into line with LaTeX as to output of abbreviatinos on first and subsequent uses</li>
+<li>CHANGED: Slight performance tweak</li>
+<li>CHANGED: Update German test suite</li>
+<li>FIXED: Allow <code>{{TOC}}</code> in latex verbatim</li>
+<li>FIXED: Don't free token_pool if never initialized</li>
+<li>FIXED: Fix German typo</li>
+<li>FIXED: Fix missing token type</li>
+<li>FIXED: Improve performance of checking document for metadata, which improves performance when checking for possible transclusion</li>
+<li>FIXED: Update test suite for abbreviation changes</li>
+</ul></li>
+<li><p>2017&#8211;03&#8211;05 &#8211; v 0.4.2-b:</p>
+
+<ul>
+<li>ADDED: Add and utility functions; fix memory leak</li>
+<li>ADDED: Initial abbreviation support</li>
+<li>ADDED: Keep working on Abbreviations/Glossaries</li>
+<li>ADDED: Refactor abbreviation code; Add inline abbreviations; Fix abbreviations in ODF</li>
+<li>ADDED: Update Inline Footnote test</li>
+<li>CHANGED: Add comments to i18n.h</li>
+<li>CHANGED: Finish refactoring note&#8211;related code</li>
+<li>CHANGED: Refactor footnotes</li>
+<li>CHANGED: Refactor glossary code</li>
+<li>CHANGED: Remove offset from html export functions</li>
+<li>FIXED: latex list items need to block optional argument to allow &#8216;[&#8217; as first character</li>
+<li>Merge branch &#8216;release/0.4.1-b&#8217; into develop</li>
+</ul></li>
+<li><p>2017&#8211;03&#8211;04 &#8211; v 0.4.1-b:</p>
+
+<ul>
+<li>FIXED: Add glossary localization</li>
+</ul></li>
+<li><p>2017&#8211;03&#8211;04 &#8211; v 0.4.0-b:</p>
+
+<ul>
+<li>ADDED: Add TOC support to ODF</li>
+<li>ADDED: Add glossary support to ODF</li>
+<li>ADDED: Add prelim code for handling abbreviations</li>
+<li>ADDED: Add support for Swift Package Maker; CHANGED: Restructure source directory</li>
+<li>ADDED: Added LaTeX support for escaped characters, fenced code blocks, images, links</li>
+<li>ADDED: Basic ODF Support</li>
+<li>ADDED: Better document strong/emph algorithm</li>
+<li>ADDED: Continue ODF progress</li>
+<li>ADDED: Continue to work on ODF export</li>
+<li>ADDED: Continue work on ODF</li>
+<li>ADDED: Finish ODF support for lists</li>
+<li>ADDED: Improve performance when exporting</li>
+<li>ADDED: Improve token_pool memory handling</li>
+<li>ADDED: Prototype support for Glossaries</li>
+<li>ADDED: Support &#8216;latexconfig&#8217; metadata</li>
+<li>CHANGED: Use multiple cases in glossary tests</li>
+<li>FIXED: Don't force glossary terms into lowercase</li>
+<li>FIXED: Fix Makefile for new source file location</li>
+<li>FIXED: Fix algorithm for creating TOC to properly handle &#8216;incorrect&#8217; levels</li>
+<li>FIXED: Fix linebreaks in LaTeX; ADDED: Add Linebreaks test file</li>
+<li>FIXED: Fix new_source script for new directory structure</li>
+<li>FIXED: Fix non&#8211;breaking space in ODF</li>
+<li>FIXED: Fix padding at end of document body in ODF</li>
+<li>FIXED: Fix underscores in raw latex</li>
+<li>FIXED: Potential bug</li>
+<li>NOTE: Add shared library build option</li>
+</ul></li>
+<li><p>2017&#8211;02&#8211;17 &#8211; v 0.3.1.a:</p>
+
+<ul>
+<li>ADDED: &#8216;finalize&#8217; beamer support</li>
+<li>ADDED: Add escaped newline as linebreak; start on beamer/memoir support</li>
+<li>ADDED: CriticMarkup test for LaTeX</li>
+<li>ADDED: Custom LaTeX output for CriticMarkup comments</li>
+<li>ADDED: Support mmd export format</li>
+<li>ADDED: Work on cpack installer &#8211; change project name for compatibility</li>
+<li>CHANGED: Adjust latex metadata configuration for consistency</li>
+<li>CHANGED: Configure cmake to use C99</li>
+<li>FIXED: Add custom implementation for cross&#8211;platform support</li>
+<li>FIXED: Fix German HTML tests</li>
+<li>FIXED: Fix cpack destination directory issue</li>
+<li>FIXED: Fix memory leaks etc</li>
+<li>FIXED: Fix warning in custom vasprintf</li>
+<li>FIXED: Modify CMakeLists.txt to test for use of clang compiler</li>
+<li>FIXED: Work on memory leaks</li>
+<li>NOTE: Adjust license width to improve display on smaller terminal windows</li>
+</ul></li>
+<li><p>2017&#8211;02&#8211;14 &#8211; v 0.3.0a:</p>
+
+<ul>
+<li>ADDED: Add basic image support to LaTeX</li>
+<li>ADDED: Add file transclusion</li>
+<li>ADDED: Add support for citation &#8216;locators&#8217;</li>
+<li>ADDED: Add support for manual labels on ATX Headers</li>
+<li>ADDED: Add support for manual labels on Setext Headers</li>
+<li>ADDED: Add support for tables in LaTeX</li>
+<li>ADDED: HTML Comments appear as raw LaTeX</li>
+<li>ADDED: Improved citation support in LaTeX</li>
+<li>ADDED: Support \autoref{} in LaTeX</li>
+<li>ADDED: Support combined options in LaTeX citations that use the &#8216;][&#8217; syntax</li>
+<li>ADDED: Support language specifier in fenced code blocks</li>
+<li>ADDED: Support metadata in LaTeX</li>
+<li>ADDED: Update Citations test suite</li>
+<li>FIXED: Escaped LaTeX characters</li>
+<li>FIXED: Fix bug in URL parsing</li>
+<li>FIXED: Fix bug in citation links</li>
+<li>FIXED: Fix bug when no closing divider or newline at end of last table cell</li>
+<li>FIXED: Fix issue printing &#8216;&#8211;&#8217;</li>
+<li>FIXED: Fix scan_url test suite</li>
+<li>FIXED: Get Math working in LaTeX</li>
+<li>FIXED: Improve reliability or link scanner</li>
+<li>FIXED: Properly add id attribute to new instances of citation only</li>
+<li>FIXED: Properly handle manual labels with TOC</li>
+<li>FIXED: Properly print hash characters in LaTeX</li>
+<li>FIXED: Separate LaTeX verbatim and texttt character handling</li>
+<li>FIXED: Update Escapes test LaTeX result</li>
+<li>FIXED: Work on escaping LaTeX characters</li>
+</ul></li>
+<li><p>2017&#8211;02&#8211;08 &#8211; v 0.1.4a:</p>
+
+<ul>
+<li>ADDED: Add smart quote support for other languages (resolves #15)</li>
+</ul></li>
+<li><p>2017&#8211;02&#8211;08 &#8211; v 0.1.3a:</p>
+
+<ul>
+<li>ADDED: Add support for reference image id attributes</li>
+<li>ADDED: Add support for table captions</li>
+<li>ADDED: Metadata support for base header level</li>
+<li>ADDED: Support distinction between 3 and 5 backticks in fenced code blocks</li>
+<li>ADDED: Support Setext headers</li>
+<li>FIXED: Fix issue with metadata disrupting smart quotes</li>
+</ul></li>
+<li><p>2017&#8211;02&#8211;07 &#8211; v 0.1.2a:</p>
+
+<ul>
+<li>&#8220;pathologic&#8221; test suite &#8211; fix handling of nested brackets, e.g.
+<code>[[[[foo]]]]</code> to avoid bogging down checking for reference links that
+don&#8217;t exist.</li>
+<li>Table support &#8211; a single blank line separates sections of tables, so
+at least two blank lines are needed between adjacent tables.</li>
+<li>Definition list support</li>
+<li>&#8220;fuzz testing&#8221; &#8211; stress test the parser for unexpected failures</li>
+<li>Table of Contents support</li>
+<li>Improved compatibility mode parsing</li>
+</ul></li>
+<li><p>2017&#8211;01&#8211;28 &#8211; v 0.1.1a includes a few updates:</p>
+
+<ul>
+<li>Metadata support</li>
+<li>Metadata variables support</li>
+<li>Extended ASCII range character checking</li>
+<li>Rudimentary language translations, including German</li>
+<li>Improved performance</li>
+<li>Additional testing:
+
+<ul>
+<li>CriticMarkup</li>
+<li>HTML Blokcs</li>
+<li>Metadata/Variables</li>
+<li>&#8220;pathologic&#8221; test cases from CommonMark</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<div class="glossary">
+<hr />
+<ol>
+
+<li id="gn:1">
+PEG: <p>Parsing Expression Grammar <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">https://en.wikipedia.org/wiki/Parsing_expression_grammar</a> <a href="#gnref:1" title="return to body" class="reverseglossary">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
+</body>
+</html>
+

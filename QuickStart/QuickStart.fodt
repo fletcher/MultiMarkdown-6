@@ -274,7 +274,7 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="version">6.0-b</meta:user-defined>
+	<meta:user-defined meta:name="version">6.0.0-rc1</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -308,7 +308,7 @@
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:p text:style-name="Standard">Version: 6.0-b</text:p>
+<text:p text:style-name="Standard">Version: 6.0.0-rc1</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
@@ -503,10 +503,9 @@ older versions of the EPUB format, but other tools can convert to other
 document formats you need. Same goes for Amazon&#8217;s ebook formats &#8211; the
 <text:a xlink:type="simple" xlink:href="https://calibre-ebook.com/">Calibre</text:a> program can also be used to interconvert between formats.</text:p>
 
-<text:p text:style-name="Standard">**NOTE: Because EPUB documents are binary files, MMD only creates them when
-**run in batch mode (using the <text:span text:style-name="Source_20_Text">-b\--batch</text:span> options). Otherwise, it simply
-**outputs the HTML 5 file that would serve as the primary content for the
-**EPUB.</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: Because EPUB documents are binary files, MMD only creates them when
+run in batch mode (using the <text:span text:style-name="Source_20_Text">-b\--batch</text:span> options). Otherwise, it simply
+outputs the HTML 5 file that would serve as the primary content for the EPUB.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks </text:h>
 

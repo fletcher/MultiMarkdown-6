@@ -532,7 +532,7 @@ attr * parse_attributes(char * source) {
 	size_t scan_len;
 	size_t pos = 0;
 
-	while (scan_attr(&source[pos])) {
+	while (source[pos] != '\0' && scan_attr(&source[pos])) {
 		pos +=  scan_spnl(&source[pos]);
 
 		// Get key
@@ -556,7 +556,7 @@ attr * parse_attributes(char * source) {
 			attributes = a;
 		}
 
-		free(value);	// We stored a copy
+		free(value);	// We stored a modified copy
 	}
 
 	return attributes;
@@ -612,21 +612,25 @@ void store_link(scratch_pad * scratch, link * l) {
 	link * temp_link;
 
 	// Add link via `clean_text`?
-	HASH_FIND_STR(scratch->link_hash, l->clean_text, temp_link);
-	
-	if (!temp_link) {
-		// Only add if another link is not found with clean_text
-		temp_link = link_shallow_copy(l);
-		HASH_ADD_KEYPTR(hh, scratch->link_hash, l->clean_text, strlen(l->clean_text), temp_link);
+	if (l->clean_text && l->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->link_hash, l->clean_text, temp_link);
+		
+		if (!temp_link) {
+			// Only add if another link is not found with clean_text
+			temp_link = link_shallow_copy(l);
+			HASH_ADD_KEYPTR(hh, scratch->link_hash, l->clean_text, strlen(l->clean_text), temp_link);
+		}
 	}
 
 	// Add link via `label_text`?
-	HASH_FIND_STR(scratch->link_hash, l->label_text, temp_link);
+	if (l->label_text && l->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->link_hash, l->label_text, temp_link);
 
-	if (!temp_link) {
-		// Only add if another link is not found with label_text
-		temp_link = link_shallow_copy(l);
-		HASH_ADD_KEYPTR(hh, scratch->link_hash, l->label_text, strlen(l->label_text), temp_link);
+		if (!temp_link) {
+			// Only add if another link is not found with label_text
+			temp_link = link_shallow_copy(l);
+			HASH_ADD_KEYPTR(hh, scratch->link_hash, l->label_text, strlen(l->label_text), temp_link);
+		}
 	}
 }
 
@@ -663,19 +667,23 @@ void store_footnote(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `clean_text`?
-	HASH_FIND_STR(scratch->footnote_hash, f->clean_text, temp_holder);
+	if (f->clean_text && f->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->footnote_hash, f->clean_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		}
 	}
 
 	// Store by `label_text`?
-	HASH_FIND_STR(scratch->footnote_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->footnote_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->footnote_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -684,19 +692,23 @@ void store_citation(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `clean_text`?
-	HASH_FIND_STR(scratch->citation_hash, f->clean_text, temp_holder);
+	if (f->clean_text && f->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->citation_hash, f->clean_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		}
 	}
 
 	// Store by `label_text`?
-	HASH_FIND_STR(scratch->citation_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->citation_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->citation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -705,19 +717,23 @@ void store_glossary(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `clean_text`?
-	HASH_FIND_STR(scratch->glossary_hash, f->clean_text, temp_holder);
+	if (f->clean_text && f->clean_text[0] != '\0') {
+		HASH_FIND_STR(scratch->glossary_hash, f->clean_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->clean_text, strlen(f->clean_text), temp_holder);
+		}
 	}
 
 	// Store by `label_text`?
-	HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->glossary_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->glossary_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -726,10 +742,12 @@ void store_metadata(scratch_pad * scratch, meta * m) {
 	meta * temp;
 
 	// Store by `key`
-	HASH_FIND_STR(scratch->meta_hash, m->key, temp);
+	if (m->key && m->key[0] != '\0') {
+		HASH_FIND_STR(scratch->meta_hash, m->key, temp);
 
-	if (!temp) {
-		HASH_ADD_KEYPTR(hh, scratch->meta_hash, m->key, strlen(m->key), m);
+		if (!temp) {
+			HASH_ADD_KEYPTR(hh, scratch->meta_hash, m->key, strlen(m->key), m);
+		}
 	}
 }
 
@@ -738,11 +756,13 @@ void store_abbreviation(scratch_pad * scratch, footnote * f) {
 	fn_holder * temp_holder;
 
 	// Store by `label_text`
-	HASH_FIND_STR(scratch->abbreviation_hash, f->label_text, temp_holder);
+	if (f->label_text && f->label_text[0] != '\0') {
+		HASH_FIND_STR(scratch->abbreviation_hash, f->label_text, temp_holder);
 
-	if (!temp_holder) {
-		temp_holder = fn_holder_new(f);
-		HASH_ADD_KEYPTR(hh, scratch->abbreviation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		if (!temp_holder) {
+			temp_holder = fn_holder_new(f);
+			HASH_ADD_KEYPTR(hh, scratch->abbreviation_hash, f->label_text, strlen(f->label_text), temp_holder);
+		}
 	}
 }
 
@@ -831,12 +851,15 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			// Grab destination string
 			url = my_strndup(&source[start], scan_len);
 
-			// Advance remainder
-			while ((*remainder)->start < start + scan_len)
+			// Advance remainder to end of destination
+			while ((*remainder)->next &&
+				   (*remainder)->next->start < start + scan_len) {
 				*remainder = (*remainder)->next;
+			}
 
-
-			t = (*remainder)->prev;
+			t = (*remainder);	// We need to remember this for below
+			// Move remainder beyond destination
+			*remainder = (*remainder)->next;
 
 			// Is there a space in a URL concatenated with a title or attribute?
 			// e.g. [foo]: http://foo.bar/ class="foo"
@@ -1244,14 +1267,21 @@ void process_definition_block(mmd_engine * e, token * block) {
 				case BLOCK_DEF_ABBREVIATION:
 					// Strip leading '>'' from term
 					f = footnote_new(e->dstr->str, label, block->child, false);
-					if (f && f->clean_text)
+					if (f && f->clean_text) {
 						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+						while (char_is_whitespace((f->clean_text)[0])) {
+							memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+						}
+					}
 
 					// Adjust the properties
 					free(f->label_text);
 					f->label_text = f->clean_text;
-					f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
-
+					if (f->content->child->next->next) {
+						f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
+					} else {
+						f->clean_text = NULL;
+					}
 					stack_push(e->abbreviation_stack, f);
 					break;
 				case BLOCK_DEF_CITATION:
@@ -1326,7 +1356,7 @@ token * manual_label_from_header(token * h, const char * source) {
 				break;
 			case PAIR_BRACKET:
 				label = walker;
-				while(walker->type == PAIR_BRACKET) {
+				while(walker && walker->type == PAIR_BRACKET) {
 					walker = walker->prev;
 					count++;
 				}

@@ -402,22 +402,26 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 		case HASH4:
 		case HASH5:
 		case HASH6:
-			line->type = (line->child->type - HASH1) + LINE_ATX_1;
-			line->child->type = (line->type - LINE_ATX_1) + MARKER_H1;
+			if (scan_atx(&source[line->child->start])) {
+				line->type = (line->child->type - HASH1) + LINE_ATX_1;
+				line->child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
-			// Strip trailing whitespace from '#' sequence
-			line->child->len = line->child->type - MARKER_H1 + 1;
+				// Strip trailing whitespace from '#' sequence
+				line->child->len = line->child->type - MARKER_H1 + 1;
 
-			// Strip trailing '#' sequence if present
-			if (line->child->tail->type == TEXT_NL) {
-				if ((line->child->tail->prev->type >= HASH1) &&
-					(line->child->tail->prev->type <= HASH6))
-					line->child->tail->prev->type = TEXT_EMPTY;
+				// Strip trailing '#' sequence if present
+				if (line->child->tail->type == TEXT_NL) {
+					if ((line->child->tail->prev->type >= HASH1) &&
+						(line->child->tail->prev->type <= HASH6))
+						line->child->tail->prev->type = TEXT_EMPTY;
+				} else {
+//					token_describe(line->child->tail, NULL);
+					if ((line->child->tail->type >= HASH1) &&
+						(line->child->tail->type <= HASH6))
+						line->child->tail->type = TEXT_EMPTY;
+				}
 			} else {
-				token_describe(line->child->tail, NULL);
-				if ((line->child->tail->type >= HASH1) &&
-					(line->child->tail->type <= HASH6))
-					line->child->tail->type = TEXT_EMPTY;
+				line->type = LINE_PLAIN;
 			}
 			break;
 		case TEXT_NUMBER_POSS_LIST:
@@ -813,7 +817,12 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 					token_append_child(line, t);
 				}
             }
+		} else if (type == 0 && stop > last_stop) {
+			// Source text ends without newline
+			t = token_new(TEXT_PLAIN, (size_t)(last_stop - str), (size_t)(stop - last_stop));
+			token_append_child(line, t);
 		}
+
 
 		switch (type) {
 			case 0:
@@ -1316,12 +1325,17 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 						t->can_close = 0;
 
 						// Shift next token right and move those characters as child node
-						if ((t->next != NULL) && ((t->next->type == TEXT_PLAIN) || (t->next->type == TEXT_NUMBER_POSS_LIST))) {
-							t->next->start += t->len - 1;
-							t->next->len -= t->len - 1;
-
-							t->child = token_new(TEXT_PLAIN, t->start + 1, t->len - 1);
+						// It's possible that one (or more?) tokens are entirely subsumed.
+						while (t->next && t->next->start + t->next->len < offset) {
+							tokens_prune(t->next, t->next);
 						}
+
+						if ((t->next != NULL) && ((t->next->type == TEXT_PLAIN) || (t->next->type == TEXT_NUMBER_POSS_LIST))) {
+							t->next->len = t->next->start + t->next->len - offset;
+							t->next->start = offset;
+						}
+
+						t->child = token_new(TEXT_PLAIN, t->start + 1, t->len - 1);
 					}
 				}
 
@@ -1359,7 +1373,8 @@ void pair_emphasis_tokens(token * t) {
 				case STAR:
 				case UL:
 					closer = t->mate;
-					if ((t->next->mate == closer->prev) &&
+					if (t->next &&
+						(t->next->mate == closer->prev) &&
 						(t->type == t->next->type) &&
 						(t->next->mate != t) &&
 						(t->start+t->len == t->next->start) &&
@@ -1508,6 +1523,7 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 	while (l) {
 		switch (l->type) {
 			case LINE_META:
+			meta:
 				if (m) {
 					meta_set_value(m, d->str);
 					d_string_erase(d, 0, -1);
@@ -1526,9 +1542,16 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 					l->len--;
 				}
 			case LINE_PLAIN:
+			plain:
 				d_string_append_c(d, '\n');
 				d_string_append_c_array(d, &source[l->start], l->len);
 				break;
+			case LINE_TABLE:
+				if (scan_meta_line(&source[l->start])) {
+					goto meta;
+				} else {
+					goto plain;
+				}
 			default:
 				fprintf(stderr, "ERROR!\n");
 				token_describe(l, NULL);
@@ -1739,6 +1762,26 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				// Advance to next line
 				l = l->next;
 				break;
+			case BLOCK_DEFINITION:
+				// Sometimes these get created unintentionally inside other blocks
+				// Process inside it, then treat it like a line to be stripped
+
+				// Change to plain line
+				l->child->type = LINE_PLAIN;
+				strip_line_tokens_from_block(e, l);
+
+				// Move children to parent
+				// Add ':' back
+				if (e->dstr->str[l->child->start - 1] == ':') {
+					temp = token_new(COLON, l->child->start - 1, 1);
+					token_append_child(block, temp);
+				}
+				token_append_child(block, l->child);
+				l->child = NULL;
+				if (children == NULL)
+					children = l;
+				l = l->next;
+				break;
 			case LINE_TABLE_SEPARATOR:
 			case LINE_TABLE:
 				if (block->type == BLOCK_TABLE_HEADER) {
@@ -1751,7 +1794,8 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 					goto handle_line;
 				}
 			default:
-				//fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
+				// token_describe(block, e->dstr->str);
+				// fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
 				// This is a block, need to remove it from chain and
 				// Add to parent
 				temp = l->next;

@@ -1331,6 +1331,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAIR_CRITIC_SUB_DEL:
 			if ((scratch->extensions & EXT_CRITIC) &&
+				(t->next) &&
 				(t->next->type == PAIR_CRITIC_SUB_ADD)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
@@ -1349,6 +1350,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case PAIR_CRITIC_SUB_ADD:
 			if ((scratch->extensions & EXT_CRITIC) &&
+				(t->prev) &&
 				(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;

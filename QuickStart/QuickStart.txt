@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.0-b
+Version:	6.0.0-rc1
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
@@ -202,10 +202,9 @@ older versions of the EPUB format, but other tools can convert to other
 document formats you need.  Same goes for Amazon's ebook formats -- the
 [Calibre] program can also be used to interconvert between formats.
 
-**NOTE: Because EPUB documents are binary files, MMD only creates them when
-**run in batch mode (using the `-b\--batch` options).  Otherwise, it simply
-**outputs the HTML 5 file that would serve as the primary content for the
-**EPUB.
+**NOTE**: Because EPUB documents are binary files, MMD only creates them when
+run in batch mode (using the `-b\--batch` options).  Otherwise, it simply
+outputs the HTML 5 file that would serve as the primary content for the EPUB.
 
 
 ## Fenced Code Blocks ##
