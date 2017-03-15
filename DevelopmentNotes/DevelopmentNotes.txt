@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-03-14  
+Date: 2017-03-15  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 
@@ -431,6 +431,32 @@ the code or used during the development.
 
 
 # Changelog #
+
+* 2017-03-15 -- v 6.0.0-rc1:
+
+	*    FIXED: Add missing CriticMarkup tokens to LaTeX
+	*    FIXED: Don't let labels end on '\' that is escaping the closing ']'
+	*    FIXED: Fix NULL pointer dereference
+	*    FIXED: Fix bug in Aho-Corasick implementation
+	*    FIXED: Fix bug with ATX Headers without newline
+	*    FIXED: Fix bug with Setext header starting with ':'
+	*    FIXED: Fix bug with leading spaces in abbreviation references
+	*    FIXED: Fix crash with empty definition
+	*    FIXED: Fix edge case with URL definitions
+	*    FIXED: Fix edge case with superscripts
+	*    FIXED: Fix null dereference error in CriticMarkup substitution
+	*    FIXED: Fix potential bug in Aho-Corasick search:
+	*    FIXED: Fix potential bug in storing items to hash
+	*    FIXED: Fix potential bug with line->block parser
+	*    FIXED: Fix potential crash in attribute parsing
+	*    FIXED: Fix printing raw CriticMarkup tokens in LaTeX
+	*    FIXED: Fix signedness bug in Aho-Corasick
+	*    FIXED: Improve metadata edge cases; Fix NULL pointer dereference
+	*    FIXED: Include non-breaking space (ASCII 160) in re2c patterns
+	*    FIXED: Keep ':' in false positive definitions
+	*    FIXED: Lex space followed by tab as space, not text
+	*    FIXED: Limit lines treated as ATX headers
+	*    FIXED: Update test code
 
 
 * 2017-03-13 -- v 6.0.0-b2:

@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Development Notes</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="date" content="2017-03-14"/>
+	<meta name="date" content="2017-03-15"/>
 </head>
 <body>
 
@@ -399,6 +399,33 @@ the code or used during the development.</p>
 <h3 id="changelog">Changelog </h3>
 
 <ul>
+<li><p>2017&#8211;03&#8211;15 &#8211; v 6.0.0-rc1:</p>
+
+<ul>
+<li>FIXED: Add missing CriticMarkup tokens to LaTeX</li>
+<li>FIXED: Don&#8216;t let labels end on &#8217;' that is escaping the closing &#8216;]&#8217;</li>
+<li>FIXED: Fix NULL pointer dereference</li>
+<li>FIXED: Fix bug in Aho&#8211;Corasick implementation</li>
+<li>FIXED: Fix bug with ATX Headers without newline</li>
+<li>FIXED: Fix bug with Setext header starting with &#8216;:&#8217;</li>
+<li>FIXED: Fix bug with leading spaces in abbreviation references</li>
+<li>FIXED: Fix crash with empty definition</li>
+<li>FIXED: Fix edge case with URL definitions</li>
+<li>FIXED: Fix edge case with superscripts</li>
+<li>FIXED: Fix null dereference error in CriticMarkup substitution</li>
+<li>FIXED: Fix potential bug in Aho&#8211;Corasick search:</li>
+<li>FIXED: Fix potential bug in storing items to hash</li>
+<li>FIXED: Fix potential bug with line&#8211;&gt;block parser</li>
+<li>FIXED: Fix potential crash in attribute parsing</li>
+<li>FIXED: Fix printing raw CriticMarkup tokens in LaTeX</li>
+<li>FIXED: Fix signedness bug in Aho&#8211;Corasick</li>
+<li>FIXED: Improve metadata edge cases; Fix NULL pointer dereference</li>
+<li>FIXED: Include non&#8211;breaking space (ASCII 160) in re2c patterns</li>
+<li>FIXED: Keep &#8216;:&#8217; in false positive definitions</li>
+<li>FIXED: Lex space followed by tab as space, not text</li>
+<li>FIXED: Limit lines treated as ATX headers</li>
+<li>FIXED: Update test code</li>
+</ul></li>
 <li><p>2017&#8211;03&#8211;13 &#8211; v 6.0.0-b2:</p>
 
 <ul>
