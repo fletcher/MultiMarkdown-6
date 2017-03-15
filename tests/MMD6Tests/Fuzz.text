@@ -1,0 +1,40 @@
+Title:	Fuzz Testing
+latex config:	article
+
+Collection of test cases identified by [American fuzzy lop](http://lcamtuf.coredump.cx/afl/).
+
+û~~foo~>bar~~}
+
+* list
+* 	tems
+
+:Escapes [escaped]
+----------------
+
+[>MM\]: MultiMarkdown
+
+[?terí¢ıı[?term]: A term to be defined.
+
+[foo1]
+
+[foo2]
+
+[foo1]:  #ba\
+[foo2]: #bar
+
+]: And aÄe footn.I^Thi1. \$
+
+[MMD]:
+
+f o o f o o
+
+[>  o o]: F O O
+
+*  foo
+*       foo
+
+
+
+(This must be at end of file without trailing newline)
+
+# A

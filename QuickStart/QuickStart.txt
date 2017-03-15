@@ -202,10 +202,9 @@ older versions of the EPUB format, but other tools can convert to other
 document formats you need.  Same goes for Amazon's ebook formats -- the
 [Calibre] program can also be used to interconvert between formats.
 
-**NOTE: Because EPUB documents are binary files, MMD only creates them when
-**run in batch mode (using the `-b\--batch` options).  Otherwise, it simply
-**outputs the HTML 5 file that would serve as the primary content for the
-**EPUB.
+**NOTE**: Because EPUB documents are binary files, MMD only creates them when
+run in batch mode (using the `-b\--batch` options).  Otherwise, it simply
+outputs the HTML 5 file that would serve as the primary content for the EPUB.
 
 
 ## Fenced Code Blocks ##
