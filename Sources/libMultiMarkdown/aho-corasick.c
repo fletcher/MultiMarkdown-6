@@ -331,6 +331,7 @@ match * match_new(size_t start, size_t len, unsigned short match_type) {
 		m->len = len;
 		m->match_type = match_type;
 		m->next = NULL;
+		m->prev = NULL;
 	}
 
 	return m;
@@ -483,7 +484,8 @@ void match_set_filter_leftmost_longest(match * header) {
 			}
 		}
 
-		while (m->prev->len && 
+		while (m->prev &&
+			m->prev->len &&
 			m->prev->start >= m->start) {
 			// We are "lefter" than previous
 			n = m->prev;
