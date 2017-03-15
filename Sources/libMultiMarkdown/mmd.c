@@ -1373,7 +1373,8 @@ void pair_emphasis_tokens(token * t) {
 				case STAR:
 				case UL:
 					closer = t->mate;
-					if ((t->next->mate == closer->prev) &&
+					if (t->next &&
+						(t->next->mate == closer->prev) &&
 						(t->type == t->next->type) &&
 						(t->next->mate != t) &&
 						(t->start+t->len == t->next->start) &&
@@ -1522,6 +1523,7 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 	while (l) {
 		switch (l->type) {
 			case LINE_META:
+			meta:
 				if (m) {
 					meta_set_value(m, d->str);
 					d_string_erase(d, 0, -1);
@@ -1540,9 +1542,16 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 					l->len--;
 				}
 			case LINE_PLAIN:
+			plain:
 				d_string_append_c(d, '\n');
 				d_string_append_c_array(d, &source[l->start], l->len);
 				break;
+			case LINE_TABLE:
+				if (scan_meta_line(&source[l->start])) {
+					goto meta;
+				} else {
+					goto plain;
+				}
 			default:
 				fprintf(stderr, "ERROR!\n");
 				token_describe(l, NULL);
