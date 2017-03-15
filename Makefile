@@ -4,6 +4,8 @@ srcfiles := $(wildcard *.md */*.md )
 
 htmlfiles := $(patsubst %.md, %.html, $(srcfiles))
 
+epubfiles := $(patsubst %.md, %.epub, $(srcfiles))
+
 rtffiles := $(patsubst %.md, %.rtf, $(srcfiles))
 
 texfiles := $(patsubst %.md, %.tex, $(srcfiles))
@@ -30,10 +32,15 @@ guide: MMD_Users_Guide.html
 
 html: $(htmlfiles)
 
+epub: MMD_Users_Guide.epub
+
 pdf: MMD_Users_Guide.tex
-	latexmk MMD_Users_Guide.tex
-	latexmk -c MMD_Users_Guide.tex
-	rm MMD_Users_Guide.tex
+	latexmk MMD_Users_Guide
+	makeglossaries MMD_Users_Guide
+	latexmk MMD_Users_Guide
+	latexmk MMD_Users_Guide
+	latexmk -c MMD_Users_Guide
+	rm MMD_Users_Guide.tex MMD_Users_Guide.a* MMD_Users_Guide.gl*
 
 odf: MMD_Users_Guide.fodt
 
@@ -42,6 +49,12 @@ odf: MMD_Users_Guide.fodt
 
 %.html: %.text
 	../build/multimarkdown -b -t html $*.text
+
+%.epub: %.md
+	../build/multimarkdown -b -t epub $*.md
+
+%.epub: %.text
+	../build/multimarkdown -b -t epub $*.text
 
 %.rtf: %.md
 	../build/multimarkdown -b -t rtf $*.md
@@ -66,7 +79,7 @@ examples: $(ex-html) $(ex-rtf) $(ex-tex) $(ex-odf)
 
 
 clean:
-	@rm $(htmlfiles) $(rtffiles) $(texfiles) $(odffiles) $(pdffiles)
+	@rm $(htmlfiles) $(rtffiles) $(texfiles) $(odffiles) $(pdffiles) $(epubfiles)
 
 clean-examples:
 	@rm $(ex-html) $(ex-rtf) $(ex-tex) $(ex-odf)

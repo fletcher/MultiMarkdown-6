@@ -19,6 +19,7 @@ latex config:	tufte-handout
 You can view the MultiMarkdown User's Guide as a **single document**:
 
 * [HTML](MMD_Users_Guide.html)
+* [EPUB 3](MMD_Users_Guide.epub)
 * [PDF](MMD_Users_Guide.pdf)
 * [OpenDocument](MMD_Users_Guide.fodt)
 
