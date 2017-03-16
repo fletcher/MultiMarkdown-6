@@ -1,6 +1,15 @@
 /// Trivial example of using libMultiMarkdown within a Swift
 /// project.  Needs a lot of work to be functional.
 
+
+// libMultiMarkdown is built as shared library -- needs to be static
+// libMultiMarkdown is named liblibMultiMarkdown -- need to fix
+
+// Needs the functionality from main.c in order to become viable
+// replacement for the c build.
+
+// But as a proof of concept, it works.
+
 import libMultiMarkdown
 
 
