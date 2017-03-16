@@ -1304,7 +1304,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 					break;
 			}
 			label->type = TEXT_EMPTY;
-			label->next->type = TEXT_EMPTY;
+			if (label->next)
+				label->next->type = TEXT_EMPTY;
 			strip_leading_whitespace(label, e->dstr->str);
 			break;
 		case BLOCK_DEF_LINK:
@@ -2211,7 +2212,8 @@ void strip_leading_whitespace(token * chain, const char * source) {
 				return;
 		}
 
-		chain = chain->next;
+		if (chain)
+			chain = chain->next;
 	}
 }
 
