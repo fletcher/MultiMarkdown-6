@@ -326,8 +326,8 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 		if (stop == NULL)
 			break;
 
-		// Where will we start next search?
-		offset = stop + 2 - source->str;
+		// Remember insertion point
+		offset = start + 2 - source->str;
 
 		// Ensure we have a reasonable match -- cap at 1000 characters
 		if (stop - start < 1000) {
@@ -432,11 +432,12 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 
 				mmd_engine_free(e, false);
 
-				// Insert file text
+				// Insert file text -- this may cause d_string to reallocate the
+				// character buffer, meaning start/stop are no longer valid
 				d_string_insert(source, start - source->str, buffer->str);
 
 				// Shift search point
-				offset = start - source->str + buffer->currentStringLength;
+				offset += buffer->currentStringLength;
 
 				d_string_free(buffer, true);
 			}
