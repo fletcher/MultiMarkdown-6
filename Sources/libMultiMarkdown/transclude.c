@@ -287,6 +287,7 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 	char * temp;
 
 	size_t offset;
+	size_t last_match;
 
 	// TODO: Does this source have metadata that overrides the search directory?
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
@@ -327,7 +328,7 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 			break;
 
 		// Remember insertion point
-		offset = start + 2 - source->str;
+		last_match = start - source->str;
 
 		// Ensure we have a reasonable match -- cap at 1000 characters
 		if (stop - start < 1000) {
@@ -383,6 +384,7 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 				temp = stack_peek_index(parse_stack, i);
 				if (strcmp(file_path->str, temp) == 0) {
 					// We have parsed this file already, don't recurse infinitely
+					last_match += 2;
 					goto finish_file;
 				}
 			}
@@ -437,9 +439,12 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 				d_string_insert(source, start - source->str, buffer->str);
 
 				// Shift search point
-				offset += buffer->currentStringLength;
+				last_match += buffer->currentStringLength;
 
 				d_string_free(buffer, true);
+			} else {
+				// Skip over marker
+				last_match += 2;
 			}
 
 			// Remove this file from stack
@@ -450,9 +455,11 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 
 		} else {
 			// Match was too long to be reasonable file name
+			// Skip over marker
+			last_match += 2;
 		}
 
-		start = strstr(source->str + offset, "{{");
+		start = strstr(source->str + last_match, "{{");
 	}
 
 	exit:
