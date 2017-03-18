@@ -72,4 +72,6 @@
 char * uuid_new(void);
 char * uuid_string_from_bits(unsigned char * raw);
 
+void custom_seed_rand(void);
+
 #endif

@@ -253,9 +253,16 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		scratch->close_para = false;
 	}
 
-	if (link->url)
-		printf("<img src=\"%s\"", link->url);
-	else
+	if (link->url) {
+		if (scratch->store_assets) {
+			store_asset(scratch, link->url);
+			asset * a = extract_asset(scratch, link->url);
+
+			printf("<img src=\"assets/%s\"", a->asset_path);
+		} else {
+			printf("<img src=\"%s\"", link->url);
+		}
+	} else
 		print_const("<img src=\"\"");
 
 	if (text) {
@@ -660,7 +667,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				}
 
 				temp_char = label_from_token(source, temp_token);
-				printf("<caption id=\"%s\">", temp_char);
+				printf("<caption align=\"bottom\" id=\"%s\">", temp_char);
 				free(temp_char);
 
 				t->next->child->child->type = TEXT_EMPTY;

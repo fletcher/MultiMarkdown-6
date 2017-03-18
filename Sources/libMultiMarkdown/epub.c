@@ -53,18 +53,20 @@
 	
 
 */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#include <time.h>
 
+#ifdef USE_CURL
+#include <curl/curl.h>
+#endif
 
 #include "d_string.h"
 #include "epub.h"
 #include "html.h"
 #include "miniz.h"
 #include "mmd.h"
+#include "transclude.h"
 #include "uuid.h"
 #include "writer.h"
 
@@ -88,7 +90,7 @@ char * epub_container_xml(void) {
 	d_string_append(container, "<?xml version=\"1.0\"?>\n");
 	d_string_append(container, "<container version=\"1.0\" xmlns=\"urn:oasis:names:tc:opendocument:xmlns:container\">\n");
 	d_string_append(container, "<rootfiles>\n");
-	d_string_append(container, "<rootfile full-path=\"Content/main.opf\" media-type=\"application/oebps-package+xml\" />\n");
+	d_string_append(container, "<rootfile full-path=\"OEBPS/main.opf\" media-type=\"application/oebps-package+xml\" />\n");
 	d_string_append(container, "</rootfiles>\n");
 	d_string_append(container, "</container>\n");
 
@@ -97,22 +99,6 @@ char * epub_container_xml(void) {
 	return result;	
 }
 
-
-// http://stackoverflow.com/questions/322938/recommended-way-to-initialize-srand
-// http://www.concentric.net/~Ttwang/tech/inthash.htm
-unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
-{
-    a=a-b;  a=a-c;  a=a^(c >> 13);
-    b=b-c;  b=b-a;  b=b^(a << 8);
-    c=c-a;  c=c-b;  c=c^(b >> 13);
-    a=a-b;  a=a-c;  a=a^(c >> 12);
-    b=b-c;  b=b-a;  b=b^(a << 16);
-    c=c-a;  c=c-b;  c=c^(b >> 5);
-    a=a-b;  a=a-c;  a=a^(c >> 3);
-    b=b-c;  b=b-a;  b=b^(a << 10);
-    c=c-a;  c=c-b;  c=c^(b >> 15);
-    return c;
-}
 
 char * epub_package_document(scratch_pad * scratch) {
 	DString * out = d_string_new("");
@@ -134,11 +120,6 @@ char * epub_package_document(scratch_pad * scratch) {
 		print_const("</dc:identifier>\n");
 	} else {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
-		// Seed random number generator
-		// This is not a "cryptographically secure" random seed,
-		// but good enough for an EPUB id....
-		unsigned long seed = mix(clock(), time(NULL), clock());
-		srand(seed);
 
 		char * id = uuid_new();
 		print(id);
@@ -295,8 +276,125 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 }
 
 
+bool add_asset_from_file(const char * filepath, asset * a, const char * destination, const char * directory) {
+	char * path = path_from_dir_base(directory, a->url);
+	mz_bool status;
+	bool result = false;
+
+	DString * buffer = scan_file(path);
+
+	if (buffer && buffer->currentStringLength > 0) {
+		status = mz_zip_add_mem_to_archive_file_in_place(filepath, destination, buffer->str, buffer->currentStringLength, NULL, 0, MZ_BEST_COMPRESSION);
+
+		d_string_free(buffer, true);
+		result = true;
+	}
+
+	free(path);
+
+	return result;
+}
+
+
+#ifdef USE_CURL
+// Dynamic buffer for downloading files in memory
+// Based on https://curl.haxx.se/libcurl/c/getinmemory.html
+
+struct MemoryStruct {
+	char * memory;
+	size_t size;
+};
+
+
+static size_t write_memory(void * contents, size_t size, size_t nmemb, void * userp) {
+	size_t realsize = size * nmemb;
+	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
+
+	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+	if (mem->memory == NULL) {
+		// Out of memory
+		fprintf(stderr, "Out of memory\n");
+		return 0;
+	}
+
+	memcpy(&(mem->memory[mem->size]), contents, realsize);
+	mem->size += realsize;
+	mem->memory[mem->size] = 0;
+
+	return realsize;
+}
+
+// Add assets to zipfile using libcurl
+void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
+	asset * a, * a_tmp;
+
+	if (e->asset_hash){
+		CURL * curl;
+		CURLcode res;
+		struct MemoryStruct chunk;
+
+		char destination[100] = "OEBPS/assets/";
+		destination[49] = '\0';
+		
+		mz_bool status;
+
+		curl_global_init(CURL_GLOBAL_ALL);
+		curl = curl_easy_init();
+
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memory);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
+		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+			chunk.memory = malloc(1);
+			chunk.size = 0;
+
+			curl_easy_setopt(curl, CURLOPT_URL, a->url);
+			res = curl_easy_perform(curl);
+
+			memcpy(&destination[13], a->asset_path, 36);
+
+			if (res != CURLE_OK) {
+				// Attempt to add asset from local file
+				if (!add_asset_from_file(filepath, a, destination, directory)) {
+					fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
+				}
+			} else {
+				// Store downloaded file in zip
+				status = mz_zip_add_mem_to_archive_file_in_place(filepath, destination, chunk.memory, chunk.size, NULL, 0, MZ_BEST_COMPRESSION);
+			}
+		}
+	}
+}
+
+#else
+// Add local assets only (libcurl not available)
+void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
+	asset * a, * a_tmp;
+
+	if (e->asset_hash){
+
+		char destination[100] = "OEBPS/assets/";
+		destination[49] = '\0';
+		
+		mz_bool status;
+
+		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+
+			memcpy(&destination[13], a->asset_path, 36);
+
+			// Attempt to add asset from local file
+			if (!add_asset_from_file(filepath, a, destination, directory)) {
+				fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
+			}
+		}
+	}
+}
+#endif
+
+
 // Use the miniz library to create a zip archive for the EPUB document
-void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e) {
+void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_EPUB);
 	mz_bool status;
 	char * data;
@@ -312,7 +410,7 @@ void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e
 	free(data);
 
 	// Create directories
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "Content/", NULL, 0, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/", NULL, 0, NULL, 0, MZ_BEST_COMPRESSION);
 	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "META-INF/", NULL, 0, NULL, 0, MZ_BEST_COMPRESSION);
 
 	// Add container
@@ -324,18 +422,22 @@ void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e
 	// Add package
 	data = epub_package_document(scratch);
 	len = strlen(data);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "Content/main.opf", data, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/main.opf", data, len, NULL, 0, MZ_BEST_COMPRESSION);
 	free(data);
 
 	// Add nav
 	data = epub_nav(e, scratch);
 	len = strlen(data);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "Content/nav.xhtml", data, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/nav.xhtml", data, len, NULL, 0, MZ_BEST_COMPRESSION);
 	free(data);
 
-	// Add document
+	// Add main document
 	len = strlen(body);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "Content/main.xhtml", body, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/main.xhtml", body, len, NULL, 0, MZ_BEST_COMPRESSION);
+
+
+	// Add assets
+	add_assets(filepath, e, directory);
 
 	scratch_pad_free(scratch);
 }

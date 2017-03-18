@@ -75,7 +75,7 @@ char * mmd_convert_d_string(DString * source, unsigned long extensions, short fo
 
 // Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 // multiple documents (e.g. EPUB)
-void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * filepath);
+void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
 
 
 /// MMD Engine is used for storing configuration information for MMD parser

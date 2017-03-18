@@ -120,6 +120,8 @@ typedef struct {
 
 	short				odf_para_type;
 
+	struct asset *		asset_hash;
+	short				store_assets;
 } scratch_pad;
 
 
@@ -240,6 +242,9 @@ char * label_from_string(const char * str);
 char * clean_string(const char * str, bool lowercase);
 
 short raw_level_for_header(token * header);
+
+void store_asset(scratch_pad * scratch_pad, char * url);
+asset * extract_asset(scratch_pad * scratch, char * url);
 
 #endif
 

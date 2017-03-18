@@ -69,6 +69,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "uuid.h"
 
@@ -107,3 +108,31 @@ char * uuid_string_from_bits(unsigned char * raw) {
 
 	return result;
 }
+
+
+
+// http://stackoverflow.com/questions/322938/recommended-way-to-initialize-srand
+// http://www.concentric.net/~Ttwang/tech/inthash.htm
+unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
+{
+    a=a-b;  a=a-c;  a=a^(c >> 13);
+    b=b-c;  b=b-a;  b=b^(a << 8);
+    c=c-a;  c=c-b;  c=c^(b >> 13);
+    a=a-b;  a=a-c;  a=a^(c >> 12);
+    b=b-c;  b=b-a;  b=b^(a << 16);
+    c=c-a;  c=c-b;  c=c^(b >> 5);
+    a=a-b;  a=a-c;  a=a^(c >> 3);
+    b=b-c;  b=b-a;  b=b^(a << 10);
+    c=c-a;  c=c-b;  c=c^(b >> 15);
+    return c;
+}
+
+
+void custom_seed_rand(void) {
+	// Seed random number generator
+	// This is not a "cryptographically secure" random seed,
+	// but good enough for an EPUB id....
+	unsigned long seed = mix(clock(), time(NULL), clock());
+	srand(seed);
+}
+

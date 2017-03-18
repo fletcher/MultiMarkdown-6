@@ -70,6 +70,7 @@
 #include "mmd.h"
 #include "token.h"
 #include "transclude.h"
+#include "uuid.h"
 #include "version.h"
 
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
@@ -97,31 +98,6 @@ DString * stdin_buffer() {
 	}
 
 	fclose(stdin);
-
-	return buffer;
-}
-
-
-static DString * scan_file(const char * fname) {
-	/* Read from a file and return a GString *
-		`buffer` will need to be freed elsewhere */
-
-	char chunk[kBUFFERSIZE];
-	size_t bytes;
-
-	FILE * file;
-
-	if ((file = fopen(fname, "r")) == NULL ) {
-		return NULL;
-	}
-
-	DString * buffer = d_string_new("");
-
-	while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
-		d_string_append_c_array(buffer, chunk, bytes);
-	}
-
-	fclose(file);
 
 	return buffer;
 }
@@ -312,6 +288,9 @@ int main(int argc, char** argv) {
 	token_pool_init();
 #endif
 
+	// Seed random numbers
+	custom_seed_rand();
+
 	// Determine processing mode -- batch/stdin/files??
 
 	if ((a_batch->count) && (a_file->count)) {
@@ -349,8 +328,9 @@ int main(int argc, char** argv) {
 			}
 
 			// Perform transclusion(s)
+			char * folder = dirname((char *) a_file->filename[i]);
+
 			if (extensions & EXT_TRANSCLUDE) {
-				char * folder = dirname((char *) a_file->filename[i]);
 
 				transclude_source(buffer, folder, format, NULL, NULL);
 	
@@ -372,7 +352,7 @@ int main(int argc, char** argv) {
 #endif
 	
 			if (FORMAT_EPUB == format) {
-				mmd_write_to_file(buffer, extensions, format, language, output_filename);
+				mmd_write_to_file(buffer, extensions, format, language, folder, output_filename);
 				result = NULL;
 			} else if (FORMAT_MMD == format) {
 				result = buffer->str;

@@ -71,6 +71,7 @@
 #include "odf.h"
 #include "scanners.h"
 #include "token.h"
+#include "uuid.h"
 #include "writer.h"
 
 
@@ -216,6 +217,11 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 			store_metadata(p, m);
 		}
+
+
+		// Store used assets in a hash 
+		p->asset_hash = NULL;
+		p->store_assets = 0;
 	}
 
 	return p;
@@ -1662,6 +1668,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			break;
 		case FORMAT_EPUB:
 			mmd_start_complete_html(out, e->dstr->str, scratch);
+			scratch->store_assets = true;
 
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
@@ -1714,6 +1721,9 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			mmd_end_complete_odf(out, e->dstr->str, scratch);
 			break;
 	}
+
+	// Preserve asset_hash for possible use in export
+	e->asset_hash = scratch->asset_hash;
 
 	scratch_pad_free(scratch);
 }
@@ -2294,5 +2304,39 @@ short raw_level_for_header(token * header) {
 	}
 
 	return 0;
+}
+
+
+asset * asset_new(char * url, scratch_pad * scratch) {
+	asset * a = malloc(sizeof(asset));
+
+	if (a) {
+		a->url = strdup(url);
+
+		// Create a unique local asset path
+		a->asset_path = uuid_new();
+	}
+
+	return a;
+}
+
+
+asset * extract_asset(scratch_pad * scratch, char * url) {
+	asset * a;
+
+	HASH_FIND_STR(scratch->asset_hash, url, a);
+
+	return a;
+}
+
+void store_asset(scratch_pad * scratch, char * url) {
+	asset * a = extract_asset(scratch, url);
+
+	// Only store if this url has not already been stored
+	if (!a) {
+		// Asset not found - create new one
+		a = asset_new(url, scratch);
+		HASH_ADD_KEYPTR(hh, scratch->asset_hash, url, strlen(url), a);
+	}
 }
 

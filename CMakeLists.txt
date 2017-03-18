@@ -386,6 +386,12 @@ endif (WIN32)
 # Define targets
 # ==============
 
+# Is libcurl available?
+find_package(curl)
+if (CURL_FOUND) 
+	add_definitions(-DUSE_CURL)
+endif (CURL_FOUND)	
+
 # Create a library?
 if (NOT DEFINED TEST)
 	add_library(libMultiMarkdown STATIC
@@ -403,6 +409,10 @@ else ()
 		${test_files}
 	)
 endif ()
+
+if (CURL_FOUND) 
+	target_link_libraries(libMultiMarkdown curl)
+endif (CURL_FOUND)	
 
 # Create a shared library if defined
 if (DEFINED SHAREDBUILD)
@@ -422,6 +432,10 @@ if (DEFINED SHAREDBUILD)
 
 	# Remove "Shared" from library name
 	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES OUTPUT_NAME libMultiMarkdown)
+
+	if (CURL_FOUND) 
+		target_link_libraries(libMultiMarkdownShared curl)
+	endif (CURL_FOUND)	
 
 endif (DEFINED SHAREDBUILD)
 

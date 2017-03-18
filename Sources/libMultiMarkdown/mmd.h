@@ -61,6 +61,8 @@
 #include "stack.h"
 #include "token.h"
 #include "token_pairs.h"
+#include "uthash.h"
+
 
 #define kMaxParseRecursiveDepth 1000		//!< Maximum recursion depth when parsing -- to prevent stack overflow with "pathologic" input
 
@@ -88,6 +90,8 @@ struct mmd_engine {
 
 	short					language;
 	short					quotes_lang;
+
+	struct asset *			asset_hash;
 };
 
 
@@ -100,5 +104,15 @@ void is_para_html(mmd_engine * e, token * block);
 
 
 void is_list_loose(token * list);
+
+
+struct asset {
+	char *				url;
+	char *				asset_path;
+	UT_hash_handle		hh;
+};
+
+typedef struct asset asset;
+
 
 #endif

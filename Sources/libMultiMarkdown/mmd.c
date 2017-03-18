@@ -108,6 +108,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->header_stack = stack_new(0);
 		e->link_stack = stack_new(0);
 		e->metadata_stack = stack_new(0);
+		e->asset_hash = NULL;
 
 		e->pairings1 = token_pair_engine_new();
 		e->pairings2 = token_pair_engine_new();
@@ -1979,7 +1980,7 @@ char * mmd_convert_d_string(DString * source, unsigned long extensions, short fo
 }
 
 
-void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * filepath) {
+void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
 	FILE * output_stream;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
@@ -1996,7 +1997,7 @@ void mmd_write_to_file(DString * source, unsigned long extensions, short format,
 
 	switch (format) {
 		case FORMAT_EPUB:
-			epub_write_wrapper(filepath, output->str, e);
+			epub_write_wrapper(filepath, output->str, e, directory);
 			break;
 		default:
 			// Basic formats just write to file
