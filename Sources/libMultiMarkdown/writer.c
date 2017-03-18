@@ -1277,7 +1277,9 @@ void process_definition_block(mmd_engine * e, token * block) {
 					// Adjust the properties
 					free(f->label_text);
 					f->label_text = f->clean_text;
-					if (f->content->child->next->next) {
+					if (f->content->child &&
+						f->content->child->next &&
+						f->content->child->next->next) {
 						f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
 					} else {
 						f->clean_text = NULL;
