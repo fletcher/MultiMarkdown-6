@@ -106,9 +106,11 @@ void mmd_print_char_html(DString * out, char c, bool obfuscate) {
 
 
 void mmd_print_string_html(DString * out, const char * str, bool obfuscate) {
-	while (*str != '\0') {
-		mmd_print_char_html(out, *str, obfuscate);
-		str++;
+	if (str) {
+		while (*str != '\0') {
+			mmd_print_char_html(out, *str, obfuscate);
+			str++;
+		}
 	}
 }
 
