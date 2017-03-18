@@ -482,7 +482,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 					case DASH_M:
 						if (t->type == line->child->type) {
 							t = t->next;
-							temp_short += t->len;
+							if (t)
+								temp_short += t->len;
 						} else {
 							temp_short = 0;
 							t = NULL;
