@@ -632,27 +632,78 @@ void token_split_on_char(token * t, const char * source, const char c) {
 }
 
 
-// Split a token and create 
+// Split a token and create new ones as needed
 void token_split(token * t, size_t start, size_t len, unsigned short new_type) {
 	if (!t)
 		return;
 
-	token * u = token_new(new_type, start, len);
 	size_t stop = start + len;
 
-	if (t->start + t->len > stop) {
-		token * v = token_new(t->type, stop, t->start + t->len - stop);
+	if (start < t->start)
+		return;
 
-		u->next = v;
-		v->prev = u;
-		v->next = t->next;
+	if (stop > t->start + t->len)
+		return;
+
+	token * A;		// This will be new token
+	bool inset_start = false;
+	bool inset_stop = false;
+
+	// Will we need a leading token?
+	if (start > t->start)
+		inset_start = true;
+
+	// Will we need a lagging token?
+	if (stop < t->start + t->len)
+		inset_stop = true;
+
+
+	if (inset_start) {
+		A = token_new(new_type, start, len);
+		if (inset_stop) {
+			// We will end up with t->A->T2
+
+			// Create T2
+			token * T2 = token_new(t->type, stop, t->start + t->len - stop);
+			T2->next = t->next;
+	
+			if (t->next)
+				t->next->prev = T2;
+
+			A->next = T2;
+			T2->prev = A;
+		} else {
+			// We will end up with T->A
+			A->next = t->next;
+
+			if (t->next)
+				t->next->prev = A;
+		}
+
+		t->next = A;
+		A->prev = t;
+
+		t->len = start - t->start;
 	} else {
-		u->next = t->next;
+		if (inset_stop) {
+			// We will end up with A->T
+			// But we swap the tokens to ensure we don't
+			// cause difficulty pointing to this chain,
+			// resulting in T->A, where T is the new type
+			A = token_new(t->type, stop, t->start + t->len - stop);
+			A->prev = t;
+			A->next = t->next;
+			t->next = A;
+
+			if (A->next)
+				A->next->prev = A;
+
+			t->len = stop - t->start;
+			t->type = new_type;
+		} else {
+			// We will end up with A
+			t->type = new_type;
+		}
 	}
-
-	t->next = u;
-	u->prev = t;
-
-	t->len = start - t->start;
 }
 
