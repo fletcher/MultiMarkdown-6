@@ -245,6 +245,7 @@ short raw_level_for_header(token * header);
 
 void store_asset(scratch_pad * scratch_pad, char * url);
 asset * extract_asset(scratch_pad * scratch, char * url);
+void asset_free(asset * a);
 
 #endif
 

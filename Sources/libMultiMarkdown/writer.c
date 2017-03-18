@@ -2321,6 +2321,16 @@ asset * asset_new(char * url, scratch_pad * scratch) {
 }
 
 
+void asset_free(asset * a) {
+	if (a) {
+		free(a->url);
+		free(a->asset_path);
+	}
+
+	free(a);
+}
+
+
 asset * extract_asset(scratch_pad * scratch, char * url) {
 	asset * a;
 
@@ -2328,6 +2338,7 @@ asset * extract_asset(scratch_pad * scratch, char * url) {
 
 	return a;
 }
+
 
 void store_asset(scratch_pad * scratch, char * url) {
 	asset * a = extract_asset(scratch, url);

@@ -272,6 +272,14 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	}
 	stack_free(e->metadata_stack);
 
+
+	// Free asset hash
+	asset * a, * a_tmp;
+	HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+		HASH_DEL(e->asset_hash, a);	// Remove item from hash
+		asset_free(a);				// Free the asset
+	}
+
 	free(e);
 }
 
