@@ -831,6 +831,9 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 	size_t start;
 	size_t scan_len;
 
+	if (*remainder == NULL)
+		return url;
+	
 	switch ((*remainder)->type) {
 		case PAIR_PAREN:
 		case PAIR_ANGLE:
