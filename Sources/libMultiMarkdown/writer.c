@@ -1332,6 +1332,9 @@ void process_definition_stack(mmd_engine * e) {
 }
 
 token * manual_label_from_header(token * h, const char * source) {
+	if (!h || !h->child)
+		return NULL;
+	
 	token * walker = h->child->tail;
 	token * label = NULL;
 	short count = 0;
