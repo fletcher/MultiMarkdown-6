@@ -1706,7 +1706,14 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 			print_const("\t<link type=\"text/css\" rel=\"stylesheet\" href=\"");
-			mmd_print_string_html(out, m->value, false);
+			if (scratch->store_assets) {
+				store_asset(scratch, m->value);
+				asset * a = extract_asset(scratch, m->value);
+
+				mmd_print_string_html(out, a->asset_path, false);
+			} else {
+				mmd_print_string_html(out, m->value, false);
+			}
 			print_const("\"/>\n");
 		} else if (strcmp(m->key, "htmlfooter") == 0) {
 		} else if (strcmp(m->key, "htmlheader") == 0) {
