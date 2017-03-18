@@ -52,6 +52,7 @@
 
 */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -199,6 +200,32 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 }
 
 
+static char * strip_dimension_units(char *original) {
+	char *result;
+	int i;
+	
+	result = strdup(original);
+	
+	for (i = 0; result[i]; i++)
+		result[i] = tolower(result[i]);
+	
+	if (strstr(&result[strlen(result)-2],"px")) {
+		// Leave 'px' alone
+		return result;
+	}
+
+	// Trim anything other than digits
+	for (i = 0; result[i]; i++) {
+		if (result[i] < '0' || result[i] > '9') {
+			result[i] = '\0';
+			return result;
+		}
+	}
+		
+	return result;
+}
+
+
 void mmd_export_link_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	attr * a = link->attributes;
 
@@ -241,6 +268,8 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 
 void mmd_export_image_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
+	char * width = NULL;
+	char * height = NULL;
 
 	// Compatibility mode doesn't allow figures
 	if (scratch->extensions & EXT_COMPATIBILITY)
@@ -282,12 +311,52 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		printf(" title=\"%s\"", link->title);
 
 	while (a) {
-		print_const(" ");
-		print(a->key);
-		print_const("=\"");
-		print(a->value);
-		print_const("\"");
+		if (strcmp(a->key, "width") == 0) {
+			width = strip_dimension_units(a->value);
+			if (strcmp(a->value, width) == 0) {
+				print_const(" ");
+				print(a->key);
+				print_const("=\"");
+				print(a->value);
+				print_const("\"");
+				free(width);
+				width = NULL;
+			} else {
+				free(width);
+				width = a->value;
+			}
+		} else if (strcmp(a->key, "height") == 0) {
+			height = strip_dimension_units(a->value);
+			if (strcmp(a->value, height) == 0) {
+				print_const(" ");
+				print(a->key);
+				print_const("=\"");
+				print(a->value);
+				print_const("\"");
+				free(height);
+				height = NULL;
+			} else {
+				free(height);
+				height = a->value;
+			}
+		} else {
+			print_const(" ");
+			print(a->key);
+			print_const("=\"");
+			print(a->value);
+			print_const("\"");
+		}
+
 		a = a->next;
+	}
+
+	if (height || width) {
+		print_const(" style=\"");
+		if (height)
+			printf("height:%s;", height);
+		if (width)
+			printf("width:%s;", width);
+		print_const("\"");
 	}
 
 	print_const(" />");
