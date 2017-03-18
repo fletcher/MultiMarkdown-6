@@ -1539,7 +1539,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			print_token(t);
 			break;
 		default:
-			fprintf(stderr, "Unknown token type: %d\n", t->type);
+			fprintf(stderr, "Unknown token type: %d (%lu:%lu)\n", t->type, t->start, t->len);
 			token_describe(t, source);
 			break;
 	}
