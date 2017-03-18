@@ -409,10 +409,13 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			print_const("<dd>");
 
 			temp_short = scratch->list_is_tight;
-			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
-				scratch->list_is_tight = true;
+			if (t->child) {
+				if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+					scratch->list_is_tight = true;
 
-			mmd_export_token_tree_html(out, source, t->child, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
+			}
+
 			print_const("</dd>");
 			scratch->padded = 0;
 
