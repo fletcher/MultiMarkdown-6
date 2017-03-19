@@ -81,7 +81,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Voir note de bas de page",		// Français
 
 	"see citation",					// English
-	"Ver citación",					// Español
+	"Ver referencia",				// Español
 	"Siehe Zitat",					// Deutsch
 	"Voir citation",				// Français
 
