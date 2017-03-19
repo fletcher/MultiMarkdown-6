@@ -29,13 +29,15 @@ do
 	multimarkdown -b "$1"
 #	open "$file_name.html"
 
+	multimarkdown -b -t epub "$1"
+
 	multimarkdown -b -t latex "$1"
 #	mate "$file_name.tex"
 
 	multimarkdown -b -t odf "$1"
 #	open "$file_name.fodt"
 
-	multimarkdown -b -t opml "$1"
+#	multimarkdown -b -t opml "$1"
 #	open "$file_name.opml"
 
 	shift

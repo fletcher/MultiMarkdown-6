@@ -181,8 +181,7 @@ this quickly fell apart in the face of more complex structures such as
 recursive lists. After a lot of searching, and <em>tons</em> more reading, I
 ultimately decided to use a parser generator to handle the task of group lines
 into blocks. <code>parser.y</code> has the source for this, and it is processed by the
-<a href="http://www.hwaci.com/sw/lemon/">lemon</a> parser generator to create the actual
-code.</p>
+<a href="http://www.hwaci.com/sw/lemon/">lemon</a> parser generator to create the actual code.</p>
 
 <p>I chose to do this because hand-crafting the block parser would be complex.
 The end result would likely be difficult to read and understand, which would
@@ -396,9 +395,70 @@ Otherwise, it was hard to see how to really create very good unit tests for
 the development of <abbr title="MultiMarkdown">MMD</abbr>. So there is really not much unit testing built into
 the code or used during the development.</p>
 
+<h3 id="dependencieslibraries">Dependencies/Libraries </h3>
+
+<p><abbr title="MultiMarkdown">MMD</abbr> v6 has no external dependencies when compiling, aside from the standard
+libraries for C development.</p>
+
+<p><abbr title="MultiMarkdown">MMD</abbr> can be compiled without any other tools beside the build system (cmake).</p>
+
+<p>If you want to edit the block parser, you need to modify the <code>parser.y</code> file
+and process that using <a href="http://www.hwaci.com/sw/lemon/">lemon</a> in order to update the <code>parser.c</code> file. The
+lemon parser source is actually included in <abbr title="MultiMarkdown">MMD</abbr> and needs to be compiled to be
+used.</p>
+
+<p>If you want to update the lexer or scanner utility functions, then you can
+modify <code>lexer.re</code> or <code>scanners.re</code>. These need to be processed using <a href="http://re2c.org/">re2c</a>,
+which has to be installed separately.</p>
+
+<p><abbr title="MultiMarkdown">MMD</abbr> v6 makes use of several other projects to improve performance and ease of
+use:</p>
+
+<ul>
+<li><p><a href="https://troydhanson.github.io/uthash/">uthash</a> &#8211; provides support for hashes to quickly locate specific &#8220;objects&#8221;
+based on text keys. These are used for matching footnotes, links, images and
+the like when created with the reference syntax. Much faster than searching
+through each one sequentially.</p></li>
+<li><p><a href="https://github.com/richgel999/miniz">miniz</a> &#8211; provides zip archive support to enable creation of EPUB 3 files,
+which are zip files with a specific file structure inside them.</p></li>
+<li><p><a href="https://github.com/argtable/argtable3">argtable3</a> &#8211; provides more advanced command-line argument processing in a
+more cross-platform approach than that used by <abbr title="MultiMarkdown">MMD</abbr> v5.</p></li>
+</ul>
+
 <h3 id="changelog">Changelog </h3>
 
 <ul>
+<li><p>2017&#8211;03&#8211;19 &#8211; v 6.0.0-rc2:</p>
+
+<ul>
+<li>ADDED: Add debugging info</li>
+<li>ADDED: Add image assets when creating EPUB</li>
+<li>ADDED: Add mmd2epub convenience script</li>
+<li>ADDED: Add support for random footnote numbers</li>
+<li>ADDED: Include tables as targets for cross&#8211;reference links</li>
+<li>ADDED: Store css metadata as asset</li>
+<li>CHANGED: Table captions now bottom aligned in HTML</li>
+<li>CHANGED: Update license and development notes</li>
+<li>FIXED: Fix Fuzz LaTeX test</li>
+<li>FIXED: Fix bug in HR parsing</li>
+<li>FIXED: Fix bug in determining label for headers</li>
+<li>FIXED: Fix bug in printing NULL strings</li>
+<li>FIXED: Fix bug in transclusion code</li>
+<li>FIXED: Fix cmake to find on *nix systems libcurl</li>
+<li>FIXED: Fix crash in parsing URL destinations</li>
+<li>FIXED: Fix crash in reference definitions</li>
+<li>FIXED: Fix potential crash</li>
+<li>FIXED: Fix potential crash in definitions</li>
+<li>FIXED: Fix regression in transclusion</li>
+<li>FIXED: Free memory from asset hash</li>
+<li>FIXED: Improve Spanish translations</li>
+<li>FIXED: Improve token_split() algorithm and searching for abbreviations and glossary terms in text</li>
+<li>FIXED: Improve width/height attributes for HTML images</li>
+<li>FIXED: Update Spanish, update Spanish test suite, add languages to help screen</li>
+<li>FIXED: Update table caption alignment for CSS instead of deprecated alignment</li>
+<li>UPDATE: Update documentation</li>
+<li>UPDATED: Add notes to main.swift</li>
+</ul></li>
 <li><p>2017&#8211;03&#8211;15 &#8211; v 6.0.0-rc1:</p>
 
 <ul>

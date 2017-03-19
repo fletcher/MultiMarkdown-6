@@ -60,7 +60,7 @@
 
 #include "mmd.h"
 
-void epub_write_wrapper(const char * root_path, const char * body, mmd_engine * e);
+void epub_write_wrapper(const char * root_path, const char * body, mmd_engine * e, const char * directory);
 
 
 #endif

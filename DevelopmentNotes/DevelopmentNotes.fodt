@@ -501,8 +501,7 @@ this quickly fell apart in the face of more complex structures such as
 recursive lists. After a lot of searching, and <text:span text:style-name="MMD-Italic">tons</text:span> more reading, I
 ultimately decided to use a parser generator to handle the task of group lines
 into blocks. <text:span text:style-name="Source_20_Text">parser.y</text:span> has the source for this, and it is processed by the
-<text:a xlink:type="simple" xlink:href="http://www.hwaci.com/sw/lemon/">lemon</text:a> parser generator to create the actual
-code.</text:p>
+<text:a xlink:type="simple" xlink:href="http://www.hwaci.com/sw/lemon/">lemon</text:a> parser generator to create the actual code.</text:p>
 
 <text:p text:style-name="Standard">I chose to do this because hand-crafting the block parser would be complex.
 The end result would likely be difficult to read and understand, which would
@@ -716,9 +715,158 @@ Otherwise, it was hard to see how to really create very good unit tests for
 the development of MMD. So there is really not much unit testing built into
 the code or used during the development.</text:p>
 
+<text:h text:outline-level="3"><text:bookmark text:name="dependencieslibraries"/>Dependencies/Libraries </text:h>
+
+<text:p text:style-name="Standard">MMD v6 has no external dependencies when compiling, aside from the standard
+libraries for C development.</text:p>
+
+<text:p text:style-name="Standard">MMD can be compiled without any other tools beside the build system (cmake).</text:p>
+
+<text:p text:style-name="Standard">If you want to edit the block parser, you need to modify the <text:span text:style-name="Source_20_Text">parser.y</text:span> file
+and process that using <text:a xlink:type="simple" xlink:href="http://www.hwaci.com/sw/lemon/">lemon</text:a> in order to update the <text:span text:style-name="Source_20_Text">parser.c</text:span> file. The
+lemon parser source is actually included in MMD and needs to be compiled to be
+used.</text:p>
+
+<text:p text:style-name="Standard">If you want to update the lexer or scanner utility functions, then you can
+modify <text:span text:style-name="Source_20_Text">lexer.re</text:span> or <text:span text:style-name="Source_20_Text">scanners.re</text:span>. These need to be processed using <text:a xlink:type="simple" xlink:href="http://re2c.org/">re2c</text:a>,
+which has to be installed separately.</text:p>
+
+<text:p text:style-name="Standard">MMD v6 makes use of several other projects to improve performance and ease of
+use:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://troydhanson.github.io/uthash/">uthash</text:a> &#8211; provides support for hashes to quickly locate specific &#8220;objects&#8221;
+based on text keys. These are used for matching footnotes, links, images and
+the like when created with the reference syntax. Much faster than searching
+through each one sequentially.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://github.com/richgel999/miniz">miniz</text:a> &#8211; provides zip archive support to enable creation of EPUB 3 files,
+which are zip files with a specific file structure inside them.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://github.com/argtable/argtable3">argtable3</text:a> &#8211; provides more advanced command-line argument processing in a
+more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
+
+</text:list>
+
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;19 &#8211; v 6.0.0-rc2:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add debugging info</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add image assets when creating EPUB</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add mmd2epub convenience script</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for random footnote numbers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Include tables as targets for cross&#8211;reference links</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Store css metadata as asset</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Table captions now bottom aligned in HTML</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Update license and development notes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix Fuzz LaTeX test</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in HR parsing</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in determining label for headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in printing NULL strings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in transclusion code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix cmake to find on *nix systems libcurl</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix crash in parsing URL destinations</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix crash in reference definitions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential crash</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential crash in definitions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix regression in transclusion</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Free memory from asset hash</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve Spanish translations</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve token_split() algorithm and searching for abbreviations and glossary terms in text</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve width/height attributes for HTML images</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Update Spanish, update Spanish test suite, add languages to help screen</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Update table caption alignment for CSS instead of deprecated alignment</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATE: Update documentation</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Add notes to main.swift</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;03&#8211;15 &#8211; v 6.0.0-rc1:</text:p>
 

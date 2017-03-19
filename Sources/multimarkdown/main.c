@@ -70,13 +70,14 @@
 #include "mmd.h"
 #include "token.h"
 #include "transclude.h"
+#include "uuid.h"
 #include "version.h"
 
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		*a_accept, *a_reject, *a_full, *a_snippet;
+		*a_accept, *a_reject, *a_full, *a_snippet, *a_random;
 struct arg_str *a_format, *a_lang;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -97,31 +98,6 @@ DString * stdin_buffer() {
 	}
 
 	fclose(stdin);
-
-	return buffer;
-}
-
-
-static DString * scan_file(const char * fname) {
-	/* Read from a file and return a GString *
-		`buffer` will need to be freed elsewhere */
-
-	char chunk[kBUFFERSIZE];
-	size_t bytes;
-
-	FILE * file;
-
-	if ((file = fopen(fname, "r")) == NULL ) {
-		return NULL;
-	}
-
-	DString * buffer = d_string_new("");
-
-	while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
-		d_string_append_c_array(buffer, chunk, bytes);
-	}
-
-	fclose(file);
 
 	return buffer;
 }
@@ -177,6 +153,7 @@ int main(int argc, char** argv) {
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
 		a_full			= arg_lit0("f", "full", "force a complete document"),
 		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
+		a_random		= arg_lit0("", "random", "use random numbers for footnote anchors"),
 
 		a_rem2			= arg_rem("", ""),
 
@@ -191,7 +168,7 @@ int main(int argc, char** argv) {
 
 		a_rem4			= arg_rem("", ""),
 
-		a_lang			= arg_str0("l", "lang", "LANG", "language localization, LANG = en|es|de"),
+		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|nl|sv"),
 		a_end 			= arg_end(20),
 	};
 
@@ -268,6 +245,11 @@ int main(int argc, char** argv) {
 		extensions |= EXT_SNIPPET;
 	}
 
+	if (a_random->count > 0) {
+		// Use random anchors
+		extensions |= EXT_RANDOM_FOOT;
+	}
+
 	if (a_format->count > 0) {
 		if (strcmp(a_format->sval[0], "html") == 0)
 			format = FORMAT_HTML;
@@ -312,6 +294,9 @@ int main(int argc, char** argv) {
 	token_pool_init();
 #endif
 
+	// Seed random numbers
+	custom_seed_rand();
+
 	// Determine processing mode -- batch/stdin/files??
 
 	if ((a_batch->count) && (a_file->count)) {
@@ -349,8 +334,9 @@ int main(int argc, char** argv) {
 			}
 
 			// Perform transclusion(s)
+			char * folder = dirname((char *) a_file->filename[i]);
+
 			if (extensions & EXT_TRANSCLUDE) {
-				char * folder = dirname((char *) a_file->filename[i]);
 
 				transclude_source(buffer, folder, format, NULL, NULL);
 	
@@ -372,7 +358,7 @@ int main(int argc, char** argv) {
 #endif
 	
 			if (FORMAT_EPUB == format) {
-				mmd_write_to_file(buffer, extensions, format, language, output_filename);
+				mmd_write_to_file(buffer, extensions, format, language, folder, output_filename);
 				result = NULL;
 			} else if (FORMAT_MMD == format) {
 				result = buffer->str;

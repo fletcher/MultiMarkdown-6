@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-03-15")
+set (My_Project_Revised_Date "2017-03-19")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 0-rc1)
+set (My_Project_Version_Patch 0-rc2)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -227,8 +227,9 @@ set(header_files
 set (scripts
 	scripts/mmd
 	scripts/mmd2all
-	scripts/mmd2opml
+	scripts/mmd2epub
 	scripts/mmd2odf
+	scripts/mmd2opml
 	scripts/mmd2pdf
 	scripts/mmd2tex
 	scripts/markdown
@@ -385,6 +386,15 @@ endif (WIN32)
 # Define targets
 # ==============
 
+# Is libcurl available?
+find_package(CURL)
+if (CURL_FOUND)
+	add_definitions(-DUSE_CURL)
+	message (STATUS "libcurl found")
+else ()
+	message (STATUS "libcurl not found")
+endif (CURL_FOUND)	
+
 # Create a library?
 if (NOT DEFINED TEST)
 	add_library(libMultiMarkdown STATIC
@@ -402,6 +412,10 @@ else ()
 		${test_files}
 	)
 endif ()
+
+if (CURL_FOUND) 
+	target_link_libraries(libMultiMarkdown curl)
+endif (CURL_FOUND)	
 
 # Create a shared library if defined
 if (DEFINED SHAREDBUILD)
@@ -421,6 +435,10 @@ if (DEFINED SHAREDBUILD)
 
 	# Remove "Shared" from library name
 	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES OUTPUT_NAME libMultiMarkdown)
+
+	if (CURL_FOUND) 
+		target_link_libraries(libMultiMarkdownShared curl)
+	endif (CURL_FOUND)	
 
 endif (DEFINED SHAREDBUILD)
 
@@ -508,7 +526,7 @@ endif (DEFINED SHAREDBUILD)
 
 # Install LaTeX support files
 install (FILES ${latex}
-	DESTINATION share/texmf/mmd6
+	DESTINATION share/texmf/tex/latex/mmd6
 	COMPONENT latex
 	PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
 )

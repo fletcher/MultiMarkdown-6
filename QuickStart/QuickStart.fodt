@@ -576,11 +576,6 @@ existing v6 parser but it might be simpler to use the approach from v5 and
 earlier, which was to have a separate parser tuned to only identify headers
 and &#8220;stuff between headers&#8221;.</text:p></text:list-item>
 
-<text:list-item>
-<text:p text:style-name="Standard">Improved EPUB support. Currently, EPUB support is provided by a separate
-<text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MMD-ePub">tool</text:a>. At some point, I would like to
-better integrate this into MMD itself.</text:p></text:list-item>
-
 </text:list>
 </office:text>
 </office:body>

@@ -52,6 +52,7 @@
 
 */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -106,9 +107,11 @@ void mmd_print_char_html(DString * out, char c, bool obfuscate) {
 
 
 void mmd_print_string_html(DString * out, const char * str, bool obfuscate) {
-	while (*str != '\0') {
-		mmd_print_char_html(out, *str, obfuscate);
-		str++;
+	if (str) {
+		while (*str != '\0') {
+			mmd_print_char_html(out, *str, obfuscate);
+			str++;
+		}
 	}
 }
 
@@ -197,6 +200,32 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 }
 
 
+static char * strip_dimension_units(char *original) {
+	char *result;
+	int i;
+	
+	result = strdup(original);
+	
+	for (i = 0; result[i]; i++)
+		result[i] = tolower(result[i]);
+	
+	if (strstr(&result[strlen(result)-2],"px")) {
+		// Leave 'px' alone
+		return result;
+	}
+
+	// Trim anything other than digits
+	for (i = 0; result[i]; i++) {
+		if (result[i] < '0' || result[i] > '9') {
+			result[i] = '\0';
+			return result;
+		}
+	}
+		
+	return result;
+}
+
+
 void mmd_export_link_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	attr * a = link->attributes;
 
@@ -239,6 +268,8 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 
 void mmd_export_image_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
+	char * width = NULL;
+	char * height = NULL;
 
 	// Compatibility mode doesn't allow figures
 	if (scratch->extensions & EXT_COMPATIBILITY)
@@ -251,9 +282,16 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		scratch->close_para = false;
 	}
 
-	if (link->url)
-		printf("<img src=\"%s\"", link->url);
-	else
+	if (link->url) {
+		if (scratch->store_assets) {
+			store_asset(scratch, link->url);
+			asset * a = extract_asset(scratch, link->url);
+
+			printf("<img src=\"assets/%s\"", a->asset_path);
+		} else {
+			printf("<img src=\"%s\"", link->url);
+		}
+	} else
 		print_const("<img src=\"\"");
 
 	if (text) {
@@ -273,12 +311,52 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		printf(" title=\"%s\"", link->title);
 
 	while (a) {
-		print_const(" ");
-		print(a->key);
-		print_const("=\"");
-		print(a->value);
-		print_const("\"");
+		if (strcmp(a->key, "width") == 0) {
+			width = strip_dimension_units(a->value);
+			if (strcmp(a->value, width) == 0) {
+				print_const(" ");
+				print(a->key);
+				print_const("=\"");
+				print(a->value);
+				print_const("\"");
+				free(width);
+				width = NULL;
+			} else {
+				free(width);
+				width = a->value;
+			}
+		} else if (strcmp(a->key, "height") == 0) {
+			height = strip_dimension_units(a->value);
+			if (strcmp(a->value, height) == 0) {
+				print_const(" ");
+				print(a->key);
+				print_const("=\"");
+				print(a->value);
+				print_const("\"");
+				free(height);
+				height = NULL;
+			} else {
+				free(height);
+				height = a->value;
+			}
+		} else {
+			print_const(" ");
+			print(a->key);
+			print_const("=\"");
+			print(a->value);
+			print_const("\"");
+		}
+
 		a = a->next;
+	}
+
+	if (height || width) {
+		print_const(" style=\"");
+		if (height)
+			printf("height:%s;", height);
+		if (width)
+			printf("width:%s;", width);
+		print_const("\"");
 	}
 
 	print_const(" />");
@@ -409,10 +487,13 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			print_const("<dd>");
 
 			temp_short = scratch->list_is_tight;
-			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
-				scratch->list_is_tight = true;
+			if (t->child) {
+				if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+					scratch->list_is_tight = true;
 
-			mmd_export_token_tree_html(out, source, t->child, scratch);
+				mmd_export_token_tree_html(out, source, t->child, scratch);
+			}
+
 			print_const("</dd>");
 			scratch->padded = 0;
 
@@ -570,7 +651,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				print_const("<p>");
 
 			mmd_export_token_tree_html(out, source, t->child, scratch);
-
+			
 			if (scratch->citation_being_printed) {
 				scratch->footnote_para_counter--;
 
@@ -583,7 +664,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;</a>", scratch->footnote_being_printed, LC("return to body"));
+					temp_short = scratch->footnote_being_printed;
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + temp_short);
+						temp_short = rand() % 32000 + 1;
+					}
+					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;</a>", temp_short, LC("return to body"));
 				}
 			}
 
@@ -655,7 +741,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				}
 
 				temp_char = label_from_token(source, temp_token);
-				printf("<caption id=\"%s\">", temp_char);
+				printf("<caption style=\"caption-side: bottom;\" id=\"%s\">", temp_char);
 				free(temp_char);
 
 				t->next->child->child->type = TEXT_EMPTY;
@@ -1208,13 +1294,27 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				if (temp_short2 == scratch->used_footnotes->size) {
 					// This is a re-use of a previously used note
 
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + temp_short);
+						temp_short3 = rand() % 32000 + 1;
+					} else {
+						temp_short3 = temp_short;
+					}
+
 					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						temp_short, LC("see footnote"), temp_short);
+						temp_short3, LC("see footnote"), temp_short);
 				} else {
 					// This is the first time this note was used
 
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + temp_short);
+						temp_short3 = rand() % 32000 + 1;
+					} else {
+						temp_short3 = temp_short;
+					}
+
 					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						temp_short, temp_short, LC("see footnote"), temp_short);
+						temp_short3, temp_short3, LC("see footnote"), temp_short);
 				}
 			} else {
 				// Note-based syntax disabled
@@ -1534,7 +1634,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			print_token(t);
 			break;
 		default:
-			fprintf(stderr, "Unknown token type: %d\n", t->type);
+			fprintf(stderr, "Unknown token type: %d (%lu:%lu)\n", t->type, t->start, t->len);
 			token_describe(t, source);
 			break;
 	}
@@ -1625,7 +1725,14 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 			print_const("\t<link type=\"text/css\" rel=\"stylesheet\" href=\"");
-			mmd_print_string_html(out, m->value, false);
+			if (scratch->store_assets) {
+				store_asset(scratch, m->value);
+				asset * a = extract_asset(scratch, m->value);
+
+				mmd_print_string_html(out, a->asset_path, false);
+			} else {
+				mmd_print_string_html(out, m->value, false);
+			}
 			print_const("\"/>\n");
 		} else if (strcmp(m->key, "htmlfooter") == 0) {
 		} else if (strcmp(m->key, "htmlheader") == 0) {

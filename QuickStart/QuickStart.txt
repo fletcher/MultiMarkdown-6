@@ -281,22 +281,11 @@ existing v6 parser but it might be simpler to use the approach from v5 and
 earlier, which was to have a separate parser tuned to only identify headers
 and "stuff between headers".
 
-2. Improved EPUB support.  Currently, EPUB support is provided by a separate
-[tool](https://github.com/fletcher/MMD-ePub).  At some point, I would like to
-better integrate this into MMD itself.
-
-
 
 [>MMD]: MultiMarkdown
-
 [CriticMarkup]: http://criticmarkup.com/
-
 [?PEG]:	Parsing Expression Grammar <https://en.wikipedia.org/wiki/Parsing_expression_grammar>
-
 [?AST]: Abstract Syntax Tree <https://en.wikipedia.org/wiki/Abstract_syntax_tree>
-
 [EPUB 3]: https://en.wikipedia.org/wiki/EPUB
-
 [Sigil]: https://sigil-ebook.com/
-
 [Calibre]: https://calibre-ebook.com/

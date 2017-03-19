@@ -71,6 +71,7 @@
 #include "odf.h"
 #include "scanners.h"
 #include "token.h"
+#include "uuid.h"
 #include "writer.h"
 
 
@@ -136,6 +137,12 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->base_header_level = 1;
 
 		p->odf_para_type = BLOCK_PARA;
+
+		if (e->extensions & EXT_RANDOM_FOOT) {
+			p->random_seed_base = rand() % 32000;
+		} else {
+			p->random_seed_base = 0;
+		}
 
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
@@ -216,6 +223,11 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 			store_metadata(p, m);
 		}
+
+
+		// Store used assets in a hash 
+		p->asset_hash = NULL;
+		p->store_assets = 0;
 	}
 
 	return p;
@@ -831,6 +843,9 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 	size_t start;
 	size_t scan_len;
 
+	if (*remainder == NULL)
+		return url;
+	
 	switch ((*remainder)->type) {
 		case PAIR_PAREN:
 		case PAIR_ANGLE:
@@ -1277,7 +1292,9 @@ void process_definition_block(mmd_engine * e, token * block) {
 					// Adjust the properties
 					free(f->label_text);
 					f->label_text = f->clean_text;
-					if (f->content->child->next->next) {
+					if (f->content->child &&
+						f->content->child->next &&
+						f->content->child->next->next) {
 						f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
 					} else {
 						f->clean_text = NULL;
@@ -1304,7 +1321,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 					break;
 			}
 			label->type = TEXT_EMPTY;
-			label->next->type = TEXT_EMPTY;
+			if (label->next)
+				label->next->type = TEXT_EMPTY;
 			strip_leading_whitespace(label, e->dstr->str);
 			break;
 		case BLOCK_DEF_LINK:
@@ -1326,6 +1344,9 @@ void process_definition_stack(mmd_engine * e) {
 }
 
 token * manual_label_from_header(token * h, const char * source) {
+	if (!h || !h->child)
+		return NULL;
+	
 	token * walker = h->child->tail;
 	token * label = NULL;
 	short count = 0;
@@ -1415,6 +1436,39 @@ void process_header_stack(mmd_engine * e) {
 }
 
 
+void process_table_to_link(mmd_engine * e, token * t) {
+	// Is there a caption
+	if (table_has_caption(t)) {
+		token * temp_token = t->next->child;
+
+		if (temp_token->next &&
+			temp_token->next->type == PAIR_BRACKET) {
+			temp_token = temp_token->next;
+		}
+
+		char * label = label_from_token(e->dstr->str, temp_token);
+
+		DString * url = d_string_new("#");
+		d_string_append(url, label);
+
+		link * l = link_new(e->dstr->str, temp_token, url->str, NULL, NULL);
+
+		stack_push(e->link_stack, l);
+
+		d_string_free(url, true);
+		free(label);
+	}
+}
+
+
+void process_table_stack(mmd_engine * e) {
+	for (int i = 0; i < e->table_stack->size; ++i)
+	{
+		process_table_to_link(e, stack_peek_index(e->table_stack, i));	
+	}
+}
+
+
 /// Parse metadata
 void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 	if ((scratch->extensions & EXT_NO_METADATA) ||
@@ -1456,6 +1510,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			if (strcmp(temp_char, "de") == 0) {
 				scratch->language = LC_DE;
 				scratch->quotes_lang = GERMAN;
+			} else if (strcmp(temp_char, "es") == 0) {
+				scratch->language = LC_ES;
+				scratch->quotes_lang = ENGLISH;
 			} else if (strcmp(temp_char, "fr") == 0) {
 				scratch->language = LC_FR;
 				scratch->quotes_lang = FRENCH;
@@ -1531,8 +1588,9 @@ void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
 		while (walker) {
 			token_split(tok, walker->start, walker->len, walker->match_type);
 
-			// Advance token to section after the split (if present)
-			tok = tok->next->next;
+			// Advance token to next token
+			while (tok->start < walker->start + walker->len)
+				tok = tok->next;
 
 			// Advance to next match (if present)
 			walker = walker->next;
@@ -1624,6 +1682,9 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 	// Process headers for potential cross-reference targets
 	process_header_stack(e);
 
+	// Process tables for potential cross-reference targets
+	process_table_stack(e);
+
 	// Create scratch pad
 	scratch_pad * scratch = scratch_pad_new(e, format);
 
@@ -1652,6 +1713,7 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			break;
 		case FORMAT_EPUB:
 			mmd_start_complete_html(out, e->dstr->str, scratch);
+			scratch->store_assets = true;
 
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
@@ -1704,6 +1766,9 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 			mmd_end_complete_odf(out, e->dstr->str, scratch);
 			break;
 	}
+
+	// Preserve asset_hash for possible use in export
+	e->asset_hash = scratch->asset_hash;
 
 	scratch_pad_free(scratch);
 }
@@ -2211,7 +2276,8 @@ void strip_leading_whitespace(token * chain, const char * source) {
 				return;
 		}
 
-		chain = chain->next;
+		if (chain)
+			chain = chain->next;
 	}
 }
 
@@ -2283,5 +2349,50 @@ short raw_level_for_header(token * header) {
 	}
 
 	return 0;
+}
+
+
+asset * asset_new(char * url, scratch_pad * scratch) {
+	asset * a = malloc(sizeof(asset));
+
+	if (a) {
+		a->url = strdup(url);
+
+		// Create a unique local asset path
+		a->asset_path = uuid_new();
+	}
+
+	return a;
+}
+
+
+void asset_free(asset * a) {
+	if (a) {
+		free(a->url);
+		free(a->asset_path);
+	}
+
+	free(a);
+}
+
+
+asset * extract_asset(scratch_pad * scratch, char * url) {
+	asset * a;
+
+	HASH_FIND_STR(scratch->asset_hash, url, a);
+
+	return a;
+}
+
+
+void store_asset(scratch_pad * scratch, char * url) {
+	asset * a = extract_asset(scratch, url);
+
+	// Only store if this url has not already been stored
+	if (!a) {
+		// Asset not found - create new one
+		a = asset_new(url, scratch);
+		HASH_ADD_KEYPTR(hh, scratch->asset_hash, url, strlen(url), a);
+	}
 }
 
