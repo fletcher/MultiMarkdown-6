@@ -88,6 +88,8 @@ typedef struct {
 	struct fn_holder *	footnote_hash;
 	short				footnote_being_printed;
 
+	int 				random_seed_base;
+
 	stack *				used_citations;
 	stack *				inline_citations_to_free;
 	struct fn_holder *	citation_hash;

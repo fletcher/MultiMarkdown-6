@@ -651,7 +651,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				print_const("<p>");
 
 			mmd_export_token_tree_html(out, source, t->child, scratch);
-
+			
 			if (scratch->citation_being_printed) {
 				scratch->footnote_para_counter--;
 
@@ -664,7 +664,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;</a>", scratch->footnote_being_printed, LC("return to body"));
+					temp_short = scratch->footnote_being_printed;
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + temp_short);
+						temp_short = rand() % 32000 + 1;
+					}
+					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;</a>", temp_short, LC("return to body"));
 				}
 			}
 
@@ -1289,13 +1294,27 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				if (temp_short2 == scratch->used_footnotes->size) {
 					// This is a re-use of a previously used note
 
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + temp_short);
+						temp_short3 = rand() % 32000 + 1;
+					} else {
+						temp_short3 = temp_short;
+					}
+
 					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						temp_short, LC("see footnote"), temp_short);
+						temp_short3, LC("see footnote"), temp_short);
 				} else {
 					// This is the first time this note was used
 
+					if (scratch->extensions & EXT_RANDOM_FOOT) {
+						srand(scratch->random_seed_base + temp_short);
+						temp_short3 = rand() % 32000 + 1;
+					} else {
+						temp_short3 = temp_short;
+					}
+
 					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
-						temp_short, temp_short, LC("see footnote"), temp_short);
+						temp_short3, temp_short3, LC("see footnote"), temp_short);
 				}
 			} else {
 				// Note-based syntax disabled

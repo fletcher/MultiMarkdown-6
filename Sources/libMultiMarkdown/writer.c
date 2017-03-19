@@ -138,6 +138,12 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		p->odf_para_type = BLOCK_PARA;
 
+		if (e->extensions & EXT_RANDOM_FOOT) {
+			p->random_seed_base = rand() % 32000;
+		} else {
+			p->random_seed_base = 0;
+		}
+
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
 		link * l;
