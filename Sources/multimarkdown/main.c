@@ -168,7 +168,7 @@ int main(int argc, char** argv) {
 
 		a_rem4			= arg_rem("", ""),
 
-		a_lang			= arg_str0("l", "lang", "LANG", "language localization, LANG = en|es|de"),
+		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|nl|sv"),
 		a_end 			= arg_end(20),
 	};
 

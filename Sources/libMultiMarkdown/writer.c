@@ -1510,6 +1510,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			if (strcmp(temp_char, "de") == 0) {
 				scratch->language = LC_DE;
 				scratch->quotes_lang = GERMAN;
+			} else if (strcmp(temp_char, "es") == 0) {
+				scratch->language = LC_ES;
+				scratch->quotes_lang = ENGLISH;
 			} else if (strcmp(temp_char, "fr") == 0) {
 				scratch->language = LC_FR;
 				scratch->quotes_lang = FRENCH;
