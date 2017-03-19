@@ -108,6 +108,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->header_stack = stack_new(0);
 		e->link_stack = stack_new(0);
 		e->metadata_stack = stack_new(0);
+		e->table_stack = stack_new(0);
 		e->asset_hash = NULL;
 
 		e->pairings1 = token_pair_engine_new();
@@ -232,6 +233,7 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	// Pointers to blocks that are freed elsewhere
 	stack_free(e->definition_stack);
 	stack_free(e->header_stack);
+	stack_free(e->table_stack);
 
 
 	// Abbreviations need to be freed

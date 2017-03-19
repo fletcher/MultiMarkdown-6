@@ -1430,6 +1430,39 @@ void process_header_stack(mmd_engine * e) {
 }
 
 
+void process_table_to_link(mmd_engine * e, token * t) {
+	// Is there a caption
+	if (table_has_caption(t)) {
+		token * temp_token = t->next->child;
+
+		if (temp_token->next &&
+			temp_token->next->type == PAIR_BRACKET) {
+			temp_token = temp_token->next;
+		}
+
+		char * label = label_from_token(e->dstr->str, temp_token);
+
+		DString * url = d_string_new("#");
+		d_string_append(url, label);
+
+		link * l = link_new(e->dstr->str, temp_token, url->str, NULL, NULL);
+
+		stack_push(e->link_stack, l);
+
+		d_string_free(url, true);
+		free(label);
+	}
+}
+
+
+void process_table_stack(mmd_engine * e) {
+	for (int i = 0; i < e->table_stack->size; ++i)
+	{
+		process_table_to_link(e, stack_peek_index(e->table_stack, i));	
+	}
+}
+
+
 /// Parse metadata
 void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 	if ((scratch->extensions & EXT_NO_METADATA) ||
@@ -1639,6 +1672,9 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 	// Process headers for potential cross-reference targets
 	process_header_stack(e);
+
+	// Process tables for potential cross-reference targets
+	process_table_stack(e);
 
 	// Create scratch pad
 	scratch_pad * scratch = scratch_pad_new(e, format);

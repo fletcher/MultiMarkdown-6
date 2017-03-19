@@ -130,7 +130,7 @@ block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
 block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
 block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
 block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); if (!(engine->extensions & EXT_NO_LABELS)) stack_push(engine->header_stack, A); }
-block(A)			::= table(B).				{ A = token_new_parent(B, BLOCK_TABLE); }
+block(A)			::= table(B).				{ A = token_new_parent(B, BLOCK_TABLE); stack_push(engine->table_stack, A); }
 
 
 // Reusable components
