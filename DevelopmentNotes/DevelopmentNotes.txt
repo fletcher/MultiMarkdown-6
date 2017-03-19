@@ -465,6 +465,37 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-03-19 -- v 6.0.0-rc2:
+
+	*    ADDED: Add debugging info
+	*    ADDED: Add image assets when creating EPUB
+	*    ADDED: Add mmd2epub convenience script
+	*    ADDED: Add support for random footnote numbers
+	*    ADDED: Include tables as targets for cross-reference links
+	*    ADDED: Store css metadata as asset
+	*    CHANGED: Table captions now bottom aligned in HTML
+	*    CHANGED: Update license and development notes
+	*    FIXED: Fix Fuzz LaTeX test
+	*    FIXED: Fix bug in HR parsing
+	*    FIXED: Fix bug in determining label for headers
+	*    FIXED: Fix bug in printing NULL strings
+	*    FIXED: Fix bug in transclusion code
+	*    FIXED: Fix cmake to find on *nix systems libcurl
+	*    FIXED: Fix crash in parsing URL destinations
+	*    FIXED: Fix crash in reference definitions
+	*    FIXED: Fix potential crash
+	*    FIXED: Fix potential crash in definitions
+	*    FIXED: Fix regression in transclusion
+	*    FIXED: Free memory from asset hash
+	*    FIXED: Improve Spanish translations
+	*    FIXED: Improve token_split() algorithm and searching for abbreviations and glossary terms in text
+	*    FIXED: Improve width/height attributes for HTML images
+	*    FIXED: Update Spanish, update Spanish test suite, add languages to help screen
+	*    FIXED: Update table caption alignment for CSS instead of deprecated alignment
+	*    UPDATE: Update documentation
+	*    UPDATED: Add notes to main.swift
+
+
 * 2017-03-15 -- v 6.0.0-rc1:
 
 	*    FIXED: Add missing CriticMarkup tokens to LaTeX
