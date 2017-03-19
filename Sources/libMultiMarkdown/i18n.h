@@ -71,22 +71,22 @@
 // Create the dictionary array
 static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"return to body",				// English
-	"return to body",				// Español
+	"Regresar al texto",			// Español
 	"Zum Haupttext",				// Deutsch
 	"Retour au texte principal",	// Français
 
 	"see footnote",					// English
-	"Ver nota de pie",				// Español
+	"Ver nota a pie de página",		// Español
 	"Siehe Fußnote",				// Deutsch
 	"Voir note de bas de page",		// Français
 
 	"see citation",					// English
-	"see citation",					// Español
+	"Ver citación",					// Español
 	"Siehe Zitat",					// Deutsch
 	"Voir citation",				// Français
 
 	"see glossary",					// English
-	"see glossary",					// Español
+	"Ver glosario",					// Español
 	"Siehe Glossar",				// Deutsch
 	"Voir glossaire",				// Français
 };
