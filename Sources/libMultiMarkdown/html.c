@@ -736,7 +736,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				}
 
 				temp_char = label_from_token(source, temp_token);
-				printf("<caption align=\"bottom\" id=\"%s\">", temp_char);
+				printf("<caption style=\"caption-side: bottom;\" id=\"%s\">", temp_char);
 				free(temp_char);
 
 				t->next->child->child->type = TEXT_EMPTY;
