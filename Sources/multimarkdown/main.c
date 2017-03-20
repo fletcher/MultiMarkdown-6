@@ -81,7 +81,7 @@ struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
 struct arg_str *a_format, *a_lang;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
-struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4;
+struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5;
 
 
 DString * stdin_buffer() {
@@ -146,29 +146,31 @@ int main(int argc, char** argv) {
 
 		a_rem1			= arg_rem("", ""),
 
+		a_batch			= arg_lit0("b", "batch", "process each file separately"),
+		a_full			= arg_lit0("f", "full", "force a complete document"),
+		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
+		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
+		a_random		= arg_lit0(NULL, "random", "use random numbers for footnote anchors"),
+		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
+
+		a_rem2			= arg_rem("", ""),
+
 		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
-		a_batch			= arg_lit0("b", "batch", "process each file separately"),
-		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
-		a_full			= arg_lit0("f", "full", "force a complete document"),
-		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
-		a_random		= arg_lit0("", "random", "use random numbers for footnote anchors"),
-
-		a_rem2			= arg_rem("", ""),
+		a_rem3			= arg_rem("",""),
 
 		a_accept		= arg_lit0("a", "accept", "accept all CriticMarkup changes"),
 		a_reject		= arg_lit0("r", "reject", "reject all CriticMarkup changes"),
 
-		a_rem3			= arg_rem("", ""),
-
-		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
-		
-		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc+2, "read input from file(s)"),
-
 		a_rem4			= arg_rem("", ""),
 
 		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|nl|sv"),
+
+		a_rem5			= arg_rem("", ""),
+		
+		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc+2, "read input from file(s) -- use stdin if no files given"),
+
 		a_end 			= arg_end(20),
 	};
 
@@ -179,7 +181,7 @@ int main(int argc, char** argv) {
 
 	// '--help' takes precedence
 	if (a_help->count > 0) {
-		printf("\n%s v%s\n\n", MULTIMARKDOWN_NAME, MULTIMARKDOWN_VERSION);
+		printf("\n%s v%s -- %s\n\n", MULTIMARKDOWN_NAME, MULTIMARKDOWN_VERSION, MULTIMARKDOWN_COPYRIGHT);
 		printf("\tUsage: %s", binname);
 		arg_print_syntax(stdout, argtable, "\n\n");
 		printf("Options:\n");

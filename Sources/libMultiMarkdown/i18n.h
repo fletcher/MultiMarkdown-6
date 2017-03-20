@@ -37,7 +37,7 @@
 #include <stdlib.h>
 
 
-#define kNumberOfLanguages 4
+#define kNumberOfLanguages 6
 #define kNumberOfStrings 4
 #define kLanguage 0
 
@@ -74,21 +74,29 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Regresar al texto",			// Español
 	"Zum Haupttext",				// Deutsch
 	"Retour au texte principal",	// Français
+	"return to body",				// Nederlands
+	"return to body",				// Svenska
 
 	"see footnote",					// English
 	"Ver nota a pie de página",		// Español
 	"Siehe Fußnote",				// Deutsch
 	"Voir note de bas de page",		// Français
+	"see footnote",					// Nederlands
+	"see footnote",					// Svenska
 
 	"see citation",					// English
 	"Ver referencia",				// Español
 	"Siehe Zitat",					// Deutsch
 	"Voir citation",				// Français
+	"see citation",					// Nederlands
+	"see citation",					// Svenska
 
 	"see glossary",					// English
 	"Ver glosario",					// Español
 	"Siehe Glossar",				// Deutsch
 	"Voir glossaire",				// Français
+	"see glossary",					// Nederlands
+	"see glossary",					// Svenska
 };
 
 
@@ -130,6 +138,8 @@ enum lc_languages {
 	LC_ES,				//!< Español
 	LC_DE,				//!< Deutsch
 	LC_FR,				//!< Français
+	LC_NL,				//!< Nederlands
+	LC_SV,				//!< Svenska
 };
 
 
@@ -141,6 +151,10 @@ static inline short i18n_language_from_string(const char * l) {
 		return LC_DE;
 	} else if (strcmp(l, "fr") == 0) {
 		return LC_FR;
+	} else if (strcmp(l, "nl") == 0) {
+		return LC_NL;
+	} else if (strcmp(l, "sv") == 0) {
+		return LC_SV;
 	}
 
 	return 0;

@@ -209,6 +209,12 @@ void mmd_engine_set_language(mmd_engine * e, short language) {
 		case LC_FR:
 			e->quotes_lang = FRENCH;
 			break;
+		case LC_NL:
+			e->quotes_lang = DUTCH;
+			break;
+		case LC_SV:
+			e->quotes_lang = SWEDISH;
+			break;
 		default:
 			e->quotes_lang = ENGLISH;
 	}
