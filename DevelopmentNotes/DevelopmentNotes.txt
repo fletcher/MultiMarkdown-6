@@ -465,6 +465,13 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-03-21 -- v 6.0.0-rc3:
+
+	*    ADDED: Add command line support for nl/sv quotes; Improve help screen organization
+	*    CHANGED: Refactor enumerations
+	*    FIXED: Fix potential bug in CriticMarkup handling
+
+
 * 2017-03-19 -- v 6.0.0-rc2:
 
 	*    ADDED: Add debugging info

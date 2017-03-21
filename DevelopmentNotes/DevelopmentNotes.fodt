@@ -755,6 +755,23 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;21 &#8211; v 6.0.0-rc3:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add command line support for nl/sv quotes; Improve help screen organization</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor enumerations</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Fix potential bug in CriticMarkup handling</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2017&#8211;03&#8211;19 &#8211; v 6.0.0-rc2:</text:p>
 
 <text:list text:style-name="L1">
