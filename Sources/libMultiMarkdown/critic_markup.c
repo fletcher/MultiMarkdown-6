@@ -190,11 +190,13 @@ void accept_token(DString * d, token * t) {
 			break;
 		case CM_SUB_PAIR:
 			// Erase old version and markers
-			accept_token_tree_sub(d, t->child->mate);
+			if (t->child)
+				accept_token_tree_sub(d, t->child->mate);
 			break;
 		case CM_ADD_PAIR:
 			// Check children
-			accept_token_tree(d, t->child->mate);
+			if (t->child)
+				accept_token_tree(d, t->child->mate);
 			break;
 	}
 }
@@ -212,7 +214,8 @@ void accept_token_tree(DString * d, token * t) {
 void critic_markup_accept(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
-	accept_token_tree(d, t->child->tail);
+	if (t && t->child)
+		accept_token_tree(d, t->child->tail);
 
 	token_free(t);
 }
@@ -258,11 +261,13 @@ void reject_token(DString * d, token * t) {
 			break;
 		case CM_SUB_PAIR:
 			// Erase new version and markers
-			reject_token_tree_sub(d, t->child->mate);
+			if (t->child)
+				reject_token_tree_sub(d, t->child->mate);
 			break;
 		case CM_DEL_PAIR:
 			// Check children
-			reject_token_tree(d, t->child->mate);
+			if (t->child)
+				reject_token_tree(d, t->child->mate);
 			break;
 	}
 }
@@ -280,7 +285,8 @@ void reject_token_tree(DString * d, token * t) {
 void critic_markup_reject(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
-	reject_token_tree(d, t->child->tail);
+	if (t && t->child)
+		reject_token_tree(d, t->child->tail);
 
 	token_free(t);
 

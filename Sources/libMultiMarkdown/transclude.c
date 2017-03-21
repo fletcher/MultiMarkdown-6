@@ -358,7 +358,7 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 
 			// Adjust file wildcard extension for output format
 			// e.g. `foo.*`
-			if (format && strncmp(&text[stop - start - 4], ".*", 2) == 0) {
+			if ((format != FORMAT_MMD) && strncmp(&text[stop - start - 4], ".*", 2) == 0) {
 				// Trim '.*'
 				d_string_erase(file_path, file_path->currentStringLength - 2, 2);
 
