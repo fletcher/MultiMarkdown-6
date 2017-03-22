@@ -274,7 +274,8 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="date">2017-03-15</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-03-22</meta:user-defined>
+	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>
@@ -754,6 +755,15 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;22 &#8211; v 6.0.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Version bump</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;03&#8211;21 &#8211; v 6.0.0-rc3:</text:p>
 
