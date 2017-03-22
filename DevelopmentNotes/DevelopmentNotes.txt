@@ -1,8 +1,9 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-03-15  
+Date: 2017-03-22  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
+uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
 
 
 # Introduction #
@@ -464,6 +465,11 @@ more cross-platform approach than that used by MMD v5.
 
 
 # Changelog #
+
+* 2017-03-22 -- v 6.0.0:
+
+	*	Version bump
+
 
 * 2017-03-21 -- v 6.0.0-rc3:
 
