@@ -1,7 +1,8 @@
-Title:  bar
+Title:  baz
 
 This text is included in `transclusion/baz.txt`.
 
-This should pull in `bar.txt`, *if* run from the parent directory.
+This should pull in `bar.txt`, *if* run from the parent directory, since it
+does *not* override the `transclude base` metadata.
 
 {{bar.txt}}

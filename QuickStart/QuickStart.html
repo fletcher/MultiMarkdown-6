@@ -27,6 +27,7 @@
 <li><a href="#internationalization">Internationalization </a></li>
 <li><a href="#metadata">Metadata </a></li>
 <li><a href="#tableofcontents">Table of Contents </a></li>
+<li><a href="#transclusion">Transclusion </a></li>
 </ul>
 </li>
 <li><a href="#futuresteps">Future Steps </a></li>
@@ -280,6 +281,76 @@ begin</code>, and <code>latex footer</code>.</p>
 generated Table of Contents in your document. As of <abbr title="MultiMarkdown">MMD</abbr> v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</p>
+
+<h4 id="transclusion">Transclusion </h4>
+
+<p>File transclusion works basically the same way &#8211; <code>{{file}}</code> is used to
+indicate a file that needs to be transcluded. <code>{{file.*}}</code> allows for
+wildcard transclusion. What&#8217;s different is that the way search paths are
+handled is more flexible, though it may take a moment to understand.</p>
+
+<p>When you process a file with <abbr title="MultiMarkdown">MMD</abbr>, it uses that file&#8217;s directory as the search
+path for included files. For example:</p>
+
+<table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+
+<thead>
+<tr>
+	<th> Directory </th>
+	<th> Transcluded Filename </th>
+	<th> Resolved Path  </th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td> <code>/foo/bar/</code> </td>
+	<td> <code>bat</code>    </td>
+	<td> <code>/foo/bar/bat</code>  </td>
+</tr>
+<tr>
+	<td> <code>/foo/bar/</code> </td>
+	<td> <code>baz/bat</code>   </td>
+	<td> <code>/foo/bar/baz/bat</code> </td>
+</tr>
+<tr>
+	<td> <code>/foo/bar/</code> </td>
+	<td> <code>../bat</code>    </td>
+	<td> <code>/foo/bat</code>   </td>
+</tr>
+</tbody>
+</table>
+
+<p>This is the same as <abbr title="MultiMarkdown">MMD</abbr> v 5. What&#8217;s different is that when you transclude a
+file, the search path stays the same as the &#8220;parent&#8221; file, <strong>UNLESS</strong> you use
+the <code>transclude base</code> metadata to override it. The simplest override is:</p>
+
+<pre><code>transclude base: .
+</code></pre>
+
+<p>This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.</p>
+
+<p>Alternatively you could specify that any transclusion happens inside a
+subfolder:</p>
+
+<pre><code>transclude base: folder/
+</code></pre>
+
+<p>Or you can specify an absolute path:</p>
+
+<pre><code>transclude base: /some/path
+</code></pre>
+
+<p>This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a &#8220;parent&#8221; file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.</p>
 
 <h3 id="futuresteps">Future Steps </h3>
 

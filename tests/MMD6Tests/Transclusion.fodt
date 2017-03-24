@@ -292,7 +292,8 @@
 
 <text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">transclusion/baz.txt</text:span>.</text:p>
 
-<text:p text:style-name="Standard">This should pull in <text:span text:style-name="Source_20_Text">bar.txt</text:span>, <text:span text:style-name="MMD-Italic">if</text:span> run from the parent directory.</text:p>
+<text:p text:style-name="Standard">This should pull in <text:span text:style-name="Source_20_Text">bar.txt</text:span>, <text:span text:style-name="MMD-Italic">if</text:span> run from the parent directory, since it
+does <text:span text:style-name="MMD-Italic">not</text:span> override the <text:span text:style-name="Source_20_Text">transclude base</text:span> metadata.</text:p>
 
 <text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">bar.txt</text:span>.</text:p>
 
@@ -301,6 +302,15 @@
 <text:p text:style-name="Preformatted Text">This is a file with no metadata.<text:line-break/></text:p>
 
 <text:p text:style-name="Preformatted Text">This is a file with no metadata.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">transclusion/baz2.txt</text:span>.</text:p>
+
+<text:p text:style-name="Standard">This should pull in <text:span text:style-name="Source_20_Text">transclusion/bar.txt</text:span>, <text:span text:style-name="MMD-Italic">even if</text:span> run from the parent
+directory, since it overrides the <text:span text:style-name="Source_20_Text">transclude base</text:span> metadata.</text:p>
+
+<text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">transclusion\bar.txt</text:span>.</text:p>
+
+<text:p text:style-name="Standard">foo can no longer be found &#8211; {{foo.txt}}</text:p>
 </office:text>
 </office:body>
 </office:document>

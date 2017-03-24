@@ -301,6 +301,7 @@
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
@@ -563,6 +564,93 @@ to specify the latex files separately, you can use <text:span text:style-name="S
 generated Table of Contents in your document. As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="transclusion"/>Transclusion </text:h>
+
+<text:p text:style-name="Standard">File transclusion works basically the same way &#8211; <text:span text:style-name="Source_20_Text">{{file}}</text:span> is used to
+indicate a file that needs to be transcluded. <text:span text:style-name="Source_20_Text">{{file.*}}</text:span> allows for
+wildcard transclusion. What&#8217;s different is that the way search paths are
+handled is more flexible, though it may take a moment to understand.</text:p>
+
+<text:p text:style-name="Standard">When you process a file with MMD, it uses that file&#8217;s directory as the search
+path for included files. For example:</text:p>
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+<table:table-column/>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Directory </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Transcluded Filename </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Resolved Path  </text:p>
+</table:table-cell>
+</table:table-row>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">bat</text:span>    </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/bat</text:span>  </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">baz/bat</text:span>   </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/baz/bat</text:span> </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">../bat</text:span>    </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bat</text:span>   </text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+
+
+<text:p text:style-name="Standard">This is the same as MMD v 5. What&#8217;s different is that when you transclude a
+file, the search path stays the same as the &#8220;parent&#8221; file, <text:span text:style-name="MMD-Bold">UNLESS</text:span> you use
+the <text:span text:style-name="Source_20_Text">transclude base</text:span> metadata to override it. The simplest override is:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: .<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.</text:p>
+
+<text:p text:style-name="Standard">Alternatively you could specify that any transclusion happens inside a
+subfolder:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: folder/<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Or you can specify an absolute path:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: /some/path<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a &#8220;parent&#8221; file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="futuresteps"/>Future Steps </text:h>
 

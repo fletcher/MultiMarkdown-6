@@ -271,6 +271,47 @@ Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.
 
 
+## Transclusion ##
+
+File transclusion works basically the same way -- `{{file}}` is used to
+indicate a file that needs to be transcluded.  `{{file.*}}` allows for
+wildcard transclusion.  What's different is that the way search paths are
+handled is more flexible, though it may take a moment to understand.
+
+When you process a file with MMD, it uses that file's directory as the search
+path for included files. For example:
+
+| Directory   | Transcluded Filename | Resolved Path      |  
+| ----------- | -------------------- | ------------------ |  
+| `/foo/bar/` | `bat`                | `/foo/bar/bat`     |  
+| `/foo/bar/` | `baz/bat`            | `/foo/bar/baz/bat` |  
+| `/foo/bar/` | `../bat`             | `/foo/bat`         |  
+
+
+This is the same as MMD v 5.  What's different is that when you transclude a
+file, the search path stays the same as the "parent" file, **UNLESS** you use
+the `transclude base` metadata to override it.  The simplest override is:
+
+	transclude base: .
+
+This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.  
+
+Alternatively you could specify that any transclusion happens inside a
+subfolder:
+
+	transclude base: folder/
+
+Or you can specify an absolute path:
+
+	transclude base: /some/path
+
+This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a "parent" file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.
+
+
 # Future Steps #
 
 Some features I plan to implement at some point:
