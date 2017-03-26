@@ -299,6 +299,7 @@
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaryterms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossary Terms  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
@@ -548,6 +549,97 @@ glossary terms, you must explicitly mark uses of the term.</text:p>
 
 <text:p text:style-name="Standard">MMD v6 includes support for substituting certain text phrases in other
 languages. This only affects the HTML format.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexchanges"/>LaTeX Changes </text:h>
+
+<text:p text:style-name="Standard">LaTeX support is slightly different than in prior versions of MMD. It is
+designed to be a bit more consistent, and easier for basic use.</text:p>
+
+<text:p text:style-name="Standard">The previous approach used two types of metadata:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex input</text:span> &#8211; this uses the name of a latex file that will be used in a
+<text:span text:style-name="Source_20_Text">\input{file}</text:span> command. This key can be used multiple times (the only
+metadata key that worked this way), and all the basic metadata is written to
+the LaTeX file in order.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex footer</text:span> &#8211; this file worked the same way as <text:span text:style-name="Source_20_Text">latex input</text:span>, but was
+inserted at the end of the file</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">In practice, one typically needs to be able to insert <text:span text:style-name="Source_20_Text">\input</text:span> commands at
+only a few key places in the final document:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="P1">
+At the very beginning</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+After metadata, and before the body of the document</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">After the body of the document</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">MMD 6 standardizes the metadata to use 3 new keys:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex leader</text:span> &#8211; this specifies a file that will be used at the very
+beginning of the document.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex begin</text:span> &#8211; this comes after metadata, and before the body of the
+document. This will usually include the <text:span text:style-name="Source_20_Text">\begin{document}</text:span> command, hence the
+name.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex footer</text:span> &#8211; this comes after the body of the document.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">You can use these 3 keys to replace the old <text:span text:style-name="Source_20_Text">latex input</text:span> metadata keys, as
+long as you pay attention as to which is which. If you used more than three
+include statements, you may have to combine your latex files to fit into the
+new system.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">In addition</text:span></text:span>, there is a new shortcut key &#8211; <text:span text:style-name="Source_20_Text">latex config</text:span>. This allows
+you to specify a &#8220;document name&#8221; that is used to automatically identify the
+corresponding <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span> files. For
+example, using <text:span text:style-name="Source_20_Text">latex config: artice</text:span> is the same as using:</text:p>
+
+<text:p text:style-name="Preformatted Text">latex leader:<text:tab/>mmd6-article-leader<text:line-break/>latex begin:<text:tab/>mmd6-article-begin<text:line-break/>latex footer:<text:tab/>mmd6-article-footer<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Using the new system will require migrating your old configuration to the new
+naming convention, but once done I believe it should me much more intuitive to
+use.</text:p>
+
+<text:p text:style-name="Standard">The LaTeX support files included with the MMD v6 repository support the use of
+the following <text:span text:style-name="Source_20_Text">latex config</text:span> values by default:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">article</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">tufte-book</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">tufte-handout</text:span></text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">**NOTE: You do have to install the MMD support files into the proper location
+**for your system. I would like to make this easier, but haven&#8217;t found the
+**best configuration yet.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata </text:h>
 

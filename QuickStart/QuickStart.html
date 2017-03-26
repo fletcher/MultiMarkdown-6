@@ -25,6 +25,7 @@
 <li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
 <li><a href="#glossaryterms">Glossary Terms </a></li>
 <li><a href="#internationalization">Internationalization </a></li>
+<li><a href="#latexchanges">LaTeX Changes </a></li>
 <li><a href="#metadata">Metadata </a></li>
 <li><a href="#tableofcontents">Table of Contents </a></li>
 <li><a href="#transclusion">Transclusion </a></li>
@@ -264,6 +265,74 @@ glossary terms, you must explicitly mark uses of the term.</p>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 includes support for substituting certain text phrases in other
 languages. This only affects the HTML format.</p>
+
+<h4 id="latexchanges">LaTeX Changes </h4>
+
+<p>LaTeX support is slightly different than in prior versions of <abbr title="MultiMarkdown">MMD</abbr>. It is
+designed to be a bit more consistent, and easier for basic use.</p>
+
+<p>The previous approach used two types of metadata:</p>
+
+<ul>
+<li><p><code>latex input</code> &#8211; this uses the name of a latex file that will be used in a
+<code>\input{file}</code> command. This key can be used multiple times (the only
+metadata key that worked this way), and all the basic metadata is written to
+the LaTeX file in order.</p></li>
+<li><p><code>latex footer</code> &#8211; this file worked the same way as <code>latex input</code>, but was
+inserted at the end of the file</p></li>
+</ul>
+
+<p>In practice, one typically needs to be able to insert <code>\input</code> commands at
+only a few key places in the final document:</p>
+
+<ol>
+<li>At the very beginning</li>
+<li>After metadata, and before the body of the document</li>
+<li>After the body of the document</li>
+</ol>
+
+<p><abbr title="MultiMarkdown">MMD</abbr> 6 standardizes the metadata to use 3 new keys:</p>
+
+<ol>
+<li><p><code>latex leader</code> &#8211; this specifies a file that will be used at the very
+beginning of the document.</p></li>
+<li><p><code>latex begin</code> &#8211; this comes after metadata, and before the body of the
+document. This will usually include the <code>\begin{document}</code> command, hence the
+name.</p></li>
+<li><p><code>latex footer</code> &#8211; this comes after the body of the document.</p></li>
+</ol>
+
+<p>You can use these 3 keys to replace the old <code>latex input</code> metadata keys, as
+long as you pay attention as to which is which. If you used more than three
+include statements, you may have to combine your latex files to fit into the
+new system.</p>
+
+<p><strong><em>In addition</em></strong>, there is a new shortcut key &#8211; <code>latex config</code>. This allows
+you to specify a &#8220;document name&#8221; that is used to automatically identify the
+corresponding <code>latex leader</code>, <code>latex begin</code>, and <code>latex footer</code> files. For
+example, using <code>latex config: artice</code> is the same as using:</p>
+
+<pre><code>latex leader:	mmd6-article-leader
+latex begin:	mmd6-article-begin
+latex footer:	mmd6-article-footer
+</code></pre>
+
+<p>Using the new system will require migrating your old configuration to the new
+naming convention, but once done I believe it should me much more intuitive to
+use.</p>
+
+<p>The LaTeX support files included with the <abbr title="MultiMarkdown">MMD</abbr> v6 repository support the use of
+the following <code>latex config</code> values by default:</p>
+
+<ul>
+<li><code>article</code></li>
+<li><code>tufte-book</code></li>
+<li><code>tufte-handout</code></li>
+</ul>
+
+<p>**NOTE: You do have to install the <abbr title="MultiMarkdown">MMD</abbr> support files into the proper location
+**for your system. I would like to make this easier, but haven&#8217;t found the
+**best configuration yet.</p>
 
 <h4 id="metadata">Metadata </h4>
 
