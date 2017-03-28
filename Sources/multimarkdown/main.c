@@ -340,7 +340,7 @@ int main(int argc, char** argv) {
 
 			if (extensions & EXT_TRANSCLUDE) {
 
-				transclude_source(buffer, folder, format, NULL, NULL);
+				transclude_source(buffer, folder, "", format, NULL, NULL);
 	
 				// Don't free folder -- owned by dirname
 			}
@@ -417,7 +417,7 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
 			char * folder = dirname((char *) a_file->filename[0]);
 
-			transclude_source(buffer, folder, format, NULL, NULL);
+			transclude_source(buffer, folder, "", format, NULL, NULL);
 
 			// Don't free folder -- owned by dirname
 		}

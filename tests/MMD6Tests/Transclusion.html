@@ -24,7 +24,8 @@
 
 <p>This text is included in <code>transclusion/baz.txt</code>.</p>
 
-<p>This should pull in <code>bar.txt</code>, <em>if</em> run from the parent directory.</p>
+<p>This should pull in <code>bar.txt</code>, <em>if</em> run from the parent directory, since it
+does <em>not</em> override the <code>transclude base</code> metadata.</p>
 
 <p>This text is included in <code>bar.txt</code>.</p>
 
@@ -35,6 +36,15 @@
 
 <pre><code>This is a file with no metadata.
 </code></pre>
+
+<p>This text is included in <code>transclusion/baz2.txt</code>.</p>
+
+<p>This should pull in <code>transclusion/bar.txt</code>, <em>even if</em> run from the parent
+directory, since it overrides the <code>transclude base</code> metadata.</p>
+
+<p>This text is included in <code>transclusion\bar.txt</code>.</p>
+
+<p>foo can no longer be found &#8211; {{foo.txt}}</p>
 
 </body>
 </html>

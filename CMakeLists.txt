@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-03-22")
+set (My_Project_Revised_Date "2017-03-28")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 0)
+set (My_Project_Version_Patch 1)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -236,22 +236,33 @@ set (scripts
 )
 
 set (latex
-	texmf/tex/latex/mmd6/mmd6-article-begin.tex
-	texmf/tex/latex/mmd6/mmd6-article-footer.tex
-	texmf/tex/latex/mmd6/mmd6-article-leader.tex
-	texmf/tex/latex/mmd6/mmd6-criticmarkup.tex
-	texmf/tex/latex/mmd6/mmd6-default-metadata.tex
-	texmf/tex/latex/mmd6/mmd6-memoir-footer.tex
-	texmf/tex/latex/mmd6/mmd6-memoir-layout-8.5x11.tex
-	texmf/tex/latex/mmd6/mmd6-memoir-packages.tex
-	texmf/tex/latex/mmd6/mmd6-memoir-setup.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-book-begin.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-book-footer.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-book-leader.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-footer.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-handout-begin.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-handout-footer.tex
-	texmf/tex/latex/mmd6/mmd6-tufte-handout-leader.tex
+	texmf/tex/latex/mmd6/README.md
+
+	texmf/tex/latex/mmd6/article/mmd6-article-begin.tex
+	texmf/tex/latex/mmd6/article/mmd6-article-footer.tex
+	texmf/tex/latex/mmd6/article/mmd6-article-leader.tex
+
+	texmf/tex/latex/mmd6/letterhead/mmd-envelope.sty
+	texmf/tex/latex/mmd6/letterhead/mmd-letterhead.sty
+	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-begin.tex
+	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-footer.tex
+	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-leader.tex
+
+	texmf/tex/latex/mmd6/shared/mmd6-criticmarkup.tex
+	texmf/tex/latex/mmd6/shared/mmd6-default-metadata.tex
+	texmf/tex/latex/mmd6/shared/mmd6-memoir-footer.tex
+	texmf/tex/latex/mmd6/shared/mmd6-memoir-layout-8.5x11.tex
+	texmf/tex/latex/mmd6/shared/mmd6-memoir-packages.tex
+	texmf/tex/latex/mmd6/shared/mmd6-memoir-setup.tex
+	texmf/tex/latex/mmd6/shared/mmd6-title.tex
+	texmf/tex/latex/mmd6/shared/mmd6-tufte-footer.tex
+
+	texmf/tex/latex/mmd6/tufte-book/mmd6-tufte-book-begin.tex
+	texmf/tex/latex/mmd6/tufte-book/mmd6-tufte-book-footer.tex
+	texmf/tex/latex/mmd6/tufte-book/mmd6-tufte-book-leader.tex
+	texmf/tex/latex/mmd6/tufte-handout/mmd6-tufte-handout-begin.tex
+	texmf/tex/latex/mmd6/tufte-handout/mmd6-tufte-handout-footer.tex
+	texmf/tex/latex/mmd6/tufte-handout/mmd6-tufte-handout-leader.tex
 )
 
 # Public headers, will be installed in 'include'

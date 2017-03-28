@@ -1,0 +1,17 @@
+%
+%	Configure LaTeX to produce a PDF letter using the memoir class
+%
+\documentclass[oneside,article]{memoir}
+
+% Default logo settings to avoid errors
+\def\logoheight{1.7in}
+\def\coverlogo{}
+
+
+\usepackage{xcolor}				% Allow for color (annotations)
+
+\definecolor{accent}{HTML}{000000}
+\definecolor{returnaddress}{HTML}{000000}
+\def\usexelatex{true}
+
+\input{mmd-memoir-setup}

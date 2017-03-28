@@ -73,7 +73,7 @@ DString * scan_file(const char * fname);
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
-void transclude_source(DString * source, const char * dir, short format, stack * parsed, stack * manifest);
+void transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest);
 
 
 #endif

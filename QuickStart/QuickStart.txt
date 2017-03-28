@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.0.0
+Version:	6.0.1
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
@@ -252,6 +252,69 @@ MMD v6 includes support for substituting certain text phrases in other
 languages.  This only affects the HTML format.
 
 
+## LaTeX Changes ##
+
+LaTeX support is slightly different than in prior versions of MMD.  It is
+designed to be a bit more consistent, and easier for basic use.
+
+The previous approach used two types of metadata:
+
+* `latex input` -- this uses the name of a latex file that will be used in a
+`\input{file}` command.  This key can be used multiple times (the only
+metadata key that worked this way), and all the basic metadata is written to
+the LaTeX file in order.
+
+* `latex footer` -- this file worked the same way as `latex input`, but was
+inserted at the end of the file
+
+In practice, one typically needs to be able to insert `\input` commands at
+only a few key places in the final document:
+
+1. At the very beginning
+2. After metadata, and before the body of the document
+3. After the body of the document
+
+MMD 6 standardizes the metadata to use 3 new keys:
+
+1. `latex leader` -- this specifies a file that will be used at the very
+beginning of the document.
+
+2. `latex begin` -- this comes after metadata, and before the body of the
+document. This will usually include the `\begin{document}` command, hence the
+name.
+
+3. `latex footer` -- this comes after the body of the document.
+
+You can use these 3 keys to replace the old `latex input` metadata keys, as
+long as you pay attention as to which is which.  If you used more than three
+include statements, you may have to combine your latex files to fit into the
+new system.
+
+***In addition***, there is a new shortcut key -- `latex config`.  This allows
+you to specify a "document name" that is used to automatically identify the
+corresponding `latex leader`, `latex begin`, and `latex footer` files.  For
+example, using `latex config: artice` is the same as using:
+
+	latex leader:	mmd6-article-leader
+	latex begin:	mmd6-article-begin
+	latex footer:	mmd6-article-footer
+
+Using the new system will require migrating your old configuration to the new
+naming convention, but once done I believe it should me much more intuitive to
+use.
+
+The LaTeX support files included with the MMD v6 repository support the use of
+the following `latex config` values by default:
+
+* `article`
+* `tufte-book`
+* `tufte-handout`
+
+**NOTE: You do have to install the MMD support files into the proper location
+**for your system.  I would like to make this easier, but haven't found the
+**best configuration yet.
+
+
 ## Metadata ##
 
 Metadata in MMD v6 includes new support for LaTeX -- the `latex config` key
@@ -269,6 +332,47 @@ By placing `{{TOC}}` in your document, you can insert an automatically
 generated Table of Contents in your document.  As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.
+
+
+## Transclusion ##
+
+File transclusion works basically the same way -- `{{file}}` is used to
+indicate a file that needs to be transcluded.  `{{file.*}}` allows for
+wildcard transclusion.  What's different is that the way search paths are
+handled is more flexible, though it may take a moment to understand.
+
+When you process a file with MMD, it uses that file's directory as the search
+path for included files. For example:
+
+| Directory   | Transcluded Filename | Resolved Path      |  
+| ----------- | -------------------- | ------------------ |  
+| `/foo/bar/` | `bat`                | `/foo/bar/bat`     |  
+| `/foo/bar/` | `baz/bat`            | `/foo/bar/baz/bat` |  
+| `/foo/bar/` | `../bat`             | `/foo/bat`         |  
+
+
+This is the same as MMD v 5.  What's different is that when you transclude a
+file, the search path stays the same as the "parent" file, **UNLESS** you use
+the `transclude base` metadata to override it.  The simplest override is:
+
+	transclude base: .
+
+This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.  
+
+Alternatively you could specify that any transclusion happens inside a
+subfolder:
+
+	transclude base: folder/
+
+Or you can specify an absolute path:
+
+	transclude base: /some/path
+
+This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a "parent" file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.
 
 
 # Future Steps #

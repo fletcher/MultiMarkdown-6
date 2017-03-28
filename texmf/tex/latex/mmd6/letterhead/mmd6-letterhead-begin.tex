@@ -1,0 +1,168 @@
+%
+%	Get ready for the actual document
+%
+
+% Black and White Option
+\ifx\blackandwhite\undefined
+	\def\musclogo{Logo-Color.pdf}
+\else
+	\definecolor{accent}{HTML}{000000}
+	\definecolor{returnaddress}{HTML}{000000}
+	\def\musclogo{Logo-BW.pdf}
+\fi
+
+
+\ifx\mydate\undefined
+	\def\mydate{\today}
+\fi
+
+\usepackage[
+	plainpages=false,
+	pdfpagelabels,
+	pdftitle={\mytitle},
+	pagebackref,
+	pdfauthor={\myauthor},
+	pdfkeywords={\mykeywords}
+	]{hyperref}
+\usepackage{memhfixc}
+
+\def\justauthor{\myauthor}
+
+% Define signature graphic?
+\ifx\signature\undefined
+	\def\signature{~ \\ Sincerely,\\
+	\ifx\graphicsignature\undefined
+	
+	\else
+		\resizebox{2in}{!}{\includegraphics{signature}}\\
+	\fi
+\justauthor}
+\else
+\fi
+
+% Create return address
+\def\returnaddress{\raggedleft 
+\footnotesize
+\renewcommand{\baselinestretch}{1.1}
+
+\textbf{\myauthor} \\}
+
+\ifx\position\undefined
+\addtodef{\returnaddress}{}{\emph{\defaultposition}}
+\else
+	\addtodef{\returnaddress}{}{\emph{\position} \\}
+\fi
+
+\ifx\email\undefined
+\addtodef{\returnaddress}{}{\emph{\defaultemail}
+
+~
+
+}
+\else
+	\addtodef{\returnaddress}{}{\emph{\email}
+
+~
+
+}
+\fi
+
+\ifx\department\undefined
+\addtodef{\returnaddress}{}{\textbf{\defaultdepartment}}
+\else
+	\addtodef{\returnaddress}{}{\textbf{\department} \\}
+\fi
+
+\ifx\afffiliation\undefined
+\addtodef{\returnaddress}{}{\textbf{\defaultaffiliation}}
+\else
+	\addtodef{\returnaddress}{}{\textbf{\affiliation} \\}
+\fi
+
+\ifx\address\undefined
+\addtodef{\returnaddress}{}{\defaultaddress}
+\else
+	\addtodef{\returnaddress}{}{\address \\}
+\fi
+
+\ifx\phone\undefined
+\addtodef{\returnaddress}{}{\defaultphone}
+\else
+	\addtodef{\returnaddress}{}{Tel \phone \\}
+\fi
+
+
+\ifx\fax\undefined
+\addtodef{\returnaddress}{}{\defaultfax}
+\else
+	\addtodef{\returnaddress}{}{Fax \fax \\}
+\fi
+
+\ifx\web\undefined
+\addtodef{\returnaddress}{}{\defaultweb
+}
+\else
+	\addtodef{\returnaddress}{}{ \web \\
+}
+\fi
+
+\usepackage{mmd-letterhead}
+
+\begin{document}
+
+\VerbatimFootnotes
+
+\setlength{\parindent}{0pt}
+
+% Configure Recipient
+
+\ifx\recipient\undefined
+\else
+	\addtodef{\myrecipient}{}{\recipient}
+\fi
+
+\ifx\recipientaddress\undefined
+\else
+	\addtodef{\myrecipient}{}{\\ \recipientaddress}
+\fi
+
+
+\mainmatter
+
+% User coverpage style
+\thispagestyle{letterhead-cover}
+
+% Insert return address
+
+\begin{figure}[t]
+\begin{adjustwidth}{-0.5in}{-0.5in}
+\begin{minipage}[l][\logoheight]{4in}
+	\coverlogo
+	\vspace*{\fill}
+\end{minipage} 
+\hfill 
+\begin{minipage}[r][\logoheight]{2in} 
+	{\renewcommand{\baselinestretch}{1.1}
+	\color{returnaddress}\returnaddress}
+	\vspace*{\fill}
+\end{minipage}
+\end{adjustwidth}
+\end{figure}
+
+
+\pagestyle{letterhead}
+\large
+% Return to main settings
+
+
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\parskip}{12pt}
+
+%\input{mmd-title}
+
+% Insert Recipient
+\myrecipient
+
+% Insert date
+\mydate
+

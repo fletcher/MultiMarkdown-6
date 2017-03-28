@@ -1,0 +1,70 @@
+%
+%	LaTeX MMD-Letterhead style
+%
+%	Designed for use with the memoir class
+%		and letterhead XSLT for MultiMarkdown
+%%
+%	by Fletcher T. Penney
+%		http://fletcherpenney.net/
+%
+
+% Copyright (C) 2007-2008  Fletcher T. Penney <fletcher@fletcherpenney.net>
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the
+%    Free Software Foundation, Inc.
+%    59 Temple Place, Suite 330
+%    Boston, MA 02111-1307 USA
+
+
+\ProvidesPackage{mmd-letterhead}
+
+% Define an accent color and return address color
+\definecolor{accent}{HTML}{888888}
+\definecolor{returnaddress}{HTML}{000000}
+
+
+%%% set up the page layout for 8.5 x 11 paper
+\setstocksize{11in}{8.5in}
+\settrimmedsize{11in}{8.5in}{*}	% Use entire page
+\settrims{0pt}{0pt}
+
+\setlrmarginsandblock{1in}{1in}{*}
+\setulmarginsandblock{1in}{1in}{*}
+
+\setmarginnotes{0.1pt}{0.5in}{\onelineskip}
+\setheadfoot{0.5\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{2\onelineskip}{*}
+
+\setlength{\headwidth}{\textwidth}
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+
+\checkandfixthelayout
+
+
+% Separate style for cover page
+\makepagestyle{letterhead-cover} 
+\makeheadrule{letterhead-cover}{0pt}{0pt} 
+\makeevenhead{letterhead-cover}{}{}{} 
+\makeoddhead{letterhead-cover}{}{}{} 
+\makeevenfoot{letterhead-cover}{}{}{} 
+\makeoddfoot{letterhead-cover}{}{}{} 
+
+% And just page number on other pages
+\makepagestyle{letterhead} 
+\makeheadrule{letterhead}{0pt}{0pt} 
+\makeevenhead{letterhead}{}{}{\thepage} 
+\makeoddhead{letterhead}{}{}{\thepage} 
+\makeevenfoot{letterhead}{}{}{} 
+\makeoddfoot{letterhead}{}{}{}

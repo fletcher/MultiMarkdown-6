@@ -8,3 +8,5 @@ latex config:	article
 {{transclusion/bat.*}}
 
 {{transclusion/baz.txt}}
+
+{{transclusion/baz2.txt}}

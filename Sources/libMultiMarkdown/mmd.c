@@ -789,14 +789,14 @@ void strip_quote_markers_from_block(mmd_engine * e, token * block) {
 
 /// Create a token chain from source string
 /// stop_on_empty_line allows us to stop parsing part of the way through
-token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool stop_on_empty_line) {
+token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_on_empty_line) {
 	// Reset metadata flag
 	e->allow_meta = (e->extensions & EXT_COMPATIBILITY) ? false : true;
 
 
 	// Create a scanner (for re2c)
 	Scanner s;
-	s.start = str;
+	s.start = &e->dstr->str[start];
 	s.cur = s.start;
 
 	// Strip trailing whitespace
@@ -804,7 +804,7 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 //		len--;
 	
 	// Where do we stop parsing?
-	const char * stop = str + len;
+	const char * stop = &e->dstr->str[start] + len;
 
 	int type;								// TOKEN type
 	token * t;								// Create tokens for incorporation
@@ -812,7 +812,7 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 	token * root = token_new(0,0,0);		// Store the final parse tree here
 	token * line = token_new(0,0,0);		// Store current line here
 
-	const char * last_stop = str;			// Remember where last token ended
+	const char * last_stop = &e->dstr->str[start];	// Remember where last token ended
 
 	do {
 		// Scan for next token (type of 0 means there is nothing left);
@@ -824,20 +824,20 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 
             if (type) {
 				// Create a default token type for the skipped characters
-				t = token_new(TEXT_PLAIN, (size_t)(last_stop - str), (size_t)(s.start - last_stop));
+				t = token_new(TEXT_PLAIN, (size_t)(last_stop - e->dstr->str), (size_t)(s.start - last_stop));
 
 				token_append_child(line, t);
             } else {
 				if (stop > last_stop) {
 					// Source text ends without newline
-					t = token_new(TEXT_PLAIN, (size_t)(last_stop - str), (size_t)(stop - last_stop));
+					t = token_new(TEXT_PLAIN, (size_t)(last_stop - e->dstr->str), (size_t)(stop - last_stop));
                 
 					token_append_child(line, t);
 				}
             }
 		} else if (type == 0 && stop > last_stop) {
 			// Source text ends without newline
-			t = token_new(TEXT_PLAIN, (size_t)(last_stop - str), (size_t)(stop - last_stop));
+			t = token_new(TEXT_PLAIN, (size_t)(last_stop - e->dstr->str), (size_t)(stop - last_stop));
 			token_append_child(line, t);
 		}
 
@@ -855,7 +855,7 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 			case TEXT_LINEBREAK:
 			case TEXT_NL:
 				// We hit the end of a line
-				t = token_new(type, (size_t)(s.start - str), (size_t)(s.cur - s.start));
+				t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
 				token_append_child(line, t);
 
 				// What sort of line is this?
@@ -867,10 +867,10 @@ token * mmd_tokenize_string(mmd_engine * e, const char * str, size_t len, bool s
 					if (line->type == LINE_EMPTY)
 						return root;
 				}
-				line = token_new(0,s.cur - str,0);
+				line = token_new(0,s.cur - e->dstr->str,0);
 				break;
 			default:
-				t = token_new(type, (size_t)(s.start - str), (size_t)(s.cur - s.start));
+				t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
 				token_append_child(line, t);
 				break;
 		}
@@ -1839,14 +1839,14 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 	e->definition_stack->size = 0;
 	
 	// Tokenize the string
-	token * doc = mmd_tokenize_string(e, &e->dstr->str[byte_start], byte_len, false);
+	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
 
 	// Parse tokens into blocks
 	mmd_parse_token_chain(e, doc);
 
 	if (doc) {
 		// Parse blocks for pairs
-		mmd_assign_ambidextrous_tokens_in_block(e, doc, &e->dstr->str[byte_start], 0);
+		mmd_assign_ambidextrous_tokens_in_block(e, doc, e->dstr->str, 0);
 
 		// Prepare stack to be used for token pairing
 		// This avoids allocating/freeing one for each iteration.
@@ -1863,7 +1863,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		pair_emphasis_tokens(doc);
 
 #ifndef NDEBUG
-		token_tree_describe(doc, &e->dstr->str[byte_start]);
+		token_tree_describe(doc, e->dstr->str);
 #endif
 	}
 
@@ -1898,7 +1898,7 @@ bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 		token_tree_free(e->root);
 
 	// Tokenize the string (up until first empty line)
-	token * doc = mmd_tokenize_string(e, &e->dstr->str[0], e->dstr->currentStringLength, true);
+	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
 
 	// Parse tokens into blocks
 	mmd_parse_token_chain(e, doc);

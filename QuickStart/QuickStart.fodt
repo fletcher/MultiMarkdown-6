@@ -274,7 +274,7 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="version">6.0.0</meta:user-defined>
+	<meta:user-defined meta:name="version">6.0.1</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -299,8 +299,10 @@
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaryterms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossary Terms  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
@@ -308,7 +310,7 @@
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:p text:style-name="Standard">Version: 6.0.0</text:p>
+<text:p text:style-name="Standard">Version: 6.0.1</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
@@ -548,6 +550,97 @@ glossary terms, you must explicitly mark uses of the term.</text:p>
 <text:p text:style-name="Standard">MMD v6 includes support for substituting certain text phrases in other
 languages. This only affects the HTML format.</text:p>
 
+<text:h text:outline-level="4"><text:bookmark text:name="latexchanges"/>LaTeX Changes </text:h>
+
+<text:p text:style-name="Standard">LaTeX support is slightly different than in prior versions of MMD. It is
+designed to be a bit more consistent, and easier for basic use.</text:p>
+
+<text:p text:style-name="Standard">The previous approach used two types of metadata:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex input</text:span> &#8211; this uses the name of a latex file that will be used in a
+<text:span text:style-name="Source_20_Text">\input{file}</text:span> command. This key can be used multiple times (the only
+metadata key that worked this way), and all the basic metadata is written to
+the LaTeX file in order.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex footer</text:span> &#8211; this file worked the same way as <text:span text:style-name="Source_20_Text">latex input</text:span>, but was
+inserted at the end of the file</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">In practice, one typically needs to be able to insert <text:span text:style-name="Source_20_Text">\input</text:span> commands at
+only a few key places in the final document:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="P1">
+At the very beginning</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+After metadata, and before the body of the document</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">After the body of the document</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">MMD 6 standardizes the metadata to use 3 new keys:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex leader</text:span> &#8211; this specifies a file that will be used at the very
+beginning of the document.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex begin</text:span> &#8211; this comes after metadata, and before the body of the
+document. This will usually include the <text:span text:style-name="Source_20_Text">\begin{document}</text:span> command, hence the
+name.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex footer</text:span> &#8211; this comes after the body of the document.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">You can use these 3 keys to replace the old <text:span text:style-name="Source_20_Text">latex input</text:span> metadata keys, as
+long as you pay attention as to which is which. If you used more than three
+include statements, you may have to combine your latex files to fit into the
+new system.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">In addition</text:span></text:span>, there is a new shortcut key &#8211; <text:span text:style-name="Source_20_Text">latex config</text:span>. This allows
+you to specify a &#8220;document name&#8221; that is used to automatically identify the
+corresponding <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span> files. For
+example, using <text:span text:style-name="Source_20_Text">latex config: artice</text:span> is the same as using:</text:p>
+
+<text:p text:style-name="Preformatted Text">latex leader:<text:tab/>mmd6-article-leader<text:line-break/>latex begin:<text:tab/>mmd6-article-begin<text:line-break/>latex footer:<text:tab/>mmd6-article-footer<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Using the new system will require migrating your old configuration to the new
+naming convention, but once done I believe it should me much more intuitive to
+use.</text:p>
+
+<text:p text:style-name="Standard">The LaTeX support files included with the MMD v6 repository support the use of
+the following <text:span text:style-name="Source_20_Text">latex config</text:span> values by default:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">article</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">tufte-book</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">tufte-handout</text:span></text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">**NOTE: You do have to install the MMD support files into the proper location
+**for your system. I would like to make this easier, but haven&#8217;t found the
+**best configuration yet.</text:p>
+
 <text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata </text:h>
 
 <text:p text:style-name="Standard">Metadata in MMD v6 includes new support for LaTeX &#8211; the <text:span text:style-name="Source_20_Text">latex config</text:span> key
@@ -563,6 +656,93 @@ to specify the latex files separately, you can use <text:span text:style-name="S
 generated Table of Contents in your document. As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="transclusion"/>Transclusion </text:h>
+
+<text:p text:style-name="Standard">File transclusion works basically the same way &#8211; <text:span text:style-name="Source_20_Text">{{file}}</text:span> is used to
+indicate a file that needs to be transcluded. <text:span text:style-name="Source_20_Text">{{file.*}}</text:span> allows for
+wildcard transclusion. What&#8217;s different is that the way search paths are
+handled is more flexible, though it may take a moment to understand.</text:p>
+
+<text:p text:style-name="Standard">When you process a file with MMD, it uses that file&#8217;s directory as the search
+path for included files. For example:</text:p>
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+<table:table-column/>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Directory </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Transcluded Filename </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Resolved Path  </text:p>
+</table:table-cell>
+</table:table-row>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">bat</text:span>    </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/bat</text:span>  </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">baz/bat</text:span>   </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/baz/bat</text:span> </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">../bat</text:span>    </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bat</text:span>   </text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+
+
+<text:p text:style-name="Standard">This is the same as MMD v 5. What&#8217;s different is that when you transclude a
+file, the search path stays the same as the &#8220;parent&#8221; file, <text:span text:style-name="MMD-Bold">UNLESS</text:span> you use
+the <text:span text:style-name="Source_20_Text">transclude base</text:span> metadata to override it. The simplest override is:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: .<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.</text:p>
+
+<text:p text:style-name="Standard">Alternatively you could specify that any transclusion happens inside a
+subfolder:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: folder/<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Or you can specify an absolute path:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: /some/path<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a &#8220;parent&#8221; file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.</text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="futuresteps"/>Future Steps </text:h>
 

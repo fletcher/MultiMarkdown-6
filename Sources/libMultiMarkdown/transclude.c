@@ -274,12 +274,12 @@ DString * scan_file(const char * fname) {
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
-void transclude_source(DString * source, const char * dir, short format, stack * parsed, stack * manifest) {
+void transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest) {
 	DString * file_path;
 	DString * buffer;
 
-	// Ensure folder is tidied up
-	char * folder = path_from_dir_base(dir, NULL);
+	// Ensure search_folder is tidied up
+	char * search_folder = path_from_dir_base(search_path, NULL);
 
 	char * start, * stop;
 	char text[1100];
@@ -289,22 +289,28 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 	size_t offset;
 	size_t last_match;
 
-	// TODO: Does this source have metadata that overrides the search directory?
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
 	if (mmd_has_metadata(e, &offset)) {
 
 		temp = metavalue_for_key(e, "transclude base");
 
 		if (temp) {
-			free(folder);
+			// The new file overrides the search path
+			free(search_folder);
 
-			folder = path_from_dir_base(dir, temp);
+			// First, calculate path to this source file
+			char * temp_path = path_from_dir_base(search_path, source_path);
+
+			// Then, calculate new search path relative to source
+			search_folder = path_from_dir_base(temp_path, temp);
+
+			free(temp_path);
 		}
 	}
 
 	mmd_engine_free(e, false);
 
-	if (folder == NULL) {
+	if (search_folder == NULL) {
 		// We don't have anywhere to search, so nothing to do
 		goto exit;
 	}
@@ -348,9 +354,9 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 				file_path = d_string_new(text);
 			} else {
 				// Relative path
-				file_path = d_string_new(folder);
+				file_path = d_string_new(search_folder);
 
-				// Ensure that folder ends in separator
+				// Ensure that search_folder ends in separator
 				add_trailing_sep(file_path);
 
 				d_string_append(file_path, text);
@@ -419,8 +425,15 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 				d_string_erase(source, start - source->str, 2 + stop - start);
 
 				// Recursively check this file for transclusions
-				transclude_source(buffer, folder, format, parse_stack, manifest);
+				char * new_search_path;
+				char * source_filename;
+				split_path_file(&new_search_path, &source_filename, file_path->str);
 
+				transclude_source(buffer, search_folder, new_search_path, format, parse_stack, manifest);
+
+				free(new_search_path);
+				free(source_filename);
+				
 				// Strip metadata from buffer now that we have parsed it
 				e = mmd_engine_create_with_dstring(buffer, EXT_TRANSCLUDE);
 				
@@ -469,7 +482,7 @@ void transclude_source(DString * source, const char * dir, short format, stack *
 		stack_free(parse_stack);
 	}
 
-	free(folder);
+	free(search_folder);
 }
 
 

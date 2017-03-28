@@ -8,3 +8,5 @@ latex config:	article</p>
 <p>{{transclusion/bat.*}}</p>
 
 <p>{{transclusion/baz.txt}}</p>
+
+<p>{{transclusion/baz2.txt}}</p>
