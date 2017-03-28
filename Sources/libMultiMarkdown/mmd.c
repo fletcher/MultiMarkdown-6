@@ -1231,8 +1231,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				}
 				break;
 			case QUOTE_SINGLE:
-				if (!(e->extensions & EXT_SMART))
-					break;
 				// Some of these are actually APOSTROPHE's and should not be paired
 				offset = t->start;
 
@@ -1248,8 +1246,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					break;
 				}
 			case QUOTE_DOUBLE:
-				if (!(e->extensions & EXT_SMART))
-					break;
 				offset = t->start;
 
 				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset - 1]))) {
