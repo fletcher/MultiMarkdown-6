@@ -274,7 +274,7 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="date">2017-03-22</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-03-28</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -755,6 +755,28 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;28 &#8211; v 6.0.1:</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Adjust LaTeX support files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Fix potential bug in tokenize function</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug between ASCII 160 (non&#8211;breaking space) and &#8216;à&#8217; character</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve transclude base overriding of search paths, and explain change in QuickStart guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update QuickStart to include more info about LaTeX</text:p></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;03&#8211;22 &#8211; v 6.0.0:</text:p>
 
