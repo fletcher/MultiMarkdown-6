@@ -466,6 +466,13 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-03-29 - v 6.0.2:
+
+	*    CHANGED: Refactor code slightly
+	*    CHANGED: Remove ASCII non-breaking space support from lexer
+	*    FIXED: Fix quote pairing in compatibility mode
+
+
 * 2017-03-28 -- v 6.0.1:
 
 *    CHANGED: Adjust LaTeX support files
