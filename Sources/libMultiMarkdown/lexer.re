@@ -79,21 +79,21 @@ int scan(Scanner * s, const char * stop) {
 		re2c:yyfill:enable = 0;
 
 		NL								= "\r\n" | '\n' | '\r';
-		WS 								= [ \t\240];	// Whitespace from char_lookup.c
+		WS 								= [ \t];	// Whitespace from char_lookup.c
 		SP								= WS+;
 
 		SPNL							= WS* NL;
 
 		INDENT_TAB 						= '\t';
-		INDENT_SPACE 					= [ \240]{4};
-		NON_INDENT_SPACE				= [ \240]{2,3};
+		INDENT_SPACE 					= [ ]{4};
+		NON_INDENT_SPACE				= [ ]{2,3};
 
-		TEXT_LINEBREAK					= [ \240]{2,} NL;
+		TEXT_LINEBREAK					= [ ]{2,} NL;
 
 		// The order of these seems to matter
 
 		// Don't split `à` character
-		'\303' '\240'					{ return TEXT_PLAIN; }
+		//'\303' '\240'					{ return TEXT_PLAIN; }
 
 		"{{TOC}}"						{ return TOC; }
 
@@ -229,7 +229,7 @@ int scan(Scanner * s, const char * stop) {
 		' '? NL							{ return TEXT_NL; }
 
 		NON_INDENT_SPACE				{ return NON_INDENT_SPACE; }
-		[ \240] / '\t'					{ return NON_INDENT_SPACE; }
+		[ ] / '\t'					{ return NON_INDENT_SPACE; }
 
 		"*"								{ return STAR; }
 		"+"								{ return PLUS; }

@@ -1009,7 +1009,7 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 /// open a pair.  This allows for complex behavior without having to bog down the tokenizer
 /// with figuring out which type of asterisk we have.  Default behavior is that open and close
 /// are enabled, so we just have to figure out when to turn it off.
-void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, const char * str, size_t start_offset) {
+void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size_t start_offset) {
 	if (block == NULL || block->child == NULL)
 		return;
 
@@ -1017,6 +1017,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 	size_t lead_count, lag_count, pre_count, post_count;
 	
 	token * t = block->child;
+
+	char * str = e->dstr->str;
 
 	while (t != NULL) {
 		switch (t->type) {
@@ -1050,7 +1052,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 			case BLOCK_TABLE:
 			case BLOCK_TERM:
 				// Assign child tokens of blocks
-				mmd_assign_ambidextrous_tokens_in_block(e, t, str, start_offset);
+				mmd_assign_ambidextrous_tokens_in_block(e, t, start_offset);
 				break;
 			case CRITIC_SUB_DIV:
 				// Divide this into two tokens
@@ -1229,8 +1231,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 				}
 				break;
 			case QUOTE_SINGLE:
-				if (!(e->extensions & EXT_SMART))
-					break;
 				// Some of these are actually APOSTROPHE's and should not be paired
 				offset = t->start;
 
@@ -1246,8 +1246,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, cons
 					break;
 				}
 			case QUOTE_DOUBLE:
-				if (!(e->extensions & EXT_SMART))
-					break;
 				offset = t->start;
 
 				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset - 1]))) {
@@ -1834,6 +1832,11 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len) {
+	// Free existing parse tree
+	if (e->root)
+		token_tree_free(e->root);
+
+	// New parse tree
 
 	// Reset definition stack
 	e->definition_stack->size = 0;
@@ -1846,7 +1849,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 	if (doc) {
 		// Parse blocks for pairs
-		mmd_assign_ambidextrous_tokens_in_block(e, doc, e->dstr->str, 0);
+		mmd_assign_ambidextrous_tokens_in_block(e, doc, 0);
 
 		// Prepare stack to be used for token pairing
 		// This avoids allocating/freeing one for each iteration.
@@ -1873,11 +1876,6 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 /// Parse the entire string into a token tree
 void mmd_engine_parse_string(mmd_engine * e) {
-	// Free existing parse tree
-	if (e->root)
-		token_tree_free(e->root);
-
-	// New parse tree
 	e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
 }
 
