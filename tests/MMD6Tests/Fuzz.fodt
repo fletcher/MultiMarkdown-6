@@ -310,7 +310,7 @@ list</text:p></text:list-item>
 foo</text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="Standard">Â  foo</text:p></text:list-item>
+<text:p text:style-name="Standard">foo</text:p></text:list-item>
 
 </text:list>
 
