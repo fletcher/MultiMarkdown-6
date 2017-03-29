@@ -466,6 +466,14 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-03-29 - v 6.0.3:
+
+	*    ADDED: Script for updating re2c and lemon files
+	*    CHANGED: Recompile lexer using -8 flag
+	*    CHANGED: Recompile scanners using -8 flag
+	*    FIXED: Don't separate out 'à'
+
+
 * 2017-03-29 - v 6.0.2:
 
 	*    CHANGED: Refactor code slightly
