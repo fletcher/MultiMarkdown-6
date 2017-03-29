@@ -11,7 +11,7 @@ set (My_Project_Author "Fletcher T. Penney")
 set (My_Project_Revised_Date "2017-03-29")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 2)
+set (My_Project_Version_Patch 3)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 

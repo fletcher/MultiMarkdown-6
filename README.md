@@ -6,7 +6,7 @@
 | Author:    | Fletcher T. Penney       |  
 | Date:      | 2017-03-29 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 6.0.2      |  
+| Version:   | 6.0.3      |  
 
 
 ## An Announcement! ##
