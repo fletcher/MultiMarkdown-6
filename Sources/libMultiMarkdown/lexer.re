@@ -93,7 +93,7 @@ int scan(Scanner * s, const char * stop) {
 		// The order of these seems to matter
 
 		// Don't split `à` character
-		'\303' '\240'					{ return TEXT_PLAIN; }
+		//'\303' '\240'					{ return TEXT_PLAIN; }
 
 		"{{TOC}}"						{ return TOC; }
 
