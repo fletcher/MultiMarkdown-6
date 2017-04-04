@@ -325,6 +325,16 @@ the document, and one to be included at the end of the document.  If you want
 to specify the latex files separately, you can use `latex leader`, `latex
 begin`, and `latex footer`.
 
+There are new metadata keys for controlling internationalization:
+
+* `language` -- specify the content language for a document, using the two
+letter code for the language (e.g. `en` for English).  Where possible, this
+will also set the default `quotes language`.
+
+* `quotes language` -- specify which variant of smart quotes to use.  Valid
+options are `dutch`, `french`, `german`, `germanguillemets`, `swedish`, `nl`,
+`fr`, `de`, `sv`.  Anything else defaults to English.
+
 
 ## Table of Contents ##
 

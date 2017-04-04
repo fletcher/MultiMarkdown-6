@@ -1902,7 +1902,6 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 		} else if (strcmp(m->key, "htmlfooter") == 0) {
 		} else if (strcmp(m->key, "htmlheader") == 0) {
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
-		} else if (strcmp(m->key, "lang") == 0) {
 		} else if (strcmp(m->key, "language") == 0) {
 		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexconfig") == 0) {

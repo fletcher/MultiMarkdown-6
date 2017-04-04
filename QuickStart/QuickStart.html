@@ -344,6 +344,17 @@ the document, and one to be included at the end of the document. If you want
 to specify the latex files separately, you can use <code>latex leader</code>, <code>latex
 begin</code>, and <code>latex footer</code>.</p>
 
+<p>There are new metadata keys for controlling internationalization:</p>
+
+<ul>
+<li><p><code>language</code> &#8211; specify the content language for a document, using the two
+letter code for the language (e.g. <code>en</code> for English). Where possible, this
+will also set the default <code>quotes language</code>.</p></li>
+<li><p><code>quotes language</code> &#8211; specify which variant of smart quotes to use. Valid
+options are <code>dutch</code>, <code>french</code>, <code>german</code>, <code>germanguillemets</code>, <code>swedish</code>, <code>nl</code>,
+<code>fr</code>, <code>de</code>, <code>sv</code>. Anything else defaults to English.</p></li>
+</ul>
+
 <h4 id="tableofcontents">Table of Contents </h4>
 
 <p>By placing <code>{{TOC}}</code> in your document, you can insert an automatically
