@@ -29,5 +29,10 @@ latex config:	article</p>
 
 <p>5</p>
 
+<p>```</p>
+
+<p>foo</p>
+```
+
 <p>```
 foo</p>
