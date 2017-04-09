@@ -466,6 +466,13 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-04-09 - v 6.0.4:
+
+	*    ADDED: The '-l' command line argument also sets language, if not overridden by metadata
+	*    FIXED: Fix regular expression to match table separator lines. (Fixes #50)
+	*    FIXED: Improve organization of fallback lines for fenced code blocks and HTML blocks
+
+
 * 2017-03-29 - v 6.0.3:
 
 	*    ADDED: Script for updating re2c and lemon files

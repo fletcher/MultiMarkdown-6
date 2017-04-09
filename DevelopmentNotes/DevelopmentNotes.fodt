@@ -756,6 +756,61 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2017&#8211;04&#8211;09 - v 6.0.4:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: The &#8216;&#8211;l&#8217; command line argument also sets language, if not overridden by metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix regular expression to match table separator lines. (Fixes #50)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Improve organization of fallback lines for fenced code blocks and HTML blocks</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;29 - v 6.0.3:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Script for updating re2c and lemon files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Recompile lexer using &#8211;8 flag</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Recompile scanners using &#8211;8 flag</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Don&#8217;t separate out 'à'</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;03&#8211;29 - v 6.0.2:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor code slightly</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Remove ASCII non&#8211;breaking space support from lexer</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Fix quote pairing in compatibility mode</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2017&#8211;03&#8211;28 &#8211; v 6.0.1:</text:p></text:list-item>
 
 <text:list-item>
