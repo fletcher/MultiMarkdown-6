@@ -299,6 +299,8 @@
 
 <text:p text:style-name="Standard">5</text:p>
 
+<text:p text:style-name="Preformatted Text">&lt;p&gt;foo&lt;/p&gt;<text:line-break/></text:p>
+
 <text:p text:style-name="Preformatted Text">foo<text:line-break/></text:p>
 </office:text>
 </office:body>

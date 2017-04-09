@@ -650,6 +650,21 @@ included at the top of the file, one to be included right at the beginning of
 the document, and one to be included at the end of the document. If you want
 to specify the latex files separately, you can use <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex<text:line-break/>begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span>.</text:p>
 
+<text:p text:style-name="Standard">There are new metadata keys for controlling internationalization:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">language</text:span> &#8211; specify the content language for a document, using the two
+letter code for the language (e.g. <text:span text:style-name="Source_20_Text">en</text:span> for English). Where possible, this
+will also set the default <text:span text:style-name="Source_20_Text">quotes language</text:span>.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">quotes language</text:span> &#8211; specify which variant of smart quotes to use. Valid
+options are <text:span text:style-name="Source_20_Text">dutch</text:span>, <text:span text:style-name="Source_20_Text">french</text:span>, <text:span text:style-name="Source_20_Text">german</text:span>, <text:span text:style-name="Source_20_Text">germanguillemets</text:span>, <text:span text:style-name="Source_20_Text">swedish</text:span>, <text:span text:style-name="Source_20_Text">nl</text:span>,
+<text:span text:style-name="Source_20_Text">fr</text:span>, <text:span text:style-name="Source_20_Text">de</text:span>, <text:span text:style-name="Source_20_Text">sv</text:span>. Anything else defaults to English.</text:p></text:list-item>
+
+</text:list>
+
 <text:h text:outline-level="4"><text:bookmark text:name="tableofcontents"/>Table of Contents </text:h>
 
 <text:p text:style-name="Standard">By placing <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> in your document, you can insert an automatically

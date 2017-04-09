@@ -64,6 +64,7 @@
 #include "d_string.h"
 #include "epub.h"
 #include "html.h"
+#include "i18n.h"
 #include "miniz.h"
 #include "mmd.h"
 #include "transclude.h"
@@ -153,7 +154,25 @@ char * epub_package_document(scratch_pad * scratch) {
 		mmd_print_string_html(out, m->value, false);
 		print_const("</dc:language>\n");
 	} else {
-		print_const("<dc:language>en</dc:language>\n");
+		switch(scratch->language) {
+			case LC_ES:
+				print_const("<dc:language>es</dc:language>\n");
+				break;
+			case LC_DE:
+				print_const("<dc:language>de</dc:language>\n");
+				break;
+			case LC_FR:
+				print_const("<dc:language>fr</dc:language>\n");
+				break;
+			case LC_NL:
+				print_const("<dc:language>nl</dc:language>\n");
+				break;
+			case LC_SV:
+				print_const("<dc:language>sv</dc:language>\n");
+				break;
+			default:
+				print_const("<dc:language>en</dc:language>\n");
+		}
 	}
 
 	// Date

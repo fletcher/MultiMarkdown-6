@@ -1714,7 +1714,25 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 	if (m) {
 		printf(" lang=\"%s\"", m->value);
 	} else {
-		print_const(" lang=\"en\"");
+		switch(scratch->language) {
+			case LC_ES:
+				print_const(" lang=\"es\"");
+				break;
+			case LC_DE:
+				print_const(" lang=\"de\"");
+				break;
+			case LC_FR:
+				print_const(" lang=\"fr\"");
+				break;
+			case LC_NL:
+				print_const(" lang=\"nl\"");
+				break;
+			case LC_SV:
+				print_const(" lang=\"sv\"");
+				break;
+			default:
+				print_const(" lang=\"en\"");
+		}
 	}
 	print_const(">\n<head>\n\t<meta charset=\"utf-8\"/>\n");
 
@@ -1739,7 +1757,7 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 			print(m->value);
 			print_char('\n');
 		} else if (strcmp(m->key, "htmlheaderlevel") == 0) {
-		} else if (strcmp(m->key, "lang") == 0) {
+		} else if (strcmp(m->key, "language") == 0) {
 		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexconfig") == 0) {
 		} else if (strcmp(m->key, "latexfooter") == 0) {
