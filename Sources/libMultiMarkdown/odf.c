@@ -364,7 +364,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
-	char *	temp_char3	= NULL;
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
 	footnote * temp_note = NULL;
