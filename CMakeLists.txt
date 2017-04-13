@@ -52,6 +52,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	add_definitions("-fbracket-depth=264")	
 endif()
 
+set(CMAKE_SUPPRESS_REGENERATION 1)
+
 
 # =================
 # Macro Definitions
@@ -66,7 +68,8 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 	# the workflow as appropriate, since there is only one 
 	# public_header_files list.
 
-	SET_TARGET_PROPERTIES(${target} PROPERTIES PUBLIC_HEADER ${filename})
+	# This should only be run once per target
+	# SET_TARGET_PROPERTIES(${target} PROPERTIES PUBLIC_HEADER ${filename})
 
 	LIST(APPEND public_header_files ${filename})
 
@@ -74,7 +77,7 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 		${filename}
 		PROPERTIES
 		MACOSX_PACKAGE_LOCATION
-		PUBLIC_HEADER
+		include/\${PRODUCT_NAME}
 	)
 
 	# Set Xcode project to configure public header location to allow
@@ -453,12 +456,17 @@ if (DEFINED SHAREDBUILD)
 
 endif (DEFINED SHAREDBUILD)
 
+# remove the extra "lib" from "liblibFOO"
+SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
+	PREFIX ""
+	FRAMEWORK TRUE
+	FRAMEWORK_VERSION A
+	MACOSX_FRAMEWORK_IDENTIFIER net.multimarkdown.mmd6
+)
 
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/d_string.h)
-
-# remove the extra "lib" from "liblibFOO"
-SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
+ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/token.h)
 
 # Create a command-line app?
 # if (NOT DEFINED TEST)
