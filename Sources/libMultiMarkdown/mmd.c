@@ -226,6 +226,9 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	if (e == NULL)
 		return;
 
+	if (e->root)
+		token_tree_free(e->root);
+
 	if (freeDString)
 		d_string_free(e->dstr, true);
 
@@ -1832,11 +1835,11 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len) {
+	// First, clean up any leftovers from previous parse
+
 	// Free existing parse tree
 	if (e->root)
 		token_tree_free(e->root);
-
-	// New parse tree
 
 	// Free necessary stacks
 
