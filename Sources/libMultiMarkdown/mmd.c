@@ -1838,8 +1838,16 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 	// New parse tree
 
-	// Reset definition stack
+	// Reset stacks
+	e->abbreviation_stack->size = 0;
+	e->citation_stack->size = 0;
 	e->definition_stack->size = 0;
+	e->footnote_stack->size = 0;
+	e->glossary_stack->size = 0;
+	e->header_stack->size = 0;
+	e->link_stack->size = 0;
+	e->metadata_stack->size = 0;
+	e->table_stack->size = 0;
 	
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
