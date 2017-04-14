@@ -1838,15 +1838,49 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 	// New parse tree
 
-	// Reset stacks
-	e->abbreviation_stack->size = 0;
-	e->citation_stack->size = 0;
+	// Free necessary stacks
+
+	// Abbreviations need to be freed
+	while (e->abbreviation_stack->size) {
+		footnote_free(stack_pop(e->abbreviation_stack));
+	}
+	
+	// Citations need to be freed
+	while (e->citation_stack->size) {
+		footnote_free(stack_pop(e->citation_stack));
+	}
+
+	// Footnotes need to be freed
+	while (e->footnote_stack->size) {
+		footnote_free(stack_pop(e->footnote_stack));
+	}
+
+	// Glossaries need to be freed
+	while (e->glossary_stack->size) {
+		footnote_free(stack_pop(e->glossary_stack));
+	}
+
+	// Links need to be freed
+	while (e->link_stack->size) {
+		link_free(stack_pop(e->link_stack));
+	}
+
+	// Metadata needs to be freed
+	while (e->metadata_stack->size) {
+		meta_free(stack_pop(e->metadata_stack));
+	}
+
+	// Free asset hash
+	asset * a, * a_tmp;
+	HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+		HASH_DEL(e->asset_hash, a);	// Remove item from hash
+		asset_free(a);				// Free the asset
+	}
+
+
+	// Reset other stacks
 	e->definition_stack->size = 0;
-	e->footnote_stack->size = 0;
-	e->glossary_stack->size = 0;
 	e->header_stack->size = 0;
-	e->link_stack->size = 0;
-	e->metadata_stack->size = 0;
 	e->table_stack->size = 0;
 	
 	// Tokenize the string
