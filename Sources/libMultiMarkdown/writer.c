@@ -1037,11 +1037,11 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 void footnote_free(footnote * f) {
 	if (f) {
 		if (f->free_para) {
-			// I'm not sure why, but the following causes a memory error.
-			// Strangely, not freeing it does *not* seem to cause memory
-			// leaks??
-
-			//free(f->content);
+#ifdef kUseObjectPool
+			// Nothing to do here
+#else
+			free(f->content);
+#endif
 		}
 		free(f->clean_text);
 		free(f->label_text);
