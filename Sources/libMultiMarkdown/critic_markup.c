@@ -64,7 +64,7 @@
 #include "token_pairs.h"
 
 
-token * critic_tokenize_string(const char * source, size_t start, size_t len) {
+token * mmd_critic_tokenize_string(const char * source, size_t start, size_t len) {
 	trie * ac = trie_new(0);
 
 	trie_insert(ac, "{++", CM_ADD_OPEN);
@@ -124,7 +124,7 @@ token * critic_tokenize_string(const char * source, size_t start, size_t len) {
 
 
 token * critic_parse_substring(const char * source, size_t start, size_t len) {
-	token * chain = critic_tokenize_string(source, start, len);
+	token * chain = mmd_critic_tokenize_string(source, start, len);
 
 	if (chain) {
 		token_pair_engine * e = token_pair_engine_new();
@@ -211,7 +211,7 @@ void accept_token_tree(DString * d, token * t) {
 	}
 }
 
-void critic_markup_accept(DString * d) {
+void mmd_critic_markup_accept(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
 	if (t && t->child)
@@ -282,7 +282,7 @@ void reject_token_tree(DString * d, token * t) {
 	}
 }
 
-void critic_markup_reject(DString * d) {
+void mmd_critic_markup_reject(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
 	if (t && t->child)
