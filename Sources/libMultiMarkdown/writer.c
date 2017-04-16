@@ -1326,7 +1326,7 @@ void process_definition_block(mmd_engine * e, token * block) {
 			strip_leading_whitespace(label, e->dstr->str);
 			break;
 		case BLOCK_DEF_LINK:
-			definition_extract(e, &(block->child));
+			definition_extract(e, &(label));
 			break;
 		default:
 			fprintf(stderr, "process %d\n", block->type);
