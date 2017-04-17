@@ -392,6 +392,10 @@
 
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo:</text:span> bar</text:p>
 
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo [bar]</text:span></text:p>
+
+<text:p text:style-name="Standard">50</text:p>
+
 <text:p text:style-name="Standard">*foo
 *foo
 *foo

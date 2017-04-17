@@ -117,6 +117,10 @@ latex config:	article</p>
 
 <p><strong>foo:</strong> bar</p>
 
+<p><em>foo [bar]</em></p>
+
+<p>50</p>
+
 <p>*foo
 *foo
 *foo

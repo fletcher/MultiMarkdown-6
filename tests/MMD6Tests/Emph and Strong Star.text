@@ -117,6 +117,10 @@ foo **1. bar**
 
 **foo:** bar
 
+*foo [bar]*
+
+50
+
 *foo
 *foo
 *foo

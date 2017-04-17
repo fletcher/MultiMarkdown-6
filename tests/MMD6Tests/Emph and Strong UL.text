@@ -115,6 +115,12 @@ foo __- bar__
 
 foo __1. bar__
 
+__foo:__ bar
+
+_foo [bar]_
+
+50
+
 _foo
 _foo
 _foo

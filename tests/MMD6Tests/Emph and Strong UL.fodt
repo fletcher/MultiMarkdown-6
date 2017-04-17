@@ -386,9 +386,15 @@
 
 <text:p text:style-name="Standard">foo___bar foo___bar</text:p>
 
-<text:p text:style-name="Standard">foo __- bar__</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold">- bar</text:span></text:p>
 
 <text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold">1. bar</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo:</text:span> bar</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo [bar]</text:span></text:p>
+
+<text:p text:style-name="Standard">50</text:p>
 
 <text:p text:style-name="Standard">_foo
 _foo

@@ -1198,8 +1198,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					offset--;
 				}
 				
-				if ((offset == 0) || (char_is_whitespace_or_line_ending_or_punctuation(str[offset]))) {
-					// Whitespace or punctuation to left, so can't close
+				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset]))) {
+					// Whitespace to left, so can't close
 					t->can_close = 0;
 				}
 
@@ -1215,7 +1215,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				while ((str[offset] == '*') || (str[offset] == '_'))
 					offset++;
 				
-				if (char_is_whitespace_or_line_ending_or_punctuation(str[offset])) {
+				if (char_is_whitespace_or_line_ending(str[offset])) {
 					// Whitespace to right, so can't open
 					t->can_open = 0;
 				}
