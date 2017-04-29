@@ -1239,11 +1239,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
-							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
+							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
 									temp_short, LC("see citation"), temp_short);
 						} else {
 							// This is the first time this note was used
-							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
+							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
 									temp_short, temp_short, LC("see citation"), temp_short);
 						}
 					} else {
@@ -1251,11 +1251,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
-							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s, %d]</a>",
+							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
 									temp_short, LC("see citation"), temp_char, temp_short);
 						} else {
 							// This is the first time this note was used
-							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s, %d]</a>",
+							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
 									temp_short, temp_short, LC("see citation"), temp_char, temp_short);
 						}
 					}
@@ -1301,7 +1301,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						temp_short3 = temp_short;
 					}
 
-					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
+					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
 						temp_short3, LC("see footnote"), temp_short);
 				} else {
 					// This is the first time this note was used
@@ -1313,7 +1313,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						temp_short3 = temp_short;
 					}
 
-					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
+					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
 						temp_short3, temp_short3, LC("see footnote"), temp_short);
 				}
 			} else {
