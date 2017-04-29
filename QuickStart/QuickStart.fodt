@@ -297,6 +297,7 @@
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#emphandstrong" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Emph and Strong  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#epub3support" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">EPUB 3 Support  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#footnotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Footnotes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaryterms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossary Terms  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes  <text:tab/>1</text:a></text:p>
@@ -465,6 +466,9 @@ complex abbreviations, you must explicitly mark uses of the abbreviation.</text:
 
 <text:p text:style-name="Standard">Citations can be specified using an inline syntax, just like inline footnotes.</text:p>
 
+<text:p text:style-name="Standard">The HTML output for citations now uses parentheses instead of brackets, e.g.
+<text:span text:style-name="Source_20_Text">(1)</text:span> instead of <text:span text:style-name="Source_20_Text">[1]</text:span>.</text:p>
+
 <text:h text:outline-level="4"><text:bookmark text:name="criticmarkup"/>CriticMarkup </text:h>
 
 <text:p text:style-name="Standard">MMD v6 has improved support for <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a>, both in terms of parsing, and
@@ -524,6 +528,11 @@ complex parser.</text:p></text:list-item>
 considered to be part of the code block.</text:p></text:list-item>
 
 </text:list>
+
+<text:h text:outline-level="4"><text:bookmark text:name="footnotes"/>Footnotes </text:h>
+
+<text:p text:style-name="Standard">The HTML output for footnotes now uses superscripts instead of brackets, e.g.
+<text:span text:style-name="Source_20_Text">&lt;sup&gt;1&lt;/sup&gt;</text:span> instead of <text:span text:style-name="Source_20_Text">[1]</text:span>.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="glossaryterms"/>Glossary Terms </text:h>
 

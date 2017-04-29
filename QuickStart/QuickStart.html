@@ -23,6 +23,7 @@
 <li><a href="#emphandstrong">Emph and Strong </a></li>
 <li><a href="#epub3support">EPUB 3 Support </a></li>
 <li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
+<li><a href="#footnotes">Footnotes </a></li>
 <li><a href="#glossaryterms">Glossary Terms </a></li>
 <li><a href="#internationalization">Internationalization </a></li>
 <li><a href="#latexchanges">LaTeX Changes </a></li>
@@ -179,6 +180,9 @@ complex abbreviations, you must explicitly mark uses of the abbreviation.</p>
 
 <p>Citations can be specified using an inline syntax, just like inline footnotes.</p>
 
+<p>The HTML output for citations now uses parentheses instead of brackets, e.g.
+<code>(1)</code> instead of <code>[1]</code>.</p>
+
 <h4 id="criticmarkup">CriticMarkup </h4>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 has improved support for <a href="http://criticmarkup.com/">CriticMarkup</a>, both in terms of parsing, and
@@ -234,6 +238,11 @@ complex parser.</p></li>
 <li><p>If there is no trailing fence, then everything after the leading fence is
 considered to be part of the code block.</p></li>
 </ol>
+
+<h4 id="footnotes">Footnotes </h4>
+
+<p>The HTML output for footnotes now uses superscripts instead of brackets, e.g.
+<code>&lt;sup&gt;1&lt;/sup&gt;</code> instead of <code>[1]</code>.</p>
 
 <h4 id="glossaryterms">Glossary Terms </h4>
 

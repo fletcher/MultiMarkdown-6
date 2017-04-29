@@ -159,6 +159,9 @@ complex abbreviations, you must explicitly mark uses of the abbreviation.
 
 Citations can be specified using an inline syntax, just like inline footnotes.
 
+The HTML output for citations now uses parentheses instead of brackets, e.g.
+`(1)` instead of `[1]`.
+
 
 ## CriticMarkup ##
 
@@ -217,6 +220,12 @@ complex parser.
 
 2. If there is no trailing fence, then everything after the leading fence is
 considered to be part of the code block.
+
+
+## Footnotes ##
+
+The HTML output for footnotes now uses superscripts instead of brackets, e.g.
+`<sup>1</sup>` instead of `[1]`.
 
 
 ## Glossary Terms ##
