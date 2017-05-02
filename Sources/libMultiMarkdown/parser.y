@@ -127,6 +127,7 @@ block(A)			::= definition_block(B).	{ A = token_new_parent(B, BLOCK_DEFLIST); }
 block(A)			::= empty(B).				{ A = token_new_parent(B, BLOCK_EMPTY); }
 block(A)			::= fenced_block(B).		{ A = token_new_parent(B, BLOCK_CODE_FENCED); B->child->type = CODE_FENCE; }
 block(A)			::= html_block(B).			{ A = token_new_parent(B, BLOCK_HTML); }
+block(A)			::= html_com_block(B).		{ A = token_new_parent(B, BLOCK_HTML); }
 block(A)			::= indented_code(B).		{ A = token_new_parent(B, BLOCK_CODE_INDENTED); }
 block(A)			::= list_bullet(B).			{ A = token_new_parent(B, BLOCK_LIST_BULLETED); is_list_loose(A); }
 block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
@@ -148,6 +149,7 @@ chunk(A)			::= chunk(B) chunk_line(C).					{ A = B; token_chain_append(B, C); }
 chunk				::= chunk_line.
 
 chunk_line			::= LINE_CONTINUATION.
+chunk_line			::= LINE_STOP_COMMENT.
 
 
 // A "nested chunk" is useful when a chunk can also include following blocks
@@ -268,6 +270,8 @@ fenced_line			::= LINE_EMPTY.
 fenced_line			::= LINE_FALLBACK.
 fenced_line			::= LINE_HR.
 fenced_line			::= LINE_HTML.
+fenced_line			::= LINE_START_COMMENT.
+fenced_line			::= LINE_STOP_COMMENT.
 
 
 // HTML
@@ -278,6 +282,20 @@ html_line			::= LINE_CONTINUATION.
 html_line			::= LINE_FALLBACK.
 html_line			::= LINE_HR.
 html_line			::= LINE_HTML.
+
+
+// HTML Comment
+html_com_block(A)	::= html_comment(B) LINE_STOP_COMMENT(C).	{ A = B; token_chain_append(B, C); }
+html_com_block 		::= html_comment.
+
+html_comment(A)		::= html_comment(B) comment_line(C).		{ A = B; token_chain_append(B, C); }
+html_comment		::= LINE_START_COMMENT.
+
+comment_line		::= LINE_CONTINUATION.
+comment_line		::= LINE_EMPTY.
+comment_line		::= LINE_FALLBACK.
+comment_line		::= LINE_HR.
+comment_line		::= LINE_HTML.
 
 
 // Indented code blocks
@@ -317,6 +335,7 @@ meta_line 			::= LINE_CONTINUATION.
 // Paragraphs
 para(A)				::= LINE_PLAIN(B) chunk(C).					{ A = B; token_chain_append(B, C); }
 para				::= LINE_PLAIN.
+para				::= LINE_STOP_COMMENT.
 
 
 // Setext headers

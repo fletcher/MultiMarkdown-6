@@ -282,12 +282,9 @@
 
 <text:p text:style-name="Preformatted Text">&lt;div&gt;<text:line-break/>    foo<text:line-break/>&lt;/div&gt;<text:line-break/></text:p>
 
-<text:p text:style-name="Standard">test. Comment </text:p>
+<text:p text:style-name="Standard">test.</text:p>
 
-<text:p text:style-name="Standard">test. Comment 
-with
-multiple
-line. </text:p>
+<text:p text:style-name="Standard">test.</text:p>
 </office:text>
 </office:body>
 </office:document>

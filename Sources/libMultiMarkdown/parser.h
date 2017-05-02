@@ -33,4 +33,6 @@
 #define LINE_FENCE_BACKTICK_START_3     33
 #define LINE_FENCE_BACKTICK_START_4     34
 #define LINE_FENCE_BACKTICK_START_5     35
-#define LINE_EMPTY                      36
+#define LINE_STOP_COMMENT               36
+#define LINE_EMPTY                      37
+#define LINE_START_COMMENT              38

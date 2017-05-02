@@ -803,6 +803,22 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case HASH6:
 			print_token(t);
 			break;
+		case HTML_COMMENT_START:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("&lt;!--");
+			} else {
+				print_const("&lt;!");
+				print_localized(DASH_N);
+			}
+			break;
+		case HTML_COMMENT_STOP:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("--&gt;");
+			} else {
+				print_localized(DASH_N);
+				print_const("&gt;");
+			}
+			break;
 		case INDENT_SPACE:
 			print_char(' ');
 			break;
@@ -1365,6 +1381,8 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			} else {
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
+			break;
+		case PAIR_HTML_COMMENT:
 			break;
 		case PAIR_MATH:
 		case PAIR_PAREN:

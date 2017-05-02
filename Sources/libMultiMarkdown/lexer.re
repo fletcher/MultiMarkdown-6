@@ -126,6 +126,9 @@ int scan(Scanner * s, const char * stop) {
 		"("								{ return PAREN_LEFT; }
 		")"								{ return PAREN_RIGHT; }
 
+		"<!--"							{ return HTML_COMMENT_START; }
+		"-->"							{ return HTML_COMMENT_STOP; }
+
 		"<"								{ return ANGLE_LEFT; }
 		">"								{ return ANGLE_RIGHT; }
 

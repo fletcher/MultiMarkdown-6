@@ -272,42 +272,36 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<dc:title>HTML Blocks</dc:title>
+	<dc:title>HTML Comments</dc:title>
 </office:meta>
 <office:body>
 <office:text>
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar1</text:span></text:p>
+<text:p text:style-name="Standard">foo </text:p>
 
-<text:p text:style-name="Standard">foo
+<text:p text:style-name="Standard">foo </text:p>
 
-<text:span text:style-name="MMD-Italic">bar3</text:span>
-</text:p>
+<text:p text:style-name="Standard">foo </text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar5</text:span></text:p>
+<text:p text:style-name="Standard">foo &lt;!&#8211;
+<text:span text:style-name="MMD-Italic">bar</text:span></text:p>
+
+<text:p text:style-name="Standard">&#8211;&gt;</text:p>
+
+<text:p text:style-name="Standard">foo &lt;!&#8211;</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
+
+<text:p text:style-name="Standard">&#8211;&gt;</text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Standard">foo</text:p>
+<text:p text:style-name="Standard">foo &lt;!&#8211;</text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar5</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span> &#8211;&gt;</text:p>
 
-<text:p text:style-name="Standard">10</text:p>
+<text:p text:style-name="Standard">&lt;!&#8211; <text:span text:style-name="MMD-Italic">foo</text:span></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo2"/>foo2 </text:h>
-
-<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#foo2">foo</text:a></text:p>
-
-<text:p text:style-name="Standard">&lt;!&#8211; This is not a</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">comment</text:span> &#8211;&gt;</text:p>
-
-<text:p text:style-name="Standard">15</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo3</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo5</text:span></text:p>
-
-<text:p text:style-name="Standard">20</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>

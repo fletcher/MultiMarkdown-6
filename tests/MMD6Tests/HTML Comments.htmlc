@@ -1,0 +1,43 @@
+<p>Title:	HTML Comments
+latex config:	article</p>
+
+<p>foo <!-- *bar* --></p>
+
+<p>foo <!--
+*bar* --></p>
+
+<p>foo <!--
+*bar*
+--></p>
+
+<p>foo &lt;!--
+<em>bar</em></p>
+
+<p>--&gt;</p>
+
+<p>foo &lt;!--</p>
+
+<p><em>bar</em></p>
+
+<p>--&gt;</p>
+
+<!--
+
+*foo*
+
+-->
+
+<p>5</p>
+
+<p>foo &lt;!--</p>
+
+<p><em>bar</em> --&gt;</p>
+
+<p>&lt;!-- <em>foo</em></p>
+
+<p><em>bar</em></p>
+
+<!--
+
+*foo*
+

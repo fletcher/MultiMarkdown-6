@@ -69,7 +69,7 @@ latex config:	article</p>
 longer
  *comment* -->
 
-<!-- This is not a
+<p>&lt;!-- This is not a</p>
 
 <p><em>comment</em> --&gt;</p>
 

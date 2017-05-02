@@ -877,6 +877,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 			}
 			break;
+		case HTML_COMMENT_START:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("<!--");
+			} else {
+				print_const("<!");
+				print_localized(DASH_N);
+			}
+			break;
+		case HTML_COMMENT_STOP:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("-->");
+			} else {
+				print_localized(DASH_N);
+				print_const(">");
+			}
+			break;
 		case INDENT_SPACE:
 			print_char(' ');
 			break;
@@ -1413,6 +1429,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+			break;
+		case PAIR_HTML_COMMENT:
 			break;
 		case PAIR_MATH:
 			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
