@@ -444,10 +444,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("\\&");
 			break;
 		case ANGLE_LEFT:
-			print_const("$<$");
+			print_const("<");
 			break;
 		case ANGLE_RIGHT:
-			print_const("$>$");
+			print_const(">");
 			break;
 		case APOSTROPHE:
 			if (!(scratch->extensions & EXT_SMART)) {
@@ -877,6 +877,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 			}
 			break;
+		case HTML_COMMENT_START:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("<!--");
+			} else {
+				print_const("<!");
+				print_localized(DASH_N);
+			}
+			break;
+		case HTML_COMMENT_STOP:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("-->");
+			} else {
+				print_localized(DASH_N);
+				print_const(">");
+			}
+			break;
 		case INDENT_SPACE:
 			print_char(' ');
 			break;
@@ -1115,17 +1131,24 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				citation_from_bracket(source, scratch, t, &temp_short);
 
 				if (temp_short == -1) {
-					// This instance is not properly formed
-					print_const("[#");
-					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
-					print_const("]");
+					// Ensure we aren't using BibTeX
+					if (!scratch->bibtex_file) {
+						// This instance is not properly formed
+						print_const("[#");
+						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
+						print_const("]");
 
-					free(temp_char);
-					break;
+						free(temp_char);
+						break;
+					}
 				}
 
 				// Get instance of the note used
-				temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+				if (temp_short == -1) {
+					temp_note = NULL;
+				} else {
+					temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);					
+				}
 
 				if (temp_bool) {
 					// This is a regular citation
@@ -1134,6 +1157,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					temp_char2 = clean_inside_pair(source, t, false);
 					if (temp_char2[strlen(temp_char2) - 1] == ';') {
 						temp_bool = true;		// citet
+						temp_char2[strlen(temp_char2) - 1] = '\0';
 					} else {
 						temp_bool = false;		// citep
 					}
@@ -1164,11 +1188,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						}
 					}
 
-					printf("{%s}", temp_note->label_text);
+					if (temp_note) {
+						printf("{%s}", temp_note->label_text);
+					} else {
+						printf("{%s}", &temp_char2[1]);
+					}
+
 					free(temp_char2);
 				} else {
 					// This is a "nocite"
-					printf("~\\nocite{%s}", temp_note->label_text);
+					if (temp_note) {
+						printf("~\\nocite{%s}", temp_note->label_text);
+					} else {
+						temp_char2 = clean_inside_pair(source, t, false);
+						printf("~\\nocite{%s}", &temp_char2[1]);
+						free(temp_char2);
+					}
 				}
 
 				if (temp_token != t) {
@@ -1414,6 +1449,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
+		case PAIR_HTML_COMMENT:
+			break;
 		case PAIR_MATH:
 			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
 				mmd_export_token_latex(out, source, t->child, scratch);
@@ -1657,10 +1694,10 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			print_const("\\&");
 			break;
 		case ANGLE_LEFT:
-			print_const("$<$");
+			print_const("<");
 			break;
 		case ANGLE_RIGHT:
-			print_const("$>$");
+			print_const(">");
 			break;
 		case CRITIC_ADD_OPEN:
 			print_const("\\{++");
@@ -1831,7 +1868,6 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
-		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 		} else if (strcmp(m->key, "htmlfooter") == 0) {
 		} else if (strcmp(m->key, "htmlheader") == 0) {

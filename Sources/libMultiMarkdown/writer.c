@@ -161,6 +161,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->used_citations = stack_new(0);
 		p->inline_citations_to_free = stack_new(0);
 		p->citation_being_printed = 0;
+		p->bibtex_file = NULL;
 
 		p->citation_hash = NULL;
 
@@ -276,6 +277,7 @@ void scratch_pad_free(scratch_pad * scratch) {
 	}
 	stack_free(scratch->inline_citations_to_free);
 
+	free(scratch->bibtex_file);
 
 	// Free glossary hash
 	HASH_ITER(hh, scratch->glossary_hash, f, f_tmp) {
@@ -1037,11 +1039,11 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 void footnote_free(footnote * f) {
 	if (f) {
 		if (f->free_para) {
-			// I'm not sure why, but the following causes a memory error.
-			// Strangely, not freeing it does *not* seem to cause memory
-			// leaks??
-
-			//free(f->content);
+#ifdef kUseObjectPool
+			// Nothing to do here
+#else
+			free(f->content);
+#endif
 		}
 		free(f->clean_text);
 		free(f->label_text);
@@ -1326,7 +1328,7 @@ void process_definition_block(mmd_engine * e, token * block) {
 			strip_leading_whitespace(label, e->dstr->str);
 			break;
 		case BLOCK_DEF_LINK:
-			definition_extract(e, &(block->child));
+			definition_extract(e, &(label));
 			break;
 		default:
 			fprintf(stderr, "process %d\n", block->type);
@@ -1562,6 +1564,11 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			}
 
 			free(temp_char);
+		} else if (strcmp(m->key, "bibtex") == 0) {
+			scratch->bibtex_file = strdup(m->value);
+			// Trigger complete document unless explicitly denied
+			if (!(scratch->extensions & EXT_SNIPPET))
+				scratch->extensions |= EXT_COMPLETE;
 		} else {
 			// Any other key triggers complete document
 			if (!(scratch->extensions & EXT_SNIPPET))
@@ -2074,8 +2081,15 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 
 	if (citation_id == -1) {
 		// No match, this is an inline citation -- create a new one
+
 		t->child->type = TEXT_EMPTY;
 		t->child->mate->type = TEXT_EMPTY;
+
+		// *UNLESS* we are using BibTeX, in which case we leave them alone
+		if (scratch->bibtex_file) {
+			*num = -1;
+			return;
+		}
 
 		// Create citation
 		footnote * temp = footnote_new(source, t, t->child, true);

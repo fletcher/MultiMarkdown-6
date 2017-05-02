@@ -112,7 +112,8 @@
 	tag_end		= '</' tag_name sp '>';
 
 	// We limit comments to exclude '>' character to minimize backtracking
-	comment		= [^>\-\x00] [^>\x00]*;
+	comment_old		= [^>\-\x00] [^>\x00]*;
+	comment		= [^>\-\x00\r\n] [^>\x00\r\n]* (nl [^>\x00\r\n]+)*;
 
 	tag_comment	= '<!--' comment '-->';
 

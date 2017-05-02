@@ -272,209 +272,36 @@
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<dc:title>Emph and Strong UL</dc:title>
+	<dc:title>HTML Comments</dc:title>
 </office:meta>
 <office:body>
 <office:text>
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo</text:span></text:p>
+<text:p text:style-name="Standard">foo </text:p>
 
-<text:p text:style-name="Standard">_<text:span text:style-name="MMD-Italic">foo</text:span></text:p>
+<text:p text:style-name="Standard">foo </text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo</text:span>_</text:p>
+<text:p text:style-name="Standard">foo </text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo bar</text:span></text:p>
+<text:p text:style-name="Standard">foo &lt;!&#8211;
+<text:span text:style-name="MMD-Italic">bar</text:span></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo</text:span> bar</text:p>
+<text:p text:style-name="Standard">&#8211;&gt;</text:p>
+
+<text:p text:style-name="Standard">foo &lt;!&#8211;</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
+
+<text:p text:style-name="Standard">&#8211;&gt;</text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Italic">bar</text:span></text:p>
+<text:p text:style-name="Standard">foo &lt;!&#8211;</text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span> &#8211;&gt;</text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo bar</text:span></text:p>
+<text:p text:style-name="Standard">&lt;!&#8211; <text:span text:style-name="MMD-Italic">foo</text:span></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo</text:span> bar</text:p>
-
-<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold">bar</text:span></text:p>
-
-<text:p text:style-name="Standard">10</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Italic">bar</text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Bold">bar</text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">bar</text:span></text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo <text:span text:style-name="MMD-Italic">bar</text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo <text:span text:style-name="MMD-Bold">bar</text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard">15</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">bar</text:span></text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Italic">bar</text:span> foo</text:span></text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Bold">bar</text:span> foo</text:span></text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">bar</text:span></text:span> foo</text:span></text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">foo</text:span></text:span></text:p>
-
-<text:p text:style-name="Standard">20</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Bold">foo</text:span> bar</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">foo</text:span> bar</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Bold">bar</text:span></text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo <text:span text:style-name="MMD-Italic">bar</text:span></text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo_bar</text:span></text:p>
-
-<text:p text:style-name="Standard">25</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Italic">bar <text:span text:style-name="MMD-Italic">foo <text:span text:style-name="MMD-Italic">bar</text:span></text:span></text:span></text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Italic"><text:span text:style-name="MMD-Italic">foo</text:span> bar</text:span> foo</text:span> bar</text:span></text:p>
-
-<text:p text:style-name="Standard">_foo bar_bar</text:p>
-
-<text:p text:style-name="Standard">__foo bar__bar</text:p>
-
-<text:p text:style-name="Standard">___foo bar___bar</text:p>
-
-<text:p text:style-name="Standard">30</text:p>
-
-<text:p text:style-name="Standard">foo_bar_foo</text:p>
-
-<text:p text:style-name="Standard">foo__bar__foo</text:p>
-
-<text:p text:style-name="Standard">foo___bar___foo</text:p>
-
-<text:p text:style-name="Standard">foo_bar_foo</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo <text:span text:style-name="MMD-Italic">foobarfoo</text:span> foo</text:span></text:p>
-
-<text:p text:style-name="Standard">35</text:p>
-
-<text:p text:style-name="Standard">foo__<text:span text:style-name="Source_20_Text">_bar_</text:span>__</text:p>
-
-<text:p text:style-name="Standard">_(<text:span text:style-name="MMD-Italic">foo</text:span>)</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo</text:span>:</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo</text:span>:</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">foo</text:span></text:span>:</text:p>
-
-<text:p text:style-name="Standard">40</text:p>
-
-<text:p text:style-name="Standard">foo_bar</text:p>
-
-<text:p text:style-name="Standard">foo_bar foo_bar</text:p>
-
-<text:p text:style-name="Standard">foo__bar</text:p>
-
-<text:p text:style-name="Standard">foo__bar foo__bar</text:p>
-
-<text:p text:style-name="Standard">foo___bar</text:p>
-
-<text:p text:style-name="Standard">45</text:p>
-
-<text:p text:style-name="Standard">foo___bar foo___bar</text:p>
-
-<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold">- bar</text:span></text:p>
-
-<text:p text:style-name="Standard">foo <text:span text:style-name="MMD-Bold">1. bar</text:span></text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">foo:</text:span> bar</text:p>
-
-<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">foo [bar]</text:span></text:p>
-
-<text:p text:style-name="Standard">50</text:p>
-
-<text:p text:style-name="Standard">_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-_foo
-<text:span text:style-name="MMD-Italic">foo</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>

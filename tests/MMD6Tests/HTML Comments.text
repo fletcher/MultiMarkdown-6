@@ -1,0 +1,42 @@
+Title:	HTML Comments
+latex config:	article
+
+foo <!-- *bar* -->
+
+foo <!--
+*bar* -->
+
+foo <!--
+*bar*
+-->
+
+foo <!--
+*bar*
+
+-->
+
+foo <!--
+
+*bar*
+
+-->
+
+<!--
+
+*foo*
+
+-->
+
+5
+
+foo <!-- 
+
+*bar* -->
+
+<!-- *foo*
+
+*bar*
+
+<!--
+
+*foo*

@@ -87,8 +87,8 @@ enum cm_types {
 };
 
 
-void critic_markup_accept(DString * d);
+void mmd_critic_markup_accept(DString * d);
 
-void critic_markup_reject(DString * d);
+void mmd_critic_markup_reject(DString * d);
 
 #endif

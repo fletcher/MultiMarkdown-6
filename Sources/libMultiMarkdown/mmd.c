@@ -114,6 +114,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->pairings1 = token_pair_engine_new();
 		e->pairings2 = token_pair_engine_new();
 		e->pairings3 = token_pair_engine_new();
+		e->pairings4 = token_pair_engine_new();
 
 		// CriticMarkup
 		if (extensions & EXT_CRITIC) {
@@ -125,51 +126,54 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings1, CRITIC_HI_OPEN, CRITIC_HI_CLOSE, PAIR_CRITIC_HI, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 
+		// HTML Comments
+		token_pair_engine_add_pairing(e->pairings2, HTML_COMMENT_START, HTML_COMMENT_STOP, PAIR_HTML_COMMENT, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+
 		// Brackets, Parentheses, Angles
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings3, BRACKET_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		if (extensions & EXT_NOTES) {
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET_GLOSSARY, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_CITATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_FOOTNOTE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET_GLOSSARY, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET_ABBREVIATION, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		} else {
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_CITATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_FOOTNOTE_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 		
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings3, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
-		token_pair_engine_add_pairing(e->pairings2, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, PAREN_LEFT, PAREN_RIGHT, PAIR_PAREN, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, ANGLE_LEFT, ANGLE_RIGHT, PAIR_ANGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings2, BRACE_DOUBLE_LEFT, BRACE_DOUBLE_RIGHT, PAIR_BRACES, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings3, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings3, PAREN_LEFT, PAREN_RIGHT, PAIR_PAREN, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings3, ANGLE_LEFT, ANGLE_RIGHT, PAIR_ANGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings3, BRACE_DOUBLE_LEFT, BRACE_DOUBLE_RIGHT, PAIR_BRACES, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		// Strong/Emph
-		token_pair_engine_add_pairing(e->pairings3, STAR, STAR, PAIR_STAR, 0);
-		token_pair_engine_add_pairing(e->pairings3, UL, UL, PAIR_UL, 0);
+		token_pair_engine_add_pairing(e->pairings4, STAR, STAR, PAIR_STAR, 0);
+		token_pair_engine_add_pairing(e->pairings4, UL, UL, PAIR_UL, 0);
 
 		// Quotes and Backticks
-		token_pair_engine_add_pairing(e->pairings2, BACKTICK, BACKTICK, PAIR_BACKTICK, PAIRING_PRUNE_MATCH | PAIRING_MATCH_LENGTH);
+		token_pair_engine_add_pairing(e->pairings3, BACKTICK, BACKTICK, PAIR_BACKTICK, PAIRING_PRUNE_MATCH | PAIRING_MATCH_LENGTH);
 
-		token_pair_engine_add_pairing(e->pairings3, BACKTICK,   QUOTE_RIGHT_ALT,   PAIR_QUOTE_ALT, PAIRING_ALLOW_EMPTY | PAIRING_MATCH_LENGTH);
-		token_pair_engine_add_pairing(e->pairings3, QUOTE_SINGLE, QUOTE_SINGLE, PAIR_QUOTE_SINGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-		token_pair_engine_add_pairing(e->pairings3, QUOTE_DOUBLE, QUOTE_DOUBLE, PAIR_QUOTE_DOUBLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings4, BACKTICK,   QUOTE_RIGHT_ALT,   PAIR_QUOTE_ALT, PAIRING_ALLOW_EMPTY | PAIRING_MATCH_LENGTH);
+		token_pair_engine_add_pairing(e->pairings4, QUOTE_SINGLE, QUOTE_SINGLE, PAIR_QUOTE_SINGLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		token_pair_engine_add_pairing(e->pairings4, QUOTE_DOUBLE, QUOTE_DOUBLE, PAIR_QUOTE_DOUBLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		// Math
 		if (!(extensions & EXT_COMPATIBILITY)) {
-			token_pair_engine_add_pairing(e->pairings2, MATH_PAREN_OPEN, MATH_PAREN_CLOSE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, MATH_BRACKET_OPEN, MATH_BRACKET_CLOSE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, MATH_DOLLAR_SINGLE, MATH_DOLLAR_SINGLE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
-			token_pair_engine_add_pairing(e->pairings2, MATH_DOLLAR_DOUBLE, MATH_DOLLAR_DOUBLE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, MATH_PAREN_OPEN, MATH_PAREN_CLOSE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, MATH_BRACKET_OPEN, MATH_BRACKET_CLOSE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, MATH_DOLLAR_SINGLE, MATH_DOLLAR_SINGLE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings3, MATH_DOLLAR_DOUBLE, MATH_DOLLAR_DOUBLE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 	
 		// Superscript/Subscript
 		if (!(extensions & EXT_COMPATIBILITY)) {
-			token_pair_engine_add_pairing(e->pairings3, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, 0);
-			token_pair_engine_add_pairing(e->pairings3, SUBSCRIPT, SUBSCRIPT, PAIR_SUPERSCRIPT, 0);
+			token_pair_engine_add_pairing(e->pairings4, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, 0);
+			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUPERSCRIPT, 0);
 		}
 
 	}
@@ -221,65 +225,41 @@ void mmd_engine_set_language(mmd_engine * e, short language) {
 }
 
 
-/// Free an existing MMD Engine
-void mmd_engine_free(mmd_engine * e, bool freeDString) {
-	if (e == NULL)
-		return;
-
-	if (freeDString)
-		d_string_free(e->dstr, true);
-
-	token_pair_engine_free(e->pairings1);
-	
-	token_pair_engine_free(e->pairings2);
-	token_pair_engine_free(e->pairings3);
-
-	token_tree_free(e->root);
-
-	// Pointers to blocks that are freed elsewhere
-	stack_free(e->definition_stack);
-	stack_free(e->header_stack);
-	stack_free(e->table_stack);
-
+void mmd_engine_reset(mmd_engine * e) {
+	if (e->root) {
+		token_tree_free(e->root);
+		e->root = NULL;
+	}
 
 	// Abbreviations need to be freed
 	while (e->abbreviation_stack->size) {
 		footnote_free(stack_pop(e->abbreviation_stack));
 	}
-	stack_free(e->abbreviation_stack);
-	
+
 	// Citations need to be freed
 	while (e->citation_stack->size) {
 		footnote_free(stack_pop(e->citation_stack));
 	}
-	stack_free(e->citation_stack);
 
 	// Footnotes need to be freed
 	while (e->footnote_stack->size) {
 		footnote_free(stack_pop(e->footnote_stack));
 	}
-	stack_free(e->footnote_stack);
 
 	// Glossaries need to be freed
 	while (e->glossary_stack->size) {
 		footnote_free(stack_pop(e->glossary_stack));
 	}
-	stack_free(e->glossary_stack);
-
 
 	// Links need to be freed
 	while (e->link_stack->size) {
 		link_free(stack_pop(e->link_stack));
 	}
-	stack_free(e->link_stack);
-
 
 	// Metadata needs to be freed
 	while (e->metadata_stack->size) {
 		meta_free(stack_pop(e->metadata_stack));
 	}
-	stack_free(e->metadata_stack);
-
 
 	// Free asset hash
 	asset * a, * a_tmp;
@@ -287,6 +267,41 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 		HASH_DEL(e->asset_hash, a);	// Remove item from hash
 		asset_free(a);				// Free the asset
 	}
+
+	// Reset other stacks
+	e->definition_stack->size = 0;
+	e->header_stack->size = 0;
+	e->table_stack->size = 0;
+}
+
+
+/// Free an existing MMD Engine
+void mmd_engine_free(mmd_engine * e, bool freeDString) {
+	if (e == NULL)
+		return;
+
+	mmd_engine_reset(e);
+
+	if (freeDString)
+		d_string_free(e->dstr, true);
+
+	token_pair_engine_free(e->pairings1);
+	token_pair_engine_free(e->pairings2);
+	token_pair_engine_free(e->pairings3);
+	token_pair_engine_free(e->pairings4);
+
+	// Pointers to blocks that are freed elsewhere
+	stack_free(e->definition_stack);
+	stack_free(e->header_stack);
+	stack_free(e->table_stack);
+
+	// Takedown
+	stack_free(e->abbreviation_stack);
+	stack_free(e->citation_stack);
+	stack_free(e->footnote_stack);
+	stack_free(e->glossary_stack);
+	stack_free(e->link_stack);
+	stack_free(e->metadata_stack);
 
 	free(e);
 }
@@ -440,6 +455,18 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			} else {
 				line->type = LINE_PLAIN;
 			}
+			break;
+		case HTML_COMMENT_START:
+			if (!line->child->next || !line->child->next->next)
+				line->type = LINE_START_COMMENT;
+			else
+				line->type = LINE_PLAIN;
+			break;
+		case HTML_COMMENT_STOP:
+			if (!line->child->next || !line->child->next->next)
+				line->type = LINE_STOP_COMMENT;
+			else
+				line->type = LINE_PLAIN;
 			break;
 		case TEXT_NUMBER_POSS_LIST:
 			switch(source[line->child->next->start]) {
@@ -809,8 +836,8 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 	int type;								// TOKEN type
 	token * t;								// Create tokens for incorporation
 
-	token * root = token_new(0,0,0);		// Store the final parse tree here
-	token * line = token_new(0,0,0);		// Store current line here
+	token * root = token_new(0,start,0);		// Store the final parse tree here
+	token * line = token_new(0,start,0);		// Store current line here
 
 	const char * last_stop = &e->dstr->str[start];	// Remember where last token ended
 
@@ -1187,8 +1214,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					offset--;
 				}
 				
-				if ((offset == 0) || (char_is_whitespace_or_line_ending_or_punctuation(str[offset]))) {
-					// Whitespace or punctuation to left, so can't close
+				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset]))) {
+					// Whitespace to left, so can't close
 					t->can_close = 0;
 				}
 
@@ -1204,7 +1231,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				while ((str[offset] == '*') || (str[offset] == '_'))
 					offset++;
 				
-				if (char_is_whitespace_or_line_ending_or_punctuation(str[offset])) {
+				if (char_is_whitespace_or_line_ending(str[offset])) {
 					// Whitespace to right, so can't open
 					t->can_open = 0;
 				}
@@ -1493,17 +1520,16 @@ void is_para_html(mmd_engine * e, token * block) {
 		return;
 	token * t = block->child->child;
 
-	if (t->type != ANGLE_LEFT)
-		return;
+	if (t->type == ANGLE_LEFT || t->type == HTML_COMMENT_START) {
+		if (scan_html_block(&(e->dstr->str[t->start]))) {
+			block->type = BLOCK_HTML;
+			return;
+		}	
 
-	if (scan_html_block(&(e->dstr->str[t->start]))) {
-		block->type = BLOCK_HTML;
-		return;
-	}	
-
-	if (scan_html_line(&(e->dstr->str[t->start]))) {
-		block->type = BLOCK_HTML;
-		return;
+		if (scan_html_line(&(e->dstr->str[t->start]))) {
+			block->type = BLOCK_HTML;
+			return;
+		}
 	}
 }
 
@@ -1748,6 +1774,8 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_LIST_ENUMERATED:
 			case LINE_META:
 			case LINE_PLAIN:
+			case LINE_START_COMMENT:
+			case LINE_STOP_COMMENT:
 				handle_line:
 				// Remove leading non-indent space from line
 				if (l->child && l->child->type == NON_INDENT_SPACE)
@@ -1832,14 +1860,9 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len) {
-	// Free existing parse tree
-	if (e->root)
-		token_tree_free(e->root);
+	// First, clean up any leftovers from previous parse
 
-	// New parse tree
-
-	// Reset definition stack
-	e->definition_stack->size = 0;
+	mmd_engine_reset(e);
 	
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
@@ -1859,6 +1882,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		mmd_pair_tokens_in_block(doc, e->pairings1, pair_stack);
 		mmd_pair_tokens_in_block(doc, e->pairings2, pair_stack);
 		mmd_pair_tokens_in_block(doc, e->pairings3, pair_stack);
+		mmd_pair_tokens_in_block(doc, e->pairings4, pair_stack);
 
 		// Free stack
 		stack_free(pair_stack);

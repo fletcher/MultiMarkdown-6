@@ -347,11 +347,11 @@ int main(int argc, char** argv) {
 
 			// Perform block level CriticMarkup?
 			if (extensions & EXT_CRITIC_ACCEPT) {
-				critic_markup_accept(buffer);
+				mmd_critic_markup_accept(buffer);
 			}
 
 			if (extensions & EXT_CRITIC_REJECT) {
-				critic_markup_reject(buffer);
+				mmd_critic_markup_reject(buffer);
 			}
 
 			// Increment counter and prepare token pool
@@ -424,11 +424,11 @@ int main(int argc, char** argv) {
 
 		// Perform block level CriticMarkup?
 		if (extensions & EXT_CRITIC_ACCEPT) {
-			critic_markup_accept(buffer);
+			mmd_critic_markup_accept(buffer);
 		}
 
 		if (extensions & EXT_CRITIC_REJECT) {
-			critic_markup_reject(buffer);
+			mmd_critic_markup_reject(buffer);
 		}
 
 		if (FORMAT_MMD == format) {

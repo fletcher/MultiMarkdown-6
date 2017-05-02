@@ -23,7 +23,9 @@
 <li><a href="#emphandstrong">Emph and Strong </a></li>
 <li><a href="#epub3support">EPUB 3 Support </a></li>
 <li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
+<li><a href="#footnotes">Footnotes </a></li>
 <li><a href="#glossaryterms">Glossary Terms </a></li>
+<li><a href="#htmlcomments">HTML Comments </a></li>
 <li><a href="#internationalization">Internationalization </a></li>
 <li><a href="#latexchanges">LaTeX Changes </a></li>
 <li><a href="#metadata">Metadata </a></li>
@@ -177,7 +179,12 @@ complex abbreviations, you must explicitly mark uses of the abbreviation.</p>
 
 <h4 id="citations">Citations </h4>
 
-<p>Citations can be specified using an inline syntax, just like inline footnotes.</p>
+<p>Citations can be specified using an inline syntax, just like inline footnotes.
+If you wish to use BibTeX, then configure the <code>bibtex</code> metadata (required) and
+the <code>biblio style</code> metadata (optional).</p>
+
+<p>The HTML output for citations now uses parentheses instead of brackets, e.g.
+<code>(1)</code> instead of <code>[1]</code>.</p>
 
 <h4 id="criticmarkup">CriticMarkup </h4>
 
@@ -235,6 +242,11 @@ complex parser.</p></li>
 considered to be part of the code block.</p></li>
 </ol>
 
+<h4 id="footnotes">Footnotes </h4>
+
+<p>The HTML output for footnotes now uses superscripts instead of brackets, e.g.
+<code>&lt;sup&gt;1&lt;/sup&gt;</code> instead of <code>[1]</code>.</p>
+
 <h4 id="glossaryterms">Glossary Terms </h4>
 
 <p>If there are terms in your document you wish to define in a <a href="#gn:3" id="gnref:3" title="see glossary" class="glossary">glossary</a> at
@@ -260,6 +272,18 @@ each instance where the term is used and substitute it automatically. In this
 case, the term is limited to a more basic character set which includes
 letters, numbers, periods, and hyphens, but not much else. For more complex
 glossary terms, you must explicitly mark uses of the term.</p>
+
+<h4 id="htmlcomments">HTML Comments </h4>
+
+<p>Previously, HTML Comments were used by MultiMarkdown to include raw text for
+inclusion in the output file. This was useful, but limited, as it could only
+work for one output format at a time.</p>
+
+<p>HTML Comments are now only included in HTML output, but not in any other
+format since they would cause errors.</p>
+
+<p>Take a look at the <code>HTML Comments.text</code> file in the test suite for a better
+understanding of comment blocks vs comment spans, and how they are parsed.</p>
 
 <h4 id="internationalization">Internationalization </h4>
 

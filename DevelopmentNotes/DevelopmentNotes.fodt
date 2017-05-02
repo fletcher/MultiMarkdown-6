@@ -756,6 +756,67 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2017&#8211;05&#8211;02 - v 6.0.5:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add back support for BibTeX bibliography entries (address #56)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Adjust &gt; and &lt; in LaTeX output &#8211; don't wrap in math</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Change HTML output for footnotes and citations</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Improve flexibility of HTML Comment parsing (Addresses #25)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor mmd_engine cleanup</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Remove unnecessary variable</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Rename criticmarkup functions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Tweak Xcode configuration</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in mmd<text:span text:style-name="MMD-Italic">tokenize</text:span>string()</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix memory leak</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix pointer bug</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix underscore strong/emph around punctuation</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve memory management</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">FIXED: Reset stacks when parsing</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2017&#8211;04&#8211;09 - v 6.0.4:</text:p>
 
 <text:list text:style-name="L1">

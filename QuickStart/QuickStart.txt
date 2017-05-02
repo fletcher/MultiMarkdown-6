@@ -158,6 +158,11 @@ complex abbreviations, you must explicitly mark uses of the abbreviation.
 ## Citations ##
 
 Citations can be specified using an inline syntax, just like inline footnotes.
+If you wish to use BibTeX, then configure the `bibtex` metadata (required) and
+the `biblio style` metadata (optional).
+
+The HTML output for citations now uses parentheses instead of brackets, e.g.
+`(1)` instead of `[1]`.
 
 
 ## CriticMarkup ##
@@ -219,6 +224,12 @@ complex parser.
 considered to be part of the code block.
 
 
+## Footnotes ##
+
+The HTML output for footnotes now uses superscripts instead of brackets, e.g.
+`<sup>1</sup>` instead of `[1]`.
+
+
 ## Glossary Terms ##
 
 If there are terms in your document you wish to define in a [?(glossary) The
@@ -244,6 +255,19 @@ each instance where the term is used and substitute it automatically.  In this
 case, the term is limited to a more basic character set which includes
 letters, numbers, periods, and hyphens, but not much else.  For more complex
 glossary terms, you must explicitly mark uses of the term.
+
+
+## HTML Comments ##
+
+Previously, HTML Comments were used by MultiMarkdown to include raw text for
+inclusion in the output file.  This was useful, but limited, as it could only
+work for one output format at a time.
+
+HTML Comments are now only included in HTML output, but not in any other
+format since they would cause errors.
+
+Take a look at the `HTML Comments.text` file in the test suite for a better
+understanding of comment blocks vs comment spans, and how they are parsed.
 
 
 ## Internationalization ##

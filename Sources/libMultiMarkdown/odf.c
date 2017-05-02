@@ -364,7 +364,6 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 	link *	temp_link	= NULL;
 	char *	temp_char	= NULL;
 	char *	temp_char2	= NULL;
-	char *	temp_char3	= NULL;
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
 	footnote * temp_note = NULL;
@@ -803,6 +802,22 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case HASH5:
 		case HASH6:
 			print_token(t);
+			break;
+		case HTML_COMMENT_START:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("&lt;!--");
+			} else {
+				print_const("&lt;!");
+				print_localized(DASH_N);
+			}
+			break;
+		case HTML_COMMENT_STOP:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("--&gt;");
+			} else {
+				print_localized(DASH_N);
+				print_const("&gt;");
+			}
 			break;
 		case INDENT_SPACE:
 			print_char(' ');
@@ -1367,6 +1382,8 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				mmd_export_token_tree_odf(out, source, t->child, scratch);
 			}
 			break;
+		case PAIR_HTML_COMMENT:
+			break;
 		case PAIR_MATH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
@@ -1897,6 +1914,7 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibliostyle") == 0) {
 		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 		} else if (strcmp(m->key, "htmlfooter") == 0) {

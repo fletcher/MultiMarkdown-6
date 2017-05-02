@@ -97,6 +97,10 @@ mmd_engine * mmd_engine_create_with_string(
 );
 
 
+/// Reset engine when finished parsing. (Not necessary to use this.)
+void mmd_engine_reset(mmd_engine * e);
+
+
 /// Free an existing MMD Engine
 void mmd_engine_free(
 	mmd_engine * e,
@@ -252,6 +256,10 @@ enum token_types {
 
 	ESCAPED_CHARACTER,
 
+	HTML_COMMENT_START,
+	HTML_COMMENT_STOP,
+	PAIR_HTML_COMMENT,
+	
 	MATH_PAREN_OPEN,
 	MATH_PAREN_CLOSE,
 	MATH_BRACKET_OPEN,

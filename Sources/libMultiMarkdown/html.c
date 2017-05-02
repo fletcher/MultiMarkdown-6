@@ -945,6 +945,22 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case HASH6:
 			print_token(t);
 			break;
+		case HTML_COMMENT_START:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("&lt;!--");
+			} else {
+				print_const("&lt;!");
+				print_localized(DASH_N);
+			}
+			break;
+		case HTML_COMMENT_STOP:
+			if (!(scratch->extensions & EXT_SMART)) {
+				print_const("--&gt;");
+			} else {
+				print_localized(DASH_N);
+				print_const("&gt;");
+			}
+			break;
 		case INDENT_SPACE:
 			print_char(' ');
 			break;
@@ -1239,11 +1255,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
-							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
+							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
 									temp_short, LC("see citation"), temp_short);
 						} else {
 							// This is the first time this note was used
-							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%d]</a>",
+							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
 									temp_short, temp_short, LC("see citation"), temp_short);
 						}
 					} else {
@@ -1251,11 +1267,11 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
-							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">[%s, %d]</a>",
+							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
 									temp_short, LC("see citation"), temp_char, temp_short);
 						} else {
 							// This is the first time this note was used
-							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">[%s, %d]</a>",
+							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
 									temp_short, temp_short, LC("see citation"), temp_char, temp_short);
 						}
 					}
@@ -1301,7 +1317,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						temp_short3 = temp_short;
 					}
 
-					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
+					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
 						temp_short3, LC("see footnote"), temp_short);
 				} else {
 					// This is the first time this note was used
@@ -1313,7 +1329,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						temp_short3 = temp_short;
 					}
 
-					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\">[%d]</a>",
+					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
 						temp_short3, temp_short3, LC("see footnote"), temp_short);
 				}
 			} else {
@@ -1488,6 +1504,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			} else {
 				mmd_export_token_tree_html(out, source, t->child, scratch);
 			}
+			break;
+		case PAIR_HTML_COMMENT:
+			print_token(t);
 			break;
 		case PAIR_MATH:
 		case PAIR_PAREN:
@@ -1740,6 +1759,7 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibliostyle") == 0) {
 		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 			print_const("\t<link type=\"text/css\" rel=\"stylesheet\" href=\"");

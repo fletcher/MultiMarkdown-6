@@ -466,6 +466,24 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-05-02 - v 6.0.5:
+
+	*    ADDED: Add back support for BibTeX bibliography entries (address #56)
+	*    CHANGED: Adjust > and < in LaTeX output -- don't wrap in math
+	*    CHANGED: Change HTML output for footnotes and citations
+	*    CHANGED: Improve flexibility of HTML Comment parsing (Addresses #25)
+	*    CHANGED: Refactor mmd_engine cleanup
+	*    CHANGED: Remove unnecessary variable
+	*    CHANGED: Rename criticmarkup functions
+	*    CHANGED: Tweak Xcode configuration
+	*    FIXED: Fix bug in mmd_tokenize_string()
+	*    FIXED: Fix memory leak
+	*    FIXED: Fix pointer bug
+	*    FIXED: Fix underscore strong/emph around punctuation
+	*    FIXED: Improve memory management
+	*    FIXED: Reset stacks when parsing
+
+
 * 2017-04-09 - v 6.0.4:
 
 	*    ADDED: The '-l' command line argument also sets language, if not overridden by metadata

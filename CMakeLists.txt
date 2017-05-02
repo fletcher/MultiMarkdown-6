@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-04-09")
+set (My_Project_Revised_Date "2017-05-02")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 4)
+set (My_Project_Version_Patch 5)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -52,6 +52,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	add_definitions("-fbracket-depth=264")	
 endif()
 
+set(CMAKE_SUPPRESS_REGENERATION 1)
+
 
 # =================
 # Macro Definitions
@@ -66,7 +68,8 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 	# the workflow as appropriate, since there is only one 
 	# public_header_files list.
 
-	SET_TARGET_PROPERTIES(${target} PROPERTIES PUBLIC_HEADER ${filename})
+	# This should only be run once per target
+	# SET_TARGET_PROPERTIES(${target} PROPERTIES PUBLIC_HEADER ${filename})
 
 	LIST(APPEND public_header_files ${filename})
 
@@ -74,7 +77,7 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 		${filename}
 		PROPERTIES
 		MACOSX_PACKAGE_LOCATION
-		PUBLIC_HEADER
+		include/\${PRODUCT_NAME}
 	)
 
 	# Set Xcode project to configure public header location to allow
@@ -453,12 +456,17 @@ if (DEFINED SHAREDBUILD)
 
 endif (DEFINED SHAREDBUILD)
 
+# remove the extra "lib" from "liblibFOO"
+SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
+	PREFIX ""
+	FRAMEWORK TRUE
+	FRAMEWORK_VERSION A
+	MACOSX_FRAMEWORK_IDENTIFIER net.multimarkdown.mmd6
+)
 
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/d_string.h)
-
-# remove the extra "lib" from "liblibFOO"
-SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES PREFIX "")
+ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/token.h)
 
 # Create a command-line app?
 # if (NOT DEFINED TEST)
