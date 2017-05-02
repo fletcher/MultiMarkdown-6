@@ -4,9 +4,9 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-04-09 |  
+| Date:      | 2017-05-02 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 6.0.4      |  
+| Version:   | 6.0.5      |  
 
 
 ## An Announcement! ##
