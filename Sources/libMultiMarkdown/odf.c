@@ -1914,6 +1914,7 @@ void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * sc
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibliostyle") == 0) {
 		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 		} else if (strcmp(m->key, "htmlfooter") == 0) {

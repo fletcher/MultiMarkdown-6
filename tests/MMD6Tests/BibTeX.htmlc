@@ -1,0 +1,18 @@
+<p>Title:	Bibliography
+latex config:	article
+bibtex:	bibtex
+biblio style: apalike</p>
+
+<p>[#Knuth:1968]</p>
+
+<p>[#Knuth:1968;]</p>
+
+<p>[#Knuth:1981]</p>
+
+<p>[#Knuth:1981;]</p>
+
+<p>[#Knuth:1968,Knuth:1981]</p>
+
+<p>5</p>
+
+<p>[#Knuth:1968,Knuth:1981;]</p>

@@ -94,6 +94,7 @@ typedef struct {
 	stack *				inline_citations_to_free;
 	struct fn_holder *	citation_hash;
 	short				citation_being_printed;
+	char *				bibtex_file;
 
 	stack *				used_glossaries;
 	stack *				inline_glossaries_to_free;

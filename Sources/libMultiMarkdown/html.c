@@ -1759,6 +1759,7 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "baseheaderlevel") == 0) {
+		} else if (strcmp(m->key, "bibliostyle") == 0) {
 		} else if (strcmp(m->key, "bibtex") == 0) {
 		} else if (strcmp(m->key, "css") == 0) {
 			print_const("\t<link type=\"text/css\" rel=\"stylesheet\" href=\"");

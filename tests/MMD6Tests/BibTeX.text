@@ -1,0 +1,19 @@
+Title:	Bibliography
+latex config:	article
+bibtex:	bibtex
+biblio style: apalike
+
+
+[#Knuth:1968]
+
+[#Knuth:1968;]
+
+[#Knuth:1981]
+
+[#Knuth:1981;]
+
+[#Knuth:1968,Knuth:1981]
+
+5
+
+[#Knuth:1968,Knuth:1981;]
