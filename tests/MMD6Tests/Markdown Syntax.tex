@@ -93,11 +93,11 @@ use HTML itself. There's no need to preface it or delimit it to
 indicate that you're switching from Markdown to HTML; you just use
 the tags.
 
-The only restrictions are that block-level HTML elements -- e.g. \texttt{$<$div$>$},
-\texttt{$<$table$>$}, \texttt{$<$pre$>$}, \texttt{$<$p$>$}, etc. -- must be separated from surrounding
+The only restrictions are that block-level HTML elements -- e.g. \texttt{<div>},
+\texttt{<table>}, \texttt{<pre>}, \texttt{<p>}, etc. -- must be separated from surrounding
 content by blank lines, and the start and end tags of the block should
 not be indented with tabs or spaces. Markdown is smart enough not
-to add extra (unwanted) \texttt{$<$p$>$} tags around HTML block-level tags.
+to add extra (unwanted) \texttt{<p>} tags around HTML block-level tags.
 
 For example, to add an HTML table to a Markdown article:
 
@@ -117,16 +117,16 @@ Note that Markdown formatting syntax is not processed within block-level
 HTML tags. E.g., you can't use Markdown-style \texttt{*emphasis*} inside an
 HTML block.
 
-Span-level HTML tags -- e.g. \texttt{$<$span$>$}, \texttt{$<$cite$>$}, or \texttt{$<$del$>$} -- can be
+Span-level HTML tags -- e.g. \texttt{<span>}, \texttt{<cite>}, or \texttt{<del>} -- can be
 used anywhere in a Markdown paragraph, list item, or header. If you
 want, you can even use HTML tags instead of Markdown formatting; e.g. if
-you'd prefer to use HTML \texttt{$<$a$>$} or \texttt{$<$img$>$} tags instead of Markdown's
+you'd prefer to use HTML \texttt{<a>} or \texttt{<img>} tags instead of Markdown's
 link or image syntax, go right ahead.
 
 Unlike block-level HTML tags, Markdown syntax \emph{is} processed within
 span-level tags.
 
-In HTML, there are two characters that demand special treatment: \texttt{$<$}
+In HTML, there are two characters that demand special treatment: \texttt{<}
 and \texttt{\&}. Left angle brackets are used to start tags; ampersands are
 used to denote HTML entities. If you want to use them as literal
 characters, you must escape them as entities, e.g. \texttt{\&lt;}, and
@@ -190,7 +190,7 @@ Markdown will translate it to:
 However, inside Markdown code spans and blocks, angle brackets and
 ampersands are \emph{always} encoded automatically. This makes it easy to use
 Markdown to write about HTML code. (As opposed to raw HTML, which is a
-terrible format for writing about HTML syntax, because every single \texttt{$<$}
+terrible format for writing about HTML syntax, because every single \texttt{<}
 and \texttt{\&} in your example code needs to be escaped.)
 
 \begin{center}\rule{3in}{0.4pt}\end{center}
@@ -204,13 +204,13 @@ The implication of the ``one or more consecutive lines of text'' rule is
 that Markdown supports ``hard-wrapped'' text paragraphs. This differs
 significantly from most other text-to-HTML formatters (including Movable
 Type's ``Convert Line Breaks'' option) which translate every line break
-character in a paragraph into a \texttt{$<$br \slash $>$} tag.
+character in a paragraph into a \texttt{<br \slash >} tag.
 
-When you \emph{do} want to insert a \texttt{$<$br \slash $>$} break tag using Markdown, you
+When you \emph{do} want to insert a \texttt{<br \slash >} break tag using Markdown, you
 end a line with two or more spaces, then type return.
 
-Yes, this takes a tad more effort to create a \texttt{$<$br \slash $>$}, but a simplistic
-``every line break is a \texttt{$<$br \slash $>$}'' rule wouldn't work for Markdown.
+Yes, this takes a tad more effort to create a \texttt{<br \slash >}, but a simplistic
+``every line break is a \texttt{<br \slash >}'' rule wouldn't work for Markdown.
 Markdown's email-style blockquoting (\autoref{blockquote}) and multi-paragraph list items (\autoref{list})
 work best -- and look better -- when you format them with hard breaks.
 
@@ -254,10 +254,10 @@ determines the header level.) :
 ### This is an H3 ######
 \end{verbatim}
 
-Markdown uses email-style \texttt{$>$} characters for blockquoting. If you're
+Markdown uses email-style \texttt{>} characters for blockquoting. If you're
 familiar with quoting passages of text in an email message, then you
 know how to create a blockquote in Markdown. It looks best if you hard
-wrap the text and put a \texttt{$>$} before every line:
+wrap the text and put a \texttt{>} before every line:
 
 \begin{verbatim}
 > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
@@ -268,7 +268,7 @@ wrap the text and put a \texttt{$>$} before every line:
 > id sem consectetuer libero luctus adipiscing.
 \end{verbatim}
 
-Markdown allows you to be lazy and only put the \texttt{$>$} before the first
+Markdown allows you to be lazy and only put the \texttt{>} before the first
 line of a hard-wrapped paragraph:
 
 \begin{verbatim}
@@ -281,7 +281,7 @@ id sem consectetuer libero luctus adipiscing.
 \end{verbatim}
 
 Blockquotes can be nested (i.e. a blockquote-in-a-blockquote) by
-adding additional levels of \texttt{$>$}:
+adding additional levels of \texttt{>}:
 
 \begin{verbatim}
 > This is the first level of quoting.
@@ -406,7 +406,7 @@ Suspendisse id sem consectetuer libero luctus adipiscing.
 \end{verbatim}
 
 If list items are separated by blank lines, Markdown will wrap the
-items in \texttt{$<$p$>$} tags in the HTML output. For example, this input:
+items in \texttt{<p>} tags in the HTML output. For example, this input:
 
 \begin{verbatim}
 *   Bird
@@ -469,7 +469,7 @@ sit amet, consectetuer adipiscing elit.
 *   Another item in the same list.
 \end{verbatim}
 
-To put a blockquote within a list item, the blockquote's \texttt{$>$}
+To put a blockquote within a list item, the blockquote's \texttt{>}
 delimiters need to be indented:
 
 \begin{verbatim}
@@ -505,7 +505,7 @@ line. To avoid this, you can backslash-escape the period:
 Pre-formatted code blocks are used for writing about programming or
 markup source code. Rather than forming normal paragraphs, the lines
 of a code block are interpreted literally. Markdown wraps a code block
-in both \texttt{$<$pre$>$} and \texttt{$<$code$>$} tags.
+in both \texttt{<pre>} and \texttt{<code>} tags.
 
 To produce a code block in Markdown, simply indent every line of the
 block by at least 4 spaces or 1 tab. For example, given this input:
@@ -550,7 +550,7 @@ end tell
 A code block continues until it reaches a line that is not indented
 (or the end of the article).
 
-Within a code block, ampersands (\texttt{\&}) and angle brackets (\texttt{$<$} and \texttt{$>$})
+Within a code block, ampersands (\texttt{\&}) and angle brackets (\texttt{<} and \texttt{>})
 are automatically converted into HTML entities. This makes it very
 easy to include example HTML source code using Markdown -- just paste
 it and indent it, and Markdown will handle the hassle of encoding the
@@ -575,7 +575,7 @@ Regular Markdown syntax is not processed within code blocks. E.g.,
 asterisks are just literal asterisks within a code block. This means
 it's also easy to use Markdown to write about Markdown's own syntax.
 
-You can produce a horizontal rule tag (\texttt{$<$hr \slash $>$}) by placing three or
+You can produce a horizontal rule tag (\texttt{<hr \slash >}) by placing three or
 more hyphens, asterisks, or underscores on a line by themselves. If you
 wish, you may use spaces between the hyphens or asterisks. Each of the
 following lines will produce a horizontal rule:
@@ -791,8 +791,8 @@ prose.
 
 Markdown treats asterisks (\texttt{*}) and underscores (\texttt{\_}) as indicators of
 emphasis. Text wrapped with one \texttt{*} or \texttt{\_} will be wrapped with an
-HTML \texttt{$<$em$>$} tag; double \texttt{*}'s or \texttt{\_}'s will be wrapped with an HTML
-\texttt{$<$strong$>$} tag. E.g., this input:
+HTML \texttt{<em>} tag; double \texttt{*}'s or \texttt{\_}'s will be wrapped with an HTML
+\texttt{<strong>} tag. E.g., this input:
 
 \begin{verbatim}
 *single asterisks*
@@ -951,7 +951,7 @@ are defined using syntax identical to link references:
 
 As of this writing, Markdown has no syntax for specifying the
 dimensions of an image; if this is important to you, you can simply
-use regular HTML \texttt{$<$img$>$} tags.
+use regular HTML \texttt{<img>} tags.
 
 \begin{center}\rule{3in}{0.4pt}\end{center}
 
@@ -995,7 +995,7 @@ will probably eventually start receiving spam.)
 Markdown allows you to use backslash escapes to generate literal
 characters which would otherwise have special meaning in Markdown's
 formatting syntax. For example, if you wanted to surround a word
-with literal asterisks (instead of an HTML \texttt{$<$em$>$} tag), you can use
+with literal asterisks (instead of an HTML \texttt{<em>} tag), you can use
 backslashes before the asterisks, like this:
 
 \begin{verbatim}

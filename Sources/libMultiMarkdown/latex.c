@@ -444,10 +444,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("\\&");
 			break;
 		case ANGLE_LEFT:
-			print_const("$<$");
+			print_const("<");
 			break;
 		case ANGLE_RIGHT:
-			print_const("$>$");
+			print_const(">");
 			break;
 		case APOSTROPHE:
 			if (!(scratch->extensions & EXT_SMART)) {
@@ -1694,10 +1694,10 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			print_const("\\&");
 			break;
 		case ANGLE_LEFT:
-			print_const("$<$");
+			print_const("<");
 			break;
 		case ANGLE_RIGHT:
-			print_const("$>$");
+			print_const(">");
 			break;
 		case CRITIC_ADD_OPEN:
 			print_const("\\{++");
