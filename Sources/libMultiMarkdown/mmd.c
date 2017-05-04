@@ -1459,6 +1459,8 @@ void pair_emphasis_tokens(token * t) {
 
 
 void recursive_parse_list_item(mmd_engine * e, token * block) {
+	token * marker = token_copy(block->child->child);
+
 	// Strip list marker from first line
 	token_remove_first_child(block->child);
 
@@ -1466,6 +1468,11 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 	deindent_block(e, block);
 
 	mmd_parse_token_chain(e, block);
+
+	// Insert marker back in place
+	marker->next = block->child->child;
+	block->child->child->prev = marker;
+	block->child->child = marker;
 }
 
 
