@@ -1508,11 +1508,13 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case PAIR_HTML_COMMENT:
 			print_token(t);
 			break;
+		case PAIR_EMPH:
 		case PAIR_MATH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
 		case PAIR_STAR:
+		case PAIR_STRONG:
 		case PAIR_UL:
 			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;

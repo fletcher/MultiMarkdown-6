@@ -1432,9 +1432,12 @@ void pair_emphasis_tokens(token * t) {
 						
 						tokens_prune(t->next, t->next);
 						tokens_prune(closer->prev, closer->prev);
+
+						token_prune_graft(t, closer, PAIR_STRONG);
 					} else {
 						t->type = EMPH_START;
 						closer->type = EMPH_STOP;
+						token_prune_graft(t, closer, PAIR_EMPH);
 					}
 					break;
 					
@@ -1668,17 +1671,12 @@ void parse_table_row_into_cells(token * row) {
 		last = first;
 	}
 
-
 	walker = walker->next;
 
 	while (walker) {
 		switch (walker->type) {
 			case PIPE:
-				if (row->child == first) {
-					row->child = token_prune_graft(first, last, TABLE_CELL);
-				} else {
-					token_prune_graft(first, last, TABLE_CELL);
-				}
+				token_prune_graft(first, last, TABLE_CELL);
 				first = NULL;
 				last = NULL;
 				walker->type = TABLE_DIVIDER;
@@ -1696,11 +1694,7 @@ void parse_table_row_into_cells(token * row) {
 	}
 
 	if (first) {
-		if (row->child == first) {
-			row->child = token_prune_graft(first, last, TABLE_CELL);
-		} else {
-			token_prune_graft(first, last, TABLE_CELL);
-		}
+		token_prune_graft(first, last, TABLE_CELL);
 	}
 }
 

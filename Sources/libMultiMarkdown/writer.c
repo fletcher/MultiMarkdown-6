@@ -336,6 +336,10 @@ void print_token_raw(DString * out, const char * source, token * t) {
 			case STRONG_STOP:
 			case TEXT_EMPTY:
 				break;
+			case PAIR_EMPH:
+			case PAIR_STRONG:
+				print_token_tree_raw(out, source, t->child);
+				break;
 			default:
 				d_string_append_c_array(out, &source[t->start], t->len);
 				break;

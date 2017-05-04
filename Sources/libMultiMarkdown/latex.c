@@ -1460,11 +1460,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
 				mmd_export_token_latex(out, source, t->child->mate, scratch);
-			break;			
+			break;
+		case PAIR_EMPH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
 		case PAIR_STAR:
+		case PAIR_STRONG:
 		case PAIR_UL:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
