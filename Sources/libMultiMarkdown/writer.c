@@ -1370,6 +1370,12 @@ token * manual_label_from_header(token * h, const char * source) {
 			case TEXT_NL:
 			case TEXT_LINEBREAK:
 			case TEXT_EMPTY:
+			case MARKER_H1:
+			case MARKER_H2:
+			case MARKER_H3:
+			case MARKER_H4:
+			case MARKER_H5:
+			case MARKER_H6:
 				walker = walker->prev;
 				break;
 			case TEXT_PLAIN:

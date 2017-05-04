@@ -444,13 +444,16 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				// Strip trailing '#' sequence if present
 				if (line->child->tail->type == TEXT_NL) {
 					if ((line->child->tail->prev->type >= HASH1) &&
-						(line->child->tail->prev->type <= HASH6))
-						line->child->tail->prev->type = TEXT_EMPTY;
+						(line->child->tail->prev->type <= HASH6)) {
+						line->child->tail->prev->type -= HASH1;
+						line->child->tail->prev->type += MARKER_H1;
+					}
 				} else {
-//					token_describe(line->child->tail, NULL);
 					if ((line->child->tail->type >= HASH1) &&
-						(line->child->tail->type <= HASH6))
-						line->child->tail->type = TEXT_EMPTY;
+						(line->child->tail->type <= HASH6)) {
+						line->child->tail->type -= TEXT_EMPTY;
+						line->child->tail->type += MARKER_H1;
+					}
 				}
 			} else {
 				line->type = LINE_PLAIN;
