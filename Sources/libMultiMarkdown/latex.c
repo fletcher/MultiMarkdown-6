@@ -1467,6 +1467,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case PAIR_QUOTE_SINGLE:
 		case PAIR_STAR:
 		case PAIR_STRONG:
+		case PAIR_SUBSCRIPT:
+		case PAIR_SUPERSCRIPT:
 		case PAIR_UL:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;

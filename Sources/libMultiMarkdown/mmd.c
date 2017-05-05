@@ -172,8 +172,8 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 	
 		// Superscript/Subscript
 		if (!(extensions & EXT_COMPATIBILITY)) {
-			token_pair_engine_add_pairing(e->pairings4, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, 0);
-			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUPERSCRIPT, 0);
+			token_pair_engine_add_pairing(e->pairings4, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUBSCRIPT, PAIRING_PRUNE_MATCH);
 		}
 
 	}
@@ -1330,8 +1330,10 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				break;
 			case SUPERSCRIPT:
 			case SUBSCRIPT:
-				if (e->extensions & EXT_COMPATIBILITY)
+				if (e->extensions & EXT_COMPATIBILITY) {
+					t->type = TEXT_PLAIN;
 					break;
+				}
 
 				offset = t->start;
 

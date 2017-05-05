@@ -1391,6 +1391,8 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case PAIR_QUOTE_SINGLE:
 		case PAIR_STAR:
 		case PAIR_STRONG:
+		case PAIR_SUBSCRIPT:
+		case PAIR_SUPERSCRIPT:
 		case PAIR_UL:
 			mmd_export_token_tree_odf(out, source, t->child, scratch);
 			break;
