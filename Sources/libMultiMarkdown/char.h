@@ -103,5 +103,9 @@ int char_is_whitespace_or_line_ending_or_punctuation(char c);
 // Is byte a UTF-8 continuation byte
 #define char_is_continuation_byte(x) ((x & 0xC0) == 0x80)
 
+// Is byte the first byte of a multibyte UTF-8 sequence?
+#define char_is_lead_multibyte(x) ((x & 0xC0) == 0xC0)
+
+
 #endif
 
