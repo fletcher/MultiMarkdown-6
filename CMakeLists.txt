@@ -50,6 +50,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	# using Clang
 	# Default is 256 -- needed for localization hash function
 	add_definitions("-fbracket-depth=264")	
+else()
+	add_definitions("-std=c99")
 endif()
 
 set(CMAKE_SUPPRESS_REGENERATION 1)
