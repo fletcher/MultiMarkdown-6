@@ -70,6 +70,7 @@
 #include "token.h"
 #include "token_pairs.h"
 #include "writer.h"
+#include "version.h"
 
 
 // Basic parser function declarations
@@ -2060,3 +2061,9 @@ void mmd_write_to_file(DString * source, unsigned long extensions, short format,
 	d_string_free(output, true);
 }
 
+// Return string containing engine version.
+char * mmd_version(void) {
+	char *result;
+	result = strdup(MULTIMARKDOWN_VERSION);
+	return result;
+}
