@@ -1996,6 +1996,25 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 	return result;
 }
 
+
+// Grab metadata without processing entire document
+// Returned char * does not need to be freed
+char * metavalue_from_string(const char * source, const char * key) {
+	char * result;
+
+	token_pool_init();
+
+	mmd_engine * e = mmd_engine_create_with_string(source, EXT_SNIPPET);
+
+	result = metavalue_for_key(e, key);
+
+	mmd_engine_free(e, true); // The engine has a private copy of source that must be freed
+
+	token_pool_drain();
+	return result;
+}
+
+
 // Extract Metadata keys from an engine, returning one key on each line
 // Returned char* must be freed
 char * mmd_metadata_keys_engine(mmd_engine* e) {
