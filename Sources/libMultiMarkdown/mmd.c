@@ -1909,6 +1909,27 @@ void mmd_engine_parse_string(mmd_engine * e) {
 	e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
 }
 
+bool mmd_string_has_metadata(const char * source, size_t* end) {
+		bool result;
+
+		token_pool_init();
+
+		mmd_engine * e = mmd_engine_create_with_string(source, EXT_SNIPPET);
+
+		mmd_engine_set_language(e, ENGLISH);
+
+		mmd_engine_parse_string(e);
+
+		mmd_engine_parse_string(e);
+
+		result = mmd_has_metadata(e, end);
+
+		mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+
+		token_pool_drain();
+		
+		return result;
+}
 
 bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
@@ -1976,10 +1997,94 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 }
 
 
+// Grab metadata without processing entire document
+// Returned char * does not need to be freed
+char * metavalue_from_string(const char * source, const char * key) {
+	char * result;
+
+	token_pool_init();
+
+	mmd_engine * e = mmd_engine_create_with_string(source, EXT_SNIPPET);
+
+	result = metavalue_for_key(e, key);
+
+	mmd_engine_free(e, true); // The engine has a private copy of source that must be freed
+
+	token_pool_drain();
+	return result;
+}
+
+
+// Extract Metadata keys from an engine, returning one key on each line
+// Returned char* must be freed
+char * mmd_metadata_keys_engine(mmd_engine* e) {
+	if (e->metadata_stack->size == 0) {
+		// Ensure we have checked for metadata
+		if(!mmd_has_metadata(e, NULL))
+			return NULL;
+	}
+
+	DString * output = d_string_new("");
+
+	meta * m;
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+
+		d_string_append_printf(output, "%s\n", m->key);
+	}
+
+	d_string_free(output, false);
+	return output->str;
+}
+
+
+// Extract Metadata keys from a DString, returning one key on each line
+// Returned char* must be freed
+char * mmd_metadata_keys(DString * source, unsigned long extensions, short format, short language) {
+	char * result;
+	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+	result = mmd_metadata_keys_engine(e);
+
+	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+
+	return result;
+}
+
+
+// Extract Metadata keys from a DString, returning one key on each line
+// Returned char* must be freed
+char * mmd_metadata_keys_string(const char * source, unsigned long extensions, short format, short language) {
+	char * result;
+
+	token_pool_init();
+
+	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+
+	result = mmd_metadata_keys_engine(e);
+
+	mmd_engine_free(e, true);
+
+	token_pool_drain();
+
+	return result;
+}
+
+
 // Convert MMD text to specified format, with specified extensions, and language
 // Returned char * must be freed
 char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language) {
 	char * result;
+
+	token_pool_init();
 
 	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
 
@@ -1995,6 +2100,8 @@ char * mmd_convert_string(const char * source, unsigned long extensions, short f
 
 	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
 	d_string_free(output, false);
+
+	token_pool_drain();
 
 	return result;
 }

@@ -117,11 +117,30 @@ void mmd_engine_parse_string(mmd_engine * e);
 
 
 /// Does the text have metadata?
+bool mmd_string_has_metadata(const char * source, size_t* end);
+
+
+/// Does the text have metadata?
 bool mmd_has_metadata(mmd_engine * e, size_t * end);
 
 
+// Extract metadata keys from string
+char * mmd_metadata_keys_string(const char * source, unsigned long extensions, short format, short language);
+
+
+// Extract metadata keys from DString
+char * mmd_metadata_keys(DString * source, unsigned long extensions, short format, short language);
+
+
+// Extract metadata keys from parsed engine
+char * mmd_metadata_keys_engine(mmd_engine* e);
+
 /// Extract desired metadata as string value
 char * metavalue_for_key(mmd_engine * e, const char * key);
+
+
+// Extract desired metadata as string value from string
+char * metavalue_from_string(const char * source, const char * key);
 
 
 void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
