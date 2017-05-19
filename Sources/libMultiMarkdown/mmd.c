@@ -1976,6 +1976,24 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 }
 
 
+// Grab metadata without processing entire document
+// Returned char * does not need to be freed
+char * metavalue_from_string(const char * source, const char * key) {
+	char * result;
+
+	token_pool_init();
+
+	mmd_engine * e = mmd_engine_create_with_string(source, EXT_SNIPPET);
+
+	result = metavalue_for_key(e, key);
+
+	mmd_engine_free(e, true); // The engine has a private copy of source that must be freed
+
+	token_pool_drain();
+	return result;
+}
+
+
 // Convert MMD text to specified format, with specified extensions, and language
 // Returned char * must be freed
 char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language) {
