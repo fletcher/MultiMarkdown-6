@@ -118,6 +118,9 @@ void mmd_engine_parse_string(mmd_engine * e);
 
 /// Does the text have metadata?
 bool mmd_string_has_metadata(const char * source, size_t* end);
+
+
+/// Does the text have metadata?
 bool mmd_has_metadata(mmd_engine * e, size_t * end);
 
 
