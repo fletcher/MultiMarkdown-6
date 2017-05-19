@@ -1996,6 +1996,69 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 	return result;
 }
 
+// Extract Metadata keys from an engine, returning one key on each line
+// Returned char* must be freed
+char * mmd_metadata_keys_engine(mmd_engine* e) {
+	if (e->metadata_stack->size == 0) {
+		// Ensure we have checked for metadata
+		if(!mmd_has_metadata(e, NULL))
+			return NULL;
+	}
+
+	DString * output = d_string_new("");
+
+	meta * m;
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+
+		d_string_append_printf(output, "%s\n", m->key);
+	}
+
+	d_string_free(output, false);
+	return output->str;
+}
+
+
+// Extract Metadata keys from a DString, returning one key on each line
+// Returned char* must be freed
+char * mmd_metadata_keys(DString * source, unsigned long extensions, short format, short language) {
+	char * result;
+	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+	result = mmd_metadata_keys_engine(e);
+
+	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+
+	return result;
+}
+
+
+// Extract Metadata keys from a DString, returning one key on each line
+// Returned char* must be freed
+char * mmd_metadata_keys_string(const char * source, unsigned long extensions, short format, short language) {
+	char * result;
+
+	token_pool_init();
+
+	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+
+	result = mmd_metadata_keys_engine(e);
+
+	mmd_engine_free(e, true);
+
+	token_pool_drain();
+
+	return result;
+}
+
 
 // Convert MMD text to specified format, with specified extensions, and language
 // Returned char * must be freed
