@@ -1910,6 +1910,27 @@ void mmd_engine_parse_string(mmd_engine * e) {
 	e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
 }
 
+bool mmd_string_has_metadata(const char * source, size_t* end) {
+		bool result;
+
+		token_pool_init();
+
+		mmd_engine * e = mmd_engine_create_with_string(source, EXT_SNIPPET);
+
+		mmd_engine_set_language(e, ENGLISH);
+
+		mmd_engine_parse_string(e);
+
+		mmd_engine_parse_string(e);
+
+		result = mmd_has_metadata(e, end);
+
+		mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+
+		token_pool_drain();
+		
+		return result;
+}
 
 bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
