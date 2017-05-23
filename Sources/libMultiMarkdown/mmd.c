@@ -1924,6 +1924,20 @@ bool mmd_string_has_metadata(char * source, size_t * end) {
 }
 
 
+/// Does the text have metadata?
+bool mmd_d_string_has_metadata(DString * source, size_t * end) {
+	bool result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	result = mmd_engine_has_metadata(e, end);
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
 
@@ -1976,6 +1990,20 @@ char * mmd_string_metadata_keys(char * source) {
 
 /// Return metadata keys, one per line
 /// Returned char * must be freed
+char * mmd_d_string_metadata_keys(DString * source) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	result = mmd_engine_metadata_keys(e);
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
 char * mmd_engine_metadata_keys(mmd_engine * e) {
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
@@ -2011,6 +2039,20 @@ char * mmd_string_metavalue_for_key(char * source, const char * key) {
 	result = strdup(mmd_engine_metavalue_for_key(e, key));
 
 	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	result = strdup(mmd_engine_metavalue_for_key(e, key));
+
+	mmd_engine_free(e, false);
 
 	return result;
 }
@@ -2055,16 +2097,9 @@ char * mmd_string_convert(const char * source, unsigned long extensions, short f
 
 	mmd_engine_set_language(e, language);
 
-	mmd_engine_parse_string(e);
-
-	DString * output = d_string_new("");
-
-	mmd_engine_export_token_tree(output, e, format);
-
-	result = output->str;
+	result = mmd_engine_convert(e, format);
 
 	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
-	d_string_free(output, false);
 
 	return result;
 }
@@ -2079,6 +2114,19 @@ char * mmd_d_string_convert(DString * source, unsigned long extensions, short fo
 
 	mmd_engine_set_language(e, language);
 
+	result = mmd_engine_convert(e, format);
+
+	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
+
+	return result;
+}
+
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_engine_convert(mmd_engine * e, short format) {
+	char * result;
+
 	mmd_engine_parse_string(e);
 
 	DString * output = d_string_new("");
@@ -2087,21 +2135,44 @@ char * mmd_d_string_convert(DString * source, unsigned long extensions, short fo
 
 	result = output->str;
 
-	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
 	d_string_free(output, false);
 
 	return result;
 }
 
 
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_string_convert_to_file(const char * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
+
+	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	mmd_engine_parse_string(e);
+
+	mmd_engine_free(e, true);			// The engine has a private copy of source, so free it.
+}
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
 void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
-	FILE * output_stream;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
 
 	mmd_engine_set_language(e, language);
 
-	mmd_engine_parse_string(e);
+	mmd_engine_convert_to_file(e, format, directory, filepath);
+
+	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
+}
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath) {
+	FILE * output_stream;
 
 	DString * output = d_string_new("");
 
@@ -2126,9 +2197,9 @@ void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, sh
 			break;
 	}
 
-	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
 	d_string_free(output, true);
 }
+
 
 /// Return string containing engine version.
 char * mmd_version(void) {

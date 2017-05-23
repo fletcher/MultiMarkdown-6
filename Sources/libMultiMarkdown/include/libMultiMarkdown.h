@@ -78,9 +78,21 @@
 #include "token.h"
 
 
+/// There are 3 main versions of the primary functions:
+///
+///	* `mmd_string...` -- start from source text in c string
+/// * `mmd_d_string...` -- start from a DString (Useful if you already use DString's for your text)
+/// * `mmd_engine...` -- useful when you are processing the same source multiple times
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_string_convert_to_file(const char * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
 
 
 /// Does the text have metadata?
@@ -97,6 +109,8 @@ char * mmd_string_metadata_keys(char * source);
 char * mmd_string_metavalue_for_key(char * source, const char * key);
 
 
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language);
@@ -105,6 +119,22 @@ char * mmd_d_string_convert(DString * source, unsigned long extensions, short fo
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 /// multiple documents (e.g. EPUB)
 void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
+
+
+/// Does the text have metadata?
+bool mmd_d_string_has_metadata(DString * source, size_t * end);
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_d_string_metadata_keys(DString * source);
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_d_string_metavalue_for_key(DString * source, const char * key);
+
+
 
 
 /// MMD Engine is used for storing configuration information for MMD parser
@@ -126,7 +156,7 @@ mmd_engine * mmd_engine_create_with_string(
 );
 
 
-/// Reset engine when finished parsing. (Not necessary to use this.)
+/// Reset engine when finished parsing. (Usually not necessary to use this.)
 void mmd_engine_reset(mmd_engine * e);
 
 
@@ -137,12 +167,30 @@ void mmd_engine_free(
 );
 
 
+/// Set language and smart quotes language
+void mmd_engine_set_language(mmd_engine * e, short language);
+
+
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len);
 
 
 /// Parse the entire string into a token tree
 void mmd_engine_parse_string(mmd_engine * e);
+
+
+/// Export parsed token tree to output format
+void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format);
+
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_engine_convert(mmd_engine * e, short format);
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath);
 
 
 /// Does the text have metadata?
@@ -156,13 +204,6 @@ char * mmd_engine_metadata_keys(mmd_engine * e);
 
 /// Extract desired metadata as string value
 char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
-
-
-void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format);
-
-
-/// Set language and smart quotes language
-void mmd_engine_set_language(mmd_engine * e, short language);
 
 
 /// Return the version string for this build of libMultiMarkdown
