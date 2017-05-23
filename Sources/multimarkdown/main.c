@@ -77,11 +77,11 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		*a_accept, *a_reject, *a_full, *a_snippet, *a_random;
-struct arg_str *a_format, *a_lang;
+		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta;
+struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
-struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5;
+struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
 
 
 DString * stdin_buffer() {
@@ -169,6 +169,11 @@ int main(int argc, char** argv) {
 
 		a_rem5			= arg_rem("", ""),
 		
+		a_meta			= arg_lit0("m", "metadata-keys", "list all metadata keys"),
+		a_extract		= arg_str0("e", "extract", "KEY", "extract specified metadata key"),
+
+		a_rem6			= arg_rem("", ""),
+
 		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc+2, "read input from file(s) -- use stdin if no files given"),
 
 		a_end 			= arg_end(20),
@@ -287,7 +292,7 @@ int main(int argc, char** argv) {
 	}
 
 	DString * buffer = NULL;
-	char * result;
+	char * result = NULL;
 	FILE * output_stream;
 	char * output_filename;
 
@@ -358,32 +363,53 @@ int main(int argc, char** argv) {
 #ifdef kUseObjectPool
 			token_pool_init();
 #endif
-	
-			if (FORMAT_EPUB == format) {
-				mmd_write_to_file(buffer, extensions, format, language, folder, output_filename);
-				result = NULL;
-			} else if (FORMAT_MMD == format) {
-				result = buffer->str;
-			} else {
-				result = mmd_convert_d_string(buffer, extensions, format, language);
-			}
+			if (a_meta->count > 0) {
+				// List metadata keys
+				result = mmd_string_metadata_keys(buffer->str);
 
-			if (result) {
-				if (!(output_stream = fopen(output_filename, "w"))) {
-					// Failed to open file
-					perror(output_filename);
+				fputs(result, stdout);
+
+				free(result);
+			} else if (a_extract->count > 0) {
+				// Extract metadata key
+				const char * query = a_extract->sval[0];
+
+				result = mmd_string_metavalue_for_key(buffer->str, query);
+
+				fputs(result, stdout);
+				fputc('\n', stdout);
+
+				free(result);
+			} else {
+				// Regular processing
+
+				if (FORMAT_EPUB == format) {
+					mmd_d_string_convert_to_file(buffer, extensions, format, language, folder, output_filename);
+					result = NULL;
+				} else if (FORMAT_MMD == format) {
+					result = buffer->str;
 				} else {
-					fputs(result, output_stream);
-					fputc('\n', output_stream);
-					fclose(output_stream);
+					result = mmd_d_string_convert(buffer, extensions, format, language);
+				}
+
+				if (result) {
+					if (!(output_stream = fopen(output_filename, "w"))) {
+						// Failed to open file
+						perror(output_filename);
+					} else {
+						fputs(result, output_stream);
+						fputc('\n', output_stream);
+						fclose(output_stream);
+					}
+				}
+
+				if (FORMAT_MMD != format) {
+					free(result);
 				}
 			}
 
 			d_string_free(buffer, true);
 			free(output_filename);
-			if (FORMAT_MMD != format) {
-				free(result);
-			}
 
 			// Decrement counter and drain
 			token_pool_drain();
@@ -431,35 +457,57 @@ int main(int argc, char** argv) {
 			mmd_critic_markup_reject(buffer);
 		}
 
-		if (FORMAT_MMD == format) {
-			result = buffer->str;
+		if (a_meta->count > 0) {
+			// List metadata keys
+			result = mmd_string_metadata_keys(buffer->str);
+
+			fputs(result, stdout);
+
+			free(result);
+		} else if (a_extract->count > 0) {
+			// Extract metadata key
+			const char * query = a_extract->sval[0];
+
+			result = mmd_string_metavalue_for_key(buffer->str, query);
+
+			fputs(result, stdout);
+			fputc('\n', stdout);
+
+			free(result);
 		} else {
-			result = mmd_convert_d_string(buffer, extensions, format, language);
+			// Regular processing
+
+			if (FORMAT_MMD == format) {
+				result = buffer->str;
+			} else {
+				result = mmd_d_string_convert(buffer, extensions, format, language);
+			}
+
+			// Where does output go?
+			if (strcmp(a_o->filename[0], "-") == 0) {
+				// direct to stdout
+				output_stream = stdout;
+			} else if (!(output_stream = fopen(a_o->filename[0], "w"))) {
+				perror(a_o->filename[0]);
+				free(result);
+				d_string_free(buffer, true);
+		
+				exitcode = 1;
+				goto exit;
+			}
+
+			fputs(result, output_stream);
+			fputc('\n', output_stream);
+			
+			if (output_stream != stdout)
+				fclose(output_stream);
+
+			if (FORMAT_MMD != format) {
+				free(result);
+			}
 		}
 
-		// Where does output go?
-		if (strcmp(a_o->filename[0], "-") == 0) {
-			// direct to stdout
-			output_stream = stdout;
-		} else if (!(output_stream = fopen(a_o->filename[0], "w"))) {
-			perror(a_o->filename[0]);
-			free(result);
-			d_string_free(buffer, true);
-	
-			exitcode = 1;
-			goto exit;
-		}
-
-		fputs(result, output_stream);
-		fputc('\n', output_stream);
-		
-		if (output_stream != stdout)
-			fclose(output_stream);
-		
 		d_string_free(buffer, true);
-		if (FORMAT_MMD != format) {
-			free(result);
-		}
 	}
 
 

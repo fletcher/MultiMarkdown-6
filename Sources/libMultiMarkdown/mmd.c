@@ -1911,14 +1911,27 @@ void mmd_engine_parse_string(mmd_engine * e) {
 }
 
 
-bool mmd_has_metadata(mmd_engine * e, size_t * end) {
+/// Does the text have metadata?
+bool mmd_string_has_metadata(char * source, size_t * end) {
+	bool result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	result = mmd_engine_has_metadata(e, end);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
 
 	if (!(scan_meta_line(&e->dstr->str[0]))) {
 		// First line is not metadata, so can't have metadata
 		// Saves the time of an unnecessary parse 
 		// TODO:  Need faster confirmation of actual metadata than full tokenizing
-		
+		*end = 0;
 		return false;
 	}
 
@@ -1947,12 +1960,68 @@ bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 }
 
 
-/// Grab metadata without processing entire document
-/// Returned char * does not need to be freed
-char * metavalue_for_key(mmd_engine * e, const char * key) {
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_string_metadata_keys(char * source) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	result = mmd_engine_metadata_keys(e);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_engine_metadata_keys(mmd_engine * e) {
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
-		if (!mmd_has_metadata(e, NULL))
+		if (!mmd_engine_has_metadata(e, NULL))
+			return NULL;
+	}
+
+	char * result = NULL;
+	DString * output = d_string_new("");
+
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+
+		d_string_append_printf(output, "%s\n", m->key);
+	}
+
+	result = output->str;
+	d_string_free(output, false);
+
+	return result;
+}
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_string_metavalue_for_key(char * source, const char * key) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	result = strdup(mmd_engine_metavalue_for_key(e, key));
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Grab metadata without processing entire document
+/// Returned char * does not need to be freed
+char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
+	if (e->metadata_stack->size == 0) {
+		// Ensure we have checked for metadata
+		if (!mmd_engine_has_metadata(e, NULL))
 			return NULL;
 	}
 
@@ -1979,7 +2048,7 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
-char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language) {
+char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
@@ -1990,7 +2059,7 @@ char * mmd_convert_string(const char * source, unsigned long extensions, short f
 
 	DString * output = d_string_new("");
 
-	mmd_export_token_tree(output, e, format);
+	mmd_engine_export_token_tree(output, e, format);
 
 	result = output->str;
 
@@ -2003,7 +2072,7 @@ char * mmd_convert_string(const char * source, unsigned long extensions, short f
 
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
-char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language) {
+char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
@@ -2014,7 +2083,7 @@ char * mmd_convert_d_string(DString * source, unsigned long extensions, short fo
 
 	DString * output = d_string_new("");
 
-	mmd_export_token_tree(output, e, format);
+	mmd_engine_export_token_tree(output, e, format);
 
 	result = output->str;
 
@@ -2025,7 +2094,7 @@ char * mmd_convert_d_string(DString * source, unsigned long extensions, short fo
 }
 
 
-void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
+void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
 	FILE * output_stream;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
@@ -2036,7 +2105,7 @@ void mmd_write_to_file(DString * source, unsigned long extensions, short format,
 
 	DString * output = d_string_new("");
 
-	mmd_export_token_tree(output, e, format);
+	mmd_engine_export_token_tree(output, e, format);
 
 	// Now we have the input source string, the output string, the (modified) parse tree, and engine stacks
 

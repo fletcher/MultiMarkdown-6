@@ -1691,7 +1691,7 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 }
 
 
-void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
+void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 	// Process potential reference definitions
 	process_definition_stack(e);

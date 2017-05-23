@@ -10,6 +10,20 @@
 	@author	Fletcher T. Penney
 	@bug	
 
+
+	******IMPORTANT******
+
+	If you are using libMultiMarkdown in your own project, you need to either:
+
+	1. Disable kUseObjectPool in `token.h`
+
+	2. Properly manage the `token_pool_init` and `token_pool_free` functions.
+
+
+	I recommend option #1, unless you absolutely need the best performance for 
+	long documents.  Doing #2 properly is tricky in any program that can handle
+	multiple MMD text strings at overlapping times.
+
 **/
 
 /*
@@ -64,18 +78,33 @@
 #include "token.h"
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
-char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language);
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
-char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language);
+/// Does the text have metadata?
+bool mmd_string_has_metadata(char * source, size_t * end);
 
-// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
-// multiple documents (e.g. EPUB)
-void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_string_metadata_keys(char * source);
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_string_metavalue_for_key(char * source, const char * key);
+
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language);
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
 
 
 /// MMD Engine is used for storing configuration information for MMD parser
@@ -117,22 +146,29 @@ void mmd_engine_parse_string(mmd_engine * e);
 
 
 /// Does the text have metadata?
-bool mmd_has_metadata(mmd_engine * e, size_t * end);
+bool mmd_engine_has_metadata(mmd_engine * e, size_t * end);
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_engine_metadata_keys(mmd_engine * e);
 
 
 /// Extract desired metadata as string value
-char * metavalue_for_key(mmd_engine * e, const char * key);
+char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
 
 
-void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
+void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format);
 
 
 /// Set language and smart quotes language
 void mmd_engine_set_language(mmd_engine * e, short language);
 
+
 /// Return the version string for this build of libMultiMarkdown
 /// The returned `char *` will need to be freed after it is no longer needed.
 char * mmd_version(void);
+
 
 /// Token types for parse tree
 enum token_types {

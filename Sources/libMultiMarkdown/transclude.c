@@ -290,9 +290,9 @@ void transclude_source(DString * source, const char * search_path, const char * 
 	size_t last_match;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
-	if (mmd_has_metadata(e, &offset)) {
+	if (mmd_engine_has_metadata(e, &offset)) {
 
-		temp = metavalue_for_key(e, "transclude base");
+		temp = mmd_engine_metavalue_for_key(e, "transclude base");
 
 		if (temp) {
 			// The new file overrides the search path
@@ -437,7 +437,7 @@ void transclude_source(DString * source, const char * search_path, const char * 
 				// Strip metadata from buffer now that we have parsed it
 				e = mmd_engine_create_with_dstring(buffer, EXT_TRANSCLUDE);
 				
-				if (mmd_has_metadata(e, &offset)) {
+				if (mmd_engine_has_metadata(e, &offset)) {
 					d_string_erase(buffer, 0, offset);
 				} else {
 					// Do we need to strip BOM?
