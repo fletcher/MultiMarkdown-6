@@ -2063,7 +2063,7 @@ void mmd_write_to_file(DString * source, unsigned long extensions, short format,
 
 // Return string containing engine version.
 char * mmd_version(void) {
-	char *result;
+	char * result;
 	result = strdup(MULTIMARKDOWN_VERSION);
 	return result;
 }
