@@ -2093,6 +2093,8 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language) {
 	char * result;
 
+	token_pool_init();
+
 	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
 
 	mmd_engine_set_language(e, language);
@@ -2100,6 +2102,8 @@ char * mmd_string_convert(const char * source, unsigned long extensions, short f
 	result = mmd_engine_convert(e, format);
 
 	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+
+	token_pool_drain();
 
 	return result;
 }
