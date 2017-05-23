@@ -130,6 +130,9 @@ void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
 /// Set language and smart quotes language
 void mmd_engine_set_language(mmd_engine * e, short language);
 
+/// Return the version string for this build of libMultiMarkdown
+/// The returned `char *` will need to be freed after it is no longer needed.
+char * mmd_version(void);
 
 /// Token types for parse tree
 enum token_types {
