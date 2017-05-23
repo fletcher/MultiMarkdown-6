@@ -124,6 +124,10 @@ bool mmd_has_metadata(mmd_engine * e, size_t * end);
 char * metavalue_for_key(mmd_engine * e, const char * key);
 
 
+// Extract desired metadata as string value from string
+char * metavalue_from_string(const char * source, const char * key);
+
+
 void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
 
 
