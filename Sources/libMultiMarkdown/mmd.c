@@ -1977,8 +1977,8 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 }
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
 char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language) {
 	char * result;
 
@@ -2001,8 +2001,8 @@ char * mmd_convert_string(const char * source, unsigned long extensions, short f
 }
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
 char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language) {
 	char * result;
 
@@ -2061,7 +2061,7 @@ void mmd_write_to_file(DString * source, unsigned long extensions, short format,
 	d_string_free(output, true);
 }
 
-// Return string containing engine version.
+/// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;
 	result = strdup(MULTIMARKDOWN_VERSION);
