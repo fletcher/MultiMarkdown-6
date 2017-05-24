@@ -66,7 +66,6 @@
 #include "i18n.h"
 #include "libMultiMarkdown.h"
 #include "token.h"
-#include "transclude.h"
 #include "uuid.h"
 #include "version.h"
 
@@ -82,7 +81,7 @@ struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
 
 
 DString * stdin_buffer() {
-	/* Read from stdin and return a GString *
+	/* Read from stdin and return a DString *
 		`buffer` will need to be freed elsewhere */
 
 	char chunk[kBUFFERSIZE];
@@ -342,7 +341,7 @@ int main(int argc, char** argv) {
 
 			if (extensions & EXT_TRANSCLUDE) {
 
-				transclude_source(buffer, folder, "", format, NULL, NULL);
+				mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
 	
 				// Don't free folder -- owned by dirname
 			}
@@ -440,7 +439,7 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
 			char * folder = dirname((char *) a_file->filename[0]);
 
-			transclude_source(buffer, folder, "", format, NULL, NULL);
+			mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
 
 			// Don't free folder -- owned by dirname
 		}

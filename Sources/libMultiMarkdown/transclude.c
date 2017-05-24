@@ -274,7 +274,7 @@ DString * scan_file(const char * fname) {
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
-void transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest) {
+void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest) {
 	DString * file_path;
 	DString * buffer;
 
@@ -429,7 +429,7 @@ void transclude_source(DString * source, const char * search_path, const char * 
 				char * source_filename;
 				split_path_file(&new_search_path, &source_filename, file_path->str);
 
-				transclude_source(buffer, search_folder, new_search_path, format, parse_stack, manifest);
+				mmd_transclude_source(buffer, search_folder, new_search_path, format, parse_stack, manifest);
 
 				free(new_search_path);
 				free(source_filename);

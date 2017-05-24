@@ -211,6 +211,17 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
 char * mmd_version(void);
 
 
+// Read file into memory
+DString * scan_file(const char * fname);
+
+/// MMD Engine is used for storing configuration information for MMD parser
+typedef struct stack stack;
+
+/// Recursively transclude source text, given a search directory.
+/// Track files to prevent infinite recursive loops
+void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, struct stack * parsed, struct stack * manifest);
+
+
 /// Token types for parse tree
 enum token_types {
 	DOC_START_TOKEN = 0,	//!< DOC_START_TOKEN must be type 0
