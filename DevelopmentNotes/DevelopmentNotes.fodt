@@ -274,7 +274,7 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="date">2017-03-28</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-05-24</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -756,6 +756,91 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2017&#8211;05&#8211;24 - v 6.0.6:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add function for accessing library version</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Restructure superscript</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Continue to refactor core API routines for clarity and flexibility</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Don't strip list markers from nested list items</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Extended ASCII support interferes with UTF&#8211;8 support &#8211; disable it</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Fix style</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Preserve closing Heading markers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor CriticMarkup basic commands to be part of libMultiMarkdown.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor code for more consistent API naming in libMultiMarkdown.h; Add functionality to list metadata keys and extract specific metadata values</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Refactor transclude_source to be part of main libMultiMarkdown.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Restructure strong/emph to a nested structure</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Adjust CMake configuration for Linux to allow building with libcurl</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix regression in EPUB code refactoring</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Need separate check for escaped characters in CriticMarkup parsing</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: compiling with older gcc and used c standard</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #61 from silvio/gcc&#8211;build&#8211;fix</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #64 from jasedit/feat/add<text:span text:style-name="MMD-Italic">version</text:span>function</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+NOTE: Remove unnecessary includes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update libMultiMarkdown.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update mmd.c</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2017&#8211;05&#8211;02 - v 6.0.5:</text:p>
 
 <text:list text:style-name="L1">
@@ -850,7 +935,7 @@ CHANGED: Recompile lexer using &#8211;8 flag</text:p></text:list-item>
 CHANGED: Recompile scanners using &#8211;8 flag</text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="Standard">FIXED: Don&#8217;t separate out 'à'</text:p></text:list-item>
+<text:p text:style-name="Standard">FIXED: Don&#8217;t separate out &#8216;à&#8217;</text:p></text:list-item>
 
 </text:list></text:list-item>
 

@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-03-28  
+Date: 2017-05-24  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -465,6 +465,30 @@ more cross-platform approach than that used by MMD v5.
 
 
 # Changelog #
+
+* 2017-05-24 - v 6.0.6:
+
+	*    ADDED: Add function for accessing library version
+	*    ADDED: Restructure superscript
+	*    CHANGED: Continue to refactor core API routines for clarity and flexibility
+	*    CHANGED: Don't strip list markers from nested list items
+	*    CHANGED: Extended ASCII support interferes with UTF-8 support -- disable it
+	*    CHANGED: Fix style
+	*    CHANGED: Preserve closing Heading markers
+	*    CHANGED: Refactor CriticMarkup basic commands to be part of libMultiMarkdown.h
+	*    CHANGED: Refactor code for more consistent API naming in libMultiMarkdown.h; Add functionality to list metadata keys and extract specific metadata values
+	*    CHANGED: Refactor transclude_source to be part of main libMultiMarkdown.h
+	*    CHANGED: Restructure strong/emph to a nested structure
+	*    FIXED: Adjust CMake configuration for Linux to allow building with libcurl
+	*    FIXED: Fix regression in EPUB code refactoring
+	*    FIXED: Need separate check for escaped characters in CriticMarkup parsing
+	*    FIXED: compiling with older gcc and used c standard
+	*    Merge pull request #61 from silvio/gcc-build-fix
+	*    Merge pull request #64 from jasedit/feat/add_version_function
+	*    NOTE: Remove unnecessary includes
+	*    UPDATED: Update libMultiMarkdown.h
+	*    UPDATED: Update mmd.c
+
 
 * 2017-05-02 - v 6.0.5:
 
