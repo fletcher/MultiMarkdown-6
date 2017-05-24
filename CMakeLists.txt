@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-05-02")
+set (My_Project_Revised_Date "2017-05-24")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 5)
+set (My_Project_Version_Patch 6)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -50,6 +50,8 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	# using Clang
 	# Default is 256 -- needed for localization hash function
 	add_definitions("-fbracket-depth=264")	
+else()
+	add_definitions("-std=c99")
 endif()
 
 set(CMAKE_SUPPRESS_REGENERATION 1)
@@ -384,9 +386,9 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	# You may wish to disable this.
 	#
 	
-	set (CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-	set (BUILD_SHARED_LIBRARIES OFF)
-	set (CMAKE_EXE_LINKER_FLAGS "-static")
+	# set (CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+	# set (BUILD_SHARED_LIBRARIES OFF)
+	# set (CMAKE_EXE_LINKER_FLAGS "-static")
 
 	# Some libraries need to be linked on some Linux builds
 	if (DEFINED TEST)
@@ -484,9 +486,9 @@ ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/token.h)
 set_target_properties(libMultiMarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 
-# Use C99
-set_property(TARGET libMultiMarkdown PROPERTY C_STANDARD 99)
-set_property(TARGET multimarkdown PROPERTY C_STANDARD 99)
+# Use C11
+set_property(TARGET libMultiMarkdown PROPERTY C_STANDARD 11)
+set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
 
 
 # ==========================

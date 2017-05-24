@@ -65,6 +65,7 @@
 #define digit(x)		table[x] |= CHAR_DIGIT
 #define line_ending(x)	table[x] |= CHAR_LINE_ENDING
 
+#define USE_EXTENDED_ASCII_disabled 1
 
 int main( int argc, char** argv ) {
 	unsigned char table[256] = {0};
@@ -140,7 +141,7 @@ int main( int argc, char** argv ) {
 
 
 	// Extended ASCII
-
+#ifdef USE_EXTENDED_ASCII
 	// Punctuation ranges
 	for (int i = 132; i < 138; ++i) {
 		punctuation(i);
@@ -194,7 +195,7 @@ int main( int argc, char** argv ) {
 				break;
 		}
 	}
-
+#endif
 
 
 	// Print output as 16 x 16 table

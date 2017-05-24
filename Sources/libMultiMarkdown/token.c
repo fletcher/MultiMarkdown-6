@@ -142,6 +142,22 @@ token * token_new(unsigned short type, size_t start, size_t len) {
 }
 
 
+/// Duplicate an existing token
+token * token_copy(token * original) {
+#ifdef kUseObjectPool
+	token * t = pool_allocate_object(token_pool);
+#else
+	token * t = malloc(sizeof(token));
+#endif
+
+	if (t) {
+		* t = * original;
+	}
+
+	return t;
+}
+
+
 /// Create a parent for a chain of tokens
 token * token_new_parent(token * child, unsigned short type) {
 	if (child == NULL) {
@@ -307,34 +323,39 @@ token * token_prune_graft(token * first, token * last, unsigned short container_
 	token * prev = first->prev;
 	token * next = last->next;
 	
-	// If we are head of chain, remember tail
-	token * tail = NULL;
-	if (prev == NULL)
-		tail = first->tail;
+	// Duplicate first token -- this will be child of new container
+	token * new_child = token_copy(first);
+	new_child->prev = NULL;
+	new_child->tail = last;
+	if (new_child->next) {
+		new_child->next->prev = new_child;
+	}
 
+	// Swap last (if necessary)
+	if (first == last)
+		last = new_child;
 
-	token * container = token_new(container_type, first->start, last->start + last->len - first->start);
-	
-	container->child = first;
-	container->next = next;
-	container->prev = prev;
-	container->can_close = 0;
-	container->can_open = 0;
+	// Existing first token will be new container
+	first->child = new_child;
+	first->type = container_type;
+	first->len = last->start + last->len - first->start;
+	first->next = next;
+	first->can_close = 0;
+	first->can_open = 0;
 
-	if (tail)
-		container->tail = tail;
+	// Fix mating
+	if (first->mate) {
+		first->mate = NULL;
+		new_child->mate->mate = new_child;
+	}
 
-	if (prev)
-		prev->next = container;
-
-	first->prev = NULL;
-
+	// Disconnect last token
 	last->next = NULL;
 
 	if (next)
-		next->prev = container;
+		next->prev = first;
 
-	return container;
+	return first;
 }
 
 

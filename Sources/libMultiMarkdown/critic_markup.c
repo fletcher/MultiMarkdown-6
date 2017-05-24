@@ -83,6 +83,16 @@ token * mmd_critic_tokenize_string(const char * source, size_t start, size_t len
 	trie_insert(ac, "{>>", CM_COM_OPEN);
 	trie_insert(ac, "<<}", CM_COM_CLOSE);
 
+	trie_insert(ac, "\\{", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\}", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\{", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\+", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\-", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\~", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\>", CM_PLAIN_TEXT);
+	trie_insert(ac, "\\=", CM_PLAIN_TEXT);
+
+
 	ac_trie_prepare(ac);
 
 	match * m = ac_trie_leftmost_longest_search(ac, source, start, len);

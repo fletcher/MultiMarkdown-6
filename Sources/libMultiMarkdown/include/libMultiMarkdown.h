@@ -10,6 +10,20 @@
 	@author	Fletcher T. Penney
 	@bug	
 
+
+	******IMPORTANT******
+
+	If you are using libMultiMarkdown in your own project, you need to either:
+
+	1. Disable kUseObjectPool in `token.h`
+
+	2. Properly manage the `token_pool_init` and `token_pool_free` functions.
+
+
+	I recommend option #1, unless you absolutely need the best performance for 
+	long documents.  Doing #2 properly is tricky in any program that can handle
+	multiple MMD text strings at overlapping times.
+
 **/
 
 /*
@@ -64,19 +78,76 @@
 #include "token.h"
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
-char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language);
+/// There are 3 main versions of the primary functions:
+///
+///	* `mmd_string...` -- start from source text in c string
+/// * `mmd_d_string...` -- start from a DString (Useful if you already use DString's for your text)
+/// * `mmd_engine...` -- useful when you are processing the same source multiple times
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
-char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language);
+/*
+	C string variants
+*/
 
-// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
-// multiple documents (e.g. EPUB)
-void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
 
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_string_convert_to_file(const char * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
+
+
+/// Does the text have metadata?
+bool mmd_string_has_metadata(char * source, size_t * end);
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_string_metadata_keys(char * source);
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_string_metavalue_for_key(char * source, const char * key);
+
+
+
+
+/*
+	DString variants - DString ("dynamic string") is a mutable string implementation used in this project
+*/
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language);
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
+
+
+/// Does the text have metadata?
+bool mmd_d_string_has_metadata(DString * source, size_t * end);
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_d_string_metadata_keys(DString * source);
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_d_string_metavalue_for_key(DString * source, const char * key);
+
+
+
+
+/*
+	MMD Engine variants
+*/
 
 /// MMD Engine is used for storing configuration information for MMD parser
 typedef struct mmd_engine mmd_engine;
@@ -97,7 +168,7 @@ mmd_engine * mmd_engine_create_with_string(
 );
 
 
-/// Reset engine when finished parsing. (Not necessary to use this.)
+/// Reset engine when finished parsing. (Usually not necessary to use this.)
 void mmd_engine_reset(mmd_engine * e);
 
 
@@ -108,6 +179,10 @@ void mmd_engine_free(
 );
 
 
+/// Set language and smart quotes language
+void mmd_engine_set_language(mmd_engine * e, short language);
+
+
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len);
 
@@ -116,19 +191,63 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 void mmd_engine_parse_string(mmd_engine * e);
 
 
+/// Export parsed token tree to output format
+void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format);
+
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_engine_convert(mmd_engine * e, short format);
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath);
+
+
 /// Does the text have metadata?
-bool mmd_has_metadata(mmd_engine * e, size_t * end);
+bool mmd_engine_has_metadata(mmd_engine * e, size_t * end);
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_engine_metadata_keys(mmd_engine * e);
 
 
 /// Extract desired metadata as string value
-char * metavalue_for_key(mmd_engine * e, const char * key);
+char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
 
 
-void mmd_export_token_tree(DString * out, mmd_engine * e, short format);
 
 
-/// Set language and smart quotes language
-void mmd_engine_set_language(mmd_engine * e, short language);
+/*
+	Utility functions
+*/
+
+/// Return the version string for this build of libMultiMarkdown
+/// The returned `char *` will need to be freed after it is no longer needed.
+char * mmd_version(void);
+
+
+// Read file into memory
+DString * scan_file(const char * fname);
+
+
+/// MMD Engine is used for storing configuration information for MMD parser
+typedef struct stack stack;
+
+
+/// Recursively transclude source text, given a search directory.
+/// Track files to prevent infinite recursive loops
+void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, struct stack * parsed, struct stack * manifest);
+
+
+/// Accept all CriticMarkup changes in the source string
+void mmd_critic_markup_accept(DString * d);
+
+
+/// Reject all CriticMarkup changes in the source string
+void mmd_critic_markup_reject(DString * d);
 
 
 /// Token types for parse tree
@@ -202,13 +321,16 @@ enum token_types {
 	PAIR_BRACKET_CITATION,
 	PAIR_BRACKET_IMAGE,
 	PAIR_BRACKET_VARIABLE,
+	PAIR_EMPH,
 	PAIR_MATH,
 	PAIR_PAREN,
 	PAIR_QUOTE_SINGLE,
 	PAIR_QUOTE_DOUBLE,
 	PAIR_QUOTE_ALT,
+	PAIR_SUBSCRIPT,
 	PAIR_SUPERSCRIPT,
 	PAIR_STAR,
+	PAIR_STRONG,
 	PAIR_UL,
 	PAIR_BRACES,
 

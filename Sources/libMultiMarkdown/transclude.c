@@ -274,7 +274,7 @@ DString * scan_file(const char * fname) {
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
-void transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest) {
+void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest) {
 	DString * file_path;
 	DString * buffer;
 
@@ -290,9 +290,9 @@ void transclude_source(DString * source, const char * search_path, const char * 
 	size_t last_match;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
-	if (mmd_has_metadata(e, &offset)) {
+	if (mmd_engine_has_metadata(e, &offset)) {
 
-		temp = metavalue_for_key(e, "transclude base");
+		temp = mmd_engine_metavalue_for_key(e, "transclude base");
 
 		if (temp) {
 			// The new file overrides the search path
@@ -429,7 +429,7 @@ void transclude_source(DString * source, const char * search_path, const char * 
 				char * source_filename;
 				split_path_file(&new_search_path, &source_filename, file_path->str);
 
-				transclude_source(buffer, search_folder, new_search_path, format, parse_stack, manifest);
+				mmd_transclude_source(buffer, search_folder, new_search_path, format, parse_stack, manifest);
 
 				free(new_search_path);
 				free(source_filename);
@@ -437,7 +437,7 @@ void transclude_source(DString * source, const char * search_path, const char * 
 				// Strip metadata from buffer now that we have parsed it
 				e = mmd_engine_create_with_dstring(buffer, EXT_TRANSCLUDE);
 				
-				if (mmd_has_metadata(e, &offset)) {
+				if (mmd_engine_has_metadata(e, &offset)) {
 					d_string_erase(buffer, 0, offset);
 				} else {
 					// Do we need to strip BOM?

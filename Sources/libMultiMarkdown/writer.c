@@ -336,6 +336,10 @@ void print_token_raw(DString * out, const char * source, token * t) {
 			case STRONG_STOP:
 			case TEXT_EMPTY:
 				break;
+			case PAIR_EMPH:
+			case PAIR_STRONG:
+				print_token_tree_raw(out, source, t->child);
+				break;
 			default:
 				d_string_append_c_array(out, &source[t->start], t->len);
 				break;
@@ -1366,6 +1370,12 @@ token * manual_label_from_header(token * h, const char * source) {
 			case TEXT_NL:
 			case TEXT_LINEBREAK:
 			case TEXT_EMPTY:
+			case MARKER_H1:
+			case MARKER_H2:
+			case MARKER_H3:
+			case MARKER_H4:
+			case MARKER_H5:
+			case MARKER_H6:
 				walker = walker->prev;
 				break;
 			case TEXT_PLAIN:
@@ -1681,7 +1691,7 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 }
 
 
-void mmd_export_token_tree(DString * out, mmd_engine * e, short format) {
+void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 	// Process potential reference definitions
 	process_definition_stack(e);

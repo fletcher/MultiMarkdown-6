@@ -104,6 +104,11 @@ token * token_new(
 	size_t len							//!< Len of token
 );
 
+/// Duplicate an existing token
+token * token_copy(
+	token * original					//!< Token to be copied
+);
+
 /// Create a parent for a chain of tokens
 token * token_new_parent(
 	token * child,						//!< Pointer to child token chain

@@ -70,6 +70,7 @@
 #include "token.h"
 #include "token_pairs.h"
 #include "writer.h"
+#include "version.h"
 
 
 // Basic parser function declarations
@@ -172,8 +173,8 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 	
 		// Superscript/Subscript
 		if (!(extensions & EXT_COMPATIBILITY)) {
-			token_pair_engine_add_pairing(e->pairings4, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, 0);
-			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUPERSCRIPT, 0);
+			token_pair_engine_add_pairing(e->pairings4, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUBSCRIPT, PAIRING_PRUNE_MATCH);
 		}
 
 	}
@@ -444,13 +445,16 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				// Strip trailing '#' sequence if present
 				if (line->child->tail->type == TEXT_NL) {
 					if ((line->child->tail->prev->type >= HASH1) &&
-						(line->child->tail->prev->type <= HASH6))
-						line->child->tail->prev->type = TEXT_EMPTY;
+						(line->child->tail->prev->type <= HASH6)) {
+						line->child->tail->prev->type -= HASH1;
+						line->child->tail->prev->type += MARKER_H1;
+					}
 				} else {
-//					token_describe(line->child->tail, NULL);
 					if ((line->child->tail->type >= HASH1) &&
-						(line->child->tail->type <= HASH6))
-						line->child->tail->type = TEXT_EMPTY;
+						(line->child->tail->type <= HASH6)) {
+						line->child->tail->type -= TEXT_EMPTY;
+						line->child->tail->type += MARKER_H1;
+					}
 				}
 			} else {
 				line->type = LINE_PLAIN;
@@ -1327,8 +1331,10 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				break;
 			case SUPERSCRIPT:
 			case SUBSCRIPT:
-				if (e->extensions & EXT_COMPATIBILITY)
+				if (e->extensions & EXT_COMPATIBILITY) {
+					t->type = TEXT_PLAIN;
 					break;
+				}
 
 				offset = t->start;
 
@@ -1432,9 +1438,12 @@ void pair_emphasis_tokens(token * t) {
 						
 						tokens_prune(t->next, t->next);
 						tokens_prune(closer->prev, closer->prev);
+
+						token_prune_graft(t, closer, PAIR_STRONG);
 					} else {
 						t->type = EMPH_START;
 						closer->type = EMPH_STOP;
+						token_prune_graft(t, closer, PAIR_EMPH);
 					}
 					break;
 					
@@ -1453,6 +1462,8 @@ void pair_emphasis_tokens(token * t) {
 
 
 void recursive_parse_list_item(mmd_engine * e, token * block) {
+	token * marker = token_copy(block->child->child);
+
 	// Strip list marker from first line
 	token_remove_first_child(block->child);
 
@@ -1460,6 +1471,11 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 	deindent_block(e, block);
 
 	mmd_parse_token_chain(e, block);
+
+	// Insert marker back in place
+	marker->next = block->child->child;
+	block->child->child->prev = marker;
+	block->child->child = marker;
 }
 
 
@@ -1668,17 +1684,12 @@ void parse_table_row_into_cells(token * row) {
 		last = first;
 	}
 
-
 	walker = walker->next;
 
 	while (walker) {
 		switch (walker->type) {
 			case PIPE:
-				if (row->child == first) {
-					row->child = token_prune_graft(first, last, TABLE_CELL);
-				} else {
-					token_prune_graft(first, last, TABLE_CELL);
-				}
+				token_prune_graft(first, last, TABLE_CELL);
 				first = NULL;
 				last = NULL;
 				walker->type = TABLE_DIVIDER;
@@ -1696,11 +1707,7 @@ void parse_table_row_into_cells(token * row) {
 	}
 
 	if (first) {
-		if (row->child == first) {
-			row->child = token_prune_graft(first, last, TABLE_CELL);
-		} else {
-			token_prune_graft(first, last, TABLE_CELL);
-		}
+		token_prune_graft(first, last, TABLE_CELL);
 	}
 }
 
@@ -1904,14 +1911,41 @@ void mmd_engine_parse_string(mmd_engine * e) {
 }
 
 
-bool mmd_has_metadata(mmd_engine * e, size_t * end) {
+/// Does the text have metadata?
+bool mmd_string_has_metadata(char * source, size_t * end) {
+	bool result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	result = mmd_engine_has_metadata(e, end);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Does the text have metadata?
+bool mmd_d_string_has_metadata(DString * source, size_t * end) {
+	bool result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	result = mmd_engine_has_metadata(e, end);
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Does the text have metadata?
+bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
 
 	if (!(scan_meta_line(&e->dstr->str[0]))) {
 		// First line is not metadata, so can't have metadata
 		// Saves the time of an unnecessary parse 
 		// TODO:  Need faster confirmation of actual metadata than full tokenizing
-		
+		*end = 0;
 		return false;
 	}
 
@@ -1940,12 +1974,96 @@ bool mmd_has_metadata(mmd_engine * e, size_t * end) {
 }
 
 
-/// Grab metadata without processing entire document
-/// Returned char * does not need to be freed
-char * metavalue_for_key(mmd_engine * e, const char * key) {
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_string_metadata_keys(char * source) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	result = mmd_engine_metadata_keys(e);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_d_string_metadata_keys(DString * source) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	result = mmd_engine_metadata_keys(e);
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Return metadata keys, one per line
+/// Returned char * must be freed
+char * mmd_engine_metadata_keys(mmd_engine * e) {
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
-		if (!mmd_has_metadata(e, NULL))
+		if (!mmd_engine_has_metadata(e, NULL))
+			return NULL;
+	}
+
+	char * result = NULL;
+	DString * output = d_string_new("");
+
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+
+		d_string_append_printf(output, "%s\n", m->key);
+	}
+
+	result = output->str;
+	d_string_free(output, false);
+
+	return result;
+}
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_string_metavalue_for_key(char * source, const char * key) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	result = strdup(mmd_engine_metavalue_for_key(e, key));
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Extract desired metadata as string value
+/// Returned char * must be freed
+char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	result = strdup(mmd_engine_metavalue_for_key(e, key));
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Grab metadata without processing entire document
+/// Returned char * does not need to be freed
+char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
+	if (e->metadata_stack->size == 0) {
+		// Ensure we have checked for metadata
+		if (!mmd_engine_has_metadata(e, NULL))
 			return NULL;
 	}
 
@@ -1970,10 +2088,62 @@ char * metavalue_for_key(mmd_engine * e, const char * key) {
 }
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
-char * mmd_convert_string(const char * source, unsigned long extensions, short format, short language) {
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language) {
 	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	result = mmd_engine_convert(e, format);
+
+	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
+
+	return result;
+}
+
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language) {
+	char * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	result = mmd_engine_convert(e, format);
+
+	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
+
+	return result;
+}
+
+
+/// Convert MMD text to specified format, with specified extensions, and language
+/// Returned char * must be freed
+char * mmd_engine_convert(mmd_engine * e, short format) {
+	char * result;
+
+	mmd_engine_parse_string(e);
+
+	DString * output = d_string_new("");
+
+	mmd_engine_export_token_tree(output, e, format);
+
+	result = output->str;
+
+	d_string_free(output, false);
+
+	return result;
+}
+
+
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_string_convert_to_file(const char * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
 
 	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
 
@@ -1981,55 +2151,34 @@ char * mmd_convert_string(const char * source, unsigned long extensions, short f
 
 	mmd_engine_parse_string(e);
 
-	DString * output = d_string_new("");
-
-	mmd_export_token_tree(output, e, format);
-
-	result = output->str;
-
-	mmd_engine_free(e, true);			// The engine has a private copy of source that must be freed
-	d_string_free(output, false);
-
-	return result;
+	mmd_engine_free(e, true);			// The engine has a private copy of source, so free it.
 }
 
 
-// Convert MMD text to specified format, with specified extensions, and language
-// Returned char * must be freed
-char * mmd_convert_d_string(DString * source, unsigned long extensions, short format, short language) {
-	char * result;
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_d_string_convert_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
 
 	mmd_engine_set_language(e, language);
 
-	mmd_engine_parse_string(e);
-
-	DString * output = d_string_new("");
-
-	mmd_export_token_tree(output, e, format);
-
-	result = output->str;
+	mmd_engine_convert_to_file(e, format, directory, filepath);
 
 	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
-	d_string_free(output, false);
-
-	return result;
 }
 
 
-void mmd_write_to_file(DString * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath) {
+/// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+/// multiple documents (e.g. EPUB)
+void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath) {
 	FILE * output_stream;
-
-	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
-
-	mmd_engine_set_language(e, language);
-
-	mmd_engine_parse_string(e);
 
 	DString * output = d_string_new("");
 
-	mmd_export_token_tree(output, e, format);
+	mmd_engine_parse_string(e);
+	
+	mmd_engine_export_token_tree(output, e, format);
 
 	// Now we have the input source string, the output string, the (modified) parse tree, and engine stacks
 
@@ -2050,7 +2199,13 @@ void mmd_write_to_file(DString * source, unsigned long extensions, short format,
 			break;
 	}
 
-	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
 	d_string_free(output, true);
 }
 
+
+/// Return string containing engine version.
+char * mmd_version(void) {
+	char * result;
+	result = strdup(MULTIMARKDOWN_VERSION);
+	return result;
+}
