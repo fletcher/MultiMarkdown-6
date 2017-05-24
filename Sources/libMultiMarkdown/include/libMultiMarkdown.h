@@ -85,6 +85,10 @@
 /// * `mmd_engine...` -- useful when you are processing the same source multiple times
 
 
+/*
+	C string variants
+*/
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
@@ -111,6 +115,10 @@ char * mmd_string_metavalue_for_key(char * source, const char * key);
 
 
 
+/*
+	DString variants - DString ("dynamic string") is a mutable string implementation used in this project
+*/
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language);
@@ -136,6 +144,10 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key);
 
 
 
+
+/*
+	MMD Engine variants
+*/
 
 /// MMD Engine is used for storing configuration information for MMD parser
 typedef struct mmd_engine mmd_engine;
@@ -206,6 +218,12 @@ char * mmd_engine_metadata_keys(mmd_engine * e);
 char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
 
 
+
+
+/*
+	Utility functions
+*/
+
 /// Return the version string for this build of libMultiMarkdown
 /// The returned `char *` will need to be freed after it is no longer needed.
 char * mmd_version(void);
@@ -214,12 +232,22 @@ char * mmd_version(void);
 // Read file into memory
 DString * scan_file(const char * fname);
 
+
 /// MMD Engine is used for storing configuration information for MMD parser
 typedef struct stack stack;
+
 
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
 void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, struct stack * parsed, struct stack * manifest);
+
+
+/// Accept all CriticMarkup changes in the source string
+void mmd_critic_markup_accept(DString * d);
+
+
+/// Reject all CriticMarkup changes in the source string
+void mmd_critic_markup_reject(DString * d);
 
 
 /// Token types for parse tree

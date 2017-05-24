@@ -61,7 +61,6 @@
 
 
 #include "argtable3.h"
-#include "critic_markup.h"
 #include "d_string.h"
 #include "i18n.h"
 #include "libMultiMarkdown.h"
