@@ -466,6 +466,11 @@ more cross-platform approach than that used by MMD v5.
 
 # Changelog #
 
+* 2017-05-24 - v 6.0.7:
+
+	*    CHANGED: Add mmd_convert_to_data functions; Refactor main.c so that EPUB and other formats use same workflow -- batch mode no longer required for EPUB format
+
+
 * 2017-05-24 - v 6.0.6:
 
 	*    ADDED: Add function for accessing library version

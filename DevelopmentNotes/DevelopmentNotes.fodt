@@ -756,6 +756,15 @@ more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2017&#8211;05&#8211;24 - v 6.0.7:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">CHANGED: Add mmd_convert_to_data functions; Refactor main.c so that EPUB and other formats use same workflow &#8211; batch mode no longer required for EPUB format</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2017&#8211;05&#8211;24 - v 6.0.6:</text:p>
 
 <text:list text:style-name="L1">
