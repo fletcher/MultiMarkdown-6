@@ -94,6 +94,12 @@
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
 
 
+/// Convert MMD text to specified format using DString as a container for block of data
+/// and length of that block.  Must be used for "complex" output formats such as EPUB.
+/// Returned DString * must be freed
+DString * mmd_string_convert_to_data(const char * source, unsigned long extensions, short format, short language, const char * directory);
+
+
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 /// multiple documents (e.g. EPUB)
 void mmd_string_convert_to_file(const char * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
@@ -122,6 +128,12 @@ char * mmd_string_metavalue_for_key(char * source, const char * key);
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_d_string_convert(DString * source, unsigned long extensions, short format, short language);
+
+
+/// Convert MMD text to specified format using DString as a container for block of data
+/// and length of that block.  Must be used for "complex" output formats such as EPUB.
+/// Returned DString * must be freed
+DString * mmd_d_string_convert_to_data(DString * source, unsigned long extensions, short format, short language, const char * directory);
 
 
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
@@ -203,6 +215,12 @@ char * mmd_engine_convert(mmd_engine * e, short format);
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 /// multiple documents (e.g. EPUB)
 void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath);
+
+
+/// Convert MMD text to specified format using DString as a container for block of data
+/// and length of that block.  Must be used for "complex" output formats such as EPUB.
+/// Returned DString * must be freed
+DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * directory);
 
 
 /// Does the text have metadata?

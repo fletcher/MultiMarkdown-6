@@ -11,7 +11,7 @@ set (My_Project_Author "Fletcher T. Penney")
 set (My_Project_Revised_Date "2017-05-24")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 6)
+set (My_Project_Version_Patch 7)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -200,6 +200,7 @@ set(src_files
 	Sources/libMultiMarkdown/transclude.c
 	Sources/libMultiMarkdown/uuid.c
 	Sources/libMultiMarkdown/writer.c
+	Sources/libMultiMarkdown/zip.c
 )
 
 # Primary header files, also for doxygen documentation
@@ -227,6 +228,7 @@ set(header_files
 	Sources/libMultiMarkdown/uthash.h
 	Sources/libMultiMarkdown/uuid.h
 	Sources/libMultiMarkdown/writer.h
+	Sources/libMultiMarkdown/zip.h
 )
 
 set (scripts

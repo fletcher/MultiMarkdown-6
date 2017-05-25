@@ -61,16 +61,14 @@
 #include <curl/curl.h>
 #endif
 
-#include "d_string.h"
 #include "epub.h"
 #include "html.h"
 #include "i18n.h"
 #include "miniz.h"
-#include "mmd.h"
 #include "transclude.h"
 #include "uuid.h"
 #include "writer.h"
-
+#include "zip.h"
 
 #define print(x) d_string_append(out, x)
 #define print_const(x) d_string_append_c_array(out, x, sizeof(x) - 1)
@@ -295,7 +293,10 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 }
 
 
-bool add_asset_from_file(const char * filepath, asset * a, const char * destination, const char * directory) {
+bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
+	if (!directory)
+		return false;
+	
 	char * path = path_from_dir_base(directory, a->url);
 	mz_bool status;
 	bool result = false;
@@ -303,7 +304,7 @@ bool add_asset_from_file(const char * filepath, asset * a, const char * destinat
 	DString * buffer = scan_file(path);
 
 	if (buffer && buffer->currentStringLength > 0) {
-		status = mz_zip_add_mem_to_archive_file_in_place(filepath, destination, buffer->str, buffer->currentStringLength, NULL, 0, MZ_BEST_COMPRESSION);
+		status = mz_zip_writer_add_mem(pZip, destination, buffer->str, buffer->currentStringLength, MZ_BEST_COMPRESSION);
 
 		d_string_free(buffer, true);
 		result = true;
@@ -344,7 +345,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 }
 
 // Add assets to zipfile using libcurl
-void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
+void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
 	if (e->asset_hash){
@@ -375,12 +376,12 @@ void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
 
 			if (res != CURLE_OK) {
 				// Attempt to add asset from local file
-				if (!add_asset_from_file(filepath, a, destination, directory)) {
+				if (!add_asset_from_file(pZip, a, destination, directory)) {
 					fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
 				}
 			} else {
 				// Store downloaded file in zip
-				status = mz_zip_add_mem_to_archive_file_in_place(filepath, destination, chunk.memory, chunk.size, NULL, 0, MZ_BEST_COMPRESSION);
+				status = mz_zip_writer_add_mem(pZip, destination, chunk.memory, chunk.size, MZ_BEST_COMPRESSION);
 			}
 		}
 	}
@@ -388,7 +389,7 @@ void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
 
 #else
 // Add local assets only (libcurl not available)
-void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
+void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
 	if (e->asset_hash){
@@ -403,7 +404,7 @@ void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
 			memcpy(&destination[13], a->asset_path, 36);
 
 			// Attempt to add asset from local file
-			if (!add_asset_from_file(filepath, a, destination, directory)) {
+			if (!add_asset_from_file(pZip, a, destination, directory)) {
 				fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
 			}
 		}
@@ -414,53 +415,76 @@ void add_assets(const char * filepath, mmd_engine * e, const char * directory) {
 
 // Use the miniz library to create a zip archive for the EPUB document
 void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
+	FILE * output_stream;
+
+	DString * result = epub_create(body, e, directory);
+
+	if (!(output_stream = fopen(filepath, "w"))) {
+		// Failed to open file
+		perror(filepath);
+	} else {
+		fwrite(&(result->str), result->currentStringLength, 1, output_stream);
+		fclose(output_stream);
+	}
+
+	d_string_free(result, true);
+}
+
+
+DString * epub_create(const char * body, mmd_engine * e, const char * directory) {
+	DString * result = d_string_new("");
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_EPUB);
+
 	mz_bool status;
 	char * data;
 	size_t len;
 
-	// Delete existing file, if present
-	remove(filepath);
+	mz_zip_archive zip;
+	zip_new_archive(&zip);
 
 	// Add mimetype
 	data = epub_mimetype();
 	len = strlen(data);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "mimetype", data, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "mimetype", data, len, MZ_BEST_COMPRESSION);
 	free(data);
 
 	// Create directories
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/", NULL, 0, NULL, 0, MZ_BEST_COMPRESSION);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "META-INF/", NULL, 0, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/", NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
 
 	// Add container
 	data = epub_container_xml();
 	len = strlen(data);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "META-INF/container.xml", data, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "META-INF/container.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
 
 	// Add package
 	data = epub_package_document(scratch);
 	len = strlen(data);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/main.opf", data, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.opf", data, len, MZ_BEST_COMPRESSION);
 	free(data);
 
 	// Add nav
 	data = epub_nav(e, scratch);
 	len = strlen(data);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/nav.xhtml", data, len, NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/nav.xhtml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
 
 	// Add main document
 	len = strlen(body);
-	status = mz_zip_add_mem_to_archive_file_in_place(filepath, "OEBPS/main.xhtml", body, len, NULL, 0, MZ_BEST_COMPRESSION);
-
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body, len, MZ_BEST_COMPRESSION);
 
 	// Add assets
-	add_assets(filepath, e, directory);
+	add_assets(&zip, e, directory);
 
 	scratch_pad_free(scratch);
+
+	// Finalize zip archive and extract data
+	free(result->str);
+
+	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), &(result->currentStringLength));
+
+	return result;
 }
-
-
 
 
