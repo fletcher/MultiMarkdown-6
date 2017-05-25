@@ -58,9 +58,12 @@
 #ifndef EPUB_MULTIMARKDOWN_H
 #define EPUB_MULTIMARKDOWN_H
 
+#include "d_string.h"
 #include "mmd.h"
 
 void epub_write_wrapper(const char * root_path, const char * body, mmd_engine * e, const char * directory);
+
+DString * epub_create(const char * body, mmd_engine * e, const char * directory);
 
 
 #endif

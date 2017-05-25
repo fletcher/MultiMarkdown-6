@@ -287,7 +287,8 @@ int main(int argc, char** argv) {
 	}
 
 	DString * buffer = NULL;
-	char * result = NULL;
+	DString * result = NULL;
+	char * char_result = NULL;
 	FILE * output_stream;
 	char * output_filename;
 
@@ -360,46 +361,40 @@ int main(int argc, char** argv) {
 #endif
 			if (a_meta->count > 0) {
 				// List metadata keys
-				result = mmd_string_metadata_keys(buffer->str);
+				char_result = mmd_string_metadata_keys(buffer->str);
 
-				fputs(result, stdout);
+				fputs(char_result, stdout);
 
-				free(result);
+				free(char_result);
 			} else if (a_extract->count > 0) {
 				// Extract metadata key
 				const char * query = a_extract->sval[0];
 
-				result = mmd_string_metavalue_for_key(buffer->str, query);
+				char_result = mmd_string_metavalue_for_key(buffer->str, query);
 
-				fputs(result, stdout);
+				fputs(char_result, stdout);
 				fputc('\n', stdout);
 
-				free(result);
+				free(char_result);
 			} else {
 				// Regular processing
 
-				if (FORMAT_EPUB == format) {
-					mmd_d_string_convert_to_file(buffer, extensions, format, language, folder, output_filename);
-					result = NULL;
-				} else if (FORMAT_MMD == format) {
-					result = buffer->str;
+				if (FORMAT_MMD == format) {
+					result = buffer;
 				} else {
-					result = mmd_d_string_convert(buffer, extensions, format, language);
+					result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 				}
 
-				if (result) {
-					if (!(output_stream = fopen(output_filename, "w"))) {
-						// Failed to open file
-						perror(output_filename);
-					} else {
-						fputs(result, output_stream);
-						fputc('\n', output_stream);
-						fclose(output_stream);
-					}
+				if (!(output_stream = fopen(output_filename, "w"))) {
+					// Failed to open file
+					perror(output_filename);
+				} else {
+					fwrite(result->str, result->currentStringLength, 1, output_stream);
+					fclose(output_stream);
 				}
 
 				if (FORMAT_MMD != format) {
-					free(result);
+					d_string_free(result, true);
 				}
 			}
 
@@ -434,9 +429,14 @@ int main(int argc, char** argv) {
 			buffer = stdin_buffer();
 		}
 
+		char * folder = NULL;
+
+		if (a_file->count == 1) {
+			folder = dirname((char *) a_file->filename[0]);
+		}
+
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-			char * folder = dirname((char *) a_file->filename[0]);
 
 			mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
 
@@ -454,28 +454,28 @@ int main(int argc, char** argv) {
 
 		if (a_meta->count > 0) {
 			// List metadata keys
-			result = mmd_string_metadata_keys(buffer->str);
+			char_result = mmd_string_metadata_keys(buffer->str);
 
-			fputs(result, stdout);
+			fputs(char_result, stdout);
 
-			free(result);
+			free(char_result);
 		} else if (a_extract->count > 0) {
 			// Extract metadata key
 			const char * query = a_extract->sval[0];
 
-			result = mmd_string_metavalue_for_key(buffer->str, query);
+			char_result = mmd_string_metavalue_for_key(buffer->str, query);
 
-			fputs(result, stdout);
+			fputs(char_result, stdout);
 			fputc('\n', stdout);
 
-			free(result);
+			free(char_result);
 		} else {
 			// Regular processing
 
 			if (FORMAT_MMD == format) {
-				result = buffer->str;
+				result = buffer;
 			} else {
-				result = mmd_d_string_convert(buffer, extensions, format, language);
+				result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 			}
 
 			// Where does output go?
@@ -491,14 +491,13 @@ int main(int argc, char** argv) {
 				goto exit;
 			}
 
-			fputs(result, output_stream);
-			fputc('\n', output_stream);
-			
+			fwrite(result->str, result->currentStringLength, 1, output_stream);			
+
 			if (output_stream != stdout)
 				fclose(output_stream);
 
 			if (FORMAT_MMD != format) {
-				free(result);
+				d_string_free(result, true);
 			}
 		}
 

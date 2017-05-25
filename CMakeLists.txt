@@ -200,6 +200,7 @@ set(src_files
 	Sources/libMultiMarkdown/transclude.c
 	Sources/libMultiMarkdown/uuid.c
 	Sources/libMultiMarkdown/writer.c
+	Sources/libMultiMarkdown/zip.c
 )
 
 # Primary header files, also for doxygen documentation
@@ -227,6 +228,7 @@ set(header_files
 	Sources/libMultiMarkdown/uthash.h
 	Sources/libMultiMarkdown/uuid.h
 	Sources/libMultiMarkdown/writer.h
+	Sources/libMultiMarkdown/zip.h
 )
 
 set (scripts

@@ -2203,6 +2203,55 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 }
 
 
+DString * mmd_string_convert_to_data(const char * source, unsigned long extensions, short format, short language, const char * directory) {
+	mmd_engine * e = mmd_engine_create_with_string(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	DString * result = mmd_engine_convert_to_data(e, format, directory);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+DString * mmd_d_string_convert_to_data(DString * source, unsigned long extensions, short format, short language, const char * directory) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, extensions);
+
+	mmd_engine_set_language(e, language);
+
+	DString * result =  mmd_engine_convert_to_data(e, format, directory);
+
+	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
+
+	return result;
+}
+
+
+DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * directory) {
+	DString * output = d_string_new("");
+	DString * result = NULL;
+
+	mmd_engine_parse_string(e);
+	
+	mmd_engine_export_token_tree(output, e, format);
+
+	switch (format) {
+		case FORMAT_EPUB:
+			result = epub_create(output->str, e, directory);
+
+			d_string_free(output, true);
+			break;
+		default:
+			result = output;
+			break;
+	}
+
+	return result;
+}
+
+
 /// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;
