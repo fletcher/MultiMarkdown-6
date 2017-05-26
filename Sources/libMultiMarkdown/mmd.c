@@ -2133,6 +2133,9 @@ char * mmd_engine_convert(mmd_engine * e, short format) {
 
 	mmd_engine_export_token_tree(output, e, format);
 
+	// Add newline to result
+	d_string_append_c(output, '\n');
+
 	result = output->str;
 
 	d_string_free(output, false);
@@ -2245,6 +2248,8 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 			break;
 		default:
 			result = output;
+			// Add newline to result
+			d_string_append_c(result, '\n');
 			break;
 	}
 
