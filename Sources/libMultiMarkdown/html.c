@@ -1508,8 +1508,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case PAIR_HTML_COMMENT:
 			print_token(t);
 			break;
-		case PAIR_EMPH:
 		case PAIR_MATH:
+			print_const("<span class=\"math\">");
+			mmd_export_token_tree_html_raw(out, source, t->child, scratch);
+			print_const("</span>");
+			break;
+		case PAIR_EMPH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
@@ -1710,6 +1714,32 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 		case ESCAPED_CHARACTER:
 			print_const("\\");
 			mmd_print_char_html(out, source[t->start + 1], false);
+			break;
+		case MATH_BRACKET_OPEN:
+			print_const("\\[");
+			break;
+		case MATH_BRACKET_CLOSE:
+			print_const("\\]");
+			break;
+		case MATH_DOLLAR_SINGLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\(") ) : ( print_const("\\)") );
+			} else {
+				print_const("$");
+			}
+			break;
+		case MATH_DOLLAR_DOUBLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\[") ) : ( print_const("\\]") );
+			} else {
+				print_const("$$");
+			}
+			break;
+		case MATH_PAREN_OPEN:
+			print_const("\\(");
+			break;
+		case MATH_PAREN_CLOSE:
+			print_const("\\)");
 			break;
 		case QUOTE_DOUBLE:
 			print_const("&quot;");

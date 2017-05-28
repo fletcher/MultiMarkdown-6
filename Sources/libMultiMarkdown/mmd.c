@@ -1460,8 +1460,16 @@ void pair_emphasis_tokens(token * t) {
 
 		}
 		
-		if (t->child != NULL)
-			pair_emphasis_tokens(t->child);
+		if (t->child != NULL) {
+			switch(t->type) {
+				case PAIR_BACKTICK:
+				case PAIR_MATH:
+					break;
+				default:
+					pair_emphasis_tokens(t->child);
+					break;
+			}
+		}
 		
 		t = t->next;
 	}
