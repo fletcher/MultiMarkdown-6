@@ -1354,18 +1354,36 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				}
 
 				// We need to be contiguous in order to match
+				if (t->can_close) {
+					offset = t->start;
+					t->can_close = 0;
+
+					while ((offset > 0) && !(char_is_whitespace_or_line_ending(str[offset - 1]))) {
+						if (str[offset - 1] == str[t->start]) {
+							t->can_close = 1;
+							break;
+						}
+
+						offset--;
+					}
+				}
+
+				// We need to be contiguous in order to match
 				if (t->can_open) {
 					offset = t->start + t->len;
 					t->can_open = 0;
 
 					while (!(char_is_whitespace_or_line_ending(str[offset]))) {
-						if (str[offset] == str[t->start])
+						if (str[offset] == str[t->start]) {
 							t->can_open = 1;
+							break;
+						}
+
 						offset++;
 					}
 
 					// Are we a standalone, e.g x^2
-					if (!t->can_open) {
+					if (!t->can_close && !t->can_open) {
 						offset = t->start + t->len;
 						while (!char_is_whitespace_or_line_ending_or_punctuation(str[offset]))
 							offset++;
@@ -1388,17 +1406,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					}
 				}
 
-				// We need to be contiguous in order to match
-				if (t->can_close) {
-					offset = t->start;
-					t->can_close = 0;
-
-					while ((offset > 0) && !(char_is_whitespace_or_line_ending(str[offset - 1]))) {
-						if (str[offset - 1] == str[t->start])
-							t->can_close = 1;
-						offset--;
-					}
-				}
 				break;
 		}
 		

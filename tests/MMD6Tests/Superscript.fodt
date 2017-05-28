@@ -307,6 +307,14 @@
 <text:p text:style-name="Standard">x<text:span text:style-name="MMD-Subscript">2</text:span> 3~</text:p>
 
 <text:p text:style-name="Standard">x<text:span text:style-name="MMD-Subscript">2</text:span> 3<text:span text:style-name="MMD-Subscript">2</text:span></text:p>
+
+<text:p text:style-name="Standard">H<text:span text:style-name="MMD-Subscript">2</text:span>O</text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard">CH<text:span text:style-name="MMD-Subscript">3</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH<text:span text:style-name="MMD-Subscript">3</text:span></text:p>
+
+<text:p text:style-name="Standard">CH<text:span text:style-name="MMD-Subscript">3</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH~3</text:p>
 </office:text>
 </office:body>
 </office:document>
