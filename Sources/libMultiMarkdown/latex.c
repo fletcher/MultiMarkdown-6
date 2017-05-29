@@ -1890,15 +1890,21 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
-		} else if ((strcmp(m->key, "title") == 0) ||
-			(strcmp(m->key, "latextitle") == 0)) {
+		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\\def\\mytitle{");
 			mmd_print_string_latex(out, m->value);
 			print_const("}\n");
-		} else if ((strcmp(m->key, "author") == 0) ||
-			(strcmp(m->key, "latexauthor") == 0)) {
+		} else if (strcmp(m->key, "latextitle") == 0) {
+			print_const("\\def\\latextitle{");
+			print(m->value);
+			print_const("}\n");
+		} else if (strcmp(m->key, "author") == 0) {
 			print_const("\\def\\myauthor{");
 			mmd_print_string_latex(out, m->value);
+			print_const("}\n");
+		} else if (strcmp(m->key, "latexauthor") == 0) {
+			print_const("\\def\\latexauthor{");
+			print(m->value);
 			print_const("}\n");
 		} else if (strcmp(m->key, "date") == 0) {
 			print_const("\\def\\mydate{");
