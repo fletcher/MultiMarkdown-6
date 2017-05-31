@@ -27,3 +27,9 @@ Here is an inline [link](</script?foo=1&bar=2>).
 
 [1]: http://example.com/?foo=1&bar=2
 [2]: http://att.com/  "AT&T"
+
+&copy; `&copy;`
+ 
+&#169; `&#169;`
+ 
+&#xA9; `&#xA9;`

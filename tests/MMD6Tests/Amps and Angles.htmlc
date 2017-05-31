@@ -25,3 +25,9 @@ latex config:	article</p>
 </code></pre>
 
 <p>10</p>
+
+<p>&copy; <code>&amp;copy;</code></p>
+
+<p>&#169; <code>&amp;#169;</code></p>
+
+<p>&#xA9; <code>&amp;#xA9;</code></p>

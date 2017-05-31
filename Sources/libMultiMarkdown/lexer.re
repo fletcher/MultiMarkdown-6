@@ -145,7 +145,11 @@ int scan(Scanner * s, const char * stop) {
 		"..."							{ return ELLIPSIS; }
 		". . ."							{ return ELLIPSIS; }
 		":"								{ return COLON; }
+
 		'&amp;'							{ return AMPERSAND_LONG; }
+		"&#" [Xx] [0-9a-fA-f]+ ';'		{ return HTML_ENTITY; }
+		"&#" [0-9]+ ';'					{ return HTML_ENTITY; }
+		"&" [A-Za-z0-9]+ ';'			{ return HTML_ENTITY; }
 		"&"								{ return AMPERSAND; }
 
 		"/"								{ return SLASH; }

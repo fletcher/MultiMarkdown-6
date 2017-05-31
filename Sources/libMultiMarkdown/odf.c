@@ -803,6 +803,10 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case HASH6:
 			print_token(t);
 			break;
+		case HTML_ENTITY:
+			print_const("&amp;");
+			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
+			break;
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("&lt;!--");
@@ -1584,6 +1588,10 @@ void mmd_export_token_odf_raw(DString * out, const char * source, token * t, scr
 		case ESCAPED_CHARACTER:
 			print_const("\\");
 			mmd_print_char_odf(out, source[t->start + 1]);
+			break;
+		case HTML_ENTITY:
+			print_const("&amp;");
+			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
 			break;
 		case INDENT_TAB:
 			print_const("<text:tab/>");

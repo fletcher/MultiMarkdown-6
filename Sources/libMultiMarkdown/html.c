@@ -945,6 +945,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case HASH6:
 			print_token(t);
 			break;
+		case HTML_ENTITY:
+			print_token(t);
+			break;
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("&lt;!--");
@@ -1714,6 +1717,10 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 		case ESCAPED_CHARACTER:
 			print_const("\\");
 			mmd_print_char_html(out, source[t->start + 1], false);
+			break;
+		case HTML_ENTITY:
+			print_const("&amp;");
+			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
 			break;
 		case MATH_BRACKET_OPEN:
 			print_const("\\[");

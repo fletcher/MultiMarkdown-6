@@ -877,6 +877,15 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 			}
 			break;
+		case HTML_ENTITY:
+			if (source[t->start + 1] == '#') {
+				print_const("\\&\\#");
+				d_string_append_c_array(out, &(source[t->start + 2]), t->len - 2);
+			} else {
+				print_const("\\");
+				print_token(t);
+			}
+			break;
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("<!--");
@@ -1660,6 +1669,9 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			print_char(source[t->start + 1]);
 //			mmd_print_char_latex(out, source[t->start + 1]);
 			break;
+		case HTML_ENTITY:
+			print_token(t);
+			break;
 		case CODE_FENCE:
 			if (t->next)
 				t->next->type = TEXT_EMPTY;
@@ -1757,6 +1769,15 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 		case ESCAPED_CHARACTER:
 			print_const("\\textbackslash{}");
 			mmd_print_char_latex(out, source[t->start + 1]);
+			break;
+		case HTML_ENTITY:
+			if (source[t->start + 1] == '#') {
+				print_const("\\&\\#");
+				d_string_append_c_array(out, &(source[t->start + 2]), t->len - 2);
+			} else {
+				print_const("\\");
+				print_token(t);
+			}
 			break;
 		case CODE_FENCE:
 			if (t->next)
