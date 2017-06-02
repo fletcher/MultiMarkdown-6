@@ -259,7 +259,7 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 		text->child->next->len++;
 	}
 
-	if (text->child)
+	if (text && text->child)
 		mmd_export_token_tree_html(out, source, text->child, scratch);
 
 	print_const("</a>");

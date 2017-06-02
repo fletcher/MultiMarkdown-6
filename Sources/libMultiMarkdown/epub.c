@@ -306,6 +306,10 @@ bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destinat
 	if (buffer && buffer->currentStringLength > 0) {
 		status = mz_zip_writer_add_mem(pZip, destination, buffer->str, buffer->currentStringLength, MZ_BEST_COMPRESSION);
 
+		if (!status) {
+			fprintf(stderr, "Error adding asset to zip.\n");
+		}
+
 		d_string_free(buffer, true);
 		result = true;
 	}
@@ -351,7 +355,10 @@ void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	if (e->asset_hash){
 		CURL * curl;
 		CURLcode res;
+		
 		struct MemoryStruct chunk;
+		chunk.memory = malloc(1);
+		chunk.size = 0;
 
 		char destination[100] = "OEBPS/assets/";
 		destination[49] = '\0';
@@ -366,9 +373,6 @@ void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 		curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
 
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
-			chunk.memory = malloc(1);
-			chunk.size = 0;
-
 			curl_easy_setopt(curl, CURLOPT_URL, a->url);
 			res = curl_easy_perform(curl);
 
@@ -382,6 +386,10 @@ void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 			} else {
 				// Store downloaded file in zip
 				status = mz_zip_writer_add_mem(pZip, destination, chunk.memory, chunk.size, MZ_BEST_COMPRESSION);
+
+				if (!status) {
+					fprintf(stderr, "Error adding asset to zip.\n");
+				}
 			}
 		}
 	}
@@ -447,32 +455,54 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "mimetype", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	// Create directories
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/", NULL, 0, MZ_BEST_COMPRESSION);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
+
 	status = mz_zip_writer_add_mem(&zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	// Add container
 	data = epub_container_xml();
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "META-INF/container.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	// Add package
 	data = epub_package_document(scratch);
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.opf", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	// Add nav
 	data = epub_nav(e, scratch);
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/nav.xhtml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	// Add main document
 	len = strlen(body);
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body, len, MZ_BEST_COMPRESSION);
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	// Add assets
 	add_assets(&zip, e, directory);
@@ -483,6 +513,9 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	free(result->str);
 
 	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), &(result->currentStringLength));
+	if (!status) {
+		fprintf(stderr, "Error adding asset to zip.\n");
+	}
 
 	return result;
 }

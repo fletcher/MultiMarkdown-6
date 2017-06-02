@@ -1033,6 +1033,8 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 					f->free_para = true;
 					break;
 			}
+		} else {
+			f->content = NULL;
 		}
 	}
 
@@ -2205,7 +2207,8 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 			// Adjust the properties
 			free(temp->label_text);
 			temp->label_text = temp->clean_text;
-			temp->clean_text = clean_string_from_range(source, temp->content->child->start, t->start + t->len - t->child->mate->len - temp->content->child->start, false);
+			if (temp->content && temp->content->child)
+				temp->clean_text = clean_string_from_range(source, temp->content->child->start, t->start + t->len - t->child->mate->len - temp->content->child->start, false);
 
 			// Store as used
 			stack_push(scratch->used_abbreviations, temp);

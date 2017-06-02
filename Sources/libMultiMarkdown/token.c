@@ -320,7 +320,6 @@ token * token_prune_graft(token * first, token * last, unsigned short container_
 	if (first == NULL || last == NULL)
 		return first;
 
-	token * prev = first->prev;
 	token * next = last->next;
 	
 	// Duplicate first token -- this will be child of new container
