@@ -298,13 +298,8 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			// The new file overrides the search path
 			free(search_folder);
 
-			// First, calculate path to this source file
-			char * temp_path = path_from_dir_base(search_path, source_path);
-
-			// Then, calculate new search path relative to source
-			search_folder = path_from_dir_base(temp_path, temp);
-
-			free(temp_path);
+			// Calculate new search path relative to source
+			search_folder = path_from_dir_base(source_path, temp);
 		}
 	}
 
@@ -322,6 +317,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 		// Create temporary stack
 		parse_stack = stack_new(0);
 	}
+
+	// Remember where we currently are in the stack
+	size_t stack_depth = parse_stack->size;
 
 	// Iterate through source text, looking for `{{foo}}`
 
@@ -385,7 +383,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			}
 
 			// Prevent infinite recursive loops
-			for (int i = 0; i < parse_stack->size; ++i)
+			for (int i = 0; i < stack_depth; ++i)
 			{
 				temp = stack_peek_index(parse_stack, i);
 				if (strcmp(file_path->str, temp) == 0) {
@@ -480,6 +478,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	if (parsed == NULL) {
 		// Free temp stack
 		stack_free(parse_stack);
+	} else {
+		// Reset stack depth
+		parse_stack->size = stack_depth;
 	}
 
 	free(search_folder);

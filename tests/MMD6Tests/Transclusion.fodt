@@ -282,7 +282,10 @@
 
 <text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">bar.txt</text:span>.</text:p>
 
-<text:p text:style-name="Standard">This can be transcluded without causing an infinite loop &#8211; {{foo.txt}}</text:p>
+<text:p text:style-name="Standard">This can be transcluded without causing an infinite loop &#8211;
+This text is included in <text:span text:style-name="Source_20_Text">foo.txt</text:span>.</text:p>
+
+<text:p text:style-name="Standard">This should not be transcluded to avoid an infinite loop &#8211; {{foo.txt}}</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a file with no metadata.<text:line-break/></text:p>
 
@@ -297,7 +300,10 @@ does <text:span text:style-name="MMD-Italic">not</text:span> override the <text:
 
 <text:p text:style-name="Standard">This text is included in <text:span text:style-name="Source_20_Text">bar.txt</text:span>.</text:p>
 
-<text:p text:style-name="Standard">This can be transcluded without causing an infinite loop &#8211; {{foo.txt}}</text:p>
+<text:p text:style-name="Standard">This can be transcluded without causing an infinite loop &#8211;
+This text is included in <text:span text:style-name="Source_20_Text">foo.txt</text:span>.</text:p>
+
+<text:p text:style-name="Standard">This should not be transcluded to avoid an infinite loop &#8211; {{foo.txt}}</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a file with no metadata.<text:line-break/></text:p>
 
