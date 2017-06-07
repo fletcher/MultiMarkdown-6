@@ -72,7 +72,8 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta;
+		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+		*a_notransclude;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -147,6 +148,7 @@ int main(int argc, char** argv) {
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
 		a_random		= arg_lit0(NULL, "random", "use random numbers for footnote anchors"),
 		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
+		a_notransclude	= arg_lit0(NULL, "notransclude", "Disable file transclusion"),
 
 		a_rem2			= arg_rem("", ""),
 
@@ -220,6 +222,11 @@ int main(int argc, char** argv) {
 	if (a_nolabels->count > 0) {
 		// Disable header id attributes
 		extensions |= EXT_NO_LABELS;
+	}
+
+	if (a_notransclude->count > 0) {
+		// Disable file transclusion
+		extensions &= ~EXT_TRANSCLUDE;
 	}
 
 	if (a_accept->count > 0) {
