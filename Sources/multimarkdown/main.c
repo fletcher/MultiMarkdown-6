@@ -347,7 +347,7 @@ int main(int argc, char** argv) {
 			char * folder = dirname((char *) a_file->filename[i]);
 
 			if (extensions & EXT_TRANSCLUDE) {
-				mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
+				mmd_transclude_source(buffer, folder, a_file->filename[i], format, NULL, NULL);
 	
 				// Don't free folder -- owned by dirname
 			}
@@ -443,7 +443,7 @@ int main(int argc, char** argv) {
 
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-			mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
+			mmd_transclude_source(buffer, folder, a_file->filename[0], format, NULL, NULL);
 
 			// Don't free folder -- owned by dirname
 		}

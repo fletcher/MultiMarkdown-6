@@ -195,8 +195,8 @@ void Test_path_from_dir_base(CuTest* tc) {
 /// Separate filename and directory from a full path
 ///
 /// See http://stackoverflow.com/questions/1575278/function-to-split-a-filepath-into-path-and-file
-void split_path_file(char ** dir, char ** file, char * path) {
-    char * slash = path, * next;
+void split_path_file(char ** dir, char ** file, const char * path) {
+    const char * slash = path, * next;
 
 #if defined(__WIN32)
 	const char sep[] = "\\/";	// Windows allows either variant
@@ -280,6 +280,10 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 	// Ensure search_folder is tidied up
 	char * search_folder = path_from_dir_base(search_path, NULL);
+	char * source_folder;
+	char * source_file;
+
+	split_path_file(&source_folder, &source_file, source_path);
 
 	char * start, * stop;
 	char text[1100];
@@ -298,10 +302,13 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			// The new file overrides the search path
 			free(search_folder);
 
-			// Calculate new search path relative to source
-			search_folder = path_from_dir_base(source_path, temp);
+			// Calculate new search path relative to source document
+			search_folder = path_from_dir_base(source_folder, temp);
 		}
 	}
+
+	free(source_folder);
+	free(source_file);
 
 	mmd_engine_free(e, false);
 
@@ -423,14 +430,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 				d_string_erase(source, start - source->str, 2 + stop - start);
 
 				// Recursively check this file for transclusions
-				char * new_search_path;
-				char * source_filename;
-				split_path_file(&new_search_path, &source_filename, file_path->str);
-
-				mmd_transclude_source(buffer, search_folder, new_search_path, format, parse_stack, manifest);
-
-				free(new_search_path);
-				free(source_filename);
+				mmd_transclude_source(buffer, search_folder, file_path->str, format, parse_stack, manifest);
 				
 				// Strip metadata from buffer now that we have parsed it
 				e = mmd_engine_create_with_dstring(buffer, EXT_TRANSCLUDE);
