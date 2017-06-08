@@ -382,6 +382,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 					case FORMAT_MEMOIR:
 						d_string_append(file_path, ".tex");
 						break;
+					case FORMAT_ODF:
+						d_string_append(file_path, ".fodt");
+						break;
 					default:
 						d_string_append(file_path, ".txt");
 						break;
