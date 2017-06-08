@@ -1,0 +1,11 @@
+Title:	%|  
+Author:	Fletcher T. Penney  
+Version:	{{version.txt}}  
+Revised:	%|  
+Base Header Level:	2  
+CSS:	{{css.txt}}  
+MMD Footer:	links.txt  
+LaTeX Config:	tufte-handout  
+
+# [%title] #
+

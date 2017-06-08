@@ -27,3 +27,5 @@ You can view the MultiMarkdown User's Guide as a **single document**:
 Or as a set of web pages for individual sections:
 
 * [Introduction](introduction.html)
+* [Syntax](syntax/index.html)
+	* [Metadata](syntax/metadata.html)

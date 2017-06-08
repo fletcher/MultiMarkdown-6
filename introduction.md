@@ -9,7 +9,7 @@ LaTeX Config:	tufte-handout
 
 # Introduction #
 
-## What is Markdown ##
+## What is Markdown? ##
 
 To understand what MultiMarkdown is, you first should be familiar with
 [Markdown](http://daringfireball.net/projects/markdown/ "Daring Fireball:

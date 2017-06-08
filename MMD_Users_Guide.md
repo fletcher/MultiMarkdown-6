@@ -1,4 +1,5 @@
 Title:	MultiMarkdown User's Guide
+LaTeX Title: MultiMarkdown \\ User's Guide
 Author:	Fletcher T. Penney  
 Version:	{{version.txt}}  
 Revised:	2017-03-15  
@@ -12,9 +13,12 @@ HTML header:	<script type="text/javascript"
 UUID:	88e8f53c-9a02-4e49-a639-f2dbb0a2e338
 
 
-#  [%title] #
+# [%title] #
 
 > Version {{version.txt}}  
 > Revised [%revised]
 
+{{toc.*}}
+
 {{introduction.md}}
+{{syntax/index.md}}

@@ -273,6 +273,7 @@
  </office:master-styles>
 <office:meta>
 	<dc:title>MultiMarkdown User's Guide</dc:title>
+	<meta:user-defined meta:name="latextitle">MultiMarkdown \\ User's Guide</meta:user-defined>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
 	<meta:user-defined meta:name="version">6.0a</meta:user-defined>
 	<meta:user-defined meta:name="revised">2017-03-15</meta:user-defined>
@@ -287,7 +288,7 @@ Revised 2017-03-15</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:h text:outline-level="3"><text:bookmark text:name="whatismarkdown"/>What is Markdown </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="whatismarkdown"/>What is Markdown? </text:h>
 
 <text:p text:style-name="Standard">To understand what MultiMarkdown is, you first should be familiar with
 <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/">Markdown</text:a>. The best description of what Markdown is comes from John Gruber&#8217;s
@@ -310,6 +311,10 @@ like it&#8217;s been marked up with tags or formatting instructions. While
 Markdown&#8217;s syntax has been influenced by several existing
 text-to-HTML filters, the single biggest source of inspiration for
 Markdown&#8217;s syntax is the format of plain text email. &#8212; <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/">John Gruber</text:a></text:p>
+
+<text:h text:outline-level="2"><text:bookmark text:name="syntax"/>Syntax </text:h>
+
+<text:h text:outline-level="3"><text:bookmark text:name="metadata"/>Metadata </text:h>
 </office:text>
 </office:body>
 </office:document>

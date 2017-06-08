@@ -26,7 +26,7 @@ ex-odf := $(patsubst %.text, %.fodt, $(examples))
 
 
 
-all: $(htmlfiles) $(texfiles) # $(rtffiles) $(odffiles)
+all: $(htmlfiles) $(texfiles) epub odf # $(rtffiles) $(odffiles)
 
 guide: MMD_Users_Guide.html
 
