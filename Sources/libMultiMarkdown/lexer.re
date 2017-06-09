@@ -224,6 +224,7 @@ int scan(Scanner * s, const char * stop) {
 
 		'#'								{ return TEXT_HASH; }
 		'%'								{ return TEXT_PERCENT; }
+		'{='							{ return RAW_FILTER_LEFT; }
 		'{'								{ return TEXT_BRACE_LEFT; }
 		'}'								{ return TEXT_BRACE_RIGHT; }
 		'\\'							{ return TEXT_BACKSLASH; }

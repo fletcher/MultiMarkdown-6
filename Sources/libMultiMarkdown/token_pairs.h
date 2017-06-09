@@ -65,7 +65,7 @@
 #include "CuTest.h"
 #endif
 
-#define kMaxTokenTypes	200				//!< This needs to be larger than the largest token type being used
+#define kMaxTokenTypes	230				//!< This needs to be larger than the largest token type being used
 #define kLargeStackThreshold 1000		//!< Avoid unnecessary searches of large stacks
 #define kMaxPairRecursiveDepth 1000		//!< Maximum recursion depth to traverse when pairing tokens -- to prevent stack overflow with "pathologic" input
 

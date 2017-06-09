@@ -472,7 +472,31 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			pad(out, 2, scratch);
 
 			temp_char = get_fence_language_specifier(t->child->child, source);
+
 			if (temp_char) {
+				if (strncmp("{=", temp_char, 2) == 0) {
+					// Raw source
+					if (raw_filter_text_matches(temp_char, FORMAT_LATEX)) {
+						switch (t->child->tail->type) {
+							case LINE_FENCE_BACKTICK_3:
+							case LINE_FENCE_BACKTICK_4:
+							case LINE_FENCE_BACKTICK_5:
+								temp_token = t->child->tail;
+								break;
+							default:
+								temp_token = NULL;
+						}
+						if (temp_token) {
+							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
+							scratch->padded = 1;
+						} else {
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);							
+							scratch->padded = 0;
+						}
+					}
+
+					break;
+				}
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
 				print_const("\\begin{verbatim}\n");
@@ -1012,10 +1036,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
+
+			if (t->next && t->next->type == PAIR_RAW_FILTER) {
+				// Raw text?
+				if (raw_filter_matches(t->next, source, FORMAT_LATEX)) {
+					d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
+				}
+				// Skip over PAIR_RAW_FILTER
+				scratch->skip_token = 1;
+				break;
+			}
+
 			print_const("\\texttt{");
 			mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
 			print_const("}");
 			break;
+		case PAIR_BRACE:
 		case PAIR_BRACES:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
@@ -1617,6 +1653,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case TEXT_BRACE_LEFT:
 		case TEXT_BRACE_RIGHT:
 			print_const("\\");
+		case RAW_FILTER_LEFT:
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:

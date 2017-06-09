@@ -177,6 +177,11 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUBSCRIPT, PAIRING_PRUNE_MATCH);
 		}
 
+		// Text Braces -- for raw text syntax
+		if (!(extensions & EXT_COMPATIBILITY)) {
+			token_pair_engine_add_pairing(e->pairings4, TEXT_BRACE_LEFT, TEXT_BRACE_RIGHT, PAIR_BRACE, PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings4, RAW_FILTER_LEFT, TEXT_BRACE_RIGHT, PAIR_RAW_FILTER, PAIRING_PRUNE_MATCH);
+		}
 	}
 
 	return e;

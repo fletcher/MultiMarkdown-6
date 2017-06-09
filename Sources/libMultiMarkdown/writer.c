@@ -2423,3 +2423,55 @@ void store_asset(scratch_pad * scratch, char * url) {
 	}
 }
 
+
+bool raw_filter_text_matches(char * pattern, short format) {
+	if (!pattern)
+		return false;
+
+	if (strcmp("*", pattern) == 0) {
+		return true;
+	} else if (strcmp("{=*}", pattern) == 0) {
+		return true;
+	} else {
+		switch(format){
+			case FORMAT_HTML:
+				if (strstr(pattern, "html"))
+					return true;
+				break;
+			case FORMAT_ODF:
+				if (strstr(pattern, "odf"))
+					return true;
+				break;
+			case FORMAT_EPUB:
+				if (strstr(pattern, "epub"))
+					return true;
+				break;
+			case FORMAT_MEMOIR:
+			case FORMAT_BEAMER:
+			case FORMAT_LATEX:
+				if (strstr(pattern, "latex"))
+					return true;
+				break;
+		}
+	}
+
+	return false;
+}
+
+
+/// Determine whether raw filter matches specified format
+bool raw_filter_matches(token * t, const char * source, short format) {
+	bool result = false;
+
+	if (t->type != PAIR_RAW_FILTER)
+		return result;
+
+	char * pattern = my_strndup(&source[t->child->start + 2], t->child->mate->start - t->child->start - 2);
+
+	result = raw_filter_text_matches(pattern, format);
+
+	free(pattern);
+
+	return result;
+}
+
