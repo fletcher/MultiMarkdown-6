@@ -491,9 +491,9 @@ enum parser_extensions {
 	EXT_NOTES               = 1 << 4,    //!< Enable Footnotes
 	EXT_NO_LABELS           = 1 << 5,    //!< Don't add anchors to headers, etc.
 	EXT_PROCESS_HTML        = 1 << 6,    //!< Process Markdown inside HTML
-	EXT_NO_METADATA         = 1 << 7,   //!< Don't parse Metadata
-	EXT_OBFUSCATE           = 1 << 8,   //!< Mask email addresses
-	EXT_CRITIC              = 1 << 9,   //!< Critic Markup Support
+	EXT_NO_METADATA         = 1 << 7,    //!< Don't parse Metadata
+	EXT_OBFUSCATE           = 1 << 8,    //!< Mask email addresses
+	EXT_CRITIC              = 1 << 9,    //!< Critic Markup Support
 	EXT_CRITIC_ACCEPT       = 1 << 10,   //!< Accept all proposed changes
 	EXT_CRITIC_REJECT       = 1 << 11,   //!< Reject all proposed changes
 	EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
