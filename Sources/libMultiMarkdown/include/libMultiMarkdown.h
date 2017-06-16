@@ -487,24 +487,17 @@ enum parser_extensions {
 	EXT_COMPATIBILITY       = 1 << 0,    //!< Markdown compatibility mode
 	EXT_COMPLETE            = 1 << 1,    //!< Create complete document
 	EXT_SNIPPET             = 1 << 2,    //!< Create snippet only
-	EXT_HEAD_CLOSED         = 1 << 3,    //!< for use by parser
-	EXT_SMART               = 1 << 4,    //!< Enable Smart quotes
-	EXT_NOTES               = 1 << 5,    //!< Enable Footnotes
-	EXT_NO_LABELS           = 1 << 6,    //!< Don't add anchors to headers, etc.
-	EXT_FILTER_STYLES       = 1 << 7,    //!< Filter out style blocks
-	EXT_FILTER_HTML         = 1 << 8,    //!< Filter out raw HTML
-	EXT_PROCESS_HTML        = 1 << 9,    //!< Process Markdown inside HTML
-	EXT_NO_METADATA         = 1 << 10,   //!< Don't parse Metadata
-	EXT_OBFUSCATE           = 1 << 11,   //!< Mask email addresses
-	EXT_CRITIC              = 1 << 12,   //!< Critic Markup Support
-	EXT_CRITIC_ACCEPT       = 1 << 13,   //!< Accept all proposed changes
-	EXT_CRITIC_REJECT       = 1 << 14,   //!< Reject all proposed changes
-	EXT_RANDOM_FOOT         = 1 << 15,   //!< Use random numbers for footnote links
-	EXT_HEADINGSECTION      = 1 << 16,   //!< Group blocks under parent heading
-	EXT_ESCAPED_LINE_BREAKS = 1 << 17,   //!< Escaped line break
-	EXT_NO_STRONG           = 1 << 18,   //!< Don't allow nested \<strong\>'s
-	EXT_NO_EMPH             = 1 << 19,   //!< Don't allow nested \<emph\>'s
-	EXT_TRANSCLUDE          = 1 << 20,   //!< Perform transclusion(s)
+	EXT_SMART               = 1 << 3,    //!< Enable Smart quotes
+	EXT_NOTES               = 1 << 4,    //!< Enable Footnotes
+	EXT_NO_LABELS           = 1 << 5,    //!< Don't add anchors to headers, etc.
+	EXT_PROCESS_HTML        = 1 << 6,    //!< Process Markdown inside HTML
+	EXT_NO_METADATA         = 1 << 7,   //!< Don't parse Metadata
+	EXT_OBFUSCATE           = 1 << 8,   //!< Mask email addresses
+	EXT_CRITIC              = 1 << 9,   //!< Critic Markup Support
+	EXT_CRITIC_ACCEPT       = 1 << 10,   //!< Accept all proposed changes
+	EXT_CRITIC_REJECT       = 1 << 11,   //!< Reject all proposed changes
+	EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
+	EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 
