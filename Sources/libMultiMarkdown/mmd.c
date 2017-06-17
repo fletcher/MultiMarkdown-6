@@ -1087,6 +1087,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case BLOCK_SETEXT_2:
 			case BLOCK_TABLE:
 			case BLOCK_TERM:
+			case LINE_LIST_BULLETED:
+			case LINE_LIST_ENUMERATED:
 				// Assign child tokens of blocks
 				mmd_assign_ambidextrous_tokens_in_block(e, t, start_offset);
 				break;

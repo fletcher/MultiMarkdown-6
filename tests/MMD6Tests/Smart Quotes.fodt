@@ -351,6 +351,18 @@
 <text:p text:style-name="Standard">foo(&#8216;bar&#8217;)</text:p>
 
 <text:p text:style-name="Standard">foo(&#8220;bar&#8221;)</text:p>
+
+<text:p text:style-name="Standard">foo-bar</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+foo-bar</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">foo-bar</text:p></text:list-item>
+
+</text:list>
 </office:text>
 </office:body>
 </office:document>

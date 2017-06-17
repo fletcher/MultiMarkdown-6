@@ -76,3 +76,8 @@ foo's and bar's
 foo('bar')
 
 foo("bar")
+
+foo-bar
+
+* foo-bar
+* foo-bar
