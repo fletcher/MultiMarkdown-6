@@ -70,3 +70,9 @@ l'année l'été
 foo's and bar's
 
 `foo`'s and `bar`'s
+
+30
+
+foo('bar')
+
+foo("bar")

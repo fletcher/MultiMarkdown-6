@@ -1270,7 +1270,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				// Some of these are actually APOSTROPHE's and should not be paired
 				offset = t->start;
 
-				if (!((offset == 0) || (char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
+				if (!((offset == 0) ||
+					(char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
 					(char_is_whitespace_or_line_ending_or_punctuation(str[offset + 1])))) {
 					t->type = APOSTROPHE;
 					break;
@@ -1278,8 +1279,13 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 				if (offset && (char_is_punctuation(str[offset - 1])) &&
 					(char_is_alphanumeric(str[offset + 1]))) {
-					t->type = APOSTROPHE;
-					break;
+					// If possessive apostrophe, e.g. `x`'s 
+					if (str[offset + 1] == 's' || str[offset + 1] == 'S') {
+						if (char_is_whitespace_or_line_ending_or_punctuation(str[offset + 2])) {
+							t->type = APOSTROPHE;
+							break;
+						}
+					}
 				}
 			case QUOTE_DOUBLE:
 				offset = t->start;

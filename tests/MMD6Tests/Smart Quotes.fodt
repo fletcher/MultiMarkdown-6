@@ -345,6 +345,12 @@
 <text:p text:style-name="Standard">foo&#8217;s and bar&#8217;s</text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">foo</text:span>&#8217;s and <text:span text:style-name="Source_20_Text">bar</text:span>&#8217;s</text:p>
+
+<text:p text:style-name="Standard">30</text:p>
+
+<text:p text:style-name="Standard">foo(&#8216;bar&#8217;)</text:p>
+
+<text:p text:style-name="Standard">foo(&#8220;bar&#8221;)</text:p>
 </office:text>
 </office:body>
 </office:document>
