@@ -231,16 +231,28 @@ set(header_files
 	Sources/libMultiMarkdown/zip.h
 )
 
-set (scripts
-	scripts/mmd
-	scripts/mmd2all
-	scripts/mmd2epub
-	scripts/mmd2odf
-	scripts/mmd2opml
-	scripts/mmd2pdf
-	scripts/mmd2tex
-	scripts/markdown
-)
+if (WIN32)
+	set (scripts
+		scripts/mmd.bat
+		scripts/mmd2all.bat
+		scripts/mmd2epub.bat
+		scripts/mmd2odf.bat
+		scripts/mmd2opml.bat
+		scripts/mmd2tex.bat
+		scripts/markdown.bat
+	)
+else()
+	set (scripts
+		scripts/mmd
+		scripts/mmd2all
+		scripts/mmd2epub
+		scripts/mmd2odf
+		scripts/mmd2opml
+		scripts/mmd2pdf
+		scripts/mmd2tex
+		scripts/markdown
+	)
+endif (WIN32)
 
 set (latex
 	texmf/tex/latex/mmd6/README.md
