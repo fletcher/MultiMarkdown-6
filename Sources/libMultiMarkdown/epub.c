@@ -53,6 +53,7 @@
 	
 
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -293,7 +294,7 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 }
 
 
-bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
+static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
 	if (!directory)
 		return false;
 	
@@ -349,7 +350,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 }
 
 // Add assets to zipfile using libcurl
-void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
+static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
 	if (e->asset_hash){
@@ -397,7 +398,7 @@ void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 
 #else
 // Add local assets only (libcurl not available)
-void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
+static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
 	if (e->asset_hash){
