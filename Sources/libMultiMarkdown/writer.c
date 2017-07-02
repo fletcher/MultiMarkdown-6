@@ -1732,8 +1732,9 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 			break;
 		case FORMAT_EPUB:
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			mmd_start_complete_html(out, e->dstr->str, scratch);
 			scratch->store_assets = true;
+
+			mmd_start_complete_html(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
