@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("",""),
@@ -280,6 +280,10 @@ int main(int argc, char** argv) {
 			format = FORMAT_ODF;
 		else if (strcmp(a_format->sval[0], "epub") == 0)
 			format = FORMAT_EPUB;
+		else if (strcmp(a_format->sval[0], "bundle") == 0)
+			format = FORMAT_TEXTBUNDLE;
+		else if (strcmp(a_format->sval[0], "bundlezip") == 0)
+			format = FORMAT_TEXTBUNDLE_COMPRESSED;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -346,6 +350,12 @@ int main(int argc, char** argv) {
 					break;
 				case FORMAT_EPUB:
 					output_filename = filename_with_extension(a_file->filename[i], ".epub");
+					break;
+				case FORMAT_TEXTBUNDLE:
+					output_filename = filename_with_extension(a_file->filename[i], ".textbundle");
+					break;
+				case FORMAT_TEXTBUNDLE_COMPRESSED:
+					output_filename = filename_with_extension(a_file->filename[i], ".textpack");
 					break;
 			}
 
