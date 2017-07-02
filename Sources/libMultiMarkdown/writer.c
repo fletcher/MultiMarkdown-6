@@ -2421,7 +2421,7 @@ void store_asset(scratch_pad * scratch, char * url) {
 	if (!a) {
 		// Asset not found - create new one
 		a = asset_new(url, scratch);
-		HASH_ADD_KEYPTR(hh, scratch->asset_hash, url, strlen(url), a);
+		HASH_ADD_KEYPTR(hh, scratch->asset_hash, a->url, strlen(a->url), a);
 	}
 }
 

@@ -368,3 +368,37 @@ char * d_string_copy_substring(DString * d, size_t start, size_t len) {
 	
 	return result;
 }
+
+
+/// Replace occurences of "original" with "replace" inside the specified range
+/// Returns the change in overall length
+long d_string_replace_text_in_range(DString * d, size_t pos, size_t len, const char * original, const char * replace) {
+	long delta = 0;		// Overall change in length
+
+	long len_o = strlen(original);
+	long len_r = strlen(replace);
+	long change = len_r - len_o;	// Change in length for each replacement
+
+	char * start = &(d->str[pos]);
+	char * stop;
+
+	if (len == -1) {
+		stop = &(d->str[d->currentStringLength]);
+	} else {
+		stop = &(d->str[pos + len]);
+	}
+
+	char * match = strstr(start, original);
+
+	while (match && match < stop) {
+		d_string_erase(d, match - d->str, len_o);
+		d_string_insert(d, match - d->str, replace);
+
+		delta += change;
+		stop += change;
+		match = strstr(match + len_r, original);
+	}
+
+	return delta;
+}
+

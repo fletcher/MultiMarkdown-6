@@ -201,7 +201,7 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 		chunk.size = 0;
 
 		char destination[100] = "assets/";
-		destination[49] = '\0';
+		destination[43] = '\0';
 		
 		mz_bool status;
 
@@ -243,13 +243,13 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 	if (e->asset_hash){
 
 		char destination[100] = "assets/";
-		destination[49] = '\0';
+		destination[43] = '\0';
 		
 		mz_bool status;
 
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
 
-			memcpy(&destination[13], a->asset_path, 36);
+			memcpy(&destination[7], a->asset_path, 36);
 
 			// Attempt to add asset from local file
 			if (!add_asset_from_file(pZip, a, destination, directory)) {
@@ -259,6 +259,105 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 	}
 }
 #endif
+
+
+void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offset, char * destination, char * url) {
+	asset * a;
+	char * clean;
+	link * l;
+
+	while (t) {
+		switch(t->type) {
+			case PAIR_BRACKET_IMAGE:
+				if (t->next && t->next->type == PAIR_PAREN) {
+					t = t->next;
+
+					memcpy(url, &text->str[t->start + *offset + 1], t->len - 2);
+					url[t->len - 2] = '\0';
+					clean = clean_string(url, false);
+
+					HASH_FIND_STR(e->asset_hash, clean, a);
+
+					if (a) {
+						// Replace url with asset path
+						memcpy(&destination[7], a->asset_path, 36);
+						* offset += d_string_replace_text_in_range(text, t->start + *offset, t->len, clean, destination);
+					}
+
+					free(clean);
+				}
+				break;
+			case BLOCK_EMPTY:
+				// Is this a link definition?
+				for (int i = 0; i < e->definition_stack->size; ++i) {
+					if (t == stack_peek_index(e->definition_stack, i)) {
+						// Find matching link
+						for (int j = 0; j < e->link_stack->size; ++j) {
+							l = stack_peek_index(e->link_stack, j);
+							if (l->label->start == t->child->start) {
+								// This is a match
+								HASH_FIND_STR(e->asset_hash, l->url, a);
+
+								if (a) {
+									memcpy(&destination[7], a->asset_path, 36);
+									* offset += d_string_replace_text_in_range(text, t->start + *offset, t->len, l->url, destination);
+								}
+							}
+						}
+					}
+				}
+				break;
+			default:
+				if (t->child) {
+					traverse_for_images(t->child, text, e, offset, destination, url);
+				}
+				break;
+		}
+
+		t = t->next;
+	}
+}
+
+
+void sub_asset_paths(DString * text, mmd_engine * e) {
+	long offset = 0;
+	asset * a, * a_tmp;
+	token * t = e->root->child;
+
+	char destination[100] = "assets/";
+	destination[43] = '\0';
+
+	// Is there CSS metadata?
+	if (e->metadata_stack) {
+		if (e->metadata_stack->size > 0) {
+			meta * m;
+
+			for (int i = 0; i < e->metadata_stack->size; ++i)
+			{
+				m = stack_peek_index(e->metadata_stack, i);
+				if (strcmp("css", m->key) == 0) {
+					// Get METADATA range
+					t = e->root->child;
+					token_skip_until_type(&t, BLOCK_META);
+
+					// Substitute inside metadata block
+					HASH_FIND_STR(e->asset_hash, m->value, a);
+					if (a) {
+						memcpy(&destination[7], a->asset_path, 36);
+						offset += d_string_replace_text_in_range(text, t->start, t->len, m->value, destination);
+					}
+				}
+			}
+		}
+	}
+
+
+	// Find images
+	char url[1000] = "";
+
+	// Travel parse tree for images and image reference definitions
+	traverse_for_images(t, text, e, &offset, &destination[0], &url[0]);
+}
 
 
 // Use the miniz library to create a zip archive for the TEXTBUNDLE_COMPRESSED document
@@ -307,8 +406,12 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	}
 
 	// Add main document
-	len = e->dstr->currentStringLength;
-	status = mz_zip_writer_add_mem(&zip, "text.markdown", e->dstr->str, len, MZ_BEST_COMPRESSION);
+	DString * temp = d_string_new(e->dstr->str);
+
+	sub_asset_paths(temp, e);
+
+	len = temp->currentStringLength;
+	status = mz_zip_writer_add_mem(&zip, "text.markdown", temp->str, len, MZ_BEST_COMPRESSION);
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
 	}
