@@ -306,7 +306,14 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 		fprintf(stderr, "Error adding assets directory to zip.\n");
 	}
 
-	// Add main document
+	// Add html version document
+	len = strlen(body);
+	status = mz_zip_writer_add_mem(&zip, "text.html", body, len, MZ_BEST_COMPRESSION);
+	if (!status) {
+		fprintf(stderr, "Error adding content to zip.\n");
+	}
+
+	// Add html version document
 	len = strlen(body);
 	status = mz_zip_writer_add_mem(&zip, "text.html", body, len, MZ_BEST_COMPRESSION);
 	if (!status) {
