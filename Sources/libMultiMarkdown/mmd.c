@@ -67,6 +67,7 @@
 #include "parser.h"
 #include "scanners.h"
 #include "stack.h"
+#include "textbundle.h"
 #include "token.h"
 #include "token_pairs.h"
 #include "writer.h"
@@ -2219,6 +2220,9 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 		case FORMAT_EPUB:
 			epub_write_wrapper(filepath, output->str, e, directory);
 			break;
+		case FORMAT_TEXTBUNDLE_COMPRESSED:
+			textbundle_write_wrapper(filepath, output->str, e, directory);
+			break;
 		default:
 			// Basic formats just write to file
 			if (!(output_stream = fopen(filepath, "w"))) {
@@ -2273,6 +2277,11 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 	switch (format) {
 		case FORMAT_EPUB:
 			result = epub_create(output->str, e, directory);
+
+			d_string_free(output, true);
+			break;
+		case FORMAT_TEXTBUNDLE_COMPRESSED:
+			result = textbundle_create(output->str, e, directory);
 
 			d_string_free(output, true);
 			break;

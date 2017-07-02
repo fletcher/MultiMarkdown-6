@@ -1848,6 +1848,7 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 				store_asset(scratch, m->value);
 				asset * a = extract_asset(scratch, m->value);
 
+				mmd_print_string_html(out, "assets/", false);
 				mmd_print_string_html(out, a->asset_path, false);
 			} else {
 				mmd_print_string_html(out, m->value, false);

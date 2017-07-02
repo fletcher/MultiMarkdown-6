@@ -195,6 +195,7 @@ set(src_files
 	Sources/libMultiMarkdown/rng.c
 	Sources/libMultiMarkdown/scanners.c
 	Sources/libMultiMarkdown/stack.c
+	Sources/libMultiMarkdown/textbundle.c
 	Sources/libMultiMarkdown/token.c
 	Sources/libMultiMarkdown/token_pairs.c
 	Sources/libMultiMarkdown/transclude.c
@@ -222,6 +223,7 @@ set(header_files
 	Sources/libMultiMarkdown/object_pool.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
+	Sources/libMultiMarkdown/textbundle.c
 	Sources/libMultiMarkdown/include/token.h
 	Sources/libMultiMarkdown/token_pairs.h
 	Sources/libMultiMarkdown/transclude.h

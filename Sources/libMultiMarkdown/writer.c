@@ -1731,8 +1731,10 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			break;
 		case FORMAT_EPUB:
-			mmd_start_complete_html(out, e->dstr->str, scratch);
+		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			scratch->store_assets = true;
+
+			mmd_start_complete_html(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
@@ -2419,7 +2421,7 @@ void store_asset(scratch_pad * scratch, char * url) {
 	if (!a) {
 		// Asset not found - create new one
 		a = asset_new(url, scratch);
-		HASH_ADD_KEYPTR(hh, scratch->asset_hash, url, strlen(url), a);
+		HASH_ADD_KEYPTR(hh, scratch->asset_hash, a->url, strlen(a->url), a);
 	}
 }
 
