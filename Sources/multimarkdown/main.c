@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub|bundle|bundlezip"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("",""),
@@ -280,8 +280,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_ODF;
 		else if (strcmp(a_format->sval[0], "epub") == 0)
 			format = FORMAT_EPUB;
-		else if (strcmp(a_format->sval[0], "bundle") == 0)
-			format = FORMAT_TEXTBUNDLE;
+//		else if (strcmp(a_format->sval[0], "bundle") == 0)
+//			format = FORMAT_TEXTBUNDLE;
 		else if (strcmp(a_format->sval[0], "bundlezip") == 0)
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
 		else {
