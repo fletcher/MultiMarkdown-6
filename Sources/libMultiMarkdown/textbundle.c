@@ -308,7 +308,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 
 	// Add main document
 	len = e->dstr->currentStringLength;
-	status = mz_zip_writer_add_mem(&zip, "text.md", e->dstr->str, len, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "text.markdown", e->dstr->str, len, MZ_BEST_COMPRESSION);
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
 	}
