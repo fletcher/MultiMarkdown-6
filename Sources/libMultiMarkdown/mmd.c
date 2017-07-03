@@ -1503,7 +1503,8 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 
 	// Insert marker back in place
 	marker->next = block->child->child;
-	block->child->child->prev = marker;
+	if (block->child->child)
+		block->child->child->prev = marker;
 	block->child->child = marker;
 }
 
@@ -1531,6 +1532,9 @@ void is_list_loose(token * list) {
 	bool loose = false;
 	
 	token * walker = list->child;
+
+	if (walker == NULL)
+		return;
 
 	while (walker->next != NULL) {
 		if (walker->type == BLOCK_LIST_ITEM) {
