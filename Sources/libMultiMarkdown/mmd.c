@@ -205,6 +205,9 @@ mmd_engine * mmd_engine_create_with_string(const char * str, unsigned long exten
 
 /// Set language and smart quotes language
 void mmd_engine_set_language(mmd_engine * e, short language) {
+	if (!e)
+		return;
+
 	e->language = language;
 
 	switch (language) {
@@ -1940,7 +1943,9 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 /// Parse the entire string into a token tree
 void mmd_engine_parse_string(mmd_engine * e) {
-	e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
+	if (e) {
+		e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);		
+	}
 }
 
 
@@ -1980,7 +1985,10 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		// First line is not metadata, so can't have metadata
 		// Saves the time of an unnecessary parse 
 		// TODO:  Need faster confirmation of actual metadata than full tokenizing
-		*end = 0;
+		if (end) {
+			*end = 0;
+		}
+	
 		return false;
 	}
 
