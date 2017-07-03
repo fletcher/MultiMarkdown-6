@@ -2220,6 +2220,9 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 		case FORMAT_EPUB:
 			epub_write_wrapper(filepath, output->str, e, directory);
 			break;
+		case FORMAT_TEXTBUNDLE:
+			// TODO: Need to implement this
+			break;
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			textbundle_write_wrapper(filepath, output->str, e, directory);
 			break;
@@ -2280,6 +2283,7 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 			d_string_free(output, true);
 			break;
+		case FORMAT_TEXTBUNDLE:
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			result = textbundle_create(output->str, e, directory);
 

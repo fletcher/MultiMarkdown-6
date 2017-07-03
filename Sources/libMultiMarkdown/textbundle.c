@@ -110,7 +110,6 @@
 #endif
 
 #include "textbundle.h"
-#include "html.h"
 #include "miniz.h"
 #include "transclude.h"
 #include "writer.h"
@@ -360,24 +359,6 @@ void sub_asset_paths(DString * text, mmd_engine * e) {
 }
 
 
-// Use the miniz library to create a zip archive for the TEXTBUNDLE_COMPRESSED document
-void textbundle_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
-	FILE * output_stream;
-
-	DString * result = textbundle_create(body, e, directory);
-
-	if (!(output_stream = fopen(filepath, "w"))) {
-		// Failed to open file
-		perror(filepath);
-	} else {
-		fwrite(&(result->str), result->currentStringLength, 1, output_stream);
-		fclose(output_stream);
-	}
-
-	d_string_free(result, true);
-}
-
-
 DString * textbundle_create(const char * body, mmd_engine * e, const char * directory) {
 	DString * result = d_string_new("");
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_TEXTBUNDLE_COMPRESSED);
@@ -437,4 +418,23 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	}
 
 	return result;
+}
+
+
+
+// Use the miniz library to create a zip archive for the TEXTBUNDLE_COMPRESSED document
+void textbundle_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
+	FILE * output_stream;
+
+	DString * result = textbundle_create(body, e, directory);
+
+	if (!(output_stream = fopen(filepath, "w"))) {
+		// Failed to open file
+		perror(filepath);
+	} else {
+		fwrite(&(result->str), result->currentStringLength, 1, output_stream);
+		fclose(output_stream);
+	}
+
+	d_string_free(result, true);
 }

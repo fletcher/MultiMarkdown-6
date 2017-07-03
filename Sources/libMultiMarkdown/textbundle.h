@@ -108,7 +108,7 @@
 #include "d_string.h"
 #include "mmd.h"
 
-void textbundle_write_wrapper(const char * root_path, const char * body, mmd_engine * e, const char * directory);
+void textbundle_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory);
 
 DString * textbundle_create(const char * body, mmd_engine * e, const char * directory);
 
