@@ -8,6 +8,8 @@
 | Copyright: | @My_Project_Copyright@    |  
 | Version:   | @My_Project_Version@      |  
 
+master branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=master)](https://travis-ci.org/fletcher/MultiMarkdown-6)  
+develop branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=develop)](https://travis-ci.org/fletcher/MultiMarkdown-6)
 
 ## An Announcement! ##
 
