@@ -2104,7 +2104,7 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
-	result = strdup(mmd_engine_metavalue_for_key(e, key));
+	result = my_strdup(mmd_engine_metavalue_for_key(e, key));
 
 	mmd_engine_free(e, false);
 
