@@ -87,6 +87,7 @@ void store_metadata(scratch_pad * scratch, meta * m);
 
 void store_abbreviation(scratch_pad * scratch, footnote * a);
 
+
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
 	size_t len = 0;
@@ -109,6 +110,18 @@ static char * my_strndup(const char * source, size_t n) {
 		result[len] = '\0';
 	}
 	
+	return result;
+}
+
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
 	return result;
 }
 
@@ -534,7 +547,7 @@ attr * attr_new(char * key, char * value) {
 
 	if (a) {
 		a->key = key;
-		a->value = strdup(value);
+		a->value = my_strdup(value);
 		a->next = NULL;
 	}
 
@@ -594,7 +607,7 @@ link * link_new(const char * source, token * label, char * url, char * title, ch
 			l->label_text = NULL;
 		}
 		l->url = clean_string(url, false);
-		l->title = (title == NULL) ? NULL : strdup(title);
+		l->title = (title == NULL) ? NULL : my_strdup(title);
 		l->attributes = (attributes == NULL) ? NULL : parse_attributes(attributes);
 	}
 
@@ -1577,7 +1590,7 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 
 			free(temp_char);
 		} else if (strcmp(m->key, "bibtex") == 0) {
-			scratch->bibtex_file = strdup(m->value);
+			scratch->bibtex_file = my_strdup(m->value);
 			// Trigger complete document unless explicitly denied
 			if (!(scratch->extensions & EXT_SNIPPET))
 				scratch->extensions |= EXT_COMPLETE;
@@ -2386,7 +2399,7 @@ asset * asset_new(char * url, scratch_pad * scratch) {
 	asset * a = malloc(sizeof(asset));
 
 	if (a) {
-		a->url = strdup(url);
+		a->url = my_strdup(url);
 
 		// Create a unique local asset path
 		a->asset_path = uuid_new();

@@ -75,6 +75,19 @@
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
 #define print_localized(x) mmd_print_localized_char_html(out, x, scratch)
 
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 // Use Knuth's pseudo random generator to obfuscate email addresses predictably
 long ran_num_next();
 
@@ -204,7 +217,7 @@ static char * strip_dimension_units(char *original) {
 	char *result;
 	int i;
 	
-	result = strdup(original);
+	result = my_strdup(original);
 	
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
@@ -1261,7 +1274,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 					if (strcmp(temp_char2, "notcited") == 0) {
 						free(temp_char);
-						temp_char = strdup("");
+						temp_char = my_strdup("");
 						temp_bool = false;
 					}
 
@@ -1272,7 +1285,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				} else {
 					// This is the actual citation (e.g. `[#foo]`)
 					// No locator
-					temp_char = strdup("");
+					temp_char = my_strdup("");
 				}
 
 				// Classify this use

@@ -83,6 +83,17 @@ void ParseTrace();
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
 
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
 
 /// Build MMD Engine
 mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
@@ -2079,7 +2090,7 @@ char * mmd_string_metavalue_for_key(char * source, const char * key) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
-	result = strdup(mmd_engine_metavalue_for_key(e, key));
+	result = my_strdup(mmd_engine_metavalue_for_key(e, key));
 
 	mmd_engine_free(e, true);
 
@@ -2315,6 +2326,6 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 /// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;
-	result = strdup(MULTIMARKDOWN_VERSION);
+	result = my_strdup(MULTIMARKDOWN_VERSION);
 	return result;
 }

@@ -79,8 +79,20 @@
 #define print_localized(x) mmd_print_localized_char_html(out, x, scratch)
 
 
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 char * epub_mimetype(void) {
-	return strdup("application/epub+zip");
+	return my_strdup("application/epub+zip");
 }
 
 

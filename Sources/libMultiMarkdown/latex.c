@@ -71,6 +71,18 @@
 #define print_localized(x) mmd_print_localized_char_latex(out, x, scratch)
 
 
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 void mmd_print_char_latex(DString * out, char c) {
 	switch (c) {
 		case '\\':
@@ -257,7 +269,7 @@ static char * correct_dimension_units(char *original) {
 	char *result;
 	int i;
 	
-	result = strdup(original);
+	result = my_strdup(original);
 	
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
@@ -1158,7 +1170,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 					if (strcmp(temp_char2, "notcited") == 0) {
 						free(temp_char);
-						temp_char = strdup("");
+						temp_char = my_strdup("");
 						temp_bool = false;
 					}
 
@@ -1169,7 +1181,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				} else {
 					// This is the actual citation (e.g. `[#foo]`)
 					// No locator
-					temp_char = strdup("");
+					temp_char = my_strdup("");
 				}
 
 				// Classify this use

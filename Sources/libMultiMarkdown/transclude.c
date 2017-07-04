@@ -92,6 +92,18 @@ static char * my_strndup(const char * source, size_t n) {
 }
 
 
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 /// Windows can use either `\` or `/` as a separator -- thanks to t-beckmann on github
 ///	for suggesting a fix for this.
 bool is_separator(char c) {
@@ -211,7 +223,7 @@ void split_path_file(char ** dir, char ** file, const char * path) {
     	slash++;
 
     *dir = my_strndup(path, slash - path);
-    *file = strdup(slash);
+    *file = my_strdup(slash);
 }
 
 #ifdef TEST
@@ -421,7 +433,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				// Add path to manifest
 				if (add)
-					stack_push(manifest, strdup(file_path->str));
+					stack_push(manifest, my_strdup(file_path->str));
 			}
 
 			// Read the file
