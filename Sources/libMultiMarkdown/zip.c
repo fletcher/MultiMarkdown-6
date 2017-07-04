@@ -104,7 +104,6 @@
 #include "zip.h"
 
 #include <dirent.h>
-#include <limits.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -149,7 +148,8 @@ mz_bool unzip_archive_to_path(mz_zip_archive * pZip, const char * path) {
 		// Directory 'path' exists
 		
 		// Remember current working directory
-		char cwd[PATH_MAX + 1];
+		// Apparently PATH_MAX doesn't actually mean anything, so pick a big number
+		char cwd[4096 + 1];
 		getcwd(cwd, sizeof(cwd));
 
 		// Move into the desired directory
