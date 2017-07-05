@@ -64,6 +64,7 @@
 #include "libMultiMarkdown.h"
 #include "mmd.h"
 #include "object_pool.h"
+#include "opendocument.h"
 #include "parser.h"
 #include "scanners.h"
 #include "stack.h"
@@ -2310,6 +2311,16 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			result = textbundle_create(output->str, e, directory);
 
+			d_string_free(output, true);
+			break;
+		case FORMAT_ODT:
+			result = opendocument_text_create(output->str, e, directory);
+
+			d_string_free(output, true);
+			break;
+		case FORMAT_FODT:
+			result = opendocument_flat_text_create(output->str, e, directory);
+			
 			d_string_free(output, true);
 			break;
 		default:

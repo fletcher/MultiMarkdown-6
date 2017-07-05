@@ -183,6 +183,7 @@ set(src_files
 	Sources/libMultiMarkdown/critic_markup.c
 	Sources/libMultiMarkdown/d_string.c
 	Sources/libMultiMarkdown/epub.c
+	Sources/libMultiMarkdown/fodt.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
@@ -191,6 +192,8 @@ set(src_files
 	Sources/libMultiMarkdown/mmd.c
 	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.c
+	Sources/libMultiMarkdown/opendocument.c
+	Sources/libMultiMarkdown/opendocument-content.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
 	Sources/libMultiMarkdown/scanners.c
@@ -212,6 +215,7 @@ set(header_files
 	Sources/libMultiMarkdown/critic_markup.h
 	Sources/libMultiMarkdown/include/d_string.h
 	Sources/libMultiMarkdown/epub.h
+	Sources/libMultiMarkdown/fodt.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
@@ -221,6 +225,8 @@ set(header_files
 	Sources/libMultiMarkdown/mmd.h
 	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.h
+	Sources/libMultiMarkdown/opendocument.h
+	Sources/libMultiMarkdown/opendocument-content.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
 	Sources/libMultiMarkdown/textbundle.c
@@ -630,7 +636,7 @@ ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 
 ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
-ADD_MMD_TEST(mmd-6-odf "-t odf" MMD6Tests fodt)
+ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
 
 ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)
 

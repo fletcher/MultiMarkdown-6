@@ -68,7 +68,7 @@
 #include "latex.h"
 #include "memoir.h"
 #include "mmd.h"
-#include "odf.h"
+#include "opendocument-content.h"
 #include "scanners.h"
 #include "token.h"
 #include "uuid.h"
@@ -1529,7 +1529,8 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 				(scratch->output_format == FORMAT_MEMOIR))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
-			if (scratch->output_format == FORMAT_ODF)
+			if ((scratch->output_format == FORMAT_ODT) ||
+				(scratch->output_format == FORMAT_FODT))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "language") == 0) {
 			temp_char = label_from_string(m->value);
@@ -1793,12 +1794,14 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 				mmd_end_complete_latex(out, e->dstr->str, scratch);
 
 			break;
-		case FORMAT_ODF:
-			mmd_start_complete_odf(out, e->dstr->str, scratch);
+		case FORMAT_ODT:
+			scratch->store_assets = true;
+		case FORMAT_FODT:
+//			mmd_start_complete_odf(out, e->dstr->str, scratch);
 
-			mmd_export_token_tree_odf(out, e->dstr->str, e->root, scratch);
+			mmd_export_token_tree_opendocument(out, e->dstr->str, e->root, scratch);
 
-			mmd_end_complete_odf(out, e->dstr->str, scratch);
+//			mmd_end_complete_odf(out, e->dstr->str, scratch);
 			break;
 	}
 
@@ -2454,8 +2457,9 @@ bool raw_filter_text_matches(char * pattern, short format) {
 				if (strstr(pattern, "html"))
 					return true;
 				break;
-			case FORMAT_ODF:
-				if (strstr(pattern, "odf"))
+			case FORMAT_ODT:
+			case FORMAT_FODT:
+				if (strstr(pattern, "odt"))
 					return true;
 				break;
 			case FORMAT_EPUB:

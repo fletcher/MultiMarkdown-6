@@ -2,9 +2,9 @@
 
 	MultiMarkdown -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
-	@file odf.c
+	@file opendocument.h
 
-	@brief 
+	@brief Common Utilities for various OpenDocument export types
 
 
 	@author	Fletcher T. Penney
@@ -102,16 +102,17 @@
 */
 
 
-#include "odf.h"
+#ifndef OPENDOCUMENT_MULTIMARKDOWN_H
+#define OPENDOCUMENT_MULTIMARKDOWN_H
 
-static int void_function(void) {
-	return 0;
-}
+#include "d_string.h"
+#include "mmd.h"
+#include "writer.h"
 
-#ifdef TEST
-static void Test_void_function(CuTest* tc) {
-	int test = void_function();
+char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch);
 
-	CuAssertIntEquals(tc, 0, test);
-}
+
+DString * opendocument_flat_text_create(const char * body, mmd_engine * e, const char * directory);
+DString * opendocument_text_create(const char * body, mmd_engine * e, const char * directory);
+
 #endif

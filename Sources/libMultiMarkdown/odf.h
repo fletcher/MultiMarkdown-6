@@ -1,10 +1,10 @@
 /**
 
-	MultiMarkdown -- Lightweight markup processor to produce HTML, odf, and more.
+	MultiMarkdown -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
 	@file odf.h
 
-	@brief Convert token tree to Flat OpenDocument (ODF/FODT) output
+	@brief 
 
 
 	@author	Fletcher T. Penney
@@ -29,6 +29,24 @@
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
 	
+	uthash library:
+		Copyright (c) 2005-2016, Troy D. Hanson
+	
+		Licensed under Revised BSD license
+	
+	miniz library:
+		Copyright 2013-2014 RAD Game Tools and Valve Software
+		Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
+	
+		Licensed under the MIT license
+	
+	argtable3 library:
+		Copyright (C) 1998-2001,2003-2011,2013 Stewart Heitmann
+		<sheitmann@users.sourceforge.net>
+		All rights reserved.
+	
+		Licensed under the Revised BSD License
+	
 	
 	## The MIT License ##
 	
@@ -51,6 +69,35 @@
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
+	
+	## Revised BSD License ##
+	
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions are
+	met:
+	    * Redistributions of source code must retain the above copyright
+	      notice, this list of conditions and the following disclaimer.
+	    * Redistributions in binary form must reproduce the above
+	      copyright notice, this list of conditions and the following
+	      disclaimer in the documentation and/or other materials provided
+	      with the distribution.
+	    * Neither the name of the <organization> nor the
+	      names of its contributors may be used to endorse or promote
+	      products derived from this software without specific prior
+	      written permission.
+	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+	A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT
+	HOLDER> BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+	PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES LOSS OF USE, DATA, OR
+	PROFITS OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
 
 */
 
@@ -58,24 +105,12 @@
 #ifndef ODF_MULTIMARKDOWN_H
 #define ODF_MULTIMARKDOWN_H
 
+#ifdef TEST
+#include "CuTest.h"
+#endif
 
-#include "d_string.h"
-#include "token.h"
-#include "writer.h"
 
-void mmd_export_token_odf(DString * out, const char * source, token * t, scratch_pad * scratch);
-void mmd_export_token_tree_odf(DString * out, const char * source, token * t, scratch_pad * scratch);
-
-void mmd_export_token_odf_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
-void mmd_export_token_tree_odf_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
-
-void mmd_export_citation_list_odf(DString * out, const char * source, scratch_pad * scratch);
-void mmd_export_footnote_list_odf(DString * out, const char * source, scratch_pad * scratch);
-
-void mmd_start_complete_odf(DString * out, const char * source, scratch_pad * scratch);
-void mmd_end_complete_odf(DString * out, const char * source, scratch_pad * scratch);
-
-void mmd_export_citation_list_odf(DString * out, const char * source, scratch_pad * scratch);
-
+/// This is a sample function with a doxygen description.
+// void void_f(void);
 
 #endif

@@ -2,7 +2,7 @@
 
 	MultiMarkdown -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
-	@file odf.c
+	@file opendocument-content.h
 
 	@brief 
 
@@ -102,16 +102,33 @@
 */
 
 
-#include "odf.h"
+#ifndef OPENDOCUMENT_CONTENT_MULTIMARKDOWN_H
+#define OPENDOCUMENT_CONTENT_MULTIMARKDOWN_H
 
-static int void_function(void) {
-	return 0;
-}
+#include "writer.h"
 
-#ifdef TEST
-static void Test_void_function(CuTest* tc) {
-	int test = void_function();
+void mmd_print_char_opendocument(DString * out, char c);
+void mmd_print_string_opendocument(DString * out, const char * str);
+void mmd_print_localized_char_opendocument(DString * out, unsigned short type, scratch_pad * scratch);
 
-	CuAssertIntEquals(tc, 0, test);
-}
+void mmd_export_token_opendocument_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
+
+void mmd_export_link_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch);
+void mmd_export_image_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure);
+
+
+void mmd_export_token_opendocument(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_tree_opendocument(DString * out, const char * source, token * t, scratch_pad * scratch);
+
+void mmd_export_token_opendocument_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_tree_opendocument_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
+
+void mmd_export_citation_list_opendocument(DString * out, const char * source, scratch_pad * scratch);
+void mmd_export_footnote_list_opendocument(DString * out, const char * source, scratch_pad * scratch);
+
+void mmd_start_complete_opendocument(DString * out, const char * source, scratch_pad * scratch);
+void mmd_end_complete_opendocument(DString * out, const char * source, scratch_pad * scratch);
+
+void mmd_export_citation_list_opendocument(DString * out, const char * source, scratch_pad * scratch);
+
 #endif

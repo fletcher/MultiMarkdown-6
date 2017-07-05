@@ -154,7 +154,7 @@ int main(int argc, char** argv) {
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub|bundle|bundlezip"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("",""),
@@ -277,8 +277,10 @@ int main(int argc, char** argv) {
 			format = FORMAT_MEMOIR;
 		else if (strcmp(a_format->sval[0], "mmd") == 0)
 			format = FORMAT_MMD;
-		else if (strcmp(a_format->sval[0], "odf") == 0)
-			format = FORMAT_ODF;
+		else if (strcmp(a_format->sval[0], "odt") == 0)
+			format = FORMAT_ODT;
+		else if (strcmp(a_format->sval[0], "fodt") == 0)
+			format = FORMAT_FODT;
 		else if (strcmp(a_format->sval[0], "epub") == 0)
 			format = FORMAT_EPUB;
 		else if (strcmp(a_format->sval[0], "bundle") == 0)
@@ -343,8 +345,11 @@ int main(int argc, char** argv) {
 				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
-				case FORMAT_ODF:
+				case FORMAT_FODT:
 					output_filename = filename_with_extension(a_file->filename[i], ".fodt");
+					break;
+				case FORMAT_ODT:
+					output_filename = filename_with_extension(a_file->filename[i], ".odt");
 					break;
 				case FORMAT_MMD:
 					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");

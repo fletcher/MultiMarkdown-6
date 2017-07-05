@@ -7,7 +7,7 @@ latex config:	article</p>
 
 <p><code>*foo*</code>{=latex}</p>
 
-<p><code>*foo*</code>{=odf}</p>
+<p><code>*foo*</code>{=odt}</p>
 
 <p><code>*foo*</code>{=*}</p>
 
@@ -22,7 +22,7 @@ latex config:	article</p>
 <p><code>{=latex}
 *foo*</code></p>
 
-<p><code>{=odf}
+<p><code>{=odt}
 *foo*</code></p>
 
 <p><code>{=*}

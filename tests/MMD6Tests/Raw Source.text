@@ -7,7 +7,7 @@ latex config:	article
 
 `*foo*`{=latex}
 
-`*foo*`{=odf}
+`*foo*`{=odt}
 
 `*foo*`{=*}
 
@@ -25,7 +25,7 @@ latex config:	article
 *foo*
 ```
 
-```{=odf}
+```{=odt}
 *foo*
 ```
 
