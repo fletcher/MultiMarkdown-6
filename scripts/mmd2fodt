@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# mmd2odf --- MultiMarkdown convenience script
+# mmd2fodt --- MultiMarkdown convenience script
 #	<http://fletcherpenney.net/multimarkdown/>
 #	Fletcher T. Penney
 #
@@ -19,11 +19,11 @@ fi
 
 if [ $# = 0 ]
 then
-	multimarkdown -t odf
+	multimarkdown -t fodt
 else
 until [ "$*" = "" ]
 do
-	multimarkdown -b -t odf "$1"
+	multimarkdown -b -t fodt "$1"
 	shift
 done
 fi

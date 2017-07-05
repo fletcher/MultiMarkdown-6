@@ -190,7 +190,6 @@ set(src_files
 	Sources/libMultiMarkdown/memoir.c
 	Sources/libMultiMarkdown/miniz.c
 	Sources/libMultiMarkdown/mmd.c
-	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.c
 	Sources/libMultiMarkdown/opendocument.c
 	Sources/libMultiMarkdown/opendocument-content.c
@@ -223,7 +222,6 @@ set(header_files
 	Sources/libMultiMarkdown/memoir.h
 	Sources/libMultiMarkdown/miniz.h
 	Sources/libMultiMarkdown/mmd.h
-	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.h
 	Sources/libMultiMarkdown/opendocument.h
 	Sources/libMultiMarkdown/opendocument-content.h
@@ -244,7 +242,8 @@ if (WIN32)
 		scripts/mmd.bat
 		scripts/mmd2all.bat
 		scripts/mmd2epub.bat
-		scripts/mmd2odf.bat
+		scripts/mmd2fodt.bat
+		scripts/mmd2odt.bat
 		scripts/mmd2opml.bat
 		scripts/mmd2tex.bat
 		scripts/markdown.bat
@@ -254,7 +253,8 @@ else()
 		scripts/mmd
 		scripts/mmd2all
 		scripts/mmd2epub
-		scripts/mmd2odf
+		scripts/mmd2fodt
+		scripts/mmd2odt
 		scripts/mmd2opml
 		scripts/mmd2pdf
 		scripts/mmd2tex
