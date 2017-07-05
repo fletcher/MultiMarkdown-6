@@ -395,8 +395,16 @@ void mmd_export_image_opendocument(DString * out, const char * source, token * t
 	if (width)
 		free(width);
 
-	if (link->url)
-		printf(">\n<draw:image xlink:href=\"%s\"", link->url);
+	if (link->url) {
+		if (scratch->store_assets) {
+			store_asset(scratch, link->url);
+			asset * a = extract_asset(scratch, link->url);
+
+			printf(">\n<draw:image xlink:href=\"Pictures/%s\"", a->asset_path);			
+		} else {
+			printf(">\n<draw:image xlink:href=\"%s\"", link->url);			
+		}
+	}
 
 	print_const(" xlink:type=\"simple\" xlink:show=\"embed\" xlink:actuate=\"onLoad\" draw:filter-name=\"&lt;All formats&gt;\"/>\n</draw:frame></text:p>");
 

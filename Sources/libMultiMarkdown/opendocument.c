@@ -101,10 +101,14 @@
 
 */
 
+#ifdef USE_CURL
+#include <curl/curl.h>
+#endif
 
 #include "miniz.h"
 #include "opendocument.h"
 #include "opendocument-content.h"
+#include "transclude.h"
 #include "writer.h"
 #include "zip.h"
 
@@ -123,6 +127,33 @@ static char * my_strdup(const char * source) {
 	if (result) {
 		strcpy(result, source);
 	}
+
+	return result;
+}
+
+
+static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
+	if (!directory)
+		return false;
+	
+	char * path = path_from_dir_base(directory, a->url);
+	mz_bool status;
+	bool result = false;
+
+	DString * buffer = scan_file(path);
+
+	if (buffer && buffer->currentStringLength > 0) {
+		status = mz_zip_writer_add_mem(pZip, destination, buffer->str, buffer->currentStringLength, MZ_BEST_COMPRESSION);
+
+		if (!status) {
+			fprintf(stderr, "Error adding asset '%s' to zip.\n", destination);
+		}
+
+		d_string_free(buffer, true);
+		result = true;
+	}
+
+	free(path);
 
 	return result;
 }
@@ -496,6 +527,9 @@ char * opendocument_style_file(int format) {
 "xmlns:ooow=\"http://openoffice.org/2004/writer\"\n" \
 "xmlns:oooc=\"http://openoffice.org/2004/calc\"\n" \
 "xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n" \
+"xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n" \
+"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" \
+"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" \
 "xmlns:rpt=\"http://openoffice.org/2005/report\"\n" \
 "xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\"\n" \
 "xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"\n" \
@@ -506,6 +540,7 @@ char * opendocument_style_file(int format) {
 "xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\"\n" \
 "xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\"\n" \
 "xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\"\n" \
+"xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\"\n" \
 "xmlns:css3t=\"http://www.w3.org/TR/css3-text/\"\n" \
 "office:version=\"1.2\">\n");
 
@@ -529,6 +564,107 @@ char * opendocument_settings_file(int format) {
 }
 
 
+#ifdef USE_CURL
+// Dynamic buffer for downloading files in memory
+// Based on https://curl.haxx.se/libcurl/c/getinmemory.html
+
+struct MemoryStruct {
+	char * memory;
+	size_t size;
+};
+
+
+static size_t write_memory(void * contents, size_t size, size_t nmemb, void * userp) {
+	size_t realsize = size * nmemb;
+	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
+
+	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+	if (mem->memory == NULL) {
+		// Out of memory
+		fprintf(stderr, "Out of memory\n");
+		return 0;
+	}
+
+	memcpy(&(mem->memory[mem->size]), contents, realsize);
+	mem->size += realsize;
+	mem->memory[mem->size] = 0;
+
+	return realsize;
+}
+
+// Add assets to zipfile using libcurl
+static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
+	asset * a, * a_tmp;
+
+	if (e->asset_hash){
+		CURL * curl;
+		CURLcode res;
+		
+		struct MemoryStruct chunk;
+		chunk.memory = malloc(1);
+		chunk.size = 0;
+
+		char destination[100] = "Pictures/";
+		destination[45] = '\0';
+		
+		mz_bool status;
+
+		curl_global_init(CURL_GLOBAL_ALL);
+		curl = curl_easy_init();
+
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_memory);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+
+		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+			curl_easy_setopt(curl, CURLOPT_URL, a->url);
+			res = curl_easy_perform(curl);
+
+			memcpy(&destination[9], a->asset_path, 36);
+
+			if (res != CURLE_OK) {
+				// Attempt to add asset from local file
+				if (!add_asset_from_file(pZip, a, destination, directory)) {
+					fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
+				}
+			} else {
+				// Store downloaded file in zip
+				status = mz_zip_writer_add_mem(pZip, destination, chunk.memory, chunk.size, MZ_BEST_COMPRESSION);
+
+				if (!status) {
+					fprintf(stderr, "Error adding asset '%s' to zip as '%s'.\n", a->asset_path, destination);
+				}
+			}
+		}
+	}
+}
+
+#else
+// Add local assets only (libcurl not available)
+static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
+	asset * a, * a_tmp;
+
+	if (e->asset_hash){
+
+		char destination[100] = "Pictures/";
+		destination[45] = '\0';
+		
+		mz_bool status;
+
+		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+
+			memcpy(&destination[9], a->asset_path, 36);
+
+			// Attempt to add asset from local file
+			if (!add_asset_from_file(pZip, a, destination, directory)) {
+				fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
+			}
+		}
+	}
+}
+#endif
+
+
 /// Create manifest file for OpenDocument
 char * opendocument_manifest_file(mmd_engine * e, int format) {
 	DString * out = d_string_new("");
@@ -550,6 +686,17 @@ char * opendocument_manifest_file(mmd_engine * e, int format) {
 	print_const("\t<manifest:file-entry manifest:full-path=\"styles.xml\" manifest:media-type=\"text/xml\"/>\n");
 	print_const("\t<manifest:file-entry manifest:full-path=\"settings.xml\" manifest:media-type=\"text/xml\"/>\n");
 	print_const("\t<manifest:file-entry manifest:full-path=\"meta.xml\" manifest:media-type=\"text/xml\"/>\n");
+
+	// Add assets
+	if (e->asset_hash) {
+		asset * a, * a_tmp;
+
+		print_const("\t<manifest:file-entry manifest:full-path=\"Pictures/\" manifest:media-type=\"\"/>\n");
+
+		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
+			printf("\t<manifest:file-entry manifest:full-path=\"Pictures/%s\" manifest:media-type=\"image/png\"/>\n", a->asset_path);
+		}
+	}
 
 	// Close
 	print_const("\n</manifest:manifest>");
@@ -627,7 +774,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
 
-//	status = mz_zip_writer_add_mem(zip, "Pictures/", NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(zip, "Pictures/", NULL, 0, MZ_BEST_COMPRESSION);
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
@@ -790,7 +937,9 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 	}
 
 
-	// TODO: Add image assets
+	// Add image assets
+	add_assets(zip, e, directory);
+
 
 	// Clean up
 	free(result->str);
