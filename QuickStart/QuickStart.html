@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Quick Start Guide</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="version" content="6.0.1"/>
+	<meta name="version" content="6.1.0"/>
 	<meta name="uuid" content="0d6313fa-9135-477e-9c14-7d62c1977833"/>
 </head>
 <body>
@@ -29,6 +29,8 @@
 <li><a href="#internationalization">Internationalization </a></li>
 <li><a href="#latexchanges">LaTeX Changes </a></li>
 <li><a href="#metadata">Metadata </a></li>
+<li><a href="#outputformats">Output Formats </a></li>
+<li><a href="#embeddedimages">Embedded Images </a></li>
 <li><a href="#tableofcontents">Table of Contents </a></li>
 <li><a href="#transclusion">Transclusion </a></li>
 </ul>
@@ -39,7 +41,7 @@
 
 <h3 id="introduction">Introduction </h3>
 
-<p>Version: 6.0.1</p>
+<p>Version: 6.1.0</p>
 
 <p>This document serves as a description of MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
@@ -379,6 +381,44 @@ options are <code>dutch</code>, <code>french</code>, <code>german</code>, <code>
 <code>fr</code>, <code>de</code>, <code>sv</code>. Anything else defaults to English.</p></li>
 </ul>
 
+<h4 id="outputformats">Output Formats </h4>
+
+<p>MultiMarkdown 6 supports the following output formats, using the <code>-t</code>
+command-line argument:</p>
+
+<ul>
+<li><code>html</code> &#8211; (Default) create HTML 5</li>
+<li><code>latex</code> &#8211; create <a href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</a> for conversion to PDF using high quality
+typography</li>
+<li><code>beamer</code> and <code>memoir</code> &#8211; two additional LaTeX variants for creating
+slide presentations and longer documents, respectively</li>
+<li><code>mmd</code> &#8211; output the <abbr title="MultiMarkdown">MMD</abbr> text before converting to another format,
+but after performing transclusion. This format is not generally needed.</li>
+<li><code>odt</code> &#8211; OpenDocument text file, used by OpenOffice and compatible
+word processors. Images are embedded inside the file package.</li>
+<li><code>fodt</code> &#8211; OpenDocument text variant using a single text (XML) file
+instead of a compressed zip file. Images are not embedded in this format.</li>
+<li><code>epub</code> &#8211; EPUB 3 ebook format. Images and CSS are embedded in the
+file package.</li>
+<li><code>bundle</code> &#8211; [TextBundle] format consisting of Markdown/MultiMarkdown
+text file and embedded images and CSS. Useful for sharing Markdown files
+and images between applications (on any OS, but especially on iOS)</li>
+<li><code>bundlezip</code> &#8211; TextPack variant of the TextBundle format &#8211; the file
+package is compressed to a single zip file (similar to EPUB and ODT
+formats).</li>
+</ul>
+
+<h4 id="embeddedimages">Embedded Images </h4>
+
+<p>Supported export formats (<code>odt</code>, <code>epub</code>, <code>bundle</code>, <code>bundlezip</code>) include
+images inside the export document:</p>
+
+<ul>
+<li>Local images are embedded automatically</li>
+<li>Images stored on remote servers are embedded <em>if</em> <a href="https://curl.haxx.se/libcurl/">libCurl</a> is
+properly installed when <abbr title="MultiMarkdown">MMD</abbr> is compiled. This is true for macOS builds.</li>
+</ul>
+
 <h4 id="tableofcontents">Table of Contents </h4>
 
 <p>By placing <code>{{TOC}}</code> in your document, you can insert an automatically
@@ -490,4 +530,3 @@ glossary collects information about important terms used in your document <a hre
 
 </body>
 </html>
-

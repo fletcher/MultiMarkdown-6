@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.0.1
+Version:	6.1.0
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
@@ -358,6 +358,46 @@ will also set the default `quotes language`.
 * `quotes language` -- specify which variant of smart quotes to use.  Valid
 options are `dutch`, `french`, `german`, `germanguillemets`, `swedish`, `nl`,
 `fr`, `de`, `sv`.  Anything else defaults to English.
+
+
+## Output Formats ##
+
+MultiMarkdown 6 supports the following output formats, using the `-t`
+command-line argument:
+
+*	`html` -- (Default) create HTML 5
+*	`latex` -- create [LaTeX] for conversion to PDF using high quality 
+typography
+*	`beamer` and `memoir` -- two additional LaTeX variants for creating
+slide presentations and longer documents, respectively
+*	`mmd` -- output the MMD text before converting to another format,
+but after performing transclusion.  This format is not generally needed.
+*	`odt` -- OpenDocument text file, used by OpenOffice and compatible
+word processors.  Images are embedded inside the file package.
+*	`fodt` -- OpenDocument text variant using a single text (XML) file
+instead of a compressed zip file.  Images are not embedded in this format.
+*	`epub` -- EPUB 3 ebook format.  Images and CSS are embedded in the
+file package.
+*	`bundle` -- [TextBundle] format consisting of Markdown/MultiMarkdown
+text file and embedded images and CSS.  Useful for sharing Markdown files
+and images between applications (on any OS, but especially on iOS)
+*	`bundlezip` -- TextPack variant of the TextBundle format -- the file
+package is compressed to a single zip file (similar to EPUB and ODT
+formats).
+
+[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
+
+
+## Embedded Images ##
+
+Supported export formats (`odt`, `epub`, `bundle`, `bundlezip`) include
+images inside the export document:
+
+* Local images are embedded automatically
+* Images stored on remote servers are embedded *if* [libCurl] is
+properly installed when MMD is compiled.  This is true for macOS builds.
+
+[libCurl]:	https://curl.haxx.se/libcurl/
 
 
 ## Table of Contents ##

@@ -274,7 +274,7 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="date">2017-05-24</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-07-06</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -750,11 +750,157 @@ which are zip files with a specific file structure inside them.</text:p></text:l
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://github.com/argtable/argtable3">argtable3</text:a> &#8211; provides more advanced command-line argument processing in a
 more cross-platform approach than that used by MMD v5.</text:p></text:list-item>
 
+<text:list-item>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://curl.haxx.se/libcurl/">libCurl</text:a> &#8211; allows for easily downloading image assets from web servers in
+order to embed them in packaged file formats, e.g. EPUB 3,
+TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
+
 </text:list>
 
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;07&#8211;06 - v 6.1.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add &#8216;&#8211;nosmart&#8217; option to disable smart typography</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add &#8216;notransclude&#8217; option</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add Travis CI configuration</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add odt and fodt formats; disable odf format for consistency</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add regular TextBundle format support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for &#8216;latexauthor&#8217; and &#8216;latextitle&#8217; metadata (Addresses #58)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add syntax for raw source (Addresses #38)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Start working on textbundle output format</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Store image assets in OpenDocument files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Use assets for reference image definitions in TextBundle format</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Disable &#8216;bundle&#8217; format until it's finished</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Make epub utility functions static</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Remove odf files; replace convenience scripts</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Use &#8216;markdown&#8217; file extension</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Add ODF to wilcard transcluding; Fix tufte to support latex title</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Avoid a few potential crashes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don't parse MMD inside math (fixes #69)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix asset path for CSS metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue where tight list items not properly processed for smart typography</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with transclusion and relative paths</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix regression and add newline at end of converted strings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix two potential crashes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve apostrophe detection after punctuation mark</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve handling of HTML entities (fixed #71)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve transclusion search folder resolution</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: PATH_MAX isn't reliable</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Refactor super/subscript parsing (fixes #70)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Silence a few warnings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use .bat files for Windows installer (fixes #74)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATE: Use custom strdup() replacement</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix whitespace</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Include build status in README</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Include html version in Textbundle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update parser to track headers, even in compatibility mode</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;05&#8211;24 - v 6.0.7:</text:p>
 
