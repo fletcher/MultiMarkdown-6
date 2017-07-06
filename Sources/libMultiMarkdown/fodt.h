@@ -2,7 +2,7 @@
 
 	MultiMarkdown -- Lightweight markup processor to produce HTML, odf, and more.
 
-	@file odf.h
+	@file fodt.h
 
 	@brief Convert token tree to Flat OpenDocument (ODF/FODT) output
 
@@ -55,8 +55,8 @@
 */
 
 
-#ifndef ODF_MULTIMARKDOWN_H
-#define ODF_MULTIMARKDOWN_H
+#ifndef FODT_MULTIMARKDOWN_H
+#define FODT_MULTIMARKDOWN_H
 
 
 #include "d_string.h"

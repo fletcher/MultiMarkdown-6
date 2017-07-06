@@ -68,7 +68,7 @@
 #include "latex.h"
 #include "memoir.h"
 #include "mmd.h"
-#include "odf.h"
+#include "opendocument-content.h"
 #include "scanners.h"
 #include "token.h"
 #include "uuid.h"
@@ -86,6 +86,7 @@ void store_link(scratch_pad * scratch, link * l);
 void store_metadata(scratch_pad * scratch, meta * m);
 
 void store_abbreviation(scratch_pad * scratch, footnote * a);
+
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
@@ -109,6 +110,18 @@ static char * my_strndup(const char * source, size_t n) {
 		result[len] = '\0';
 	}
 	
+	return result;
+}
+
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
 	return result;
 }
 
@@ -534,7 +547,7 @@ attr * attr_new(char * key, char * value) {
 
 	if (a) {
 		a->key = key;
-		a->value = strdup(value);
+		a->value = my_strdup(value);
 		a->next = NULL;
 	}
 
@@ -594,7 +607,7 @@ link * link_new(const char * source, token * label, char * url, char * title, ch
 			l->label_text = NULL;
 		}
 		l->url = clean_string(url, false);
-		l->title = (title == NULL) ? NULL : strdup(title);
+		l->title = (title == NULL) ? NULL : my_strdup(title);
 		l->attributes = (attributes == NULL) ? NULL : parse_attributes(attributes);
 	}
 
@@ -1033,6 +1046,8 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 					f->free_para = true;
 					break;
 			}
+		} else {
+			f->content = NULL;
 		}
 	}
 
@@ -1514,7 +1529,8 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 				(scratch->output_format == FORMAT_MEMOIR))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
-			if (scratch->output_format == FORMAT_ODF)
+			if ((scratch->output_format == FORMAT_ODT) ||
+				(scratch->output_format == FORMAT_FODT))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "language") == 0) {
 			temp_char = label_from_string(m->value);
@@ -1575,7 +1591,7 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 
 			free(temp_char);
 		} else if (strcmp(m->key, "bibtex") == 0) {
-			scratch->bibtex_file = strdup(m->value);
+			scratch->bibtex_file = my_strdup(m->value);
 			// Trigger complete document unless explicitly denied
 			if (!(scratch->extensions & EXT_SNIPPET))
 				scratch->extensions |= EXT_COMPLETE;
@@ -1729,8 +1745,11 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			break;
 		case FORMAT_EPUB:
-			mmd_start_complete_html(out, e->dstr->str, scratch);
+		case FORMAT_TEXTBUNDLE:
+		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			scratch->store_assets = true;
+
+			mmd_start_complete_html(out, e->dstr->str, scratch);
 
 			mmd_export_token_tree_html(out, e->dstr->str, e->root, scratch);
 			mmd_export_footnote_list_html(out, e->dstr->str, scratch);
@@ -1775,12 +1794,14 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 				mmd_end_complete_latex(out, e->dstr->str, scratch);
 
 			break;
-		case FORMAT_ODF:
-			mmd_start_complete_odf(out, e->dstr->str, scratch);
+		case FORMAT_ODT:
+			scratch->store_assets = true;
+		case FORMAT_FODT:
+//			mmd_start_complete_odf(out, e->dstr->str, scratch);
 
-			mmd_export_token_tree_odf(out, e->dstr->str, e->root, scratch);
+			mmd_export_token_tree_opendocument(out, e->dstr->str, e->root, scratch);
 
-			mmd_end_complete_odf(out, e->dstr->str, scratch);
+//			mmd_end_complete_odf(out, e->dstr->str, scratch);
 			break;
 	}
 
@@ -2205,7 +2226,8 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 			// Adjust the properties
 			free(temp->label_text);
 			temp->label_text = temp->clean_text;
-			temp->clean_text = clean_string_from_range(source, temp->content->child->start, t->start + t->len - t->child->mate->len - temp->content->child->start, false);
+			if (temp->content && temp->content->child)
+				temp->clean_text = clean_string_from_range(source, temp->content->child->start, t->start + t->len - t->child->mate->len - temp->content->child->start, false);
 
 			// Store as used
 			stack_push(scratch->used_abbreviations, temp);
@@ -2380,7 +2402,7 @@ asset * asset_new(char * url, scratch_pad * scratch) {
 	asset * a = malloc(sizeof(asset));
 
 	if (a) {
-		a->url = strdup(url);
+		a->url = my_strdup(url);
 
 		// Create a unique local asset path
 		a->asset_path = uuid_new();
@@ -2416,7 +2438,60 @@ void store_asset(scratch_pad * scratch, char * url) {
 	if (!a) {
 		// Asset not found - create new one
 		a = asset_new(url, scratch);
-		HASH_ADD_KEYPTR(hh, scratch->asset_hash, url, strlen(url), a);
+		HASH_ADD_KEYPTR(hh, scratch->asset_hash, a->url, strlen(a->url), a);
 	}
+}
+
+
+bool raw_filter_text_matches(char * pattern, short format) {
+	if (!pattern)
+		return false;
+
+	if (strcmp("*", pattern) == 0) {
+		return true;
+	} else if (strcmp("{=*}", pattern) == 0) {
+		return true;
+	} else {
+		switch(format){
+			case FORMAT_HTML:
+				if (strstr(pattern, "html"))
+					return true;
+				break;
+			case FORMAT_ODT:
+			case FORMAT_FODT:
+				if (strstr(pattern, "odt"))
+					return true;
+				break;
+			case FORMAT_EPUB:
+				if (strstr(pattern, "epub"))
+					return true;
+				break;
+			case FORMAT_MEMOIR:
+			case FORMAT_BEAMER:
+			case FORMAT_LATEX:
+				if (strstr(pattern, "latex"))
+					return true;
+				break;
+		}
+	}
+
+	return false;
+}
+
+
+/// Determine whether raw filter matches specified format
+bool raw_filter_matches(token * t, const char * source, short format) {
+	bool result = false;
+
+	if (t->type != PAIR_RAW_FILTER)
+		return result;
+
+	char * pattern = my_strndup(&source[t->child->start + 2], t->child->mate->start - t->child->start - 2);
+
+	result = raw_filter_text_matches(pattern, format);
+
+	free(pattern);
+
+	return result;
 }
 

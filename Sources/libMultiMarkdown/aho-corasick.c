@@ -414,16 +414,19 @@ match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) 
 
 
 void match_excise(match * m) {
-	if (m->prev) {
-		m->prev->next = m->next;
-	}
+	if (m) {
+		if (m->prev) {
+			m->prev->next = m->next;
+		}
 
-	if (m->next) {
-		m->next->prev = m->prev;
-	}
+		if (m->next) {
+			m->next->prev = m->prev;
+		}
 
-	free(m);
+		free(m);
+	}
 }
+
 
 int match_count(match * m) {
 	int result = 0;

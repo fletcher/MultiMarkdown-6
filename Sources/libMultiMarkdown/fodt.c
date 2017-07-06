@@ -2,7 +2,7 @@
 
 	MultiMarkdown -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
-	@file odf.c
+	@file fodt.c
 
 	@brief Convert token tree to Flat OpenDocument (ODF/FODT) output
 
@@ -62,7 +62,7 @@
 
 #include "char.h"
 #include "i18n.h"
-#include "odf.h"
+#include "fodt.h"
 #include "parser.h"
 #include "scanners.h"
 
@@ -72,6 +72,18 @@
 #define printf(...) d_string_append_printf(out, __VA_ARGS__)
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
 #define print_localized(x) mmd_print_localized_char_odf(out, x, scratch)
+
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
 
 
 void mmd_print_char_odf(DString * out, char c) {
@@ -224,7 +236,7 @@ static char * correct_dimension_units(char *original) {
 	char *result;
 	int i;
 	
-	result = strdup(original);
+	result = my_strdup(original);
 	
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
@@ -417,6 +429,37 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			break;
 		case BLOCK_CODE_FENCED:
 			pad(out, 2, scratch);
+
+			temp_char = get_fence_language_specifier(t->child->child, source);
+
+			if (temp_char) {
+				if (strncmp("{=", temp_char, 2) == 0) {
+					// Raw source
+					if (raw_filter_text_matches(temp_char, FORMAT_ODT)) {
+						switch (t->child->tail->type) {
+							case LINE_FENCE_BACKTICK_3:
+							case LINE_FENCE_BACKTICK_4:
+							case LINE_FENCE_BACKTICK_5:
+								temp_token = t->child->tail;
+								break;
+							default:
+								temp_token = NULL;
+						}
+						if (temp_token) {
+							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
+							scratch->padded = 1;
+						} else {
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);							
+							scratch->padded = 0;
+						}
+					}
+
+					break;
+				}
+			}
+			
+			free(temp_char);
+
 			print_const("<text:p text:style-name=\"Preformatted Text\">");
 			mmd_export_token_tree_odf_raw(out, source, t->child->next, scratch);
 			print_const("</text:p>");
@@ -803,6 +846,10 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case HASH6:
 			print_token(t);
 			break;
+		case HTML_ENTITY:
+			print_const("&amp;");
+			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
+			break;
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("&lt;!--");
@@ -946,10 +993,22 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			}
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
+
+			if (t->next && t->next->type == PAIR_RAW_FILTER) {
+				// Raw text?
+				if (raw_filter_matches(t->next, source, FORMAT_FODT)) {
+					d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
+				}
+				// Skip over PAIR_RAW_FILTER
+				scratch->skip_token = 1;
+				break;
+			}
+
 			print_const("<text:span text:style-name=\"Source_20_Text\">");
 			mmd_export_token_tree_odf_raw(out, source, t->child, scratch);
 			print_const("</text:span>");
 			break;
+		case PAIR_BRACE:
 		case PAIR_BRACES:
 			mmd_export_token_tree_odf(out, source, t->child, scratch);
 			break;
@@ -1016,7 +1075,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 
 					if (strcmp(temp_char2, "notcited") == 0) {
 						free(temp_char);
-						temp_char = strdup("");
+						temp_char = my_strdup("");
 						temp_bool = false;
 					}
 
@@ -1027,7 +1086,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 				} else {
 					// This is the actual citation (e.g. `[#foo]`)
 					// No locator
-					temp_char = strdup("");
+					temp_char = my_strdup("");
 				}
 
 				// Classify this use
@@ -1521,6 +1580,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 			if (t->next)
 				print_char('\n');
 			break;
+		case RAW_FILTER_LEFT:
 		case TEXT_BACKSLASH:
 		case TEXT_BRACE_LEFT:
 		case TEXT_BRACE_RIGHT:
@@ -1584,6 +1644,10 @@ void mmd_export_token_odf_raw(DString * out, const char * source, token * t, scr
 		case ESCAPED_CHARACTER:
 			print_const("\\");
 			mmd_print_char_odf(out, source[t->start + 1]);
+			break;
+		case HTML_ENTITY:
+			print_const("&amp;");
+			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
 			break;
 		case INDENT_TAB:
 			print_const("<text:tab/>");

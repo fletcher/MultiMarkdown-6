@@ -250,5 +250,9 @@ void store_asset(scratch_pad * scratch_pad, char * url);
 asset * extract_asset(scratch_pad * scratch, char * url);
 void asset_free(asset * a);
 
+bool raw_filter_text_matches(char * pattern, short format);
+bool raw_filter_matches(token * filter, const char * source, short format);
+
+
 #endif
 

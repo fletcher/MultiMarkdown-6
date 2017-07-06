@@ -12,7 +12,10 @@
 
 <p>This text is included in <code>bar.txt</code>.</p>
 
-<p>This can be transcluded without causing an infinite loop &#8211; {{foo.txt}}</p>
+<p>This can be transcluded without causing an infinite loop &#8211;
+This text is included in <code>foo.txt</code>.</p>
+
+<p>This should not be transcluded to avoid an infinite loop &#8211; {{foo.txt}}</p>
 
 <pre><code>This is a file with no metadata.
 </code></pre>
@@ -29,7 +32,10 @@ does <em>not</em> override the <code>transclude base</code> metadata.</p>
 
 <p>This text is included in <code>bar.txt</code>.</p>
 
-<p>This can be transcluded without causing an infinite loop &#8211; {{foo.txt}}</p>
+<p>This can be transcluded without causing an infinite loop &#8211;
+This text is included in <code>foo.txt</code>.</p>
+
+<p>This should not be transcluded to avoid an infinite loop &#8211; {{foo.txt}}</p>
 
 <pre><code>This is a file with no metadata.
 </code></pre>

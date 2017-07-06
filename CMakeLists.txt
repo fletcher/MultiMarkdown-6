@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-05-24")
+set (My_Project_Revised_Date "2017-07-06")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 0)
-set (My_Project_Version_Patch 7)
+set (My_Project_Version_Minor 1)
+set (My_Project_Version_Patch 0)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -183,18 +183,21 @@ set(src_files
 	Sources/libMultiMarkdown/critic_markup.c
 	Sources/libMultiMarkdown/d_string.c
 	Sources/libMultiMarkdown/epub.c
+	Sources/libMultiMarkdown/fodt.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
 	Sources/libMultiMarkdown/memoir.c
 	Sources/libMultiMarkdown/miniz.c
 	Sources/libMultiMarkdown/mmd.c
-	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.c
+	Sources/libMultiMarkdown/opendocument.c
+	Sources/libMultiMarkdown/opendocument-content.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
 	Sources/libMultiMarkdown/scanners.c
 	Sources/libMultiMarkdown/stack.c
+	Sources/libMultiMarkdown/textbundle.c
 	Sources/libMultiMarkdown/token.c
 	Sources/libMultiMarkdown/token_pairs.c
 	Sources/libMultiMarkdown/transclude.c
@@ -211,6 +214,7 @@ set(header_files
 	Sources/libMultiMarkdown/critic_markup.h
 	Sources/libMultiMarkdown/include/d_string.h
 	Sources/libMultiMarkdown/epub.h
+	Sources/libMultiMarkdown/fodt.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
@@ -218,10 +222,12 @@ set(header_files
 	Sources/libMultiMarkdown/memoir.h
 	Sources/libMultiMarkdown/miniz.h
 	Sources/libMultiMarkdown/mmd.h
-	Sources/libMultiMarkdown/odf.c
 	Sources/libMultiMarkdown/object_pool.h
+	Sources/libMultiMarkdown/opendocument.h
+	Sources/libMultiMarkdown/opendocument-content.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
+	Sources/libMultiMarkdown/textbundle.c
 	Sources/libMultiMarkdown/include/token.h
 	Sources/libMultiMarkdown/token_pairs.h
 	Sources/libMultiMarkdown/transclude.h
@@ -231,16 +237,30 @@ set(header_files
 	Sources/libMultiMarkdown/zip.h
 )
 
-set (scripts
-	scripts/mmd
-	scripts/mmd2all
-	scripts/mmd2epub
-	scripts/mmd2odf
-	scripts/mmd2opml
-	scripts/mmd2pdf
-	scripts/mmd2tex
-	scripts/markdown
-)
+if (WIN32)
+	set (scripts
+		scripts/mmd.bat
+		scripts/mmd2all.bat
+		scripts/mmd2epub.bat
+		scripts/mmd2fodt.bat
+		scripts/mmd2odt.bat
+		scripts/mmd2opml.bat
+		scripts/mmd2tex.bat
+		scripts/markdown.bat
+	)
+else()
+	set (scripts
+		scripts/mmd
+		scripts/mmd2all
+		scripts/mmd2epub
+		scripts/mmd2fodt
+		scripts/mmd2odt
+		scripts/mmd2opml
+		scripts/mmd2pdf
+		scripts/mmd2tex
+		scripts/markdown
+	)
+endif (WIN32)
 
 set (latex
 	texmf/tex/latex/mmd6/README.md
@@ -616,7 +636,7 @@ ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 
 ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
-ADD_MMD_TEST(mmd-6-odf "-t odf" MMD6Tests fodt)
+ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
 
 ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)
 

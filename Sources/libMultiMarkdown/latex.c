@@ -71,6 +71,18 @@
 #define print_localized(x) mmd_print_localized_char_latex(out, x, scratch)
 
 
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 void mmd_print_char_latex(DString * out, char c) {
 	switch (c) {
 		case '\\':
@@ -257,7 +269,7 @@ static char * correct_dimension_units(char *original) {
 	char *result;
 	int i;
 	
-	result = strdup(original);
+	result = my_strdup(original);
 	
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
@@ -472,7 +484,31 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			pad(out, 2, scratch);
 
 			temp_char = get_fence_language_specifier(t->child->child, source);
+
 			if (temp_char) {
+				if (strncmp("{=", temp_char, 2) == 0) {
+					// Raw source
+					if (raw_filter_text_matches(temp_char, FORMAT_LATEX)) {
+						switch (t->child->tail->type) {
+							case LINE_FENCE_BACKTICK_3:
+							case LINE_FENCE_BACKTICK_4:
+							case LINE_FENCE_BACKTICK_5:
+								temp_token = t->child->tail;
+								break;
+							default:
+								temp_token = NULL;
+						}
+						if (temp_token) {
+							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
+							scratch->padded = 1;
+						} else {
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);							
+							scratch->padded = 0;
+						}
+					}
+
+					break;
+				}
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
 				print_const("\\begin{verbatim}\n");
@@ -877,6 +913,15 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 			}
 			break;
+		case HTML_ENTITY:
+			if (source[t->start + 1] == '#') {
+				print_const("\\&\\#");
+				d_string_append_c_array(out, &(source[t->start + 2]), t->len - 2);
+			} else {
+				print_const("\\");
+				print_token(t);
+			}
+			break;
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("<!--");
@@ -1003,10 +1048,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
+
+			if (t->next && t->next->type == PAIR_RAW_FILTER) {
+				// Raw text?
+				if (raw_filter_matches(t->next, source, FORMAT_LATEX)) {
+					d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
+				}
+				// Skip over PAIR_RAW_FILTER
+				scratch->skip_token = 1;
+				break;
+			}
+
 			print_const("\\texttt{");
 			mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
 			print_const("}");
 			break;
+		case PAIR_BRACE:
 		case PAIR_BRACES:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
@@ -1113,7 +1170,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 					if (strcmp(temp_char2, "notcited") == 0) {
 						free(temp_char);
-						temp_char = strdup("");
+						temp_char = my_strdup("");
 						temp_bool = false;
 					}
 
@@ -1124,7 +1181,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				} else {
 					// This is the actual citation (e.g. `[#foo]`)
 					// No locator
-					temp_char = strdup("");
+					temp_char = my_strdup("");
 				}
 
 				// Classify this use
@@ -1608,6 +1665,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case TEXT_BRACE_LEFT:
 		case TEXT_BRACE_RIGHT:
 			print_const("\\");
+		case RAW_FILTER_LEFT:
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
@@ -1659,6 +1717,9 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			print_const("\\");
 			print_char(source[t->start + 1]);
 //			mmd_print_char_latex(out, source[t->start + 1]);
+			break;
+		case HTML_ENTITY:
+			print_token(t);
 			break;
 		case CODE_FENCE:
 			if (t->next)
@@ -1757,6 +1818,15 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 		case ESCAPED_CHARACTER:
 			print_const("\\textbackslash{}");
 			mmd_print_char_latex(out, source[t->start + 1]);
+			break;
+		case HTML_ENTITY:
+			if (source[t->start + 1] == '#') {
+				print_const("\\&\\#");
+				d_string_append_c_array(out, &(source[t->start + 2]), t->len - 2);
+			} else {
+				print_const("\\");
+				print_token(t);
+			}
 			break;
 		case CODE_FENCE:
 			if (t->next)
@@ -1890,15 +1960,21 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
-		} else if ((strcmp(m->key, "title") == 0) ||
-			(strcmp(m->key, "latextitle") == 0)) {
+		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\\def\\mytitle{");
 			mmd_print_string_latex(out, m->value);
 			print_const("}\n");
-		} else if ((strcmp(m->key, "author") == 0) ||
-			(strcmp(m->key, "latexauthor") == 0)) {
+		} else if (strcmp(m->key, "latextitle") == 0) {
+			print_const("\\def\\latextitle{");
+			print(m->value);
+			print_const("}\n");
+		} else if (strcmp(m->key, "author") == 0) {
 			print_const("\\def\\myauthor{");
 			mmd_print_string_latex(out, m->value);
+			print_const("}\n");
+		} else if (strcmp(m->key, "latexauthor") == 0) {
+			print_const("\\def\\latexauthor{");
+			print(m->value);
 			print_const("}\n");
 		} else if (strcmp(m->key, "date") == 0) {
 			print_const("\\def\\mydate{");

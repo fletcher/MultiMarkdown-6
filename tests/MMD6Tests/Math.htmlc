@@ -52,3 +52,7 @@ latex config:	article</p>
 <p>\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\]</p>
 
 <p><code>\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</code></p>
+
+<p>$a <em>foo</em> b$</p>
+
+<p>\[a <em>foo</em> b\]</p>

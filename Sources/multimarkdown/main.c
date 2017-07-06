@@ -67,12 +67,14 @@
 #include "token.h"
 #include "uuid.h"
 #include "version.h"
+#include "zip.h"
 
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta;
+		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+		*a_notransclude, *a_nosmart;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -146,11 +148,13 @@ int main(int argc, char** argv) {
 		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
 		a_random		= arg_lit0(NULL, "random", "use random numbers for footnote anchors"),
+		a_nosmart		= arg_lit0(NULL, "nosmart", "Disable smart typography"),
 		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
+		a_notransclude	= arg_lit0(NULL, "notransclude", "Disable file transclusion"),
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odf|epub"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("",""),
@@ -217,9 +221,19 @@ int main(int argc, char** argv) {
 		extensions = EXT_COMPATIBILITY | EXT_NO_LABELS | EXT_OBFUSCATE;
 	}
 
+	if (a_nosmart->count > 0) {
+		// Disable smart typography
+		extensions &= ~EXT_SMART;
+	}
+
 	if (a_nolabels->count > 0) {
 		// Disable header id attributes
 		extensions |= EXT_NO_LABELS;
+	}
+
+	if (a_notransclude->count > 0) {
+		// Disable file transclusion
+		extensions &= ~EXT_TRANSCLUDE;
 	}
 
 	if (a_accept->count > 0) {
@@ -263,10 +277,16 @@ int main(int argc, char** argv) {
 			format = FORMAT_MEMOIR;
 		else if (strcmp(a_format->sval[0], "mmd") == 0)
 			format = FORMAT_MMD;
-		else if (strcmp(a_format->sval[0], "odf") == 0)
-			format = FORMAT_ODF;
+		else if (strcmp(a_format->sval[0], "odt") == 0)
+			format = FORMAT_ODT;
+		else if (strcmp(a_format->sval[0], "fodt") == 0)
+			format = FORMAT_FODT;
 		else if (strcmp(a_format->sval[0], "epub") == 0)
 			format = FORMAT_EPUB;
+		else if (strcmp(a_format->sval[0], "bundle") == 0)
+			format = FORMAT_TEXTBUNDLE;
+		else if (strcmp(a_format->sval[0], "bundlezip") == 0)
+			format = FORMAT_TEXTBUNDLE_COMPRESSED;
 		else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -325,8 +345,11 @@ int main(int argc, char** argv) {
 				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
-				case FORMAT_ODF:
+				case FORMAT_FODT:
 					output_filename = filename_with_extension(a_file->filename[i], ".fodt");
+					break;
+				case FORMAT_ODT:
+					output_filename = filename_with_extension(a_file->filename[i], ".odt");
 					break;
 				case FORMAT_MMD:
 					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");
@@ -334,14 +357,19 @@ int main(int argc, char** argv) {
 				case FORMAT_EPUB:
 					output_filename = filename_with_extension(a_file->filename[i], ".epub");
 					break;
+				case FORMAT_TEXTBUNDLE:
+					output_filename = filename_with_extension(a_file->filename[i], ".textbundle");
+					break;
+				case FORMAT_TEXTBUNDLE_COMPRESSED:
+					output_filename = filename_with_extension(a_file->filename[i], ".textpack");
+					break;
 			}
 
 			// Perform transclusion(s)
 			char * folder = dirname((char *) a_file->filename[i]);
 
 			if (extensions & EXT_TRANSCLUDE) {
-
-				mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
+				mmd_transclude_source(buffer, folder, a_file->filename[i], format, NULL, NULL);
 	
 				// Don't free folder -- owned by dirname
 			}
@@ -385,12 +413,16 @@ int main(int argc, char** argv) {
 					result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 				}
 
-				if (!(output_stream = fopen(output_filename, "w"))) {
-					// Failed to open file
-					perror(output_filename);
+				if (FORMAT_TEXTBUNDLE == format) {
+					unzip_data_to_path(result->str, result->currentStringLength, output_filename);
 				} else {
-					fwrite(result->str, result->currentStringLength, 1, output_stream);
-					fclose(output_stream);
+					if (!(output_stream = fopen(output_filename, "w"))) {
+						// Failed to open file
+						perror(output_filename);
+					} else {
+						fwrite(result->str, result->currentStringLength, 1, output_stream);
+						fclose(output_stream);
+					}
 				}
 
 				if (FORMAT_MMD != format) {
@@ -437,8 +469,7 @@ int main(int argc, char** argv) {
 
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-
-			mmd_transclude_source(buffer, folder, "", format, NULL, NULL);
+			mmd_transclude_source(buffer, folder, a_file->filename[0], format, NULL, NULL);
 
 			// Don't free folder -- owned by dirname
 		}

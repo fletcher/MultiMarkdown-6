@@ -52,3 +52,7 @@ $$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\parti
 \\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\\]
 
 `\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}`
+
+$a *foo* b$
+
+\\[a *foo* b\\]

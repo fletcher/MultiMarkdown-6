@@ -105,7 +105,16 @@
 #ifndef ZIP_MULTIMARKDOWN_H
 #define ZIP_MULTIMARKDOWN_H
 
+#include "miniz.h"
+
+// Create new zip archive
 void zip_new_archive(mz_zip_archive * pZip);
+
+// Unzip archive to specified file path
+mz_bool unzip_archive_to_path(mz_zip_archive * pZip, const char * path);
+
+// Unzip archive (as plain binary data) to specified file path
+mz_bool unzip_data_to_path(const void * data, size_t len, const char * path);
 
 
 #endif

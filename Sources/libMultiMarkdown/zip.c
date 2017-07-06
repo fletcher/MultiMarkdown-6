@@ -101,11 +101,14 @@
 
 */
 
-
-#include "miniz.h"
 #include "zip.h"
 
+#include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
+
+// Create new zip archive
 void zip_new_archive(mz_zip_archive * pZip) {
 	memset(pZip, 0, sizeof(mz_zip_archive));
 
@@ -116,5 +119,80 @@ void zip_new_archive(mz_zip_archive * pZip) {
 	if (!status) {
 		fprintf(stderr, "mz_zip_writer_init_heap() failed.\n");
 	}
+}
+
+
+// Unzip archive to specified file path
+mz_bool unzip_archive_to_path(mz_zip_archive * pZip, const char * path) {
+	// Ensure folder 'path' exists
+
+	DIR * dir = opendir(path);
+	mz_bool status;
+
+	if (!dir) {
+		// path is not an existing directory
+
+		if (access(path, F_OK) == 0) {
+			// path is an existing file
+			fprintf(stderr, "'%s' is an existing file.\n", path);
+			return -1;
+		} else {
+			// path doesn't exist - create directory
+			mkdir(path, 0755);
+		}
+	}
+
+	dir = opendir(path);
+
+	if (dir) {
+		// Directory 'path' exists
+		
+		// Remember current working directory
+		// Apparently PATH_MAX doesn't actually mean anything, so pick a big number
+		char cwd[4096 + 1];
+		getcwd(cwd, sizeof(cwd));
+
+		// Move into the desired directory
+		chdir(path);
+
+		int file_count = mz_zip_reader_get_num_files(pZip);
+
+		mz_zip_archive_file_stat pStat;
+
+		for (int i = 0; i < file_count; ++i) {
+			mz_zip_reader_file_stat(pZip, i, &pStat);
+			if (pStat.m_is_directory) {
+				// Create the directory
+				mkdir(pStat.m_filename, 0755);
+			} else {
+				status = mz_zip_reader_extract_to_file(pZip, i, pStat.m_filename, 0);
+				if (!status) {
+					fprintf(stderr, "Error extracting file from zip archive.\n");
+					return status;
+				}
+			}
+		}
+
+		// Return to prior working directory
+		chdir(cwd);
+	}
+
+
+	return 0;
+}
+
+
+// Unzip archive (as plain binary data) to specified file path
+mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
+	mz_zip_archive pZip;
+	memset(&pZip, 0, sizeof(mz_zip_archive));
+
+	mz_bool status = mz_zip_reader_init_mem(&pZip, data, size, 0);
+	if (!status) {
+		fprintf(stderr, "mz_zip_reader_init_mem() failed.\n");
+		return status;
+	}
+
+	return unzip_archive_to_path(&pZip, path);
 }
 

@@ -75,6 +75,19 @@
 #define print_token(t) d_string_append_c_array(out, &(source[t->start]), t->len)
 #define print_localized(x) mmd_print_localized_char_html(out, x, scratch)
 
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 // Use Knuth's pseudo random generator to obfuscate email addresses predictably
 long ran_num_next();
 
@@ -204,7 +217,7 @@ static char * strip_dimension_units(char *original) {
 	char *result;
 	int i;
 	
-	result = strdup(original);
+	result = my_strdup(original);
 	
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
@@ -259,7 +272,7 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 		text->child->next->len++;
 	}
 
-	if (text->child)
+	if (text && text->child)
 		mmd_export_token_tree_html(out, source, text->child, scratch);
 
 	print_const("</a>");
@@ -520,12 +533,38 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			break;
 		case BLOCK_CODE_FENCED:
 			pad(out, 2, scratch);
-			print_const("<pre><code");
 
 			temp_char = get_fence_language_specifier(t->child->child, source);
+
 			if (temp_char) {
+				if (strncmp("{=", temp_char, 2) == 0) {
+					// Raw source
+					if (raw_filter_text_matches(temp_char, FORMAT_HTML)) {
+						switch (t->child->tail->type) {
+							case LINE_FENCE_BACKTICK_3:
+							case LINE_FENCE_BACKTICK_4:
+							case LINE_FENCE_BACKTICK_5:
+								temp_token = t->child->tail;
+								break;
+							default:
+								temp_token = NULL;
+						}
+						if (temp_token) {
+							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
+							scratch->padded = 1;
+						} else {
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);							
+							scratch->padded = 0;
+						}
+					}
+
+					break;
+				}
+				print_const("<pre><code");
 				printf(" class=\"%s\"", temp_char);
 				free(temp_char);
+			} else {
+				print_const("<pre><code");
 			}
 
 			print_const(">");
@@ -945,6 +984,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case HASH6:
 			print_token(t);
 			break;
+		case HTML_ENTITY:
+			print_token(t);
+			break;
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("&lt;!--");
@@ -1056,6 +1098,17 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			}
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
+
+			if (t->next && t->next->type == PAIR_RAW_FILTER) {
+				// Raw text?
+				if (raw_filter_matches(t->next, source, FORMAT_HTML)) {
+					d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
+				}
+				// Skip over PAIR_RAW_FILTER
+				scratch->skip_token = 1;
+				break;
+			}
+
 			print_const("<code>");
 			mmd_export_token_tree_html_raw(out, source, t->child, scratch);
 			print_const("</code>");
@@ -1088,7 +1141,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 			free(temp_char);
 			break;
+		case PAIR_BRACE:
 		case PAIR_BRACES:
+		case PAIR_RAW_FILTER:
 			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET:
@@ -1219,7 +1274,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 					if (strcmp(temp_char2, "notcited") == 0) {
 						free(temp_char);
-						temp_char = strdup("");
+						temp_char = my_strdup("");
 						temp_bool = false;
 					}
 
@@ -1230,7 +1285,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				} else {
 					// This is the actual citation (e.g. `[#foo]`)
 					// No locator
-					temp_char = strdup("");
+					temp_char = my_strdup("");
 				}
 
 				// Classify this use
@@ -1508,8 +1563,12 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case PAIR_HTML_COMMENT:
 			print_token(t);
 			break;
-		case PAIR_EMPH:
 		case PAIR_MATH:
+			print_const("<span class=\"math\">");
+			mmd_export_token_tree_html_raw(out, source, t->child, scratch);
+			print_const("</span>");
+			break;
+		case PAIR_EMPH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:
@@ -1642,6 +1701,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			if (t->next)
 				print_char('\n');
 			break;
+		case RAW_FILTER_LEFT:
 		case TEXT_BACKSLASH:
 		case TEXT_BRACE_LEFT:
 		case TEXT_BRACE_RIGHT:
@@ -1711,6 +1771,36 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			print_const("\\");
 			mmd_print_char_html(out, source[t->start + 1], false);
 			break;
+		case HTML_ENTITY:
+			print_const("&amp;");
+			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
+			break;
+		case MATH_BRACKET_OPEN:
+			print_const("\\[");
+			break;
+		case MATH_BRACKET_CLOSE:
+			print_const("\\]");
+			break;
+		case MATH_DOLLAR_SINGLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\(") ) : ( print_const("\\)") );
+			} else {
+				print_const("$");
+			}
+			break;
+		case MATH_DOLLAR_DOUBLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\[") ) : ( print_const("\\]") );
+			} else {
+				print_const("$$");
+			}
+			break;
+		case MATH_PAREN_OPEN:
+			print_const("\\(");
+			break;
+		case MATH_PAREN_CLOSE:
+			print_const("\\)");
+			break;
 		case QUOTE_DOUBLE:
 			print_const("&quot;");
 			break;
@@ -1771,6 +1861,7 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 				store_asset(scratch, m->value);
 				asset * a = extract_asset(scratch, m->value);
 
+				mmd_print_string_html(out, "assets/", false);
 				mmd_print_string_html(out, a->asset_path, false);
 			} else {
 				mmd_print_string_html(out, m->value, false);

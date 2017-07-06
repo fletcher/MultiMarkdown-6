@@ -169,5 +169,14 @@ char * d_string_copy_substring(
 	size_t len								//!< How many characters(bytes) to copy
 );
 
+/// Replace occurences of "original" with "replace" inside the specified range
+/// Returns the change in overall length
+long d_string_replace_text_in_range(
+	DString * d,
+	size_t pos,
+	size_t len,
+	const char * original,
+	const char * replace
+);
 
 #endif

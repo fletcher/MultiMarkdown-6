@@ -70,3 +70,16 @@ latex config:	article</p>
 <p>foo's and bar's</p>
 
 <p><code>foo</code>'s and <code>bar</code>'s</p>
+
+<p>30</p>
+
+<p>foo('bar')</p>
+
+<p>foo(&quot;bar&quot;)</p>
+
+<p>foo-bar</p>
+
+<ul>
+<li>foo-bar</li>
+<li>foo-bar</li>
+</ul>

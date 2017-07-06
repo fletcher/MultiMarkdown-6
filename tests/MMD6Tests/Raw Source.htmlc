@@ -1,0 +1,36 @@
+<p>Title:	Raw Source
+latex config:	article</p>
+
+<p><code>*foo*</code>{*}</p>
+
+<p><code>*foo*</code>{=html}</p>
+
+<p><code>*foo*</code>{=latex}</p>
+
+<p><code>*foo*</code>{=odt}</p>
+
+<p><code>*foo*</code>{=*}</p>
+
+<p>5</p>
+
+<p><code>{*}
+*foo*</code></p>
+
+<p><code>{=html}
+*foo*</code></p>
+
+<p><code>{=latex}
+*foo*</code></p>
+
+<p><code>{=odt}
+*foo*</code></p>
+
+<p><code>{=*}
+*foo*</code></p>
+
+<p>10</p>
+
+<p>```{=*}
+<em>foo</em></p>
+
+<p><em>bar</em></p>

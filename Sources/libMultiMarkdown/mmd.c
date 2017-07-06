@@ -64,9 +64,11 @@
 #include "libMultiMarkdown.h"
 #include "mmd.h"
 #include "object_pool.h"
+#include "opendocument.h"
 #include "parser.h"
 #include "scanners.h"
 #include "stack.h"
+#include "textbundle.h"
 #include "token.h"
 #include "token_pairs.h"
 #include "writer.h"
@@ -81,6 +83,17 @@ void ParseTrace();
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
 
 
 /// Build MMD Engine
@@ -177,6 +190,11 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings4, SUBSCRIPT, SUBSCRIPT, PAIR_SUBSCRIPT, PAIRING_PRUNE_MATCH);
 		}
 
+		// Text Braces -- for raw text syntax
+		if (!(extensions & EXT_COMPATIBILITY)) {
+			token_pair_engine_add_pairing(e->pairings4, TEXT_BRACE_LEFT, TEXT_BRACE_RIGHT, PAIR_BRACE, PAIRING_PRUNE_MATCH);
+			token_pair_engine_add_pairing(e->pairings4, RAW_FILTER_LEFT, TEXT_BRACE_RIGHT, PAIR_RAW_FILTER, PAIRING_PRUNE_MATCH);
+		}
 	}
 
 	return e;
@@ -199,6 +217,9 @@ mmd_engine * mmd_engine_create_with_string(const char * str, unsigned long exten
 
 /// Set language and smart quotes language
 void mmd_engine_set_language(mmd_engine * e, short language) {
+	if (!e)
+		return;
+
 	e->language = language;
 
 	switch (language) {
@@ -1082,6 +1103,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case BLOCK_SETEXT_2:
 			case BLOCK_TABLE:
 			case BLOCK_TERM:
+			case LINE_LIST_BULLETED:
+			case LINE_LIST_ENUMERATED:
 				// Assign child tokens of blocks
 				mmd_assign_ambidextrous_tokens_in_block(e, t, start_offset);
 				break;
@@ -1265,7 +1288,8 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				// Some of these are actually APOSTROPHE's and should not be paired
 				offset = t->start;
 
-				if (!((offset == 0) || (char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
+				if (!((offset == 0) ||
+					(char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
 					(char_is_whitespace_or_line_ending_or_punctuation(str[offset + 1])))) {
 					t->type = APOSTROPHE;
 					break;
@@ -1273,8 +1297,13 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 				if (offset && (char_is_punctuation(str[offset - 1])) &&
 					(char_is_alphanumeric(str[offset + 1]))) {
-					t->type = APOSTROPHE;
-					break;
+					// If possessive apostrophe, e.g. `x`'s 
+					if (str[offset + 1] == 's' || str[offset + 1] == 'S') {
+						if (char_is_whitespace_or_line_ending_or_punctuation(str[offset + 2])) {
+							t->type = APOSTROPHE;
+							break;
+						}
+					}
 				}
 			case QUOTE_DOUBLE:
 				offset = t->start;
@@ -1354,18 +1383,36 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				}
 
 				// We need to be contiguous in order to match
+				if (t->can_close) {
+					offset = t->start;
+					t->can_close = 0;
+
+					while ((offset > 0) && !(char_is_whitespace_or_line_ending(str[offset - 1]))) {
+						if (str[offset - 1] == str[t->start]) {
+							t->can_close = 1;
+							break;
+						}
+
+						offset--;
+					}
+				}
+
+				// We need to be contiguous in order to match
 				if (t->can_open) {
 					offset = t->start + t->len;
 					t->can_open = 0;
 
 					while (!(char_is_whitespace_or_line_ending(str[offset]))) {
-						if (str[offset] == str[t->start])
+						if (str[offset] == str[t->start]) {
 							t->can_open = 1;
+							break;
+						}
+
 						offset++;
 					}
 
 					// Are we a standalone, e.g x^2
-					if (!t->can_open) {
+					if (!t->can_close && !t->can_open) {
 						offset = t->start + t->len;
 						while (!char_is_whitespace_or_line_ending_or_punctuation(str[offset]))
 							offset++;
@@ -1388,17 +1435,6 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					}
 				}
 
-				// We need to be contiguous in order to match
-				if (t->can_close) {
-					offset = t->start;
-					t->can_close = 0;
-
-					while ((offset > 0) && !(char_is_whitespace_or_line_ending(str[offset - 1]))) {
-						if (str[offset - 1] == str[t->start])
-							t->can_close = 1;
-						offset--;
-					}
-				}
 				break;
 		}
 		
@@ -1453,8 +1489,16 @@ void pair_emphasis_tokens(token * t) {
 
 		}
 		
-		if (t->child != NULL)
-			pair_emphasis_tokens(t->child);
+		if (t->child != NULL) {
+			switch(t->type) {
+				case PAIR_BACKTICK:
+				case PAIR_MATH:
+					break;
+				default:
+					pair_emphasis_tokens(t->child);
+					break;
+			}
+		}
 		
 		t = t->next;
 	}
@@ -1474,7 +1518,8 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 
 	// Insert marker back in place
 	marker->next = block->child->child;
-	block->child->child->prev = marker;
+	if (block->child->child)
+		block->child->child->prev = marker;
 	block->child->child = marker;
 }
 
@@ -1502,6 +1547,9 @@ void is_list_loose(token * list) {
 	bool loose = false;
 	
 	token * walker = list->child;
+
+	if (walker == NULL)
+		return;
 
 	while (walker->next != NULL) {
 		if (walker->type == BLOCK_LIST_ITEM) {
@@ -1907,7 +1955,9 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 /// Parse the entire string into a token tree
 void mmd_engine_parse_string(mmd_engine * e) {
-	e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
+	if (e) {
+		e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);		
+	}
 }
 
 
@@ -1940,12 +1990,17 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 /// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
-
+	if (!e || !end)
+		return false;
+	
 	if (!(scan_meta_line(&e->dstr->str[0]))) {
 		// First line is not metadata, so can't have metadata
 		// Saves the time of an unnecessary parse 
 		// TODO:  Need faster confirmation of actual metadata than full tokenizing
-		*end = 0;
+		if (end) {
+			*end = 0;
+		}
+	
 		return false;
 	}
 
@@ -2036,7 +2091,7 @@ char * mmd_string_metavalue_for_key(char * source, const char * key) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
-	result = strdup(mmd_engine_metavalue_for_key(e, key));
+	result = my_strdup(mmd_engine_metavalue_for_key(e, key));
 
 	mmd_engine_free(e, true);
 
@@ -2050,7 +2105,7 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
-	result = strdup(mmd_engine_metavalue_for_key(e, key));
+	result = my_strdup(mmd_engine_metavalue_for_key(e, key));
 
 	mmd_engine_free(e, false);
 
@@ -2133,6 +2188,9 @@ char * mmd_engine_convert(mmd_engine * e, short format) {
 
 	mmd_engine_export_token_tree(output, e, format);
 
+	// Add newline to result
+	d_string_append_c(output, '\n');
+
 	result = output->str;
 
 	d_string_free(output, false);
@@ -2185,6 +2243,12 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 	switch (format) {
 		case FORMAT_EPUB:
 			epub_write_wrapper(filepath, output->str, e, directory);
+			break;
+		case FORMAT_TEXTBUNDLE:
+			// TODO: Need to implement this
+			break;
+		case FORMAT_TEXTBUNDLE_COMPRESSED:
+			textbundle_write_wrapper(filepath, output->str, e, directory);
 			break;
 		default:
 			// Basic formats just write to file
@@ -2243,8 +2307,26 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 			d_string_free(output, true);
 			break;
+		case FORMAT_TEXTBUNDLE:
+		case FORMAT_TEXTBUNDLE_COMPRESSED:
+			result = textbundle_create(output->str, e, directory);
+
+			d_string_free(output, true);
+			break;
+		case FORMAT_ODT:
+			result = opendocument_text_create(output->str, e, directory);
+
+			d_string_free(output, true);
+			break;
+		case FORMAT_FODT:
+			result = opendocument_flat_text_create(output->str, e, directory);
+			
+			d_string_free(output, true);
+			break;
 		default:
 			result = output;
+			// Add newline to result
+			d_string_append_c(result, '\n');
 			break;
 	}
 
@@ -2255,6 +2337,6 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 /// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;
-	result = strdup(MULTIMARKDOWN_VERSION);
+	result = my_strdup(MULTIMARKDOWN_VERSION);
 	return result;
 }
