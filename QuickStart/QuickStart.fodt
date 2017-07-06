@@ -274,7 +274,7 @@
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="version">6.0.1</meta:user-defined>
+	<meta:user-defined meta:name="version">6.1.0</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -303,6 +303,8 @@
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#outputformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Output Formats  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#embeddedimages" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Embedded Images  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
@@ -312,7 +314,7 @@
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:p text:style-name="Standard">Version: 6.0.1</text:p>
+<text:p text:style-name="Standard">Version: 6.1.0</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
@@ -686,6 +688,68 @@ will also set the default <text:span text:style-name="Source_20_Text">quotes lan
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">quotes language</text:span> &#8211; specify which variant of smart quotes to use. Valid
 options are <text:span text:style-name="Source_20_Text">dutch</text:span>, <text:span text:style-name="Source_20_Text">french</text:span>, <text:span text:style-name="Source_20_Text">german</text:span>, <text:span text:style-name="Source_20_Text">germanguillemets</text:span>, <text:span text:style-name="Source_20_Text">swedish</text:span>, <text:span text:style-name="Source_20_Text">nl</text:span>,
 <text:span text:style-name="Source_20_Text">fr</text:span>, <text:span text:style-name="Source_20_Text">de</text:span>, <text:span text:style-name="Source_20_Text">sv</text:span>. Anything else defaults to English.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="4"><text:bookmark text:name="outputformats"/>Output Formats </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown 6 supports the following output formats, using the <text:span text:style-name="Source_20_Text">-t</text:span>
+command-line argument:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">html</text:span> &#8211; (Default) create HTML 5</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex</text:span> &#8211; create <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/LaTeX">LaTeX</text:a> for conversion to PDF using high quality
+typography</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">beamer</text:span> and <text:span text:style-name="Source_20_Text">memoir</text:span> &#8211; two additional LaTeX variants for creating
+slide presentations and longer documents, respectively</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">mmd</text:span> &#8211; output the MMD text before converting to another format,
+but after performing transclusion. This format is not generally needed.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">odt</text:span> &#8211; OpenDocument text file, used by OpenOffice and compatible
+word processors. Images are embedded inside the file package.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">fodt</text:span> &#8211; OpenDocument text variant using a single text (XML) file
+instead of a compressed zip file. Images are not embedded in this format.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">epub</text:span> &#8211; EPUB 3 ebook format. Images and CSS are embedded in the
+file package.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">bundle</text:span> &#8211; [TextBundle] format consisting of Markdown/MultiMarkdown
+text file and embedded images and CSS. Useful for sharing Markdown files
+and images between applications (on any OS, but especially on iOS)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">bundlezip</text:span> &#8211; TextPack variant of the TextBundle format &#8211; the file
+package is compressed to a single zip file (similar to EPUB and ODT
+formats).</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="4"><text:bookmark text:name="embeddedimages"/>Embedded Images </text:h>
+
+<text:p text:style-name="Standard">Supported export formats (<text:span text:style-name="Source_20_Text">odt</text:span>, <text:span text:style-name="Source_20_Text">epub</text:span>, <text:span text:style-name="Source_20_Text">bundle</text:span>, <text:span text:style-name="Source_20_Text">bundlezip</text:span>) include
+images inside the export document:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+Local images are embedded automatically</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Images stored on remote servers are embedded <text:span text:style-name="MMD-Italic">if</text:span> <text:a xlink:type="simple" xlink:href="https://curl.haxx.se/libcurl/">libCurl</text:a> is
+properly installed when MMD is compiled. This is true for macOS builds.</text:p></text:list-item>
 
 </text:list>
 

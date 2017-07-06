@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Development Notes</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="date" content="2017-05-24"/>
+	<meta name="date" content="2017-07-06"/>
 	<meta name="uuid" content="dd2d8e76-dc2d-416d-9acd-5395d20871c2"/>
 </head>
 <body>
@@ -424,11 +424,52 @@ through each one sequentially.</p></li>
 which are zip files with a specific file structure inside them.</p></li>
 <li><p><a href="https://github.com/argtable/argtable3">argtable3</a> &#8211; provides more advanced command-line argument processing in a
 more cross-platform approach than that used by <abbr title="MultiMarkdown">MMD</abbr> v5.</p></li>
+<li><p><a href="https://curl.haxx.se/libcurl/">libCurl</a> &#8211; allows for easily downloading image assets from web servers in
+order to embed them in packaged file formats, e.g. EPUB 3,
+TextBundle/TextPack, OpenDocument, etc.</p></li>
 </ul>
 
 <h3 id="changelog">Changelog </h3>
 
 <ul>
+<li><p>2017&#8211;07&#8211;06 - v 6.1.0:</p>
+
+<ul>
+<li>ADDED: Add &#8216;&#8211;nosmart&#8217; option to disable smart typography</li>
+<li>ADDED: Add &#8216;notransclude&#8217; option</li>
+<li>ADDED: Add Travis CI configuration</li>
+<li>ADDED: Add odt and fodt formats; disable odf format for consistency</li>
+<li>ADDED: Add regular TextBundle format support</li>
+<li>ADDED: Add support for &#8216;latexauthor&#8217; and &#8216;latextitle&#8217; metadata (Addresses #58)</li>
+<li>ADDED: Add syntax for raw source (Addresses #38)</li>
+<li>ADDED: Start working on textbundle output format</li>
+<li>ADDED: Store image assets in OpenDocument files</li>
+<li>ADDED: Use assets for reference image definitions in TextBundle format</li>
+<li>CHANGED: Disable &#8216;bundle&#8217; format until it's finished</li>
+<li>CHANGED: Make epub utility functions static</li>
+<li>CHANGED: Remove odf files; replace convenience scripts</li>
+<li>CHANGED: Use &#8216;markdown&#8217; file extension</li>
+<li>FIXED: Add ODF to wilcard transcluding; Fix tufte to support latex title</li>
+<li>FIXED: Avoid a few potential crashes</li>
+<li>FIXED: Don't parse MMD inside math (fixes #69)</li>
+<li>FIXED: Fix asset path for CSS metadata</li>
+<li>FIXED: Fix issue where tight list items not properly processed for smart typography</li>
+<li>FIXED: Fix issue with transclusion and relative paths</li>
+<li>FIXED: Fix regression and add newline at end of converted strings</li>
+<li>FIXED: Fix two potential crashes</li>
+<li>FIXED: Improve apostrophe detection after punctuation mark</li>
+<li>FIXED: Improve handling of HTML entities (fixed #71)</li>
+<li>FIXED: Improve transclusion search folder resolution</li>
+<li>FIXED: PATH_MAX isn't reliable</li>
+<li>FIXED: Refactor super/subscript parsing (fixes #70)</li>
+<li>FIXED: Silence a few warnings</li>
+<li>FIXED: Use .bat files for Windows installer (fixes #74)</li>
+<li>UPDATE: Use custom strdup() replacement</li>
+<li>UPDATED: Fix whitespace</li>
+<li>UPDATED: Include build status in README</li>
+<li>UPDATED: Include html version in Textbundle</li>
+<li>UPDATED: Update parser to track headers, even in compatibility mode</li>
+</ul></li>
 <li><p>2017&#8211;05&#8211;24 - v 6.0.7:</p>
 
 <ul>

@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-05-24  
+Date: 2017-07-06  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -449,6 +449,10 @@ which are zip files with a specific file structure inside them.
 * [argtable3] -- provides more advanced command-line argument processing in a
 more cross-platform approach than that used by MMD v5.
 
+* [libCurl] -- allows for easily downloading image assets from web servers in
+order to embed them in packaged file formats, e.g. EPUB 3, 
+TextBundle/TextPack, OpenDocument, etc.
+
 
 [>MMD]: MultiMarkdown
 [>MD]: Markdown
@@ -462,9 +466,48 @@ more cross-platform approach than that used by MMD v5.
 [uthash]:	https://troydhanson.github.io/uthash/
 [miniz]:	https://github.com/richgel999/miniz
 [argtable3]:	https://github.com/argtable/argtable3
+[libCurl]:	https://curl.haxx.se/libcurl/
 
 
 # Changelog #
+
+* 2017-07-06 - v 6.1.0:
+
+	*    ADDED: Add '--nosmart' option to disable smart typography
+	*    ADDED: Add 'notransclude' option
+	*    ADDED: Add Travis CI configuration
+	*    ADDED: Add odt and fodt formats; disable odf format for consistency
+	*    ADDED: Add regular TextBundle format support
+	*    ADDED: Add support for 'latexauthor' and 'latextitle' metadata (Addresses #58)
+	*    ADDED: Add syntax for raw source (Addresses #38)
+	*    ADDED: Start working on textbundle output format
+	*    ADDED: Store image assets in OpenDocument files
+	*    ADDED: Use assets for reference image definitions in TextBundle format
+	*    CHANGED: Disable 'bundle' format until it's finished
+	*    CHANGED: Make epub utility functions static
+	*    CHANGED: Remove odf files; replace convenience scripts
+	*    CHANGED: Use 'markdown' file extension
+	*    FIXED: Add ODF to wilcard transcluding; Fix tufte to support latex title
+	*    FIXED: Avoid a few potential crashes
+	*    FIXED: Don't parse MMD inside math (fixes #69)
+	*    FIXED: Fix asset path for CSS metadata
+	*    FIXED: Fix issue where tight list items not properly processed for smart typography
+	*    FIXED: Fix issue with transclusion and relative paths
+	*    FIXED: Fix regression and add newline at end of converted strings
+	*    FIXED: Fix two potential crashes
+	*    FIXED: Improve apostrophe detection after punctuation mark
+	*    FIXED: Improve handling of HTML entities (fixed #71)
+	*    FIXED: Improve transclusion search folder resolution
+	*    FIXED: PATH_MAX isn't reliable
+	*    FIXED: Refactor super/subscript parsing (fixes #70)
+	*    FIXED: Silence a few warnings
+	*    FIXED: Use .bat files for Windows installer (fixes #74)
+	*    UPDATE: Use custom strdup() replacement
+	*    UPDATED: Fix whitespace
+	*    UPDATED: Include build status in README
+	*    UPDATED: Include html version in Textbundle
+	*    UPDATED: Update parser to track headers, even in compatibility mode
+
 
 * 2017-05-24 - v 6.0.7:
 
