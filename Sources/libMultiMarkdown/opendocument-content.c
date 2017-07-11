@@ -333,8 +333,9 @@ void mmd_export_link_opendocument(DString * out, const char * source, token * te
 		text->child->next->start--;
 		text->child->next->len++;
 	}
-	
-	mmd_export_token_tree_opendocument(out, source, text->child, scratch);
+
+	if (text)
+		mmd_export_token_tree_opendocument(out, source, text->child, scratch);
 
 	print_const("</text:a>");
 }

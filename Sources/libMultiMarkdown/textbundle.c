@@ -320,7 +320,7 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 
 void sub_asset_paths(DString * text, mmd_engine * e) {
 	long offset = 0;
-	asset * a, * a_tmp;
+	asset * a;
 	token * t = e->root->child;
 
 	char destination[100] = "assets/";

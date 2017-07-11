@@ -1990,7 +1990,7 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 /// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
-	if (!e || !end)
+	if (!e)
 		return false;
 	
 	if (!(scan_meta_line(&e->dstr->str[0]))) {
@@ -2018,7 +2018,7 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		if (doc->child && doc->child->type == BLOCK_META) {
 			result = true;
 
-			if (end != NULL)
+			if (end)
 				*end = doc->child->len;
 		}
 
