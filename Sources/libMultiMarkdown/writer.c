@@ -1642,28 +1642,30 @@ void automatic_search(mmd_engine * e, token * t, trie * ac) {
 				automatic_search_text(e, t, ac);
 				break;
 			case DOC_START_TOKEN:
-			case BLOCK_PARA:
-			case BLOCK_H1:
-			case BLOCK_H2:
-			case BLOCK_H3:
-			case BLOCK_H4:
-			case BLOCK_H5:
-			case BLOCK_H6:
+			case BLOCK_BLOCKQUOTE:
+			case BLOCK_DEFINITION:
+			case BLOCK_DEFLIST:
 			case BLOCK_LIST_BULLETED:
 			case BLOCK_LIST_BULLETED_LOOSE:
 			case BLOCK_LIST_ENUMERATED:
 			case BLOCK_LIST_ENUMERATED_LOOSE:
 			case BLOCK_LIST_ITEM_TIGHT:
 			case BLOCK_LIST_ITEM:
-			case BLOCK_SETEXT_1:
-			case BLOCK_SETEXT_2:
+			case BLOCK_PARA:
 			case BLOCK_TABLE:
 			case BLOCK_TABLE_HEADER:
 			case BLOCK_TABLE_SECTION:
+			case BLOCK_TERM:
+			case PAIR_BRACKET:
+			case PAIR_BRACKET_FOOTNOTE:
+			case PAIR_BRACKET_GLOSSARY:
+			case PAIR_BRACKET_IMAGE:
 			case PAIR_QUOTE_DOUBLE:
 			case PAIR_QUOTE_SINGLE:
 			case PAIR_STAR:
 			case PAIR_UL:
+			case TABLE_CELL:
+			case TABLE_ROW:
 				automatic_search(e, t->child, ac);
 				break;			
 //			case PAIR_PAREN:
