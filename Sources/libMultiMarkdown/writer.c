@@ -69,6 +69,7 @@
 #include "memoir.h"
 #include "mmd.h"
 #include "opendocument-content.h"
+#include "parser.h"
 #include "scanners.h"
 #include "token.h"
 #include "uuid.h"
@@ -1656,6 +1657,8 @@ void automatic_search(mmd_engine * e, token * t, trie * ac) {
 			case BLOCK_TABLE_HEADER:
 			case BLOCK_TABLE_SECTION:
 			case BLOCK_TERM:
+			case LINE_LIST_BULLETED:
+			case LINE_LIST_ENUMERATED:
 			case PAIR_BRACKET:
 			case PAIR_BRACKET_FOOTNOTE:
 			case PAIR_BRACKET_GLOSSARY:
