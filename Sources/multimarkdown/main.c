@@ -81,6 +81,18 @@ struct arg_end *a_end;
 struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
 
 
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
+
+
 DString * stdin_buffer() {
 	/* Read from stdin and return a DString *
 		`buffer` will need to be freed elsewhere */
@@ -107,7 +119,7 @@ char * filename_with_extension(const char * original, const char * new_extension
 	DString * new_name;
 
 	// Determine output filename without file extension
-	name_no_ext = strdup(original);
+	name_no_ext = my_strdup(original);
 
 	if (strrchr(name_no_ext, '.') != NULL) {
 		long count = strrchr(name_no_ext, '.') - name_no_ext;

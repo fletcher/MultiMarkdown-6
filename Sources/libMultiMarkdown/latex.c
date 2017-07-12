@@ -1235,7 +1235,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						if (temp_char3) {
 							// Convert `\]\[` to `][`
 							temp_char[temp_char3 - temp_char] = ']';
-							memmove(temp_char3 + 1, temp_char3 + 3, strlen(temp_char3 - 3));
+							memmove(temp_char3 + 1, temp_char3 + 3, strlen(temp_char3) - 2);
 						}
 
 						if (temp_bool) {
