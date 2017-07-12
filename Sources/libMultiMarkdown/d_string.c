@@ -77,27 +77,20 @@
  *		76a88d63d9519978/041a7d0570de2d48?lnk=raot
  */
 
-/* Solaris and Windows do not provide vasprintf() or asprintf(). */
-#if defined(__WIN32) || (defined(__SVR4) && defined(__sun))
-int vasprintf( char **sptr, const char *fmt, va_list argv ) 
-{ 
-    int wanted = vsnprintf( *sptr = NULL, 0, fmt, argv ); 
-    if( (wanted > 0) && ((*sptr = malloc( 1 + wanted )) != NULL) ) 
-        return vsprintf( *sptr, fmt, argv ); 
- 
-    return wanted; 
-} 
- 
-int asprintf( char **sptr, char *fmt, ... ) 
-{ 
-    int retval; 
-    va_list argv; 
-    va_start( argv, fmt ); 
-    retval = vasprintf( sptr, fmt, argv ); 
-    va_end( argv ); 
-    return retval; 
-} 
-#endif
+// Some operating systems do not supply vasprintf() -- standardize on this
+// replacement from:
+//		https://github.com/esp8266/Arduino/issues/1954
+int vasprintf(char** strp, const char* fmt, va_list ap) {
+	va_list ap2;
+	va_copy(ap2, ap);
+	char tmp[1];
+	int size = vsnprintf(tmp, 1, fmt, ap2);
+	if (size <= 0) return size;
+	va_end(ap2);
+	size += 1;
+	*strp = (char*)malloc(size * sizeof(char));
+	return vsnprintf(*strp, size, fmt, ap);
+}
 
 
 /* DString */
