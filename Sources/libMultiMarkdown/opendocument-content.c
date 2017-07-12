@@ -572,6 +572,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 						}
 					}
 
+					free(temp_char);
 					break;
 				}
 			}

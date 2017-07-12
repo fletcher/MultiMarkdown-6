@@ -558,6 +558,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						}
 					}
 
+					free(temp_char);
 					break;
 				}
 				print_const("<pre><code");

@@ -507,6 +507,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						}
 					}
 
+					free(temp_char);
 					break;
 				}
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);

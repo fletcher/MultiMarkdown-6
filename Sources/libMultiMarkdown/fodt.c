@@ -454,6 +454,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 						}
 					}
 
+					free(temp_char);
 					break;
 				}
 			}
