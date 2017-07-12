@@ -171,6 +171,7 @@ typedef struct fn_holder fn_holder;
 struct meta {
 	char *				key;
 	char *				value;
+	size_t				start;
 	UT_hash_handle		hh;
 };
 

@@ -119,6 +119,10 @@ char * mmd_string_metadata_keys(char * source);
 char * mmd_string_metavalue_for_key(char * source, const char * key);
 
 
+/// Insert/replace metadata in string, returning new string
+char * mmd_string_update_metavalue_for_key(const char * source, const char * key, const char * value);
+
+
 
 
 /*
@@ -153,6 +157,10 @@ char * mmd_d_string_metadata_keys(DString * source);
 /// Extract desired metadata as string value
 /// Returned char * must be freed
 char * mmd_d_string_metavalue_for_key(DString * source, const char * key);
+
+
+/// Insert/replace metadata value in DString
+void mmd_d_string_update_metavalue_for_key(DString * source, const char * key, const char * value);
 
 
 
@@ -234,6 +242,10 @@ char * mmd_engine_metadata_keys(mmd_engine * e);
 
 /// Extract desired metadata as string value
 char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
+
+
+/// Insert/replace metadata value in mmd_engine
+void mmd_engine_update_metavalue_for_key(mmd_engine * e, const char * key, const char * value);
 
 
 

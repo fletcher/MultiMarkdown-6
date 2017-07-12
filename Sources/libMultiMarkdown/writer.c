@@ -1082,6 +1082,7 @@ meta * meta_new(const char * source, size_t key_start, size_t len) {
 		m->key = label_from_string(key);
 		free(key);
 		m->value = NULL;
+		m->start = key_start;
 	}
 
 	return m;

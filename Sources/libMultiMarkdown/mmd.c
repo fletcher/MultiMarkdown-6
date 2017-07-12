@@ -2143,6 +2143,111 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 }
 
 
+/// Insert/replace metadata in string, returning new string
+char * mmd_string_update_metavalue_for_key(const char * source, const char * key, const char * value) {
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	mmd_engine_update_metavalue_for_key(e, key, value);
+
+	DString * d = e->dstr;
+
+	mmd_engine_free(e, false);
+
+	char * result = d->str;
+	d_string_free(d, false);
+
+	return result;
+}
+
+
+/// Insert/replace metadata value in DString
+void mmd_d_string_update_metavalue_for_key(DString * source, const char * key, const char * value) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	mmd_engine_update_metavalue_for_key(e, key, value);
+
+	mmd_engine_free(e, false);
+}
+
+
+/// Insert/replace metadata value in mmd_engine
+void mmd_engine_update_metavalue_for_key(mmd_engine * e, const char * key, const char * value) {
+	bool has_meta = true;
+	size_t meta_end = 0;
+
+	// Check for metadata and character
+	if (!mmd_engine_has_metadata(e, &meta_end))
+		has_meta = false;
+
+	// Get clean metadata key for match
+	char * clean = label_from_string(key);
+
+	// Determine range to excise and replace
+	size_t start = -1;
+	size_t end = -1;
+	size_t len = -1;
+
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i)
+	{
+		m = stack_peek_index(e->metadata_stack, i);
+
+		if (strcmp(clean, m->key) == 0) {
+			// We have a match
+			start = m->start;
+		} else if (start != -1) {
+			// We have already found a match
+			if (end == -1) {
+				// This is the next metadata key, so determine length
+				end = m->start;
+			}
+		}
+	}
+
+	DString * temp = d_string_new(key);
+	d_string_append(temp, ":\t");
+	d_string_append(temp, value);
+	d_string_append_c(temp, '\n');
+
+	if (start != -1) {
+		// We're replacing existing metadata
+
+		// Figure out where to start
+		char * begin = &(e->dstr->str[start]);
+
+		while (*begin != ':')
+			begin++;
+
+		begin++;
+
+		while (char_is_whitespace(*begin))
+			begin++;
+
+		start = begin - e->dstr->str;
+
+		if (end == -1) {
+			// Replace until the end of the metadata (last key)
+			len = meta_end - start;
+		} else {
+			len = end - start;
+		}
+
+		d_string_erase(e->dstr, start, len);
+		d_string_insert(e->dstr, start, "\n");
+		d_string_insert(e->dstr, start, value);
+	} else if (meta_end != 0) {
+		// We're appending metadata at the end
+		d_string_insert(e->dstr, meta_end, temp->str);
+	} else {
+		// There is no metadata, so prepend before document
+		d_string_append_c(temp, '\n');
+		d_string_prepend(e->dstr, temp->str);
+	}
+
+	d_string_free(temp, true);
+	free(clean);
+}
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language) {
