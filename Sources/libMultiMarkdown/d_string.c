@@ -372,24 +372,24 @@ long d_string_replace_text_in_range(DString * d, size_t pos, size_t len, const c
 	long len_r = strlen(replace);
 	long change = len_r - len_o;	// Change in length for each replacement
 
-	char * start = &(d->str[pos]);
-	char * stop;
+	size_t stop;
 
 	if (len == -1) {
-		stop = &(d->str[d->currentStringLength]);
+		stop = d->currentStringLength;
 	} else {
-		stop = &(d->str[pos + len]);
+		stop = pos + len;
 	}
 
-	char * match = strstr(start, original);
+	char * match = strstr(&(d->str[pos]), original);
 
-	while (match && match < stop) {
+	while (match && (match - d->str < stop)) {
+		pos = match - d->str;
 		d_string_erase(d, match - d->str, len_o);
 		d_string_insert(d, match - d->str, replace);
 
 		delta += change;
 		stop += change;
-		match = strstr(match + len_r, original);
+		match = strstr(d->str + pos + len_r, original);
 	}
 
 	return delta;
