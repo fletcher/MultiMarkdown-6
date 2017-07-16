@@ -152,6 +152,7 @@
 	align_left	= sp ':' align sp ('|' | nl_eof);
 	align_right	= sp align ':' sp ('|' | nl_eof);
 	align_center	= sp ':' align ':' sp ('|' | nl_eof);
+	align_wrap 	= sp align '+' sp ('|' | nl_eof);
 	align_wrap_left		= sp ':' align '+' sp ('|' | nl_eof);
 	align_wrap_right	= sp align ':' '+' sp ('|' | nl_eof);
 	align_wrap_center	= sp ':' align ':' '+' sp ('|' | nl_eof);
@@ -422,6 +423,7 @@ size_t scan_alignment_string(const char * c) {
 	const char * marker = NULL;
 
 /*!re2c
+	align_wrap 		{ return ALIGN_WRAP; }
 	align_left		{ return ALIGN_LEFT; }
 	align_right		{ return ALIGN_RIGHT; }
 	align_center	{ return ALIGN_CENTER; }

@@ -754,6 +754,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					case 'C':
 						print_char(scratch->table_alignment[i]);
 						break;
+					case 'N':
+						print_char('L');
+						break;
 					default:
 						print_char('l');
 						break;

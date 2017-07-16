@@ -2294,7 +2294,7 @@ void read_table_column_alignments(const char * source, token * table, scratch_pa
 						scratch->table_alignment[counter] = 'C';
 						break;
 					case ALIGN_WRAP:
-						scratch->table_alignment[counter] = 'C';
+						scratch->table_alignment[counter] = 'N';
 						break;
 					default:
 						scratch->table_alignment[counter] = 'n';

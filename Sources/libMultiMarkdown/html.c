@@ -803,6 +803,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 					case 'l':
 						print_const("<col style=\"text-align:left;\"/>\n");
 						break;
+					case 'N':
 					case 'L':
 						print_const("<col style=\"text-align:left;\" class=\"extended\"/>\n");
 						break;
