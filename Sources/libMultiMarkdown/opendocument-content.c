@@ -995,6 +995,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 		case LINE_LIST_ENUMERATED:
 			mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			break;
+		case LINE_SETEXT_2:
 		case MANUAL_LABEL:
 		case MARKER_BLOCKQUOTE:
 		case MARKER_H1:

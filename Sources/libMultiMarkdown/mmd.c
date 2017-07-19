@@ -915,6 +915,15 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 
 				token_append_child(root, line);
 
+				// If this is first line, do we have proper metadata?
+				if (e->allow_meta && root->child == line) {
+					if (line->type == LINE_SETEXT_2) {
+						line->type = LINE_YAML;
+					} else if (line->type != LINE_META) {
+						e->allow_meta = false;
+					}
+				}
+
 				if (stop_on_empty_line) {
 					if (line->type == LINE_EMPTY)
 						return root;
@@ -1651,6 +1660,8 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 			plain:
 				d_string_append_c(d, '\n');
 				d_string_append_c_array(d, &source[l->start], l->len);
+				break;
+			case LINE_YAML:
 				break;
 			case LINE_TABLE:
 				if (scan_meta_line(&source[l->start])) {

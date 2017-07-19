@@ -1015,6 +1015,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 		case LINE_LIST_ENUMERATED:
 			mmd_export_token_tree_html(out, source, t->child, scratch);
 			break;
+		case LINE_SETEXT_2:
 		case MARKER_BLOCKQUOTE:
 		case MARKER_H1:
 		case MARKER_H2:

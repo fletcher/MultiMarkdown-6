@@ -877,6 +877,7 @@ void mmd_export_token_odf(DString * out, const char * source, token * t, scratch
 		case LINE_LIST_ENUMERATED:
 			mmd_export_token_tree_odf(out, source, t->child, scratch);
 			break;
+		case LINE_SETEXT_2:
 		case MANUAL_LABEL:
 		case MARKER_BLOCKQUOTE:
 		case MARKER_H1:

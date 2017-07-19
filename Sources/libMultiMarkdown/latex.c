@@ -952,8 +952,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case LINE_LIST_ENUMERATED:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+		case LINE_SETEXT_2:
 		case MANUAL_LABEL:
-			break;
 		case MARKER_BLOCKQUOTE:
 		case MARKER_H1:
 		case MARKER_H2:
