@@ -488,9 +488,11 @@ int main(int argc, char** argv) {
 #ifdef PATH_MAX
             char absolute[PATH_MAX + 1];
             realpath(a_file->filename[0], absolute);
+            fprintf(stderr, "A->'%s'->'%s'\n",a_file->filename[0],absolute);
             mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 #else
             char * absolute = realpath(a_file->filename[0], NULL);
+            fprintf(stderr, "B->'%s'->'%s'\n",a_file->filename[0],absolute);
             mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
             free(absolute);
 #endif
