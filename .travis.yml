@@ -3,7 +3,7 @@ install:
     - make
     - cd build; make
 script:
-    - cd build; make test
+    - cd build; ctest -V
 branches:
   only:
     - master
