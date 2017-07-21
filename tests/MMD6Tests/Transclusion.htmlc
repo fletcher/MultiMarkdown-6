@@ -1,5 +1,6 @@
 <p>Title:	Transclusion
-latex config:	article</p>
+latex config:	article
+transclude base: .</p>
 
 <p>{{foo.txt}}</p>
 

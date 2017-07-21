@@ -1,5 +1,6 @@
 Title:	Transclusion
 latex config:	article
+transclude base: .
 
 {{foo.txt}}
 

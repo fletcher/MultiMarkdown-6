@@ -481,8 +481,12 @@ int main(int argc, char** argv) {
 
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-			mmd_transclude_source(buffer, folder, a_file->filename[0], format, NULL, NULL);
+            
+            // Convert to absolute path for first file to enable proper path resolution
+            char absolute[1025];
+            realpath(a_file->filename[0], absolute);
 
+            mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 			// Don't free folder -- owned by dirname
 		}
 
