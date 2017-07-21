@@ -12,3 +12,4 @@ branches:
 os:
   - linux
   - osx
+sudo: false
