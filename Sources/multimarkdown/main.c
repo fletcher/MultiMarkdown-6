@@ -476,27 +476,28 @@ int main(int argc, char** argv) {
 
 		char * folder = NULL;
 
-		if (a_file->count == 1) {
-			folder = dirname((char *) a_file->filename[0]);
-		}
-
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
             
             // Convert to absolute path for first file to enable proper path resolution
-
 #ifdef PATH_MAX
             char absolute[PATH_MAX + 1];
             realpath(a_file->filename[0], absolute);
             fprintf(stderr, "A->'%s'->'%s'\n",a_file->filename[0],absolute);
+			folder = dirname((char *) a_file->filename[0]);
             mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 #else
             char * absolute = realpath(a_file->filename[0], NULL);
             fprintf(stderr, "B->'%s'->'%s'\n",a_file->filename[0],absolute);
+			folder = dirname((char *) a_file->filename[0]);
             mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
             free(absolute);
 #endif
 			// Don't free folder -- owned by dirname
+		}
+
+		if (a_file->count == 1) {
+			folder = dirname((char *) a_file->filename[0]);
 		}
 
 		// Perform block level CriticMarkup?
