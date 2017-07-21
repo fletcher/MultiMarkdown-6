@@ -272,6 +272,14 @@ typedef struct stack stack;
 void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, struct stack * parsed, struct stack * manifest);
 
 
+/// If MMD Header metadata used, insert it into appropriate place
+void mmd_prepend_mmd_header(DString * source);
+
+
+/// If MMD Footer metadata used, insert it into appropriate place
+void mmd_append_mmd_footer(DString * source);
+
+
 /// Accept all CriticMarkup changes in the source string
 void mmd_critic_markup_accept(DString * d);
 

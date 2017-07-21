@@ -381,6 +381,11 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
 			char * folder = dirname((char *) a_file->filename[i]);
 
+			if (!(extensions & EXT_COMPATIBILITY)) {
+				mmd_prepend_mmd_header(buffer);
+				mmd_append_mmd_footer(buffer);
+			}
+
 			if (extensions & EXT_TRANSCLUDE) {
 				mmd_transclude_source(buffer, folder, a_file->filename[i], format, NULL, NULL);
 	
@@ -476,6 +481,11 @@ int main(int argc, char** argv) {
 
 		char * folder = NULL;
 
+		if (!(extensions & EXT_COMPATIBILITY)) {
+			mmd_prepend_mmd_header(buffer);
+			mmd_append_mmd_footer(buffer);
+		}
+
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
 			
@@ -485,6 +495,7 @@ int main(int argc, char** argv) {
 			char absolute[PATH_MAX + 1];
 			realpath(a_file->filename[0], absolute);
 			folder = dirname((char *) a_file->filename[0]);
+
 			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 #else
 			// If undefined, then we *should* be able to use a NULL pointer to allocate

@@ -1,0 +1,6 @@
+Title:	MMD Header and Footer
+latex config:	article
+MMD Header:	{{header.txt}}
+MMD Footer:	{{footer.txt}}
+
+Main Body

@@ -342,7 +342,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 	// Iterate through source text, looking for `{{foo}}`
 
-	start = strstr(source->str, "{{");
+	start = strstr(&source->str[offset], "{{");
 
 	while (start != NULL) {
 		stop = strstr(start, "}}");
@@ -501,4 +501,33 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	free(search_folder);
 }
 
+
+
+/// If MMD Header metadata used, insert it into appropriate place
+void mmd_prepend_mmd_header(DString * source) {
+	size_t end;
+
+	if (mmd_d_string_has_metadata(source, &end)) {
+		char * meta = mmd_d_string_metavalue_for_key(source, "mmdheader");
+
+		if (meta) {
+			d_string_insert(source, end, "\n\n");
+			d_string_insert(source, end + 2, meta);
+			free(meta);
+		}
+	}
+}
+
+
+/// If MMD Footer metadata used, insert it into appropriate place
+void mmd_append_mmd_footer(DString * source) {
+	char * meta = mmd_d_string_metavalue_for_key(source, "mmdfooter");
+
+	if (meta) {
+		d_string_append(source, "\n\n");
+		d_string_append(source, meta);
+
+		free(meta);
+	}
+}
 

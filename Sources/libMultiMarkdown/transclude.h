@@ -76,4 +76,12 @@ DString * scan_file(const char * fname);
 void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, stack * parsed, stack * manifest);
 
 
+/// If MMD Header metadata used, insert it into appropriate place
+void mmd_prepend_mmd_header(DString * source);
+
+
+/// If MMD Footer metadata used, insert it into appropriate place
+void mmd_append_mmd_footer(DString * source);
+
+
 #endif
