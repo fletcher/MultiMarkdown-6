@@ -55,6 +55,7 @@
 
 #include <ctype.h>
 #include <libgen.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -483,10 +484,16 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
             
             // Convert to absolute path for first file to enable proper path resolution
-            char absolute[1025];
-            realpath(a_file->filename[0], absolute);
 
+#ifdef PATH_MAX
+            char absolute[PATH_MAX + 1];
+            realpath(a_file->filename[0], absolute);
             mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
+#else
+            char * absolute = realpath(a_file->filename[0], NULL);
+            mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
+            free(absolute);
+#endif
 			// Don't free folder -- owned by dirname
 		}
 
