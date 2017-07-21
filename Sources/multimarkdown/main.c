@@ -478,25 +478,27 @@ int main(int argc, char** argv) {
 
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-            
-            // Convert to absolute path for first file to enable proper path resolution
+			
+			// Convert to absolute path for first file to enable proper path resolution
 #ifdef PATH_MAX
-            char absolute[PATH_MAX + 1];
-            realpath(a_file->filename[0], absolute);
-            fprintf(stderr, "A->'%s'->'%s'\n",a_file->filename[0],absolute);
+			// If PATH_MAX defined, use it
+			char absolute[PATH_MAX + 1];
+			realpath(a_file->filename[0], absolute);
 			folder = dirname((char *) a_file->filename[0]);
-            mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
+			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 #else
-            char * absolute = realpath(a_file->filename[0], NULL);
-            fprintf(stderr, "B->'%s'->'%s'\n",a_file->filename[0],absolute);
+			// If undefined, then we *should* be able to use a NULL pointer to allocate
+			char * absolute = realpath(a_file->filename[0], NULL);
 			folder = dirname((char *) a_file->filename[0]);
-            mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
-            free(absolute);
+			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
+			free(absolute);
 #endif
 			// Don't free folder -- owned by dirname
 		}
 
 		if (a_file->count == 1) {
+			// Must do this after realpath, b/c on some OS's (e.g. Travis-CI linux)
+			// this truncates a_file->filename[0]
 			folder = dirname((char *) a_file->filename[0]);
 		}
 
