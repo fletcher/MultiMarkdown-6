@@ -9,3 +9,6 @@ branches:
     - master
     - develop
     - /^\d+\.\d+.*/
+os:
+  - linux
+  - osx
