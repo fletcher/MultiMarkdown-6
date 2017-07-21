@@ -11,7 +11,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -21,30 +21,30 @@
 
 
 	The `c-template` project is released under the MIT License.
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -280,10 +280,9 @@ void ac_trie_node_prepare(trie * a, size_t s, char * buffer, unsigned short dept
 
 
 	// Prepare children
-	for (int i = 0; i < 256; ++i)
-	{
+	for (int i = 0; i < 256; ++i) {
 		if ((n->child[i] != 0) &&
-			(n->child[i] != s)) {
+		        (n->child[i] != s)) {
 			buffer[depth] = i;
 
 			ac_trie_node_prepare(a, n->child[i], buffer, depth + 1, last_match_state);
@@ -294,8 +293,7 @@ void ac_trie_node_prepare(trie * a, size_t s, char * buffer, unsigned short dept
 /// Prepare trie for Aho-Corasick search algorithm by mapping failure connections
 void ac_trie_prepare(trie * a) {
 	// Clear old pointers
-	for (size_t i = 0; i < a->size; ++i)
-	{
+	for (size_t i = 0; i < a->size; ++i) {
 		a->node[i].ac_fail = 0;
 	}
 
@@ -401,7 +399,7 @@ match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) 
 					m = result;
 				}
 				m = match_add(m, counter - a->node[temp_state].len,
-					a->node[temp_state].len, a->node[temp_state].match_type);
+				              a->node[temp_state].len, a->node[temp_state].match_type);
 			}
 
 			// Iterate to find shorter matches
@@ -442,8 +440,8 @@ int match_count(match * m) {
 
 
 void match_describe(match * m, const char * source) {
-	fprintf(stderr, "'%.*s'(%d) at %lu:%lu\n", (int)m->len, &source[m->start], 
-		m->match_type, m->start, m->start + m->len);
+	fprintf(stderr, "'%.*s'(%d) at %lu:%lu\n", (int)m->len, &source[m->start],
+	        m->match_type, m->start, m->start + m->len);
 }
 
 
@@ -471,15 +469,15 @@ void match_set_filter_leftmost_longest(match * header) {
 				continue;
 			}
 
-			while (m->next && 
-				m->next->start > m->start &&
-				m->next->start < m->start + m->len) {
+			while (m->next &&
+			        m->next->start > m->start &&
+			        m->next->start < m->start + m->len) {
 				// This match is "lefter" than next
 				match_excise(m->next);
 			}
 
 			while (m->next &&
-				m->next->start < m->start) {
+			        m->next->start < m->start) {
 				// Next match is "lefter" than us
 				n = m;
 				m = m->prev;
@@ -488,8 +486,8 @@ void match_set_filter_leftmost_longest(match * header) {
 		}
 
 		while (m->prev &&
-			m->prev->len &&
-			m->prev->start >= m->start) {
+		        m->prev->len &&
+		        m->prev->start >= m->start) {
 			// We are "lefter" than previous
 			n = m->prev;
 			match_excise(n);
@@ -564,8 +562,7 @@ void trie_node_to_graphviz(trie * a, size_t s) {
 	if (n->match_type)
 		fprintf(stderr, "\"%lu\" [shape=doublecircle]\n", s);
 
-	for (int i = 0; i < 256; ++i)
-	{
+	for (int i = 0; i < 256; ++i) {
 		if (n->child[i]) {
 			switch (i) {
 				default:
@@ -581,8 +578,7 @@ void trie_node_to_graphviz(trie * a, size_t s) {
 
 void trie_to_graphviz(trie * a) {
 	fprintf(stderr, "digraph dfa {\n");
-	for (int i = 0; i <  a->size; ++i)
-	{
+	for (int i = 0; i <  a->size; ++i) {
 		trie_node_to_graphviz(a, i);
 	}
 	fprintf(stderr, "}\n");

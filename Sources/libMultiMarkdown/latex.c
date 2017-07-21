@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -124,7 +124,7 @@ void mmd_print_char_latex(DString * out, char c) {
 void mmd_print_string_latex(DString * out, const char * str) {
 	if (str == NULL)
 		return;
-	
+
 	while (*str != '\0') {
 		mmd_print_char_latex(out, *str);
 		str++;
@@ -162,7 +162,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 					break;
 				default:
 					print_const("`");
-				}
+			}
 			break;
 		case QUOTE_RIGHT_SINGLE:
 			switch (scratch->quotes_lang) {
@@ -174,7 +174,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 					break;
 				default:
 					print_const("'");
-				}
+			}
 			break;
 		case QUOTE_LEFT_DOUBLE:
 			switch (scratch->quotes_lang) {
@@ -193,7 +193,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 					break;
 				default:
 					print_const("``");
-				}
+			}
 			break;
 		case QUOTE_RIGHT_DOUBLE:
 			switch (scratch->quotes_lang) {
@@ -210,7 +210,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 				case DUTCH:
 				default:
 					print_const("''");
-				}
+			}
 			break;
 	}
 }
@@ -241,7 +241,7 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 			}
 			return;
 		} else {
-			printf("\\href{%s}", link->url);			
+			printf("\\href{%s}", link->url);
 		}
 	} else
 		print_const("\\href{}");
@@ -253,7 +253,7 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 		text->child->next->start--;
 		text->child->next->len++;
 	}
-	
+
 	mmd_export_token_tree_latex(out, source, text->child, scratch);
 
 	print_const("}");
@@ -268,17 +268,17 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 static char * correct_dimension_units(char *original) {
 	char *result;
 	int i;
-	
+
 	result = my_strdup(original);
-	
+
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
-	
+
 	if (strstr(&result[strlen(result)-2],"px")) {
 		result[strlen(result)-2] = '\0';
 		strcat(result, "pt");
 	}
-	
+
 	return result;
 }
 
@@ -419,7 +419,7 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 			(*counter)--;
 			break;
 		}
-		
+
 		// Increment counter
 		(*counter)++;
 	}
@@ -502,7 +502,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
 						} else {
-							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);							
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
 							scratch->padded = 0;
 						}
 					}
@@ -552,7 +552,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
 				print_const("\\begin{description}\n");
-	
+
 			scratch->padded = 2;
 
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
@@ -706,7 +706,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				temp_token = t->next->child;
 
 				if (temp_token->next &&
-					temp_token->next->type == PAIR_BRACKET) {
+				        temp_token->next->type == PAIR_BRACKET) {
 					temp_token = temp_token->next;
 				}
 
@@ -743,8 +743,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 			print_const("\\begin{tabulary}{\\textwidth}{@{}");
 
-			for (int i = 0; i < scratch->table_column_count; ++i)
-			{
+			for (int i = 0; i < scratch->table_column_count; ++i) {
 				switch (scratch->table_alignment[i]) {
 					case 'l':
 					case 'L':
@@ -799,7 +798,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("\\}\\}");
 			break;
 		case BRACKET_LEFT:
-			print_const("[");			
+			print_const("[");
 			break;
 		case BRACKET_ABBREVIATION_LEFT:
 			print_const("[>");
@@ -895,7 +894,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case ESCAPED_CHARACTER:
 			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
-				(source[t->start + 1] == ' ')) {
+			        (source[t->start + 1] == ' ')) {
 				print_const("~");
 			} else {
 				mmd_print_char_latex(out, source[t->start + 1]);
@@ -907,8 +906,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case HASH4:
 		case HASH5:
 		case HASH6:
-			for (int i = 0; i < t->len; ++i)
-			{
+			for (int i = 0; i < t->len; ++i) {
 				if (source[t->start + i] == '#') {
 					print_char('\\');
 					print_char('#');
@@ -1073,7 +1071,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
-				(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
+			        (t->next && t->next->type == PAIR_BRACKET_CITATION)) {
 				goto parse_citation;
 			}
 
@@ -1089,8 +1087,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					temp_token = t->next;
 
 					if (temp_token &&
-						((temp_token->type == PAIR_BRACKET) ||
-						(temp_token->type == PAIR_PAREN))) {
+					        ((temp_token->type == PAIR_BRACKET) ||
+					         (temp_token->type == PAIR_PAREN))) {
 						temp_token = temp_token->next;
 					}
 
@@ -1106,7 +1104,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						mmd_export_image_latex(out, source, t, temp_link, scratch, true);
 					}
 				}
-				
+
 				if (temp_bool) {
 					link_free(temp_link);
 				}
@@ -1160,7 +1158,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 			break;
 		case PAIR_BRACKET_CITATION:
-			parse_citation:
+parse_citation:
 			temp_bool = true;		// Track whether this is regular vs 'not cited'
 			temp_token = t;			// Remember whether we need to skip ahead
 
@@ -1208,7 +1206,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_short == -1) {
 					temp_note = NULL;
 				} else {
-					temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);					
+					temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
 				}
 
 				if (temp_bool) {
@@ -1297,7 +1295,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_short2 == scratch->used_footnotes->size) {
 					// This is a re-use of a previously used note
 
-					// TODO: This would work, assuming no URL's are converted to 
+					// TODO: This would work, assuming no URL's are converted to
 					// footnotes without affecting the numbering.
 					// Could add a NULL to the used_footnotes stack??
 
@@ -1338,7 +1336,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_short == -1) {
 					// This instance is not properly formed
 					print_const("[?");
-					
+
 					if (t->child)
 						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
 					else
@@ -1374,7 +1372,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						print(temp_note->clean_text);
 
 						print_const(", description={");
-						
+
 						// We skip over temp_note->content, since that is the term in use
 						mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
 						print_const("}}\\gls{");
@@ -1414,7 +1412,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					print_const("}");
 				}
 			} else {
-				mmd_export_token_tree_latex(out, source, t->child, scratch);				
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_CRITIC_DEL:
@@ -1432,13 +1430,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					print_const("}");
 				}
 			} else {
-				mmd_export_token_tree_latex(out, source, t->child, scratch);				
+				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_CRITIC_COM:
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-				(scratch->extensions & EXT_CRITIC_ACCEPT))
+			        (scratch->extensions & EXT_CRITIC_ACCEPT))
 				break;
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
@@ -1453,7 +1451,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case PAIR_CRITIC_HI:
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-				(scratch->extensions & EXT_CRITIC_ACCEPT))
+			        (scratch->extensions & EXT_CRITIC_ACCEPT))
 				break;
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
@@ -1474,8 +1472,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_CRITIC_SUB_DEL:
 			if ((scratch->extensions & EXT_CRITIC) &&
-				(t->next) &&
-				(t->next->type == PAIR_CRITIC_SUB_ADD)) {
+			        (t->next) &&
+			        (t->next->type == PAIR_CRITIC_SUB_ADD)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
@@ -1493,8 +1491,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			break;
 		case PAIR_CRITIC_SUB_ADD:
 			if ((scratch->extensions & EXT_CRITIC) &&
-				(t->prev) &&
-				(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
+			        (t->prev) &&
+			        (t->prev->type == PAIR_CRITIC_SUB_DEL)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				if (scratch->extensions & EXT_CRITIC_REJECT) {
@@ -1540,8 +1538,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const(")");
 			break;
 		case PIPE:
-			for (int i = 0; i < t->len; ++i)
-			{
+			for (int i = 0; i < t->len; ++i) {
 				print_const("\\textbar{}");
 			}
 			break;
@@ -1598,7 +1595,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print_const("}");
 			} else {
 				print_const("\\^{}");
-			}	
+			}
 			break;
 		case TABLE_CELL:
 			if (t->next && t->next->type == TABLE_DIVIDER) {
@@ -1729,7 +1726,7 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			if (t->next)
 				t->next->type = TEXT_EMPTY;
 		case TEXT_EMPTY:
-			break;			
+			break;
 		default:
 			if (t->child)
 				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
@@ -2051,8 +2048,7 @@ void mmd_export_citation_list_latex(DString * out, const char * source, scratch_
 		print_const("\\begin{thebibliography}{0}");
 		scratch->padded = 0;
 
-		for (int i = 0; i < scratch->used_citations->size; ++i)
-		{
+		for (int i = 0; i < scratch->used_citations->size; ++i) {
 			// Export footnote
 			pad(out, 2, scratch);
 

@@ -125,3 +125,7 @@ $(XCODE_DEBUG_BUILD_DIR):
 CHANGELOG:
 	-git log master..develop --format="*    %s" | sort | uniq > CHANGELOG-UNRELEASED
 
+# Use astyle
+.PHONY : astyle
+astyle:
+	astyle --options=.astylerc "Sources/libMultiMarkdown/*.c" "Sources/multimarkdown/*.c"

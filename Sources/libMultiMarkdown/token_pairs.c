@@ -19,30 +19,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -96,7 +96,7 @@ void token_pair_engine_free(token_pair_engine * e) {
 
 /// Add a new pairing configuration to a token pair engine
 void token_pair_engine_add_pairing(token_pair_engine * e, unsigned short open_type, unsigned short close_type,
-	unsigned short pair_type, int options) {
+                                   unsigned short pair_type, int options) {
 	// \todo: This needs to be more sophisticated
 	e->can_open_pair[open_type] = 1;
 	e->can_close_pair[close_type] = 1;
@@ -159,8 +159,7 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 			// Do we even have a valid opener in the stack?
 			// It's only worth checking if the stack is beyond a certain size
 			if (i > start_counter + kLargeStackThreshold) {
-				for (int j = 0; j < kMaxTokenTypes; ++j)
-				{
+				for (int j = 0; j < kMaxTokenTypes; ++j) {
 					if (opener_count[j]) {
 						if (e->pair_type[j][walker->type])
 							goto close;
@@ -171,7 +170,7 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 				goto open;
 			}
 
-			close:
+close:
 			// Find matching opener for this closer
 			while (i > start_counter) {
 				peek = stack_peek_index(s, i - 1);
@@ -182,7 +181,7 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 					if (!e->empty_allowed[pair_type]) {
 						// Make sure they aren't consecutive tokens
 						if ((peek->next == walker) &&
-							(peek->start + peek->len == walker->start)) {
+						        (peek->start + peek->len == walker->start)) {
 							// i--;
 							i = start_counter;	// In this situation, we can't use this token as a closer
 							continue;
@@ -230,13 +229,13 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 			}
 		}
 
-		open:
+open:
 		// Is this an opener?
 		if (walker->can_open && e->can_open_pair[walker->type] && walker->unmatched) {
 			stack_push(s, walker);
 			opener_count[walker->type]++;
 #ifndef NDEBUG
-		fprintf(stderr, "push token type %d to stack (%lu elements)\n", walker->type, s->size);
+			fprintf(stderr, "push token type %d to stack (%lu elements)\n", walker->type, s->size);
 #endif
 		}
 

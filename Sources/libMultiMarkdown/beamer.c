@@ -4,11 +4,11 @@
 
 	@file beamer.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -67,7 +67,7 @@
 void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratch) {
 	token * t;
 	short level;		// Header level we are adding
-	short t_level;	
+	short t_level;
 	stack * s = scratch->outline_stack;
 
 	if (current) {
@@ -236,7 +236,7 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 					temp_char = label_from_token(source, t);
 				}
 				printf("}\n\\label{%s}", temp_char);
-	
+
 				if (temp_char)
 					free(temp_char);
 			}
@@ -281,8 +281,7 @@ void mmd_export_citation_list_beamer(DString * out, const char * source, scratch
 		print_const("\\part{Bibliography}\n\\begin{frame}[allowframebreaks]\n\\frametitle{Bibliography}\n\\def\\newblock{}\n\\begin{thebibliography}{0}");
 		scratch->padded = 0;
 
-		for (int i = 0; i < scratch->used_citations->size; ++i)
-		{
+		for (int i = 0; i < scratch->used_citations->size; ++i) {
 			// Export footnote
 			pad(out, 2, scratch);
 

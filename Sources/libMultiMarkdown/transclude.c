@@ -4,11 +4,11 @@
 
 	@file transclude.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -73,8 +73,7 @@ static char * my_strndup(const char * source, size_t n) {
 	const char * test = source;
 
 	// strlen is too slow if strlen(source) >> n
-	for (len = 0; len < n; ++len)
-	{
+	for (len = 0; len < n; ++len) {
 		if (test == '\0')
 			break;
 
@@ -87,7 +86,7 @@ static char * my_strndup(const char * source, size_t n) {
 		memcpy(result, source, len);
 		result[len] = '\0';
 	}
-	
+
 	return result;
 }
 
@@ -118,7 +117,7 @@ bool is_separator(char c) {
 #ifdef TEST
 void Test_is_separator(CuTest* tc) {
 	char * test = "a/\\";
-	
+
 #if defined(__WIN32)
 	CuAssertIntEquals(tc, false, is_separator(test[0]));
 	CuAssertIntEquals(tc, true, is_separator(test[1]));
@@ -208,7 +207,7 @@ void Test_path_from_dir_base(CuTest* tc) {
 ///
 /// See http://stackoverflow.com/questions/1575278/function-to-split-a-filepath-into-path-and-file
 void split_path_file(char ** dir, char ** file, const char * path) {
-    const char * slash = path, * next;
+	const char * slash = path, * next;
 
 #if defined(__WIN32)
 	const char sep[] = "\\/";	// Windows allows either variant
@@ -216,14 +215,14 @@ void split_path_file(char ** dir, char ** file, const char * path) {
 	const char sep[] = "/";
 #endif
 
-    while ((next = strpbrk(slash + 1, sep)))
-    	slash = next;
-    
-    if (path != slash)
-    	slash++;
+	while ((next = strpbrk(slash + 1, sep)))
+		slash = next;
 
-    *dir = my_strndup(path, slash - path);
-    *file = my_strdup(slash);
+	if (path != slash)
+		slash++;
+
+	*dir = my_strndup(path, slash - path);
+	*file = my_strdup(slash);
 }
 
 #ifdef TEST
@@ -405,8 +404,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			}
 
 			// Prevent infinite recursive loops
-			for (int i = 0; i < stack_depth; ++i)
-			{
+			for (int i = 0; i < stack_depth; ++i) {
 				temp = stack_peek_index(parse_stack, i);
 				if (strcmp(file_path->str, temp) == 0) {
 					// We have parsed this file already, don't recurse infinitely
@@ -422,8 +420,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			if (manifest) {
 				bool add = true;
 
-				for (int i = 0; i < manifest->size; ++i)
-				{
+				for (int i = 0; i < manifest->size; ++i) {
 					temp = stack_peek_index(manifest, i);
 					if (strcmp(file_path->str, temp) == 0) {
 						// Already on manifest, don't duplicate
@@ -446,16 +443,16 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				// Recursively check this file for transclusions
 				mmd_transclude_source(buffer, search_folder, file_path->str, format, parse_stack, manifest);
-				
+
 				// Strip metadata from buffer now that we have parsed it
 				e = mmd_engine_create_with_dstring(buffer, EXT_TRANSCLUDE);
-				
+
 				if (mmd_engine_has_metadata(e, &offset)) {
 					d_string_erase(buffer, 0, offset);
 				} else {
 					// Do we need to strip BOM?
 					if (strncmp(buffer->str, "\xef\xbb\xbf",3) == 0)
-					d_string_erase(buffer, 0, 3);
+						d_string_erase(buffer, 0, 3);
 				}
 
 				mmd_engine_free(e, false);
@@ -476,7 +473,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			// Remove this file from stack
 			stack_pop(parse_stack);
 
-			finish_file:
+finish_file:
 			d_string_free(file_path, true);
 
 		} else {
@@ -488,7 +485,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 		start = strstr(source->str + last_match, "{{");
 	}
 
-	exit:
+exit:
 
 	if (parsed == NULL) {
 		// Free temp stack

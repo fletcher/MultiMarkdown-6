@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 
 **/
@@ -19,30 +19,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -74,8 +74,8 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
-		*a_notransclude, *a_nosmart;
+	       *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+	       *a_notransclude, *a_nosmart;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -180,7 +180,7 @@ int main(int argc, char** argv) {
 		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|nl|sv"),
 
 		a_rem5			= arg_rem("", ""),
-		
+
 		a_meta			= arg_lit0("m", "metadata-keys", "list all metadata keys"),
 		a_extract		= arg_str0("e", "extract", "KEY", "extract specified metadata key"),
 
@@ -337,8 +337,7 @@ int main(int argc, char** argv) {
 
 	if ((a_batch->count) && (a_file->count)) {
 		// Batch process 1 or more files
-		for (int i = 0; i < a_file->count; ++i)
-		{
+		for (int i = 0; i < a_file->count; ++i) {
 
 			buffer = scan_file(a_file->filename[i]);
 
@@ -388,7 +387,7 @@ int main(int argc, char** argv) {
 
 			if (extensions & EXT_TRANSCLUDE) {
 				mmd_transclude_source(buffer, folder, a_file->filename[i], format, NULL, NULL);
-	
+
 				// Don't free folder -- owned by dirname
 			}
 
@@ -461,8 +460,7 @@ int main(int argc, char** argv) {
 			DString * file_buffer;
 
 			// Concatenate all input files
-			for (int i = 0; i < a_file->count; ++i)
-			{
+			for (int i = 0; i < a_file->count; ++i) {
 				file_buffer = scan_file(a_file->filename[i]);
 
 				if (file_buffer == NULL) {
@@ -488,7 +486,7 @@ int main(int argc, char** argv) {
 
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-			
+
 			// Convert to absolute path for first file to enable proper path resolution
 #ifdef PATH_MAX
 			// If PATH_MAX defined, use it
@@ -556,12 +554,12 @@ int main(int argc, char** argv) {
 				perror(a_o->filename[0]);
 				free(result);
 				d_string_free(buffer, true);
-		
+
 				exitcode = 1;
 				goto exit;
 			}
 
-			fwrite(result->str, result->currentStringLength, 1, output_stream);			
+			fwrite(result->str, result->currentStringLength, 1, output_stream);
 
 			if (output_stream != stdout)
 				fclose(output_stream);
@@ -579,7 +577,7 @@ exit:
 
 	// Decrement counter and clean up token pool
 	token_pool_drain();
-	
+
 #ifdef kUseObjectPool
 	token_pool_free();
 #endif

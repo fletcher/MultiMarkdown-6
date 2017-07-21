@@ -1,0 +1,19 @@
+# Brace style
+--style=java
+
+
+# Indents
+--indent=tab=4
+
+# Switch statements
+--indent-switches
+
+
+# Excludes
+--exclude="Sources/libMultiMarkdown/scanners.c"
+--exclude="Sources/libMultiMarkdown/parser.c"
+--exclude="Sources/libMultiMarkdown/lexer.c"
+--exclude="Sources/multimarkdown/argtable3.c"
+--exclude="Sources/libMultiMarkdown/miniz.c"
+
+--ignore-exclude-errors

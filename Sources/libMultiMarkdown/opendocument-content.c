@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,38 +18,38 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
-	
+
 	uthash library:
 		Copyright (c) 2005-2016, Troy D. Hanson
-	
+
 		Licensed under Revised BSD license
-	
+
 	miniz library:
 		Copyright 2013-2014 RAD Game Tools and Valve Software
 		Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
-	
+
 		Licensed under the MIT license
-	
+
 	argtable3 library:
 		Copyright (C) 1998-2001,2003-2011,2013 Stewart Heitmann
 		<sheitmann@users.sourceforge.net>
 		All rights reserved.
-	
+
 		Licensed under the Revised BSD License
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
 	"Software"), to deal in the Software without restriction, including
@@ -57,10 +57,10 @@
 	distribute, sublicense, and/or sell copies of the Software, and to
 	permit persons to whom the Software is furnished to do so, subject to
 	the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -68,10 +68,10 @@
 	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
-	
+
+
 	## Revised BSD License ##
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are
 	met:
@@ -85,7 +85,7 @@
 	      names of its contributors may be used to endorse or promote
 	      products derived from this software without specific prior
 	      written permission.
-	
+
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -97,7 +97,7 @@
 	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	
+
 
 */
 
@@ -158,7 +158,7 @@ void mmd_print_char_opendocument(DString * out, char c) {
 void mmd_print_string_opendocument(DString * out, const char * str) {
 	if (str == NULL)
 		return;
-	
+
 	while (*str != '\0') {
 		mmd_print_char_opendocument(out, *str);
 		str++;
@@ -196,7 +196,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 				default:
 					print_const("&#8216;");
-				}
+			}
 			break;
 		case QUOTE_RIGHT_SINGLE:
 			switch (scratch->quotes_lang) {
@@ -208,7 +208,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 				default:
 					print_const("&#8217;");
-				}
+			}
 			break;
 		case QUOTE_LEFT_DOUBLE:
 			switch (scratch->quotes_lang) {
@@ -227,7 +227,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 				default:
 					print_const("&#8220;");
-				}
+			}
 			break;
 		case QUOTE_RIGHT_DOUBLE:
 			switch (scratch->quotes_lang) {
@@ -244,7 +244,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 				case DUTCH:
 				default:
 					print_const("&#8221;");
-				}
+			}
 			break;
 	}
 }
@@ -344,17 +344,17 @@ void mmd_export_link_opendocument(DString * out, const char * source, token * te
 static char * correct_dimension_units(char *original) {
 	char *result;
 	int i;
-	
+
 	result = my_strdup(original);
-	
+
 	for (i = 0; result[i]; i++)
 		result[i] = tolower(result[i]);
-	
+
 	if (strstr(&result[strlen(result)-2],"px")) {
 		result[strlen(result)-2] = '\0';
 		strcat(result, "pt");
 	}
-	
+
 	return result;
 }
 
@@ -401,9 +401,9 @@ void mmd_export_image_opendocument(DString * out, const char * source, token * t
 			store_asset(scratch, link->url);
 			asset * a = extract_asset(scratch, link->url);
 
-			printf(">\n<draw:image xlink:href=\"Pictures/%s\"", a->asset_path);			
+			printf(">\n<draw:image xlink:href=\"Pictures/%s\"", a->asset_path);
 		} else {
-			printf(">\n<draw:image xlink:href=\"%s\"", link->url);			
+			printf(">\n<draw:image xlink:href=\"%s\"", link->url);
 		}
 	}
 
@@ -458,7 +458,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 			(*counter)--;
 			break;
 		}
-		
+
 		// Increment counter
 		(*counter)++;
 	}
@@ -527,8 +527,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					print_token(t);
 				} else {
 					print_localized(QUOTE_LEFT_DOUBLE);
-				}
-			else if (t->start < t->mate->start) {
+				} else if (t->start < t->mate->start) {
 				print_const("<text:span text:style-name=\"Source_20_Text\">");
 			} else {
 				print_const("</text:span>");
@@ -567,7 +566,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
 						} else {
-							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);							
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
 							scratch->padded = 0;
 						}
 					}
@@ -576,7 +575,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					break;
 				}
 			}
-			
+
 			free(temp_char);
 
 			print_const("<text:p text:style-name=\"Preformatted Text\">");
@@ -605,7 +604,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 				print_const("</text:p>");
 			} else {
-				mmd_export_token_tree_opendocument(out, source, t->child, scratch);				
+				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			}
 			scratch->padded = 0;
 
@@ -620,7 +619,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 
 //			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
 //				print_const("<dl>\n");
-	
+
 			scratch->padded = 2;
 
 			mmd_export_token_tree_opendocument(out, source, t->child, scratch);
@@ -735,7 +734,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 
 			if (t->child && t->child->type != BLOCK_PARA)
-			print_const("</text:p>");
+				print_const("</text:p>");
 
 			print_const("</text:list-item>");
 			scratch->padded = 0;
@@ -757,7 +756,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				case PAIR_BRACKET_GLOSSARY:
 					print_const(" text:style-name=\"Footnote\">");
 					break;
-				default:				
+				default:
 					print_const(" text:style-name=\"Standard\">");
 					break;
 			}
@@ -774,8 +773,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			scratch->padded = 2;
 			read_table_column_alignments(source, t, scratch);
 
-			for (int i = 0; i < scratch->table_column_count; ++i)
-			{
+			for (int i = 0; i < scratch->table_column_count; ++i) {
 				print_const("<table:table-column/>\n");
 //				switch (scratch->table_alignment[i]) {
 //					case 'l':
@@ -812,7 +810,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				temp_token = t->next->child;
 
 				if (temp_token->next &&
-					temp_token->next->type == PAIR_BRACKET) {
+				        temp_token->next->type == PAIR_BRACKET) {
 					temp_token = temp_token->next;
 				}
 
@@ -875,7 +873,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			print_const("[#");
 			break;
 		case BRACKET_LEFT:
-			print_const("[");			
+			print_const("[");
 			break;
 		case BRACKET_RIGHT:
 			print_const("]");
@@ -951,7 +949,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			break;
 		case ESCAPED_CHARACTER:
 			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
-				(source[t->start + 1] == ' ')) {
+			        (source[t->start + 1] == ' ')) {
 				print_const(" ");		// This is a non-breaking space character
 			} else {
 				mmd_print_char_opendocument(out, source[t->start + 1]);
@@ -1134,7 +1132,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			break;
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
-				(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
+			        (t->next && t->next->type == PAIR_BRACKET_CITATION)) {
 				goto parse_citation;
 			}
 
@@ -1150,8 +1148,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					temp_token = t->next;
 
 					if (temp_token &&
-						((temp_token->type == PAIR_BRACKET) ||
-						(temp_token->type == PAIR_PAREN))) {
+					        ((temp_token->type == PAIR_BRACKET) ||
+					         (temp_token->type == PAIR_PAREN))) {
 						temp_token = temp_token->next;
 					}
 
@@ -1167,7 +1165,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 						mmd_export_image_opendocument(out, source, t, temp_link, scratch, true);
 					}
 				}
-				
+
 				if (temp_bool) {
 					link_free(temp_link);
 				}
@@ -1181,7 +1179,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			break;
 		case PAIR_BRACKET_CITATION:
-			parse_citation:
+parse_citation:
 			temp_bool = true;		// Track whether this is regular vs 'not cited'
 			temp_token = t;			// Remember whether we need to skip ahead
 
@@ -1232,7 +1230,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 
 					if (temp_char[0] == '\0') {
 						// No locator
-				
+
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
 							print_const("<text:span text:style-name=\"Footnote_20_anchor\"><text:note-ref text:note-class=\"endnote\" text:reference-format=\"text\" ");
@@ -1262,17 +1260,17 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 						}
 					}
 				} else {
-						if (temp_short2 == scratch->used_citations->size) {
-							// This is a re-use of a previously used note
-						} else {
-							// This is the first time this note was used
-							// TODO: Not sure how to add an endnote without inserting a marker in the text
-							printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
-							temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
+					if (temp_short2 == scratch->used_citations->size) {
+						// This is a re-use of a previously used note
+					} else {
+						// This is the first time this note was used
+						// TODO: Not sure how to add an endnote without inserting a marker in the text
+						printf("<text:note text:id=\"cite%d\" text:note-class=\"endnote\"><text:note-body>", temp_short);
+						temp_note = stack_peek_index(scratch->used_citations, temp_short - 1);
 
-							mmd_export_token_tree_opendocument(out, source, temp_note->content, scratch);
-							print_const("</text:note-body></text:note>");
-						}
+						mmd_export_token_tree_opendocument(out, source, temp_note->content, scratch);
+						print_const("</text:note-body></text:note>");
+					}
 				}
 
 				if (temp_token != t) {
@@ -1379,13 +1377,13 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 						// This is a reference definition
 						mmd_print_string_opendocument(out, temp_note->clean_text);
 						print_const(" (");
-						mmd_print_string_opendocument(out, temp_note->label_text); 
+						mmd_print_string_opendocument(out, temp_note->label_text);
 						print_const(")");
 					} else {
 						// This is an inline definition
 						mmd_print_string_opendocument(out, temp_note->clean_text);
 						print_const(" (");
-						mmd_print_string_opendocument(out, temp_note->label_text); 
+						mmd_print_string_opendocument(out, temp_note->label_text);
 						print_const(")");
 					}
 
@@ -1422,11 +1420,11 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				if (temp_short2 == scratch->used_glossaries->size) {
 					// This is a re-use of a previously used note
 
-					mmd_print_string_opendocument(out, temp_note->clean_text); 
+					mmd_print_string_opendocument(out, temp_note->clean_text);
 				} else {
 					// This is the first time this note was used
 
-					mmd_print_string_opendocument(out, temp_note->clean_text); 
+					mmd_print_string_opendocument(out, temp_note->clean_text);
 
 					printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
 					mmd_export_token_tree_opendocument(out, source, temp_note->content, scratch);
@@ -1466,7 +1464,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					print_const("</text:span>");
 				}
 			} else {
-				mmd_export_token_tree_opendocument(out, source, t->child, scratch);				
+				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_CRITIC_DEL:
@@ -1484,13 +1482,13 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					print_const("</text:span>");
 				}
 			} else {
-				mmd_export_token_tree_opendocument(out, source, t->child, scratch);				
+				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			}
 			break;
 		case PAIR_CRITIC_COM:
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-				(scratch->extensions & EXT_CRITIC_ACCEPT))
+			        (scratch->extensions & EXT_CRITIC_ACCEPT))
 				break;
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
@@ -1505,7 +1503,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 		case PAIR_CRITIC_HI:
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-				(scratch->extensions & EXT_CRITIC_ACCEPT))
+			        (scratch->extensions & EXT_CRITIC_ACCEPT))
 				break;
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
@@ -1525,8 +1523,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			break;
 		case PAIR_CRITIC_SUB_DEL:
 			if ((scratch->extensions & EXT_CRITIC) &&
-				(t->next) &&
-				(t->next->type == PAIR_CRITIC_SUB_ADD)) {
+			        (t->next) &&
+			        (t->next->type == PAIR_CRITIC_SUB_ADD)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
@@ -1544,8 +1542,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			break;
 		case PAIR_CRITIC_SUB_ADD:
 			if ((scratch->extensions & EXT_CRITIC) &&
-				(t->prev) &&
-				(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
+			        (t->prev) &&
+			        (t->prev->type == PAIR_CRITIC_SUB_DEL)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				if (scratch->extensions & EXT_CRITIC_REJECT) {
@@ -1637,7 +1635,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				print_const("</text:span>");
 			} else {
 				print_const("^");
-			}	
+			}
 			break;
 		case TABLE_CELL:
 			print_const("<table:table-cell");
@@ -1678,7 +1676,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				scratch->table_cell_count += t->next->len;
 			else
 				scratch->table_cell_count++;
-			
+
 			break;
 		case TABLE_DIVIDER:
 			break;

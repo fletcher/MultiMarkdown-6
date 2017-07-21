@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -96,8 +96,7 @@ static char * my_strndup(const char * source, size_t n) {
 	const char * test = source;
 
 	// strlen is too slow is strlen(source) >> n
-	for (len = 0; len < n; ++len)
-	{
+	for (len = 0; len < n; ++len) {
 		if (test == '\0')
 			break;
 
@@ -110,7 +109,7 @@ static char * my_strndup(const char * source, size_t n) {
 		memcpy(result, source, len);
 		result[len] = '\0';
 	}
-	
+
 	return result;
 }
 
@@ -162,8 +161,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->link_hash = NULL;
 		link * l;
 
-		for (int i = 0; i < e->link_stack->size; ++i)
-		{
+		for (int i = 0; i < e->link_stack->size; ++i) {
 			l = stack_peek_index(e->link_stack, i);
 
 			store_link(p, l);
@@ -179,8 +177,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		p->citation_hash = NULL;
 
-		for (int i = 0; i < e->citation_stack->size; ++i)
-		{
+		for (int i = 0; i < e->citation_stack->size; ++i) {
 			f = stack_peek_index(e->citation_stack, i);
 
 			store_citation(p, f);
@@ -194,8 +191,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		p->footnote_hash = NULL;				// Store defined footnotes in a hash
 
-		for (int i = 0; i < e->footnote_stack->size; ++i)
-		{
+		for (int i = 0; i < e->footnote_stack->size; ++i) {
 			f = stack_peek_index(e->footnote_stack, i);
 
 			store_footnote(p, f);
@@ -208,8 +204,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		p->glossary_hash = NULL;
 
-		for (int i = 0; i < e->glossary_stack->size; ++i)
-		{
+		for (int i = 0; i < e->glossary_stack->size; ++i) {
 			f = stack_peek_index(e->glossary_stack, i);
 
 			store_glossary(p, f);
@@ -221,8 +216,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 
 		p->abbreviation_hash = NULL;
 
-		for (int i = 0; i < e->abbreviation_stack->size; ++i)
-		{
+		for (int i = 0; i < e->abbreviation_stack->size; ++i) {
 			f = stack_peek_index(e->abbreviation_stack, i);
 
 			store_abbreviation(p, f);
@@ -232,15 +226,14 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->meta_hash = NULL;
 		meta * m;
 
-		for (int i = 0; i < e->metadata_stack->size; ++i)
-		{
+		for (int i = 0; i < e->metadata_stack->size; ++i) {
 			m = stack_peek_index(e->metadata_stack, i);
 
 			store_metadata(p, m);
 		}
 
 
-		// Store used assets in a hash 
+		// Store used assets in a hash
 		p->asset_hash = NULL;
 		p->store_assets = 0;
 	}
@@ -255,12 +248,12 @@ void scratch_pad_free(scratch_pad * scratch) {
 	stack_free(scratch->outline_stack);
 
 	link * l, * l_tmp;
-	
+
 	// Free link hash
 	HASH_ITER(hh, scratch->link_hash, l, l_tmp) {
 		HASH_DEL(scratch->link_hash, l); 	// Remove item from hash
 		free(l);		// "Shallow" free -- the pointers will be freed
-						// with the original later.
+		// with the original later.
 	}
 
 	fn_holder * f, * f_tmp;
@@ -321,7 +314,7 @@ void scratch_pad_free(scratch_pad * scratch) {
 
 	// Free metadata hash
 	meta * m, * m_tmp;
-	
+
 	HASH_ITER(hh, scratch->meta_hash, m, m_tmp) {
 		HASH_DEL(scratch->meta_hash, m); 	// Remove item from hash
 		// Don't free meta pointer since it is freed with the mmd_engine
@@ -408,9 +401,8 @@ char * label_from_string(const char * str) {
 				next_char++;
 			}
 		} else if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
-			|| (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
-			|| (*str== '-') || (*str== ':'))
-		{
+		           || (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
+		           || (*str== '-') || (*str== ':')) {
 			// Allow 0-9, A-Z, a-z, ., _, -, :
 			d_string_append_c(out, tolower(*str));
 		}
@@ -457,7 +449,7 @@ char * label_from_header(const char * source, token * t) {
 char * clean_string(const char * str, bool lowercase) {
 	if (str == NULL)
 		return NULL;
-	
+
 	DString * out = d_string_new("");
 	char * clean = NULL;
 	bool block_whitespace = true;
@@ -570,7 +562,7 @@ attr * parse_attributes(char * source) {
 		// Get key
 		scan_len = scan_key(&source[pos]);
 		key = my_strndup(&source[pos], scan_len);
-		
+
 		// Skip '='
 		pos += scan_len + 1;
 
@@ -631,7 +623,7 @@ link * link_shallow_copy(link * l) {
 		new->title = l->title;
 		new->attributes = l->attributes;
 	}
-	
+
 	return new;
 }
 
@@ -646,7 +638,7 @@ void store_link(scratch_pad * scratch, link * l) {
 	// Add link via `clean_text`?
 	if (l->clean_text && l->clean_text[0] != '\0') {
 		HASH_FIND_STR(scratch->link_hash, l->clean_text, temp_link);
-		
+
 		if (!temp_link) {
 			// Only add if another link is not found with clean_text
 			temp_link = link_shallow_copy(l);
@@ -865,7 +857,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 
 	if (*remainder == NULL)
 		return url;
-	
+
 	switch ((*remainder)->type) {
 		case PAIR_PAREN:
 		case PAIR_ANGLE:
@@ -874,9 +866,9 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 			t = token_chain_accept_multiple(remainder, 2, PAIR_ANGLE, PAIR_PAREN);
 			url = text_inside_pair(source, t);
 			break;
-        default:
-            start = (*remainder)->start;
-			
+		default:
+			start = (*remainder)->start;
+
 			// Skip any whitespace
 			while (char_is_whitespace(source[start]))
 				start++;
@@ -888,7 +880,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 
 			// Advance remainder to end of destination
 			while ((*remainder)->next &&
-				   (*remainder)->next->start < start + scan_len) {
+			        (*remainder)->next->start < start + scan_len) {
 				*remainder = (*remainder)->next;
 			}
 
@@ -912,7 +904,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 
 	// Is this a valid URL?
 	clean = clean_string(url, false);
-	
+
 	if (validate && !validate_url(clean)) {
 		free(clean);
 		clean = NULL;
@@ -939,7 +931,7 @@ char * url_accept(const char * source, size_t start, size_t max_len, size_t * en
 
 		// Is this <foo>?
 		if ((source[start] == '<') &&
-			(source[start + scan_len - 1] == '>')) {
+		        (source[start + scan_len - 1] == '>')) {
 			// Strip '<' and '>'
 			start++;
 			scan_len -= 2;
@@ -963,10 +955,10 @@ char * url_accept(const char * source, size_t start, size_t max_len, size_t * en
 
 /// Extract url string from `(foo)` or `(<foo>)` or `(foo "bar")`
 void extract_from_paren(token * paren, const char * source, char ** url, char ** title, char ** attributes) {
-   size_t scan_len;
-    size_t pos = paren->child->next->start;
-    
-    
+	size_t scan_len;
+	size_t pos = paren->child->next->start;
+
+
 	size_t attr_len;
 
 	// Skip whitespace
@@ -994,7 +986,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 
 	// Grab attributes, if present
 	attr_len = scan_attributes(&source[pos]);
-	
+
 	if (attr_len) {
 		*attributes = my_strndup(&source[pos], attr_len);
 	}
@@ -1014,7 +1006,7 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 		if (!(scratch->extensions & EXT_COMPATIBILITY))
 			l = link_new(source, NULL, url_char, title_char, attr_char);
 	} else {
-		l = link_new(source, NULL, url_char, title_char, attr_char);		
+		l = link_new(source, NULL, url_char, title_char, attr_char);
 	}
 
 	free(url_char);
@@ -1167,12 +1159,12 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 
 	link * l = NULL;
 	footnote * f = NULL;
-	
+
 	// Store label
 	label = *remainder;
 
 	*remainder = (*remainder)->next;
-	
+
 	// Prepare for parsing
 
 	// Account for settings
@@ -1202,7 +1194,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 						stack_push(e->glossary_stack, f);
 						break;
 				}
-				
+
 				break;
 			}
 		case PAIR_BRACKET:
@@ -1242,7 +1234,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 			if ((*remainder) && (((*remainder)->type != TEXT_NL) && ((*remainder)->type != TEXT_LINEBREAK))) {
 				if (!(e->extensions & EXT_COMPATIBILITY)) {
 					attr_len = scan_attributes(&source[(*remainder)->start]);
-					
+
 					if (attr_len) {
 						attr_char = my_strndup(&source[(*remainder)->start], attr_len);
 
@@ -1252,7 +1244,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 						while ((*remainder) && (*remainder)->start < attr_len)
 							*remainder = (*remainder)->next;
 					}
-					
+
 					l = link_new(e->dstr->str, label, url_char, title_char, attr_char);
 				} else {
 					// Not valid match
@@ -1278,13 +1270,13 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 	// Advance to next line
 	token_skip_until_type_multiple(remainder, 2, TEXT_NL, TEXT_LINEBREAK);
 	if (*remainder)
-		*remainder = (*remainder)->next;				
+		*remainder = (*remainder)->next;
 
 	// Clean up
 	free(url_char);
 	free(title_char);
 	free(attr_char);
-	
+
 	return true;
 }
 
@@ -1316,8 +1308,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 					free(f->label_text);
 					f->label_text = f->clean_text;
 					if (f->content->child &&
-						f->content->child->next &&
-						f->content->child->next->next) {
+					        f->content->child->next &&
+					        f->content->child->next->next) {
 						f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
 					} else {
 						f->clean_text = NULL;
@@ -1338,7 +1330,7 @@ void process_definition_block(mmd_engine * e, token * block) {
 					if (f && f->clean_text)
 						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
 					//if (f && f->label_text)
-				//		memmove(f->label_text, &(f->label_text)[1],strlen(f->label_text));
+					//		memmove(f->label_text, &(f->label_text)[1],strlen(f->label_text));
 
 					stack_push(e->glossary_stack, f);
 					break;
@@ -1360,8 +1352,7 @@ void process_definition_block(mmd_engine * e, token * block) {
 
 
 void process_definition_stack(mmd_engine * e) {
-	for (int i = 0; i < e->definition_stack->size; ++i)
-	{
+	for (int i = 0; i < e->definition_stack->size; ++i) {
 		process_definition_block(e, stack_peek_index(e->definition_stack, i));
 	}
 }
@@ -1369,7 +1360,7 @@ void process_definition_stack(mmd_engine * e) {
 token * manual_label_from_header(token * h, const char * source) {
 	if (!h || !h->child)
 		return NULL;
-	
+
 	token * walker = h->child->tail;
 	token * label = NULL;
 	short count = 0;
@@ -1436,7 +1427,7 @@ void process_header_to_links(mmd_engine * e, token * h) {
 		label = label_from_token(e->dstr->str, manual);
 		h = manual;
 	} else {
-		label = label_from_token(e->dstr->str, h);		
+		label = label_from_token(e->dstr->str, h);
 	}
 
 	DString * url = d_string_new("#");
@@ -1458,8 +1449,7 @@ void process_header_stack(mmd_engine * e) {
 	if (e->extensions & EXT_NO_LABELS)
 		return;
 
-	for (int i = 0; i < e->header_stack->size; ++i)
-	{
+	for (int i = 0; i < e->header_stack->size; ++i) {
 		process_header_to_links(e, stack_peek_index(e->header_stack, i));
 	}
 }
@@ -1471,7 +1461,7 @@ void process_table_to_link(mmd_engine * e, token * t) {
 		token * temp_token = t->next->child;
 
 		if (temp_token->next &&
-			temp_token->next->type == PAIR_BRACKET) {
+		        temp_token->next->type == PAIR_BRACKET) {
 			temp_token = temp_token->next;
 		}
 
@@ -1491,9 +1481,8 @@ void process_table_to_link(mmd_engine * e, token * t) {
 
 
 void process_table_stack(mmd_engine * e) {
-	for (int i = 0; i < e->table_stack->size; ++i)
-	{
-		process_table_to_link(e, stack_peek_index(e->table_stack, i));	
+	for (int i = 0; i < e->table_stack->size; ++i) {
+		process_table_to_link(e, stack_peek_index(e->table_stack, i));
 	}
 }
 
@@ -1501,15 +1490,14 @@ void process_table_stack(mmd_engine * e) {
 /// Parse metadata
 void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 	if ((scratch->extensions & EXT_NO_METADATA) ||
-		(scratch->extensions & EXT_COMPATIBILITY))
+	        (scratch->extensions & EXT_COMPATIBILITY))
 		return;
 
 	meta * m;
 	short header_level = -10;
 	char * temp_char = NULL;
 
-	for (int i = 0; i < e->metadata_stack->size; ++i)
-	{
+	for (int i = 0; i < e->metadata_stack->size; ++i) {
 		// Check for certain metadata keys
 		m = stack_peek_index(e->metadata_stack, i);
 
@@ -1527,12 +1515,12 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 			if ((scratch->output_format == FORMAT_LATEX) ||
-				(scratch->output_format == FORMAT_BEAMER) ||
-				(scratch->output_format == FORMAT_MEMOIR))
+			        (scratch->output_format == FORMAT_BEAMER) ||
+			        (scratch->output_format == FORMAT_MEMOIR))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
 			if ((scratch->output_format == FORMAT_ODT) ||
-				(scratch->output_format == FORMAT_FODT))
+			        (scratch->output_format == FORMAT_FODT))
 				header_level = atoi(m->value);
 		} else if (strcmp(m->key, "language") == 0) {
 			temp_char = label_from_string(m->value);
@@ -1574,18 +1562,18 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			temp_char = label_from_string(m->value);
 
 			if ((strcmp(temp_char, "dutch") == 0) ||
-				(strcmp(temp_char, "nl") == 0)) {
+			        (strcmp(temp_char, "nl") == 0)) {
 				scratch->quotes_lang = DUTCH;
 			} else if ((strcmp(temp_char, "french") == 0) ||
-				(strcmp(temp_char, "fr") == 0)) {
+			           (strcmp(temp_char, "fr") == 0)) {
 				scratch->quotes_lang = FRENCH;
 			} else if ((strcmp(temp_char, "german") == 0) ||
-				(strcmp(temp_char, "de") == 0)) {
+			           (strcmp(temp_char, "de") == 0)) {
 				scratch->quotes_lang = GERMAN;
 			} else if (strcmp(temp_char, "germanguillemets") == 0) {
 				scratch->quotes_lang = GERMANGUILL;
 			} else if ((strcmp(temp_char, "swedish") == 0) ||
-				(strcmp(temp_char, "sv") == 0)) {
+			           (strcmp(temp_char, "sv") == 0)) {
 				scratch->quotes_lang = SWEDISH;
 			} else {
 				scratch->quotes_lang = ENGLISH;
@@ -1671,13 +1659,13 @@ void automatic_search(mmd_engine * e, token * t, trie * ac) {
 			case TABLE_CELL:
 			case TABLE_ROW:
 				automatic_search(e, t->child, ac);
-				break;			
+				break;
 //			case PAIR_PAREN:
 			default:
 				break;
 		}
 
-		t = t->next;		
+		t = t->next;
 	}
 }
 
@@ -1694,15 +1682,13 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 	footnote * f;
 
 	// Add abbreviations to search trie
-	for (int i = 0; i < e->abbreviation_stack->size; ++i)
-	{
+	for (int i = 0; i < e->abbreviation_stack->size; ++i) {
 		f = stack_peek_index(e->abbreviation_stack, i);
 		trie_insert(ac, f->label_text, PAIR_BRACKET_ABBREVIATION);
 	}
 
 	// Add glossary to search trie (without leading '?')
-	for (int i = 0; i < e->glossary_stack->size; ++i)
-	{
+	for (int i = 0; i < e->glossary_stack->size; ++i) {
 		f = stack_peek_index(e->glossary_stack, i);
 		trie_insert(ac, f->clean_text, PAIR_BRACKET_GLOSSARY);
 	}
@@ -1731,7 +1717,7 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 	process_metadata_stack(e, scratch);
 
 	// Process abbreviations, glossary, etc.
-	if (!(e->extensions & EXT_COMPATIBILITY)) 
+	if (!(e->extensions & EXT_COMPATIBILITY))
 		identify_global_search_terms(e, scratch);
 
 
@@ -1898,11 +1884,11 @@ void parse_brackets(const char * source, scratch_pad * scratch, token * bracket,
 		// Don't output brackets
 		if (bracket->child) {
 			bracket->child->type = TEXT_EMPTY;
-		
+
 			if (bracket->child->mate)
 				bracket->child->mate->type = TEXT_EMPTY;
 		}
-		
+
 		*final_link = temp_link;
 
 		// Skip over second bracket if present
@@ -2083,7 +2069,7 @@ void footnote_from_bracket(const char * source, scratch_pad * scratch, token * t
 	// Get text inside bracket
 	char * text = text_inside_pair(source, t);
 	short footnote_id = extract_footnote_from_stack(scratch, text);
-	
+
 	free(text);
 
 	if (footnote_id == -1) {
@@ -2113,7 +2099,7 @@ void citation_from_bracket(const char * source, scratch_pad * scratch, token * t
 	// Get text inside bracket
 	char * text = text_inside_pair(source, t);
 	short citation_id = extract_citation_from_stack(scratch, text);
-	
+
 	free(text);
 
 	if (citation_id == -1) {
@@ -2152,7 +2138,7 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 
 	if (t->child) {
 		text = text_inside_pair(source, t);
-        memmove(text, &text[1], strlen(text));
+		memmove(text, &text[1], strlen(text));
 	} else {
 		text = malloc(t->len + 1);
 		memcpy(text, &source[t->start], t->len);
@@ -2160,7 +2146,7 @@ void glossary_from_bracket(const char * source, scratch_pad * scratch, token * t
 	}
 
 	short glossary_id = extract_glossary_from_stack(scratch, text);
-	
+
 	free(text);
 
 	if (glossary_id == -1) {
@@ -2211,7 +2197,7 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 	}
 
 	short abbr_id = extract_abbreviation_from_stack(scratch, &text[1]);
-	
+
 	free(text);
 
 	if (abbr_id == -1) {
@@ -2220,7 +2206,7 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
 		}
-		
+
 		// Create glossary
 		token * label = t->child;
 		while (label && label->type != PAIR_PAREN)
@@ -2257,8 +2243,8 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch) {
 	token * walker = table->child->child;
 
-	// Find the separator line	
-	while (walker->next) 
+	// Find the separator line
+	while (walker->next)
 		walker = walker->next;
 
 	walker->type = TEXT_EMPTY;
@@ -2343,12 +2329,12 @@ bool table_has_caption(token * t) {
 			t = t->next;
 
 			if (t && t->next &&
-				t->next->type == PAIR_BRACKET)
+			        t->next->type == PAIR_BRACKET)
 				t = t->next;
 
 			if (t && t->next &&
-				((t->next->type == TEXT_NL) ||
-				(t->next->type == TEXT_LINEBREAK)))
+			        ((t->next->type == TEXT_NL) ||
+			         (t->next->type == TEXT_LINEBREAK)))
 				t = t->next;
 
 			if (t && t->next == NULL)
@@ -2363,7 +2349,7 @@ bool table_has_caption(token * t) {
 /// Grab the first "word" after the end of the fence marker:
 /// ````perl
 /// or
-/// ```` perl 
+/// ```` perl
 char * get_fence_language_specifier(token * fence, const char * source) {
 	char * result = NULL;
 	size_t start = fence->start + fence->len;
@@ -2458,7 +2444,7 @@ bool raw_filter_text_matches(char * pattern, short format) {
 	} else if (strcmp("{=*}", pattern) == 0) {
 		return true;
 	} else {
-		switch(format){
+		switch(format) {
 			case FORMAT_HTML:
 				if (strstr(pattern, "html"))
 					return true;
