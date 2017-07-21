@@ -1661,6 +1661,7 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 				d_string_append_c(d, '\n');
 				d_string_append_c_array(d, &source[l->start], l->len);
 				break;
+			case LINE_SETEXT_2:
 			case LINE_YAML:
 				break;
 			case LINE_TABLE:

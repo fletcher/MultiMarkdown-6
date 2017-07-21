@@ -380,6 +380,7 @@ size_t scan_meta_line(const char * c) {
 	const char * start = c;
 
 /*!re2c
+	non_indent '-'{3,} nl meta_line { return (size_t) ( c - start ); }
 	meta_line	{ return (size_t)( c - start ); }
 	.?			{ return 0; }
 */	

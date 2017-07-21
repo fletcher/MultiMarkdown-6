@@ -133,7 +133,7 @@ block(A)			::= indented_code(B).		{ A = token_new_parent(B, BLOCK_CODE_INDENTED)
 block(A)			::= list_bullet(B).			{ A = token_new_parent(B, BLOCK_LIST_BULLETED); is_list_loose(A); }
 block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
 block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
-block(A)			::= meta_block(B) LINE_SETEXT_2(C).	{ A = token_new_parent(B, BLOCK_META); token_chain_append(A, C); }
+block(A)			::= meta_block(B) LINE_SETEXT_2(C).	{ A = token_new_parent(B, BLOCK_META); token_append_child(A, C); }
 block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
 block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); stack_push(engine->header_stack, A); }
 block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); stack_push(engine->header_stack, A); }

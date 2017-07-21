@@ -1296,7 +1296,7 @@ static void yy_reduce(
   yymsp[0].minor.yy0 = yylhsminor.yy0;
         break;
       case 27: /* block ::= meta_block LINE_SETEXT_2 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_META); token_chain_append(yylhsminor.yy0, yymsp[0].minor.yy0); }
+{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_META); token_append_child(yylhsminor.yy0, yymsp[0].minor.yy0); }
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
       case 28: /* block ::= para */
