@@ -87,8 +87,9 @@ token_pair_engine * token_pair_engine_new(void) {
 
 /// Free existing token pair engine
 void token_pair_engine_free(token_pair_engine * e) {
-	if (e == NULL)
+	if (e == NULL) {
 		return;
+	}
 
 	free(e);
 }
@@ -102,22 +103,26 @@ void token_pair_engine_add_pairing(token_pair_engine * e, unsigned short open_ty
 	e->can_close_pair[close_type] = 1;
 	(e->pair_type)[open_type][close_type] = pair_type;
 
-	if (options & PAIRING_ALLOW_EMPTY)
+	if (options & PAIRING_ALLOW_EMPTY) {
 		e->empty_allowed[pair_type] = true;
+	}
 
-	if (options & PAIRING_MATCH_LENGTH)
+	if (options & PAIRING_MATCH_LENGTH) {
 		e->match_len[pair_type] = true;
+	}
 
-	if (options & PAIRING_PRUNE_MATCH)
+	if (options & PAIRING_PRUNE_MATCH) {
 		e->should_prune[pair_type] = true;
+	}
 
 }
 
 
 /// Mate opener and closer together
 void token_pair_mate(token * a, token * b) {
-	if (a == NULL | b  == NULL)
+	if (a == NULL | b  == NULL) {
 		return;
+	}
 
 	a->mate = b;
 	a->unmatched = false;
@@ -131,8 +136,9 @@ void token_pair_mate(token * a, token * b) {
 void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e, stack * s, unsigned short depth) {
 
 	// Avoid stack overflow in "pathologic" input
-	if (depth == kMaxPairRecursiveDepth)
+	if (depth == kMaxPairRecursiveDepth) {
 		return;
+	}
 
 	// Walk the child chain
 	token * walker = parent->child;
@@ -161,8 +167,9 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 			if (i > start_counter + kLargeStackThreshold) {
 				for (int j = 0; j < kMaxTokenTypes; ++j) {
 					if (opener_count[j]) {
-						if (e->pair_type[j][walker->type])
+						if (e->pair_type[j][walker->type]) {
 							goto close;
+						}
 					}
 				}
 
@@ -171,6 +178,7 @@ void token_pairs_match_pairs_inside_token(token * parent, token_pair_engine * e,
 			}
 
 close:
+
 			// Find matching opener for this closer
 			while (i > start_counter) {
 				peek = stack_peek_index(s, i - 1);
@@ -204,6 +212,7 @@ close:
 						peek = stack_pop(s);
 						opener_count[peek->type]--;
 					}
+
 					#ifndef NDEBUG
 					fprintf(stderr, "stack now sized %lu\n", s->size);
 					#endif
@@ -220,16 +229,19 @@ close:
 
 					break;
 				}
+
 				#ifndef NDEBUG
 				else {
 					fprintf(stderr, "token type %d failed to match stack element\n", walker->type);
 				}
+
 				#endif
 				i--;
 			}
 		}
 
 open:
+
 		// Is this an opener?
 		if (walker->can_open && e->can_open_pair[walker->type] && walker->unmatched) {
 			stack_push(s, walker);

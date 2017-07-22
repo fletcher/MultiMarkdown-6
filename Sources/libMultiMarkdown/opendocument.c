@@ -133,8 +133,9 @@ static char * my_strdup(const char * source) {
 
 
 static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
-	if (!directory)
+	if (!directory) {
 		return false;
+	}
 
 	char * path = path_from_dir_base(directory, a->url);
 	mz_bool status;
@@ -579,6 +580,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
 
 	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+
 	if (mem->memory == NULL) {
 		// Out of memory
 		fprintf(stderr, "Out of memory\n");
@@ -733,6 +735,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 
 	len = strlen(mime);
 	status = mz_zip_writer_add_mem(zip, "mimetype", mime, len, MZ_NO_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding mimetype to zip.\n");
 	}
@@ -743,6 +746,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "meta.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding metadata to zip.\n");
 	}
@@ -753,6 +757,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "styles.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding styles to zip.\n");
 	}
@@ -763,6 +768,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "settings.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding settings to zip.\n");
 	}
@@ -770,11 +776,13 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 
 	// Create directories
 	status = mz_zip_writer_add_mem(zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
 
 	status = mz_zip_writer_add_mem(zip, "Pictures/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
@@ -785,6 +793,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "META-INF/manifest.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding manifest to zip.\n");
 	}
@@ -932,6 +941,7 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "content.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding content.xml to zip.\n");
 	}
@@ -945,6 +955,7 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 	free(result->str);
 
 	status = mz_zip_writer_finalize_heap_archive(zip, (void **) &(result->str), (size_t *) &(result->currentStringLength));
+
 	if (!status) {
 		fprintf(stderr, "Error finalizing zip archive.\n");
 	}

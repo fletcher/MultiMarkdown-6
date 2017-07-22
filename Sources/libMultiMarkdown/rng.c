@@ -34,10 +34,22 @@ long ran_x[KK];                    /* the generator state */
 #endif
 {
 	register int i,j;
-	for (j=0; j<KK; j++) aa[j]=ran_x[j];
-	for (; j<n; j++) aa[j]=mod_diff(aa[j-KK],aa[j-LL]);
-	for (i=0; i<LL; i++,j++) ran_x[i]=mod_diff(aa[j-KK],aa[j-LL]);
-	for (; i<KK; i++,j++) ran_x[i]=mod_diff(aa[j-KK],ran_x[i-LL]);
+
+	for (j=0; j<KK; j++) {
+		aa[j]=ran_x[j];
+	}
+
+	for (; j<n; j++) {
+		aa[j]=mod_diff(aa[j-KK],aa[j-LL]);
+	}
+
+	for (i=0; i<LL; i++,j++) {
+		ran_x[i]=mod_diff(aa[j-KK],aa[j-LL]);
+	}
+
+	for (; i<KK; i++,j++) {
+		ran_x[i]=mod_diff(aa[j-KK],ran_x[i-LL]);
+	}
 }
 
 /* the following routines are from exercise 3.6--15 */
@@ -61,35 +73,64 @@ long *ran_arr_ptr=&ran_arr_dummy; /* the next random number, or -1 */
 	register int t,j;
 	long x[KK+KK-1];              /* the preparation buffer */
 	register long ss=(seed+2)&(MM-2);
+
 	for (j=0; j<KK; j++) {
 		x[j]=ss;                      /* bootstrap the buffer */
 		ss<<=1;
-		if (ss>=MM) ss-=MM-2; /* cyclic shift 29 bits */
+
+		if (ss>=MM) {
+			ss-=MM-2;    /* cyclic shift 29 bits */
+		}
 	}
+
 	x[1]++;              /* make x[1] (and only x[1]) odd */
+
 	for (ss=seed&(MM-1),t=TT-1; t; ) {
-		for (j=KK-1; j>0; j--) x[j+j]=x[j], x[j+j-1]=0; /* "square" */
+		for (j=KK-1; j>0; j--) {
+			x[j+j]=x[j], x[j+j-1]=0;    /* "square" */
+		}
+
 		for (j=KK+KK-2; j>=KK; j--)
 			x[j-(KK-LL)]=mod_diff(x[j-(KK-LL)],x[j]),
 			             x[j-KK]=mod_diff(x[j-KK],x[j]);
+
 		if (is_odd(ss)) {              /* "multiply by z" */
-			for (j=KK; j>0; j--)  x[j]=x[j-1];
+			for (j=KK; j>0; j--) {
+				x[j]=x[j-1];
+			}
+
 			x[0]=x[KK];            /* shift the buffer cyclically */
 			x[LL]=mod_diff(x[LL],x[KK]);
 		}
-		if (ss) ss>>=1;
-		else t--;
+
+		if (ss) {
+			ss>>=1;
+		} else {
+			t--;
+		}
 	}
-	for (j=0; j<LL; j++) ran_x[j+KK-LL]=x[j];
-	for (; j<KK; j++) ran_x[j-LL]=x[j];
-	for (j=0; j<10; j++) ran_array(x,KK+KK-1); /* warm things up */
+
+	for (j=0; j<LL; j++) {
+		ran_x[j+KK-LL]=x[j];
+	}
+
+	for (; j<KK; j++) {
+		ran_x[j-LL]=x[j];
+	}
+
+	for (j=0; j<10; j++) {
+		ran_array(x,KK+KK-1);    /* warm things up */
+	}
+
 	ran_arr_ptr=&ran_arr_started;
 }
 
 #define ran_arr_next() (*ran_arr_ptr>=0? *ran_arr_ptr++: ran_arr_cycle())
 long ran_arr_cycle() {
-	if (ran_arr_ptr==&ran_arr_dummy)
-		ran_start(314159L); /* the user forgot to initialize */
+	if (ran_arr_ptr==&ran_arr_dummy) {
+		ran_start(314159L);    /* the user forgot to initialize */
+	}
+
 	ran_array(ran_arr_buf,QUALITY);
 	ran_arr_buf[KK]=-1;
 	ran_arr_ptr=ran_arr_buf+1;

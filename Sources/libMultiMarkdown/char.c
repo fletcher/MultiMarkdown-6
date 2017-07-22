@@ -99,11 +99,13 @@ int char_is_line_ending(char c) {
 
 // Is character part of Windows line ending ('\r\n')?
 int char_is_windows_line_ending(char * c) {
-	if (*c == '\n')
+	if (*c == '\n') {
 		return (*(c - 1) == '\r') ? 1 : 0;
+	}
 
-	if (*c == '\r')
+	if (*c == '\r') {
 		return (*(c + 1) == '\n') ? 1 : 0;
+	}
 
 	return 0;
 }

@@ -133,8 +133,9 @@ char * textbundle_info_json(void) {
 
 
 static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
-	if (!directory)
+	if (!directory) {
 		return false;
+	}
 
 	char * path = path_from_dir_base(directory, a->url);
 	mz_bool status;
@@ -174,6 +175,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
 
 	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+
 	if (mem->memory == NULL) {
 		// Out of memory
 		fprintf(stderr, "Out of memory\n");
@@ -285,14 +287,18 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 
 					free(clean);
 				}
+
 				break;
+
 			case BLOCK_EMPTY:
+
 				// Is this a link definition?
 				for (int i = 0; i < e->definition_stack->size; ++i) {
 					if (t == stack_peek_index(e->definition_stack, i)) {
 						// Find matching link
 						for (int j = 0; j < e->link_stack->size; ++j) {
 							l = stack_peek_index(e->link_stack, j);
+
 							if (l->label->start == t->child->start) {
 								// This is a match
 								HASH_FIND_STR(e->asset_hash, l->url, a);
@@ -305,11 +311,14 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 						}
 					}
 				}
+
 				break;
+
 			default:
 				if (t->child) {
 					traverse_for_images(t->child, text, e, offset, destination, url);
 				}
+
 				break;
 		}
 
@@ -333,6 +342,7 @@ void sub_asset_paths(DString * text, mmd_engine * e) {
 
 			for (int i = 0; i < e->metadata_stack->size; ++i) {
 				m = stack_peek_index(e->metadata_stack, i);
+
 				if (strcmp("css", m->key) == 0) {
 					// Get METADATA range
 					t = e->root->child;
@@ -340,6 +350,7 @@ void sub_asset_paths(DString * text, mmd_engine * e) {
 
 					// Substitute inside metadata block
 					HASH_FIND_STR(e->asset_hash, m->value, a);
+
 					if (a) {
 						memcpy(&destination[7], a->asset_path, 36);
 						offset += d_string_replace_text_in_range(text, t->start, t->len, m->value, destination);
@@ -375,12 +386,14 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "info.json", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding JSON info to zip.\n");
 	}
 
 	// Create directories
 	status = mz_zip_writer_add_mem(&zip, "assets/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding assets directory to zip.\n");
 	}
@@ -392,6 +405,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 
 	len = temp->currentStringLength;
 	status = mz_zip_writer_add_mem(&zip, "text.markdown", temp->str, len, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
 	}
@@ -399,6 +413,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	// Add html version document
 	len = strlen(body);
 	status = mz_zip_writer_add_mem(&zip, "text.html", body, len, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
 	}
@@ -412,6 +427,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	free(result->str);
 
 	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), (size_t *) &(result->currentStringLength));
+
 	if (!status) {
 		fprintf(stderr, "Error finalizing zip.\n");
 	}

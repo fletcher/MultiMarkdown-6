@@ -66,8 +66,9 @@ stack * stack_new(int startingSize) {
 	stack * s = malloc(sizeof(stack));
 
 	if (s) {
-		if (startingSize <= 0)
+		if (startingSize <= 0) {
 			startingSize = kStackStartingSize;
+		}
 
 		s->element = malloc(sizeof(void *) * startingSize);
 
@@ -106,8 +107,9 @@ void stack_push(stack * s, void * element) {
 void * stack_pop(stack * s) {
 	void * last = stack_peek(s);
 
-	if (s->size != 0)
+	if (s->size != 0) {
 		s->size--;
+	}
 
 	return last;
 }
@@ -115,8 +117,9 @@ void * stack_pop(stack * s) {
 
 /// Peek at the top item on the stack
 void * stack_peek(stack * s) {
-	if (s->size == 0)
+	if (s->size == 0) {
 		return NULL;
+	}
 
 	return s->element[(s->size) - 1];
 }
@@ -124,8 +127,9 @@ void * stack_peek(stack * s) {
 
 /// Peek at a specific index in the stack
 void * stack_peek_index(stack * s, size_t index) {
-	if (index >= s->size)
+	if (index >= s->size) {
 		return NULL;
+	}
 
 	return s->element[index];
 }

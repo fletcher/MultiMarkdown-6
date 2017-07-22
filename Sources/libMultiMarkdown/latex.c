@@ -88,24 +88,30 @@ void mmd_print_char_latex(DString * out, char c) {
 		case '\\':
 			print_const("\\textbackslash{}");
 			break;
+
 		case '~':
 			print_const("\\ensuremath{\\sim}");
 			break;
+
 		case '/':
 			print_const("\\slash ");
 			break;
+
 		case '^':
 			print_const("\\^{}");
 			break;
+
 		case '<':
 		case '>':
 			print_char('$');
 			print_char(c);
 			print_char('$');
 			break;
+
 		case '|':
 			print_const("\\textbar{}");
 			break;
+
 		case '#':
 		case '{':
 		case '}':
@@ -114,6 +120,7 @@ void mmd_print_char_latex(DString * out, char c) {
 		case '&':
 		case '_':
 			print_char('\\');
+
 		default:
 			print_char(c);
 			break;
@@ -122,8 +129,9 @@ void mmd_print_char_latex(DString * out, char c) {
 
 
 void mmd_print_string_latex(DString * out, const char * str) {
-	if (str == NULL)
+	if (str == NULL) {
 		return;
+	}
 
 	while (*str != '\0') {
 		mmd_print_char_latex(out, *str);
@@ -137,80 +145,104 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 		case DASH_N:
 			print_const("--");
 			break;
+
 		case DASH_M:
 			print_const("---");
 			break;
+
 		case ELLIPSIS:
 			print_const("{\\ldots}");
 			break;
+
 		case APOSTROPHE:
 			print_const("'");
 			break;
+
 		case QUOTE_LEFT_SINGLE:
 			switch (scratch->quotes_lang) {
 				case SWEDISH:
 					print_const("'");
 					break;
+
 				case FRENCH:
 					print_const("'");
 					break;
+
 				case GERMAN:
 					print_const("‚");
 					break;
+
 				case GERMANGUILL:
 					print_const("›");
 					break;
+
 				default:
 					print_const("`");
 			}
+
 			break;
+
 		case QUOTE_RIGHT_SINGLE:
 			switch (scratch->quotes_lang) {
 				case GERMAN:
 					print_const("`");
 					break;
+
 				case GERMANGUILL:
 					print_const("‹");
 					break;
+
 				default:
 					print_const("'");
 			}
+
 			break;
+
 		case QUOTE_LEFT_DOUBLE:
 			switch (scratch->quotes_lang) {
 				case DUTCH:
 				case GERMAN:
 					print_const("„");
 					break;
+
 				case GERMANGUILL:
 					print_const("»");
 					break;
+
 				case FRENCH:
 					print_const("«");
 					break;
+
 				case SWEDISH:
 					print_const("''");
 					break;
+
 				default:
 					print_const("``");
 			}
+
 			break;
+
 		case QUOTE_RIGHT_DOUBLE:
 			switch (scratch->quotes_lang) {
 				case GERMAN:
 					print_const("``");
 					break;
+
 				case GERMANGUILL:
 					print_const("«");
 					break;
+
 				case FRENCH:
 					print_const("»");
 					break;
+
 				case SWEDISH:
 				case DUTCH:
 				default:
 					print_const("''");
 			}
+
 			break;
 	}
 }
@@ -239,12 +271,14 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 			} else {
 				printf("\\autoref{%s}", &(link->url)[1]);
 			}
+
 			return;
 		} else {
 			printf("\\href{%s}", link->url);
 		}
-	} else
+	} else {
 		print_const("\\href{}");
+	}
 
 	print_const("{");
 
@@ -271,8 +305,9 @@ static char * correct_dimension_units(char *original) {
 
 	result = my_strdup(original);
 
-	for (i = 0; result[i]; i++)
+	for (i = 0; result[i]; i++) {
 		result[i] = tolower(result[i]);
+	}
 
 	if (strstr(&result[strlen(result)-2],"px")) {
 		result[strlen(result)-2] = '\0';
@@ -290,8 +325,9 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 	float temp_float;
 
 	// Compatibility mode doesn't allow figures
-	if (scratch->extensions & EXT_COMPATIBILITY)
+	if (scratch->extensions & EXT_COMPATIBILITY) {
 		is_figure = false;
+	}
 
 	if (is_figure) {
 		print_const("\\begin{figure}[htbp]\n\\centering\n");
@@ -357,19 +393,22 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 		print_const("keepaspectratio,width=\\textwidth,height=0.75\\textheight");
 	}
 
-	if (link->url)
+	if (link->url) {
 		printf("]{%s}", link->url);
-	else
+	} else {
 		print_const("]{}");
+	}
 
 
 	if (is_figure) {
 		print_const("\n");
+
 		if (text) {
 			print_const("\\caption{");
 			mmd_export_token_tree_latex(out, source, text->child, scratch);
 			print_const("}\n");
 		}
+
 		if (link->label) {
 			// \todo: Need to decide on approach to id's
 			char * label = label_from_token(source, link->label);
@@ -405,6 +444,7 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 			if (*counter < scratch->header_stack->size - 1) {
 				next = stack_peek_index(scratch->header_stack, *counter + 1);
 				next_level = next->type - BLOCK_H1 + 1;
+
 				if (next_level > entry_level) {
 					// This entry has children
 					(*counter)++;
@@ -436,8 +476,9 @@ void mmd_export_toc_latex(DString * out, const char * source, scratch_pad * scra
 
 
 void mmd_export_token_latex(DString * out, const char * source, token * t, scratch_pad * scratch) {
-	if (t == NULL)
+	if (t == NULL) {
 		return;
+	}
 
 	short	temp_short;
 	short	temp_short2;
@@ -455,22 +496,28 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case AMPERSAND_LONG:
 			print_const("\\&");
 			break;
+
 		case ANGLE_LEFT:
 			print_const("<");
 			break;
+
 		case ANGLE_RIGHT:
 			print_const(">");
 			break;
+
 		case APOSTROPHE:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_token(t);
 			} else {
 				print_localized(APOSTROPHE);
 			}
+
 			break;
+
 		case BACKTICK:
 			print_token(t);
 			break;
+
 		case BLOCK_BLOCKQUOTE:
 			pad(out, 2, scratch);
 			print_const("\\begin{quote}\n");
@@ -480,6 +527,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("\\end{quote}");
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_CODE_FENCED:
 			pad(out, 2, scratch);
 
@@ -495,9 +543,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 							case LINE_FENCE_BACKTICK_5:
 								temp_token = t->child->tail;
 								break;
+
 							default:
 								temp_token = NULL;
 						}
+
 						if (temp_token) {
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
@@ -510,6 +560,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					free(temp_char);
 					break;
 				}
+
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
 				print_const("\\begin{verbatim}\n");
@@ -523,8 +574,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			} else {
 				print_const("\\end{verbatim}");
 			}
+
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
 			print_const("\\begin{verbatim}\n");
@@ -532,39 +585,47 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("\\end{verbatim}");
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_DEFINITION:
 			pad(out, 2, scratch);
 
 			temp_short = scratch->list_is_tight;
-			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next))
+
+			if (!(t->child->next && (t->child->next->type == BLOCK_EMPTY) && t->child->next->next)) {
 				scratch->list_is_tight = true;
+			}
 
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 
 			scratch->list_is_tight = temp_short;
 			break;
+
 		case BLOCK_DEFLIST:
 			pad(out, 2, scratch);
 
 			// Group consecutive definition lists into a single list.
 			// lemon's LALR(1) parser can't properly handle this (to my understanding).
 
-			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST)))
+			if (!(t->prev && (t->prev->type == BLOCK_DEFLIST))) {
 				print_const("\\begin{description}\n");
+			}
 
 			scratch->padded = 2;
 
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			pad(out, 1, scratch);
 
-			if (!(t->next && (t->next->type == BLOCK_DEFLIST)))
+			if (!(t->next && (t->next->type == BLOCK_DEFLIST))) {
 				print_const("\\end{description}\n");
+			}
 
 			scratch->padded = 1;
 			break;
+
 		case BLOCK_EMPTY:
 			break;
+
 		case BLOCK_H1:
 		case BLOCK_H2:
 		case BLOCK_H3:
@@ -574,13 +635,16 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case BLOCK_SETEXT_1:
 		case BLOCK_SETEXT_2:
 			pad(out, 2, scratch);
+
 			switch (t->type) {
 				case BLOCK_SETEXT_1:
 					temp_short = 1;
 					break;
+
 				case BLOCK_SETEXT_2:
 					temp_short = 2;
 					break;
+
 				default:
 					temp_short = t->type - BLOCK_H1 + 1;
 			}
@@ -589,21 +653,27 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				case 1:
 					print_const("\\part{");
 					break;
+
 				case 2:
 					print_const("\\chapter{");
 					break;
+
 				case 3:
 					print_const("\\section{");
 					break;
+
 				case 4:
 					print_const("\\subsection{");
 					break;
+
 				case 5:
 					print_const("\\subsubsection{");
 					break;
+
 				case 6:
 					print_const("\\paragraph{");
 					break;
+
 				case 7:
 					print_const("\\subparagraph{");
 					break;
@@ -615,35 +685,44 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print_const("}");
 			} else {
 				temp_token = manual_label_from_header(t, source);
+
 				if (temp_token) {
 					temp_char = label_from_token(source, temp_token);
 				} else {
 					temp_char = label_from_token(source, t);
 				}
+
 				printf("}\n\\label{%s}", temp_char);
 				free(temp_char);
 			}
+
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_HR:
 			pad(out, 2, scratch);
 			print_const("\\begin{center}\\rule{3in}{0.4pt}\\end{center}");
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_HTML:
 			// Don't print HTML
 			break;
+
 		case BLOCK_LIST_BULLETED_LOOSE:
 		case BLOCK_LIST_BULLETED:
 			temp_short = scratch->list_is_tight;
+
 			switch (t->type) {
 				case BLOCK_LIST_BULLETED_LOOSE:
 					scratch->list_is_tight = false;
 					break;
+
 				case BLOCK_LIST_BULLETED:
 					scratch->list_is_tight = true;
 					break;
 			}
+
 			pad(out, 2, scratch);
 			print_const("\\begin{itemize}");
 			scratch->padded = 1;
@@ -653,17 +732,21 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			scratch->padded = 0;
 			scratch->list_is_tight = temp_short;
 			break;
+
 		case BLOCK_LIST_ENUMERATED_LOOSE:
 		case BLOCK_LIST_ENUMERATED:
 			temp_short = scratch->list_is_tight;
+
 			switch (t->type) {
 				case BLOCK_LIST_ENUMERATED_LOOSE:
 					scratch->list_is_tight = false;
 					break;
+
 				case BLOCK_LIST_ENUMERATED:
 					scratch->list_is_tight = true;
 					break;
 			}
+
 			pad(out, 2, scratch);
 			print_const("\\begin{enumerate}");
 			scratch->padded = 1;
@@ -673,6 +756,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			scratch->padded = 0;
 			scratch->list_is_tight = temp_short;
 			break;
+
 		case BLOCK_LIST_ITEM:
 			pad(out, 2, scratch);
 			print_const("\\item{} ");
@@ -680,6 +764,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_LIST_ITEM_TIGHT:
 			pad(out, 2, scratch);
 			print_const("\\item{} ");
@@ -687,13 +772,16 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_META:
 			break;
+
 		case BLOCK_PARA:
 			pad(out, 2, scratch);
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_TABLE:
 			pad(out, 2, scratch);
 
@@ -738,6 +826,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			scratch->skip_token = temp_short;
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_TABLE_HEADER:
 			pad(out, 2, scratch);
 
@@ -753,9 +842,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					case 'C':
 						print_char(scratch->table_alignment[i]);
 						break;
+
 					case 'N':
 						print_char('L');
 						break;
+
 					default:
 						print_char('l');
 						break;
@@ -772,6 +863,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 			scratch->padded = 1;
 			break;
+
 		case BLOCK_TABLE_SECTION:
 			pad(out, 2, scratch);
 			scratch->padded = 2;
@@ -779,6 +871,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("\\bottomrule");
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_TERM:
 			pad(out, 2, scratch);
 			print_const("\\item[");
@@ -786,112 +879,147 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("]");
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_TOC:
 			pad(out, 2, scratch);
 			print_const("\\tableofcontents");
 			scratch->padded = 0;
 			break;
+
 		case BRACE_DOUBLE_LEFT:
 			print_const("\\{\\{");
 			break;
+
 		case BRACE_DOUBLE_RIGHT:
 			print_const("\\}\\}");
 			break;
+
 		case BRACKET_LEFT:
 			print_const("[");
 			break;
+
 		case BRACKET_ABBREVIATION_LEFT:
 			print_const("[>");
 			break;
+
 		case BRACKET_CITATION_LEFT:
 			print_const("[#");
 			break;
+
 		case BRACKET_FOOTNOTE_LEFT:
 			print_const("[^");
 			break;
+
 		case BRACKET_GLOSSARY_LEFT:
 			print_const("[?");
 			break;
+
 		case BRACKET_IMAGE_LEFT:
 			print_const("![");
 			break;
+
 		case BRACKET_VARIABLE_LEFT:
 			print_const("[\%");
 			break;
+
 		case BRACKET_RIGHT:
 			print_const("]");
 			break;
+
 		case CODE_FENCE:
 			break;
+
 		case COLON:
 			print_const(":");
 			break;
+
 		case CRITIC_ADD_OPEN:
 			print_const("\\{++");
 			break;
+
 		case CRITIC_ADD_CLOSE:
 			print_const("++\\}");
 			break;
+
 		case CRITIC_COM_OPEN:
 			print_const("\\{>>");
 			break;
+
 		case CRITIC_COM_CLOSE:
 			print_const("<<\\}");
 			break;
+
 		case CRITIC_DEL_OPEN:
 			print_const("\\{--");
 			break;
+
 		case CRITIC_DEL_CLOSE:
 			print_const("--\\}");
 			break;
+
 		case CRITIC_HI_OPEN:
 			print_const("\\{==");
 			break;
+
 		case CRITIC_HI_CLOSE:
 			print_const("==\\}");
 			break;
+
 		case CRITIC_SUB_OPEN:
 			print_const("\\{~~");
 			break;
+
 		case CRITIC_SUB_DIV:
 			print_const("~>");
 			break;
+
 		case CRITIC_SUB_CLOSE:
 			print_const("~~\\}");
 			break;
+
 		case DASH_M:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_token(t);
 			} else {
 				print_localized(DASH_M);
 			}
+
 			break;
+
 		case DASH_N:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_token(t);
 			} else {
 				print_localized(DASH_N);
 			}
+
 			break;
+
 		case DOC_START_TOKEN:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+
 		case ELLIPSIS:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_token(t);
 			} else {
 				print_localized(ELLIPSIS);
 			}
+
 			break;
+
 		case EMPH_START:
 			print_const("\\emph{");
 			break;
+
 		case EMPH_STOP:
 			print_const("}");
 			break;
+
 		case EQUAL:
 			print_const("=");
 			break;
+
 		case ESCAPED_CHARACTER:
 			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
 			        (source[t->start + 1] == ' ')) {
@@ -899,7 +1027,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			} else {
 				mmd_print_char_latex(out, source[t->start + 1]);
 			}
+
 			break;
+
 		case HASH1:
 		case HASH2:
 		case HASH3:
@@ -914,7 +1044,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					mmd_print_char_latex(out, source[t->start + i]);
 				}
 			}
+
 			break;
+
 		case HTML_ENTITY:
 			if (source[t->start + 1] == '#') {
 				print_const("\\&\\#");
@@ -923,7 +1055,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print_const("\\");
 				print_token(t);
 			}
+
 			break;
+
 		case HTML_COMMENT_START:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("<!--");
@@ -931,7 +1065,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print_const("<!");
 				print_localized(DASH_N);
 			}
+
 			break;
+
 		case HTML_COMMENT_STOP:
 			if (!(scratch->extensions & EXT_SMART)) {
 				print_const("-->");
@@ -939,17 +1075,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				print_localized(DASH_N);
 				print_const(">");
 			}
+
 			break;
+
 		case INDENT_SPACE:
 			print_char(' ');
 			break;
+
 		case INDENT_TAB:
 			print_char('\t');
 			break;
+
 		case LINE_LIST_BULLETED:
 		case LINE_LIST_ENUMERATED:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+
 		case LINE_SETEXT_2:
 		case MANUAL_LABEL:
 		case MARKER_BLOCKQUOTE:
@@ -962,33 +1103,45 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
 			break;
+
 		case MATH_BRACKET_OPEN:
 			print_const("\\[");
 			break;
+
 		case MATH_BRACKET_CLOSE:
 			print_const("\\]");
 			break;
+
 		case MATH_DOLLAR_SINGLE:
-			if (t->mate)
+			if (t->mate) {
 				print_const("$");
-			else
+			} else {
 				print_const("\\$");
+			}
+
 			break;
+
 		case MATH_DOLLAR_DOUBLE:
-			if (t->mate)
+			if (t->mate) {
 				print_const("$$");
-			else
+			} else {
 				print_const("\\$\\$");
+			}
+
 			break;
+
 		case MATH_PAREN_OPEN:
 			print_const("\\(");
 			break;
+
 		case MATH_PAREN_CLOSE:
 			print_const("\\)");
 			break;
+
 		case NON_INDENT_SPACE:
 			print_char(' ');
 			break;
+
 		case PAIR_ANGLE:
 			temp_char = url_accept(source, t->start + 1, t->len - 2, NULL, true);
 
@@ -1017,7 +1170,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 			free(temp_char);
 			break;
+
 		case PAIR_BACKTICK:
+
 			// Strip leading whitespace
 			switch (t->child->next->type) {
 				case TEXT_NL:
@@ -1026,11 +1181,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				case NON_INDENT_SPACE:
 					t->child->next->type = TEXT_EMPTY;
 					break;
+
 				case TEXT_PLAIN:
 					while (t->child->next->len && char_is_whitespace(source[t->child->next->start])) {
 						t->child->next->start++;
 						t->child->next->len--;
 					}
+
 					break;
 			}
 
@@ -1042,12 +1199,15 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				case NON_INDENT_SPACE:
 					t->child->mate->prev->type = TEXT_EMPTY;
 					break;
+
 				case TEXT_PLAIN:
 					while (t->child->mate->prev->len && char_is_whitespace(source[t->child->mate->prev->start + t->child->mate->prev->len - 1])) {
 						t->child->mate->prev->len--;
 					}
+
 					break;
 			}
+
 			t->child->type = TEXT_EMPTY;
 			t->child->mate->type = TEXT_EMPTY;
 
@@ -1056,6 +1216,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (raw_filter_matches(t->next, source, FORMAT_LATEX)) {
 					d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
 				}
+
 				// Skip over PAIR_RAW_FILTER
 				scratch->skip_token = 1;
 				break;
@@ -1065,10 +1226,12 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
 			print_const("}");
 			break;
+
 		case PAIR_BRACE:
 		case PAIR_BRACES:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
 			        (t->next && t->next->type == PAIR_BRACKET_CITATION)) {
@@ -1092,11 +1255,13 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 						temp_token = temp_token->next;
 					}
 
-					if (temp_token && temp_token->type == TEXT_NL)
+					if (temp_token && temp_token->type == TEXT_NL) {
 						temp_token = temp_token->next;
+					}
 
-					if (temp_token && temp_token->type == TEXT_LINEBREAK)
+					if (temp_token && temp_token->type == TEXT_LINEBREAK) {
 						temp_token = temp_token->next;
+					}
 
 					if (t->prev || temp_token) {
 						mmd_export_image_latex(out, source, t, temp_link, scratch, false);
@@ -1117,7 +1282,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			// No links exist, so treat as normal
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+
 		case PAIR_BRACKET_ABBREVIATION:
+
 			// Which might also be an "auto-tagged" abbreviation
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
@@ -1156,7 +1323,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_BRACKET_CITATION:
 parse_citation:
 			temp_bool = true;		// Track whether this is regular vs 'not cited'
@@ -1214,6 +1383,7 @@ parse_citation:
 
 					// Are we citep vs citet?
 					temp_char2 = clean_inside_pair(source, t, false);
+
 					if (temp_char2[strlen(temp_char2) - 1] == ';') {
 						temp_bool = true;		// citet
 						temp_char2[strlen(temp_char2) - 1] = '\0';
@@ -1234,6 +1404,7 @@ parse_citation:
 						// Are there two arguments in the locator?
 						// e.g. `[foo\]\[bar]`
 						temp_char3 = strstr(temp_char, "\\]\\[");
+
 						if (temp_char3) {
 							// Convert `\]\[` to `][`
 							temp_char[temp_char3 - temp_char] = ']';
@@ -1275,7 +1446,9 @@ parse_citation:
 				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_BRACKET_FOOTNOTE:
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
@@ -1322,8 +1495,11 @@ parse_citation:
 				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_BRACKET_GLOSSARY:
+
 			// Which might also be an "auto-tagged" glossary
 			if (scratch->extensions & EXT_NOTES) {
 				// Note-based syntax enabled
@@ -1337,10 +1513,11 @@ parse_citation:
 					// This instance is not properly formed
 					print_const("[?");
 
-					if (t->child)
+					if (t->child) {
 						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
-					else
+					} else {
 						print_token(t);
+					}
 
 					print_const("]");
 					break;
@@ -1384,26 +1561,34 @@ parse_citation:
 				// Note-based syntax disabled
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_BRACKET_VARIABLE:
 			temp_char = text_inside_pair(source, t);
 			temp_char2 = extract_metadata(scratch, temp_char);
 
-			if (temp_char2)
+			if (temp_char2) {
 				mmd_print_string_latex(out, temp_char2);
-			else
+			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
+			}
 
 			// Don't free temp_char2 (it belongs to meta *)
 			free(temp_char);
 			break;
+
 		case PAIR_CRITIC_ADD:
+
 			// Ignore if we're rejecting
-			if (scratch->extensions & EXT_CRITIC_REJECT)
+			if (scratch->extensions & EXT_CRITIC_REJECT) {
 				break;
+			}
+
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
+
 				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
 					mmd_export_token_tree_latex(out, source, t->child, scratch);
 				} else {
@@ -1414,14 +1599,20 @@ parse_citation:
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_CRITIC_DEL:
+
 			// Ignore if we're accepting
-			if (scratch->extensions & EXT_CRITIC_ACCEPT)
+			if (scratch->extensions & EXT_CRITIC_ACCEPT) {
 				break;
+			}
+
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
+
 				if (scratch->extensions & EXT_CRITIC_REJECT) {
 					mmd_export_token_tree_latex(out, source, t->child, scratch);
 				} else {
@@ -1432,12 +1623,17 @@ parse_citation:
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_CRITIC_COM:
+
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-			        (scratch->extensions & EXT_CRITIC_ACCEPT))
+			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
 				break;
+			}
+
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
@@ -1447,12 +1643,17 @@ parse_citation:
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_CRITIC_HI:
+
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-			        (scratch->extensions & EXT_CRITIC_ACCEPT))
+			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
 				break;
+			}
+
 			if (scratch->extensions & EXT_CRITIC) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
@@ -1463,19 +1664,24 @@ parse_citation:
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case CRITIC_SUB_DIV_A:
 			print_const("~");
 			break;
+
 		case CRITIC_SUB_DIV_B:
 			print_const("&gt;");
 			break;
+
 		case PAIR_CRITIC_SUB_DEL:
 			if ((scratch->extensions & EXT_CRITIC) &&
 			        (t->next) &&
 			        (t->next->type == PAIR_CRITIC_SUB_ADD)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
+
 				if (scratch->extensions & EXT_CRITIC_ACCEPT) {
 
 				} else if (scratch->extensions & EXT_CRITIC_REJECT) {
@@ -1488,13 +1694,16 @@ parse_citation:
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_CRITIC_SUB_ADD:
 			if ((scratch->extensions & EXT_CRITIC) &&
 			        (t->prev) &&
 			        (t->prev->type == PAIR_CRITIC_SUB_DEL)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
+
 				if (scratch->extensions & EXT_CRITIC_REJECT) {
 
 				} else if (scratch->extensions & EXT_CRITIC_ACCEPT) {
@@ -1507,19 +1716,26 @@ parse_citation:
 			} else {
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
 			}
+
 			break;
+
 		case PAIR_HTML_COMMENT:
 			break;
+
 		case PAIR_MATH:
-			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
+			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0) {
 				mmd_export_token_latex(out, source, t->child, scratch);
+			}
 
 			// Math is raw LaTeX -- use string itself rather than interior tokens
 			d_string_append_c_array(out, &(source[t->child->start + t->child->len]), t->child->mate->start - t->child->start - t->child->len);
 
-			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0)
+			if (strncmp(&source[t->child->start + t->child->len], "\\begin", 6) != 0) {
 				mmd_export_token_latex(out, source, t->child->mate, scratch);
+			}
+
 			break;
+
 		case PAIR_EMPH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
@@ -1531,50 +1747,69 @@ parse_citation:
 		case PAIR_UL:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			break;
+
 		case PAREN_LEFT:
 			print_const("(");
 			break;
+
 		case PAREN_RIGHT:
 			print_const(")");
 			break;
+
 		case PIPE:
 			for (int i = 0; i < t->len; ++i) {
 				print_const("\\textbar{}");
 			}
+
 			break;
+
 		case PLUS:
 			print_token(t);
 			break;
+
 		case QUOTE_SINGLE:
-			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
+			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART))) {
 				print_const("'");
-			else
+			} else {
 				(t->start < t->mate->start) ? ( print_localized(QUOTE_LEFT_SINGLE) ) : ( print_localized(QUOTE_RIGHT_SINGLE) );
+			}
+
 			break;
+
 		case QUOTE_DOUBLE:
-			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
+			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART))) {
 				print_const("''");
-			else
+			} else {
 				(t->start < t->mate->start) ? ( print_localized(QUOTE_LEFT_DOUBLE) ) : ( print_localized(QUOTE_RIGHT_DOUBLE) );
+			}
+
 			break;
+
 		case QUOTE_RIGHT_ALT:
-			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART)))
+			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART))) {
 				print_const("''");
-			else
+			} else {
 				print_localized(QUOTE_RIGHT_DOUBLE);
+			}
+
 			break;
+
 		case SLASH:
 			print_const("\\slash ");
 			break;
+
 		case STAR:
 			print_token(t);
 			break;
+
 		case STRONG_START:
 			print_const("\\textbf{");
 			break;
+
 		case STRONG_STOP:
 			print_const("}");
 			break;
+
 		case SUBSCRIPT:
 			if (t->mate) {
 				(t->start < t->mate->start) ? (print_const("\\textsubscript{")) : (print_const("}"));
@@ -1585,7 +1820,9 @@ parse_citation:
 			} else {
 				print_const("\\ensuremath{\\sim}");
 			}
+
 			break;
+
 		case SUPERSCRIPT:
 			if (t->mate) {
 				(t->start < t->mate->start) ? (print_const("\\textsuperscript{")) : (print_const("}"));
@@ -1596,20 +1833,25 @@ parse_citation:
 			} else {
 				print_const("\\^{}");
 			}
+
 			break;
+
 		case TABLE_CELL:
 			if (t->next && t->next->type == TABLE_DIVIDER) {
 				if (t->next->len > 1) {
 					printf("\\multicolumn{%lu}{",t->next->len);
+
 					switch (scratch->table_alignment[scratch->table_cell_count]) {
 						case 'l':
 						case 'L':
 							print_const("l}{");
 							break;
+
 						case 'r':
 						case 'R':
 							print_const("r}{");
 							break;
+
 						default:
 							print_const("c}{");
 							break;
@@ -1620,8 +1862,9 @@ parse_citation:
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 
 			if (t->next && t->next->type == TABLE_DIVIDER) {
-				if (t->next->len > 1)
+				if (t->next->len > 1) {
 					print_const("}");
+				}
 			}
 
 			if (t->next && t->next->type == TABLE_DIVIDER) {
@@ -1631,53 +1874,70 @@ parse_citation:
 					print_const("&");
 					scratch->table_cell_count += t->next->len;
 				}
-			} else
+			} else {
 				scratch->table_cell_count++;
+			}
 
 			break;
+
 		case TABLE_DIVIDER:
 			break;
+
 		case TABLE_ROW:
 			scratch->table_cell_count = 0;
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			print_const("\\\\\n");
 			break;
+
 		case TEXT_BACKSLASH:
 			print_const("\\textbackslash{}");
 			break;
+
 		case TEXT_EMPTY:
 			break;
+
 		case TEXT_HASH:
 			print_const("\\#");
 			break;
+
 		case TEXT_LINEBREAK:
 			if (t->next) {
 				print_const("\\\\\n");
 				scratch->padded = 1;
 			}
+
 			break;
+
 		case TEXT_NL:
-			if (t->next)
+			if (t->next) {
 				print_char('\n');
+			}
+
 			break;
+
 		case TEXT_PERCENT:
 			print_const("\\%");
 			break;
+
 		case TEXT_BRACE_LEFT:
 		case TEXT_BRACE_RIGHT:
 			print_const("\\");
+
 		case RAW_FILTER_LEFT:
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
 			print_token(t);
 			break;
+
 		case TOC:
 			print_const("\\{\\{TOC\\}\\}");
 			break;
+
 		case UL:
 			print_const("\\_");
 			break;
+
 		default:
 			fprintf(stderr, "Unknown token type: %d\n", t->type);
 			token_describe(t, source);
@@ -1710,8 +1970,9 @@ void mmd_export_token_tree_latex(DString * out, const char * source, token * t, 
 
 
 void mmd_export_token_latex_raw(DString * out, const char * source, token * t, scratch_pad * scratch) {
-	if (t == NULL)
+	if (t == NULL) {
 		return;
+	}
 
 	switch (t->type) {
 		case ESCAPED_CHARACTER:
@@ -1719,19 +1980,26 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			print_char(source[t->start + 1]);
 //			mmd_print_char_latex(out, source[t->start + 1]);
 			break;
+
 		case HTML_ENTITY:
 			print_token(t);
 			break;
+
 		case CODE_FENCE:
-			if (t->next)
+			if (t->next) {
 				t->next->type = TEXT_EMPTY;
+			}
+
 		case TEXT_EMPTY:
 			break;
+
 		default:
-			if (t->child)
+			if (t->child) {
 				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
-			else
+			} else {
 				print_token(t);
+			}
+
 			break;
 	}
 }
@@ -1751,63 +2019,81 @@ void mmd_export_token_tree_latex_raw(DString * out, const char * source, token *
 
 
 void mmd_export_token_latex_tt(DString * out, const char * source, token * t, scratch_pad * scratch) {
-	if (t == NULL)
+	if (t == NULL) {
 		return;
+	}
 
 	switch (t->type) {
 		case AMPERSAND:
 		case AMPERSAND_LONG:
 			print_const("\\&");
 			break;
+
 		case ANGLE_LEFT:
 			print_const("<");
 			break;
+
 		case ANGLE_RIGHT:
 			print_const(">");
 			break;
+
 		case CRITIC_ADD_OPEN:
 			print_const("\\{++");
 			break;
+
 		case CRITIC_ADD_CLOSE:
 			print_const("++\\}");
 			break;
+
 		case CRITIC_COM_OPEN:
 			print_const("\\{>>");
 			break;
+
 		case CRITIC_COM_CLOSE:
 			print_const("<<\\}");
 			break;
+
 		case CRITIC_DEL_OPEN:
 			print_const("\\{--");
 			break;
+
 		case CRITIC_DEL_CLOSE:
 			print_const("--\\}");
 			break;
+
 		case CRITIC_HI_OPEN:
 			print_const("\\{==");
 			break;
+
 		case CRITIC_HI_CLOSE:
 			print_const("==\\}");
 			break;
+
 		case CRITIC_SUB_OPEN:
 			print_const("\\{~~");
 			break;
+
 		case CRITIC_SUB_DIV:
 			print_const("~>");
 			break;
+
 		case CRITIC_SUB_CLOSE:
 			print_const("~~\\}");
 			break;
+
 		case DASH_N:
 			if (t->len == 1) {
 				print_const("-");
 			} else {
 				print_const("-{}-");
 			}
+
 			break;
+
 		case DASH_M:
 			print_const("-{}-{}-");
 			break;
+
 		case EMPH_START:
 		case EMPH_STOP:
 			if (source[t->start] == '_') {
@@ -1815,11 +2101,14 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			} else {
 				print_const("*");
 			}
+
 			break;
+
 		case ESCAPED_CHARACTER:
 			print_const("\\textbackslash{}");
 			mmd_print_char_latex(out, source[t->start + 1]);
 			break;
+
 		case HTML_ENTITY:
 			if (source[t->start + 1] == '#') {
 				print_const("\\&\\#");
@@ -1828,41 +2117,56 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 				print_const("\\");
 				print_token(t);
 			}
+
 			break;
+
 		case CODE_FENCE:
-			if (t->next)
+			if (t->next) {
 				t->next->type = TEXT_EMPTY;
+			}
+
 		case TEXT_EMPTY:
 			break;
+
 		case SLASH:
 			print_const("\\slash ");
 			break;
+
 		case TEXT_BACKSLASH:
 			print_const("\\textbackslash{}");
 			break;
+
 		case BRACE_DOUBLE_LEFT:
 			print_const("\\{\\{");
 			break;
+
 		case BRACE_DOUBLE_RIGHT:
 			print_const("\\}\\}");
 			break;
+
 		case TEXT_BRACE_LEFT:
 			print_const("\\{");
 			break;
+
 		case TEXT_BRACE_RIGHT:
 			print_const("\\}");
 			break;
+
 		case TOC:
 			print_const("\\{\\{TOC\\}\\}");
 			break;
+
 		case UL:
 			print_const("\\_");
 			break;
+
 		default:
-			if (t->child)
+			if (t->child) {
 				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
-			else
+			} else {
 				print_token(t);
+			}
+
 			break;
 	}
 }
@@ -1908,6 +2212,7 @@ void mmd_define_glossaries_latex(DString * out, const char * source, scratch_pad
 			mmd_export_token_tree_latex(out, source, f->note->content, scratch);
 			print_const("}\n\n");
 		}
+
 		last_key = f->note->clean_text;
 	}
 
@@ -1931,6 +2236,7 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 	meta * m;
 
 	m = extract_meta_from_stack(scratch, "latexleader");
+
 	if (m) {
 		printf("\\input{%s}\n", m->value);
 	} else {
@@ -2005,6 +2311,7 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 	mmd_define_glossaries_latex(out, source, scratch);
 
 	m = extract_meta_from_stack(scratch, "latexbegin");
+
 	if (m) {
 		printf("\\input{%s}\n", m->value);
 	} else {

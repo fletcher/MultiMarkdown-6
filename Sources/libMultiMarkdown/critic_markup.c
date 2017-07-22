@@ -185,12 +185,16 @@ void accept_token(DString * d, token * t) {
 			if (t->mate) {
 				d_string_erase(d, t->start, t->len);
 			}
+
 			break;
+
 		case CM_SUB_OPEN:
 		case CM_ADD_OPEN:
 		case CM_ADD_CLOSE:
-			if (!t->mate)
+			if (!t->mate) {
 				break;
+			}
+
 		case CM_SUB_DIV:
 		case CM_DEL_PAIR:
 		case CM_COM_PAIR:
@@ -198,15 +202,23 @@ void accept_token(DString * d, token * t) {
 			// Erase these
 			d_string_erase(d, t->start, t->len);
 			break;
+
 		case CM_SUB_PAIR:
+
 			// Erase old version and markers
-			if (t->child)
+			if (t->child) {
 				accept_token_tree_sub(d, t->child->mate);
+			}
+
 			break;
+
 		case CM_ADD_PAIR:
+
 			// Check children
-			if (t->child)
+			if (t->child) {
 				accept_token_tree(d, t->child->mate);
+			}
+
 			break;
 	}
 }
@@ -224,8 +236,9 @@ void accept_token_tree(DString * d, token * t) {
 void mmd_critic_markup_accept(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
-	if (t && t->child)
+	if (t && t->child) {
 		accept_token_tree(d, t->child->tail);
+	}
 
 	token_free(t);
 }
@@ -256,12 +269,16 @@ void reject_token(DString * d, token * t) {
 			if (t->mate) {
 				d_string_erase(d, t->start, t->len);
 			}
+
 			break;
+
 		case CM_SUB_OPEN:
 		case CM_DEL_OPEN:
 		case CM_DEL_CLOSE:
-			if (!t->mate)
+			if (!t->mate) {
 				break;
+			}
+
 		case CM_SUB_DIV:
 		case CM_ADD_PAIR:
 		case CM_COM_PAIR:
@@ -269,15 +286,23 @@ void reject_token(DString * d, token * t) {
 			// Erase these
 			d_string_erase(d, t->start, t->len);
 			break;
+
 		case CM_SUB_PAIR:
+
 			// Erase new version and markers
-			if (t->child)
+			if (t->child) {
 				reject_token_tree_sub(d, t->child->mate);
+			}
+
 			break;
+
 		case CM_DEL_PAIR:
+
 			// Check children
-			if (t->child)
+			if (t->child) {
 				reject_token_tree(d, t->child->mate);
+			}
+
 			break;
 	}
 }
@@ -295,8 +320,9 @@ void reject_token_tree(DString * d, token * t) {
 void mmd_critic_markup_reject(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
-	if (t && t->child)
+	if (t && t->child) {
 		reject_token_tree(d, t->child->tail);
+	}
 
 	token_free(t);
 

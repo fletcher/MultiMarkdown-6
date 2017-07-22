@@ -13,7 +13,20 @@
 
 # Indent pre-processor directives
 --indent-preproc-block
+--indent-preproc-define
 --indent-preproc-cond
+
+# Line endings
+--lineend=linux
+
+# Add brackets to one-liners
+--add-brackets
+
+# Pad with blank lines
+--break-blocks
+
+# Pad around operators
+--pad-oper
 
 
 # Excludes

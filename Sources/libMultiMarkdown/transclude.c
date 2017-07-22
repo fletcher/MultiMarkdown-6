@@ -74,8 +74,9 @@ static char * my_strndup(const char * source, size_t n) {
 
 	// strlen is too slow if strlen(source) >> n
 	for (len = 0; len < n; ++len) {
-		if (test == '\0')
+		if (test == '\0') {
 			break;
+		}
 
 		test++;
 	}
@@ -146,8 +147,9 @@ void add_trailing_sep(DString * path) {
 
 /// Combine directory and base filename to create a full path */
 char * path_from_dir_base(const char * dir, const char * base) {
-	if (!dir && !base)
+	if (!dir && !base) {
 		return NULL;
+	}
 
 
 	DString * path = NULL;
@@ -164,8 +166,9 @@ char * path_from_dir_base(const char * dir, const char * base) {
 		add_trailing_sep(path);
 
 		// Append filename (if present)
-		if (base)
+		if (base) {
 			d_string_append(path, base);
+		}
 	}
 
 	result = path->str;
@@ -215,11 +218,13 @@ void split_path_file(char ** dir, char ** file, const char * path) {
 	const char sep[] = "/";
 	#endif
 
-	while ((next = strpbrk(slash + 1, sep)))
+	while ((next = strpbrk(slash + 1, sep))) {
 		slash = next;
+	}
 
-	if (path != slash)
+	if (path != slash) {
 		slash++;
+	}
 
 	*dir = my_strndup(path, slash - path);
 	*file = my_strdup(slash);
@@ -265,6 +270,7 @@ DString * scan_file(const char * fname) {
 
 	if ((file = _wfopen(wstr, L"r")) == NULL) {
 	#else
+
 	if ((file = fopen(fname, "r")) == NULL ) {
 	#endif
 
@@ -305,6 +311,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	size_t last_match;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
+
 	if (mmd_engine_has_metadata(e, &offset)) {
 
 		temp = mmd_engine_metavalue_for_key(e, "transclude base");
@@ -346,8 +353,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	while (start != NULL) {
 		stop = strstr(start, "}}");
 
-		if (stop == NULL)
+		if (stop == NULL) {
 			break;
+		}
 
 		// Remember insertion point
 		last_match = start - source->str;
@@ -388,14 +396,17 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 					case FORMAT_HTML:
 						d_string_append(file_path, ".html");
 						break;
+
 					case FORMAT_LATEX:
 					case FORMAT_BEAMER:
 					case FORMAT_MEMOIR:
 						d_string_append(file_path, ".tex");
 						break;
+
 					case FORMAT_FODT:
 						d_string_append(file_path, ".fodt");
 						break;
+
 					default:
 						d_string_append(file_path, ".txt");
 						break;
@@ -406,6 +417,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			// Prevent infinite recursive loops
 			for (int i = 0; i < stack_depth; ++i) {
 				temp = stack_peek_index(parse_stack, i);
+
 				if (strcmp(file_path->str, temp) == 0) {
 					// We have parsed this file already, don't recurse infinitely
 					last_match += 2;
@@ -422,6 +434,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				for (int i = 0; i < manifest->size; ++i) {
 					temp = stack_peek_index(manifest, i);
+
 					if (strcmp(file_path->str, temp) == 0) {
 						// Already on manifest, don't duplicate
 						add = false;
@@ -429,8 +442,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 				}
 
 				// Add path to manifest
-				if (add)
+				if (add) {
 					stack_push(manifest, my_strdup(file_path->str));
+				}
 			}
 
 			// Read the file
@@ -451,8 +465,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 					d_string_erase(buffer, 0, offset);
 				} else {
 					// Do we need to strip BOM?
-					if (strncmp(buffer->str, "\xef\xbb\xbf",3) == 0)
+					if (strncmp(buffer->str, "\xef\xbb\xbf",3) == 0) {
 						d_string_erase(buffer, 0, 3);
+					}
 				}
 
 				mmd_engine_free(e, false);

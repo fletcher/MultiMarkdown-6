@@ -280,27 +280,27 @@ int main(int argc, char** argv) {
 	}
 
 	if (a_format->count > 0) {
-		if (strcmp(a_format->sval[0], "html") == 0)
+		if (strcmp(a_format->sval[0], "html") == 0) {
 			format = FORMAT_HTML;
-		else if (strcmp(a_format->sval[0], "latex") == 0)
+		} else if (strcmp(a_format->sval[0], "latex") == 0) {
 			format = FORMAT_LATEX;
-		else if (strcmp(a_format->sval[0], "beamer") == 0)
+		} else if (strcmp(a_format->sval[0], "beamer") == 0) {
 			format = FORMAT_BEAMER;
-		else if (strcmp(a_format->sval[0], "memoir") == 0)
+		} else if (strcmp(a_format->sval[0], "memoir") == 0) {
 			format = FORMAT_MEMOIR;
-		else if (strcmp(a_format->sval[0], "mmd") == 0)
+		} else if (strcmp(a_format->sval[0], "mmd") == 0) {
 			format = FORMAT_MMD;
-		else if (strcmp(a_format->sval[0], "odt") == 0)
+		} else if (strcmp(a_format->sval[0], "odt") == 0) {
 			format = FORMAT_ODT;
-		else if (strcmp(a_format->sval[0], "fodt") == 0)
+		} else if (strcmp(a_format->sval[0], "fodt") == 0) {
 			format = FORMAT_FODT;
-		else if (strcmp(a_format->sval[0], "epub") == 0)
+		} else if (strcmp(a_format->sval[0], "epub") == 0) {
 			format = FORMAT_EPUB;
-		else if (strcmp(a_format->sval[0], "bundle") == 0)
+		} else if (strcmp(a_format->sval[0], "bundle") == 0) {
 			format = FORMAT_TEXTBUNDLE;
-		else if (strcmp(a_format->sval[0], "bundlezip") == 0)
+		} else if (strcmp(a_format->sval[0], "bundlezip") == 0) {
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
-		else {
+		} else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
 			exitcode = 1;
@@ -352,26 +352,33 @@ int main(int argc, char** argv) {
 				case FORMAT_HTML:
 					output_filename = filename_with_extension(a_file->filename[i], ".html");
 					break;
+
 				case FORMAT_LATEX:
 				case FORMAT_BEAMER:
 				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
+
 				case FORMAT_FODT:
 					output_filename = filename_with_extension(a_file->filename[i], ".fodt");
 					break;
+
 				case FORMAT_ODT:
 					output_filename = filename_with_extension(a_file->filename[i], ".odt");
 					break;
+
 				case FORMAT_MMD:
 					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");
 					break;
+
 				case FORMAT_EPUB:
 					output_filename = filename_with_extension(a_file->filename[i], ".epub");
 					break;
+
 				case FORMAT_TEXTBUNDLE:
 					output_filename = filename_with_extension(a_file->filename[i], ".textbundle");
 					break;
+
 				case FORMAT_TEXTBUNDLE_COMPRESSED:
 					output_filename = filename_with_extension(a_file->filename[i], ".textpack");
 					break;
@@ -404,6 +411,7 @@ int main(int argc, char** argv) {
 			#ifdef kUseObjectPool
 			token_pool_init();
 			#endif
+
 			if (a_meta->count > 0) {
 				// List metadata keys
 				char_result = mmd_string_metadata_keys(buffer->str);
@@ -561,8 +569,9 @@ int main(int argc, char** argv) {
 
 			fwrite(result->str, result->currentStringLength, 1, output_stream);
 
-			if (output_stream != stdout)
+			if (output_stream != stdout) {
 				fclose(output_stream);
+			}
 
 			if (FORMAT_MMD != format) {
 				d_string_free(result, true);

@@ -85,7 +85,11 @@ int vasprintf(char** strp, const char* fmt, va_list ap) {
 	va_copy(ap2, ap);
 	char tmp[1];
 	int size = vsnprintf(tmp, 1, fmt, ap2);
-	if (size <= 0) return size;
+
+	if (size <= 0) {
+		return size;
+	}
+
 	va_end(ap2);
 	size += 1;
 	*strp = (char*)malloc(size * sizeof(char));
@@ -104,13 +108,17 @@ int vasprintf(char** strp, const char* fmt, va_list ap) {
 DString* d_string_new(const char * startingString) {
 	DString* newString = malloc(sizeof(DString));
 
-	if (!newString)
+	if (!newString) {
 		return NULL;
+	}
 
-	if (startingString == NULL) startingString = "";
+	if (startingString == NULL) {
+		startingString = "";
+	}
 
 	size_t startingBufferSize = kStringBufferStartingSize;
 	size_t startingStringSize = strlen(startingString);
+
 	while (startingBufferSize < (startingStringSize + 1)) {
 		startingBufferSize *= kStringBufferGrowthMultiplier;
 	}
@@ -133,14 +141,17 @@ DString* d_string_new(const char * startingString) {
 
 /// Free dynamic string
 char* d_string_free(DString * ripString, bool freeCharacterData) {
-	if (ripString == NULL)
+	if (ripString == NULL) {
 		return NULL;
+	}
 
 	char* returnedString = ripString->str;
+
 	if (freeCharacterData) {
 		if (ripString->str != NULL) {
 			free(ripString->str);
 		}
+
 		returnedString = NULL;
 	}
 
@@ -153,6 +164,7 @@ char* d_string_free(DString * ripString, bool freeCharacterData) {
 /// Ensure that dynamic string has specified capacity
 static void ensureStringBufferCanHold(DString * baseString, size_t newStringSize) {
 	size_t newBufferSizeNeeded = newStringSize + 1;
+
 	if (newBufferSizeNeeded > baseString->currentStringBufferSize) {
 		size_t newBufferSize = baseString->currentStringBufferSize;
 
@@ -173,6 +185,7 @@ static void ensureStringBufferCanHold(DString * baseString, size_t newStringSize
 
 			exit(1);
 		}
+
 		baseString->str = temp;
 		baseString->currentStringBufferSize = newBufferSize;
 	}
@@ -224,10 +237,12 @@ void d_string_append_printf(DString * baseString, const char * format, ...) {
 
 	char* formattedString = NULL;
 	vasprintf(&formattedString, format, args);
+
 	if (formattedString != NULL) {
 		d_string_append(baseString, formattedString);
 		free(formattedString);
 	}
+
 	va_end(args);
 }
 
@@ -253,8 +268,9 @@ void d_string_insert(DString * baseString, size_t pos, const char * insertedStri
 	size_t insertedStringLength = strlen(insertedString);
 
 	if ((insertedString != NULL) && (insertedStringLength > 0)) {
-		if (pos > baseString->currentStringLength)
+		if (pos > baseString->currentStringLength) {
 			pos = baseString->currentStringLength;
+		}
 
 		size_t newStringLength = baseString->currentStringLength + insertedStringLength;
 		ensureStringBufferCanHold(baseString, newStringLength);
@@ -270,8 +286,9 @@ void d_string_insert(DString * baseString, size_t pos, const char * insertedStri
 
 /// Insert single character inside dynamic string
 void d_string_insert_c(DString * baseString, size_t pos, char insertedCharacter) {
-	if (pos > baseString->currentStringLength)
+	if (pos > baseString->currentStringLength) {
 		pos = baseString->currentStringLength;
+	}
 
 	size_t newSizeNeeded = baseString->currentStringLength + 1;
 	ensureStringBufferCanHold(baseString, newSizeNeeded);
@@ -292,21 +309,25 @@ void d_string_insert_printf(DString * baseString, size_t pos, const char * forma
 
 	char* formattedString = NULL;
 	vasprintf(&formattedString, format, args);
+
 	if (formattedString != NULL) {
 		d_string_insert(baseString, pos, formattedString);
 		free(formattedString);
 	}
+
 	va_end(args);
 }
 
 
 /// Erase portion of dynamic string
 void d_string_erase(DString * baseString, size_t pos, size_t len) {
-	if ((pos > baseString->currentStringLength) || (len <= 0))
+	if ((pos > baseString->currentStringLength) || (len <= 0)) {
 		return;
+	}
 
-	if ((pos + len) >= baseString->currentStringLength)
+	if ((pos + len) >= baseString->currentStringLength) {
 		len = -1;
+	}
 
 	if (len == -1) {
 		baseString->currentStringLength = pos;

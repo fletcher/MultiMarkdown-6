@@ -92,8 +92,9 @@ void token_pool_drain(void) {
 	// Decrement counter
 	token_pool_count--;
 
-	if (token_pool_count == 0)
+	if (token_pool_count == 0) {
 		pool_drain(token_pool);
+	}
 }
 
 
@@ -174,8 +175,9 @@ token * token_new_parent(token * child, unsigned short type) {
 	} else if (child->next == NULL) {
 		t->len = child->len;
 	} else {
-		while (child->next != NULL)
+		while (child->next != NULL) {
 			child = child->next;
+		}
 
 		t->len = child->start + child->len - t->start;
 	}
@@ -188,8 +190,9 @@ token * token_new_parent(token * child, unsigned short type) {
 /// may or may not also be the start of a chain
 void token_chain_append(token * chain_start, token * t) {
 	if ((chain_start == NULL) ||
-	        (t == NULL))
+	        (t == NULL)) {
 		return;
+	}
 
 	// Append t
 	chain_start->tail->next = t;
@@ -204,8 +207,9 @@ void token_chain_append(token * chain_start, token * t) {
 /// token chain.  The new token may or may not be
 /// the start of a chain.
 void token_append_child(token * parent, token * t) {
-	if ((parent == NULL) || (t == NULL))
+	if ((parent == NULL) || (t == NULL)) {
 		return;
+	}
 
 	if (parent->child == NULL) {
 		// Parent has no children
@@ -222,8 +226,9 @@ void token_append_child(token * parent, token * t) {
 
 /// Remove the first child of a token
 void token_remove_first_child(token * parent) {
-	if ((parent == NULL) || (parent->child == NULL))
+	if ((parent == NULL) || (parent->child == NULL)) {
 		return;
+	}
 
 	token * t = parent->child;
 	parent->child = t->next;
@@ -239,8 +244,9 @@ void token_remove_first_child(token * parent) {
 
 /// Remove the last child of a token
 void token_remove_last_child(token * parent) {
-	if ((parent == NULL) || (parent->child == NULL))
+	if ((parent == NULL) || (parent->child == NULL)) {
 		return;
+	}
 
 	token * t = parent->child->tail;
 
@@ -255,8 +261,9 @@ void token_remove_last_child(token * parent) {
 
 /// Remove the last token in a chain
 void token_remove_tail(token * head) {
-	if ((head == NULL) || (head->tail == head))
+	if ((head == NULL) || (head->tail == head)) {
 		return;
+	}
 
 	token * t = head->tail;
 
@@ -273,8 +280,9 @@ void token_remove_tail(token * head) {
 /// Token must be freed if it is no longer needed.
 /// \todo: If t is the tail token of a chain, the tail is no longer correct on the start of chain.
 void token_pop_link_from_chain(token * t) {
-	if (t == NULL)
+	if (t == NULL) {
 		return;
+	}
 
 	token * prev = t->prev;
 	token * next = t->next;
@@ -295,17 +303,20 @@ void token_pop_link_from_chain(token * t) {
 
 /// Remove one or more tokens from chain
 void tokens_prune(token * first, token * last) {
-	if (first == NULL || last == NULL)
+	if (first == NULL || last == NULL) {
 		return;
+	}
 
 	token * prev = first->prev;
 	token * next = last->next;
 
-	if (prev != NULL)
+	if (prev != NULL) {
 		prev->next = next;
+	}
 
-	if (next != NULL)
+	if (next != NULL) {
 		next->prev = prev;
+	}
 
 	first->prev = NULL;
 	last->next = NULL;
@@ -317,8 +328,9 @@ void tokens_prune(token * first, token * last) {
 /// Given a start/stop point in token chain, create a new container token.
 /// Return pointer to new container token.
 token * token_prune_graft(token * first, token * last, unsigned short container_type) {
-	if (first == NULL || last == NULL)
+	if (first == NULL || last == NULL) {
 		return first;
+	}
 
 	token * next = last->next;
 
@@ -326,13 +338,15 @@ token * token_prune_graft(token * first, token * last, unsigned short container_
 	token * new_child = token_copy(first);
 	new_child->prev = NULL;
 	new_child->tail = last;
+
 	if (new_child->next) {
 		new_child->next->prev = new_child;
 	}
 
 	// Swap last (if necessary)
-	if (first == last)
+	if (first == last) {
 		last = new_child;
+	}
 
 	// Existing first token will be new container
 	first->child = new_child;
@@ -351,8 +365,9 @@ token * token_prune_graft(token * first, token * last, unsigned short container_
 	// Disconnect last token
 	last->next = NULL;
 
-	if (next)
+	if (next) {
 		next->prev = first;
+	}
 
 	return first;
 }
@@ -363,8 +378,10 @@ void token_free(token * t) {
 	#ifdef kUseObjectPool
 	return;
 	#else
-	if (t == NULL)
+
+	if (t == NULL) {
 		return;
+	}
 
 	token_tree_free(t->child);
 
@@ -386,6 +403,7 @@ void token_tree_free(token * t) {
 
 		t = n;
 	}
+
 	#endif
 }
 
@@ -400,14 +418,16 @@ void print_token(token * t, unsigned short depth, const char * string) {
 		for (int i = 0; i < depth; ++i) {
 			fprintf(stderr, "\t");
 		}
+
 		if (string == NULL) {
 			fprintf(stderr, "* (%d) %lu:%lu\n", t->type, t->start, t->len);
 		} else {
 			fprintf(stderr, "* (%d) %lu:%lu\t'%.*s'\n", t->type, t->start, t->len, (int)t->len, &string[t->start]);
 		}
 
-		if (t->child != NULL)
+		if (t->child != NULL) {
 			print_token_tree(t->child, depth + 1, string);
+		}
 	}
 }
 
@@ -431,11 +451,13 @@ void token_describe(token * t, const char * string) {
 /// Print a description of the token tree based on specified string
 void token_tree_describe(token * t, const char * string) {
 	fprintf(stderr, "=====>\n");
+
 	while (t != NULL) {
 		print_token(t, 0, string);
 
 		t = t->next;
 	}
+
 	fprintf(stderr, "<=====\n");
 }
 
@@ -446,12 +468,14 @@ token * token_child_for_offset(
     token * parent,						//!< Pointer to parent token
     size_t offset						//!< Search position
 ) {
-	if (parent == NULL)
+	if (parent == NULL) {
 		return NULL;
+	}
 
 	if ((parent->start > offset) ||
-	        (parent->start + parent->len < offset))
+	        (parent->start + parent->len < offset)) {
 		return NULL;
+	}
 
 	token * walker = parent->child;
 
@@ -461,8 +485,10 @@ token * token_child_for_offset(
 				return walker;
 			}
 		}
-		if (walker->start > offset)
+
+		if (walker->start > offset) {
 			return NULL;
+		}
 
 		walker = walker->next;
 	}
@@ -483,21 +509,25 @@ token * token_first_child_in_range(
     size_t start,						//!< Start search position
     size_t len							//!< Search length
 ) {
-	if (parent == NULL)
+	if (parent == NULL) {
 		return NULL;
+	}
 
 	if ((parent->start > start + len) ||
-	        (parent->start + parent->len < start))
+	        (parent->start + parent->len < start)) {
 		return NULL;
+	}
 
 	token * walker = parent->child;
 
 	while (walker != NULL) {
-		if (ranges_intersect(start, len, walker->start, walker->len))
+		if (ranges_intersect(start, len, walker->start, walker->len)) {
 			return walker;
+		}
 
-		if (walker->start > start)
+		if (walker->start > start) {
 			return NULL;
+		}
 
 		walker = walker->next;
 	}
@@ -513,22 +543,26 @@ token * token_last_child_in_range(
     size_t start,						//!< Start search position
     size_t len							//!< Search length
 ) {
-	if (parent == NULL)
+	if (parent == NULL) {
 		return NULL;
+	}
 
 	if ((parent->start > start + len) ||
-	        (parent->start + parent->len < start))
+	        (parent->start + parent->len < start)) {
 		return NULL;
+	}
 
 	token * walker = parent->child;
 	token * last = NULL;
 
 	while (walker != NULL) {
-		if (ranges_intersect(start, len, walker->start, walker->len))
+		if (ranges_intersect(start, len, walker->start, walker->len)) {
 			last = walker;
+		}
 
-		if (walker->start > start + len)
+		if (walker->start > start + len) {
 			return last;
+		}
 
 		walker = walker->next;
 	}
@@ -581,8 +615,10 @@ token * token_chain_accept_multiple(token ** t, int n, ...) {
 
 	for (int i = 0; i < n; ++i) {
 		result = token_chain_accept(t, va_arg(valist, int));
-		if (result)
+
+		if (result) {
 			break;
+		}
 	}
 
 	va_end(valist);
@@ -592,8 +628,9 @@ token * token_chain_accept_multiple(token ** t, int n, ...) {
 
 
 void token_skip_until_type(token ** t, short type) {
-	while ((*t) && ((*t)->type != type))
+	while ((*t) && ((*t)->type != type)) {
 		*t = (*t)->next;
+	}
 }
 
 
@@ -612,8 +649,9 @@ void token_skip_until_type_multiple(token ** t, int n, ...) {
 	//
 	while (*t) {
 		for (int i = 0; i < n; ++i) {
-			if ((*t)->type == type[i])
+			if ((*t)->type == type[i]) {
 				return;
+			}
 		}
 
 		*t = (*t)->next;
@@ -624,8 +662,9 @@ void token_skip_until_type_multiple(token ** t, int n, ...) {
 
 
 void token_split_on_char(token * t, const char * source, const char c) {
-	if (!t)
+	if (!t) {
 		return;
+	}
 
 	size_t start = t->start;
 	size_t pos = 0;
@@ -650,32 +689,38 @@ void token_split_on_char(token * t, const char * source, const char c) {
 
 // Split a token and create new ones as needed
 void token_split(token * t, size_t start, size_t len, unsigned short new_type) {
-	if (!t)
+	if (!t) {
 		return;
+	}
 
 	size_t stop = start + len;
 
-	if (start < t->start)
+	if (start < t->start) {
 		return;
+	}
 
-	if (stop > t->start + t->len)
+	if (stop > t->start + t->len) {
 		return;
+	}
 
 	token * A;		// This will be new token
 	bool inset_start = false;
 	bool inset_stop = false;
 
 	// Will we need a leading token?
-	if (start > t->start)
+	if (start > t->start) {
 		inset_start = true;
+	}
 
 	// Will we need a lagging token?
-	if (stop < t->start + t->len)
+	if (stop < t->start + t->len) {
 		inset_stop = true;
+	}
 
 
 	if (inset_start) {
 		A = token_new(new_type, start, len);
+
 		if (inset_stop) {
 			// We will end up with t->A->T2
 
@@ -683,8 +728,9 @@ void token_split(token * t, size_t start, size_t len, unsigned short new_type) {
 			token * T2 = token_new(t->type, stop, t->start + t->len - stop);
 			T2->next = t->next;
 
-			if (t->next)
+			if (t->next) {
 				t->next->prev = T2;
+			}
 
 			A->next = T2;
 			T2->prev = A;
@@ -692,8 +738,9 @@ void token_split(token * t, size_t start, size_t len, unsigned short new_type) {
 			// We will end up with T->A
 			A->next = t->next;
 
-			if (t->next)
+			if (t->next) {
 				t->next->prev = A;
+			}
 		}
 
 		t->next = A;
@@ -711,8 +758,9 @@ void token_split(token * t, size_t start, size_t len, unsigned short new_type) {
 			A->next = t->next;
 			t->next = A;
 
-			if (A->next)
+			if (A->next) {
 				A->next->prev = A;
+			}
 
 			t->len = stop - t->start;
 			t->type = new_type;

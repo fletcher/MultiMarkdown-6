@@ -70,8 +70,9 @@ trie * trie_new(size_t startingSize) {
 	trie * a = malloc(sizeof(trie));
 
 	if (a) {
-		if (startingSize <= 1)
+		if (startingSize <= 1) {
 			startingSize = kTrieStartingSize;
+		}
 
 		a->node = malloc(sizeof(trie_node) * startingSize);
 
@@ -217,8 +218,9 @@ size_t trie_search(trie * a, const char * query) {
 unsigned short trie_search_match_type(trie * a, const char * query) {
 	size_t s = trie_search(a, query);
 
-	if (s == -1)
+	if (s == -1) {
 		return -1;
+	}
 
 	return a->node[s].match_type;
 }
@@ -266,8 +268,9 @@ void ac_trie_node_prepare(trie * a, size_t s, char * buffer, unsigned short dept
 	while ((suffix[0] != '\0') && (n->ac_fail == 0)) {
 		n->ac_fail = trie_search(a, suffix);
 
-		if (n->ac_fail == -1)
+		if (n->ac_fail == -1) {
 			n->ac_fail = 0;
+		}
 
 		if (n->ac_fail == s) {
 			// Something went wrong
@@ -398,6 +401,7 @@ match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) 
 					result = match_new(0, 0, 0);
 					m = result;
 				}
+
 				m = match_add(m, counter - a->node[temp_state].len,
 				              a->node[temp_state].len, a->node[temp_state].match_type);
 			}
@@ -447,6 +451,7 @@ void match_describe(match * m, const char * source) {
 
 void match_set_describe(match * m, const char * source) {
 	m = m->next;	// Skip header
+
 	while (m) {
 		match_describe(m, source);
 		m = m->next;
@@ -501,8 +506,9 @@ void match_set_filter_leftmost_longest(match * header) {
 match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t start, size_t len) {
 	match * result = ac_trie_search(a, source, start, len);
 
-	if (result)
+	if (result) {
 		match_set_filter_leftmost_longest(result);
+	}
 
 	return result;
 }
@@ -559,8 +565,9 @@ void Test_aho_trie_search(CuTest* tc) {
 void trie_node_to_graphviz(trie * a, size_t s) {
 	trie_node * n = &a->node[s];
 
-	if (n->match_type)
+	if (n->match_type) {
 		fprintf(stderr, "\"%lu\" [shape=doublecircle]\n", s);
+	}
 
 	for (int i = 0; i < 256; ++i) {
 		if (n->child[i]) {
@@ -571,16 +578,19 @@ void trie_node_to_graphviz(trie * a, size_t s) {
 		}
 	}
 
-	if (n->ac_fail)
+	if (n->ac_fail) {
 		fprintf(stderr, "\"%lu\" -> \"%lu\" [label=\"fail\"]\n", s, n->ac_fail);
+	}
 }
 
 
 void trie_to_graphviz(trie * a) {
 	fprintf(stderr, "digraph dfa {\n");
+
 	for (int i = 0; i <  a->size; ++i) {
 		trie_node_to_graphviz(a, i);
 	}
+
 	fprintf(stderr, "}\n");
 }
 

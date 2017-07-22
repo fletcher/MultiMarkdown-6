@@ -132,6 +132,7 @@ int main( int argc, char** argv ) {
 	for (char i = 'a'; i <= 'z'; ++i) {
 		alpha(i);
 	}
+
 	for (char i = 'A'; i <= 'Z'; ++i) {
 		alpha(i);
 	}
@@ -139,6 +140,7 @@ int main( int argc, char** argv ) {
 
 	// Extended ASCII
 	#ifdef USE_EXTENDED_ASCII
+
 	// Punctuation ranges
 	for (int i = 132; i < 138; ++i) {
 		punctuation(i);
@@ -176,9 +178,11 @@ int main( int argc, char** argv ) {
 			case 247:
 				punctuation(i);
 				break;
+
 			case 160:
 				whitespace(i);
 				break;
+
 			case 131:
 			case 138:
 			case 140:
@@ -188,10 +192,12 @@ int main( int argc, char** argv ) {
 			case 159:
 				alpha(i);
 				break;
+
 			default:
 				break;
 		}
 	}
+
 	#endif
 
 

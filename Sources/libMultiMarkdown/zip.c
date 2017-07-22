@@ -161,11 +161,13 @@ mz_bool unzip_archive_to_path(mz_zip_archive * pZip, const char * path) {
 
 		for (int i = 0; i < file_count; ++i) {
 			mz_zip_reader_file_stat(pZip, i, &pStat);
+
 			if (pStat.m_is_directory) {
 				// Create the directory
 				mkdir(pStat.m_filename, 0755);
 			} else {
 				status = mz_zip_reader_extract_to_file(pZip, i, pStat.m_filename, 0);
+
 				if (!status) {
 					fprintf(stderr, "Error extracting file from zip archive.\n");
 					return status;
@@ -188,6 +190,7 @@ mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
 	memset(&pZip, 0, sizeof(mz_zip_archive));
 
 	mz_bool status = mz_zip_reader_init_mem(&pZip, data, size, 0);
+
 	if (!status) {
 		fprintf(stderr, "mz_zip_reader_init_mem() failed.\n");
 		return status;

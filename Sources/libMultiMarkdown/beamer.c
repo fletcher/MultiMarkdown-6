@@ -75,9 +75,11 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 			case BLOCK_SETEXT_1:
 				level = 1;
 				break;
+
 			case BLOCK_SETEXT_2:
 				level = 2;
 				break;
+
 			default:
 				level = 1 + current->type - BLOCK_H1;
 		}
@@ -95,9 +97,11 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 				case BLOCK_SETEXT_1:
 					t_level = 1;
 					break;
+
 				case BLOCK_SETEXT_2:
 					t_level = 2;
 					break;
+
 				default:
 					t_level = 1 + t->type - BLOCK_H1;
 			}
@@ -112,6 +116,7 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 						print_const("\\end{frame}\n\n");
 						scratch->padded = 2;
 						break;
+
 					case 4:
 						pad(out, 1, scratch);
 						print_const("}\n\n");
@@ -137,6 +142,7 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 			scratch->padded = 1;
 			stack_push(s, current);
 			break;
+
 		case 4:
 			pad(out, 2, scratch);
 			print_const("\\mode<article>{");
@@ -148,8 +154,9 @@ void mmd_outline_add_beamer(DString * out, token * current, scratch_pad * scratc
 
 
 void mmd_export_token_beamer(DString * out, const char * source, token * t, scratch_pad * scratch) {
-	if (t == NULL)
+	if (t == NULL) {
 		return;
+	}
 
 	short	temp_short;
 	char *	temp_char	= NULL;
@@ -159,10 +166,12 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 		case DOC_START_TOKEN:
 			mmd_export_token_tree_beamer(out, source, t->child, scratch);
 			break;
+
 		case BLOCK_CODE_FENCED:
 			pad(out, 2, scratch);
 
 			temp_char = get_fence_language_specifier(t->child->child, source);
+
 			if (temp_char) {
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
@@ -177,8 +186,10 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 			} else {
 				print_const("\\end{verbatim}");
 			}
+
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
 			print_const("\\begin{verbatim}\n");
@@ -186,6 +197,7 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 			print_const("\\end{verbatim}");
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_H1:
 		case BLOCK_H2:
 		case BLOCK_H3:
@@ -202,9 +214,11 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 				case BLOCK_SETEXT_1:
 					temp_short = 1;
 					break;
+
 				case BLOCK_SETEXT_2:
 					temp_short = 2;
 					break;
+
 				default:
 					temp_short = t->type - BLOCK_H1 + 1;
 			}
@@ -213,12 +227,15 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 				case 1:
 					print_const("\\part{");
 					break;
+
 				case 2:
 					print_const("\\section{");
 					break;
+
 				case 3:
 					print_const("\\frametitle{");
 					break;
+
 				default:
 					print_const("\\emph{");
 					break;
@@ -230,18 +247,23 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 				print_const("}");
 			} else {
 				temp_token = manual_label_from_header(t, source);
+
 				if (temp_token) {
 					temp_char = label_from_token(source, temp_token);
 				} else {
 					temp_char = label_from_token(source, t);
 				}
+
 				printf("}\n\\label{%s}", temp_char);
 
-				if (temp_char)
+				if (temp_char) {
 					free(temp_char);
+				}
 			}
+
 			scratch->padded = 0;
 			break;
+
 		default:
 			// Default to LaTeX behavior
 			mmd_export_token_latex(out, source, t, scratch);

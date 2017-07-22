@@ -106,8 +106,9 @@ void pool_free(pool * p) {
 
 /// Drain pool -- free slabs previously allocated
 void pool_drain(pool * p) {
-	if (p == NULL)
+	if (p == NULL) {
 		return;
+	}
 
 	void * slab;
 
