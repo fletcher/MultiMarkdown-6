@@ -326,9 +326,9 @@ int main(int argc, char** argv) {
 	char * output_filename;
 
 	// Increment counter and prepare token pool
-#ifdef kUseObjectPool
+	#ifdef kUseObjectPool
 	token_pool_init();
-#endif
+	#endif
 
 	// Seed random numbers
 	custom_seed_rand();
@@ -401,9 +401,9 @@ int main(int argc, char** argv) {
 			}
 
 			// Increment counter and prepare token pool
-#ifdef kUseObjectPool
+			#ifdef kUseObjectPool
 			token_pool_init();
-#endif
+			#endif
 			if (a_meta->count > 0) {
 				// List metadata keys
 				char_result = mmd_string_metadata_keys(buffer->str);
@@ -488,20 +488,20 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
 
 			// Convert to absolute path for first file to enable proper path resolution
-#ifdef PATH_MAX
+			#ifdef PATH_MAX
 			// If PATH_MAX defined, use it
 			char absolute[PATH_MAX + 1];
 			realpath(a_file->filename[0], absolute);
 			folder = dirname((char *) a_file->filename[0]);
 
 			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
-#else
+			#else
 			// If undefined, then we *should* be able to use a NULL pointer to allocate
 			char * absolute = realpath(a_file->filename[0], NULL);
 			folder = dirname((char *) a_file->filename[0]);
 			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 			free(absolute);
-#endif
+			#endif
 			// Don't free folder -- owned by dirname
 		}
 
@@ -578,9 +578,9 @@ exit:
 	// Decrement counter and clean up token pool
 	token_pool_drain();
 
-#ifdef kUseObjectPool
+	#ifdef kUseObjectPool
 	token_pool_free();
-#endif
+	#endif
 
 exit2:
 

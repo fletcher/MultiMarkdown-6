@@ -1051,11 +1051,11 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 void footnote_free(footnote * f) {
 	if (f) {
 		if (f->free_para) {
-#ifdef kUseObjectPool
+			#ifdef kUseObjectPool
 			// Nothing to do here
-#else
+			#else
 			free(f->content);
-#endif
+			#endif
 		}
 		free(f->clean_text);
 		free(f->label_text);

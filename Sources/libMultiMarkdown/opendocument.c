@@ -102,7 +102,7 @@
 */
 
 #ifdef USE_CURL
-#include <curl/curl.h>
+	#include <curl/curl.h>
 #endif
 
 #include "miniz.h"
