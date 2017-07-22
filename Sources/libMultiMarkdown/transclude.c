@@ -367,7 +367,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			text[stop - start - 2] = '\0';
 
 			// Is this just {{TOC}}
-			if (strcmp("TOC",text) == 0) {
+			if (strcmp("TOC", text) == 0) {
 				start = strstr(stop, "{{");
 				continue;
 			}
@@ -465,7 +465,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 					d_string_erase(buffer, 0, offset);
 				} else {
 					// Do we need to strip BOM?
-					if (strncmp(buffer->str, "\xef\xbb\xbf",3) == 0) {
+					if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
 						d_string_erase(buffer, 0, 3);
 					}
 				}

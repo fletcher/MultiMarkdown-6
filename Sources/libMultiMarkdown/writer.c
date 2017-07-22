@@ -409,8 +409,8 @@ char * label_from_string(const char * str) {
 				next_char++;
 			}
 		} else if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
-		           || (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str== '_')
-		           || (*str== '-') || (*str== ':')) {
+		           || (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str == '_')
+		           || (*str == '-') || (*str == ':')) {
 			// Allow 0-9, A-Z, a-z, ., _, -, :
 			d_string_append_c(out, tolower(*str));
 		}
@@ -1020,7 +1020,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 
 /// Create a link from an explicit link `[foo](bar)`
 link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, const char * source) {
-	char * url_char =NULL;
+	char * url_char = NULL;
 	char * title_char = NULL;
 	char * attr_char = NULL;
 	link * l = NULL;
@@ -1346,10 +1346,10 @@ void process_definition_block(mmd_engine * e, token * block) {
 					f = footnote_new(e->dstr->str, label, block->child, false);
 
 					if (f && f->clean_text) {
-						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+						memmove(f->clean_text, &(f->clean_text)[1], strlen(f->clean_text));
 
 						while (char_is_whitespace((f->clean_text)[0])) {
-							memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+							memmove(f->clean_text, &(f->clean_text)[1], strlen(f->clean_text));
 						}
 					}
 
@@ -1383,7 +1383,7 @@ void process_definition_block(mmd_engine * e, token * block) {
 					f = footnote_new(e->dstr->str, label, block->child, false);
 
 					if (f && f->clean_text) {
-						memmove(f->clean_text, &(f->clean_text)[1],strlen(f->clean_text));
+						memmove(f->clean_text, &(f->clean_text)[1], strlen(f->clean_text));
 					}
 
 					//if (f && f->label_text)
@@ -1466,7 +1466,7 @@ token * manual_label_from_header(token * h, const char * source) {
 			case PAIR_BRACKET:
 				label = walker;
 
-				while(walker && walker->type == PAIR_BRACKET) {
+				while (walker && walker->type == PAIR_BRACKET) {
 					walker = walker->prev;
 					count++;
 				}
@@ -2579,7 +2579,7 @@ bool raw_filter_text_matches(char * pattern, short format) {
 	} else if (strcmp("{=*}", pattern) == 0) {
 		return true;
 	} else {
-		switch(format) {
+		switch (format) {
 			case FORMAT_HTML:
 				if (strstr(pattern, "html")) {
 					return true;

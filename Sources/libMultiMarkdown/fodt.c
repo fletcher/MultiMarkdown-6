@@ -273,8 +273,8 @@ static char * correct_dimension_units(char *original) {
 		result[i] = tolower(result[i]);
 	}
 
-	if (strstr(&result[strlen(result)-2],"px")) {
-		result[strlen(result)-2] = '\0';
+	if (strstr(&result[strlen(result) - 2], "px")) {
+		result[strlen(result) - 2] = '\0';
 		strcat(result, "pt");
 	}
 

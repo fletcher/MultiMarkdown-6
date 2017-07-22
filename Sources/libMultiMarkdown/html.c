@@ -253,7 +253,7 @@ static char * strip_dimension_units(char *original) {
 		result[i] = tolower(result[i]);
 	}
 
-	if (strstr(&result[strlen(result)-2],"px")) {
+	if (strstr(&result[strlen(result) - 2], "px")) {
 		// Leave 'px' alone
 		return result;
 	}
@@ -2131,7 +2131,7 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 	if (m) {
 		printf(" lang=\"%s\"", m->value);
 	} else {
-		switch(scratch->language) {
+		switch (scratch->language) {
 			case LC_ES:
 				print_const(" lang=\"es\"");
 				break;
@@ -2257,7 +2257,7 @@ void mmd_export_footnote_list_html(DString * out, const char * source, scratch_p
 			scratch->footnote_para_counter = 0;
 
 			// We need to know which block is the last one in the footnote
-			while(content) {
+			while (content) {
 				if (content->type == BLOCK_PARA) {
 					scratch->footnote_para_counter++;
 				}
@@ -2310,7 +2310,7 @@ void mmd_export_glossary_list_html(DString * out, const char * source, scratch_p
 			scratch->footnote_para_counter = 0;
 
 			// We need to know which block is the last one in the footnote
-			while(content) {
+			while (content) {
 				if (content->type == BLOCK_PARA) {
 					scratch->footnote_para_counter++;
 				}
@@ -2358,7 +2358,7 @@ void mmd_export_citation_list_html(DString * out, const char * source, scratch_p
 			scratch->footnote_para_counter = 0;
 
 			// We need to know which block is the last one in the footnote
-			while(content) {
+			while (content) {
 				if (content->type == BLOCK_PARA) {
 					scratch->footnote_para_counter++;
 				}

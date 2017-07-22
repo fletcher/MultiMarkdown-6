@@ -540,7 +540,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			break;
 
 		case TEXT_NUMBER_POSS_LIST:
-			switch(source[line->child->next->start]) {
+			switch (source[line->child->next->start]) {
 				case ' ':
 				case '\t':
 					line->type = LINE_LIST_ENUMERATED;
@@ -562,9 +562,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 						case NON_INDENT_SPACE:
 							t = line->child;
 
-							while(t->next && ((t->next->type == INDENT_SPACE) ||
-							                  (t->next->type == INDENT_TAB) ||
-							                  (t->next->type == NON_INDENT_SPACE))) {
+							while (t->next && ((t->next->type == INDENT_SPACE) ||
+							                   (t->next->type == INDENT_TAB) ||
+							                   (t->next->type == NON_INDENT_SPACE))) {
 								tokens_prune(t->next, t->next);
 							}
 
@@ -686,7 +686,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				// TODO: Should this be an empty list item instead??
 				line->type = LINE_PLAIN;
 			} else {
-				switch(source[line->child->next->start]) {
+				switch (source[line->child->next->start]) {
 					case ' ':
 					case '\t':
 						line->type = LINE_LIST_BULLETED;
@@ -708,9 +708,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 							case NON_INDENT_SPACE:
 								t = line->child;
 
-								while(t->next && ((t->next->type == INDENT_SPACE) ||
-								                  (t->next->type == INDENT_TAB) ||
-								                  (t->next->type == NON_INDENT_SPACE))) {
+								while (t->next && ((t->next->type == INDENT_SPACE) ||
+								                   (t->next->type == INDENT_TAB) ||
+								                   (t->next->type == NON_INDENT_SPACE))) {
 									tokens_prune(t->next, t->next);
 								}
 
@@ -969,8 +969,8 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 	int type;								// TOKEN type
 	token * t;								// Create tokens for incorporation
 
-	token * root = token_new(0,start,0);		// Store the final parse tree here
-	token * line = token_new(0,start,0);		// Store current line here
+	token * root = token_new(0, start, 0);		// Store the final parse tree here
+	token * line = token_new(0, start, 0);		// Store current line here
 
 	const char * last_stop = &e->dstr->str[start];	// Remember where last token ended
 
@@ -1039,7 +1039,7 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 					}
 				}
 
-				line = token_new(0,s.cur - e->dstr->str,0);
+				line = token_new(0, s.cur - e->dstr->str, 0);
 				break;
 
 			default:
@@ -1572,7 +1572,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 							offset++;
 						}
 
-						t->len = offset-t->start;
+						t->len = offset - t->start;
 						t->can_close = 0;
 
 						// Shift next token right and move those characters as child node
@@ -1618,7 +1618,7 @@ void pair_emphasis_tokens(token * t) {
 					        (t->next->mate == closer->prev) &&
 					        (t->type == t->next->type) &&
 					        (t->next->mate != t) &&
-					        (t->start+t->len == t->next->start) &&
+					        (t->start + t->len == t->next->start) &&
 					        (closer->start == closer->prev->start + closer->prev->len)) {
 
 						// We have a strong pair
@@ -1647,7 +1647,7 @@ void pair_emphasis_tokens(token * t) {
 		}
 
 		if (t->child != NULL) {
-			switch(t->type) {
+			switch (t->type) {
 				case PAIR_BACKTICK:
 				case PAIR_MATH:
 					break;

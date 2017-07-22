@@ -244,7 +244,7 @@ void Test_trie_search(CuTest* tc) {
 	CuAssertIntEquals(tc, 40, trie_search_match_type(a, "food"));
 
 	CuAssertIntEquals(tc, -1, trie_search(a, "foot"));
-	CuAssertIntEquals(tc, (unsigned short) -1, trie_search_match_type(a, "foot"));
+	CuAssertIntEquals(tc, (unsigned short) - 1, trie_search_match_type(a, "foot"));
 
 	trie_free(a);
 }

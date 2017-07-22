@@ -181,7 +181,7 @@ static void ensureStringBufferCanHold(DString * baseString, size_t newStringSize
 
 		if (temp == NULL) {
 			/* realloc failed */
-			fprintf(stderr, "Error reallocating memory for d_string. Current buffer size %lu.\n",baseString->currentStringBufferSize);
+			fprintf(stderr, "Error reallocating memory for d_string. Current buffer size %lu.\n", baseString->currentStringBufferSize);
 
 			exit(1);
 		}
@@ -223,7 +223,7 @@ void d_string_append_c_array(DString * baseString, const char * appendedChars, s
 	size_t newSizeNeeded = baseString->currentStringLength + bytes;
 	ensureStringBufferCanHold(baseString, newSizeNeeded);
 
-	memcpy(baseString->str + baseString->currentStringLength,appendedChars, bytes);
+	memcpy(baseString->str + baseString->currentStringLength, appendedChars, bytes);
 
 	baseString->currentStringLength = newSizeNeeded;
 	baseString->str[baseString->currentStringLength] = '\0';

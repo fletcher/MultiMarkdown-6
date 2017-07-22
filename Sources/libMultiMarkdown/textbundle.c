@@ -268,7 +268,7 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 	link * l;
 
 	while (t) {
-		switch(t->type) {
+		switch (t->type) {
 			case PAIR_BRACKET_IMAGE:
 				if (t->next && t->next->type == PAIR_PAREN) {
 					t = t->next;
@@ -426,7 +426,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	// Finalize zip archive and extract data
 	free(result->str);
 
-	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), (size_t *) &(result->currentStringLength));
+	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
 
 	if (!status) {
 		fprintf(stderr, "Error finalizing zip.\n");

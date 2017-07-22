@@ -309,8 +309,8 @@ static char * correct_dimension_units(char *original) {
 		result[i] = tolower(result[i]);
 	}
 
-	if (strstr(&result[strlen(result)-2],"px")) {
-		result[strlen(result)-2] = '\0';
+	if (strstr(&result[strlen(result) - 2], "px")) {
+		result[strlen(result) - 2] = '\0';
 		strcat(result, "pt");
 	}
 
@@ -359,7 +359,7 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 				// specified as percent
 				width[strlen(width) - 1] = '\0';
 				temp_float = strtod(width, NULL);
-				temp_float = temp_float/100.0f;
+				temp_float = temp_float / 100.0f;
 				printf("width=%.4f\\textwidth,", temp_float);
 			} else {
 				printf("width=%s,", width);
@@ -377,7 +377,7 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 				// specified as percent
 				height[strlen(height) - 1] = '\0';
 				temp_float = strtod(height, NULL);
-				temp_float = temp_float/100.0f;
+				temp_float = temp_float / 100.0f;
 				printf("height=%.4f\\textheight", temp_float);
 			} else {
 				printf("height=%s", height);
@@ -1839,7 +1839,7 @@ parse_citation:
 		case TABLE_CELL:
 			if (t->next && t->next->type == TABLE_DIVIDER) {
 				if (t->next->len > 1) {
-					printf("\\multicolumn{%lu}{",t->next->len);
+					printf("\\multicolumn{%lu}{", t->next->len);
 
 					switch (scratch->table_alignment[scratch->table_cell_count]) {
 						case 'l':

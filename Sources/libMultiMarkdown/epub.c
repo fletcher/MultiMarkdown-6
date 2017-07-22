@@ -169,7 +169,7 @@ char * epub_package_document(scratch_pad * scratch) {
 		mmd_print_string_html(out, m->value, false);
 		print_const("</dc:language>\n");
 	} else {
-		switch(scratch->language) {
+		switch (scratch->language) {
 			case LC_ES:
 				print_const("<dc:language>es</dc:language>\n");
 				break;
@@ -547,7 +547,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	// Finalize zip archive and extract data
 	free(result->str);
 
-	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), (size_t *) &(result->currentStringLength));
+	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
 
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");

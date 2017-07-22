@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
 		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
-		a_rem3			= arg_rem("",""),
+		a_rem3			= arg_rem("", ""),
 
 		a_accept		= arg_lit0("a", "accept", "accept all CriticMarkup changes"),
 		a_reject		= arg_lit0("r", "reject", "reject all CriticMarkup changes"),
@@ -186,7 +186,7 @@ int main(int argc, char** argv) {
 
 		a_rem6			= arg_rem("", ""),
 
-		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc+2, "read input from file(s) -- use stdin if no files given"),
+		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc + 2, "read input from file(s) -- use stdin if no files given"),
 
 		a_end 			= arg_end(20),
 	};

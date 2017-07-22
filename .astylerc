@@ -1,3 +1,7 @@
+# astyle configuration file
+# http://astyle.sourceforge.net/astyle.html
+
+
 # Brace style
 --style=java
 
@@ -5,28 +9,40 @@
 # Indents
 --indent=tab=4
 
+
 # Switch statements
 --indent-switches
 
+
 # Break long conditionals
 --break-after-logical
+
 
 # Indent pre-processor directives
 --indent-preproc-block
 --indent-preproc-define
 --indent-preproc-cond
 
+
 # Line endings
 --lineend=linux
+
 
 # Add brackets to one-liners
 --add-brackets
 
+
 # Pad with blank lines
 --break-blocks
 
-# Pad around operators
+
+# Pad with spaces
 --pad-oper
+--pad-header
+
+
+# Pointers/References
+--align-reference=name
 
 
 # Excludes
