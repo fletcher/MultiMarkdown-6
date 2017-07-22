@@ -9,14 +9,14 @@
 	swapping out certain strings based on user-specified languages at runtime.
 
 	This does slow down compiling, as multiple hash strings are compiled (seemingly
-	quite slowly).  But, to my understanding and testing, it does not affect the 
+	quite slowly).  But, to my understanding and testing, it does not affect the
 	speed when actually running MMD.  This should allow translating an arbitrary
 	number of strings into an arbitrary number of languages without a performance
 	penalty.
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -121,7 +121,7 @@ static inline const char * Translate(unsigned long x, int l) {
 		case 2977473004:
 			return lc_lookup[2 * kNumberOfLanguages + l];
 		case 3851221863:
-			return lc_lookup[3 * kNumberOfLanguages + l];		
+			return lc_lookup[3 * kNumberOfLanguages + l];
 		default:
 			return "localization error";
 	}
@@ -144,7 +144,7 @@ enum lc_languages {
 
 
 // MMD expects a lower case 2 letter code in the metadata or command-line arguments`
-static inline short i18n_language_from_string(const char * l) { 
+static inline short i18n_language_from_string(const char * l) {
 	if (strcmp(l, "es") == 0) {
 		return LC_ES;
 	} else if (strcmp(l, "de") == 0) {

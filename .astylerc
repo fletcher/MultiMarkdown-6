@@ -8,12 +8,25 @@
 # Switch statements
 --indent-switches
 
+# Break long conditionals
+--break-after-logical
+
+# Indent pre-processor directives
+--indent-preproc-block
+--indent-preproc-cond
+
 
 # Excludes
 --exclude="Sources/libMultiMarkdown/scanners.c"
 --exclude="Sources/libMultiMarkdown/parser.c"
 --exclude="Sources/libMultiMarkdown/lexer.c"
---exclude="Sources/multimarkdown/argtable3.c"
+
+--exclude="Sources/libMultiMarkdown/i18n.h"
 --exclude="Sources/libMultiMarkdown/miniz.c"
+--exclude="Sources/libMultiMarkdown/miniz.h"
+--exclude="Sources/libMultiMarkdown/uthash.h"
+
+--exclude="Sources/multimarkdown/argtable3.c"
+--exclude="Sources/multimarkdown/argtable3.h"
 
 --ignore-exclude-errors
