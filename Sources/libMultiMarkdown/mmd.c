@@ -2026,7 +2026,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 handle_line:
 
 				// Remove leading non-indent space from line
-				if (l->child && l->child->type == NON_INDENT_SPACE) {
+				if (block->type != BLOCK_CODE_FENCED && l->child && l->child->type == NON_INDENT_SPACE) {
 					token_remove_first_child(l);
 				}
 
@@ -2034,7 +2034,7 @@ handle_line:
 			case LINE_INDENTED_SPACE:
 
 				// Strip leading indent (Only the first one)
-				if (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
+				if (block->type != BLOCK_CODE_FENCED && l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
 					token_remove_first_child(l);
 				}
 

@@ -36,3 +36,16 @@ latex config:	article</p>
 
 <p>```
 foo</p>
+
+<pre><code>bar
+</code></pre>
+
+<p>bar</p>
+
+<pre><code>foo
+</code></pre>
+
+<p>```</p>
+
+<p>```
+foo</p>
