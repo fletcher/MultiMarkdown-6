@@ -286,7 +286,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">foo</text:p>
 
-<text:p text:style-name="Standard"> foo</text:p>
+<text:p text:style-name="Standard">foo</text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 

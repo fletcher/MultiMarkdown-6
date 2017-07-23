@@ -1013,10 +1013,14 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 				token_append_child(root, line);
 				break;
 
+			case TEXT_NL_SP:
+				t = token_new(TEXT_NL, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start - 1));
 			case TEXT_LINEBREAK:
 			case TEXT_NL:
 				// We hit the end of a line
-				t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
+				if (type != TEXT_NL_SP)
+					t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
+
 				token_append_child(line, t);
 
 				// What sort of line is this?
@@ -1039,7 +1043,14 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 					}
 				}
 
-				line = token_new(0, s.cur - e->dstr->str, 0);
+				if (type == TEXT_NL_SP) {
+                    line = token_new(0, s.cur - e->dstr->str - 1, 0);
+					t = token_new(NON_INDENT_SPACE, (size_t)(s.cur - e->dstr->str - 1), 1);
+					token_append_child(line, t);
+                } else {
+                    line = token_new(0, s.cur - e->dstr->str, 0);
+                }
+
 				break;
 
 			default:

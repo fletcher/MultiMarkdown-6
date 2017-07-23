@@ -143,7 +143,7 @@ enum lc_languages {
 };
 
 
-// MMD expects a lower case 2 letter code in the metadata or command-line arguments`
+// MMD expects a lower case 2 letter code in the metadata or command-line arguments
 static inline short i18n_language_from_string(const char * l) {
 	if (strcmp(l, "es") == 0) {
 		return LC_ES;

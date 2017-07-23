@@ -95,6 +95,10 @@ int scan(Scanner * s, const char * stop) {
 		// Don't split `à` character
 		//'\303' '\240'					{ return TEXT_PLAIN; }
 
+		// NL with single space -- this would otherwise be wrapped into a TEXT_PLAIN
+		NL ' ' / [^ \t\r\n]				{ return TEXT_NL_SP; }
+
+
 		"{{TOC}}"						{ return TOC; }
 
 		"{++"							{ return CRITIC_ADD_OPEN; }
