@@ -303,7 +303,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Preformatted Text">&lt;p&gt;foo&lt;/p&gt;<text:line-break/></text:p>
 
-<text:p text:style-name="Preformatted Text">foo<text:line-break/><text:line-break/><text:tab/>bar<text:line-break/><text:line-break/>bar<text:line-break/><text:line-break/>    foo<text:line-break/></text:p>
+<text:p text:style-name="Preformatted Text">foo<text:line-break/><text:line-break/><text:tab/>bar<text:line-break/><text:line-break/>  bar<text:line-break/><text:line-break/>    foo<text:line-break/></text:p>
 
 <text:p text:style-name="Preformatted Text">foo<text:line-break/></text:p>
 </office:text>

@@ -97,7 +97,7 @@ int scan(Scanner * s, const char * stop) {
 
 		// NL with single space -- this would otherwise be wrapped into a TEXT_PLAIN
 		NL ' ' / [^ \t\r\n]				{ return TEXT_NL_SP; }
-
+		TEXT_LINEBREAK ' ' / [^ \t\r\n]	{ return TEXT_LINEBREAK_SP; }
 
 		"{{TOC}}"						{ return TOC; }
 
