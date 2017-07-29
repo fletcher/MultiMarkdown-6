@@ -10,7 +10,7 @@
 	@author	Fletcher T. Penney
 	@bug
 
-**/
+ **/
 
 /*
 
@@ -21,7 +21,7 @@
 
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
 
-		https://github.com/fletcher/MultiMarkdown-4/
+ https://github.com/fletcher/MultiMarkdown-4/
 
 	MMD 4 is released under both the MIT License and GPL.
 
@@ -50,7 +50,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 
-*/
+ */
 
 
 #ifndef STACK_SMART_STRING_H
@@ -106,5 +106,8 @@ void * stack_peek_index(
     size_t index					//!< Index to peek at (0 is first pointer on stack)
 );
 
+
+/// Sort stack based on sort_function
+void stack_sort(stack * s, void * compare_function);
 
 #endif
