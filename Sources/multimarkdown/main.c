@@ -432,11 +432,7 @@ int main(int argc, char** argv) {
 			} else {
 				// Regular processing
 
-				if (FORMAT_MMD == format) {
-					result = buffer;
-				} else {
-					result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
-				}
+				result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 
 				if (FORMAT_TEXTBUNDLE == format) {
 					unzip_data_to_path(result->str, result->currentStringLength, output_filename);
@@ -450,9 +446,7 @@ int main(int argc, char** argv) {
 					}
 				}
 
-				if (FORMAT_MMD != format) {
-					d_string_free(result, true);
-				}
+				d_string_free(result, true);
 			}
 
 			d_string_free(buffer, true);
@@ -548,11 +542,7 @@ int main(int argc, char** argv) {
 		} else {
 			// Regular processing
 
-			if (FORMAT_MMD == format) {
-				result = buffer;
-			} else {
-				result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
-			}
+			result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 
 			// Where does output go?
 			if (strcmp(a_o->filename[0], "-") == 0) {
@@ -573,9 +563,7 @@ int main(int argc, char** argv) {
 				fclose(output_stream);
 			}
 
-			if (FORMAT_MMD != format) {
-				d_string_free(result, true);
-			}
+			d_string_free(result, true);
 		}
 
 		d_string_free(buffer, true);

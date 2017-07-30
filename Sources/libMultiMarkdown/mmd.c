@@ -2649,7 +2649,7 @@ DString * mmd_d_string_convert_to_data(DString * source, unsigned long extension
 
 	mmd_engine_set_language(e, language);
 
-	DString * result =  mmd_engine_convert_to_data(e, format, directory);
+	DString * result = mmd_engine_convert_to_data(e, format, directory);
 
 	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
 
@@ -2660,6 +2660,13 @@ DString * mmd_d_string_convert_to_data(DString * source, unsigned long extension
 DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * directory) {
 	DString * output = d_string_new("");
 	DString * result = NULL;
+
+	if (format == FORMAT_MMD) {
+		// Simply return text (transclusion is handled externally)
+		d_string_append_c_array(output, e->dstr->str, e->dstr->currentStringLength);
+
+		return output;
+	}
 
 	mmd_engine_parse_string(e);
 
