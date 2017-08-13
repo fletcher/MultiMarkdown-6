@@ -621,7 +621,7 @@ enable_testing()
 function(ADD_MMD_TEST NAME FLAGS FOLDER EXTENSION)
 	add_test ( ${NAME}
 		${PROJECT_SOURCE_DIR}/tests/MarkdownTest.pl
-		--Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown
+		--Script="${CMAKE_CURRENT_BINARY_DIR}/multimarkdown"
 		--testdir=${PROJECT_SOURCE_DIR}/tests/${FOLDER}
 		"--Flags=${FLAGS}"
 		--ext=${EXTENSION}
