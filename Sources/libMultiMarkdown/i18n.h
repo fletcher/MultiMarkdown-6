@@ -37,7 +37,7 @@
 #include <stdlib.h>
 
 
-#define kNumberOfLanguages 6
+#define kNumberOfLanguages 7
 #define kNumberOfStrings 4
 #define kLanguage 0
 
@@ -76,6 +76,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Retour au texte principal",	// Français
 	"return to body",				// Nederlands
 	"return to body",				// Svenska
+	"חזור/י לגוף הטקסט",				// Hebrew - עברית
 
 	"see footnote",					// English
 	"Ver nota a pie de página",		// Español
@@ -83,6 +84,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Voir note de bas de page",		// Français
 	"see footnote",					// Nederlands
 	"see footnote",					// Svenska
+	"ראה/י הערה",					// Hebrew - עברית
 
 	"see citation",					// English
 	"Ver referencia",				// Español
@@ -90,6 +92,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Voir citation",				// Français
 	"see citation",					// Nederlands
 	"see citation",					// Svenska
+	"ראה/י ציטוט",					// Hebrew - עברית
 
 	"see glossary",					// English
 	"Ver glosario",					// Español
@@ -97,6 +100,7 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Voir glossaire",				// Français
 	"see glossary",					// Nederlands
 	"see glossary",					// Svenska
+	"ראה/י מילון מונחים",				// Hebrew - עברית
 };
 
 
@@ -140,6 +144,7 @@ enum lc_languages {
 	LC_FR,				//!< Français
 	LC_NL,				//!< Nederlands
 	LC_SV,				//!< Svenska
+	LC_HE,				//!< Hebrew - עברית
 };
 
 
@@ -151,6 +156,8 @@ static inline short i18n_language_from_string(const char * l) {
 		return LC_DE;
 	} else if (strcmp(l, "fr") == 0) {
 		return LC_FR;
+	} else if (strcmp(l, "he") == 0) {
+		return LC_HE;
 	} else if (strcmp(l, "nl") == 0) {
 		return LC_NL;
 	} else if (strcmp(l, "sv") == 0) {
