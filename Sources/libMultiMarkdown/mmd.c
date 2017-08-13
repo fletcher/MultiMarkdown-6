@@ -1945,15 +1945,17 @@ void parse_table_row_into_cells(token * row) {
 
 	token * walker = row->child;
 
-	if (walker->type == PIPE) {
-		walker->type = TABLE_DIVIDER;
-		first = walker->next;
-	} else {
-		first = walker;
-		last = first;
-	}
+	if (walker) {
+		if (walker->type == PIPE) {
+			walker->type = TABLE_DIVIDER;
+			first = walker->next;
+		} else {
+			first = walker;
+			last = first;
+		}
 
-	walker = walker->next;
+		walker = walker->next;
+	}
 
 	while (walker) {
 		switch (walker->type) {
