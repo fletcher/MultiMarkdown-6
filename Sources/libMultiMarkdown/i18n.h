@@ -74,32 +74,32 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Regresar al texto",			// Español
 	"Zum Haupttext",				// Deutsch
 	"Retour au texte principal",	// Français
-	"return to body",				// Nederlands
-	"return to body",				// Svenska
+	"Ga terug naar tekstlichaam",	// Nederlands
+	"Återgå till textkroppen",		// Svenska
 	"חזור/י לגוף הטקסט",				// Hebrew - עברית
 
 	"see footnote",					// English
 	"Ver nota a pie de página",		// Español
 	"Siehe Fußnote",				// Deutsch
 	"Voir note de bas de page",		// Français
-	"see footnote",					// Nederlands
-	"see footnote",					// Svenska
+	"Zie vootnot",					// Nederlands
+	"Se fotnot",					// Svenska
 	"ראה/י הערה",					// Hebrew - עברית
 
 	"see citation",					// English
 	"Ver referencia",				// Español
 	"Siehe Zitat",					// Deutsch
 	"Voir citation",				// Français
-	"see citation",					// Nederlands
-	"see citation",					// Svenska
+	"Zie citaat",					// Nederlands
+	"Se citat",						// Svenska
 	"ראה/י ציטוט",					// Hebrew - עברית
 
 	"see glossary",					// English
 	"Ver glosario",					// Español
 	"Siehe Glossar",				// Deutsch
 	"Voir glossaire",				// Français
-	"see glossary",					// Nederlands
-	"see glossary",					// Svenska
+	"Zie woordenlijst",				// Nederlands
+	"Se ordlista",					// Svenska
 	"ראה/י מילון מונחים",				// Hebrew - עברית
 };
 
