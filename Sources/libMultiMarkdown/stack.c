@@ -8,9 +8,9 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
-**/
+ **/
 
 /*
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
-		https://github.com/fletcher/MultiMarkdown-4/
-	
+
+ https://github.com/fletcher/MultiMarkdown-4/
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -50,7 +50,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 
-*/
+ */
 
 #include <stdlib.h>
 #include <string.h>
@@ -64,10 +64,11 @@
 /// initial capacity (0 to use default capacity)
 stack * stack_new(int startingSize) {
 	stack * s = malloc(sizeof(stack));
-	
+
 	if (s) {
-		if (startingSize <= 0)
+		if (startingSize <= 0) {
 			startingSize = kStackStartingSize;
+		}
 
 		s->element = malloc(sizeof(void *) * startingSize);
 
@@ -106,8 +107,9 @@ void stack_push(stack * s, void * element) {
 void * stack_pop(stack * s) {
 	void * last = stack_peek(s);
 
-	if (s->size != 0)
+	if (s->size != 0) {
 		s->size--;
+	}
 
 	return last;
 }
@@ -115,8 +117,9 @@ void * stack_pop(stack * s) {
 
 /// Peek at the top item on the stack
 void * stack_peek(stack * s) {
-	if (s->size == 0)
+	if (s->size == 0) {
 		return NULL;
+	}
 
 	return s->element[(s->size) - 1];
 }
@@ -124,9 +127,16 @@ void * stack_peek(stack * s) {
 
 /// Peek at a specific index in the stack
 void * stack_peek_index(stack * s, size_t index) {
-	if (index >= s->size)
+	if (index >= s->size) {
 		return NULL;
+	}
 
 	return s->element[index];
+}
+
+
+/// Sort array using specified compare_function
+void stack_sort(stack * s, void * compare_function) {
+	qsort(s->element, s->size, sizeof(void *), compare_function);
 }
 

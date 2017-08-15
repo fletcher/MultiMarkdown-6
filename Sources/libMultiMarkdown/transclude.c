@@ -4,11 +4,11 @@
 
 	@file transclude.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -60,7 +60,7 @@
 #include "transclude.h"
 
 #if defined(__WIN32)
-#include <windows.h>
+	#include <windows.h>
 #endif
 
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
@@ -73,10 +73,10 @@ static char * my_strndup(const char * source, size_t n) {
 	const char * test = source;
 
 	// strlen is too slow if strlen(source) >> n
-	for (len = 0; len < n; ++len)
-	{
-		if (test == '\0')
+	for (len = 0; len < n; ++len) {
+		if (test == '\0') {
 			break;
+		}
 
 		test++;
 	}
@@ -87,7 +87,7 @@ static char * my_strndup(const char * source, size_t n) {
 		memcpy(result, source, len);
 		result[len] = '\0';
 	}
-	
+
 	return result;
 }
 
@@ -107,37 +107,37 @@ static char * my_strdup(const char * source) {
 /// Windows can use either `\` or `/` as a separator -- thanks to t-beckmann on github
 ///	for suggesting a fix for this.
 bool is_separator(char c) {
-#if defined(__WIN32)
+	#if defined(__WIN32)
 	return c == '\\' || c == '/';
-#else
+	#else
 	return c == '/';
-#endif
+	#endif
 }
 
 
 #ifdef TEST
 void Test_is_separator(CuTest* tc) {
 	char * test = "a/\\";
-	
-#if defined(__WIN32)
+
+	#if defined(__WIN32)
 	CuAssertIntEquals(tc, false, is_separator(test[0]));
 	CuAssertIntEquals(tc, true, is_separator(test[1]));
 	CuAssertIntEquals(tc, true, is_separator(test[2]));
-#else
+	#else
 	CuAssertIntEquals(tc, false, is_separator(test[0]));
 	CuAssertIntEquals(tc, true, is_separator(test[1]));
 	CuAssertIntEquals(tc, false, is_separator(test[2]));
-#endif
+	#endif
 }
 #endif
 
 
 void add_trailing_sep(DString * path) {
-#if defined(__WIN32)
+	#if defined(__WIN32)
 	char sep = '\\';
-#else
+	#else
 	char sep = '/';
-#endif
+	#endif
 
 	// Ensure that folder ends in separator
 	if (!is_separator(path->str[path->currentStringLength - 1])) {
@@ -147,8 +147,9 @@ void add_trailing_sep(DString * path) {
 
 /// Combine directory and base filename to create a full path */
 char * path_from_dir_base(const char * dir, const char * base) {
-	if (!dir && !base)
+	if (!dir && !base) {
 		return NULL;
+	}
 
 
 	DString * path = NULL;
@@ -165,8 +166,9 @@ char * path_from_dir_base(const char * dir, const char * base) {
 		add_trailing_sep(path);
 
 		// Append filename (if present)
-		if (base)
+		if (base) {
 			d_string_append(path, base);
+		}
 	}
 
 	result = path->str;
@@ -183,11 +185,11 @@ void Test_path_from_dir_base(CuTest* tc) {
 
 	char * path = path_from_dir_base(dir, base);
 
-#if defined(__WIN32)
+	#if defined(__WIN32)
 	CuAssertStrEquals(tc, "/foo\\bar", path);
-#else
+	#else
 	CuAssertStrEquals(tc, "/foo/bar", path);
-#endif
+	#endif
 
 	free(path);
 	strcpy(base, "/bar");
@@ -208,22 +210,24 @@ void Test_path_from_dir_base(CuTest* tc) {
 ///
 /// See http://stackoverflow.com/questions/1575278/function-to-split-a-filepath-into-path-and-file
 void split_path_file(char ** dir, char ** file, const char * path) {
-    const char * slash = path, * next;
+	const char * slash = path, * next;
 
-#if defined(__WIN32)
+	#if defined(__WIN32)
 	const char sep[] = "\\/";	// Windows allows either variant
-#else
+	#else
 	const char sep[] = "/";
-#endif
+	#endif
 
-    while ((next = strpbrk(slash + 1, sep)))
-    	slash = next;
-    
-    if (path != slash)
-    	slash++;
+	while ((next = strpbrk(slash + 1, sep))) {
+		slash = next;
+	}
 
-    *dir = my_strndup(path, slash - path);
-    *file = my_strdup(slash);
+	if (path != slash) {
+		slash++;
+	}
+
+	*dir = my_strndup(path, slash - path);
+	*file = my_strdup(slash);
 }
 
 #ifdef TEST
@@ -239,13 +243,13 @@ void Test_split_path_file(CuTest* tc) {
 	path = "\\foo\\bar.txt";
 	split_path_file(&dir, &file, path);
 
-#if defined(__WIN32)
+	#if defined(__WIN32)
 	CuAssertStrEquals(tc, "\\foo\\", dir);
 	CuAssertStrEquals(tc, "bar.txt", file);
-#else
+	#else
 	CuAssertStrEquals(tc, "", dir);
 	CuAssertStrEquals(tc, "\\foo\\bar.txt", file);
-#endif
+	#endif
 }
 #endif
 
@@ -259,15 +263,16 @@ DString * scan_file(const char * fname) {
 
 	FILE * file;
 
-#if defined(__WIN32)
+	#if defined(__WIN32)
 	int wchars_num = MultiByteToWideChar(CP_UTF8, 0, fname, -1, NULL, 0);
 	wchar_t wstr[wchars_num];
 	MultiByteToWideChar(CP_UTF8, 0, fname, -1, wstr, wchars_num);
 
 	if ((file = _wfopen(wstr, L"r")) == NULL) {
-#else
+	#else
+
 	if ((file = fopen(fname, "r")) == NULL ) {
-#endif
+	#endif
 
 		return NULL;
 	}
@@ -306,6 +311,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	size_t last_match;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
+
 	if (mmd_engine_has_metadata(e, &offset)) {
 
 		temp = mmd_engine_metavalue_for_key(e, "transclude base");
@@ -342,13 +348,14 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 	// Iterate through source text, looking for `{{foo}}`
 
-	start = strstr(source->str, "{{");
+	start = strstr(&source->str[offset], "{{");
 
 	while (start != NULL) {
 		stop = strstr(start, "}}");
 
-		if (stop == NULL)
+		if (stop == NULL) {
 			break;
+		}
 
 		// Remember insertion point
 		last_match = start - source->str;
@@ -360,7 +367,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			text[stop - start - 2] = '\0';
 
 			// Is this just {{TOC}}
-			if (strcmp("TOC",text) == 0) {
+			if (strcmp("TOC", text) == 0) {
 				start = strstr(stop, "{{");
 				continue;
 			}
@@ -389,14 +396,17 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 					case FORMAT_HTML:
 						d_string_append(file_path, ".html");
 						break;
+
 					case FORMAT_LATEX:
 					case FORMAT_BEAMER:
 					case FORMAT_MEMOIR:
 						d_string_append(file_path, ".tex");
 						break;
+
 					case FORMAT_FODT:
 						d_string_append(file_path, ".fodt");
 						break;
+
 					default:
 						d_string_append(file_path, ".txt");
 						break;
@@ -405,9 +415,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			}
 
 			// Prevent infinite recursive loops
-			for (int i = 0; i < stack_depth; ++i)
-			{
+			for (int i = 0; i < stack_depth; ++i) {
 				temp = stack_peek_index(parse_stack, i);
+
 				if (strcmp(file_path->str, temp) == 0) {
 					// We have parsed this file already, don't recurse infinitely
 					last_match += 2;
@@ -422,9 +432,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			if (manifest) {
 				bool add = true;
 
-				for (int i = 0; i < manifest->size; ++i)
-				{
+				for (int i = 0; i < manifest->size; ++i) {
 					temp = stack_peek_index(manifest, i);
+
 					if (strcmp(file_path->str, temp) == 0) {
 						// Already on manifest, don't duplicate
 						add = false;
@@ -432,8 +442,9 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 				}
 
 				// Add path to manifest
-				if (add)
+				if (add) {
 					stack_push(manifest, my_strdup(file_path->str));
+				}
 			}
 
 			// Read the file
@@ -446,16 +457,17 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				// Recursively check this file for transclusions
 				mmd_transclude_source(buffer, search_folder, file_path->str, format, parse_stack, manifest);
-				
+
 				// Strip metadata from buffer now that we have parsed it
 				e = mmd_engine_create_with_dstring(buffer, EXT_TRANSCLUDE);
-				
+
 				if (mmd_engine_has_metadata(e, &offset)) {
 					d_string_erase(buffer, 0, offset);
 				} else {
 					// Do we need to strip BOM?
-					if (strncmp(buffer->str, "\xef\xbb\xbf",3) == 0)
-					d_string_erase(buffer, 0, 3);
+					if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
+						d_string_erase(buffer, 0, 3);
+					}
 				}
 
 				mmd_engine_free(e, false);
@@ -476,7 +488,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 			// Remove this file from stack
 			stack_pop(parse_stack);
 
-			finish_file:
+finish_file:
 			d_string_free(file_path, true);
 
 		} else {
@@ -488,7 +500,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 		start = strstr(source->str + last_match, "{{");
 	}
 
-	exit:
+exit:
 
 	if (parsed == NULL) {
 		// Free temp stack
@@ -501,4 +513,33 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	free(search_folder);
 }
 
+
+
+/// If MMD Header metadata used, insert it into appropriate place
+void mmd_prepend_mmd_header(DString * source) {
+	size_t end;
+
+	if (mmd_d_string_has_metadata(source, &end)) {
+		char * meta = mmd_d_string_metavalue_for_key(source, "mmdheader");
+
+		if (meta) {
+			d_string_insert(source, end, "\n\n");
+			d_string_insert(source, end + 2, meta);
+			free(meta);
+		}
+	}
+}
+
+
+/// If MMD Footer metadata used, insert it into appropriate place
+void mmd_append_mmd_footer(DString * source) {
+	char * meta = mmd_d_string_metavalue_for_key(source, "mmdfooter");
+
+	if (meta) {
+		d_string_append(source, "\n\n");
+		d_string_append(source, meta);
+
+		free(meta);
+	}
+}
 

@@ -4,11 +4,11 @@
 
 	@file epub.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,20 +18,20 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
 	"Software"), to deal in the Software without restriction, including
@@ -39,10 +39,10 @@
 	distribute, sublicense, and/or sell copies of the Software, and to
 	permit persons to whom the Software is furnished to do so, subject to
 	the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -50,7 +50,7 @@
 	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 
 */
 
@@ -59,7 +59,7 @@
 #include <sys/stat.h>
 
 #ifdef USE_CURL
-#include <curl/curl.h>
+	#include <curl/curl.h>
 #endif
 
 #include "epub.h"
@@ -108,7 +108,7 @@ char * epub_container_xml(void) {
 
 	char * result = container->str;
 	d_string_free(container, false);
-	return result;	
+	return result;
 }
 
 
@@ -122,10 +122,11 @@ char * epub_package_document(scratch_pad * scratch) {
 
 
 	// Metadata
-	d_string_append(out, "<metadata xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n");	
+	d_string_append(out, "<metadata xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n");
 
 	// Identifier
 	HASH_FIND_STR(scratch->meta_hash, "uuid", m);
+
 	if (m) {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
 		mmd_print_string_html(out, m->value, false);
@@ -141,6 +142,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	// Title
 	HASH_FIND_STR(scratch->meta_hash, "title", m);
+
 	if (m) {
 		print_const("<dc:title>");
 		mmd_print_string_html(out, m->value, false);
@@ -151,6 +153,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	// Author
 	HASH_FIND_STR(scratch->meta_hash, "author", m);
+
 	if (m) {
 		print_const("<dc:creator>");
 		mmd_print_string_html(out, m->value, false);
@@ -160,27 +163,33 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	// Language
 	HASH_FIND_STR(scratch->meta_hash, "language", m);
+
 	if (m) {
 		print_const("<dc:language>");
 		mmd_print_string_html(out, m->value, false);
 		print_const("</dc:language>\n");
 	} else {
-		switch(scratch->language) {
+		switch (scratch->language) {
 			case LC_ES:
 				print_const("<dc:language>es</dc:language>\n");
 				break;
+
 			case LC_DE:
 				print_const("<dc:language>de</dc:language>\n");
 				break;
+
 			case LC_FR:
 				print_const("<dc:language>fr</dc:language>\n");
 				break;
+
 			case LC_NL:
 				print_const("<dc:language>nl</dc:language>\n");
 				break;
+
 			case LC_SV:
 				print_const("<dc:language>sv</dc:language>\n");
 				break;
+
 			default:
 				print_const("<dc:language>en</dc:language>\n");
 		}
@@ -188,6 +197,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	// Date
 	HASH_FIND_STR(scratch->meta_hash, "date", m);
+
 	if (m) {
 		print_const("<meta property=\"dcterms:modified\">");
 		mmd_print_string_html(out, m->value, false);
@@ -197,7 +207,7 @@ char * epub_package_document(scratch_pad * scratch) {
 		struct tm * today = localtime(&t);
 
 		d_string_append_printf(out, "<meta property=\"dcterms:modified\">%d-%02d-%02d</meta>\n",
-			today->tm_year + 1900, today->tm_mon + 1, today->tm_mday);
+		                       today->tm_year + 1900, today->tm_mon + 1, today->tm_mday);
 	}
 
 	d_string_append(out, "</metadata>\n");
@@ -205,13 +215,13 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	// Manifest
 	d_string_append(out, "<manifest>\n");
-    d_string_append(out, "<item id=\"nav\" href=\"nav.xhtml\" properties=\"nav\" media-type=\"application/xhtml+xml\"/>\n");
-    d_string_append(out, "<item id=\"main\" href=\"main.xhtml\" media-type=\"application/xhtml+xml\"/>\n");
+	d_string_append(out, "<item id=\"nav\" href=\"nav.xhtml\" properties=\"nav\" media-type=\"application/xhtml+xml\"/>\n");
+	d_string_append(out, "<item id=\"main\" href=\"main.xhtml\" media-type=\"application/xhtml+xml\"/>\n");
 	d_string_append(out, "</manifest>\n");
 
 	// Spine
 	d_string_append(out, "<spine>\n");
-    d_string_append(out, "<itemref idref=\"main\"/>");
+	d_string_append(out, "<itemref idref=\"main\"/>");
 	d_string_append(out, "</spine>\n");
 
 	d_string_append(out, "</package>\n");
@@ -245,6 +255,7 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 			if (*counter < scratch->header_stack->size - 1) {
 				next = stack_peek_index(scratch->header_stack, *counter + 1);
 				next_level = next->type - BLOCK_H1 + 1;
+
 				if (next_level > entry_level) {
 					// This entry has children
 					(*counter)++;
@@ -260,7 +271,7 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 			(*counter)--;
 			break;
 		}
-		
+
 		// Increment counter
 		(*counter)++;
 	}
@@ -286,13 +297,15 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 
 	d_string_append(out, "<head>\n<title>");
 	HASH_FIND_STR(scratch->meta_hash, "title", temp);
+
 	if (temp) {
 		mmd_print_string_html(out, temp->value, false);
 	} else {
 		print_const("Untitled");
 	}
+
 	print_const("</title>\n</head>\n");
-	
+
 	print_const("<body>\n<nav epub:type=\"toc\">\n");
 	print_const("<h2>Table of Contents</h2>\n");
 
@@ -302,14 +315,15 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 
 	char * result = out->str;
 	d_string_free(out, false);
-	return result;	
+	return result;
 }
 
 
 static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
-	if (!directory)
+	if (!directory) {
 		return false;
-	
+	}
+
 	char * path = path_from_dir_base(directory, a->url);
 	mz_bool status;
 	bool result = false;
@@ -348,6 +362,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
 
 	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+
 	if (mem->memory == NULL) {
 		// Out of memory
 		fprintf(stderr, "Out of memory\n");
@@ -365,17 +380,17 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
-	if (e->asset_hash){
+	if (e->asset_hash) {
 		CURL * curl;
 		CURLcode res;
-		
+
 		struct MemoryStruct chunk;
 		chunk.memory = malloc(1);
 		chunk.size = 0;
 
 		char destination[100] = "OEBPS/assets/";
 		destination[49] = '\0';
-		
+
 		mz_bool status;
 
 		curl_global_init(CURL_GLOBAL_ALL);
@@ -413,11 +428,11 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
-	if (e->asset_hash){
+	if (e->asset_hash) {
 
 		char destination[100] = "OEBPS/assets/";
 		destination[49] = '\0';
-		
+
 		mz_bool status;
 
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
@@ -468,17 +483,20 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "mimetype", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
 
 	// Create directories
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
 
 	status = mz_zip_writer_add_mem(&zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
@@ -488,6 +506,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "META-INF/container.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
@@ -497,6 +516,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.opf", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
@@ -506,6 +526,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/nav.xhtml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
@@ -513,6 +534,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	// Add main document
 	len = strlen(body);
 	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body, len, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
@@ -525,7 +547,8 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	// Finalize zip archive and extract data
 	free(result->str);
 
-	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), &(result->currentStringLength));
+	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
+
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}

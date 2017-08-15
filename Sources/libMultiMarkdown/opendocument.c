@@ -4,11 +4,11 @@
 
 	@file opendocument.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,38 +18,38 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
-	
+
 	uthash library:
 		Copyright (c) 2005-2016, Troy D. Hanson
-	
+
 		Licensed under Revised BSD license
-	
+
 	miniz library:
 		Copyright 2013-2014 RAD Game Tools and Valve Software
 		Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
-	
+
 		Licensed under the MIT license
-	
+
 	argtable3 library:
 		Copyright (C) 1998-2001,2003-2011,2013 Stewart Heitmann
 		<sheitmann@users.sourceforge.net>
 		All rights reserved.
-	
+
 		Licensed under the Revised BSD License
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
 	"Software"), to deal in the Software without restriction, including
@@ -57,10 +57,10 @@
 	distribute, sublicense, and/or sell copies of the Software, and to
 	permit persons to whom the Software is furnished to do so, subject to
 	the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -68,10 +68,10 @@
 	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
-	
+
+
 	## Revised BSD License ##
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are
 	met:
@@ -85,7 +85,7 @@
 	      names of its contributors may be used to endorse or promote
 	      products derived from this software without specific prior
 	      written permission.
-	
+
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -97,12 +97,12 @@
 	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	
+
 
 */
 
 #ifdef USE_CURL
-#include <curl/curl.h>
+	#include <curl/curl.h>
 #endif
 
 #include "miniz.h"
@@ -133,9 +133,10 @@ static char * my_strdup(const char * source) {
 
 
 static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
-	if (!directory)
+	if (!directory) {
 		return false;
-	
+	}
+
 	char * path = path_from_dir_base(directory, a->url);
 	mz_bool status;
 	bool result = false;
@@ -207,7 +208,7 @@ char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch) {
 	}
 
 	d_string_append(out, "</office:meta>");
-	
+
 	char * result = out->str;
 	d_string_free(out, false);
 	return result;
@@ -242,255 +243,255 @@ char * opendocument_metadata_file(mmd_engine * e, scratch_pad * scratch) {
 char * opendocument_style(int format) {
 	DString * out = d_string_new("");
 
-		/* Font Declarations */
+	/* Font Declarations */
 	print_const("<office:font-face-decls>\n" \
-	"   <style:font-face style:name=\"Courier New\" svg:font-family=\"'Courier New'\"\n" \
-    "                    style:font-adornments=\"Regular\"\n" \
-    "                    style:font-family-generic=\"modern\"\n" \
-    "                    style:font-pitch=\"fixed\"/>\n" \
-    "</office:font-face-decls>\n");
-    
-    /* Append basic style information */
-    print_const("<office:styles>\n" \
-    "<style:style style:name=\"Standard\" style:family=\"paragraph\" style:class=\"text\">\n" \
-    "      <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.15in\"" \
-    "     fo:text-align=\"justify\" style:justify-single-word=\"false\"/>\n" \
-    "   </style:style>\n" \
-    "<style:style style:name=\"Preformatted_20_Text\" style:display-name=\"Preformatted Text\"\n" \
-    "             style:family=\"paragraph\"\n" \
-    "             style:parent-style-name=\"Standard\"\n" \
-    "             style:class=\"html\">\n" \
-    "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0in\" fo:text-align=\"start\"\n" \
-    "                               style:justify-single-word=\"false\"/>\n" \
-    "   <style:text-properties style:font-name=\"Courier New\" fo:font-size=\"11pt\"\n" \
-    "                          style:font-name-asian=\"Courier New\"\n" \
-    "                          style:font-size-asian=\"11pt\"\n" \
-    "                          style:font-name-complex=\"Courier New\"\n" \
-    "                          style:font-size-complex=\"11pt\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"Source_20_Text\" style:display-name=\"Source Text\"\n" \
-    "             style:family=\"text\">\n" \
-    "   <style:text-properties style:font-name=\"Courier New\" style:font-name-asian=\"Courier New\"\n" \
-    "                          style:font-name-complex=\"Courier New\"\n" \
-    "                          fo:font-size=\"11pt\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"List\" style:family=\"paragraph\"\n" \
-    "             style:parent-style-name=\"Standard\"\n" \
-    "             style:class=\"list\">\n" \
-    "   <style:paragraph-properties fo:text-align=\"start\" style:justify-single-word=\"false\"/>\n" \
-    "   <style:text-properties style:font-size-asian=\"12pt\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"Quotations\" style:family=\"paragraph\"\n" \
-    "             style:parent-style-name=\"Standard\"\n" \
-    "             style:class=\"html\">\n" \
-    "   <style:paragraph-properties fo:margin-left=\"0.3937in\" fo:margin-right=\"0.3937in\" fo:margin-top=\"0in\"\n" \
-    "                               fo:margin-bottom=\"0.1965in\"\n" \
-    "                               fo:text-align=\"justify\"" \
-    "                               style:justify-single-word=\"false\"" \
-    "                               fo:text-indent=\"0in\"\n" \
-    "                               style:auto-text-indent=\"false\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"Table_20_Heading\" style:display-name=\"Table Heading\"\n" \
-    "             style:family=\"paragraph\"\n" \
-    "             style:parent-style-name=\"Table_20_Contents\"\n" \
-    "             style:class=\"extra\">\n" \
-    "   <style:paragraph-properties fo:text-align=\"center\" style:justify-single-word=\"false\"\n" \
-    "                               text:number-lines=\"false\"\n" \
-    "                               text:line-number=\"0\"/>\n" \
-    "   <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\"\n" \
-    "                          style:font-weight-complex=\"bold\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"Horizontal_20_Line\" style:display-name=\"Horizontal Line\"\n" \
-    "             style:family=\"paragraph\"\n" \
-    "             style:parent-style-name=\"Standard\"\n" \
-    "             style:class=\"html\">\n" \
-    "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.1965in\"\n" \
-    "                               style:border-line-width-bottom=\"0.0008in 0.0138in 0.0008in\"\n" \
-    "                               fo:padding=\"0in\"\n" \
-    "                               fo:border-left=\"none\"\n" \
-    "                               fo:border-right=\"none\"\n" \
-    "                               fo:border-top=\"none\"\n" \
-    "                               fo:border-bottom=\"0.0154in double #808080\"\n" \
-    "                               text:number-lines=\"false\"\n" \
-    "                               text:line-number=\"0\"\n" \
-    "                               style:join-border=\"false\"/>\n" \
-    "   <style:text-properties fo:font-size=\"6pt\" style:font-size-asian=\"6pt\" style:font-size-complex=\"6pt\"/>\n" \
-    "</style:style>\n" \
-	"<style:style style:name=\"Footnote_20_anchor\" style:display-name=\"Footnote anchor\"" \
-	"              style:family=\"text\">" \
-	"    <style:text-properties style:text-position=\"super 58%\"/>" \
-	" </style:style>\n" \
-  	"<style:style style:name=\"TOC_Item\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
-  	" <style:paragraph-properties>\n" \
-  	"  <style:tab-stops>\n" \
-  	"   <style:tab-stop style:position=\"6.7283in\" style:type=\"right\" style:leader-style=\"dotted\" style:leader-text=\".\"/>\n" \
-  	"  </style:tab-stops>\n" \
-  	" </style:paragraph-properties>\n" \
-  	"</style:style>\n" \
-	"  <text:notes-configuration text:note-class=\"footnote\" text:default-style-name=\"Footnote\" text:citation-style-name=\"Footnote_20_Symbol\" text:citation-body-style-name=\"Footnote_20_anchor\" text:master-page-name=\"Footnote\" style:num-format=\"a\" text:start-value=\"0\" text:footnotes-position=\"page\" text:start-numbering-at=\"page\"/>\n" \
-	"  <text:notes-configuration text:note-class=\"endnote\" text:default-style-name=\"Endnote\" text:citation-style-name=\"Endnote_20_Symbol\" text:citation-body-style-name=\"Endnote_20_anchor\" text:master-page-name=\"Endnote\" style:num-format=\"1\" text:start-value=\"0\"/>\n" \
-    "</office:styles>\n");
+	            "   <style:font-face style:name=\"Courier New\" svg:font-family=\"'Courier New'\"\n" \
+	            "                    style:font-adornments=\"Regular\"\n" \
+	            "                    style:font-family-generic=\"modern\"\n" \
+	            "                    style:font-pitch=\"fixed\"/>\n" \
+	            "</office:font-face-decls>\n");
 
-    /* Automatic style information */
-    print_const("<office:automatic-styles>" \
-    "   <style:style style:name=\"MMD-Italic\" style:family=\"text\">\n" \
-    "      <style:text-properties fo:font-style=\"italic\" style:font-style-asian=\"italic\"\n" \
-    "                             style:font-style-complex=\"italic\"/>\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"MMD-Bold\" style:family=\"text\">\n" \
-    "      <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\"\n" \
-    "                             style:font-weight-complex=\"bold\"/>\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"MMD-Superscript\" style:family=\"text\">\n" \
-    "      <style:text-properties style:text-position=\"super 58%\"/>\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"MMD-Subscript\" style:family=\"text\">\n" \
-    "      <style:text-properties style:text-position=\"sub 58%\"/>\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"Strike\" style:family=\"text\">\n" \
-    "      <style:text-properties style:text-line-through-style=\"solid\" />\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"Underline\" style:family=\"text\">\n" \
-    "      <style:text-properties style:text-underline-style=\"solid\" style:text-underline-color=\"font-color\"/>\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"Highlight\" style:family=\"text\">\n" \
-    "      <style:text-properties fo:background-color=\"#FFFF00\" />\n" \
-    "   </style:style>\n" \
-    "   <style:style style:name=\"Comment\" style:family=\"text\">\n" \
-    "      <style:text-properties fo:color=\"#0000BB\" />\n" \
-    "   </style:style>\n" \
-    "<style:style style:name=\"MMD-Table\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
-    "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.05in\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"MMD-Table-Center\" style:family=\"paragraph\" style:parent-style-name=\"MMD-Table\">\n" \
-    "   <style:paragraph-properties fo:text-align=\"center\" style:justify-single-word=\"false\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"MMD-Table-Right\" style:family=\"paragraph\" style:parent-style-name=\"MMD-Table\">\n" \
-    "   <style:paragraph-properties fo:text-align=\"right\" style:justify-single-word=\"false\"/>\n" \
-    "</style:style>\n" \
-    "<style:style style:name=\"P2\" style:family=\"paragraph\" style:parent-style-name=\"Standard\"\n" \
-    "             style:list-style-name=\"L2\">\n" \
-    "<style:paragraph-properties fo:text-align=\"start\" style:justify-single-word=\"false\"/>\n" \
-    "</style:style>\n" \
-	"<style:style style:name=\"fr1\" style:family=\"graphic\" style:parent-style-name=\"Frame\">\n" \
-	"   <style:graphic-properties style:print-content=\"true\" style:vertical-pos=\"top\"\n" \
-	"                             style:vertical-rel=\"baseline\"\n" \
-	"                             fo:padding=\"0in\"\n" \
-	"                             fo:border=\"none\"\n" \
-	"                             style:shadow=\"none\"/>\n" \
-	"</style:style>\n" \
-    "<style:style style:name=\"P1\" style:family=\"paragraph\" style:parent-style-name=\"Standard\"\n" \
-    "             style:list-style-name=\"L1\"/>\n" \
-	"<text:list-style style:name=\"L1\">\n" \
-	"	<text:list-level-style-bullet text:level=\"1\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"•\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.5in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-bullet>\n" \
-	"	<text:list-level-style-bullet text:level=\"2\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"◦\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.75in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-bullet>\n" \
-	"	<text:list-level-style-bullet text:level=\"3\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"▪\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-bullet>\n" \
-	"	<text:list-level-style-number text:level=\"4\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.25in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"5\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.5in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"6\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.75in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"7\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"8\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.25in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"9\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.5in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"10\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.75in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"</text:list-style>\n" \
-	"<text:list-style style:name=\"L2\">\n" \
-	"	<text:list-level-style-number text:level=\"1\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.5in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"2\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.75in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"3\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"4\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.25in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"5\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.5in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"6\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.75in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"7\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"8\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.25in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"9\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.5in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"	<text:list-level-style-number text:level=\"10\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
-	"		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
-	"			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.75in\"/>\n" \
-	"		</style:list-level-properties>\n" \
-	"	</text:list-level-style-number>\n" \
-	"</text:list-style>\n" \
-    "</office:automatic-styles>\n" \
-	" <office:master-styles>\n" \
-	"  <style:master-page style:name=\"Endnote\" >\n" \
-	"    <style:header><text:h text:outline-level=\"2\">Bibliography</text:h></style:header></style:master-page>\n" \
-	"  <style:master-page style:name=\"Footnote\" style:page-layout-name=\"pm2\"/>\n" \
-	" </office:master-styles>\n");
+	/* Append basic style information */
+	print_const("<office:styles>\n" \
+	            "<style:style style:name=\"Standard\" style:family=\"paragraph\" style:class=\"text\">\n" \
+	            "      <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.15in\"" \
+	            "     fo:text-align=\"justify\" style:justify-single-word=\"false\"/>\n" \
+	            "   </style:style>\n" \
+	            "<style:style style:name=\"Preformatted_20_Text\" style:display-name=\"Preformatted Text\"\n" \
+	            "             style:family=\"paragraph\"\n" \
+	            "             style:parent-style-name=\"Standard\"\n" \
+	            "             style:class=\"html\">\n" \
+	            "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0in\" fo:text-align=\"start\"\n" \
+	            "                               style:justify-single-word=\"false\"/>\n" \
+	            "   <style:text-properties style:font-name=\"Courier New\" fo:font-size=\"11pt\"\n" \
+	            "                          style:font-name-asian=\"Courier New\"\n" \
+	            "                          style:font-size-asian=\"11pt\"\n" \
+	            "                          style:font-name-complex=\"Courier New\"\n" \
+	            "                          style:font-size-complex=\"11pt\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"Source_20_Text\" style:display-name=\"Source Text\"\n" \
+	            "             style:family=\"text\">\n" \
+	            "   <style:text-properties style:font-name=\"Courier New\" style:font-name-asian=\"Courier New\"\n" \
+	            "                          style:font-name-complex=\"Courier New\"\n" \
+	            "                          fo:font-size=\"11pt\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"List\" style:family=\"paragraph\"\n" \
+	            "             style:parent-style-name=\"Standard\"\n" \
+	            "             style:class=\"list\">\n" \
+	            "   <style:paragraph-properties fo:text-align=\"start\" style:justify-single-word=\"false\"/>\n" \
+	            "   <style:text-properties style:font-size-asian=\"12pt\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"Quotations\" style:family=\"paragraph\"\n" \
+	            "             style:parent-style-name=\"Standard\"\n" \
+	            "             style:class=\"html\">\n" \
+	            "   <style:paragraph-properties fo:margin-left=\"0.3937in\" fo:margin-right=\"0.3937in\" fo:margin-top=\"0in\"\n" \
+	            "                               fo:margin-bottom=\"0.1965in\"\n" \
+	            "                               fo:text-align=\"justify\"" \
+	            "                               style:justify-single-word=\"false\"" \
+	            "                               fo:text-indent=\"0in\"\n" \
+	            "                               style:auto-text-indent=\"false\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"Table_20_Heading\" style:display-name=\"Table Heading\"\n" \
+	            "             style:family=\"paragraph\"\n" \
+	            "             style:parent-style-name=\"Table_20_Contents\"\n" \
+	            "             style:class=\"extra\">\n" \
+	            "   <style:paragraph-properties fo:text-align=\"center\" style:justify-single-word=\"false\"\n" \
+	            "                               text:number-lines=\"false\"\n" \
+	            "                               text:line-number=\"0\"/>\n" \
+	            "   <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\"\n" \
+	            "                          style:font-weight-complex=\"bold\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"Horizontal_20_Line\" style:display-name=\"Horizontal Line\"\n" \
+	            "             style:family=\"paragraph\"\n" \
+	            "             style:parent-style-name=\"Standard\"\n" \
+	            "             style:class=\"html\">\n" \
+	            "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.1965in\"\n" \
+	            "                               style:border-line-width-bottom=\"0.0008in 0.0138in 0.0008in\"\n" \
+	            "                               fo:padding=\"0in\"\n" \
+	            "                               fo:border-left=\"none\"\n" \
+	            "                               fo:border-right=\"none\"\n" \
+	            "                               fo:border-top=\"none\"\n" \
+	            "                               fo:border-bottom=\"0.0154in double #808080\"\n" \
+	            "                               text:number-lines=\"false\"\n" \
+	            "                               text:line-number=\"0\"\n" \
+	            "                               style:join-border=\"false\"/>\n" \
+	            "   <style:text-properties fo:font-size=\"6pt\" style:font-size-asian=\"6pt\" style:font-size-complex=\"6pt\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"Footnote_20_anchor\" style:display-name=\"Footnote anchor\"" \
+	            "              style:family=\"text\">" \
+	            "    <style:text-properties style:text-position=\"super 58%\"/>" \
+	            " </style:style>\n" \
+	            "<style:style style:name=\"TOC_Item\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
+	            " <style:paragraph-properties>\n" \
+	            "  <style:tab-stops>\n" \
+	            "   <style:tab-stop style:position=\"6.7283in\" style:type=\"right\" style:leader-style=\"dotted\" style:leader-text=\".\"/>\n" \
+	            "  </style:tab-stops>\n" \
+	            " </style:paragraph-properties>\n" \
+	            "</style:style>\n" \
+	            "  <text:notes-configuration text:note-class=\"footnote\" text:default-style-name=\"Footnote\" text:citation-style-name=\"Footnote_20_Symbol\" text:citation-body-style-name=\"Footnote_20_anchor\" text:master-page-name=\"Footnote\" style:num-format=\"a\" text:start-value=\"0\" text:footnotes-position=\"page\" text:start-numbering-at=\"page\"/>\n" \
+	            "  <text:notes-configuration text:note-class=\"endnote\" text:default-style-name=\"Endnote\" text:citation-style-name=\"Endnote_20_Symbol\" text:citation-body-style-name=\"Endnote_20_anchor\" text:master-page-name=\"Endnote\" style:num-format=\"1\" text:start-value=\"0\"/>\n" \
+	            "</office:styles>\n");
+
+	/* Automatic style information */
+	print_const("<office:automatic-styles>" \
+	            "   <style:style style:name=\"MMD-Italic\" style:family=\"text\">\n" \
+	            "      <style:text-properties fo:font-style=\"italic\" style:font-style-asian=\"italic\"\n" \
+	            "                             style:font-style-complex=\"italic\"/>\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"MMD-Bold\" style:family=\"text\">\n" \
+	            "      <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\"\n" \
+	            "                             style:font-weight-complex=\"bold\"/>\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"MMD-Superscript\" style:family=\"text\">\n" \
+	            "      <style:text-properties style:text-position=\"super 58%\"/>\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"MMD-Subscript\" style:family=\"text\">\n" \
+	            "      <style:text-properties style:text-position=\"sub 58%\"/>\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"Strike\" style:family=\"text\">\n" \
+	            "      <style:text-properties style:text-line-through-style=\"solid\" />\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"Underline\" style:family=\"text\">\n" \
+	            "      <style:text-properties style:text-underline-style=\"solid\" style:text-underline-color=\"font-color\"/>\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"Highlight\" style:family=\"text\">\n" \
+	            "      <style:text-properties fo:background-color=\"#FFFF00\" />\n" \
+	            "   </style:style>\n" \
+	            "   <style:style style:name=\"Comment\" style:family=\"text\">\n" \
+	            "      <style:text-properties fo:color=\"#0000BB\" />\n" \
+	            "   </style:style>\n" \
+	            "<style:style style:name=\"MMD-Table\" style:family=\"paragraph\" style:parent-style-name=\"Standard\">\n" \
+	            "   <style:paragraph-properties fo:margin-top=\"0in\" fo:margin-bottom=\"0.05in\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"MMD-Table-Center\" style:family=\"paragraph\" style:parent-style-name=\"MMD-Table\">\n" \
+	            "   <style:paragraph-properties fo:text-align=\"center\" style:justify-single-word=\"false\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"MMD-Table-Right\" style:family=\"paragraph\" style:parent-style-name=\"MMD-Table\">\n" \
+	            "   <style:paragraph-properties fo:text-align=\"right\" style:justify-single-word=\"false\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"P2\" style:family=\"paragraph\" style:parent-style-name=\"Standard\"\n" \
+	            "             style:list-style-name=\"L2\">\n" \
+	            "<style:paragraph-properties fo:text-align=\"start\" style:justify-single-word=\"false\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"fr1\" style:family=\"graphic\" style:parent-style-name=\"Frame\">\n" \
+	            "   <style:graphic-properties style:print-content=\"true\" style:vertical-pos=\"top\"\n" \
+	            "                             style:vertical-rel=\"baseline\"\n" \
+	            "                             fo:padding=\"0in\"\n" \
+	            "                             fo:border=\"none\"\n" \
+	            "                             style:shadow=\"none\"/>\n" \
+	            "</style:style>\n" \
+	            "<style:style style:name=\"P1\" style:family=\"paragraph\" style:parent-style-name=\"Standard\"\n" \
+	            "             style:list-style-name=\"L1\"/>\n" \
+	            "<text:list-style style:name=\"L1\">\n" \
+	            "	<text:list-level-style-bullet text:level=\"1\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"•\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.5in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-bullet>\n" \
+	            "	<text:list-level-style-bullet text:level=\"2\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"◦\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.75in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-bullet>\n" \
+	            "	<text:list-level-style-bullet text:level=\"3\" text:style-name=\"Numbering_20_Symbols\" style:num-suffix=\".\" text:bullet-char=\"▪\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-bullet>\n" \
+	            "	<text:list-level-style-number text:level=\"4\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.25in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"5\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.5in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"6\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.75in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"7\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"8\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.25in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"9\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.5in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"10\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.75in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "</text:list-style>\n" \
+	            "<text:list-style style:name=\"L2\">\n" \
+	            "	<text:list-level-style-number text:level=\"1\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.5in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"2\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"0.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"0.75in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"3\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"4\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.25in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"5\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.5in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"6\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"1.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"1.75in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"7\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"8\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.25in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.25in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"9\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.5in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.5in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "	<text:list-level-style-number text:level=\"10\" text:style-name=\"Standard\" style:num-suffix=\".\" style:num-format=\"1\">\n" \
+	            "		<style:list-level-properties text:list-level-position-and-space-mode=\"label-alignment\">\n" \
+	            "			<style:list-level-label-alignment text:label-followed-by=\"listtab\" text:list-tab-stop-position=\"2.75in\" fo:text-indent=\"-0.25in\" fo:margin-left=\"2.75in\"/>\n" \
+	            "		</style:list-level-properties>\n" \
+	            "	</text:list-level-style-number>\n" \
+	            "</text:list-style>\n" \
+	            "</office:automatic-styles>\n" \
+	            " <office:master-styles>\n" \
+	            "  <style:master-page style:name=\"Endnote\" >\n" \
+	            "    <style:header><text:h text:outline-level=\"2\">Bibliography</text:h></style:header></style:master-page>\n" \
+	            "  <style:master-page style:name=\"Footnote\" style:page-layout-name=\"pm2\"/>\n" \
+	            " </office:master-styles>\n");
 
 	char * result = out->str;
 	d_string_free(out, false);
@@ -508,41 +509,41 @@ char * opendocument_style_file(int format) {
 	d_string_append(out, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 
 	print_const("<office:document-styles xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n" \
-"xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n" \
-"xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n" \
-"xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n" \
-"xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n" \
-"xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n" \
-"xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n" \
-"xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n" \
-"xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n" \
-"xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n" \
-"xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n" \
-"xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n" \
-"xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n" \
-"xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n" \
-"xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n" \
-"xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n" \
-"xmlns:ooo=\"http://openoffice.org/2004/office\"\n" \
-"xmlns:ooow=\"http://openoffice.org/2004/writer\"\n" \
-"xmlns:oooc=\"http://openoffice.org/2004/calc\"\n" \
-"xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n" \
-"xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n" \
-"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" \
-"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" \
-"xmlns:rpt=\"http://openoffice.org/2005/report\"\n" \
-"xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\"\n" \
-"xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"\n" \
-"xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\"\n" \
-"xmlns:officeooo=\"http://openoffice.org/2009/office\"\n" \
-"xmlns:tableooo=\"http://openoffice.org/2009/table\"\n" \
-"xmlns:drawooo=\"http://openoffice.org/2010/draw\"\n" \
-"xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\"\n" \
-"xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\"\n" \
-"xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\"\n" \
-"xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\"\n" \
-"xmlns:css3t=\"http://www.w3.org/TR/css3-text/\"\n" \
-"office:version=\"1.2\">\n");
+	            "xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n" \
+	            "xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n" \
+	            "xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n" \
+	            "xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n" \
+	            "xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n" \
+	            "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n" \
+	            "xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n" \
+	            "xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n" \
+	            "xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n" \
+	            "xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n" \
+	            "xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n" \
+	            "xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n" \
+	            "xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n" \
+	            "xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n" \
+	            "xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n" \
+	            "xmlns:ooo=\"http://openoffice.org/2004/office\"\n" \
+	            "xmlns:ooow=\"http://openoffice.org/2004/writer\"\n" \
+	            "xmlns:oooc=\"http://openoffice.org/2004/calc\"\n" \
+	            "xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n" \
+	            "xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n" \
+	            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" \
+	            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" \
+	            "xmlns:rpt=\"http://openoffice.org/2005/report\"\n" \
+	            "xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\"\n" \
+	            "xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"\n" \
+	            "xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\"\n" \
+	            "xmlns:officeooo=\"http://openoffice.org/2009/office\"\n" \
+	            "xmlns:tableooo=\"http://openoffice.org/2009/table\"\n" \
+	            "xmlns:drawooo=\"http://openoffice.org/2010/draw\"\n" \
+	            "xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\"\n" \
+	            "xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\"\n" \
+	            "xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\"\n" \
+	            "xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\"\n" \
+	            "xmlns:css3t=\"http://www.w3.org/TR/css3-text/\"\n" \
+	            "office:version=\"1.2\">\n");
 
 	// Styles
 	d_string_append(out, style);
@@ -579,6 +580,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
 
 	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+
 	if (mem->memory == NULL) {
 		// Out of memory
 		fprintf(stderr, "Out of memory\n");
@@ -596,17 +598,17 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
-	if (e->asset_hash){
+	if (e->asset_hash) {
 		CURL * curl;
 		CURLcode res;
-		
+
 		struct MemoryStruct chunk;
 		chunk.memory = malloc(1);
 		chunk.size = 0;
 
 		char destination[100] = "Pictures/";
 		destination[45] = '\0';
-		
+
 		mz_bool status;
 
 		curl_global_init(CURL_GLOBAL_ALL);
@@ -644,11 +646,11 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
-	if (e->asset_hash){
+	if (e->asset_hash) {
 
 		char destination[100] = "Pictures/";
 		destination[45] = '\0';
-		
+
 		mz_bool status;
 
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
@@ -733,6 +735,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 
 	len = strlen(mime);
 	status = mz_zip_writer_add_mem(zip, "mimetype", mime, len, MZ_NO_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding mimetype to zip.\n");
 	}
@@ -743,6 +746,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "meta.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding metadata to zip.\n");
 	}
@@ -753,6 +757,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "styles.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding styles to zip.\n");
 	}
@@ -763,6 +768,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "settings.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding settings to zip.\n");
 	}
@@ -770,11 +776,13 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 
 	// Create directories
 	status = mz_zip_writer_add_mem(zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
 
 	status = mz_zip_writer_add_mem(zip, "Pictures/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
@@ -785,6 +793,7 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "META-INF/manifest.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding manifest to zip.\n");
 	}
@@ -800,41 +809,41 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 /// Add shared office:document config
 void opendocument_document_attr(DString * out) {
 	print_const("xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\n" \
-	"xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n" \
-	"xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n" \
-	"xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n" \
-	"xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n" \
-	"xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n" \
-	"xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n" \
-	"xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n" \
-	"xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n" \
-	"xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n" \
-	"xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n" \
-	"xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n" \
-	"xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n" \
-	"xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n" \
-	"xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n" \
-	"xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n" \
-	"xmlns:ooo=\"http://openoffice.org/2004/office\"\n" \
-	"xmlns:ooow=\"http://openoffice.org/2004/writer\"\n" \
-	"xmlns:oooc=\"http://openoffice.org/2004/calc\"\n" \
-	"xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n" \
-	"xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n" \
-	"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" \
-	"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" \
-	"xmlns:rpt=\"http://openoffice.org/2005/report\"\n" \
-	"xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\"\n" \
-	"xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"\n" \
-	"xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\"\n" \
-	"xmlns:officeooo=\"http://openoffice.org/2009/office\"\n" \
-	"xmlns:tableooo=\"http://openoffice.org/2009/table\"\n" \
-	"xmlns:drawooo=\"http://openoffice.org/2010/draw\"\n" \
-	"xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\"\n" \
-	"xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\"\n" \
-	"xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\"\n" \
-	"xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\"\n" \
-	"xmlns:css3t=\"http://www.w3.org/TR/css3-text/\"\n" \
-	"office:version=\"1.2\"");
+	            "xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\n" \
+	            "xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\n" \
+	            "xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\"\n" \
+	            "xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\"\n" \
+	            "xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\"\n" \
+	            "xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n" \
+	            "xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n" \
+	            "xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\"\n" \
+	            "xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\"\n" \
+	            "xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\"\n" \
+	            "xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\"\n" \
+	            "xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\"\n" \
+	            "xmlns:math=\"http://www.w3.org/1998/Math/MathML\"\n" \
+	            "xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\"\n" \
+	            "xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\"\n" \
+	            "xmlns:ooo=\"http://openoffice.org/2004/office\"\n" \
+	            "xmlns:ooow=\"http://openoffice.org/2004/writer\"\n" \
+	            "xmlns:oooc=\"http://openoffice.org/2004/calc\"\n" \
+	            "xmlns:dom=\"http://www.w3.org/2001/xml-events\"\n" \
+	            "xmlns:xforms=\"http://www.w3.org/2002/xforms\"\n" \
+	            "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n" \
+	            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" \
+	            "xmlns:rpt=\"http://openoffice.org/2005/report\"\n" \
+	            "xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\"\n" \
+	            "xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"\n" \
+	            "xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\"\n" \
+	            "xmlns:officeooo=\"http://openoffice.org/2009/office\"\n" \
+	            "xmlns:tableooo=\"http://openoffice.org/2009/table\"\n" \
+	            "xmlns:drawooo=\"http://openoffice.org/2010/draw\"\n" \
+	            "xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\"\n" \
+	            "xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\"\n" \
+	            "xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\"\n" \
+	            "xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\"\n" \
+	            "xmlns:css3t=\"http://www.w3.org/TR/css3-text/\"\n" \
+	            "office:version=\"1.2\"");
 }
 
 
@@ -932,6 +941,7 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "content.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding content.xml to zip.\n");
 	}
@@ -944,7 +954,8 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 	// Clean up
 	free(result->str);
 
-	status = mz_zip_writer_finalize_heap_archive(zip, (void **) &(result->str), &(result->currentStringLength));
+	status = mz_zip_writer_finalize_heap_archive(zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
+
 	if (!status) {
 		fprintf(stderr, "Error finalizing zip archive.\n");
 	}

@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -157,7 +157,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings3, BRACKET_GLOSSARY_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings3, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
-		
+
 		token_pair_engine_add_pairing(e->pairings3, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		token_pair_engine_add_pairing(e->pairings3, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -183,7 +183,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings3, MATH_DOLLAR_SINGLE, MATH_DOLLAR_SINGLE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 			token_pair_engine_add_pairing(e->pairings3, MATH_DOLLAR_DOUBLE, MATH_DOLLAR_DOUBLE, PAIR_MATH, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
-	
+
 		// Superscript/Subscript
 		if (!(extensions & EXT_COMPATIBILITY)) {
 			token_pair_engine_add_pairing(e->pairings4, SUPERSCRIPT, SUPERSCRIPT, PAIR_SUPERSCRIPT, PAIRING_PRUNE_MATCH);
@@ -217,8 +217,9 @@ mmd_engine * mmd_engine_create_with_string(const char * str, unsigned long exten
 
 /// Set language and smart quotes language
 void mmd_engine_set_language(mmd_engine * e, short language) {
-	if (!e)
+	if (!e) {
 		return;
+	}
 
 	e->language = language;
 
@@ -226,21 +227,27 @@ void mmd_engine_set_language(mmd_engine * e, short language) {
 		case LC_DE:
 			e->quotes_lang = GERMAN;
 			break;
+
 		case LC_EN:
 			e->quotes_lang = ENGLISH;
 			break;
+
 		case LC_ES:
 			e->quotes_lang = ENGLISH;
 			break;
+
 		case LC_FR:
 			e->quotes_lang = FRENCH;
 			break;
+
 		case LC_NL:
 			e->quotes_lang = DUTCH;
 			break;
+
 		case LC_SV:
 			e->quotes_lang = SWEDISH;
 			break;
+
 		default:
 			e->quotes_lang = ENGLISH;
 	}
@@ -299,13 +306,15 @@ void mmd_engine_reset(mmd_engine * e) {
 
 /// Free an existing MMD Engine
 void mmd_engine_free(mmd_engine * e, bool freeDString) {
-	if (e == NULL)
+	if (e == NULL) {
 		return;
+	}
 
 	mmd_engine_reset(e);
 
-	if (freeDString)
+	if (freeDString) {
 		d_string_free(e->dstr, true);
+	}
 
 	token_pair_engine_free(e->pairings1);
 	token_pair_engine_free(e->pairings2);
@@ -337,9 +346,11 @@ bool line_is_empty(token * t) {
 			case INDENT_SPACE:
 				t = t->next;
 				break;
+
 			case TEXT_LINEBREAK:
 			case TEXT_NL:
 				return true;
+
 			default:
 				return false;
 		}
@@ -351,8 +362,9 @@ bool line_is_empty(token * t) {
 
 /// Determine what sort of line this is
 void mmd_assign_line_type(mmd_engine * e, token * line) {
-	if (!line)
+	if (!line) {
 		return;
+	}
 
 	if (!line->child) {
 		line->type = LINE_EMPTY;
@@ -360,119 +372,149 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 	}
 
 	const char * source = e->dstr->str;
-	
+
 	token * t = NULL;
+	token * first_child = line->child;
+
 	short temp_short;
 	size_t scan_len;
 
 	// Skip non-indenting space
-	if (line->child->type == NON_INDENT_SPACE) {
-		token_remove_first_child(line);
-	} else if (line->child->type == TEXT_PLAIN && line->child->len == 1) {
-		if (source[line->child->start] == ' ')
-			token_remove_first_child(line);
+	if (first_child->type == NON_INDENT_SPACE) {
+		//token_remove_first_child(line);
+		first_child = first_child->next;
+	} else if (first_child->type == TEXT_PLAIN && first_child->len == 1) {
+		if (source[first_child->start] == ' ') {
+			//token_remove_first_child(line);
+			first_child = first_child->next;
+		}
 	}
 
-	if (line->child == NULL) {
+	if (first_child == NULL) {
 		line->type = LINE_EMPTY;
 		return;
 	}
-	
-	switch (line->child->type) {
+
+	switch (first_child->type) {
 		case INDENT_TAB:
-			if (line_is_empty(line->child)) {
+			if (line_is_empty(first_child)) {
 				line->type = LINE_EMPTY;
 				e->allow_meta = false;
-			} else
+			} else {
 				line->type = LINE_INDENTED_TAB;
+			}
+
 			break;
+
 		case INDENT_SPACE:
-			if (line_is_empty(line->child)) {
+			if (line_is_empty(first_child)) {
 				line->type = LINE_EMPTY;
 				e->allow_meta = false;
-			} else
+			} else {
 				line->type = LINE_INDENTED_SPACE;
+			}
+
 			break;
+
 		case ANGLE_LEFT:
-			if (scan_html_block(&source[line->start]))
+			if (scan_html_block(&source[line->start])) {
 				line->type = LINE_HTML;
-			else
+			} else {
 				line->type = LINE_PLAIN;
+			}
+
 			break;
+
 		case ANGLE_RIGHT:
 			line->type = LINE_BLOCKQUOTE;
-			line->child->type = MARKER_BLOCKQUOTE;
+			first_child->type = MARKER_BLOCKQUOTE;
 			break;
+
 		case BACKTICK:
 			if (e->extensions & EXT_COMPATIBILITY) {
 				line->type = LINE_PLAIN;
 				break;
 			}
-			scan_len = scan_fence_end(&source[line->child->start]);
+
+			scan_len = scan_fence_end(&source[first_child->start]);
+
 			if (scan_len) {
-				switch (line->child->len) {
+				switch (first_child->len) {
 					case 3:
 						line->type = LINE_FENCE_BACKTICK_3;
 						break;
+
 					case 4:
 						line->type = LINE_FENCE_BACKTICK_4;
 						break;
+
 					default:
 						line->type = LINE_FENCE_BACKTICK_5;
 						break;
 				}
+
 				break;
 			} else {
-				scan_len = scan_fence_start(&source[line->child->start]);
+				scan_len = scan_fence_start(&source[first_child->start]);
+
 				if (scan_len) {
-					switch (line->child->len) {
+					switch (first_child->len) {
 						case 3:
 							line->type = LINE_FENCE_BACKTICK_START_3;
 							break;
+
 						case 4:
 							line->type = LINE_FENCE_BACKTICK_START_4;
 							break;
+
 						default:
 							line->type = LINE_FENCE_BACKTICK_START_5;
 							break;
 					}
+
 					break;
 				}
 			}
+
 			line->type = LINE_PLAIN;
 			break;
+
 		case COLON:
 			line->type = LINE_PLAIN;
+
 			if (e->extensions & EXT_COMPATIBILITY) {
 				break;
 			}
-			if (scan_definition(&source[line->child->start])) {
+
+			if (scan_definition(&source[first_child->start])) {
 				line->type = LINE_DEFINITION;
 			}
+
 			break;
+
 		case HASH1:
 		case HASH2:
 		case HASH3:
 		case HASH4:
 		case HASH5:
 		case HASH6:
-			if (scan_atx(&source[line->child->start])) {
-				line->type = (line->child->type - HASH1) + LINE_ATX_1;
-				line->child->type = (line->type - LINE_ATX_1) + MARKER_H1;
+			if (scan_atx(&source[first_child->start])) {
+				line->type = (first_child->type - HASH1) + LINE_ATX_1;
+				first_child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
 				// Strip trailing whitespace from '#' sequence
-				line->child->len = line->child->type - MARKER_H1 + 1;
+				first_child->len = first_child->type - MARKER_H1 + 1;
 
 				// Strip trailing '#' sequence if present
 				if (line->child->tail->type == TEXT_NL) {
 					if ((line->child->tail->prev->type >= HASH1) &&
-						(line->child->tail->prev->type <= HASH6)) {
+					        (line->child->tail->prev->type <= HASH6)) {
 						line->child->tail->prev->type -= HASH1;
 						line->child->tail->prev->type += MARKER_H1;
 					}
 				} else {
 					if ((line->child->tail->type >= HASH1) &&
-						(line->child->tail->type <= HASH6)) {
+					        (line->child->tail->type <= HASH6)) {
 						line->child->tail->type -= TEXT_EMPTY;
 						line->child->tail->type += MARKER_H1;
 					}
@@ -480,178 +522,230 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			} else {
 				line->type = LINE_PLAIN;
 			}
-			break;
-		case HTML_COMMENT_START:
-			if (!line->child->next || !line->child->next->next)
-				line->type = LINE_START_COMMENT;
-			else
-				line->type = LINE_PLAIN;
-			break;
-		case HTML_COMMENT_STOP:
-			if (!line->child->next || !line->child->next->next)
-				line->type = LINE_STOP_COMMENT;
-			else
-				line->type = LINE_PLAIN;
-			break;
-		case TEXT_NUMBER_POSS_LIST:
-			switch(source[line->child->next->start]) {
-				case ' ':
-				case '\t':
-					line->type = LINE_LIST_ENUMERATED;
-					line->child->type = MARKER_LIST_ENUMERATOR;
 
-					switch (line->child->next->type) {
-						case TEXT_PLAIN:
-							// Strip whitespace between bullet and text
-							while (char_is_whitespace(source[line->child->next->start])) {
-								line->child->next->start++;
-								line->child->next->len--;
-							}
-							break;
-						case INDENT_SPACE:
-						case INDENT_TAB:
-						case NON_INDENT_SPACE:
-							t = line->child;
-							while(t->next && ((t->next->type == INDENT_SPACE) ||
-								(t->next->type == INDENT_TAB) ||
-								(t->next->type == NON_INDENT_SPACE))) {
-								tokens_prune(t->next, t->next);
-							}
-							break;
-					}
-					break;
-				default:
-					line->type = LINE_PLAIN;
-					line->child->type = TEXT_PLAIN;
-					break;
-			}
 			break;
+
+		case HTML_COMMENT_START:
+			if (!first_child->next || !first_child->next->next) {
+				line->type = LINE_START_COMMENT;
+			} else {
+				line->type = LINE_PLAIN;
+			}
+
+			break;
+
+		case HTML_COMMENT_STOP:
+			if (!first_child->next || !first_child->next->next) {
+				line->type = LINE_STOP_COMMENT;
+			} else {
+				line->type = LINE_PLAIN;
+			}
+
+			break;
+
+		case TEXT_NUMBER_POSS_LIST:
+			if (first_child->next) {
+				switch (source[first_child->next->start]) {
+					case ' ':
+					case '\t':
+						line->type = LINE_LIST_ENUMERATED;
+						first_child->type = MARKER_LIST_ENUMERATOR;
+
+						switch (first_child->next->type) {
+							case TEXT_PLAIN:
+
+								// Strip whitespace between bullet and text
+								while (char_is_whitespace(source[first_child->next->start])) {
+									first_child->next->start++;
+									first_child->next->len--;
+								}
+
+								break;
+
+							case INDENT_SPACE:
+							case INDENT_TAB:
+							case NON_INDENT_SPACE:
+								t = first_child;
+
+								while (t->next && ((t->next->type == INDENT_SPACE) ||
+								                   (t->next->type == INDENT_TAB) ||
+								                   (t->next->type == NON_INDENT_SPACE))) {
+									tokens_prune(t->next, t->next);
+								}
+
+								break;
+						}
+
+						break;
+
+					default:
+						line->type = LINE_PLAIN;
+						first_child->type = TEXT_PLAIN;
+						break;
+				}
+			} else {
+				line->type = LINE_LIST_ENUMERATED;
+				first_child->type = MARKER_LIST_ENUMERATOR;
+			}
+
+			break;
+
 		case EQUAL:
+
 			// Could this be a setext heading marker?
-			if (scan_setext(&source[line->child->start])) {
+			if (scan_setext(&source[first_child->start])) {
 				line->type = LINE_SETEXT_1;
 			} else {
 				line->type = LINE_PLAIN;
 			}
+
 			break;
+
 		case DASH_N:
 		case DASH_M:
-			if (scan_setext(&source[line->child->start])) {
+			if (scan_setext(&source[first_child->start])) {
 				line->type = LINE_SETEXT_2;
 				break;
 			}
+
 		case STAR:
 		case UL:
 			// Could this be a horizontal rule?
-			t = line->child->next;
-			temp_short = line->child->len;
+			t = first_child->next;
+			temp_short = first_child->len;
+
 			while (t) {
 				switch (t->type) {
 					case DASH_N:
 					case DASH_M:
-						if (t->type == line->child->type) {
+						if (t->type == first_child->type) {
 							t = t->next;
-							if (t)
+
+							if (t) {
 								temp_short += t->len;
+							}
 						} else {
 							temp_short = 0;
 							t = NULL;
 						}
+
 						break;
+
 					case STAR:
 					case UL:
-						if (t->type == line->child->type) {
+						if (t->type == first_child->type) {
 							t = t->next;
 							temp_short++;
 						} else {
 							temp_short = 0;
 							t = NULL;
 						}
+
 						break;
+
 					case NON_INDENT_SPACE:
 					case INDENT_TAB:
 					case INDENT_SPACE:
 						t = t->next;
 						break;
+
 					case TEXT_PLAIN:
 						if ((t->len == 1) && (source[t->start] == ' ')) {
 							t = t->next;
 							break;
 						}
+
 						temp_short = 0;
 						t = NULL;
 						break;
+
 					case TEXT_NL:
 					case TEXT_LINEBREAK:
 						t = NULL;
 						break;
+
 					default:
 						temp_short = 0;
 						t = NULL;
 						break;
 				}
 			}
+
 			if (temp_short > 2) {
 				// This is a horizontal rule, not a list item
 				line->type = LINE_HR;
 				break;
 			}
-			if (line->child->type == UL) {
+
+			if (first_child->type == UL) {
 				// Revert to plain for this type
 				line->type = LINE_PLAIN;
 				break;
 			}
-			// If longer than 1 character, then it can't be a list marker, so it's a 
+
+			// If longer than 1 character, then it can't be a list marker, so it's a
 			// plain line
-			if (line->child->len > 1) {
+			if (first_child->len > 1) {
 				line->type = LINE_PLAIN;
 				break;
 			}
+
 		case PLUS:
-			if (!line->child->next) {
+			if (!first_child->next) {
 				// TODO: Should this be an empty list item instead??
 				line->type = LINE_PLAIN;
 			} else {
-				switch(source[line->child->next->start]) {
+				switch (source[first_child->next->start]) {
 					case ' ':
 					case '\t':
 						line->type = LINE_LIST_BULLETED;
-						line->child->type = MARKER_LIST_BULLET;
+						first_child->type = MARKER_LIST_BULLET;
 
-						switch (line->child->next->type) {
+						switch (first_child->next->type) {
 							case TEXT_PLAIN:
+
 								// Strip whitespace between bullet and text
-								while (char_is_whitespace(source[line->child->next->start])) {
-									line->child->next->start++;
-									line->child->next->len--;
+								while (char_is_whitespace(source[first_child->next->start])) {
+									first_child->next->start++;
+									first_child->next->len--;
 								}
+
 								break;
+
 							case INDENT_SPACE:
 							case INDENT_TAB:
 							case NON_INDENT_SPACE:
-								t = line->child;
-								while(t->next && ((t->next->type == INDENT_SPACE) ||
-									(t->next->type == INDENT_TAB) ||
-									(t->next->type == NON_INDENT_SPACE))) {
+								t = first_child;
+
+								while (t->next && ((t->next->type == INDENT_SPACE) ||
+								                   (t->next->type == INDENT_TAB) ||
+								                   (t->next->type == NON_INDENT_SPACE))) {
 									tokens_prune(t->next, t->next);
 								}
+
 								break;
 						}
+
 						break;
+
 					default:
 						line->type = LINE_PLAIN;
 						break;
 				}
 			}
+
 			break;
+
 		case TEXT_LINEBREAK:
 		case TEXT_NL:
 			e->allow_meta = false;
 			line->type = LINE_EMPTY;
 			break;
+
 		case TOC:
 			line->type = (e->extensions & EXT_COMPATIBILITY) ? LINE_PLAIN : LINE_TOC;
 			break;
+
 		case BRACKET_LEFT:
 			if (e->extensions & EXT_COMPATIBILITY) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);
@@ -660,7 +754,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_link(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
+
 			break;
+
 		case BRACKET_ABBREVIATION_LEFT:
 			if (e->extensions & EXT_NOTES) {
 				scan_len = scan_ref_abbreviation(&source[line->start]);
@@ -669,7 +765,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
+
 			break;
+
 		case BRACKET_CITATION_LEFT:
 			if (e->extensions & EXT_NOTES) {
 				scan_len = scan_ref_citation(&source[line->start]);
@@ -678,7 +776,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
+
 			break;
+
 		case BRACKET_FOOTNOTE_LEFT:
 			if (e->extensions & EXT_NOTES) {
 				scan_len = scan_ref_foot(&source[line->start]);
@@ -687,7 +787,9 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
+
 			break;
+
 		case BRACKET_GLOSSARY_LEFT:
 			if (e->extensions & EXT_NOTES) {
 				scan_len = scan_ref_glossary(&source[line->start]);
@@ -696,8 +798,11 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				scan_len = scan_ref_link_no_attributes(&source[line->start]);
 				line->type = (scan_len) ? LINE_DEF_LINK : LINE_PLAIN;
 			}
+
 			break;
+
 		case PIPE:
+
 			// If PIPE is first, save checking later and assign LINE_TABLE now
 			if (!(e->extensions & EXT_COMPATIBILITY)) {
 				scan_len = scan_table_separator(&source[line->start]);
@@ -705,24 +810,27 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 
 				break;
 			}
+
 		case TEXT_PLAIN:
 			if (e->allow_meta && !(e->extensions & EXT_COMPATIBILITY)) {
 				scan_len = scan_url(&source[line->start]);
+
 				if (scan_len == 0) {
 					scan_len = scan_meta_line(&source[line->start]);
 					line->type = (scan_len) ? LINE_META : LINE_PLAIN;
 					break;
 				}
 			}
+
 		default:
 			line->type = LINE_PLAIN;
 			break;
 	}
 
 	if ((line->type == LINE_PLAIN) &&
-		!(e->extensions & EXT_COMPATIBILITY)) {
+	        !(e->extensions & EXT_COMPATIBILITY)) {
 		// Check if this is a potential table line
-		token * walker = line->child;
+		token * walker = first_child;
 
 		while (walker != NULL) {
 			if (walker->type == PIPE) {
@@ -740,9 +848,10 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 
 /// Strip leading indenting space from line (if present)
 void deindent_line(token  * line) {
-	if (!line || !line->child)
+	if (!line || !line->child) {
 		return;
-	
+	}
+
 	token * t;
 
 	switch (line->child->type) {
@@ -751,10 +860,12 @@ void deindent_line(token  * line) {
 			t = line->child;
 			line->child = t->next;
 			t->next = NULL;
+
 			if (line->child) {
 				line->child->prev = NULL;
 				line->child->tail = t->tail;
 			}
+
 			token_free(t);
 			break;
 	}
@@ -764,8 +875,9 @@ void deindent_line(token  * line) {
 /// Strip leading indenting space from block
 /// (for recursively parsing nested lists)
 void deindent_block(mmd_engine * e, token * block) {
-	if (!block || !block->child)
+	if (!block || !block->child) {
 		return;
+	}
 
 	token * t = block->child;
 
@@ -780,21 +892,24 @@ void deindent_block(mmd_engine * e, token * block) {
 
 /// Strip leading blockquote marker from line
 void strip_quote_markers_from_line(token * line, const char * source) {
-	if (!line || !line->child)
+	if (!line || !line->child) {
 		return;
+	}
 
 	token * t;
-	
+
 	switch (line->child->type) {
 		case MARKER_BLOCKQUOTE:
 		case NON_INDENT_SPACE:
 			t = line->child;
 			line->child = t->next;
 			t->next = NULL;
+
 			if (line->child) {
 				line->child->prev = NULL;
 				line->child->tail = t->tail;
 			}
+
 			token_free(t);
 			break;
 	}
@@ -802,20 +917,21 @@ void strip_quote_markers_from_line(token * line, const char * source) {
 	if (line->child && (line->child->type == TEXT_PLAIN)) {
 		// Strip leading whitespace from first text token
 		t = line->child;
-		
+
 		while (t->len && char_is_whitespace(source[t->start])) {
 			t->start++;
 			t->len--;
 		}
-		
+
 		if (t->len == 0) {
 			line->child = t->next;
 			t->next = NULL;
+
 			if (line->child) {
 				line->child->prev = NULL;
 				line->child->tail = t->tail;
 			}
-			
+
 			token_free(t);
 		}
 	}
@@ -825,8 +941,9 @@ void strip_quote_markers_from_line(token * line, const char * source) {
 /// Strip leading blockquote markers and non-indent space
 /// (for recursively parsing blockquotes)
 void strip_quote_markers_from_block(mmd_engine * e, token * block) {
-	if (!block || !block->child)
+	if (!block || !block->child) {
 		return;
+	}
 
 	token * t = block->child;
 
@@ -854,15 +971,15 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 	// Strip trailing whitespace
 //	while (len && char_is_whitespace_or_line_ending(str[len - 1]))
 //		len--;
-	
+
 	// Where do we stop parsing?
 	const char * stop = &e->dstr->str[start] + len;
 
 	int type;								// TOKEN type
 	token * t;								// Create tokens for incorporation
 
-	token * root = token_new(0,start,0);		// Store the final parse tree here
-	token * line = token_new(0,start,0);		// Store current line here
+	token * root = token_new(0, start, 0);		// Store the final parse tree here
+	token * line = token_new(0, start, 0);		// Store current line here
 
 	const char * last_stop = &e->dstr->str[start];	// Remember where last token ended
 
@@ -871,22 +988,22 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 		type = scan(&s, stop);
 
 		//if (type && s.start != last_stop) {
-        if (s.start != last_stop) {
+		if (s.start != last_stop) {
 			// We skipped characters between tokens
 
-            if (type) {
+			if (type) {
 				// Create a default token type for the skipped characters
 				t = token_new(TEXT_PLAIN, (size_t)(last_stop - e->dstr->str), (size_t)(s.start - last_stop));
 
 				token_append_child(line, t);
-            } else {
+			} else {
 				if (stop > last_stop) {
 					// Source text ends without newline
 					t = token_new(TEXT_PLAIN, (size_t)(last_stop - e->dstr->str), (size_t)(stop - last_stop));
-                
+
 					token_append_child(line, t);
 				}
-            }
+			}
 		} else if (type == 0 && stop > last_stop) {
 			// Source text ends without newline
 			t = token_new(TEXT_PLAIN, (size_t)(last_stop - e->dstr->str), (size_t)(stop - last_stop));
@@ -904,10 +1021,27 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 
 				token_append_child(root, line);
 				break;
+
+			case TEXT_NL_SP:
+			case TEXT_LINEBREAK_SP:
 			case TEXT_LINEBREAK:
 			case TEXT_NL:
+
 				// We hit the end of a line
-				t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
+				switch (type) {
+					case TEXT_NL_SP:
+						t = token_new(TEXT_NL, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start) - 1);
+						break;
+
+					case TEXT_LINEBREAK_SP:
+						t = token_new(TEXT_LINEBREAK, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start) - 1);
+						break;
+
+					default:
+						t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
+						break;
+				}
+
 				token_append_child(line, t);
 
 				// What sort of line is this?
@@ -915,12 +1049,41 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 
 				token_append_child(root, line);
 
-				if (stop_on_empty_line) {
-					if (line->type == LINE_EMPTY)
-						return root;
+				// If this is first line, do we have proper metadata?
+				if (e->allow_meta && root->child == line) {
+					if (line->type == LINE_SETEXT_2) {
+						line->type = LINE_YAML;
+					} else if (line->type != LINE_META) {
+						e->allow_meta = false;
+					}
 				}
-				line = token_new(0,s.cur - e->dstr->str,0);
+
+				if (stop_on_empty_line) {
+					if (line->type == LINE_EMPTY) {
+						return root;
+					}
+				}
+
+				switch (type) {
+					case TEXT_NL_SP:
+						line = token_new(0, s.cur - e->dstr->str - 1, 0);
+						t = token_new(NON_INDENT_SPACE, (size_t)(s.cur - e->dstr->str - 1), 1);
+						token_append_child(line, t);
+						break;
+
+					case TEXT_LINEBREAK_SP:
+						line = token_new(0, s.cur - e->dstr->str - 1, 0);
+						t = token_new(NON_INDENT_SPACE, (size_t)(s.cur - e->dstr->str - 1), 1);
+						token_append_child(line, t);
+						break;
+
+					default:
+						line = token_new(0, s.cur - e->dstr->str, 0);
+						break;
+				}
+
 				break;
+
 			default:
 				t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
 				token_append_child(line, t);
@@ -931,7 +1094,7 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 		last_stop = s.cur;
 	} while (type != 0);
 
-	
+
 	return root;
 }
 
@@ -939,8 +1102,9 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 /// Parse token tree
 void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 
-	if (e->recurse_depth == kMaxParseRecursiveDepth)
+	if (e->recurse_depth == kMaxParseRecursiveDepth) {
 		return;
+	}
 
 	e->recurse_depth++;
 
@@ -948,9 +1112,9 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
-#ifndef NDEBUG
+	#ifndef NDEBUG
 	ParseTrace(stderr, "parser >>");
-#endif
+	#endif
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -962,12 +1126,13 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 		walker->next = NULL;
 		walker->tail = walker;
 
-		if (remainder)
+		if (remainder) {
 			remainder->prev = NULL;
+		}
 
-#ifndef NDEBUG
+		#ifndef NDEBUG
 		fprintf(stderr, "\nNew line\n");
-#endif
+		#endif
 
 		Parse(pParser, walker->type, walker, e);
 
@@ -975,9 +1140,9 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	}
 
 	// Signal finish to parser
-#ifndef NDEBUG
+	#ifndef NDEBUG
 	fprintf(stderr, "\nFinish parse\n");
-#endif
+	#endif
 	Parse(pParser, 0, NULL, e);
 
 	// Disconnect of (now empty) root
@@ -1003,8 +1168,9 @@ void mmd_pair_tokens_in_chain(token * head, token_pair_engine * e, stack * s) {
 
 /// Match token pairs inside block
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
-	if (block == NULL || e == NULL)
+	if (block == NULL || e == NULL) {
 		return;
+	}
 
 	switch (block->type) {
 		case BLOCK_BLOCKQUOTE:
@@ -1027,6 +1193,7 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_TERM:
 			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			break;
+
 		case DOC_START_TOKEN:
 		case BLOCK_LIST_BULLETED:
 		case BLOCK_LIST_BULLETED_LOOSE:
@@ -1034,17 +1201,20 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 		case BLOCK_LIST_ENUMERATED_LOOSE:
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
+
 		case BLOCK_LIST_ITEM:
 		case BLOCK_LIST_ITEM_TIGHT:
 			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
+
 		case LINE_TABLE:
 		case BLOCK_TABLE:
 			// TODO: Need to parse into cells first
 			token_pairs_match_pairs_inside_token(block, e, s, 0);
 			mmd_pair_tokens_in_chain(block->child, e, s);
 			break;
+
 		case BLOCK_EMPTY:
 		case BLOCK_CODE_INDENTED:
 		case BLOCK_CODE_FENCED:
@@ -1056,18 +1226,19 @@ void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s) {
 
 
 /// Ambidextrous tokens can open OR close a pair.  This routine gives the opportunity
-/// to change this behavior on case-by-case basis.  For example, in `foo **bar** foo`, the 
+/// to change this behavior on case-by-case basis.  For example, in `foo **bar** foo`, the
 /// first set of asterisks can open, but not close a pair.  The second set can close, but not
 /// open a pair.  This allows for complex behavior without having to bog down the tokenizer
 /// with figuring out which type of asterisk we have.  Default behavior is that open and close
 /// are enabled, so we just have to figure out when to turn it off.
 void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size_t start_offset) {
-	if (block == NULL || block->child == NULL)
+	if (block == NULL || block->child == NULL) {
 		return;
+	}
 
 	size_t offset;		// Temp variable for use below
 	size_t lead_count, lag_count, pre_count, post_count;
-	
+
 	token * t = block->child;
 
 	char * str = e->dstr->str;
@@ -1075,12 +1246,16 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 	while (t != NULL) {
 		switch (t->type) {
 			case BLOCK_META:
+
 				// Do we treat this like metadata?
 				if (!(e->extensions & EXT_COMPATIBILITY) &&
-					!(e->extensions & EXT_NO_METADATA))
+				        !(e->extensions & EXT_NO_METADATA)) {
 					break;
+				}
+
 				// This is not metadata
 				t->type = BLOCK_PARA;
+
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
 			case BLOCK_DEF_ABBREVIATION:
@@ -1108,6 +1283,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				// Assign child tokens of blocks
 				mmd_assign_ambidextrous_tokens_in_block(e, t, start_offset);
 				break;
+
 			case CRITIC_SUB_DIV:
 				// Divide this into two tokens
 				t->child = token_new(CRITIC_SUB_DIV_B, t->start + 1, 1);
@@ -1117,26 +1293,28 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				t->len = 1;
 				t->type = CRITIC_SUB_DIV_A;
 				break;
+
 			case STAR:
 				// Look left and skip over neighboring '*' characters
 				offset = t->start;
-				
+
 				while ((offset != 0) && ((str[offset] == '*') || (str[offset] == '_'))) {
 					offset--;
 				}
-				
+
 				// We can only close if there is something to left besides whitespace
 				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset]))) {
 					// Whitespace or punctuation to left, so can't close
 					t->can_close = 0;
 				}
-				
+
 				// Look right and skip over neighboring '*' characters
 				offset = t->start + 1;
-				
-				while ((str[offset] == '*') || (str[offset] == '_'))
+
+				while ((str[offset] == '*') || (str[offset] == '_')) {
 					offset++;
-				
+				}
+
 				// We can only open if there is something to right besides whitespace/punctuation
 				if (char_is_whitespace_or_line_ending(str[offset])) {
 					// Whitespace to right, so can't open
@@ -1232,15 +1410,17 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 						}
 					}
 				}
+
 				break;
+
 			case UL:
 				// Look left and skip over neighboring '_' characters
 				offset = t->start;
-				
+
 				while ((offset != 0) && ((str[offset] == '_') || (str[offset] == '*'))) {
 					offset--;
 				}
-				
+
 				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset]))) {
 					// Whitespace to left, so can't close
 					t->can_close = 0;
@@ -1251,53 +1431,58 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					// Letters to left, so can't open
 					t->can_open = 0;
 				}
-				
+
 				// Look right and skip over neighboring '_' characters
 				offset = t->start + 1;
-				
-				while ((str[offset] == '*') || (str[offset] == '_'))
+
+				while ((str[offset] == '*') || (str[offset] == '_')) {
 					offset++;
-				
+				}
+
 				if (char_is_whitespace_or_line_ending(str[offset])) {
 					// Whitespace to right, so can't open
 					t->can_open = 0;
 				}
-				
+
 				if (char_is_alphanumeric(str[offset])) {
 					// Letters to right, so can't close
 					t->can_close = 0;
 				}
 
 				break;
+
 			case BACKTICK:
 				// Backticks are used for code spans, but also for ``foo'' double quote syntax.
 				// We care only about the quote syntax.
 				offset = t->start;
-				
+
 				// TODO: This does potentially prevent ``foo `` from closing due to space before closer?
 				// Bug or feature??
-				if (t->len != 2)
+				if (t->len != 2) {
 					break;
-				
+				}
+
 				if ((offset == 0) || (str[offset] != '`' && char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1]))) {
 					// Whitespace or punctuation to left, so can't close
 					t->can_close = 0;
 				}
+
 				break;
+
 			case QUOTE_SINGLE:
 				// Some of these are actually APOSTROPHE's and should not be paired
 				offset = t->start;
 
 				if (!((offset == 0) ||
-					(char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
-					(char_is_whitespace_or_line_ending_or_punctuation(str[offset + 1])))) {
+				        (char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
+				        (char_is_whitespace_or_line_ending_or_punctuation(str[offset + 1])))) {
 					t->type = APOSTROPHE;
 					break;
 				}
 
 				if (offset && (char_is_punctuation(str[offset - 1])) &&
-					(char_is_alphanumeric(str[offset + 1]))) {
-					// If possessive apostrophe, e.g. `x`'s 
+				        (char_is_alphanumeric(str[offset + 1]))) {
+					// If possessive apostrophe, e.g. `x`'s
 					if (str[offset + 1] == 's' || str[offset + 1] == 'S') {
 						if (char_is_whitespace_or_line_ending_or_punctuation(str[offset + 2])) {
 							t->type = APOSTROPHE;
@@ -1305,6 +1490,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 						}
 					}
 				}
+
 			case QUOTE_DOUBLE:
 				offset = t->start;
 
@@ -1317,24 +1503,31 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				}
 
 				break;
+
 			case DASH_N:
-				if (!(e->extensions & EXT_SMART))
+				if (!(e->extensions & EXT_SMART)) {
 					break;
+				}
+
 				// We want `1-2` to trigger a DASH_N, but regular hyphen otherwise (`a-b`)
 				// This doesn't apply to `--` or `---`
 				offset = t->start;
+
 				if (t->len == 1) {
 					// Check whether we have '1-2'
 					if ((offset == 0) || (!char_is_digit(str[offset - 1])) ||
-						(!char_is_digit(str[offset + 1]))) {
+					        (!char_is_digit(str[offset + 1]))) {
 						t->type = TEXT_PLAIN;
 					}
 				}
+
 				break;
+
 			case MATH_DOLLAR_SINGLE:
 			case MATH_DOLLAR_DOUBLE:
-				if (e->extensions & EXT_COMPATIBILITY)
+				if (e->extensions & EXT_COMPATIBILITY) {
 					break;
+				}
 
 				offset = t->start;
 
@@ -1342,14 +1535,14 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset - 1]))) {
 					// Whitespace to left, so can't close
 					t->can_close = 0;
-				} else if ((offset != 0) && (!char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1]))){
+				} else if ((offset != 0) && (!char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1]))) {
 					// No whitespace or punctuation to left, can't open
 					t->can_open = 0;
 				}
-				
+
 				// Look right
 				offset = t->start + t->len;
-				
+
 				if (char_is_whitespace_or_line_ending(str[offset])) {
 					// Whitespace to right, so can't open
 					t->can_open = 0;
@@ -1357,7 +1550,9 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					// No whitespace or punctuation to right, can't close
 					t->can_close = 0;
 				}
+
 				break;
+
 			case SUPERSCRIPT:
 			case SUBSCRIPT:
 				if (e->extensions & EXT_COMPATIBILITY) {
@@ -1414,10 +1609,12 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 					// Are we a standalone, e.g x^2
 					if (!t->can_close && !t->can_open) {
 						offset = t->start + t->len;
-						while (!char_is_whitespace_or_line_ending_or_punctuation(str[offset]))
-							offset++;
 
-						t->len = offset-t->start;
+						while (!char_is_whitespace_or_line_ending_or_punctuation(str[offset])) {
+							offset++;
+						}
+
+						t->len = offset - t->start;
 						t->can_close = 0;
 
 						// Shift next token right and move those characters as child node
@@ -1437,7 +1634,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 				break;
 		}
-		
+
 		t = t->next;
 	}
 
@@ -1445,33 +1642,34 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 
 /// Strong/emph parsing is done using single `*` and `_` characters, which are
-/// then combined in a separate routine here to determine when 
+/// then combined in a separate routine here to determine when
 /// consecutive characters should be interpreted as STRONG instead of EMPH
 /// \todo: Perhaps combining this with the routine when they are paired
 /// would improve performance?
 void pair_emphasis_tokens(token * t) {
 	token * closer;
-	
+
 	while (t != NULL) {
 		if (t->mate != NULL) {
 			switch (t->type) {
 				case STAR:
 				case UL:
 					closer = t->mate;
+
 					if (t->next &&
-						(t->next->mate == closer->prev) &&
-						(t->type == t->next->type) &&
-						(t->next->mate != t) &&
-						(t->start+t->len == t->next->start) &&
-						(closer->start == closer->prev->start + closer->prev->len)) {
-						
+					        (t->next->mate == closer->prev) &&
+					        (t->type == t->next->type) &&
+					        (t->next->mate != t) &&
+					        (t->start + t->len == t->next->start) &&
+					        (closer->start == closer->prev->start + closer->prev->len)) {
+
 						// We have a strong pair
 						t->type = STRONG_START;
 						t->len = 2;
 						closer->type = STRONG_STOP;
 						closer->len = 2;
 						closer->start--;
-						
+
 						tokens_prune(t->next, t->next);
 						tokens_prune(closer->prev, closer->prev);
 
@@ -1481,25 +1679,27 @@ void pair_emphasis_tokens(token * t) {
 						closer->type = EMPH_STOP;
 						token_prune_graft(t, closer, PAIR_EMPH);
 					}
+
 					break;
-					
+
 				default:
 					break;
 			}
 
 		}
-		
+
 		if (t->child != NULL) {
-			switch(t->type) {
+			switch (t->type) {
 				case PAIR_BACKTICK:
 				case PAIR_MATH:
 					break;
+
 				default:
 					pair_emphasis_tokens(t->child);
 					break;
 			}
 		}
-		
+
 		t = t->next;
 	}
 }
@@ -1518,8 +1718,11 @@ void recursive_parse_list_item(mmd_engine * e, token * block) {
 
 	// Insert marker back in place
 	marker->next = block->child->child;
-	if (block->child->child)
+
+	if (block->child->child) {
 		block->child->child->prev = marker;
+	}
+
 	block->child->child = marker;
 }
 
@@ -1545,11 +1748,12 @@ void recursive_parse_indent(mmd_engine * e, token * block) {
 
 void is_list_loose(token * list) {
 	bool loose = false;
-	
+
 	token * walker = list->child;
 
-	if (walker == NULL)
+	if (walker == NULL) {
 		return;
+	}
 
 	while (walker->next != NULL) {
 		if (walker->type == BLOCK_LIST_ITEM) {
@@ -1559,7 +1763,7 @@ void is_list_loose(token * list) {
 				walker->type = BLOCK_LIST_ITEM_TIGHT;
 			}
 		}
-		
+
 		walker = walker->next;
 	}
 
@@ -1568,6 +1772,7 @@ void is_list_loose(token * list) {
 			case BLOCK_LIST_BULLETED:
 				list->type = BLOCK_LIST_BULLETED_LOOSE;
 				break;
+
 			case BLOCK_LIST_ENUMERATED:
 				list->type = BLOCK_LIST_ENUMERATED_LOOSE;
 				break;
@@ -1579,16 +1784,18 @@ void is_list_loose(token * list) {
 /// Is this actually an HTML block?
 void is_para_html(mmd_engine * e, token * block) {
 	if ((block == NULL) ||
-		(block->child == NULL) ||
-		(block->child->type != LINE_PLAIN))
+	        (block->child == NULL) ||
+	        (block->child->type != LINE_PLAIN)) {
 		return;
+	}
+
 	token * t = block->child->child;
 
 	if (t->type == ANGLE_LEFT || t->type == HTML_COMMENT_START) {
 		if (scan_html_block(&(e->dstr->str[t->start]))) {
 			block->type = BLOCK_HTML;
 			return;
-		}	
+		}
 
 		if (scan_html_line(&(e->dstr->str[t->start]))) {
 			block->type = BLOCK_HTML;
@@ -1609,8 +1816,7 @@ void recursive_parse_blockquote(mmd_engine * e, token * block) {
 void metadata_stack_describe(mmd_engine * e) {
 	meta * m;
 
-	for (int i = 0; i < e->metadata_stack->size; ++i)
-	{
+	for (int i = 0; i < e->metadata_stack->size; ++i) {
 		m = stack_peek_index(e->metadata_stack, i);
 		fprintf(stderr, "'%s': '%s'\n", m->key, m->value);
 	}
@@ -1629,11 +1835,12 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 	while (l) {
 		switch (l->type) {
 			case LINE_META:
-			meta:
+meta:
 				if (m) {
 					meta_set_value(m, d->str);
 					d_string_erase(d, 0, -1);
 				}
+
 				len = scan_meta_key(&source[l->start]);
 				m = meta_new(source, l->start, len);
 				start = l->start + len + 1;
@@ -1641,23 +1848,31 @@ void strip_line_tokens_from_metadata(mmd_engine * e, token * metadata) {
 				d_string_append_c_array(d, &source[start], len);
 				stack_push(e->metadata_stack, m);
 				break;
+
 			case LINE_INDENTED_TAB:
 			case LINE_INDENTED_SPACE:
 				while (l->len && char_is_whitespace(source[l->start])) {
 					l->start++;
 					l->len--;
 				}
+
 			case LINE_PLAIN:
-			plain:
+plain:
 				d_string_append_c(d, '\n');
 				d_string_append_c_array(d, &source[l->start], l->len);
 				break;
+
+			case LINE_SETEXT_2:
+			case LINE_YAML:
+				break;
+
 			case LINE_TABLE:
 				if (scan_meta_line(&source[l->start])) {
 					goto meta;
 				} else {
 					goto plain;
 				}
+
 			default:
 				fprintf(stderr, "ERROR!\n");
 				token_describe(l, NULL);
@@ -1684,14 +1899,18 @@ void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
 			case LINE_EMPTY:
 				walker->type = TEXT_EMPTY;
 				break;
+
 			case LINE_PLAIN:
 				walker->type = BLOCK_TERM;
+
 			case BLOCK_TERM:
 				break;
+
 			case BLOCK_DEFINITION:
 				strip_line_tokens_from_block(e, walker);
 				break;
 		}
+
 		walker = walker->next;
 	}
 }
@@ -1705,9 +1924,11 @@ void strip_line_tokens_from_table(mmd_engine * e, token * table) {
 			case BLOCK_TABLE_SECTION:
 				strip_line_tokens_from_block(e, walker);
 				break;
+
 			case BLOCK_TABLE_HEADER:
 				strip_line_tokens_from_block(e, walker);
 				break;
+
 			case LINE_EMPTY:
 				walker->type = TEXT_EMPTY;
 				break;
@@ -1724,15 +1945,17 @@ void parse_table_row_into_cells(token * row) {
 
 	token * walker = row->child;
 
-	if (walker->type == PIPE) {
-		walker->type = TABLE_DIVIDER;
-		first = walker->next;
-	} else {
-		first = walker;
-		last = first;
-	}
+	if (walker) {
+		if (walker->type == PIPE) {
+			walker->type = TABLE_DIVIDER;
+			first = walker->next;
+		} else {
+			first = walker;
+			last = first;
+		}
 
-	walker = walker->next;
+		walker = walker->next;
+	}
 
 	while (walker) {
 		switch (walker->type) {
@@ -1742,12 +1965,16 @@ void parse_table_row_into_cells(token * row) {
 				last = NULL;
 				walker->type = TABLE_DIVIDER;
 				break;
+
 			case TEXT_NL:
 			case TEXT_LINEBREAK:
 				break;
+
 			default:
-				if (!first)
+				if (!first) {
 					first = walker;
+				}
+
 				last = walker;
 		}
 
@@ -1761,13 +1988,14 @@ void parse_table_row_into_cells(token * row) {
 
 
 void strip_line_tokens_from_block(mmd_engine * e, token * block) {
-	if ((block == NULL) || (block->child == NULL))
+	if ((block == NULL) || (block->child == NULL)) {
 		return;
+	}
 
-#ifndef NDEBUG
+	#ifndef NDEBUG
 	fprintf(stderr, "Strip line tokens from %d (%lu:%lu) (child %d)\n", block->type, block->start, block->len, block->child->type);
-	token_tree_describe(block, NULL);
-#endif
+	token_tree_describe(block, e->dstr->str);
+	#endif
 
 	token * l = block->child;
 
@@ -1776,14 +2004,20 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 		case BLOCK_META:
 			// Handle metadata differently
 			return strip_line_tokens_from_metadata(e, block);
+
 		case BLOCK_CODE_INDENTED:
+
 			// Strip trailing empty lines from indented code blocks
-			while (l->tail->type == LINE_EMPTY)
+			while (l->tail->type == LINE_EMPTY) {
 				token_remove_last_child(block);
+			}
+
 			break;
+
 		case BLOCK_DEFLIST:
 			// Handle definition lists
 			return strip_line_tokens_from_deflist(e, block);
+
 		case BLOCK_TABLE:
 			// Handle tables
 			return strip_line_tokens_from_table(e, block);
@@ -1796,21 +2030,28 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 	// Move contents of line directly into the parent block
 	while (l != NULL) {
+		// Remove leading non-indent space from line
+		if (block->type != BLOCK_CODE_FENCED && l->child && l->child->type == NON_INDENT_SPACE) {
+			token_remove_first_child(l);
+		}
+
 		switch (l->type) {
 			case LINE_SETEXT_1:
 			case LINE_SETEXT_2:
 				if ((block->type == BLOCK_SETEXT_1) ||
-					(block->type == BLOCK_SETEXT_2)) {
+				        (block->type == BLOCK_SETEXT_2)) {
 					temp = l->next;
 					tokens_prune(l, l);
 					l = temp;
 					break;
 				}
+
 			case LINE_DEFINITION:
 				if (block->type == BLOCK_DEFINITION) {
 					// Remove leading colon
 					token_remove_first_child(l);
 				}
+
 			case LINE_ATX_1:
 			case LINE_ATX_2:
 			case LINE_ATX_3:
@@ -1831,23 +2072,24 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_PLAIN:
 			case LINE_START_COMMENT:
 			case LINE_STOP_COMMENT:
-				handle_line:
-				// Remove leading non-indent space from line
-				if (l->child && l->child->type == NON_INDENT_SPACE)
-				token_remove_first_child(l);
+handle_line:
 
 			case LINE_INDENTED_TAB:
 			case LINE_INDENTED_SPACE:
+
 				// Strip leading indent (Only the first one)
-				if (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB)))
+				if (block->type != BLOCK_CODE_FENCED && l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
 					token_remove_first_child(l);
+				}
 
 				// If we're not a code block, strip additional indents
-				if ((block->type != BLOCK_CODE_INDENTED) && 
-					(block->type != BLOCK_CODE_FENCED)) {
-					while (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB)))
+				if ((block->type != BLOCK_CODE_INDENTED) &&
+				        (block->type != BLOCK_CODE_FENCED)) {
+					while (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
 						token_remove_first_child(l);
+					}
 				}
+
 				// Add contents of line to parent block
 				token_append_child(block, l->child);
 
@@ -1855,12 +2097,14 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				l->child = NULL;
 
 				// Need to remember first line we strip
-				if (children == NULL)
+				if (children == NULL) {
 					children = l;
+				}
 
 				// Advance to next line
 				l = l->next;
 				break;
+
 			case BLOCK_DEFINITION:
 				// Sometimes these get created unintentionally inside other blocks
 				// Process inside it, then treat it like a line to be stripped
@@ -1875,12 +2119,17 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 					temp = token_new(COLON, l->child->start - 1, 1);
 					token_append_child(block, temp);
 				}
+
 				token_append_child(block, l->child);
 				l->child = NULL;
-				if (children == NULL)
+
+				if (children == NULL) {
 					children = l;
+				}
+
 				l = l->next;
 				break;
+
 			case LINE_TABLE_SEPARATOR:
 			case LINE_TABLE:
 				if (block->type == BLOCK_TABLE_HEADER) {
@@ -1892,6 +2141,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 				} else {
 					goto handle_line;
 				}
+
 			default:
 				// token_describe(block, e->dstr->str);
 				// fprintf(stderr, "Unspecified line type %d inside block type %d\n", l->type, block->type);
@@ -1918,7 +2168,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 	// First, clean up any leftovers from previous parse
 
 	mmd_engine_reset(e);
-	
+
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
 
@@ -1944,9 +2194,9 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 		pair_emphasis_tokens(doc);
 
-#ifndef NDEBUG
+		#ifndef NDEBUG
 		token_tree_describe(doc, e->dstr->str);
-#endif
+		#endif
 	}
 
 	return doc;
@@ -1956,7 +2206,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 /// Parse the entire string into a token tree
 void mmd_engine_parse_string(mmd_engine * e) {
 	if (e) {
-		e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);		
+		e->root = mmd_engine_parse_substring(e, 0, e->dstr->currentStringLength);
 	}
 }
 
@@ -1990,23 +2240,26 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 /// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
-	if (!e || !end)
+
+	if (!e) {
 		return false;
-	
+	}
+
 	if (!(scan_meta_line(&e->dstr->str[0]))) {
 		// First line is not metadata, so can't have metadata
-		// Saves the time of an unnecessary parse 
+		// Saves the time of an unnecessary parse
 		// TODO:  Need faster confirmation of actual metadata than full tokenizing
 		if (end) {
 			*end = 0;
 		}
-	
+
 		return false;
 	}
 
 	// Free existing parse tree
-	if (e->root)
+	if (e->root) {
 		token_tree_free(e->root);
+	}
 
 	// Tokenize the string (up until first empty line)
 	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
@@ -2018,8 +2271,9 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		if (doc->child && doc->child->type == BLOCK_META) {
 			result = true;
 
-			if (end != NULL)
+			if (end) {
 				*end = doc->child->len;
+			}
 		}
 
 		token_tree_free(doc);
@@ -2062,8 +2316,9 @@ char * mmd_d_string_metadata_keys(DString * source) {
 char * mmd_engine_metadata_keys(mmd_engine * e) {
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
-		if (!mmd_engine_has_metadata(e, NULL))
+		if (!mmd_engine_has_metadata(e, NULL)) {
 			return NULL;
+		}
 	}
 
 	char * result = NULL;
@@ -2071,8 +2326,7 @@ char * mmd_engine_metadata_keys(mmd_engine * e) {
 
 	meta * m;
 
-	for (int i = 0; i < e->metadata_stack->size; ++i)
-	{
+	for (int i = 0; i < e->metadata_stack->size; ++i) {
 		m = stack_peek_index(e->metadata_stack, i);
 
 		d_string_append_printf(output, "%s\n", m->key);
@@ -2091,7 +2345,8 @@ char * mmd_string_metavalue_for_key(char * source, const char * key) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
-	result = my_strdup(mmd_engine_metavalue_for_key(e, key));
+	result = mmd_engine_metavalue_for_key(e, key);
+	result = my_strdup(result);
 
 	mmd_engine_free(e, true);
 
@@ -2105,7 +2360,11 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 	char * result;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
-	result = my_strdup(mmd_engine_metavalue_for_key(e, key));
+	result = mmd_engine_metavalue_for_key(e, key);
+
+	if (result) {
+		result = my_strdup(result);
+	}
 
 	mmd_engine_free(e, false);
 
@@ -2118,8 +2377,9 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
-		if (!mmd_engine_has_metadata(e, NULL))
+		if (!mmd_engine_has_metadata(e, NULL)) {
 			return NULL;
+		}
 	}
 
 	char * result = NULL;
@@ -2127,8 +2387,7 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 
 	meta * m;
 
-	for (int i = 0; i < e->metadata_stack->size; ++i)
-	{
+	for (int i = 0; i < e->metadata_stack->size; ++i) {
 		m = stack_peek_index(e->metadata_stack, i);
 
 		if (strcmp(clean, m->key) == 0) {
@@ -2140,6 +2399,113 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 
 	free(clean);
 	return result;
+}
+
+
+/// Insert/replace metadata in string, returning new string
+char * mmd_string_update_metavalue_for_key(const char * source, const char * key, const char * value) {
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	mmd_engine_update_metavalue_for_key(e, key, value);
+
+	DString * d = e->dstr;
+
+	mmd_engine_free(e, false);
+
+	char * result = d->str;
+	d_string_free(d, false);
+
+	return result;
+}
+
+
+/// Insert/replace metadata value in DString
+void mmd_d_string_update_metavalue_for_key(DString * source, const char * key, const char * value) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	mmd_engine_update_metavalue_for_key(e, key, value);
+
+	mmd_engine_free(e, false);
+}
+
+
+/// Insert/replace metadata value in mmd_engine
+void mmd_engine_update_metavalue_for_key(mmd_engine * e, const char * key, const char * value) {
+	bool has_meta = true;
+	size_t meta_end = 0;
+
+	// Check for metadata and character
+	if (!mmd_engine_has_metadata(e, &meta_end)) {
+		has_meta = false;
+	}
+
+	// Get clean metadata key for match
+	char * clean = label_from_string(key);
+
+	// Determine range to excise and replace
+	size_t start = -1;
+	size_t end = -1;
+	size_t len = -1;
+
+	meta * m;
+
+	for (int i = 0; i < e->metadata_stack->size; ++i) {
+		m = stack_peek_index(e->metadata_stack, i);
+
+		if (strcmp(clean, m->key) == 0) {
+			// We have a match
+			start = m->start;
+		} else if (start != -1) {
+			// We have already found a match
+			if (end == -1) {
+				// This is the next metadata key, so determine length
+				end = m->start;
+			}
+		}
+	}
+
+	DString * temp = d_string_new(key);
+	d_string_append(temp, ":\t");
+	d_string_append(temp, value);
+	d_string_append_c(temp, '\n');
+
+	if (start != -1) {
+		// We're replacing existing metadata
+
+		// Figure out where to start
+		char * begin = &(e->dstr->str[start]);
+
+		while (*begin != ':') {
+			begin++;
+		}
+
+		begin++;
+
+		while (char_is_whitespace(*begin)) {
+			begin++;
+		}
+
+		start = begin - e->dstr->str;
+
+		if (end == -1) {
+			// Replace until the end of the metadata (last key)
+			len = meta_end - start;
+		} else {
+			len = end - start;
+		}
+
+		d_string_erase(e->dstr, start, len);
+		d_string_insert(e->dstr, start, "\n");
+		d_string_insert(e->dstr, start, value);
+	} else if (meta_end != 0) {
+		// We're appending metadata at the end
+		d_string_insert(e->dstr, meta_end, temp->str);
+	} else {
+		// There is no metadata, so prepend before document
+		d_string_append_c(temp, '\n');
+		d_string_prepend(e->dstr, temp->str);
+	}
+
+	d_string_free(temp, true);
+	free(clean);
 }
 
 
@@ -2235,7 +2601,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 	DString * output = d_string_new("");
 
 	mmd_engine_parse_string(e);
-	
+
 	mmd_engine_export_token_tree(output, e, format);
 
 	// Now we have the input source string, the output string, the (modified) parse tree, and engine stacks
@@ -2244,13 +2610,17 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 		case FORMAT_EPUB:
 			epub_write_wrapper(filepath, output->str, e, directory);
 			break;
+
 		case FORMAT_TEXTBUNDLE:
 			// TODO: Need to implement this
 			break;
+
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			textbundle_write_wrapper(filepath, output->str, e, directory);
 			break;
+
 		default:
+
 			// Basic formats just write to file
 			if (!(output_stream = fopen(filepath, "w"))) {
 				// Failed to open file
@@ -2260,6 +2630,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 				fputc('\n', output_stream);
 				fclose(output_stream);
 			}
+
 			break;
 	}
 
@@ -2285,7 +2656,7 @@ DString * mmd_d_string_convert_to_data(DString * source, unsigned long extension
 
 	mmd_engine_set_language(e, language);
 
-	DString * result =  mmd_engine_convert_to_data(e, format, directory);
+	DString * result = mmd_engine_convert_to_data(e, format, directory);
 
 	mmd_engine_free(e, false);			// The engine doesn't own the DString, so don't free it.
 
@@ -2297,8 +2668,15 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 	DString * output = d_string_new("");
 	DString * result = NULL;
 
+	if (format == FORMAT_MMD) {
+		// Simply return text (transclusion is handled externally)
+		d_string_append_c_array(output, e->dstr->str, e->dstr->currentStringLength);
+
+		return output;
+	}
+
 	mmd_engine_parse_string(e);
-	
+
 	mmd_engine_export_token_tree(output, e, format);
 
 	switch (format) {
@@ -2307,22 +2685,26 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 			d_string_free(output, true);
 			break;
+
 		case FORMAT_TEXTBUNDLE:
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
 			result = textbundle_create(output->str, e, directory);
 
 			d_string_free(output, true);
 			break;
+
 		case FORMAT_ODT:
 			result = opendocument_text_create(output->str, e, directory);
 
 			d_string_free(output, true);
 			break;
+
 		case FORMAT_FODT:
 			result = opendocument_flat_text_create(output->str, e, directory);
-			
+
 			d_string_free(output, true);
 			break;
+
 		default:
 			result = output;
 			// Add newline to result

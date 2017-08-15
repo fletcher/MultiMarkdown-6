@@ -1,0 +1,61 @@
+# astyle configuration file
+# http://astyle.sourceforge.net/astyle.html
+
+
+# Brace style
+--style=java
+
+
+# Indents
+--indent=tab=4
+
+
+# Switch statements
+--indent-switches
+
+
+# Break long conditionals
+--break-after-logical
+
+
+# Indent pre-processor directives
+--indent-preproc-block
+--indent-preproc-define
+--indent-preproc-cond
+
+
+# Line endings
+--lineend=linux
+
+
+# Add brackets to one-liners
+--add-brackets
+
+
+# Pad with blank lines
+--break-blocks
+
+
+# Pad with spaces
+--pad-oper
+--pad-header
+
+
+# Pointers/References
+--align-reference=name
+
+
+# Excludes
+--exclude="Sources/libMultiMarkdown/scanners.c"
+--exclude="Sources/libMultiMarkdown/parser.c"
+--exclude="Sources/libMultiMarkdown/lexer.c"
+
+--exclude="Sources/libMultiMarkdown/i18n.h"
+--exclude="Sources/libMultiMarkdown/miniz.c"
+--exclude="Sources/libMultiMarkdown/miniz.h"
+--exclude="Sources/libMultiMarkdown/uthash.h"
+
+--exclude="Sources/multimarkdown/argtable3.c"
+--exclude="Sources/multimarkdown/argtable3.h"
+
+--ignore-exclude-errors

@@ -381,6 +381,16 @@ options are <code>dutch</code>, <code>french</code>, <code>german</code>, <code>
 <code>fr</code>, <code>de</code>, <code>sv</code>. Anything else defaults to English.</p></li>
 </ul>
 
+<p>Additionally, the <code>MMD Header</code> and <code>MMD Footer</code> metadata work slightly differently. In
+v5, these fields were used to list names of files that should be transcluded before and after
+the main body. In v6, these fields represent the actual text to be inserted. If you want them
+to reference separate files, use the transclusion functionality:</p>
+
+<pre><code>Title:	Some Title
+MMD Header:	This is *MMD* text.
+MMD Footer:	{{footer.txt}}
+</code></pre>
+
 <h4 id="outputformats">Output Formats </h4>
 
 <p>MultiMarkdown 6 supports the following output formats, using the <code>-t</code>
@@ -445,27 +455,27 @@ path for included files. For example:</p>
 
 <thead>
 <tr>
-	<th> Directory </th>
-	<th> Transcluded Filename </th>
-	<th> Resolved Path  </th>
+	<th> Directory	</th>
+	<th> Transcluded Filename	</th>
+	<th> Resolved Path 	</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-	<td> <code>/foo/bar/</code> </td>
-	<td> <code>bat</code>    </td>
-	<td> <code>/foo/bar/bat</code>  </td>
+	<td> <code>/foo/bar/</code>	</td>
+	<td> <code>bat</code>	</td>
+	<td> <code>/foo/bar/bat</code>	</td>
 </tr>
 <tr>
-	<td> <code>/foo/bar/</code> </td>
-	<td> <code>baz/bat</code>   </td>
-	<td> <code>/foo/bar/baz/bat</code> </td>
+	<td> <code>/foo/bar/</code>	</td>
+	<td> <code>baz/bat</code>	</td>
+	<td> <code>/foo/bar/baz/bat</code>	</td>
 </tr>
 <tr>
-	<td> <code>/foo/bar/</code> </td>
-	<td> <code>../bat</code>    </td>
-	<td> <code>/foo/bat</code>   </td>
+	<td> <code>/foo/bar/</code>	</td>
+	<td> <code>../bat</code> 	</td>
+	<td> <code>/foo/bat</code>	</td>
 </tr>
 </tbody>
 </table>
@@ -530,3 +540,4 @@ glossary collects information about important terms used in your document <a hre
 
 </body>
 </html>
+

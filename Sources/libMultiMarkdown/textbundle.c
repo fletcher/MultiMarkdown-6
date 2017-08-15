@@ -4,11 +4,11 @@
 
 	@file textbundle.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,38 +18,38 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
-	
+
 	uthash library:
 		Copyright (c) 2005-2016, Troy D. Hanson
-	
+
 		Licensed under Revised BSD license
-	
+
 	miniz library:
 		Copyright 2013-2014 RAD Game Tools and Valve Software
 		Copyright 2010-2014 Rich Geldreich and Tenacious Software LLC
-	
+
 		Licensed under the MIT license
-	
+
 	argtable3 library:
 		Copyright (C) 1998-2001,2003-2011,2013 Stewart Heitmann
 		<sheitmann@users.sourceforge.net>
 		All rights reserved.
-	
+
 		Licensed under the Revised BSD License
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
 	"Software"), to deal in the Software without restriction, including
@@ -57,10 +57,10 @@
 	distribute, sublicense, and/or sell copies of the Software, and to
 	permit persons to whom the Software is furnished to do so, subject to
 	the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -68,10 +68,10 @@
 	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
-	
+
+
 	## Revised BSD License ##
-	
+
 	Redistribution and use in source and binary forms, with or without
 	modification, are permitted provided that the following conditions are
 	met:
@@ -85,7 +85,7 @@
 	      names of its contributors may be used to endorse or promote
 	      products derived from this software without specific prior
 	      written permission.
-	
+
 	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 	"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 	LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -97,7 +97,7 @@
 	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-	
+
 
 */
 
@@ -106,7 +106,7 @@
 #include <sys/stat.h>
 
 #ifdef USE_CURL
-#include <curl/curl.h>
+	#include <curl/curl.h>
 #endif
 
 #include "textbundle.h"
@@ -133,9 +133,10 @@ char * textbundle_info_json(void) {
 
 
 static bool add_asset_from_file(mz_zip_archive * pZip, asset * a, const char * destination, const char * directory) {
-	if (!directory)
+	if (!directory) {
 		return false;
-	
+	}
+
 	char * path = path_from_dir_base(directory, a->url);
 	mz_bool status;
 	bool result = false;
@@ -174,6 +175,7 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 	struct MemoryStruct * mem = (struct MemoryStruct *)userp;
 
 	mem->memory = realloc(mem->memory, mem->size + realsize + 1);
+
 	if (mem->memory == NULL) {
 		// Out of memory
 		fprintf(stderr, "Out of memory\n");
@@ -191,17 +193,17 @@ static size_t write_memory(void * contents, size_t size, size_t nmemb, void * us
 static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
-	if (e->asset_hash){
+	if (e->asset_hash) {
 		CURL * curl;
 		CURLcode res;
-		
+
 		struct MemoryStruct chunk;
 		chunk.memory = malloc(1);
 		chunk.size = 0;
 
 		char destination[100] = "assets/";
 		destination[43] = '\0';
-		
+
 		mz_bool status;
 
 		curl_global_init(CURL_GLOBAL_ALL);
@@ -239,11 +241,11 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * directory) {
 	asset * a, * a_tmp;
 
-	if (e->asset_hash){
+	if (e->asset_hash) {
 
 		char destination[100] = "assets/";
 		destination[43] = '\0';
-		
+
 		mz_bool status;
 
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
@@ -266,7 +268,7 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 	link * l;
 
 	while (t) {
-		switch(t->type) {
+		switch (t->type) {
 			case PAIR_BRACKET_IMAGE:
 				if (t->next && t->next->type == PAIR_PAREN) {
 					t = t->next;
@@ -285,14 +287,18 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 
 					free(clean);
 				}
+
 				break;
+
 			case BLOCK_EMPTY:
+
 				// Is this a link definition?
 				for (int i = 0; i < e->definition_stack->size; ++i) {
 					if (t == stack_peek_index(e->definition_stack, i)) {
 						// Find matching link
 						for (int j = 0; j < e->link_stack->size; ++j) {
 							l = stack_peek_index(e->link_stack, j);
+
 							if (l->label->start == t->child->start) {
 								// This is a match
 								HASH_FIND_STR(e->asset_hash, l->url, a);
@@ -305,11 +311,14 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 						}
 					}
 				}
+
 				break;
+
 			default:
 				if (t->child) {
 					traverse_for_images(t->child, text, e, offset, destination, url);
 				}
+
 				break;
 		}
 
@@ -320,7 +329,7 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 
 void sub_asset_paths(DString * text, mmd_engine * e) {
 	long offset = 0;
-	asset * a, * a_tmp;
+	asset * a;
 	token * t = e->root->child;
 
 	char destination[100] = "assets/";
@@ -331,9 +340,9 @@ void sub_asset_paths(DString * text, mmd_engine * e) {
 		if (e->metadata_stack->size > 0) {
 			meta * m;
 
-			for (int i = 0; i < e->metadata_stack->size; ++i)
-			{
+			for (int i = 0; i < e->metadata_stack->size; ++i) {
 				m = stack_peek_index(e->metadata_stack, i);
+
 				if (strcmp("css", m->key) == 0) {
 					// Get METADATA range
 					t = e->root->child;
@@ -341,6 +350,7 @@ void sub_asset_paths(DString * text, mmd_engine * e) {
 
 					// Substitute inside metadata block
 					HASH_FIND_STR(e->asset_hash, m->value, a);
+
 					if (a) {
 						memcpy(&destination[7], a->asset_path, 36);
 						offset += d_string_replace_text_in_range(text, t->start, t->len, m->value, destination);
@@ -376,12 +386,14 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(&zip, "info.json", data, len, MZ_BEST_COMPRESSION);
 	free(data);
+
 	if (!status) {
 		fprintf(stderr, "Error adding JSON info to zip.\n");
 	}
 
 	// Create directories
 	status = mz_zip_writer_add_mem(&zip, "assets/", NULL, 0, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding assets directory to zip.\n");
 	}
@@ -393,6 +405,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 
 	len = temp->currentStringLength;
 	status = mz_zip_writer_add_mem(&zip, "text.markdown", temp->str, len, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
 	}
@@ -400,6 +413,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	// Add html version document
 	len = strlen(body);
 	status = mz_zip_writer_add_mem(&zip, "text.html", body, len, MZ_BEST_COMPRESSION);
+
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
 	}
@@ -412,7 +426,8 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	// Finalize zip archive and extract data
 	free(result->str);
 
-	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) &(result->str), &(result->currentStringLength));
+	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
+
 	if (!status) {
 		fprintf(stderr, "Error finalizing zip.\n");
 	}

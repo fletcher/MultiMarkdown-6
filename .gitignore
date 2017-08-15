@@ -33,3 +33,5 @@ test/a.out
 /.build
 /Packages
 /mmd-swift.xcodeproj
+
+*.orig

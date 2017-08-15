@@ -40,14 +40,23 @@ if($flag_version) {
 	die "$progname version $VERSION\n";
 }
 
+$script =~ s/^"//;
+$script =~ s/"$//;
+
+$test_dir =~ s/^"//;
+$test_dir =~ s/"$//;
+
+
 unless (-d $test_dir) { die "'$test_dir' is not a directory.\n"; }
-unless (-f $script)   { die "$script does not exist.\n"; }
+unless (-f $script)   { die "script $script does not exist.\n"; }
 unless (-x $script)   { die "$script is not executable.\n"; }
 
 my $tests_passed = 0;
 my $tests_failed = 0;
 
 TEST:
+$test_dir =~ s/ /\\ /g;
+
 foreach my $testfile (glob "$test_dir/*.text") {
 	my $testname = $testfile;
 	$testname =~ s{.*/(.+)\.text$}{$1}i; 

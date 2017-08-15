@@ -62,7 +62,7 @@
 
 %extra_argument { mmd_engine * engine }
 
-%fallback LINE_HR LINE_SETEXT_1 LINE_SETEXT_2.
+%fallback LINE_HR LINE_SETEXT_1 LINE_SETEXT_2 LINE_YAML.
 
 //%fallback LINE_PLAIN LINE_TABLE_SEPARATOR.
 
@@ -111,6 +111,7 @@ block(A)			::= LINE_ATX_5(B).			{ A = token_new_parent(B, BLOCK_H5); stack_push(
 block(A)			::= LINE_ATX_6(B).			{ A = token_new_parent(B, BLOCK_H6); stack_push(engine->header_stack, A); }
 
 block(A)			::= LINE_HR(B).				{ A = token_new_parent(B, BLOCK_HR); }
+block(A)			::= LINE_YAML(B).			{ A = token_new_parent(B, BLOCK_HR); }
 
 block(A)			::= LINE_TOC(B).			{ A = token_new_parent(B, BLOCK_TOC); }
 
@@ -132,6 +133,7 @@ block(A)			::= indented_code(B).		{ A = token_new_parent(B, BLOCK_CODE_INDENTED)
 block(A)			::= list_bullet(B).			{ A = token_new_parent(B, BLOCK_LIST_BULLETED); is_list_loose(A); }
 block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED); is_list_loose(A); }
 block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
+block(A)			::= meta_block(B) LINE_SETEXT_2(C).	{ A = token_new_parent(B, BLOCK_META); token_append_child(A, C); }
 block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
 block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); stack_push(engine->header_stack, A); }
 block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); stack_push(engine->header_stack, A); }
@@ -327,6 +329,7 @@ item_enum(A)		::= LINE_LIST_ENUMERATED(B).				{ A = token_new_parent(B, BLOCK_LI
 // Metadata
 meta_block(A)		::= meta_block(B) meta_line(C).				{ A = B; token_chain_append(B, C); }
 meta_block 			::= LINE_META.
+meta_block(A)		::= LINE_YAML(B) LINE_META(C).				{ A = B; token_chain_append(B, C); }
 
 meta_line 			::= LINE_META.
 meta_line 			::= LINE_CONTINUATION.

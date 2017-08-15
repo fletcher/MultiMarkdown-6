@@ -2,12 +2,12 @@
 latex config:	article</p>
 
 <p>| foo	| bar	|<br />
-| ------	| :------:	|<br />
+| ------+	| :------:+	|<br />
 | <em>foo</em>	| <em>bar</em>	|<br />
 | <strong>foo bar</strong>		||</p>
 
 <p>| foo1 | bar1 |
-| :---+ | ----: |
+| :---+ | ----:+ |
 <em>foo</em> | <em>bar</em> |
 | <strong>foo bar</strong> ||</p>
 

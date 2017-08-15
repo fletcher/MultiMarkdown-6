@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 
 **/
@@ -19,30 +19,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -55,6 +55,7 @@
 
 #include <ctype.h>
 #include <libgen.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -73,12 +74,24 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		*a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
-		*a_notransclude, *a_nosmart;
+	       *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+	       *a_notransclude, *a_nosmart;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
 struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
+
+
+/// strdup() not available on all platforms
+static char * my_strdup(const char * source) {
+	char * result = malloc(strlen(source) + 1);
+
+	if (result) {
+		strcpy(result, source);
+	}
+
+	return result;
+}
 
 
 DString * stdin_buffer() {
@@ -107,7 +120,7 @@ char * filename_with_extension(const char * original, const char * new_extension
 	DString * new_name;
 
 	// Determine output filename without file extension
-	name_no_ext = strdup(original);
+	name_no_ext = my_strdup(original);
 
 	if (strrchr(name_no_ext, '.') != NULL) {
 		long count = strrchr(name_no_ext, '.') - name_no_ext;
@@ -157,7 +170,7 @@ int main(int argc, char** argv) {
 		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
-		a_rem3			= arg_rem("",""),
+		a_rem3			= arg_rem("", ""),
 
 		a_accept		= arg_lit0("a", "accept", "accept all CriticMarkup changes"),
 		a_reject		= arg_lit0("r", "reject", "reject all CriticMarkup changes"),
@@ -167,13 +180,13 @@ int main(int argc, char** argv) {
 		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|nl|sv"),
 
 		a_rem5			= arg_rem("", ""),
-		
+
 		a_meta			= arg_lit0("m", "metadata-keys", "list all metadata keys"),
 		a_extract		= arg_str0("e", "extract", "KEY", "extract specified metadata key"),
 
 		a_rem6			= arg_rem("", ""),
 
-		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc+2, "read input from file(s) -- use stdin if no files given"),
+		a_file 			= arg_filen(NULL, NULL, "<FILE>", 0, argc + 2, "read input from file(s) -- use stdin if no files given"),
 
 		a_end 			= arg_end(20),
 	};
@@ -267,27 +280,27 @@ int main(int argc, char** argv) {
 	}
 
 	if (a_format->count > 0) {
-		if (strcmp(a_format->sval[0], "html") == 0)
+		if (strcmp(a_format->sval[0], "html") == 0) {
 			format = FORMAT_HTML;
-		else if (strcmp(a_format->sval[0], "latex") == 0)
+		} else if (strcmp(a_format->sval[0], "latex") == 0) {
 			format = FORMAT_LATEX;
-		else if (strcmp(a_format->sval[0], "beamer") == 0)
+		} else if (strcmp(a_format->sval[0], "beamer") == 0) {
 			format = FORMAT_BEAMER;
-		else if (strcmp(a_format->sval[0], "memoir") == 0)
+		} else if (strcmp(a_format->sval[0], "memoir") == 0) {
 			format = FORMAT_MEMOIR;
-		else if (strcmp(a_format->sval[0], "mmd") == 0)
+		} else if (strcmp(a_format->sval[0], "mmd") == 0) {
 			format = FORMAT_MMD;
-		else if (strcmp(a_format->sval[0], "odt") == 0)
+		} else if (strcmp(a_format->sval[0], "odt") == 0) {
 			format = FORMAT_ODT;
-		else if (strcmp(a_format->sval[0], "fodt") == 0)
+		} else if (strcmp(a_format->sval[0], "fodt") == 0) {
 			format = FORMAT_FODT;
-		else if (strcmp(a_format->sval[0], "epub") == 0)
+		} else if (strcmp(a_format->sval[0], "epub") == 0) {
 			format = FORMAT_EPUB;
-		else if (strcmp(a_format->sval[0], "bundle") == 0)
+		} else if (strcmp(a_format->sval[0], "bundle") == 0) {
 			format = FORMAT_TEXTBUNDLE;
-		else if (strcmp(a_format->sval[0], "bundlezip") == 0)
+		} else if (strcmp(a_format->sval[0], "bundlezip") == 0) {
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
-		else {
+		} else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
 			exitcode = 1;
@@ -313,9 +326,9 @@ int main(int argc, char** argv) {
 	char * output_filename;
 
 	// Increment counter and prepare token pool
-#ifdef kUseObjectPool
+	#ifdef kUseObjectPool
 	token_pool_init();
-#endif
+	#endif
 
 	// Seed random numbers
 	custom_seed_rand();
@@ -324,8 +337,7 @@ int main(int argc, char** argv) {
 
 	if ((a_batch->count) && (a_file->count)) {
 		// Batch process 1 or more files
-		for (int i = 0; i < a_file->count; ++i)
-		{
+		for (int i = 0; i < a_file->count; ++i) {
 
 			buffer = scan_file(a_file->filename[i]);
 
@@ -340,26 +352,33 @@ int main(int argc, char** argv) {
 				case FORMAT_HTML:
 					output_filename = filename_with_extension(a_file->filename[i], ".html");
 					break;
+
 				case FORMAT_LATEX:
 				case FORMAT_BEAMER:
 				case FORMAT_MEMOIR:
 					output_filename = filename_with_extension(a_file->filename[i], ".tex");
 					break;
+
 				case FORMAT_FODT:
 					output_filename = filename_with_extension(a_file->filename[i], ".fodt");
 					break;
+
 				case FORMAT_ODT:
 					output_filename = filename_with_extension(a_file->filename[i], ".odt");
 					break;
+
 				case FORMAT_MMD:
 					output_filename = filename_with_extension(a_file->filename[i], ".mmdtext");
 					break;
+
 				case FORMAT_EPUB:
 					output_filename = filename_with_extension(a_file->filename[i], ".epub");
 					break;
+
 				case FORMAT_TEXTBUNDLE:
 					output_filename = filename_with_extension(a_file->filename[i], ".textbundle");
 					break;
+
 				case FORMAT_TEXTBUNDLE_COMPRESSED:
 					output_filename = filename_with_extension(a_file->filename[i], ".textpack");
 					break;
@@ -368,9 +387,14 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
 			char * folder = dirname((char *) a_file->filename[i]);
 
+			if (!(extensions & EXT_COMPATIBILITY)) {
+				mmd_prepend_mmd_header(buffer);
+				mmd_append_mmd_footer(buffer);
+			}
+
 			if (extensions & EXT_TRANSCLUDE) {
 				mmd_transclude_source(buffer, folder, a_file->filename[i], format, NULL, NULL);
-	
+
 				// Don't free folder -- owned by dirname
 			}
 
@@ -384,9 +408,10 @@ int main(int argc, char** argv) {
 			}
 
 			// Increment counter and prepare token pool
-#ifdef kUseObjectPool
+			#ifdef kUseObjectPool
 			token_pool_init();
-#endif
+			#endif
+
 			if (a_meta->count > 0) {
 				// List metadata keys
 				char_result = mmd_string_metadata_keys(buffer->str);
@@ -407,11 +432,7 @@ int main(int argc, char** argv) {
 			} else {
 				// Regular processing
 
-				if (FORMAT_MMD == format) {
-					result = buffer;
-				} else {
-					result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
-				}
+				result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 
 				if (FORMAT_TEXTBUNDLE == format) {
 					unzip_data_to_path(result->str, result->currentStringLength, output_filename);
@@ -425,9 +446,7 @@ int main(int argc, char** argv) {
 					}
 				}
 
-				if (FORMAT_MMD != format) {
-					d_string_free(result, true);
-				}
+				d_string_free(result, true);
 			}
 
 			d_string_free(buffer, true);
@@ -443,8 +462,7 @@ int main(int argc, char** argv) {
 			DString * file_buffer;
 
 			// Concatenate all input files
-			for (int i = 0; i < a_file->count; ++i)
-			{
+			for (int i = 0; i < a_file->count; ++i) {
 				file_buffer = scan_file(a_file->filename[i]);
 
 				if (file_buffer == NULL) {
@@ -463,15 +481,36 @@ int main(int argc, char** argv) {
 
 		char * folder = NULL;
 
-		if (a_file->count == 1) {
-			folder = dirname((char *) a_file->filename[0]);
+		if (!(extensions & EXT_COMPATIBILITY)) {
+			mmd_prepend_mmd_header(buffer);
+			mmd_append_mmd_footer(buffer);
 		}
 
 		if ((extensions & EXT_TRANSCLUDE) && (a_file->count == 1)) {
 			// Perform transclusion(s)
-			mmd_transclude_source(buffer, folder, a_file->filename[0], format, NULL, NULL);
 
+			// Convert to absolute path for first file to enable proper path resolution
+			#ifdef PATH_MAX
+			// If PATH_MAX defined, use it
+			char absolute[PATH_MAX + 1];
+			realpath(a_file->filename[0], absolute);
+			folder = dirname((char *) a_file->filename[0]);
+
+			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
+			#else
+			// If undefined, then we *should* be able to use a NULL pointer to allocate
+			char * absolute = realpath(a_file->filename[0], NULL);
+			folder = dirname((char *) a_file->filename[0]);
+			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
+			free(absolute);
+			#endif
 			// Don't free folder -- owned by dirname
+		}
+
+		if (a_file->count == 1) {
+			// Must do this after realpath, b/c on some OS's (e.g. Travis-CI linux)
+			// this truncates a_file->filename[0]
+			folder = dirname((char *) a_file->filename[0]);
 		}
 
 		// Perform block level CriticMarkup?
@@ -503,11 +542,7 @@ int main(int argc, char** argv) {
 		} else {
 			// Regular processing
 
-			if (FORMAT_MMD == format) {
-				result = buffer;
-			} else {
-				result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
-			}
+			result = mmd_d_string_convert_to_data(buffer, extensions, format, language, folder);
 
 			// Where does output go?
 			if (strcmp(a_o->filename[0], "-") == 0) {
@@ -517,19 +552,18 @@ int main(int argc, char** argv) {
 				perror(a_o->filename[0]);
 				free(result);
 				d_string_free(buffer, true);
-		
+
 				exitcode = 1;
 				goto exit;
 			}
 
-			fwrite(result->str, result->currentStringLength, 1, output_stream);			
+			fwrite(result->str, result->currentStringLength, 1, output_stream);
 
-			if (output_stream != stdout)
+			if (output_stream != stdout) {
 				fclose(output_stream);
-
-			if (FORMAT_MMD != format) {
-				d_string_free(result, true);
 			}
+
+			d_string_free(result, true);
 		}
 
 		d_string_free(buffer, true);
@@ -540,10 +574,10 @@ exit:
 
 	// Decrement counter and clean up token pool
 	token_pool_drain();
-	
-#ifdef kUseObjectPool
+
+	#ifdef kUseObjectPool
 	token_pool_free();
-#endif
+	#endif
 
 exit2:
 

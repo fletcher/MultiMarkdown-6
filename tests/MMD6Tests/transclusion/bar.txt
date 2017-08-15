@@ -1,4 +1,6 @@
+---
 Title:  bar
+---
 
 This text is included in `transclusion\bar.txt`.
 

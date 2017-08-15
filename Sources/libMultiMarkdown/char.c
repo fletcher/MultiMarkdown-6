@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -59,22 +59,22 @@
 
 /// Create this lookup table using char_lookup.c
 static unsigned char smart_char_type[256] = {
- 16,  0,  0,  0,  0,  0,  0,  0,  0,  1, 16,  0,  0, 16,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
-  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  2,  2,  2,  2,  2,  2,
-  2,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
-  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  2,  2,  2,  2,  2,
-  2,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
-  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  2,  2,  2,  2,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+	16,  0,  0,  0,  0,  0,  0,  0,  0,  1, 16,  0,  0, 16,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+	8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  2,  2,  2,  2,  2,  2,
+	2,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
+	4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  2,  2,  2,  2,  2,
+	2,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
+	4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  2,  2,  2,  2,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
 
@@ -99,11 +99,13 @@ int char_is_line_ending(char c) {
 
 // Is character part of Windows line ending ('\r\n')?
 int char_is_windows_line_ending(char * c) {
-	if (*c == '\n')
+	if (*c == '\n') {
 		return (*(c - 1) == '\r') ? 1 : 0;
+	}
 
-	if (*c == '\r')
+	if (*c == '\r') {
 		return (*(c + 1) == '\n') ? 1 : 0;
+	}
 
 	return 0;
 }
@@ -111,7 +113,7 @@ int char_is_windows_line_ending(char * c) {
 #ifdef TEST
 void Test_char_is_windows_line_ending(CuTest* tc) {
 	char * test = "\r\n\n";
-	
+
 	CuAssertIntEquals(tc, 1, char_is_windows_line_ending(&test[0]));
 	CuAssertIntEquals(tc, 1, char_is_windows_line_ending(&test[1]));
 	CuAssertIntEquals(tc, 0, char_is_windows_line_ending(&test[2]));
@@ -120,22 +122,22 @@ void Test_char_is_windows_line_ending(CuTest* tc) {
 
 // Is character punctuation?
 int char_is_punctuation(char c) {
-	return smart_char_type[(unsigned char) c] & CHAR_PUNCTUATION;	
+	return smart_char_type[(unsigned char) c] & CHAR_PUNCTUATION;
 }
 
 // Is character alpha?
 int char_is_alpha(char c) {
-	return smart_char_type[(unsigned char) c] & CHAR_ALPHA;	
+	return smart_char_type[(unsigned char) c] & CHAR_ALPHA;
 }
 
 // Is character digit?
 int char_is_digit(char c) {
-	return smart_char_type[(unsigned char) c] & CHAR_DIGIT;	
+	return smart_char_type[(unsigned char) c] & CHAR_DIGIT;
 }
 
 // Is character alphanumeric?
 int char_is_alphanumeric(char c) {
-	return smart_char_type[(unsigned char) c] & CHAR_ALPHANUMERIC;	
+	return smart_char_type[(unsigned char) c] & CHAR_ALPHANUMERIC;
 }
 
 // Is character either whitespace or line ending?
@@ -150,5 +152,5 @@ int char_is_whitespace_or_punctuation(char c) {
 
 // Is character either whitespace or line ending or punctuation?
 int char_is_whitespace_or_line_ending_or_punctuation(char c) {
-	return smart_char_type[(unsigned char) c] & CHAR_WHITESPACE_OR_LINE_ENDING_OR_PUNCTUATION;	
+	return smart_char_type[(unsigned char) c] & CHAR_WHITESPACE_OR_LINE_ENDING_OR_PUNCTUATION;
 }

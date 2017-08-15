@@ -119,6 +119,10 @@ char * mmd_string_metadata_keys(char * source);
 char * mmd_string_metavalue_for_key(char * source, const char * key);
 
 
+/// Insert/replace metadata in string, returning new string
+char * mmd_string_update_metavalue_for_key(const char * source, const char * key, const char * value);
+
+
 
 
 /*
@@ -153,6 +157,10 @@ char * mmd_d_string_metadata_keys(DString * source);
 /// Extract desired metadata as string value
 /// Returned char * must be freed
 char * mmd_d_string_metavalue_for_key(DString * source, const char * key);
+
+
+/// Insert/replace metadata value in DString
+void mmd_d_string_update_metavalue_for_key(DString * source, const char * key, const char * value);
 
 
 
@@ -236,6 +244,10 @@ char * mmd_engine_metadata_keys(mmd_engine * e);
 char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key);
 
 
+/// Insert/replace metadata value in mmd_engine
+void mmd_engine_update_metavalue_for_key(mmd_engine * e, const char * key, const char * value);
+
+
 
 
 /*
@@ -258,6 +270,14 @@ typedef struct stack stack;
 /// Recursively transclude source text, given a search directory.
 /// Track files to prevent infinite recursive loops
 void mmd_transclude_source(DString * source, const char * search_path, const char * source_path, short format, struct stack * parsed, struct stack * manifest);
+
+
+/// If MMD Header metadata used, insert it into appropriate place
+void mmd_prepend_mmd_header(DString * source);
+
+
+/// If MMD Footer metadata used, insert it into appropriate place
+void mmd_append_mmd_footer(DString * source);
 
 
 /// Accept all CriticMarkup changes in the source string
@@ -451,7 +471,9 @@ enum token_types {
 	TEXT_EMPTY,
 	TEXT_HASH,
 	TEXT_LINEBREAK,
+	TEXT_LINEBREAK_SP,
 	TEXT_NL,
+	TEXT_NL_SP,
 	TEXT_NUMBER_POSS_LIST,
 	TEXT_PERCENT,
 	TEXT_PERIOD,
@@ -480,9 +502,9 @@ enum output_format {
 	FORMAT_MEMOIR,
 	FORMAT_FODT,
 	FORMAT_ODT,
-	FORMAT_MMD,
 	FORMAT_TEXTBUNDLE,
 	FORMAT_TEXTBUNDLE_COMPRESSED,
+	FORMAT_MMD,
 };
 
 

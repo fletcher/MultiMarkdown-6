@@ -34,4 +34,37 @@ bar</p>
 
 <p>[>(baz) BAZ]</p>
 
+<blockquote>
+<p>foo bar</p>
+</blockquote>
+
+<p>15</p>
+
+<p>| foo | bar |
+| --- | --- |
+| foo | bar |
+[foo bar]</p>
+
+<h1>foo bar </h1>
+
+<h3>foo bar </h3>
+
+<h1>foo bar</h1>
+
+<p><img src="http://foobar.net/" alt="foo bar" /></p>
+
+<p>20</p>
+
+<p>[^foo and bar]</p>
+
+<p>[^note]</p>
+
+<ul>
+<li>foo</li>
+<li>foo</li>
+<li>foo</li>
+</ul>
+
 <p>[>foo bar]: FOO BAR</p>
+
+<p>[^note]: foo and bar</p>

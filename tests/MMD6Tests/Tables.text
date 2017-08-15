@@ -2,13 +2,13 @@ Title:	Tables
 latex config:	article
 
 | foo	| bar	|  
-|  ------	| :------:	|  
+|  ------+	| :------:+	|  
 | *foo*	| *bar*	|  
 | **foo bar**		||  
 
 
 | foo1  |  bar1 |
-| :---+ | ----: |
+| :---+ | ----:+ |
  *foo*  | *bar* |
 | **foo bar**  ||
 

@@ -57,5 +57,59 @@ fo'o fo'o
 
 \newacronym{baz}{baz}{BAZ}\gls{baz}
 
+\begin{quote}
+\gls{foo bar}
+\end{quote}
+
+15
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\caption{\gls{foo bar}}
+\label{foobar}
+\begin{tabulary}{\textwidth}{@{}ll@{}} \toprule
+ \gls{foo} & \gls{bar} \\
+\midrule
+
+ \gls{foo} & \gls{bar} \\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
+\part{foo bar }
+\label{foobar}
+
+\section{foo bar }
+\label{foobar}
+
+\part{foo bar}
+\label{foobar}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[keepaspectratio,width=\textwidth,height=0.75\textheight]{http://foobar.net/}
+\caption{\gls{foo bar}}
+\end{figure}
+
+20
+
+\footnote{\gls{foo} and \gls{bar}}
+
+\footnote{foo and bar}
+
+\begin{itemize}
+\item{} \gls{foo}
+
+\item{} \gls{foo}
+
+\item{} \gls{foo}
+
+\end{itemize}
+
 \input{mmd6-article-footer}
 \end{document}

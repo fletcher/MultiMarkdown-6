@@ -9,7 +9,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -19,30 +19,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -62,7 +62,7 @@
 
 
 #ifdef TEST
-#include "CuTest.h"
+	#include "CuTest.h"
 #endif
 
 #define kMaxTokenTypes	230				//!< This needs to be larger than the largest token type being used
@@ -70,7 +70,7 @@
 #define kMaxPairRecursiveDepth 1000		//!< Maximum recursion depth to traverse when pairing tokens -- to prevent stack overflow with "pathologic" input
 
 
-/// Store information about which tokens can be paired, and what actions to take when 
+/// Store information about which tokens can be paired, and what actions to take when
 /// pairing them.
 struct token_pair_engine {
 	unsigned short		can_open_pair[kMaxTokenTypes];				//!< Can token type open a pair?
@@ -99,24 +99,24 @@ token_pair_engine * token_pair_engine_new(void);
 
 /// Free existing token pair engine
 void token_pair_engine_free(
-	token_pair_engine * e					//!< Token pair engine to be freed
+    token_pair_engine * e					//!< Token pair engine to be freed
 );
 
 /// Add a new pairing configuration to a token pair engine
 void token_pair_engine_add_pairing(
-	token_pair_engine * e,					//!< Token pair engine to add to
-	unsigned short open_type,				//!< Token type for opener
-	unsigned short close_type,				//!< Token type for closer
-	unsigned short pair_type,				//!< Token type for pairing
-	int options								//!< Token pair options to use
+    token_pair_engine * e,					//!< Token pair engine to add to
+    unsigned short open_type,				//!< Token type for opener
+    unsigned short close_type,				//!< Token type for closer
+    unsigned short pair_type,				//!< Token type for pairing
+    int options								//!< Token pair options to use
 );
 
 /// Search a token's childen for matching pairs
 void token_pairs_match_pairs_inside_token(
-	token * parent,							//!< Which tokens should we search for pairs
-	token_pair_engine * e,					//!< Token pair engine to be used for matching
-	stack * s,								//!< Pointer to a stack to use for pairing tokens
-	unsigned short depth					//!< Keep track of recursion depth
+    token * parent,							//!< Which tokens should we search for pairs
+    token_pair_engine * e,					//!< Token pair engine to be used for matching
+    stack * s,								//!< Pointer to a stack to use for pairing tokens
+    unsigned short depth					//!< Keep track of recursion depth
 );
 
 

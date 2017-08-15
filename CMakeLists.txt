@@ -8,9 +8,9 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-07-06")
+set (My_Project_Revised_Date "2017-08-15")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 1)
+set (My_Project_Version_Minor 2)
 set (My_Project_Version_Patch 0)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
@@ -491,6 +491,7 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/d_string.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/token.h)
+ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/version.h)
 
 # Create a command-line app?
 # if (NOT DEFINED TEST)
@@ -620,7 +621,7 @@ enable_testing()
 function(ADD_MMD_TEST NAME FLAGS FOLDER EXTENSION)
 	add_test ( ${NAME}
 		${PROJECT_SOURCE_DIR}/tests/MarkdownTest.pl
-		--Script=${CMAKE_CURRENT_BINARY_DIR}/multimarkdown
+		--Script="${CMAKE_CURRENT_BINARY_DIR}/multimarkdown"
 		--testdir=${PROJECT_SOURCE_DIR}/tests/${FOLDER}
 		"--Flags=${FLAGS}"
 		--ext=${EXTENSION}

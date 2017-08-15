@@ -4,11 +4,11 @@
 
 	@file memoir.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,30 +18,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -65,8 +65,9 @@
 
 
 void mmd_export_token_memoir(DString * out, const char * source, token * t, scratch_pad * scratch) {
-	if (t == NULL)
+	if (t == NULL) {
 		return;
+	}
 
 	char *	temp_char	= NULL;
 
@@ -74,10 +75,12 @@ void mmd_export_token_memoir(DString * out, const char * source, token * t, scra
 		case DOC_START_TOKEN:
 			mmd_export_token_tree_memoir(out, source, t->child, scratch);
 			break;
+
 		case BLOCK_CODE_FENCED:
 			pad(out, 2, scratch);
 
 			temp_char = get_fence_language_specifier(t->child->child, source);
+
 			if (temp_char) {
 				printf("\\begin{adjustwidth}{2.5em}{2.5em}\n\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
@@ -92,8 +95,10 @@ void mmd_export_token_memoir(DString * out, const char * source, token * t, scra
 			} else {
 				print_const("\\end{verbatim}\n\\end{adjustwidth}");
 			}
+
 			scratch->padded = 0;
 			break;
+
 		case BLOCK_CODE_INDENTED:
 			pad(out, 2, scratch);
 			print_const("\\begin{adjustwidth}{2.5em}{2.5em}\\begin{verbatim}\n");
@@ -101,6 +106,7 @@ void mmd_export_token_memoir(DString * out, const char * source, token * t, scra
 			print_const("\\end{verbatim}\n\\end{adjustwidth}");
 			scratch->padded = 0;
 			break;
+
 		default:
 			// Default to LaTeX behavior
 			mmd_export_token_latex(out, source, t, scratch);

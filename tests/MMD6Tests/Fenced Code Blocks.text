@@ -41,3 +41,14 @@ bar
 
 ```
 foo
+
+	bar
+
+  bar
+
+    foo
+```
+
+
+```
+foo

@@ -4,11 +4,11 @@
 
 	@file critic_markup.c
 
-	@brief 
+	@brief
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -18,20 +18,20 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the
 	text of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
 	"Software"), to deal in the Software without restriction, including
@@ -39,10 +39,10 @@
 	distribute, sublicense, and/or sell copies of the Software, and to
 	permit persons to whom the Software is furnished to do so, subject to
 	the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -50,7 +50,7 @@
 	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 
 */
 
@@ -185,12 +185,16 @@ void accept_token(DString * d, token * t) {
 			if (t->mate) {
 				d_string_erase(d, t->start, t->len);
 			}
+
 			break;
+
 		case CM_SUB_OPEN:
 		case CM_ADD_OPEN:
 		case CM_ADD_CLOSE:
-			if (!t->mate)
+			if (!t->mate) {
 				break;
+			}
+
 		case CM_SUB_DIV:
 		case CM_DEL_PAIR:
 		case CM_COM_PAIR:
@@ -198,15 +202,23 @@ void accept_token(DString * d, token * t) {
 			// Erase these
 			d_string_erase(d, t->start, t->len);
 			break;
+
 		case CM_SUB_PAIR:
+
 			// Erase old version and markers
-			if (t->child)
+			if (t->child) {
 				accept_token_tree_sub(d, t->child->mate);
+			}
+
 			break;
+
 		case CM_ADD_PAIR:
+
 			// Check children
-			if (t->child)
+			if (t->child) {
 				accept_token_tree(d, t->child->mate);
+			}
+
 			break;
 	}
 }
@@ -224,8 +236,9 @@ void accept_token_tree(DString * d, token * t) {
 void mmd_critic_markup_accept(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
-	if (t && t->child)
+	if (t && t->child) {
 		accept_token_tree(d, t->child->tail);
+	}
 
 	token_free(t);
 }
@@ -256,12 +269,16 @@ void reject_token(DString * d, token * t) {
 			if (t->mate) {
 				d_string_erase(d, t->start, t->len);
 			}
+
 			break;
+
 		case CM_SUB_OPEN:
 		case CM_DEL_OPEN:
 		case CM_DEL_CLOSE:
-			if (!t->mate)
+			if (!t->mate) {
 				break;
+			}
+
 		case CM_SUB_DIV:
 		case CM_ADD_PAIR:
 		case CM_COM_PAIR:
@@ -269,15 +286,23 @@ void reject_token(DString * d, token * t) {
 			// Erase these
 			d_string_erase(d, t->start, t->len);
 			break;
+
 		case CM_SUB_PAIR:
+
 			// Erase new version and markers
-			if (t->child)
+			if (t->child) {
 				reject_token_tree_sub(d, t->child->mate);
+			}
+
 			break;
+
 		case CM_DEL_PAIR:
+
 			// Check children
-			if (t->child)
+			if (t->child) {
 				reject_token_tree(d, t->child->mate);
+			}
+
 			break;
 	}
 }
@@ -295,8 +320,9 @@ void reject_token_tree(DString * d, token * t) {
 void mmd_critic_markup_reject(DString * d) {
 	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
 
-	if (t && t->child)
+	if (t && t->child) {
 		reject_token_tree(d, t->child->tail);
+	}
 
 	token_free(t);
 

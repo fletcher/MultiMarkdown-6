@@ -9,14 +9,14 @@
 	swapping out certain strings based on user-specified languages at runtime.
 
 	This does slow down compiling, as multiple hash strings are compiled (seemingly
-	quite slowly).  But, to my understanding and testing, it does not affect the 
+	quite slowly).  But, to my understanding and testing, it does not affect the
 	speed when actually running MMD.  This should allow translating an arbitrary
 	number of strings into an arbitrary number of languages without a performance
 	penalty.
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -37,7 +37,7 @@
 #include <stdlib.h>
 
 
-#define kNumberOfLanguages 6
+#define kNumberOfLanguages 7
 #define kNumberOfStrings 4
 #define kLanguage 0
 
@@ -74,29 +74,33 @@ static const char * lc_lookup[kNumberOfLanguages * kNumberOfStrings] = {
 	"Regresar al texto",			// Español
 	"Zum Haupttext",				// Deutsch
 	"Retour au texte principal",	// Français
-	"return to body",				// Nederlands
-	"return to body",				// Svenska
+	"Ga terug naar tekstlichaam",	// Nederlands
+	"Återgå till textkroppen",		// Svenska
+	"חזור/י לגוף הטקסט",				// Hebrew - עברית
 
 	"see footnote",					// English
 	"Ver nota a pie de página",		// Español
 	"Siehe Fußnote",				// Deutsch
 	"Voir note de bas de page",		// Français
-	"see footnote",					// Nederlands
-	"see footnote",					// Svenska
+	"Zie vootnot",					// Nederlands
+	"Se fotnot",					// Svenska
+	"ראה/י הערה",					// Hebrew - עברית
 
 	"see citation",					// English
 	"Ver referencia",				// Español
 	"Siehe Zitat",					// Deutsch
 	"Voir citation",				// Français
-	"see citation",					// Nederlands
-	"see citation",					// Svenska
+	"Zie citaat",					// Nederlands
+	"Se citat",						// Svenska
+	"ראה/י ציטוט",					// Hebrew - עברית
 
 	"see glossary",					// English
 	"Ver glosario",					// Español
 	"Siehe Glossar",				// Deutsch
 	"Voir glossaire",				// Français
-	"see glossary",					// Nederlands
-	"see glossary",					// Svenska
+	"Zie woordenlijst",				// Nederlands
+	"Se ordlista",					// Svenska
+	"ראה/י מילון מונחים",				// Hebrew - עברית
 };
 
 
@@ -121,7 +125,7 @@ static inline const char * Translate(unsigned long x, int l) {
 		case 2977473004:
 			return lc_lookup[2 * kNumberOfLanguages + l];
 		case 3851221863:
-			return lc_lookup[3 * kNumberOfLanguages + l];		
+			return lc_lookup[3 * kNumberOfLanguages + l];
 		default:
 			return "localization error";
 	}
@@ -140,17 +144,20 @@ enum lc_languages {
 	LC_FR,				//!< Français
 	LC_NL,				//!< Nederlands
 	LC_SV,				//!< Svenska
+	LC_HE,				//!< Hebrew - עברית
 };
 
 
-// MMD expects a lower case 2 letter code in the metadata or command-line arguments`
-static inline short i18n_language_from_string(const char * l) { 
+// MMD expects a lower case 2 letter code in the metadata or command-line arguments
+static inline short i18n_language_from_string(const char * l) {
 	if (strcmp(l, "es") == 0) {
 		return LC_ES;
 	} else if (strcmp(l, "de") == 0) {
 		return LC_DE;
 	} else if (strcmp(l, "fr") == 0) {
 		return LC_FR;
+	} else if (strcmp(l, "he") == 0) {
+		return LC_HE;
 	} else if (strcmp(l, "nl") == 0) {
 		return LC_NL;
 	} else if (strcmp(l, "sv") == 0) {
