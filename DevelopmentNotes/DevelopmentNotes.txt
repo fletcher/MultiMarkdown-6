@@ -471,6 +471,51 @@ TextBundle/TextPack, OpenDocument, etc.
 
 # Changelog #
 
+* 2017-08-15 - v 6.2.0:
+
+	*    ADDED: Add Dutch and Swedish translations -- thanks Sl!
+	*    ADDED: Add Hebrew translation -- thanks Sl!
+	*    ADDED: Add functions to insert/replace metadata
+	*    ADDED: Add stack_sort header
+	*    ADDED: Add support for MMD Header and MMD Footer metadata; FIXED: Fix transclusion to skip over metadata in main document; FIXED: Fix metavalue_for_key with NULL result
+	*    ADDED: Add support for YAML metadata markers (---)
+	*    CHANGED: Find single non-indenting space at beginning of lines
+	*    CHANGED: Migrate to Travis containers
+	*    CHANGED: Preserve leading non-indent space in fenced code blocks
+	*    CHANGED: Reorder export format definitions
+	*    CHANGED: Safety check to avoid potential crash
+	*    CHANGED: Standardize process for FORMAT_MMD
+	*    CHANGED: Verbose testing in Travis
+	*    FIXED: Don't strip leading indent in fenced code blocks
+	*    FIXED: Fix CTest for spaces in directory path
+	*    FIXED: Fix YAML metadata in transcluded files
+	*    FIXED: Fix bug preventing matching of abbreviations and glossary items inside tight list items
+	*    FIXED: Fix bugs in d_string_replace_text_in_range()
+	*    FIXED: Fix issue on Travis-CI Linux and file paths
+	*    FIXED: Fix memory bug and silence warnings
+	*    FIXED: Fix memory leak
+	*    FIXED: Fix potential crash
+	*    FIXED: Fix table wrapping with default alignment
+	*    FIXED: Improve abbreviation support
+	*    FIXED: Improve file path resolution with transclude base '.'
+	*    FIXED: Improve safety of realpath
+	*    FIXED: Include version.h in public headers
+	*    FIXED: Remove useless RTF scripts
+	*    FIXED: Tweak makefile
+	*    Merge branch 'release/6.1.0' into develop
+	*    TESTING: Figure out why Travis linux fails
+	*    TESTING: Working on Travis
+	*    UPDATED: Add astyle configuration to tidy c source files
+	*    UPDATED: Remove obsolete test
+	*    UPDATED: Replace vasprintf for all build environments to simplify things
+	*    UPDATED: Test on linux and osx with travis
+	*    UPDATED: Tidy up code
+	*    UPDATED: Tweak astyle settings
+	*    UPDATED: Tweaked astyle settings
+	*    UPDATED: Update quick start guide
+	*    UPDATED: Use astyle with header files as well
+
+
 * 2017-07-06 - v 6.1.0:
 
 	*    ADDED: Add '--nosmart' option to disable smart typography

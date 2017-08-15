@@ -432,6 +432,51 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <h3 id="changelog">Changelog </h3>
 
 <ul>
+<li><p>2017&#8211;08&#8211;15 - v 6.2.0:</p>
+
+<ul>
+<li>ADDED: Add Dutch and Swedish translations &#8211; thanks Sl!</li>
+<li>ADDED: Add Hebrew translation &#8211; thanks Sl!</li>
+<li>ADDED: Add functions to insert/replace metadata</li>
+<li>ADDED: Add stack_sort header</li>
+<li>ADDED: Add support for <abbr title="MultiMarkdown">MMD</abbr> Header and <abbr title="MultiMarkdown">MMD</abbr> Footer metadata; FIXED: Fix transclusion to skip over metadata in main document; FIXED: Fix metavalue_for_key with NULL result</li>
+<li>ADDED: Add support for YAML metadata markers (&#8212;)</li>
+<li>CHANGED: Find single non-indenting space at beginning of lines</li>
+<li>CHANGED: Migrate to Travis containers</li>
+<li>CHANGED: Preserve leading non-indent space in fenced code blocks</li>
+<li>CHANGED: Reorder export format definitions</li>
+<li>CHANGED: Safety check to avoid potential crash</li>
+<li>CHANGED: Standardize process for FORMAT_<abbr title="MultiMarkdown">MMD</abbr></li>
+<li>CHANGED: Verbose testing in Travis</li>
+<li>FIXED: Don&#8217;t strip leading indent in fenced code blocks</li>
+<li>FIXED: Fix CTest for spaces in directory path</li>
+<li>FIXED: Fix YAML metadata in transcluded files</li>
+<li>FIXED: Fix bug preventing matching of abbreviations and glossary items inside tight list items</li>
+<li>FIXED: Fix bugs in d_string_replace_text_in_range()</li>
+<li>FIXED: Fix issue on Travis-CI Linux and file paths</li>
+<li>FIXED: Fix memory bug and silence warnings</li>
+<li>FIXED: Fix memory leak</li>
+<li>FIXED: Fix potential crash</li>
+<li>FIXED: Fix table wrapping with default alignment</li>
+<li>FIXED: Improve abbreviation support</li>
+<li>FIXED: Improve file path resolution with transclude base &#8216;.&#8217;</li>
+<li>FIXED: Improve safety of realpath</li>
+<li>FIXED: Include version.h in public headers</li>
+<li>FIXED: Remove useless RTF scripts</li>
+<li>FIXED: Tweak makefile</li>
+<li>Merge branch &#8216;release/6.1.0&#8217; into develop</li>
+<li>TESTING: Figure out why Travis linux fails</li>
+<li>TESTING: Working on Travis</li>
+<li>UPDATED: Add astyle configuration to tidy c source files</li>
+<li>UPDATED: Remove obsolete test</li>
+<li>UPDATED: Replace vasprintf for all build environments to simplify things</li>
+<li>UPDATED: Test on linux and osx with travis</li>
+<li>UPDATED: Tidy up code</li>
+<li>UPDATED: Tweak astyle settings</li>
+<li>UPDATED: Tweaked astyle settings</li>
+<li>UPDATED: Update quick start guide</li>
+<li>UPDATED: Use astyle with header files as well</li>
+</ul></li>
 <li><p>2017&#8211;07&#8211;06 - v 6.1.0:</p>
 
 <ul>
@@ -445,13 +490,13 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Start working on textbundle output format</li>
 <li>ADDED: Store image assets in OpenDocument files</li>
 <li>ADDED: Use assets for reference image definitions in TextBundle format</li>
-<li>CHANGED: Disable &#8216;bundle&#8217; format until it's finished</li>
+<li>CHANGED: Disable &#8216;bundle&#8217; format until it&#8217;s finished</li>
 <li>CHANGED: Make epub utility functions static</li>
 <li>CHANGED: Remove odf files; replace convenience scripts</li>
 <li>CHANGED: Use &#8216;markdown&#8217; file extension</li>
 <li>FIXED: Add ODF to wilcard transcluding; Fix tufte to support latex title</li>
 <li>FIXED: Avoid a few potential crashes</li>
-<li>FIXED: Don't parse MMD inside math (fixes #69)</li>
+<li>FIXED: Don&#8217;t parse <abbr title="MultiMarkdown">MMD</abbr> inside math (fixes #69)</li>
 <li>FIXED: Fix asset path for CSS metadata</li>
 <li>FIXED: Fix issue where tight list items not properly processed for smart typography</li>
 <li>FIXED: Fix issue with transclusion and relative paths</li>
@@ -460,7 +505,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>FIXED: Improve apostrophe detection after punctuation mark</li>
 <li>FIXED: Improve handling of HTML entities (fixed #71)</li>
 <li>FIXED: Improve transclusion search folder resolution</li>
-<li>FIXED: PATH_MAX isn't reliable</li>
+<li>FIXED: PATH_MAX isn&#8217;t reliable</li>
 <li>FIXED: Refactor super/subscript parsing (fixes #70)</li>
 <li>FIXED: Silence a few warnings</li>
 <li>FIXED: Use .bat files for Windows installer (fixes #74)</li>
@@ -481,8 +526,8 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Add function for accessing library version</li>
 <li>ADDED: Restructure superscript</li>
 <li>CHANGED: Continue to refactor core API routines for clarity and flexibility</li>
-<li>CHANGED: Don't strip list markers from nested list items</li>
-<li>CHANGED: Extended ASCII support interferes with UTF&#8211;8 support &#8211; disable it</li>
+<li>CHANGED: Don&#8217;t strip list markers from nested list items</li>
+<li>CHANGED: Extended ASCII support interferes with UTF-8 support &#8211; disable it</li>
 <li>CHANGED: Fix style</li>
 <li>CHANGED: Preserve closing Heading markers</li>
 <li>CHANGED: Refactor CriticMarkup basic commands to be part of libMultiMarkdown.h</li>
@@ -493,8 +538,8 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>FIXED: Fix regression in EPUB code refactoring</li>
 <li>FIXED: Need separate check for escaped characters in CriticMarkup parsing</li>
 <li>FIXED: compiling with older gcc and used c standard</li>
-<li>Merge pull request #61 from silvio/gcc&#8211;build&#8211;fix</li>
-<li>Merge pull request #64 from jasedit/feat/add<em>version</em>function</li>
+<li>Merge pull request #61 from silvio/gcc-build-fix</li>
+<li>Merge pull request #64 from jasedit/feat/add_version_function</li>
 <li>NOTE: Remove unnecessary includes</li>
 <li>UPDATED: Update libMultiMarkdown.h</li>
 <li>UPDATED: Update mmd.c</li>
@@ -503,14 +548,14 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 
 <ul>
 <li>ADDED: Add back support for BibTeX bibliography entries (address #56)</li>
-<li>CHANGED: Adjust &gt; and &lt; in LaTeX output &#8211; don't wrap in math</li>
+<li>CHANGED: Adjust &gt; and &lt; in LaTeX output &#8211; don&#8217;t wrap in math</li>
 <li>CHANGED: Change HTML output for footnotes and citations</li>
 <li>CHANGED: Improve flexibility of HTML Comment parsing (Addresses #25)</li>
 <li>CHANGED: Refactor mmd_engine cleanup</li>
 <li>CHANGED: Remove unnecessary variable</li>
 <li>CHANGED: Rename criticmarkup functions</li>
 <li>CHANGED: Tweak Xcode configuration</li>
-<li>FIXED: Fix bug in mmd<em>tokenize</em>string()</li>
+<li>FIXED: Fix bug in mmd_tokenize_string()</li>
 <li>FIXED: Fix memory leak</li>
 <li>FIXED: Fix pointer bug</li>
 <li>FIXED: Fix underscore strong/emph around punctuation</li>
@@ -520,7 +565,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li><p>2017&#8211;04&#8211;09 - v 6.0.4:</p>
 
 <ul>
-<li>ADDED: The &#8216;&#8211;l&#8217; command line argument also sets language, if not overridden by metadata</li>
+<li>ADDED: The &#8216;-l&#8217; command line argument also sets language, if not overridden by metadata</li>
 <li>FIXED: Fix regular expression to match table separator lines. (Fixes #50)</li>
 <li>FIXED: Improve organization of fallback lines for fenced code blocks and HTML blocks</li>
 </ul></li>
@@ -528,21 +573,21 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 
 <ul>
 <li>ADDED: Script for updating re2c and lemon files</li>
-<li>CHANGED: Recompile lexer using &#8211;8 flag</li>
-<li>CHANGED: Recompile scanners using &#8211;8 flag</li>
+<li>CHANGED: Recompile lexer using -8 flag</li>
+<li>CHANGED: Recompile scanners using -8 flag</li>
 <li>FIXED: Don&#8217;t separate out &#8216;à&#8217;</li>
 </ul></li>
 <li><p>2017&#8211;03&#8211;29 - v 6.0.2:</p>
 
 <ul>
 <li>CHANGED: Refactor code slightly</li>
-<li>CHANGED: Remove ASCII non&#8211;breaking space support from lexer</li>
+<li>CHANGED: Remove ASCII non-breaking space support from lexer</li>
 <li>FIXED: Fix quote pairing in compatibility mode</li>
 </ul></li>
 <li><p>2017&#8211;03&#8211;28 &#8211; v 6.0.1:</p></li>
 <li><p>CHANGED: Adjust LaTeX support files</p></li>
 <li><p>CHANGED: Fix potential bug in tokenize function</p></li>
-<li><p>FIXED: Fix bug between ASCII 160 (non&#8211;breaking space) and &#8216;à&#8217; character</p></li>
+<li><p>FIXED: Fix bug between ASCII 160 (non-breaking space) and &#8216;à&#8217; character</p></li>
 <li><p>FIXED: Improve transclude base overriding of search paths, and explain change in QuickStart guide</p></li>
 <li><p>UPDATED: Update QuickStart to include more info about LaTeX</p></li>
 <li><p>2017&#8211;03&#8211;22 &#8211; v 6.0.0:</p>
@@ -564,7 +609,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Add image assets when creating EPUB</li>
 <li>ADDED: Add mmd2epub convenience script</li>
 <li>ADDED: Add support for random footnote numbers</li>
-<li>ADDED: Include tables as targets for cross&#8211;reference links</li>
+<li>ADDED: Include tables as targets for cross-reference links</li>
 <li>ADDED: Store css metadata as asset</li>
 <li>CHANGED: Table captions now bottom aligned in HTML</li>
 <li>CHANGED: Update license and development notes</li>
@@ -592,9 +637,9 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 
 <ul>
 <li>FIXED: Add missing CriticMarkup tokens to LaTeX</li>
-<li>FIXED: Don&#8216;t let labels end on &#8217;' that is escaping the closing &#8216;]&#8217;</li>
+<li>FIXED: Don&#8217;t let labels end on '' that is escaping the closing &#8216;]&#8217;</li>
 <li>FIXED: Fix NULL pointer dereference</li>
-<li>FIXED: Fix bug in Aho&#8211;Corasick implementation</li>
+<li>FIXED: Fix bug in Aho-Corasick implementation</li>
 <li>FIXED: Fix bug with ATX Headers without newline</li>
 <li>FIXED: Fix bug with Setext header starting with &#8216;:&#8217;</li>
 <li>FIXED: Fix bug with leading spaces in abbreviation references</li>
@@ -602,14 +647,14 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>FIXED: Fix edge case with URL definitions</li>
 <li>FIXED: Fix edge case with superscripts</li>
 <li>FIXED: Fix null dereference error in CriticMarkup substitution</li>
-<li>FIXED: Fix potential bug in Aho&#8211;Corasick search:</li>
+<li>FIXED: Fix potential bug in Aho-Corasick search:</li>
 <li>FIXED: Fix potential bug in storing items to hash</li>
-<li>FIXED: Fix potential bug with line&#8211;&gt;block parser</li>
+<li>FIXED: Fix potential bug with line-&gt;block parser</li>
 <li>FIXED: Fix potential crash in attribute parsing</li>
 <li>FIXED: Fix printing raw CriticMarkup tokens in LaTeX</li>
-<li>FIXED: Fix signedness bug in Aho&#8211;Corasick</li>
+<li>FIXED: Fix signedness bug in Aho-Corasick</li>
 <li>FIXED: Improve metadata edge cases; Fix NULL pointer dereference</li>
-<li>FIXED: Include non&#8211;breaking space (ASCII 160) in re2c patterns</li>
+<li>FIXED: Include non-breaking space (ASCII 160) in re2c patterns</li>
 <li>FIXED: Keep &#8216;:&#8217; in false positive definitions</li>
 <li>FIXED: Lex space followed by tab as space, not text</li>
 <li>FIXED: Limit lines treated as ATX headers</li>
@@ -624,7 +669,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Update QuickStart and EPUB code</li>
 <li>CHANGED: Update QuickStart guide</li>
 <li>CHANGED: Update test suite</li>
-<li>FIXED: Don't duplicate LaTeX glossary definitions</li>
+<li>FIXED: Don&#8217;t duplicate LaTeX glossary definitions</li>
 <li>FIXED: Fix abbreviations in ODF; Improve test suite</li>
 <li>FIXED: Improve glossaries and abbreviations; Update QuickStart</li>
 <li>FIXED: Tidy up some compiler warnings in code</li>
@@ -644,7 +689,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>CHANGED: Slight performance tweak</li>
 <li>CHANGED: Update German test suite</li>
 <li>FIXED: Allow <code>{{TOC}}</code> in latex verbatim</li>
-<li>FIXED: Don't free token_pool if never initialized</li>
+<li>FIXED: Don&#8217;t free token_pool if never initialized</li>
 <li>FIXED: Fix German typo</li>
 <li>FIXED: Fix missing token type</li>
 <li>FIXED: Improve performance of checking document for metadata, which improves performance when checking for possible transclusion</li>
@@ -659,7 +704,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Refactor abbreviation code; Add inline abbreviations; Fix abbreviations in ODF</li>
 <li>ADDED: Update Inline Footnote test</li>
 <li>CHANGED: Add comments to i18n.h</li>
-<li>CHANGED: Finish refactoring note&#8211;related code</li>
+<li>CHANGED: Finish refactoring note-related code</li>
 <li>CHANGED: Refactor footnotes</li>
 <li>CHANGED: Refactor glossary code</li>
 <li>CHANGED: Remove offset from html export functions</li>
@@ -690,12 +735,12 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Prototype support for Glossaries</li>
 <li>ADDED: Support &#8216;latexconfig&#8217; metadata</li>
 <li>CHANGED: Use multiple cases in glossary tests</li>
-<li>FIXED: Don't force glossary terms into lowercase</li>
+<li>FIXED: Don&#8217;t force glossary terms into lowercase</li>
 <li>FIXED: Fix Makefile for new source file location</li>
 <li>FIXED: Fix algorithm for creating TOC to properly handle &#8216;incorrect&#8217; levels</li>
 <li>FIXED: Fix linebreaks in LaTeX; ADDED: Add Linebreaks test file</li>
 <li>FIXED: Fix new_source script for new directory structure</li>
-<li>FIXED: Fix non&#8211;breaking space in ODF</li>
+<li>FIXED: Fix non-breaking space in ODF</li>
 <li>FIXED: Fix padding at end of document body in ODF</li>
 <li>FIXED: Fix underscores in raw latex</li>
 <li>FIXED: Potential bug</li>
@@ -712,7 +757,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>ADDED: Work on cpack installer &#8211; change project name for compatibility</li>
 <li>CHANGED: Adjust latex metadata configuration for consistency</li>
 <li>CHANGED: Configure cmake to use C99</li>
-<li>FIXED: Add custom implementation for cross&#8211;platform support</li>
+<li>FIXED: Add custom implementation for cross-platform support</li>
 <li>FIXED: Fix German HTML tests</li>
 <li>FIXED: Fix cpack destination directory issue</li>
 <li>FIXED: Fix memory leaks etc</li>
@@ -741,7 +786,7 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <li>FIXED: Fix bug in URL parsing</li>
 <li>FIXED: Fix bug in citation links</li>
 <li>FIXED: Fix bug when no closing divider or newline at end of last table cell</li>
-<li>FIXED: Fix issue printing &#8216;&#8211;&#8217;</li>
+<li>FIXED: Fix issue printing &#8216;-&#8217;</li>
 <li>FIXED: Fix scan_url test suite</li>
 <li>FIXED: Get Math working in LaTeX</li>
 <li>FIXED: Improve reliability or link scanner</li>
@@ -812,3 +857,4 @@ PEG: <p>Parsing Expression Grammar <a href="https://en.wikipedia.org/wiki/Parsin
 
 </body>
 </html>
+

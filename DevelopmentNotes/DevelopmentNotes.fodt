@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
-     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
-     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
-     xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
-     xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
-     xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
-     xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
-     xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
-     xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
-     xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
-     xmlns:math="http://www.w3.org/1998/Math/MathML"
-     xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
-     xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
-     xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0"
-     xmlns:ooo="http://openoffice.org/2004/office"
-     xmlns:ooow="http://openoffice.org/2004/writer"
-     xmlns:oooc="http://openoffice.org/2004/calc"
-     xmlns:dom="http://www.w3.org/2001/xml-events"
-     xmlns:xforms="http://www.w3.org/2002/xforms"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:rpt="http://openoffice.org/2005/report"
-     xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
-     xmlns:xhtml="http://www.w3.org/1999/xhtml"
-     xmlns:grddl="http://www.w3.org/2003/g/data-view#"
-     xmlns:tableooo="http://openoffice.org/2009/table"
-     xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
-     xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
-     xmlns:css3t="http://www.w3.org/TR/css3-text/"
-     office:version="1.2"
-     grddl:transformation="http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl"
-     office:mimetype="application/vnd.oasis.opendocument.text">
+xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+xmlns:math="http://www.w3.org/1998/Math/MathML"
+xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+xmlns:ooo="http://openoffice.org/2004/office"
+xmlns:ooow="http://openoffice.org/2004/writer"
+xmlns:oooc="http://openoffice.org/2004/calc"
+xmlns:dom="http://www.w3.org/2001/xml-events"
+xmlns:xforms="http://www.w3.org/2002/xforms"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:rpt="http://openoffice.org/2005/report"
+xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+xmlns:xhtml="http://www.w3.org/1999/xhtml"
+xmlns:grddl="http://www.w3.org/2003/g/data-view#"
+xmlns:officeooo="http://openoffice.org/2009/office"
+xmlns:tableooo="http://openoffice.org/2009/table"
+xmlns:drawooo="http://openoffice.org/2010/draw"
+xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0"
+xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0"
+xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
+xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
+xmlns:css3t="http://www.w3.org/TR/css3-text/"
+office:version="1.2"
+office:mimetype="application/vnd.oasis.opendocument.text">
 <office:font-face-decls>
    <style:font-face style:name="Courier New" svg:font-family="'Courier New'"
                     style:font-adornments="Regular"
@@ -273,7 +275,7 @@
  </office:master-styles>
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
-	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
+	<dc:creator>Fletcher T. Penney</dc:creator>
 	<meta:user-defined meta:name="date">2017-07-06</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
@@ -761,6 +763,175 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2017&#8211;08&#8211;15 - v 6.2.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add Dutch and Swedish translations &#8211; thanks Sl!</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add Hebrew translation &#8211; thanks Sl!</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add functions to insert/replace metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add stack_sort header</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for MMD Header and MMD Footer metadata; FIXED: Fix transclusion to skip over metadata in main document; FIXED: Fix metavalue_for_key with NULL result</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for YAML metadata markers (&#8212;)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Find single non-indenting space at beginning of lines</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Migrate to Travis containers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Preserve leading non-indent space in fenced code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Reorder export format definitions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Safety check to avoid potential crash</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Standardize process for FORMAT_MMD</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Verbose testing in Travis</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don&#8217;t strip leading indent in fenced code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix CTest for spaces in directory path</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix YAML metadata in transcluded files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug preventing matching of abbreviations and glossary items inside tight list items</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bugs in d_string_replace_text_in_range()</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue on Travis-CI Linux and file paths</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix memory bug and silence warnings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix memory leak</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential crash</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix table wrapping with default alignment</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve abbreviation support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve file path resolution with transclude base &#8216;.&#8217;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve safety of realpath</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Include version.h in public headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Remove useless RTF scripts</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Tweak makefile</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge branch &#8216;release/6.1.0&#8217; into develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+TESTING: Figure out why Travis linux fails</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+TESTING: Working on Travis</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add astyle configuration to tidy c source files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Remove obsolete test</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Replace vasprintf for all build environments to simplify things</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Test on linux and osx with travis</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Tidy up code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Tweak astyle settings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Tweaked astyle settings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update quick start guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Use astyle with header files as well</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2017&#8211;07&#8211;06 - v 6.1.0:</text:p>
 
 <text:list text:style-name="L1">
@@ -806,7 +977,7 @@ ADDED: Use assets for reference image definitions in TextBundle format</text:p><
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Disable &#8216;bundle&#8217; format until it's finished</text:p></text:list-item>
+CHANGED: Disable &#8216;bundle&#8217; format until it&#8217;s finished</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -830,7 +1001,7 @@ FIXED: Avoid a few potential crashes</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Don't parse MMD inside math (fixes #69)</text:p></text:list-item>
+FIXED: Don&#8217;t parse MMD inside math (fixes #69)</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -866,7 +1037,7 @@ FIXED: Improve transclusion search folder resolution</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: PATH_MAX isn't reliable</text:p></text:list-item>
+FIXED: PATH_MAX isn&#8217;t reliable</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -928,11 +1099,11 @@ CHANGED: Continue to refactor core API routines for clarity and flexibility</tex
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Don't strip list markers from nested list items</text:p></text:list-item>
+CHANGED: Don&#8217;t strip list markers from nested list items</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Extended ASCII support interferes with UTF&#8211;8 support &#8211; disable it</text:p></text:list-item>
+CHANGED: Extended ASCII support interferes with UTF-8 support &#8211; disable it</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -976,11 +1147,11 @@ FIXED: compiling with older gcc and used c standard</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-Merge pull request #61 from silvio/gcc&#8211;build&#8211;fix</text:p></text:list-item>
+Merge pull request #61 from silvio/gcc-build-fix</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-Merge pull request #64 from jasedit/feat/add<text:span text:style-name="MMD-Italic">version</text:span>function</text:p></text:list-item>
+Merge pull request #64 from jasedit/feat/add_version_function</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1005,7 +1176,7 @@ ADDED: Add back support for BibTeX bibliography entries (address #56)</text:p></
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Adjust &gt; and &lt; in LaTeX output &#8211; don't wrap in math</text:p></text:list-item>
+CHANGED: Adjust &gt; and &lt; in LaTeX output &#8211; don&#8217;t wrap in math</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1033,7 +1204,7 @@ CHANGED: Tweak Xcode configuration</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix bug in mmd<text:span text:style-name="MMD-Italic">tokenize</text:span>string()</text:p></text:list-item>
+FIXED: Fix bug in mmd_tokenize_string()</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1062,7 +1233,7 @@ FIXED: Improve memory management</text:p></text:list-item>
 <text:list text:style-name="L1">
 <text:list-item>
 <text:p text:style-name="P1">
-ADDED: The &#8216;&#8211;l&#8217; command line argument also sets language, if not overridden by metadata</text:p></text:list-item>
+ADDED: The &#8216;-l&#8217; command line argument also sets language, if not overridden by metadata</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1083,11 +1254,11 @@ ADDED: Script for updating re2c and lemon files</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Recompile lexer using &#8211;8 flag</text:p></text:list-item>
+CHANGED: Recompile lexer using -8 flag</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Recompile scanners using &#8211;8 flag</text:p></text:list-item>
+CHANGED: Recompile scanners using -8 flag</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="Standard">FIXED: Don&#8217;t separate out &#8216;à&#8217;</text:p></text:list-item>
@@ -1104,7 +1275,7 @@ CHANGED: Refactor code slightly</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Remove ASCII non&#8211;breaking space support from lexer</text:p></text:list-item>
+CHANGED: Remove ASCII non-breaking space support from lexer</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="Standard">FIXED: Fix quote pairing in compatibility mode</text:p></text:list-item>
@@ -1124,7 +1295,7 @@ CHANGED: Fix potential bug in tokenize function</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix bug between ASCII 160 (non&#8211;breaking space) and &#8216;à&#8217; character</text:p></text:list-item>
+FIXED: Fix bug between ASCII 160 (non-breaking space) and &#8216;à&#8217; character</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1181,7 +1352,7 @@ ADDED: Add support for random footnote numbers</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-ADDED: Include tables as targets for cross&#8211;reference links</text:p></text:list-item>
+ADDED: Include tables as targets for cross-reference links</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1282,7 +1453,7 @@ FIXED: Add missing CriticMarkup tokens to LaTeX</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Don&#8216;t let labels end on &#8217;' that is escaping the closing &#8216;]&#8217;</text:p></text:list-item>
+FIXED: Don&#8217;t let labels end on '' that is escaping the closing &#8216;]&#8217;</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1290,7 +1461,7 @@ FIXED: Fix NULL pointer dereference</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix bug in Aho&#8211;Corasick implementation</text:p></text:list-item>
+FIXED: Fix bug in Aho-Corasick implementation</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1322,7 +1493,7 @@ FIXED: Fix null dereference error in CriticMarkup substitution</text:p></text:li
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix potential bug in Aho&#8211;Corasick search:</text:p></text:list-item>
+FIXED: Fix potential bug in Aho-Corasick search:</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1330,7 +1501,7 @@ FIXED: Fix potential bug in storing items to hash</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix potential bug with line&#8211;&gt;block parser</text:p></text:list-item>
+FIXED: Fix potential bug with line-&gt;block parser</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1342,7 +1513,7 @@ FIXED: Fix printing raw CriticMarkup tokens in LaTeX</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix signedness bug in Aho&#8211;Corasick</text:p></text:list-item>
+FIXED: Fix signedness bug in Aho-Corasick</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1350,7 +1521,7 @@ FIXED: Improve metadata edge cases; Fix NULL pointer dereference</text:p></text:
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Include non&#8211;breaking space (ASCII 160) in re2c patterns</text:p></text:list-item>
+FIXED: Include non-breaking space (ASCII 160) in re2c patterns</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1399,7 +1570,7 @@ CHANGED: Update test suite</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Don't duplicate LaTeX glossary definitions</text:p></text:list-item>
+FIXED: Don&#8217;t duplicate LaTeX glossary definitions</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1468,7 +1639,7 @@ FIXED: Allow <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> in 
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Don't free token_pool if never initialized</text:p></text:list-item>
+FIXED: Don&#8217;t free token_pool if never initialized</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1517,7 +1688,7 @@ CHANGED: Add comments to i18n.h</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-CHANGED: Finish refactoring note&#8211;related code</text:p></text:list-item>
+CHANGED: Finish refactoring note-related code</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1619,7 +1790,7 @@ CHANGED: Use multiple cases in glossary tests</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Don't force glossary terms into lowercase</text:p></text:list-item>
+FIXED: Don&#8217;t force glossary terms into lowercase</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1639,7 +1810,7 @@ FIXED: Fix new_source script for new directory structure</text:p></text:list-ite
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix non&#8211;breaking space in ODF</text:p></text:list-item>
+FIXED: Fix non-breaking space in ODF</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1696,7 +1867,7 @@ CHANGED: Configure cmake to use C99</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Add custom implementation for cross&#8211;platform support</text:p></text:list-item>
+FIXED: Add custom implementation for cross-platform support</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -1801,7 +1972,7 @@ FIXED: Fix bug when no closing divider or newline at end of last table cell</tex
 
 <text:list-item>
 <text:p text:style-name="P1">
-FIXED: Fix issue printing &#8216;&#8211;&#8217;</text:p></text:list-item>
+FIXED: Fix issue printing &#8216;-&#8217;</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
