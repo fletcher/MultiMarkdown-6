@@ -359,6 +359,15 @@ will also set the default `quotes language`.
 options are `dutch`, `french`, `german`, `germanguillemets`, `swedish`, `nl`,
 `fr`, `de`, `sv`.  Anything else defaults to English.
 
+Additionally, the `MMD Header` and `MMD Footer` metadata work slightly differently.  In
+v5, these fields were used to list names of files that should be transcluded before and after
+the main body.  In v6, these fields represent the actual text to be inserted.  If you want them
+to reference separate files, use the transclusion functionality:
+
+	Title:	Some Title
+	MMD Header:	This is *MMD* text.
+	MMD Footer:	{{footer.txt}}
+
 
 ## Output Formats ##
 
@@ -418,12 +427,11 @@ handled is more flexible, though it may take a moment to understand.
 When you process a file with MMD, it uses that file's directory as the search
 path for included files. For example:
 
-| Directory   | Transcluded Filename | Resolved Path      |  
-| ----------- | -------------------- | ------------------ |  
-| `/foo/bar/` | `bat`                | `/foo/bar/bat`     |  
-| `/foo/bar/` | `baz/bat`            | `/foo/bar/baz/bat` |  
-| `/foo/bar/` | `../bat`             | `/foo/bat`         |  
-
+| Directory	| Transcluded Filename	| Resolved Path 	|  
+| ------------------	| -----------------------------	| ------------------------------	|  
+| `/foo/bar/`	| `bat`	| `/foo/bar/bat`	|  
+| `/foo/bar/`	| `baz/bat`	| `/foo/bar/baz/bat`	|  
+| `/foo/bar/`	| `../bat` 	| `/foo/bat`	|  
 
 This is the same as MMD v 5.  What's different is that when you transclude a
 file, the search path stays the same as the "parent" file, **UNLESS** you use
