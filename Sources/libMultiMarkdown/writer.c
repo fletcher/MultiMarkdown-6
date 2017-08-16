@@ -1614,10 +1614,10 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 				scratch->language = LC_FR;
 				scratch->quotes_lang = FRENCH;
 			} else if (strcmp(temp_char, "nl") == 0) {
-				//scratch->language = LC_NL;
+				scratch->language = LC_NL;
 				scratch->quotes_lang = DUTCH;
 			} else if (strcmp(temp_char, "sv") == 0) {
-				//scratch->language = LC_SV;
+				scratch->language = LC_SV;
 				scratch->quotes_lang = SWEDISH;
 			} else {
 				scratch->language = LC_EN;
