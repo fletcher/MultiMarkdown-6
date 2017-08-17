@@ -16,3 +16,13 @@ with nothing ~>
 With a *new* paragraph inserted
 
 ~~}between them.
+
+{++foo++}
+
+{--bar--}
+
+{~~foo~>bar~~}
+
+{>>foo<<}
+
+{==bar==}

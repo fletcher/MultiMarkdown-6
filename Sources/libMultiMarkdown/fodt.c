@@ -1570,6 +1570,9 @@ parse_citation:
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
 			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
+				t->child->type = TEXT_EMPTY;
+				t->child->mate->type = TEXT_EMPTY;
+				mmd_export_token_tree_odf(out, source, t->child, scratch);
 				break;
 			}
 

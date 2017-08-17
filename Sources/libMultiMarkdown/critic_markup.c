@@ -198,7 +198,6 @@ void accept_token(DString * d, token * t) {
 		case CM_SUB_DIV:
 		case CM_DEL_PAIR:
 		case CM_COM_PAIR:
-		case CM_HI_PAIR:
 			// Erase these
 			d_string_erase(d, t->start, t->len);
 			break;
@@ -213,6 +212,7 @@ void accept_token(DString * d, token * t) {
 			break;
 
 		case CM_ADD_PAIR:
+		case CM_HI_PAIR:
 
 			// Check children
 			if (t->child) {
@@ -282,7 +282,6 @@ void reject_token(DString * d, token * t) {
 		case CM_SUB_DIV:
 		case CM_ADD_PAIR:
 		case CM_COM_PAIR:
-		case CM_HI_PAIR:
 			// Erase these
 			d_string_erase(d, t->start, t->len);
 			break;
@@ -297,6 +296,7 @@ void reject_token(DString * d, token * t) {
 			break;
 
 		case CM_DEL_PAIR:
+		case CM_HI_PAIR:
 
 			// Check children
 			if (t->child) {
