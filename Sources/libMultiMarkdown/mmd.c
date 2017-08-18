@@ -2402,6 +2402,56 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 }
 
 
+/// Grab list of all transcluded files, but we need to know directory to search,
+/// as well as the path to the file
+/// Returned stack needs to be freed
+stack * mmd_string_transclusion_manifest(const char * source, const char * search_path, const char * source_path) {
+	stack * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+	
+	result = mmd_engine_transclusion_manifest(e, search_path, source_path);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Grab list of all transcluded files, but we need to know directory to search,
+/// as well as the path to the file
+/// Returned stack needs to be freed
+stack * mmd_d_string_transclusion_manifest(DString * source, const char * search_path, const char * source_path) {
+	stack * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+	
+	result = mmd_engine_transclusion_manifest(e, search_path, source_path);
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Grab list of all transcluded files, but we need to know directory to search,
+/// as well as the path to the file
+/// Returned stack needs to be freed
+stack * mmd_engine_transclusion_manifest(mmd_engine * e, const char * search_path, const char * source_path) {
+	// Create empty manifest stack
+	stack * manifest = stack_new(0);
+
+	// Copy source text for temporary buffer
+	DString * buffer = d_string_new(e->dstr->str);
+
+	mmd_transclude_source(buffer, search_path, source_path, FORMAT_HTML, NULL, manifest);
+
+	d_string_free(buffer, true);
+
+	return manifest;
+}
+
+
 /// Insert/replace metadata in string, returning new string
 char * mmd_string_update_metavalue_for_key(const char * source, const char * key, const char * value) {
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
