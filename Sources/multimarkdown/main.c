@@ -416,19 +416,23 @@ int main(int argc, char** argv) {
 				// List metadata keys
 				char_result = mmd_string_metadata_keys(buffer->str);
 
-				fputs(char_result, stdout);
+				if (char_result) {
+					fputs(char_result, stdout);
 
-				free(char_result);
+					free(char_result);
+				}
 			} else if (a_extract->count > 0) {
 				// Extract metadata key
 				const char * query = a_extract->sval[0];
 
 				char_result = mmd_string_metavalue_for_key(buffer->str, query);
 
-				fputs(char_result, stdout);
-				fputc('\n', stdout);
+				if (char_result) {
+					fputs(char_result, stdout);
+					fputc('\n', stdout);
 
-				free(char_result);
+					free(char_result);
+				}
 			} else {
 				// Regular processing
 
@@ -526,19 +530,23 @@ int main(int argc, char** argv) {
 			// List metadata keys
 			char_result = mmd_string_metadata_keys(buffer->str);
 
-			fputs(char_result, stdout);
+			if (char_result) {
+				fputs(char_result, stdout);
 
-			free(char_result);
+				free(char_result);
+			}
 		} else if (a_extract->count > 0) {
 			// Extract metadata key
 			const char * query = a_extract->sval[0];
 
 			char_result = mmd_string_metavalue_for_key(buffer->str, query);
 
-			fputs(char_result, stdout);
-			fputc('\n', stdout);
+			if (char_result) {
+				fputs(char_result, stdout);
+				fputc('\n', stdout);
 
-			free(char_result);
+				free(char_result);
+			}
 		} else {
 			// Regular processing
 

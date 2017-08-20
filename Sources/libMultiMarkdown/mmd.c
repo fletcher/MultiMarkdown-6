@@ -2346,7 +2346,11 @@ char * mmd_string_metavalue_for_key(char * source, const char * key) {
 
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
 	result = mmd_engine_metavalue_for_key(e, key);
-	result = my_strdup(result);
+
+	if (result) {
+		// We need to return a copy of the string
+		result = my_strdup(result);
+	}
 
 	mmd_engine_free(e, true);
 
@@ -2363,6 +2367,7 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 	result = mmd_engine_metavalue_for_key(e, key);
 
 	if (result) {
+		// We need to return a copy of the string
 		result = my_strdup(result);
 	}
 
