@@ -2110,7 +2110,10 @@ handle_line:
 				// Process inside it, then treat it like a line to be stripped
 
 				// Change to plain line
-				l->child->type = LINE_PLAIN;
+				if (l->child) {
+					l->child->type = LINE_PLAIN;
+				}
+
 				strip_line_tokens_from_block(e, l);
 
 				// Move children to parent
