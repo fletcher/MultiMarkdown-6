@@ -2106,6 +2106,7 @@ handle_line:
 				break;
 
 			case BLOCK_DEFINITION:
+
 				// Sometimes these get created unintentionally inside other blocks
 				// Process inside it, then treat it like a line to be stripped
 
@@ -2417,7 +2418,7 @@ stack * mmd_string_transclusion_manifest(const char * source, const char * searc
 	stack * result;
 
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
-	
+
 	result = mmd_engine_transclusion_manifest(e, search_path, source_path);
 
 	mmd_engine_free(e, true);
@@ -2433,7 +2434,7 @@ stack * mmd_d_string_transclusion_manifest(DString * source, const char * search
 	stack * result;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
-	
+
 	result = mmd_engine_transclusion_manifest(e, search_path, source_path);
 
 	mmd_engine_free(e, false);
