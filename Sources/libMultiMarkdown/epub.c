@@ -489,13 +489,13 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	}
 
 	// Create directories
-	status = mz_zip_writer_add_mem(&zip, "OEBPS/", NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/", NULL, 0, MZ_NO_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
 	}
 
-	status = mz_zip_writer_add_mem(&zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "META-INF/", NULL, 0, MZ_NO_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");

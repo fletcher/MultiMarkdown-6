@@ -775,13 +775,13 @@ mz_zip_archive * opendocument_core_zip(mmd_engine * e, int format) {
 
 
 	// Create directories
-	status = mz_zip_writer_add_mem(zip, "META-INF/", NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(zip, "META-INF/", NULL, 0, MZ_NO_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
 	}
 
-	status = mz_zip_writer_add_mem(zip, "Pictures/", NULL, 0, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(zip, "Pictures/", NULL, 0, MZ_NO_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding directory to zip.\n");
