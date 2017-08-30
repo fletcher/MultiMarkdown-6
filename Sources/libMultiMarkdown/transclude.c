@@ -268,7 +268,7 @@ DString * scan_file(const char * fname) {
 	wchar_t wstr[wchars_num];
 	MultiByteToWideChar(CP_UTF8, 0, fname, -1, wstr, wchars_num);
 
-	if ((file = _wfopen(wstr, L"r")) == NULL) {
+	if ((file = _wfopen(wstr, L"rb")) == NULL) {
 	#else
 
 	if ((file = fopen(fname, "r")) == NULL ) {

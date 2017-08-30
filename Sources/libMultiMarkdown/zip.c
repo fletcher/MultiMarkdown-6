@@ -108,6 +108,15 @@
 #include <unistd.h>
 
 
+// Windows deprecated mkdir()
+// Fix per internet searches and modified by @f8ttyc8t (<https://github.com/f8ttyc8t>)
+#if (defined(_WIN32) || defined(__WIN32__))
+	// Let compiler know where to find _mkdir()
+	#include  <direct.h>
+	#define mkdir(A, B) _mkdir(A)
+#endif
+
+
 // Create new zip archive
 void zip_new_archive(mz_zip_archive * pZip) {
 	memset(pZip, 0, sizeof(mz_zip_archive));
