@@ -240,7 +240,6 @@ set(header_files
 if (WIN32)
 	set (scripts
 		scripts/mmd.bat
-		scripts/mmd2all.bat
 		scripts/mmd2epub.bat
 		scripts/mmd2fodt.bat
 		scripts/mmd2odt.bat
