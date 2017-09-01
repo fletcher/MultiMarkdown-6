@@ -2175,11 +2175,11 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 	// Disable metadata unless we are starting at the beginnging
 	size_t old_ext = e->extensions;
-	
+
 	if (byte_start != 0) {
-	        e->extensions |= EXT_NO_METADATA;
+		e->extensions |= EXT_NO_METADATA;
 	}
-	
+
 
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
@@ -2213,7 +2213,7 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 	// Return original extensions
 	e->extensions = old_ext;
-	
+
 	return doc;
 }
 
