@@ -477,7 +477,7 @@ int main(int argc, char** argv) {
 				if (FORMAT_TEXTBUNDLE == format) {
 					unzip_data_to_path(result->str, result->currentStringLength, output_filename);
 				} else {
-					if (!(output_stream = fopen(output_filename, "w"))) {
+					if (!(output_stream = fopen(output_filename, "wb"))) {
 						// Failed to open file
 						perror(output_filename);
 					} else {
@@ -592,7 +592,7 @@ int main(int argc, char** argv) {
 			if (strcmp(a_o->filename[0], "-") == 0) {
 				// direct to stdout
 				output_stream = stdout;
-			} else if (!(output_stream = fopen(a_o->filename[0], "w"))) {
+			} else if (!(output_stream = fopen(a_o->filename[0], "wb"))) {
 				perror(a_o->filename[0]);
 				free(result);
 				d_string_free(buffer, true);
