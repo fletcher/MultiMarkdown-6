@@ -474,7 +474,7 @@ if (DEFINED SHAREDBUILD)
 	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES OUTPUT_NAME libMultiMarkdown)
 
 	if (CURL_FOUND) 
-		target_link_libraries(libMultiMarkdownShared curl)
+		target_link_libraries(libMultiMarkdown ${CURL_LIBRARY})
 	endif (CURL_FOUND)	
 
 endif (DEFINED SHAREDBUILD)
