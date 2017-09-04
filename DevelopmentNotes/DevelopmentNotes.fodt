@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2017-07-06</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-09-04</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -762,6 +762,71 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;09&#8211;04 - v 6.2.1:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add Hebrew to command line help</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add function to extract transclusion manifest</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix Windows issue (#80) - Thanks @f8ttyc8t</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix error in CriticMarkup highlights when accepting/rejecting (Thanks, Shahaf!)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with metadata extraction</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issues with Windows compiling</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential bug</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Remove non-existent mmd2all.bat</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Store directories in zip file without compression to avoid error</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix bug (I think) in Tufte LaTeX files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Tidy up BibTeX example</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update DevelopmentNotes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update Swedish/Dutch handling</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update astyle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: update miniz to 2.0.6 beta</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;08&#8211;15 - v 6.2.0:</text:p>
 

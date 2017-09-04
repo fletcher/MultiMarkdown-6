@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-07-06  
+Date: 2017-09-04  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -470,6 +470,25 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2017-09-04 - v 6.2.1:
+
+	*    ADDED: Add Hebrew to command line help
+	*    ADDED: Add function to extract transclusion manifest
+	*    FIXED: Fix Windows issue (#80) - Thanks @f8ttyc8t
+	*    FIXED: Fix error in CriticMarkup highlights when accepting/rejecting (Thanks, Shahaf!)
+	*    FIXED: Fix issue with metadata extraction
+	*    FIXED: Fix issues with Windows compiling
+	*    FIXED: Fix potential bug
+	*    FIXED: Remove non-existent mmd2all.bat
+	*    FIXED: Store directories in zip file without compression to avoid error
+	*    UPDATED: Fix bug (I think) in Tufte LaTeX files
+	*    UPDATED: Tidy up BibTeX example
+	*    UPDATED: Update DevelopmentNotes
+	*    UPDATED: Update Swedish/Dutch handling
+	*    UPDATED: Update astyle
+	*    UPDATED: update miniz to 2.0.6 beta
+
 
 * 2017-08-15 - v 6.2.0:
 
