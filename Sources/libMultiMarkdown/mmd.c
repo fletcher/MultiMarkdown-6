@@ -2106,11 +2106,15 @@ handle_line:
 				break;
 
 			case BLOCK_DEFINITION:
+
 				// Sometimes these get created unintentionally inside other blocks
 				// Process inside it, then treat it like a line to be stripped
 
 				// Change to plain line
-				l->child->type = LINE_PLAIN;
+				if (l->child) {
+					l->child->type = LINE_PLAIN;
+				}
+
 				strip_line_tokens_from_block(e, l);
 
 				// Move children to parent
@@ -2169,6 +2173,14 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 
 	mmd_engine_reset(e);
 
+	// Disable metadata unless we are starting at the beginnging
+	size_t old_ext = e->extensions;
+
+	if (byte_start != 0) {
+		e->extensions |= EXT_NO_METADATA;
+	}
+
+
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
 
@@ -2198,6 +2210,9 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		token_tree_describe(doc, e->dstr->str);
 		#endif
 	}
+
+	// Return original extensions
+	e->extensions = old_ext;
 
 	return doc;
 }
@@ -2346,7 +2361,11 @@ char * mmd_string_metavalue_for_key(char * source, const char * key) {
 
 	mmd_engine * e = mmd_engine_create_with_string(source, 0);
 	result = mmd_engine_metavalue_for_key(e, key);
-	result = my_strdup(result);
+
+	if (result) {
+		// We need to return a copy of the string
+		result = my_strdup(result);
+	}
 
 	mmd_engine_free(e, true);
 
@@ -2363,6 +2382,7 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 	result = mmd_engine_metavalue_for_key(e, key);
 
 	if (result) {
+		// We need to return a copy of the string
 		result = my_strdup(result);
 	}
 
@@ -2399,6 +2419,56 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 
 	free(clean);
 	return result;
+}
+
+
+/// Grab list of all transcluded files, but we need to know directory to search,
+/// as well as the path to the file
+/// Returned stack needs to be freed
+stack * mmd_string_transclusion_manifest(const char * source, const char * search_path, const char * source_path) {
+	stack * result;
+
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+
+	result = mmd_engine_transclusion_manifest(e, search_path, source_path);
+
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Grab list of all transcluded files, but we need to know directory to search,
+/// as well as the path to the file
+/// Returned stack needs to be freed
+stack * mmd_d_string_transclusion_manifest(DString * source, const char * search_path, const char * source_path) {
+	stack * result;
+
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+
+	result = mmd_engine_transclusion_manifest(e, search_path, source_path);
+
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Grab list of all transcluded files, but we need to know directory to search,
+/// as well as the path to the file
+/// Returned stack needs to be freed
+stack * mmd_engine_transclusion_manifest(mmd_engine * e, const char * search_path, const char * source_path) {
+	// Create empty manifest stack
+	stack * manifest = stack_new(0);
+
+	// Copy source text for temporary buffer
+	DString * buffer = d_string_new(e->dstr->str);
+
+	mmd_transclude_source(buffer, search_path, source_path, FORMAT_HTML, NULL, manifest);
+
+	d_string_free(buffer, true);
+
+	return manifest;
 }
 
 

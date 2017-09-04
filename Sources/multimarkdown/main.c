@@ -143,6 +143,42 @@ char * filename_with_extension(const char * original, const char * new_extension
 }
 
 
+// Windows does not know realpath(), so we need a "windows port"
+// Fix by @f8ttyc8t (<https://github.com/f8ttyc8t>)
+#if (defined(_WIN32) || defined(__WIN32__))
+// Let compiler know where to find GetFullPathName()
+#include <windows.h>
+
+char *realpath(const char *path, char *resolved_path) {
+	DWORD  retval = 0;
+	DWORD  dwBufSize = 0; // Just in case MAX_PATH differs from PATH_MAX
+	TCHAR  *buffer = NULL;
+
+	if (resolved_path == NULL) {
+		// realpath allocates appropiate bytes if resolved_path is null. This is to mimic realpath behavior
+		dwBufSize = PATH_MAX; // Use windows PATH_MAX constant, because we are in Windows context now.
+		buffer = (char*)malloc(dwBufSize);
+
+		if (buffer == NULL) {
+			return NULL; // some really weird is going on...
+		}
+	} else {
+		dwBufSize = MAX_PATH;  // buffer has been allocated using MAX_PATH earlier
+		buffer = resolved_path;
+	}
+
+	retval = GetFullPathName(path, dwBufSize, buffer, NULL);
+
+	if (retval == 0) {
+		return NULL;
+		printf("Failed to GetFullPathName()\n");
+	}
+
+	return buffer;
+}
+#endif
+
+
 int main(int argc, char** argv) {
 	int exitcode = EXIT_SUCCESS;
 	char * binname = "multimarkdown";
@@ -177,7 +213,7 @@ int main(int argc, char** argv) {
 
 		a_rem4			= arg_rem("", ""),
 
-		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|nl|sv"),
+		a_lang			= arg_str0("l", "lang", "LANG", "language/smart quote localization, LANG = en|es|de|fr|he|nl|sv"),
 
 		a_rem5			= arg_rem("", ""),
 
@@ -416,19 +452,23 @@ int main(int argc, char** argv) {
 				// List metadata keys
 				char_result = mmd_string_metadata_keys(buffer->str);
 
-				fputs(char_result, stdout);
+				if (char_result) {
+					fputs(char_result, stdout);
 
-				free(char_result);
+					free(char_result);
+				}
 			} else if (a_extract->count > 0) {
 				// Extract metadata key
 				const char * query = a_extract->sval[0];
 
 				char_result = mmd_string_metavalue_for_key(buffer->str, query);
 
-				fputs(char_result, stdout);
-				fputc('\n', stdout);
+				if (char_result) {
+					fputs(char_result, stdout);
+					fputc('\n', stdout);
 
-				free(char_result);
+					free(char_result);
+				}
 			} else {
 				// Regular processing
 
@@ -437,7 +477,7 @@ int main(int argc, char** argv) {
 				if (FORMAT_TEXTBUNDLE == format) {
 					unzip_data_to_path(result->str, result->currentStringLength, output_filename);
 				} else {
-					if (!(output_stream = fopen(output_filename, "w"))) {
+					if (!(output_stream = fopen(output_filename, "wb"))) {
 						// Failed to open file
 						perror(output_filename);
 					} else {
@@ -526,19 +566,23 @@ int main(int argc, char** argv) {
 			// List metadata keys
 			char_result = mmd_string_metadata_keys(buffer->str);
 
-			fputs(char_result, stdout);
+			if (char_result) {
+				fputs(char_result, stdout);
 
-			free(char_result);
+				free(char_result);
+			}
 		} else if (a_extract->count > 0) {
 			// Extract metadata key
 			const char * query = a_extract->sval[0];
 
 			char_result = mmd_string_metavalue_for_key(buffer->str, query);
 
-			fputs(char_result, stdout);
-			fputc('\n', stdout);
+			if (char_result) {
+				fputs(char_result, stdout);
+				fputc('\n', stdout);
 
-			free(char_result);
+				free(char_result);
+			}
 		} else {
 			// Regular processing
 
@@ -548,7 +592,7 @@ int main(int argc, char** argv) {
 			if (strcmp(a_o->filename[0], "-") == 0) {
 				// direct to stdout
 				output_stream = stdout;
-			} else if (!(output_stream = fopen(a_o->filename[0], "w"))) {
+			} else if (!(output_stream = fopen(a_o->filename[0], "wb"))) {
 				perror(a_o->filename[0]);
 				free(result);
 				d_string_free(buffer, true);

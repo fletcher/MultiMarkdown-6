@@ -83,8 +83,14 @@
 int vasprintf(char** strp, const char* fmt, va_list ap) {
 	va_list ap2;
 	va_copy(ap2, ap);
+
+	#if (defined(_WIN32) || defined(__WIN32__))
+	char *tmp = NULL;
+	int size = vsnprintf(tmp, 0, fmt, ap2);
+	#else
 	char tmp[1];
 	int size = vsnprintf(tmp, 1, fmt, ap2);
+	#endif
 
 	if (size <= 0) {
 		return size;
