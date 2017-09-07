@@ -2354,6 +2354,13 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch) {
 	token * walker = table->child->child;
 
+	scratch->table_alignment[0] = '\0';
+	scratch->table_column_count = 0;
+
+	if (walker == NULL) {
+		return;
+	}
+
 	// Find the separator line
 	while (walker->next) {
 		walker = walker->next;
