@@ -307,7 +307,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 	char * temp;
 
-	size_t offset;
+	size_t offset = 0;
 	size_t last_match;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);
