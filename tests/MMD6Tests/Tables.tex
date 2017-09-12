@@ -128,5 +128,41 @@
 \textbar{} --- \textbar{} --- \textbar{}
 \textbar{} foo \textbar{} bar \textbar{}
 
+6
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\caption{\emph{caption}}
+\label{bar}
+\begin{tabulary}{\textwidth}{@{}ll@{}} \toprule
+\midrule
+
+ foo & bar \\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\begin{tabulary}{\textwidth}{@{}ll@{}} \toprule
+\multicolumn{2}{c}{ bat }\\
+ foo & bar \\
+\midrule
+
+ foo & bar \\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
 \input{mmd6-article-footer}
 \end{document}

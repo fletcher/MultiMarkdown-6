@@ -54,3 +54,16 @@ latex config:	article
 | foo | bar |
 | --- | --- |
 | foo | bar |
+
+
+6
+
+| --- | --- |
+| foo | bar |
+[*caption*][bar]
+
+
+|    bat   ||
+| foo | bar |
+| --- | --- |
+| foo | bar |

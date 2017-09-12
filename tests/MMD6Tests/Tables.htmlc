@@ -50,3 +50,14 @@ latex config:	article</p>
 | foo | bar |
 | --- | --- |
 | foo | bar |</p>
+
+<p>6</p>
+
+<p>| --- | --- |
+| foo | bar |
+[<em>caption</em>][bar]</p>
+
+<p>| bat ||
+| foo | bar |
+| --- | --- |
+| foo | bar |</p>

@@ -351,6 +351,7 @@ table(A)			::= table_header(B) table_body(C).			{ A = B; token_chain_append(B, C
 table				::= table_header.
 
 table_header(A)		::= header_rows(B) LINE_TABLE_SEPARATOR(C).	{ A = token_new_parent(B, BLOCK_TABLE_HEADER); token_chain_append(B, C); }
+table_header(A)		::= LINE_TABLE_SEPARATOR(B).				{ A = token_new_parent(B, BLOCK_TABLE_HEADER); }
 
 header_rows(A)		::= header_rows(B) LINE_TABLE(C).			{ A = B; token_chain_append(B, C); }
 header_rows			::= LINE_TABLE.
