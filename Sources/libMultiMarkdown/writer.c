@@ -1695,7 +1695,7 @@ void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
 			token_split(tok, walker->start, walker->len, walker->match_type);
 
 			// Advance token to next token
-			while (tok->start < walker->start + walker->len) {
+			while (tok && (tok->start < walker->start + walker->len)) {
 				tok = tok->next;
 			}
 
