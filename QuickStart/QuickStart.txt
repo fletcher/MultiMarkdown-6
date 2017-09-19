@@ -334,9 +334,9 @@ the following `latex config` values by default:
 * `tufte-book`
 * `tufte-handout`
 
-**NOTE: You do have to install the MMD support files into the proper location
-**for your system.  I would like to make this easier, but haven't found the
-**best configuration yet.
+**NOTE**: You do have to install the MMD support files into the proper
+location for your system.  I would like to make this easier, but haven't found
+the best configuration yet.
 
 
 ## Metadata ##
@@ -359,10 +359,11 @@ will also set the default `quotes language`.
 options are `dutch`, `french`, `german`, `germanguillemets`, `swedish`, `nl`,
 `fr`, `de`, `sv`.  Anything else defaults to English.
 
-Additionally, the `MMD Header` and `MMD Footer` metadata work slightly differently.  In
-v5, these fields were used to list names of files that should be transcluded before and after
-the main body.  In v6, these fields represent the actual text to be inserted.  If you want them
-to reference separate files, use the transclusion functionality:
+Additionally, the `MMD Header` and `MMD Footer` metadata work slightly
+differently.  In v5, these fields were used to list names of files that should
+be transcluded before and after the main body.  In v6, these fields represent
+the actual text to be inserted.  If you want them to reference separate files,
+use the transclusion functionality:
 
 	Title:	Some Title
 	MMD Header:	This is *MMD* text.
@@ -415,6 +416,12 @@ By placing `{{TOC}}` in your document, you can insert an automatically
 generated Table of Contents in your document.  As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.
+
+
+## Tables ##
+
+Tables in MultiMarkdown-6 work basically the same as before, but a caption, if
+present, must come *after* the body of the table, not *before*.
 
 
 ## Transclusion ##

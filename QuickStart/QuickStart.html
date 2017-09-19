@@ -32,6 +32,7 @@
 <li><a href="#outputformats">Output Formats </a></li>
 <li><a href="#embeddedimages">Embedded Images </a></li>
 <li><a href="#tableofcontents">Table of Contents </a></li>
+<li><a href="#tables">Tables </a></li>
 <li><a href="#transclusion">Transclusion </a></li>
 </ul>
 </li>
@@ -356,9 +357,9 @@ the following <code>latex config</code> values by default:</p>
 <li><code>tufte-handout</code></li>
 </ul>
 
-<p>**NOTE: You do have to install the <abbr title="MultiMarkdown">MMD</abbr> support files into the proper location
-**for your system. I would like to make this easier, but haven&#8217;t found the
-**best configuration yet.</p>
+<p><strong>NOTE</strong>: You do have to install the <abbr title="MultiMarkdown">MMD</abbr> support files into the proper
+location for your system. I would like to make this easier, but haven&#8217;t found
+the best configuration yet.</p>
 
 <h4 id="metadata">Metadata </h4>
 
@@ -381,10 +382,11 @@ options are <code>dutch</code>, <code>french</code>, <code>german</code>, <code>
 <code>fr</code>, <code>de</code>, <code>sv</code>. Anything else defaults to English.</p></li>
 </ul>
 
-<p>Additionally, the <code>MMD Header</code> and <code>MMD Footer</code> metadata work slightly differently. In
-v5, these fields were used to list names of files that should be transcluded before and after
-the main body. In v6, these fields represent the actual text to be inserted. If you want them
-to reference separate files, use the transclusion functionality:</p>
+<p>Additionally, the <code>MMD Header</code> and <code>MMD Footer</code> metadata work slightly
+differently. In v5, these fields were used to list names of files that should
+be transcluded before and after the main body. In v6, these fields represent
+the actual text to be inserted. If you want them to reference separate files,
+use the transclusion functionality:</p>
 
 <pre><code>Title:	Some Title
 MMD Header:	This is *MMD* text.
@@ -435,6 +437,11 @@ properly installed when <abbr title="MultiMarkdown">MMD</abbr> is compiled. This
 generated Table of Contents in your document. As of <abbr title="MultiMarkdown">MMD</abbr> v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</p>
+
+<h4 id="tables">Tables </h4>
+
+<p>Tables in MultiMarkdown-6 work basically the same as before, but a caption, if
+present, must come <em>after</em> the body of the table, not <em>before</em>.</p>
 
 <h4 id="transclusion">Transclusion </h4>
 

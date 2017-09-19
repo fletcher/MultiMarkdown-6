@@ -308,6 +308,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#outputformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Output Formats  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#embeddedimages" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Embedded Images  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
 </text:index-body>
@@ -665,9 +666,9 @@ the following <text:span text:style-name="Source_20_Text">latex config</text:spa
 
 </text:list>
 
-<text:p text:style-name="Standard">**NOTE: You do have to install the MMD support files into the proper location
-**for your system. I would like to make this easier, but haven&#8217;t found the
-**best configuration yet.</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: You do have to install the MMD support files into the proper
+location for your system. I would like to make this easier, but haven&#8217;t found
+the best configuration yet.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata </text:h>
 
@@ -693,10 +694,11 @@ options are <text:span text:style-name="Source_20_Text">dutch</text:span>, <text
 
 </text:list>
 
-<text:p text:style-name="Standard">Additionally, the <text:span text:style-name="Source_20_Text">MMD Header</text:span> and <text:span text:style-name="Source_20_Text">MMD Footer</text:span> metadata work slightly differently. In
-v5, these fields were used to list names of files that should be transcluded before and after
-the main body. In v6, these fields represent the actual text to be inserted. If you want them
-to reference separate files, use the transclusion functionality:</text:p>
+<text:p text:style-name="Standard">Additionally, the <text:span text:style-name="Source_20_Text">MMD Header</text:span> and <text:span text:style-name="Source_20_Text">MMD Footer</text:span> metadata work slightly
+differently. In v5, these fields were used to list names of files that should
+be transcluded before and after the main body. In v6, these fields represent
+the actual text to be inserted. If you want them to reference separate files,
+use the transclusion functionality:</text:p>
 
 <text:p text:style-name="Preformatted Text">Title:<text:tab/>Some Title<text:line-break/>MMD Header:<text:tab/>This is *MMD* text.<text:line-break/>MMD Footer:<text:tab/>{{footer.txt}}<text:line-break/></text:p>
 
@@ -768,6 +770,11 @@ properly installed when MMD is compiled. This is true for macOS builds.</text:p>
 generated Table of Contents in your document. As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="tables"/>Tables </text:h>
+
+<text:p text:style-name="Standard">Tables in MultiMarkdown-6 work basically the same as before, but a caption, if
+present, must come <text:span text:style-name="MMD-Italic">after</text:span> the body of the table, not <text:span text:style-name="MMD-Italic">before</text:span>.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="transclusion"/>Transclusion </text:h>
 
