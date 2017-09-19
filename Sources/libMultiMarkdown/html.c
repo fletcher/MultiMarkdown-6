@@ -336,6 +336,10 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 
 			printf("<img src=\"assets/%s\"", a->asset_path);
 		} else {
+			if (scratch->remember_assets) {
+				store_asset(scratch, link->url);
+				asset * a = extract_asset(scratch, link->url);
+			}
 			printf("<img src=\"%s\"", link->url);
 		}
 	} else {

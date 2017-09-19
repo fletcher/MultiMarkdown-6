@@ -237,6 +237,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		// Store used assets in a hash
 		p->asset_hash = NULL;
 		p->store_assets = 0;
+		p->remember_assets = 0;
 	}
 
 	return p;
