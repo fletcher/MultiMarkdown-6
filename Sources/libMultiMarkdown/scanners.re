@@ -146,7 +146,7 @@
 	definition	= non_indent ':' sp [^\n\r\x00];
 
 	table_sep_cell = [ \240\t]* [:\-=+]+ [ \240\t]*;
-	table_separator = '|'? ( table_sep_cell '|')+ [ \240\t]* nl_eof;
+	table_separator = '|'? ( table_sep_cell '|')+ ( table_sep_cell )? [ \240\t]* nl_eof;
 
 	align		= [\-=]+;
 	align_left	= sp ':' align sp ('|' | nl_eof);

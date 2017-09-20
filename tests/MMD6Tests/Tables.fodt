@@ -301,7 +301,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </table:table-row>
 <table:table-row>
 <table:table-cell table:number-columns-spanned="2">
-<text:p text:style-name="MMD-Table"> <text:span text:style-name="MMD-Bold">foo bar</text:span><text:tab/><text:tab/></text:p>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="MMD-Bold">foo bar</text:span><text:tab/></text:p>
 </table:table-cell>
 </table:table-row>
 
