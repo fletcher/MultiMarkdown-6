@@ -177,7 +177,24 @@ formatting to the CriticMarkup formatting as in the preceding paragraph.
 Alternatively, you can use the `-a\--accept` or `-r\--reject` options to cause
 MMD to accept or reject, respectively, the proposed changes within the CM
 markup.  When doing this, CM will work across blank lines.  Without either of
-these two options, then CriticMarkup that spans a blank line is not recognized
+these two options, then CriticMarkup that spans a blank line is not recogniz
+
+T
+formats).
+
+[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
+
+
+## Embedded Images ##
+
+Supported export formats (`odt`, `epub`, `bundle`, `bundlezip`) include
+images inside the export document:
+
+* Local images are embedded automatically
+* Images stored on remote servers are embedded *if* [libCurl] is
+properly installed when MMD is compiled.  This is true f
+
+ed
 as such.  I working on options for this for the future.
 
 
@@ -392,22 +409,32 @@ file package.
 text file and embedded images and CSS.  Useful for sharing Markdown files
 and images between applications (on any OS, but especially on iOS)
 *	`bundlezip` -- TextPack variant of the TextBundle format -- the file
-package is compressed to a single zip file (similar to EPUB and ODT
-formats).
-
-[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
-
-
-## Embedded Images ##
-
-Supported export formats (`odt`, `epub`, `bundle`, `bundlezip`) include
-images inside the export document:
-
-* Local images are embedded automatically
-* Images stored on remote servers are embedded *if* [libCurl] is
-properly installed when MMD is compiled.  This is true for macOS builds.
+package is compressed to a single zip file (similar to EPUB and ODor macOS builds.
 
 [libCurl]:	https://curl.haxx.se/libcurl/
+
+
+## Raw Source ##
+
+In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document.  This worked reasonably well, but was limited and didn't work well when exporting to multiple formats.  It was time for something new.
+
+MMD  v6 offers a new feature to handle this.  Code spans and code blocks can be flagged as representing raw source:
+
+	foo `*bar*`{=html}
+	
+	```{=latex}
+	*foo*
+	```
+
+The contents of the span/block will be passed through unchanged.
+
+You can specify which output format is compatible with the specified source:
+
+*	`html`
+*	`odt`
+*	`epub`
+*	`latex`
+*	`*` -- wildcard matches any output format
 
 
 ## Table of Contents ##

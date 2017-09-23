@@ -20,6 +20,7 @@
 <li><a href="#abbreviationsoracronyms">Abbreviations (Or Acronyms) </a></li>
 <li><a href="#citations">Citations </a></li>
 <li><a href="#criticmarkup">CriticMarkup </a></li>
+<li><a href="#embeddedimages">Embedded Images </a></li>
 <li><a href="#emphandstrong">Emph and Strong </a></li>
 <li><a href="#epub3support">EPUB 3 Support </a></li>
 <li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
@@ -30,7 +31,7 @@
 <li><a href="#latexchanges">LaTeX Changes </a></li>
 <li><a href="#metadata">Metadata </a></li>
 <li><a href="#outputformats">Output Formats </a></li>
-<li><a href="#embeddedimages">Embedded Images </a></li>
+<li><a href="#rawsource">Raw Source </a></li>
 <li><a href="#tableofcontents">Table of Contents </a></li>
 <li><a href="#tables">Tables </a></li>
 <li><a href="#transclusion">Transclusion </a></li>
@@ -201,7 +202,23 @@ formatting to the CriticMarkup formatting as in the preceding paragraph.
 Alternatively, you can use the <code>-a\--accept</code> or <code>-r\--reject</code> options to cause
 <abbr title="MultiMarkdown">MMD</abbr> to accept or reject, respectively, the proposed changes within the CM
 markup. When doing this, CM will work across blank lines. Without either of
-these two options, then CriticMarkup that spans a blank line is not recognized
+these two options, then CriticMarkup that spans a blank line is not recogniz</p>
+
+<p>T
+formats).</p>
+
+<h4 id="embeddedimages">Embedded Images </h4>
+
+<p>Supported export formats (<code>odt</code>, <code>epub</code>, <code>bundle</code>, <code>bundlezip</code>) include
+images inside the export document:</p>
+
+<ul>
+<li>Local images are embedded automatically</li>
+<li>Images stored on remote servers are embedded <em>if</em> <a href="https://curl.haxx.se/libcurl/">libCurl</a> is
+properly installed when <abbr title="MultiMarkdown">MMD</abbr> is compiled. This is true f</li>
+</ul>
+
+<p>ed
 as such. I working on options for this for the future.</p>
 
 <h4 id="emphandstrong">Emph and Strong </h4>
@@ -416,19 +433,32 @@ file package.</li>
 text file and embedded images and CSS. Useful for sharing Markdown files
 and images between applications (on any OS, but especially on iOS)</li>
 <li><code>bundlezip</code> &#8211; TextPack variant of the TextBundle format &#8211; the file
-package is compressed to a single zip file (similar to EPUB and ODT
-formats).</li>
+package is compressed to a single zip file (similar to EPUB and ODor macOS builds.</li>
 </ul>
 
-<h4 id="embeddedimages">Embedded Images </h4>
+<h4 id="rawsource">Raw Source </h4>
 
-<p>Supported export formats (<code>odt</code>, <code>epub</code>, <code>bundle</code>, <code>bundlezip</code>) include
-images inside the export document:</p>
+<p>In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn&#8217;t work well when exporting to multiple formats. It was time for something new.</p>
+
+<p><abbr title="MultiMarkdown">MMD</abbr> v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:</p>
+
+<pre><code>foo `*bar*`{=html}
+
+```{=latex}
+*foo*
+```
+</code></pre>
+
+<p>The contents of the span/block will be passed through unchanged.</p>
+
+<p>You can specify which output format is compatible with the specified source:</p>
 
 <ul>
-<li>Local images are embedded automatically</li>
-<li>Images stored on remote servers are embedded <em>if</em> <a href="https://curl.haxx.se/libcurl/">libCurl</a> is
-properly installed when <abbr title="MultiMarkdown">MMD</abbr> is compiled. This is true for macOS builds.</li>
+<li><code>html</code></li>
+<li><code>odt</code></li>
+<li><code>epub</code></li>
+<li><code>latex</code></li>
+<li><code>*</code> &#8211; wildcard matches any output format</li>
 </ul>
 
 <h4 id="tableofcontents">Table of Contents </h4>
