@@ -68,6 +68,10 @@
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	size_t len = 0;
 	char * result;
 	const char * test = source;

@@ -91,6 +91,10 @@ void store_abbreviation(scratch_pad * scratch, footnote * a);
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	size_t len = 0;
 	char * result;
 	const char * test = source;
@@ -117,6 +121,10 @@ static char * my_strndup(const char * source, size_t n) {
 
 /// strdup() not available on all platforms
 static char * my_strdup(const char * source) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	char * result = malloc(strlen(source) + 1);
 
 	if (result) {

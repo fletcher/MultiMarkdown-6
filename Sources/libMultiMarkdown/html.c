@@ -78,6 +78,10 @@
 
 /// strdup() not available on all platforms
 static char * my_strdup(const char * source) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	char * result = malloc(strlen(source) + 1);
 
 	if (result) {

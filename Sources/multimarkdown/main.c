@@ -84,6 +84,10 @@ struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
 
 /// strdup() not available on all platforms
 static char * my_strdup(const char * source) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	char * result = malloc(strlen(source) + 1);
 
 	if (result) {
