@@ -2132,6 +2132,14 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 				t->next->type = TEXT_EMPTY;
 			}
 
+		case MATH_BRACKET_OPEN:
+		case MATH_BRACKET_CLOSE:
+		case MATH_PAREN_OPEN:
+		case MATH_PAREN_CLOSE:
+			print_const("\\textbackslash{}\\textbackslash{}");
+			print_char(source[t->start + 2]);
+			break;
+
 		case TEXT_EMPTY:
 			break;
 

@@ -1816,7 +1816,7 @@ parse_citation:
 
 		case PAIR_MATH:
 			print_const("<span class=\"math\">");
-			mmd_export_token_tree_html_raw(out, source, t->child, scratch);
+			mmd_export_token_tree_html_math(out, source, t->child, scratch);
 			print_const("</span>");
 			break;
 
@@ -2076,11 +2076,11 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			break;
 
 		case MATH_BRACKET_OPEN:
-			print_const("\\[");
+			print_const("\\\\[");
 			break;
 
 		case MATH_BRACKET_CLOSE:
-			print_const("\\]");
+			print_const("\\\\]");
 			break;
 
 		case MATH_DOLLAR_SINGLE:
@@ -2102,11 +2102,11 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			break;
 
 		case MATH_PAREN_OPEN:
-			print_const("\\(");
+			print_const("\\\\(");
 			break;
 
 		case MATH_PAREN_CLOSE:
-			print_const("\\)");
+			print_const("\\\\)");
 			break;
 
 		case QUOTE_DOUBLE:
@@ -2128,6 +2128,35 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 				print_token(t);
 			}
 
+			break;
+	}
+}
+
+
+void mmd_export_token_html_math(DString * out, const char * source, token * t, scratch_pad * scratch) {
+	if (t == NULL) {
+		return;
+	}
+
+	switch (t->type) {
+		case MATH_BRACKET_OPEN:
+			print_const("\\[");
+			break;
+
+		case MATH_BRACKET_CLOSE:
+			print_const("\\]");
+			break;
+
+		case MATH_PAREN_OPEN:
+			print_const("\\(");
+			break;
+
+		case MATH_PAREN_CLOSE:
+			print_const("\\)");
+			break;
+
+		default:
+			mmd_export_token_html_raw(out, source, t, scratch);
 			break;
 	}
 }
@@ -2239,6 +2268,19 @@ void mmd_export_token_tree_html_raw(DString * out, const char * source, token * 
 			scratch->skip_token--;
 		} else {
 			mmd_export_token_html_raw(out, source, t, scratch);
+		}
+
+		t = t->next;
+	}
+}
+
+
+void mmd_export_token_tree_html_math(DString * out, const char * source, token * t, scratch_pad * scratch) {
+	while (t != NULL) {
+		if (scratch->skip_token) {
+			scratch->skip_token--;
+		} else {
+			mmd_export_token_html_math(out, source, t, scratch);
 		}
 
 		t = t->next;

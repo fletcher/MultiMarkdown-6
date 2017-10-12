@@ -95,3 +95,5 @@ latex config:	article</p>
 <p>`foo`</p>
 
 <p>foo bar</p>
+
+<p><code>\\[foo]</code></p>

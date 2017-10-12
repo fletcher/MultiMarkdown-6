@@ -367,6 +367,8 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">`foo`</text:p>
 
 <text:p text:style-name="Standard">foo bar</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\\[foo]</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>
