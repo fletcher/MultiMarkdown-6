@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.1.0
+Version:	6.2.2
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
