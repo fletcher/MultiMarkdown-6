@@ -2113,6 +2113,26 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			print_const("&quot;");
 			break;
 
+		case SUBSCRIPT:
+			if (t->child) {
+				print_const("~");
+				mmd_export_token_tree_html_raw(out, source, t->child, scratch);
+			} else {
+				print_token(t);
+			}
+
+			break;
+
+		case SUPERSCRIPT:
+			if (t->child) {
+				print_const("^");
+				mmd_export_token_tree_html_raw(out, source, t->child, scratch);
+			} else {
+				print_token(t);
+			}
+
+			break;
+
 		case CODE_FENCE:
 			if (t->next) {
 				t->next->type = TEXT_EMPTY;

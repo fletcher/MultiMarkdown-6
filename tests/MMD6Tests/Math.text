@@ -56,3 +56,9 @@ $$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\parti
 $a *foo* b$
 
 \\[a *foo* b\\]
+
+\\[\pi^2\\]
+
+25
+
+\\[\pi~2\\]

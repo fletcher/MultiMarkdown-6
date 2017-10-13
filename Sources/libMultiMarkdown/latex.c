@@ -1992,6 +1992,26 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 			print_token(t);
 			break;
 
+		case SUBSCRIPT:
+			if (t->child) {
+				print_const("\\ensuremath{\\sim}");
+				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
+			} else {
+				print_token(t);
+			}
+
+			break;
+
+		case SUPERSCRIPT:
+			if (t->child) {
+				print_const("\\^{}");
+				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
+			} else {
+				print_token(t);
+			}
+
+			break;
+
 		case CODE_FENCE:
 			if (t->next) {
 				t->next->type = TEXT_EMPTY;
@@ -2157,6 +2177,26 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 
 		case BRACE_DOUBLE_RIGHT:
 			print_const("\\}\\}");
+			break;
+
+		case SUBSCRIPT:
+			if (t->child) {
+				print_const("\\ensuremath{\\sim}");
+				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
+			} else {
+				print_const("\\ensuremath{\\sim}");
+			}
+
+			break;
+
+		case SUPERSCRIPT:
+			if (t->child) {
+				print_const("\\^{}");
+				mmd_export_token_tree_latex_tt(out, source, t->child, scratch);
+			} else {
+				print_const("\\^{}");
+			}
+
 			break;
 
 		case TEXT_BRACE_LEFT:

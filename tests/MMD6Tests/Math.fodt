@@ -282,11 +282,11 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"><text:span text:style-name="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</text:span></text:p>
 
-<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span> bar</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">${e}^{i\pi }+1=0$</text:span> bar</text:p>
 
-<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span>, bar</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">${e}^{i\pi }+1=0$</text:span>, bar</text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\[{x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}\]</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</text:span></text:p>
 
 <text:p text:style-name="Standard">5</text:p>
 
@@ -308,9 +308,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$b</text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\(\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\)</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}$</text:span></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\[\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\]</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$$\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}$$</text:span></text:p>
 
 <text:p text:style-name="Standard">15</text:p>
 
@@ -318,9 +318,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"><text:span text:style-name="math">\[\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\]</text:span></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\(\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\)</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}$</text:span></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\]</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}$$</text:span></text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="math">\(\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\)</text:span></text:p>
 
@@ -330,9 +330,15 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}</text:span></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\(a *foo* b\)</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$a *foo* b$</text:span></text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="math">\[a *foo* b\]</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[\pi^2\]</text:span></text:p>
+
+<text:p text:style-name="Standard">25</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">\[\pi~2\]</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>
