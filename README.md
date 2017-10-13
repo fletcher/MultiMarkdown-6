@@ -4,21 +4,20 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2017-08-15 |  
+| Date:      | 2017-10-13 |  
 | Copyright: | Copyright © 2016 - 2017 Fletcher T. Penney.    |  
-| Version:   | 6.2.0      |  
+| Version:   | 6.2.2      |  
 
 master branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=master)](https://travis-ci.org/fletcher/MultiMarkdown-6)  
 develop branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=develop)](https://travis-ci.org/fletcher/MultiMarkdown-6)
 
 ## An Announcement! ##
 
-MultiMarkdown v6 is finally here!  It's technically still in "beta" as I would
-like to hear back from a few more users to make sure I'm not missing anything,
-but it has been subjected to much more rigorous testing than any previous
-versions of MultiMarkdown in the past.  If you want more information about
-testing, see `DevelopmentNotes`.  It's basically feature complete as a
-replacement for MMD v5, and included additional features beyond that.
+MultiMarkdown v6 is finally here!  If you want more information about
+testing, see `DevelopmentNotes`.  
+
+If you want to more know about the differences from v5, see the `QuickStart`
+guide.
 
 
 ## Obtaining MultiMarkdown ##

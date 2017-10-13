@@ -91,6 +91,10 @@ void store_abbreviation(scratch_pad * scratch, footnote * a);
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	size_t len = 0;
 	char * result;
 	const char * test = source;
@@ -117,6 +121,10 @@ static char * my_strndup(const char * source, size_t n) {
 
 /// strdup() not available on all platforms
 static char * my_strdup(const char * source) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	char * result = malloc(strlen(source) + 1);
 
 	if (result) {
@@ -237,6 +245,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		// Store used assets in a hash
 		p->asset_hash = NULL;
 		p->store_assets = 0;
+		p->remember_assets = 0;
 	}
 
 	return p;
@@ -1695,7 +1704,7 @@ void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
 			token_split(tok, walker->start, walker->len, walker->match_type);
 
 			// Advance token to next token
-			while (tok->start < walker->start + walker->len) {
+			while (tok && (tok->start < walker->start + walker->len)) {
 				tok = tok->next;
 			}
 
@@ -2353,6 +2362,13 @@ void abbreviation_from_bracket(const char * source, scratch_pad * scratch, token
 
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch) {
 	token * walker = table->child->child;
+
+	scratch->table_alignment[0] = '\0';
+	scratch->table_column_count = 0;
+
+	if (walker == NULL) {
+		return;
+	}
 
 	// Find the separator line
 	while (walker->next) {

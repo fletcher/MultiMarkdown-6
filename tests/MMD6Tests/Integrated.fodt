@@ -362,11 +362,11 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Standard"><text:span text:style-name="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</text:span></text:p>
 
-<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span> bar</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">${e}^{i\pi }+1=0$</text:span> bar</text:p>
 
-<text:p text:style-name="Standard">foo <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span>, bar</text:p>
+<text:p text:style-name="Standard">foo <text:span text:style-name="math">${e}^{i\pi }+1=0$</text:span>, bar</text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="math">\[{x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}\]</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$</text:span></text:p>
 
 <text:h text:outline-level="1"><text:bookmark text:name="smartquotes"/>Smart Quotes </text:h>
 

@@ -301,7 +301,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </table:table-row>
 <table:table-row>
 <table:table-cell table:number-columns-spanned="2">
-<text:p text:style-name="MMD-Table"> <text:span text:style-name="MMD-Bold">foo bar</text:span><text:tab/><text:tab/></text:p>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="MMD-Bold">foo bar</text:span><text:tab/></text:p>
 </table:table-cell>
 </table:table-row>
 
@@ -514,6 +514,56 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 | foo | bar |
 | &#8212; | &#8212; |
 | foo | bar |</text:p>
+
+<text:p text:style-name="Standard">6</text:p>
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> foo </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> bar </text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+<text:p><text:bookmark text:name="bar"/>Table <text:sequence text:name="Table" text:formula="ooow:Table+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>:<text:span text:style-name="MMD-Italic">caption</text:span><text:bookmark-end text:name="bar"/></text:p>
+
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+
+<table:table-row>
+<table:table-cell table:number-columns-spanned="2">
+<text:p text:style-name="Table_20_Heading"> bat </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> foo </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> bar </text:p>
+</table:table-cell>
+</table:table-row>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> foo </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> bar </text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+
 </office:text>
 </office:body>
 </office:document>

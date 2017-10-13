@@ -125,6 +125,7 @@ typedef struct {
 
 	struct asset *		asset_hash;
 	short				store_assets;
+	short				remember_assets;
 } scratch_pad;
 
 

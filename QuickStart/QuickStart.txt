@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.1.0
+Version:	6.2.2
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
@@ -177,7 +177,24 @@ formatting to the CriticMarkup formatting as in the preceding paragraph.
 Alternatively, you can use the `-a\--accept` or `-r\--reject` options to cause
 MMD to accept or reject, respectively, the proposed changes within the CM
 markup.  When doing this, CM will work across blank lines.  Without either of
-these two options, then CriticMarkup that spans a blank line is not recognized
+these two options, then CriticMarkup that spans a blank line is not recogniz
+
+T
+formats).
+
+[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
+
+
+## Embedded Images ##
+
+Supported export formats (`odt`, `epub`, `bundle`, `bundlezip`) include
+images inside the export document:
+
+* Local images are embedded automatically
+* Images stored on remote servers are embedded *if* [libCurl] is
+properly installed when MMD is compiled.  This is true f
+
+ed
 as such.  I working on options for this for the future.
 
 
@@ -334,9 +351,9 @@ the following `latex config` values by default:
 * `tufte-book`
 * `tufte-handout`
 
-**NOTE: You do have to install the MMD support files into the proper location
-**for your system.  I would like to make this easier, but haven't found the
-**best configuration yet.
+**NOTE**: You do have to install the MMD support files into the proper
+location for your system.  I would like to make this easier, but haven't found
+the best configuration yet.
 
 
 ## Metadata ##
@@ -359,10 +376,11 @@ will also set the default `quotes language`.
 options are `dutch`, `french`, `german`, `germanguillemets`, `swedish`, `nl`,
 `fr`, `de`, `sv`.  Anything else defaults to English.
 
-Additionally, the `MMD Header` and `MMD Footer` metadata work slightly differently.  In
-v5, these fields were used to list names of files that should be transcluded before and after
-the main body.  In v6, these fields represent the actual text to be inserted.  If you want them
-to reference separate files, use the transclusion functionality:
+Additionally, the `MMD Header` and `MMD Footer` metadata work slightly
+differently.  In v5, these fields were used to list names of files that should
+be transcluded before and after the main body.  In v6, these fields represent
+the actual text to be inserted.  If you want them to reference separate files,
+use the transclusion functionality:
 
 	Title:	Some Title
 	MMD Header:	This is *MMD* text.
@@ -391,22 +409,32 @@ file package.
 text file and embedded images and CSS.  Useful for sharing Markdown files
 and images between applications (on any OS, but especially on iOS)
 *	`bundlezip` -- TextPack variant of the TextBundle format -- the file
-package is compressed to a single zip file (similar to EPUB and ODT
-formats).
-
-[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
-
-
-## Embedded Images ##
-
-Supported export formats (`odt`, `epub`, `bundle`, `bundlezip`) include
-images inside the export document:
-
-* Local images are embedded automatically
-* Images stored on remote servers are embedded *if* [libCurl] is
-properly installed when MMD is compiled.  This is true for macOS builds.
+package is compressed to a single zip file (similar to EPUB and ODor macOS builds.
 
 [libCurl]:	https://curl.haxx.se/libcurl/
+
+
+## Raw Source ##
+
+In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document.  This worked reasonably well, but was limited and didn't work well when exporting to multiple formats.  It was time for something new.
+
+MMD  v6 offers a new feature to handle this.  Code spans and code blocks can be flagged as representing raw source:
+
+	foo `*bar*`{=html}
+	
+	```{=latex}
+	*foo*
+	```
+
+The contents of the span/block will be passed through unchanged.
+
+You can specify which output format is compatible with the specified source:
+
+*	`html`
+*	`odt`
+*	`epub`
+*	`latex`
+*	`*` -- wildcard matches any output format
 
 
 ## Table of Contents ##
@@ -415,6 +443,12 @@ By placing `{{TOC}}` in your document, you can insert an automatically
 generated Table of Contents in your document.  As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.
+
+
+## Tables ##
+
+Tables in MultiMarkdown-6 work basically the same as before, but a caption, if
+present, must come *after* the body of the table, not *before*.
 
 
 ## Transclusion ##

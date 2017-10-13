@@ -68,6 +68,10 @@
 
 /// strndup not available on all platforms
 static char * my_strndup(const char * source, size_t n) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	size_t len = 0;
 	char * result;
 	const char * test = source;
@@ -307,7 +311,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 	char * temp;
 
-	size_t offset;
+	size_t offset = 0;
 	size_t last_match;
 
 	mmd_engine * e = mmd_engine_create_with_dstring(source, EXT_TRANSCLUDE);

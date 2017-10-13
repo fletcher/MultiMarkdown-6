@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-09-04")
+set (My_Project_Revised_Date "2017-10-13")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 2)
-set (My_Project_Version_Patch 1)
+set (My_Project_Version_Patch 2)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -474,7 +474,7 @@ if (DEFINED SHAREDBUILD)
 	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES OUTPUT_NAME libMultiMarkdown)
 
 	if (CURL_FOUND) 
-		target_link_libraries(libMultiMarkdownShared curl)
+		target_link_libraries(libMultiMarkdown ${CURL_LIBRARY})
 	endif (CURL_FOUND)	
 
 endif (DEFINED SHAREDBUILD)

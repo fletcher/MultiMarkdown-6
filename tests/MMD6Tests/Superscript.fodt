@@ -317,6 +317,16 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">CH<text:span text:style-name="MMD-Subscript">3</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH<text:span text:style-name="MMD-Subscript">3</text:span></text:p>
 
 <text:p text:style-name="Standard">CH<text:span text:style-name="MMD-Subscript">3</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH<text:span text:style-name="MMD-Subscript">2</text:span>CH~3</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\pi^2</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\pi^2^</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">CH~4</text:span></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">CH~4~</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>

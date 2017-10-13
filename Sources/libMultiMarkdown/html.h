@@ -66,6 +66,7 @@ void mmd_export_token_tree_html(DString * out, const char * source, token * t, s
 
 void mmd_export_token_html_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
 void mmd_export_token_tree_html_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_tree_html_math(DString * out, const char * source, token * t, scratch_pad * scratch);
 
 void mmd_export_citation_list_html(DString * out, const char * source, scratch_pad * scratch);
 void mmd_export_footnote_list_html(DString * out, const char * source, scratch_pad * scratch);

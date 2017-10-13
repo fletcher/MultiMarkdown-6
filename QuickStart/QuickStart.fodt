@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="version">6.1.0</meta:user-defined>
+	<meta:user-defined meta:name="version">6.2.2</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -296,6 +296,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (Or Acronyms)  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#embeddedimages" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Embedded Images  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#emphandstrong" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Emph and Strong  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#epub3support" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">EPUB 3 Support  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
@@ -306,8 +307,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#outputformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Output Formats  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#embeddedimages" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Embedded Images  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#rawsource" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Raw Source  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
 </text:index-body>
@@ -316,7 +318,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:p text:style-name="Standard">Version: 6.1.0</text:p>
+<text:p text:style-name="Standard">Version: 6.2.2</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
@@ -488,7 +490,28 @@ formatting to the CriticMarkup formatting as in the preceding paragraph.
 Alternatively, you can use the <text:span text:style-name="Source_20_Text">-a\--accept</text:span> or <text:span text:style-name="Source_20_Text">-r\--reject</text:span> options to cause
 MMD to accept or reject, respectively, the proposed changes within the CM
 markup. When doing this, CM will work across blank lines. Without either of
-these two options, then CriticMarkup that spans a blank line is not recognized
+these two options, then CriticMarkup that spans a blank line is not recogniz</text:p>
+
+<text:p text:style-name="Standard">T
+formats).</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="embeddedimages"/>Embedded Images </text:h>
+
+<text:p text:style-name="Standard">Supported export formats (<text:span text:style-name="Source_20_Text">odt</text:span>, <text:span text:style-name="Source_20_Text">epub</text:span>, <text:span text:style-name="Source_20_Text">bundle</text:span>, <text:span text:style-name="Source_20_Text">bundlezip</text:span>) include
+images inside the export document:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+Local images are embedded automatically</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Images stored on remote servers are embedded <text:span text:style-name="MMD-Italic">if</text:span> <text:a xlink:type="simple" xlink:href="https://curl.haxx.se/libcurl/">libCurl</text:a> is
+properly installed when MMD is compiled. This is true f</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">ed
 as such. I working on options for this for the future.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="emphandstrong"/>Emph and Strong </text:h>
@@ -665,9 +688,9 @@ the following <text:span text:style-name="Source_20_Text">latex config</text:spa
 
 </text:list>
 
-<text:p text:style-name="Standard">**NOTE: You do have to install the MMD support files into the proper location
-**for your system. I would like to make this easier, but haven&#8217;t found the
-**best configuration yet.</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: You do have to install the MMD support files into the proper
+location for your system. I would like to make this easier, but haven&#8217;t found
+the best configuration yet.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="metadata"/>Metadata </text:h>
 
@@ -693,10 +716,11 @@ options are <text:span text:style-name="Source_20_Text">dutch</text:span>, <text
 
 </text:list>
 
-<text:p text:style-name="Standard">Additionally, the <text:span text:style-name="Source_20_Text">MMD Header</text:span> and <text:span text:style-name="Source_20_Text">MMD Footer</text:span> metadata work slightly differently. In
-v5, these fields were used to list names of files that should be transcluded before and after
-the main body. In v6, these fields represent the actual text to be inserted. If you want them
-to reference separate files, use the transclusion functionality:</text:p>
+<text:p text:style-name="Standard">Additionally, the <text:span text:style-name="Source_20_Text">MMD Header</text:span> and <text:span text:style-name="Source_20_Text">MMD Footer</text:span> metadata work slightly
+differently. In v5, these fields were used to list names of files that should
+be transcluded before and after the main body. In v6, these fields represent
+the actual text to be inserted. If you want them to reference separate files,
+use the transclusion functionality:</text:p>
 
 <text:p text:style-name="Preformatted Text">Title:<text:tab/>Some Title<text:line-break/>MMD Header:<text:tab/>This is *MMD* text.<text:line-break/>MMD Footer:<text:tab/>{{footer.txt}}<text:line-break/></text:p>
 
@@ -741,24 +765,41 @@ and images between applications (on any OS, but especially on iOS)</text:p></tex
 
 <text:list-item>
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">bundlezip</text:span> &#8211; TextPack variant of the TextBundle format &#8211; the file
-package is compressed to a single zip file (similar to EPUB and ODT
-formats).</text:p></text:list-item>
+package is compressed to a single zip file (similar to EPUB and ODor macOS builds.</text:p></text:list-item>
 
 </text:list>
 
-<text:h text:outline-level="4"><text:bookmark text:name="embeddedimages"/>Embedded Images </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="rawsource"/>Raw Source </text:h>
 
-<text:p text:style-name="Standard">Supported export formats (<text:span text:style-name="Source_20_Text">odt</text:span>, <text:span text:style-name="Source_20_Text">epub</text:span>, <text:span text:style-name="Source_20_Text">bundle</text:span>, <text:span text:style-name="Source_20_Text">bundlezip</text:span>) include
-images inside the export document:</text:p>
+<text:p text:style-name="Standard">In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn&#8217;t work well when exporting to multiple formats. It was time for something new.</text:p>
+
+<text:p text:style-name="Standard">MMD v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:</text:p>
+
+<text:p text:style-name="Preformatted Text">foo `*bar*`{=html}<text:line-break/><text:line-break/>```{=latex}<text:line-break/>*foo*<text:line-break/>```<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The contents of the span/block will be passed through unchanged.</text:p>
+
+<text:p text:style-name="Standard">You can specify which output format is compatible with the specified source:</text:p>
 
 <text:list text:style-name="L1">
 <text:list-item>
 <text:p text:style-name="P1">
-Local images are embedded automatically</text:p></text:list-item>
+<text:span text:style-name="Source_20_Text">html</text:span></text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="Standard">Images stored on remote servers are embedded <text:span text:style-name="MMD-Italic">if</text:span> <text:a xlink:type="simple" xlink:href="https://curl.haxx.se/libcurl/">libCurl</text:a> is
-properly installed when MMD is compiled. This is true for macOS builds.</text:p></text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">odt</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">epub</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">latex</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">*</text:span> &#8211; wildcard matches any output format</text:p></text:list-item>
 
 </text:list>
 
@@ -768,6 +809,11 @@ properly installed when MMD is compiled. This is true for macOS builds.</text:p>
 generated Table of Contents in your document. As of MMD v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="tables"/>Tables </text:h>
+
+<text:p text:style-name="Standard">Tables in MultiMarkdown-6 work basically the same as before, but a caption, if
+present, must come <text:span text:style-name="MMD-Italic">after</text:span> the body of the table, not <text:span text:style-name="MMD-Italic">before</text:span>.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="transclusion"/>Transclusion </text:h>
 

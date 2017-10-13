@@ -56,3 +56,9 @@ latex config:	article</p>
 <p>$a <em>foo</em> b$</p>
 
 <p>\[a <em>foo</em> b\]</p>
+
+<p>\[\pi^2\]</p>
+
+<p>25</p>
+
+<p>\[\pi~2\]</p>

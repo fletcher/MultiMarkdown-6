@@ -122,6 +122,10 @@
 
 /// strdup() not available on all platforms
 static char * my_strdup(const char * source) {
+	if (source == NULL) {
+		return NULL;
+	}
+
 	char * result = malloc(strlen(source) + 1);
 
 	if (result) {
@@ -320,6 +324,33 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 			print_const("&quot;");
 			break;
 
+		case MATH_BRACKET_OPEN:
+		case MATH_BRACKET_CLOSE:
+		case MATH_PAREN_OPEN:
+		case MATH_PAREN_CLOSE:
+			print_token(t);
+			break;
+
+		case SUBSCRIPT:
+			if (t->child) {
+				print_const("~");
+				mmd_export_token_tree_opendocument_raw(out, source, t->child, scratch);
+			} else {
+				print_token(t);
+			}
+
+			break;
+
+		case SUPERSCRIPT:
+			if (t->child) {
+				print_const("^");
+				mmd_export_token_tree_opendocument_raw(out, source, t->child, scratch);
+			} else {
+				print_token(t);
+			}
+
+			break;
+
 		case CODE_FENCE:
 			if (t->next) {
 				t->next->type = TEXT_EMPTY;
@@ -356,6 +387,47 @@ void mmd_export_token_tree_opendocument_raw(DString * out, const char * source, 
 	}
 }
 
+
+void mmd_export_token_tree_opendocument_math(DString * out, const char * source, token * t, scratch_pad * scratch) {
+	while (t != NULL) {
+		if (scratch->skip_token) {
+			scratch->skip_token--;
+		} else {
+			mmd_export_token_opendocument_math(out, source, t, scratch);
+		}
+
+		t = t->next;
+	}
+}
+
+
+void mmd_export_token_opendocument_math(DString * out, const char * source, token * t, scratch_pad * scratch) {
+	if (t == NULL) {
+		return;
+	}
+
+	switch (t->type) {
+		case MATH_BRACKET_OPEN:
+			print_const("\\[");
+			break;
+
+		case MATH_BRACKET_CLOSE:
+			print_const("\\]");
+			break;
+
+		case MATH_PAREN_OPEN:
+			print_const("\\(");
+			break;
+
+		case MATH_PAREN_CLOSE:
+			print_const("\\)");
+			break;
+
+		default:
+			mmd_export_token_opendocument_raw(out, source, t, scratch);
+			break;
+	}
+}
 
 void mmd_export_link_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	if (link->url) {
@@ -1776,8 +1848,13 @@ parse_citation:
 		case PAIR_HTML_COMMENT:
 			break;
 
-		case PAIR_EMPH:
 		case PAIR_MATH:
+			print_const("<text:span text:style-name=\"math\">");
+			mmd_export_token_tree_opendocument_math(out, source, t->child, scratch);
+			print_const("</text:span>");
+			break;
+
+		case PAIR_EMPH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
 		case PAIR_QUOTE_SINGLE:

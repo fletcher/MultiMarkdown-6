@@ -94,3 +94,5 @@ latex config:	article
 \`foo\`
 
 foo\ bar
+
+`\\[foo]`

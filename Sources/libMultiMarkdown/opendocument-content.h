@@ -112,6 +112,7 @@ void mmd_print_string_opendocument(DString * out, const char * str);
 void mmd_print_localized_char_opendocument(DString * out, unsigned short type, scratch_pad * scratch);
 
 void mmd_export_token_opendocument_raw(DString * out, const char * source, token * t, scratch_pad * scratch);
+void mmd_export_token_opendocument_math(DString * out, const char * source, token * t, scratch_pad * scratch);
 
 void mmd_export_link_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch);
 void mmd_export_image_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure);

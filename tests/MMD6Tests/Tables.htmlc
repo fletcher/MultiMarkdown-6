@@ -2,17 +2,17 @@
 latex config:	article</p>
 
 <p>| foo	| bar	|<br />
-| ------+	| :------:+	|<br />
+-----+ | :--:+	|<br />
 | <em>foo</em>	| <em>bar</em>	|<br />
-| <strong>foo bar</strong>		||</p>
+| <strong>foo bar</strong>	||</p>
 
 <p>| foo1 | bar1 |
-| :---+ | ----:+ |
+| :---+ | ---:+ |
 <em>foo</em> | <em>bar</em> |
 | <strong>foo bar</strong> ||</p>
 
 <p>| foo2 | bar2 |
-| :---- | ----: |
+| :---- | ----:
 <em>foo</em> | <em>bar</em> |
 | <strong>foo bar</strong> ||</p>
 
@@ -27,7 +27,7 @@ latex config:	article</p>
 <p>5</p>
 
 <p>| foo5 | bar5 |<br />
-| :---- | ------: |<br />
+| :---- | ------:<br />
 <em>foo</em> | <em>bar</em> |<br />
 | <strong>foo bar</strong> | ||</p>
 
@@ -37,7 +37,7 @@ latex config:	article</p>
 | <strong>foo bar</strong> ||</p>
 
 <p>| foo | bar |
-| --- | --- |
+--- | ---<br />
 | foo | bar |
 [<em>caption</em>][bar]</p>
 
@@ -47,6 +47,17 @@ latex config:	article</p>
 [<em>caption</em>]</p>
 
 <p>[<em>foo</em>][bar]
+| foo | bar |
+| --- | --- |
+| foo | bar |</p>
+
+<p>6</p>
+
+<p>--- | --- |
+| foo | bar |
+[<em>caption</em>][bar]</p>
+
+<p>| bat ||
 | foo | bar |
 | --- | --- |
 | foo | bar |</p>

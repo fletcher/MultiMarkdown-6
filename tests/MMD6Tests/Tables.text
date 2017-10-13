@@ -2,19 +2,19 @@ Title:	Tables
 latex config:	article
 
 | foo	| bar	|  
-|  ------+	| :------:+	|  
+ -----+ | :--:+	|  
 | *foo*	| *bar*	|  
-| **foo bar**		||  
+| **foo bar**	||  
 
 
 | foo1  |  bar1 |
-| :---+ | ----:+ |
+| :---+ | ---:+ |
  *foo*  | *bar* |
 | **foo bar**  ||
 
 
 | foo2  |  bar2 |
-| :---- | ----: |
+| :---- | ----:
  *foo*  | *bar* |
 | **foo bar**  ||
 
@@ -30,7 +30,7 @@ latex config:	article
 5
 
 | foo5  |    bar5 |  
-| :---- | ------: |  
+| :---- | ------:  
  *foo*  |   *bar* |  
 | **foo bar** \| ||  
 
@@ -41,7 +41,7 @@ latex config:	article
 
 
 | foo | bar |
-| --- | --- |
+  --- | ---  
 | foo | bar |
 [*caption*][bar]
 
@@ -51,6 +51,19 @@ latex config:	article
 [*caption*]
 
 [*foo*][bar]
+| foo | bar |
+| --- | --- |
+| foo | bar |
+
+
+6
+
+  --- | --- |
+| foo | bar |
+[*caption*][bar]
+
+
+|    bat   ||
 | foo | bar |
 | --- | --- |
 | foo | bar |
