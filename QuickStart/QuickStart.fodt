@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="version">6.1.0</meta:user-defined>
+	<meta:user-defined meta:name="version">6.2.2</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -318,7 +318,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:p text:style-name="Standard">Version: 6.1.0</text:p>
+<text:p text:style-name="Standard">Version: 6.2.2</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from

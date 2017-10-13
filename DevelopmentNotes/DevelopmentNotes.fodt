@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2017-09-04</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-10-13</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -762,6 +762,71 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;10&#8211;13 - v 6.2.2.:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for tables without header; test for table with multiple header rows</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Remove dead line of code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Add NULL check on my strdup functions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix NULL dereference in abbreviation search</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with libCurl on some systems (Thanks, Brad!)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix math markers in code spans</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential dereference in table handling</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix use of uninitialized variable</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve consistency of math token handling</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Relax table separator line rules to allow missing final pipe</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add additional asset storage option</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add note about tables in MMD-6 to Quick Start Guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix readme</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update QuickStart Guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update readme</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;09&#8211;04 - v 6.2.1:</text:p>
 
