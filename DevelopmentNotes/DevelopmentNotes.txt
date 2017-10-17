@@ -217,7 +217,7 @@ added up and slowed down performance.
 
 After reading for a bit, I ended up coming up with an approach that uses
 larger chunks of memory.  I allocate pools of of memory in large slabs for
-smaller "objects"".  For example, I allocate memory for 1024 tokens at a
+smaller "objects.  For example, I allocate memory for 1024 tokens at a
 single time, and then dole that memory out as needed.  When the slab is empty,
 a new one is allocated.  This dramatically improved performance.
 
@@ -254,7 +254,7 @@ measurable difference.
 I experimented with different approaches to creating the output after parsing.
 I tried printing directly to `stdout`, and even played with different
 buffering settings.  None of those seemed to work well, and all were slower
-than using the `d_string` approach (formerly call `GString` in MMD 5).
+than using the `d_string` approach (formerly called `GString` in MMD 5).
 
 
 ## Fast Searches ##
@@ -383,10 +383,10 @@ application with every release.
 
 ## Fuzz Testing ##
 
-I was not familiar with the concept of [Fuzz Testing]
-(https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned something about
-it to me a year or two ago.  I had never used it before, but it seemed like a
-good idea.  I implement it in two ways.
+I was not familiar with the concept of
+[Fuzz Testing](https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned
+something about it to me a year or two ago.  I had never used it before, but
+it seemed like a good idea.  I implemented it in two ways.
 
 The first is that I created a simplified version of the line parser that
 simply accepts various combinations of line type identifiers to see if they
@@ -401,13 +401,13 @@ several combinations of lines that did not pass.
 **NOTE**: This does not verify accurate parsing, simply that the parser does
 not crash by an unacceptable combination of lines.
 
-The second form of fuzz testing I have started using more recently.  This is
-using the [American fuzzy lop](http://lcamtuf.coredump.cx/afl/) program to try
-to find text input that crashes MMD.  This works by taking sample input (e.g.
-files from the test suite), modifying them slightly, and trying the modified
+The second form of fuzz testing I started using later.  This is using the
+[American fuzzy lop](http://lcamtuf.coredump.cx/afl/) program to try to find
+text input that crashes MMD.  This works by taking sample input (e.g. files
+from the test suite), modifying them slightly, and trying the modified
 versions.  Do this over and over and over, and some interesting edge cases are
 sometimes identified.  I have found some interesting edge cases this way.
-Definitely a very useful tool!
+Definitely a useful tool!
 
 
 ## Unit Testing ##
