@@ -217,7 +217,7 @@ added up and slowed down performance.
 
 After reading for a bit, I ended up coming up with an approach that uses
 larger chunks of memory.  I allocate pools of of memory in large slabs for
-smaller "objects"".  For example, I allocate memory for 1024 tokens at a
+smaller "objects".  For example, I allocate memory for 1024 tokens at a
 single time, and then dole that memory out as needed.  When the slab is empty,
 a new one is allocated.  This dramatically improved performance.
 
@@ -254,7 +254,7 @@ measurable difference.
 I experimented with different approaches to creating the output after parsing.
 I tried printing directly to `stdout`, and even played with different
 buffering settings.  None of those seemed to work well, and all were slower
-than using the `d_string` approach (formerly call `GString` in MMD 5).
+than using the `d_string` approach (formerly called `GString` in MMD 5).
 
 
 ## Fast Searches ##
@@ -383,10 +383,10 @@ application with every release.
 
 ## Fuzz Testing ##
 
-I was not familiar with the concept of [Fuzz Testing]
-(https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned something about
-it to me a year or two ago.  I had never used it before, but it seemed like a
-good idea.  I implement it in two ways.
+I was not familiar with the concept of 
+[Fuzz Testing](https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned 
+something about it to me a year or two ago.  I had never used it before, but 
+it seemed like a good idea.  I implement it in two ways.
 
 The first is that I created a simplified version of the line parser that
 simply accepts various combinations of line type identifiers to see if they
