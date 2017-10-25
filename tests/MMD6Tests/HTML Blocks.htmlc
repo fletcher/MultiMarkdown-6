@@ -69,11 +69,19 @@ latex config:	article</p>
 longer
  *comment* -->
 
+<!--
+This
+
+is
+
+a comment
+-->
+
+<p>15</p>
+
 <p>&lt;!-- This is not a</p>
 
 <p><em>comment</em> --&gt;</p>
-
-<p>15</p>
 
 <div>
 <div>
@@ -107,6 +115,8 @@ longer
 
 </div>
 
+<p>20</p>
+
 <div>
 <div>
 
@@ -115,4 +125,3 @@ longer
 </div>
 </div>
 
-<p>20</p>
