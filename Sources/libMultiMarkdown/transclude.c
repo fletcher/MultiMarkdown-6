@@ -285,6 +285,13 @@ DString * scan_file(const char * fname) {
 
 	while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
 		d_string_append_c_array(buffer, chunk, bytes);
+
+		if (buffer->currentStringLength < kBUFFERSIZE) {
+			// Strip BOM
+			if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
+				d_string_erase(buffer, 0, 3);
+			}
+		}
 	}
 
 	fclose(file);
@@ -467,11 +474,6 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				if (mmd_engine_has_metadata(e, &offset)) {
 					d_string_erase(buffer, 0, offset);
-				} else {
-					// Do we need to strip BOM?
-					if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
-						d_string_erase(buffer, 0, 3);
-					}
 				}
 
 				mmd_engine_free(e, false);
