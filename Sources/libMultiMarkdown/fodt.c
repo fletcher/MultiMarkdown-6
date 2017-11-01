@@ -261,7 +261,9 @@ void mmd_export_link_odf(DString * out, const char * source, token * text, link 
 		text->child->next->len++;
 	}
 
-	mmd_export_token_tree_odf(out, source, text->child, scratch);
+	if (text && text->child) {
+		mmd_export_token_tree_odf(out, source, text->child, scratch);
+	}
 
 	print_const("</text:a>");
 }

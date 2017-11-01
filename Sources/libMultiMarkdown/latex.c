@@ -292,7 +292,9 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 		text->child->next->len++;
 	}
 
-	mmd_export_token_tree_latex(out, source, text->child, scratch);
+	if (text && text->child) {
+		mmd_export_token_tree_latex(out, source, text->child, scratch);
+	}
 
 	print_const("}");
 

@@ -452,7 +452,7 @@ void mmd_export_link_opendocument(DString * out, const char * source, token * te
 		text->child->next->len++;
 	}
 
-	if (text) {
+	if (text && text->child) {
 		mmd_export_token_tree_opendocument(out, source, text->child, scratch);
 	}
 
