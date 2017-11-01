@@ -99,24 +99,24 @@ token_pair_engine * token_pair_engine_new(void);
 
 /// Free existing token pair engine
 void token_pair_engine_free(
-    token_pair_engine * e					//!< Token pair engine to be freed
+	token_pair_engine * e					//!< Token pair engine to be freed
 );
 
 /// Add a new pairing configuration to a token pair engine
 void token_pair_engine_add_pairing(
-    token_pair_engine * e,					//!< Token pair engine to add to
-    unsigned short open_type,				//!< Token type for opener
-    unsigned short close_type,				//!< Token type for closer
-    unsigned short pair_type,				//!< Token type for pairing
-    int options								//!< Token pair options to use
+	token_pair_engine * e,					//!< Token pair engine to add to
+	unsigned short open_type,				//!< Token type for opener
+	unsigned short close_type,				//!< Token type for closer
+	unsigned short pair_type,				//!< Token type for pairing
+	int options								//!< Token pair options to use
 );
 
 /// Search a token's childen for matching pairs
 void token_pairs_match_pairs_inside_token(
-    token * parent,							//!< Which tokens should we search for pairs
-    token_pair_engine * e,					//!< Token pair engine to be used for matching
-    stack * s,								//!< Pointer to a stack to use for pairing tokens
-    unsigned short depth					//!< Keep track of recursion depth
+	token * parent,							//!< Which tokens should we search for pairs
+	token_pair_engine * e,					//!< Token pair engine to be used for matching
+	stack * s,								//!< Pointer to a stack to use for pairing tokens
+	unsigned short depth					//!< Keep track of recursion depth
 );
 
 

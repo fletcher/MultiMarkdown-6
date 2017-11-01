@@ -355,7 +355,7 @@ char * d_string_copy_substring(DString * d, size_t start, size_t len) {
 		if (start + len > d->currentStringLength) {
 			fprintf(stderr, "d_string: Asked to copy invalid substring range.\n");
 			fprintf(stderr, "start: %lu  len: %lu  string: %lu\n", start, len,
-			        d->currentStringLength);
+					d->currentStringLength);
 			return NULL;
 		}
 	}

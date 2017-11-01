@@ -512,13 +512,13 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				// Strip trailing '#' sequence if present
 				if (line->child->tail->type == TEXT_NL) {
 					if ((line->child->tail->prev->type >= HASH1) &&
-					        (line->child->tail->prev->type <= HASH6)) {
+							(line->child->tail->prev->type <= HASH6)) {
 						line->child->tail->prev->type -= HASH1;
 						line->child->tail->prev->type += MARKER_H1;
 					}
 				} else {
 					if ((line->child->tail->type >= HASH1) &&
-					        (line->child->tail->type <= HASH6)) {
+							(line->child->tail->type <= HASH6)) {
 						line->child->tail->type -= TEXT_EMPTY;
 						line->child->tail->type += MARKER_H1;
 					}
@@ -572,8 +572,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 								t = first_child;
 
 								while (t->next && ((t->next->type == INDENT_SPACE) ||
-								                   (t->next->type == INDENT_TAB) ||
-								                   (t->next->type == NON_INDENT_SPACE))) {
+												   (t->next->type == INDENT_TAB) ||
+												   (t->next->type == NON_INDENT_SPACE))) {
 									tokens_prune(t->next, t->next);
 								}
 
@@ -722,8 +722,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 								t = first_child;
 
 								while (t->next && ((t->next->type == INDENT_SPACE) ||
-								                   (t->next->type == INDENT_TAB) ||
-								                   (t->next->type == NON_INDENT_SPACE))) {
+												   (t->next->type == INDENT_TAB) ||
+												   (t->next->type == NON_INDENT_SPACE))) {
 									tokens_prune(t->next, t->next);
 								}
 
@@ -832,7 +832,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 	}
 
 	if ((line->type == LINE_PLAIN) &&
-	        !(e->extensions & EXT_COMPATIBILITY)) {
+			!(e->extensions & EXT_COMPATIBILITY)) {
 		// Check if this is a potential table line
 		token * walker = first_child;
 
@@ -1253,7 +1253,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 				// Do we treat this like metadata?
 				if (!(e->extensions & EXT_COMPATIBILITY) &&
-				        !(e->extensions & EXT_NO_METADATA)) {
+						!(e->extensions & EXT_NO_METADATA)) {
 					break;
 				}
 
@@ -1478,14 +1478,14 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				offset = t->start;
 
 				if (!((offset == 0) ||
-				        (char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
-				        (char_is_whitespace_or_line_ending_or_punctuation(str[offset + 1])))) {
+						(char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) ||
+						(char_is_whitespace_or_line_ending_or_punctuation(str[offset + 1])))) {
 					t->type = APOSTROPHE;
 					break;
 				}
 
 				if (offset && (char_is_punctuation(str[offset - 1])) &&
-				        (char_is_alphanumeric(str[offset + 1]))) {
+						(char_is_alphanumeric(str[offset + 1]))) {
 					// If possessive apostrophe, e.g. `x`'s
 					if (str[offset + 1] == 's' || str[offset + 1] == 'S') {
 						if (char_is_whitespace_or_line_ending_or_punctuation(str[offset + 2])) {
@@ -1520,7 +1520,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				if (t->len == 1) {
 					// Check whether we have '1-2'
 					if ((offset == 0) || (!char_is_digit(str[offset - 1])) ||
-					        (!char_is_digit(str[offset + 1]))) {
+							(!char_is_digit(str[offset + 1]))) {
 						t->type = TEXT_PLAIN;
 					}
 				}
@@ -1661,11 +1661,11 @@ void pair_emphasis_tokens(token * t) {
 					closer = t->mate;
 
 					if (t->next &&
-					        (t->next->mate == closer->prev) &&
-					        (t->type == t->next->type) &&
-					        (t->next->mate != t) &&
-					        (t->start + t->len == t->next->start) &&
-					        (closer->start == closer->prev->start + closer->prev->len)) {
+							(t->next->mate == closer->prev) &&
+							(t->type == t->next->type) &&
+							(t->next->mate != t) &&
+							(t->start + t->len == t->next->start) &&
+							(closer->start == closer->prev->start + closer->prev->len)) {
 
 						// We have a strong pair
 						t->type = STRONG_START;
@@ -1788,8 +1788,8 @@ void is_list_loose(token * list) {
 /// Is this actually an HTML block?
 void is_para_html(mmd_engine * e, token * block) {
 	if ((block == NULL) ||
-	        (block->child == NULL) ||
-	        (block->child->type != LINE_PLAIN)) {
+			(block->child == NULL) ||
+			(block->child->type != LINE_PLAIN)) {
 		return;
 	}
 
@@ -2043,7 +2043,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 			case LINE_SETEXT_1:
 			case LINE_SETEXT_2:
 				if ((block->type == BLOCK_SETEXT_1) ||
-				        (block->type == BLOCK_SETEXT_2)) {
+						(block->type == BLOCK_SETEXT_2)) {
 					temp = l->next;
 					tokens_prune(l, l);
 					l = temp;
@@ -2088,7 +2088,7 @@ handle_line:
 
 				// If we're not a code block, strip additional indents
 				if ((block->type != BLOCK_CODE_INDENTED) &&
-				        (block->type != BLOCK_CODE_FENCED)) {
+						(block->type != BLOCK_CODE_FENCED)) {
 					while (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
 						token_remove_first_child(l);
 					}

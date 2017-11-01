@@ -76,25 +76,25 @@ typedef struct pool pool;
 
 /// Allocate a new object pool
 pool * pool_new(
-    short size 						//!< How big are the objects to be allocated
+	short size 						//!< How big are the objects to be allocated
 );
 
 
 /// Free object pool
 void pool_free(
-    pool * p						//!< Pool to be freed
+	pool * p						//!< Pool to be freed
 );
 
 
 /// Drain pool -- free slabs previously allocated
 void pool_drain(
-    pool * p						//!< Pool to be drained
+	pool * p						//!< Pool to be drained
 );
 
 
 /// Request memory for a new object from the pool
 void * pool_allocate_object(
-    pool * p						//!< Pool to be used for allocation
+	pool * p						//!< Pool to be used for allocation
 );
 
 

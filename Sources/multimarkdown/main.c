@@ -74,8 +74,8 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-	       *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
-	       *a_notransclude, *a_nosmart;
+		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+		   *a_notransclude, *a_nosmart;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;

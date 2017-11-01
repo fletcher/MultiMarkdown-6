@@ -92,7 +92,7 @@ long *ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 
 		for (j = KK + KK - 2; j >= KK; j--)
 			x[j - (KK - LL)] = mod_diff(x[j - (KK - LL)], x[j]),
-			                   x[j - KK] = mod_diff(x[j - KK], x[j]);
+							   x[j - KK] = mod_diff(x[j - KK], x[j]);
 
 		if (is_odd(ss)) {              /* "multiply by z" */
 			for (j = KK; j > 0; j--) {

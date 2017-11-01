@@ -69,7 +69,7 @@ typedef struct Scanner Scanner;
 
 /// Scan for the next token
 int scan(
-    Scanner * s,			//!< Pointer to Scanner state structure
-    const char * stop		//!< Pointer to position in string at which to stop parsing
+	Scanner * s,			//!< Pointer to Scanner state structure
+	const char * stop		//!< Pointer to position in string at which to stop parsing
 );
 

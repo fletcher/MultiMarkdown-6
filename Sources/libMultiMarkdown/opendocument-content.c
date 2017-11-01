@@ -976,7 +976,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				temp_token = t->next->child;
 
 				if (temp_token->next &&
-				        temp_token->next->type == PAIR_BRACKET) {
+						temp_token->next->type == PAIR_BRACKET) {
 					temp_token = temp_token->next;
 				}
 
@@ -1148,7 +1148,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 
 		case ESCAPED_CHARACTER:
 			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
-			        (source[t->start + 1] == ' ')) {
+					(source[t->start + 1] == ' ')) {
 				print_const(" ");		// This is a non-breaking space character
 			} else {
 				mmd_print_char_opendocument(out, source[t->start + 1]);
@@ -1370,7 +1370,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
-			        (t->next && t->next->type == PAIR_BRACKET_CITATION)) {
+					(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
 				goto parse_citation;
 			}
 
@@ -1386,8 +1386,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					temp_token = t->next;
 
 					if (temp_token &&
-					        ((temp_token->type == PAIR_BRACKET) ||
-					         (temp_token->type == PAIR_PAREN))) {
+							((temp_token->type == PAIR_BRACKET) ||
+							 (temp_token->type == PAIR_PAREN))) {
 						temp_token = temp_token->next;
 					}
 
@@ -1754,7 +1754,7 @@ parse_citation:
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
+					(scratch->extensions & EXT_CRITIC_ACCEPT)) {
 				break;
 			}
 
@@ -1774,7 +1774,7 @@ parse_citation:
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
+					(scratch->extensions & EXT_CRITIC_ACCEPT)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
@@ -1803,8 +1803,8 @@ parse_citation:
 
 		case PAIR_CRITIC_SUB_DEL:
 			if ((scratch->extensions & EXT_CRITIC) &&
-			        (t->next) &&
-			        (t->next->type == PAIR_CRITIC_SUB_ADD)) {
+					(t->next) &&
+					(t->next->type == PAIR_CRITIC_SUB_ADD)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 
@@ -1825,8 +1825,8 @@ parse_citation:
 
 		case PAIR_CRITIC_SUB_ADD:
 			if ((scratch->extensions & EXT_CRITIC) &&
-			        (t->prev) &&
-			        (t->prev->type == PAIR_CRITIC_SUB_DEL)) {
+					(t->prev) &&
+					(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 

@@ -97,7 +97,7 @@ void token_pair_engine_free(token_pair_engine * e) {
 
 /// Add a new pairing configuration to a token pair engine
 void token_pair_engine_add_pairing(token_pair_engine * e, unsigned short open_type, unsigned short close_type,
-                                   unsigned short pair_type, int options) {
+								   unsigned short pair_type, int options) {
 	// \todo: This needs to be more sophisticated
 	e->can_open_pair[open_type] = 1;
 	e->can_close_pair[close_type] = 1;
@@ -189,7 +189,7 @@ close:
 					if (!e->empty_allowed[pair_type]) {
 						// Make sure they aren't consecutive tokens
 						if ((peek->next == walker) &&
-						        (peek->start + peek->len == walker->start)) {
+								(peek->start + peek->len == walker->start)) {
 							// i--;
 							i = start_counter;	// In this situation, we can't use this token as a closer
 							continue;
