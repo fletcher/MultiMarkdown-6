@@ -2572,7 +2572,10 @@ void mmd_engine_update_metavalue_for_key(mmd_engine * e, const char * key, const
 
 		d_string_erase(e->dstr, start, len);
 		d_string_insert(e->dstr, start, "\n");
-		d_string_insert(e->dstr, start, value);
+
+		if (value) {
+			d_string_insert(e->dstr, start, value);
+		}
 	} else if (meta_end != 0) {
 		// We're appending metadata at the end
 		d_string_insert(e->dstr, meta_end, temp->str);
