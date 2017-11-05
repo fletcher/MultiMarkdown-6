@@ -2538,7 +2538,11 @@ void mmd_engine_update_metavalue_for_key(mmd_engine * e, const char * key, const
 
 	DString * temp = d_string_new(key);
 	d_string_append(temp, ":\t");
-	d_string_append(temp, value);
+
+	if (value) {
+		d_string_append(temp, value);
+	}
+
 	d_string_append_c(temp, '\n');
 
 	if (start != -1) {
