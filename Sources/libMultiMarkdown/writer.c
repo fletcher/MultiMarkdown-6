@@ -598,8 +598,10 @@ attr * parse_attributes(char * source) {
 			a->next = attr_new(key, value);
 			a = a->next;
 		} else {
+#ifndef __clang_analyzer__
 			a = attr_new(key, value);
 			attributes = a;
+#endif
 		}
 
 		free(value);	// We stored a modified copy
