@@ -63,6 +63,7 @@
 
 #include "argtable3.h"
 #include "d_string.h"
+#include "file.h"
 #include "i18n.h"
 #include "libMultiMarkdown.h"
 #include "token.h"
@@ -95,25 +96,6 @@ static char * my_strdup(const char * source) {
 	}
 
 	return result;
-}
-
-
-DString * stdin_buffer() {
-	/* Read from stdin and return a DString *
-		`buffer` will need to be freed elsewhere */
-
-	char chunk[kBUFFERSIZE];
-	size_t bytes;
-
-	DString * buffer = d_string_new("");
-
-	while ((bytes = fread(chunk, 1, kBUFFERSIZE, stdin)) > 0) {
-		d_string_append_c_array(buffer, chunk, bytes);
-	}
-
-	fclose(stdin);
-
-	return buffer;
 }
 
 

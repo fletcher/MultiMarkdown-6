@@ -63,10 +63,10 @@
 #endif
 
 #include "epub.h"
+#include "file.h"
 #include "html.h"
 #include "i18n.h"
 #include "miniz.h"
-#include "transclude.h"
 #include "uuid.h"
 #include "writer.h"
 #include "zip.h"

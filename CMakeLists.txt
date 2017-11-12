@@ -183,6 +183,7 @@ set(src_files
 	Sources/libMultiMarkdown/critic_markup.c
 	Sources/libMultiMarkdown/d_string.c
 	Sources/libMultiMarkdown/epub.c
+	Sources/libMultiMarkdown/file.c
 	Sources/libMultiMarkdown/fodt.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
@@ -214,6 +215,7 @@ set(header_files
 	Sources/libMultiMarkdown/critic_markup.h
 	Sources/libMultiMarkdown/include/d_string.h
 	Sources/libMultiMarkdown/epub.h
+	Sources/libMultiMarkdown/file.h
 	Sources/libMultiMarkdown/fodt.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
