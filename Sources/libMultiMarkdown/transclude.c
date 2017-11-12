@@ -144,7 +144,7 @@ void add_trailing_sep(DString * path) {
 	#endif
 
 	// Ensure that folder ends in separator
-	if (!is_separator(path->str[path->currentStringLength - 1])) {
+	if ((path->currentStringLength == 0) || (!is_separator(path->str[path->currentStringLength - 1]))) {
 		d_string_append_c(path, sep);
 	}
 }
