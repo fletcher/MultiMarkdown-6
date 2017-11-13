@@ -298,7 +298,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">~/Library/MultiMarkdown</text:p>
 
-<text:p text:style-name="Standard">^test</text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Superscript">test</text:span></text:p>
 
 <text:p text:style-name="Standard">10</text:p>
 
@@ -327,6 +327,14 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">20</text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">CH~4~</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Superscript">238</text:span>U</text:p>
+
+<text:p text:style-name="Standard">Ca<text:span text:style-name="MMD-Superscript">2+</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Subscript">t</text:span>p<text:span text:style-name="MMD-Subscript">x</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Superscript">23</text:span>Na<text:span text:style-name="MMD-Superscript">1+</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>
