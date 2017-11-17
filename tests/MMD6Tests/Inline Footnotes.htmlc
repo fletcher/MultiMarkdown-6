@@ -8,3 +8,5 @@ latex config:	article</p>
 <strong>foo</strong>.]</p>
 
 <p>Inline.[^foo <em>bar</em>]</p>
+
+<p>Inline.[^foo][^foo][^bar]</p>

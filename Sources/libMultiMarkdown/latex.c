@@ -1490,10 +1490,10 @@ parse_citation:
 					print_const("}");
 				} else {
 					// This is the first time this note was used
-
 					print_const("\\footnote{");
 					temp_note = stack_peek_index(scratch->used_footnotes, temp_short - 1);
-
+					// Reset padding counter in case of multiple footnotes in single paragraph
+					scratch->padded = 2;
 					mmd_export_token_tree_latex(out, source, temp_note->content, scratch);
 					print_const("}");
 				}

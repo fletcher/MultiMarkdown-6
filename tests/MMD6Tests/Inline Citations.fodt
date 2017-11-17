@@ -274,23 +274,14 @@ office:mimetype="application/vnd.oasis.opendocument.text">
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<dc:title>Inline Footnotes</dc:title>
+	<dc:title>Inline Citations</dc:title>
 </office:meta>
 <office:body>
 <office:text>
-<text:p text:style-name="Standard">Inline.<text:note text:id="fn1" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo <text:span text:style-name="MMD-Italic">bar</text:span></text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">Inline. <text:note text:id="cite1" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">John Doe. <text:span text:style-name="MMD-Italic">A Totally Fake Book 1</text:span>. Vanity Press, 2006.</text:p></text:note-body></text:note>
+<text:note text:id="cite2" text:note-class="endnote"><text:note-body>
 
-<text:p text:style-name="Standard">Inline.<text:note text:id="fn2" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo <text:span text:style-name="MMD-Italic">bar</text:span>
-<text:a xlink:type="simple" xlink:href="/bar">foo</text:a>
-<text:span text:style-name="MMD-Bold">foo</text:span>.</text:p></text:note-body></text:note></text:p>
-
-<text:p text:style-name="Standard">Inline.<text:note text:id="fn3" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo <text:span text:style-name="MMD-Italic">bar</text:span></text:p></text:note-body></text:note></text:p>
-
-<text:p text:style-name="Standard">Inline.<text:note text:id="fn4" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">foo</text:p></text:note-body></text:note><text:note text:id="fn5" text:note-class="footnote"><text:note-body>
-
-<text:p text:style-name="Footnote">foo</text:p></text:note-body></text:note><text:note text:id="fn6" text:note-class="footnote"><text:note-body>
-
-<text:p text:style-name="Footnote">bar</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Footnote">John Doe. <text:span text:style-name="MMD-Italic">A Totally Fake Book 2</text:span>. Vanity Press, 2006.</text:p></text:note-body></text:note></text:p>
 </office:text>
 </office:body>
 </office:document>
