@@ -144,4 +144,10 @@ void split_path_file(char ** dir, char ** file, const char * path);
 // Convert argument to absolute path
 char * absolute_path_for_argument(const char * arg);
 
+
+#if (defined(_WIN32) || defined(__WIN32__))
+// Windows does not know realpath(), so we need a "windows port"
+char *realpath(const char *path, char *resolved_path);
+#endif
+
 #endif
