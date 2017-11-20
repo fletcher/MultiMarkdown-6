@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-10-13  
+Date: 2017-11-20  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -470,6 +470,24 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2017-11-20 - v 6.2.3:
+
+	*    CHANGED: Fix typos
+	*    CHANGED: Update superscript/subscript algorithm to allow leading instances
+	*    FIXED: Fix bug with multiple footnotes in single paragraph when exporting to LaTeX
+	*    FIXED: Fix potential NULL pointer dereference
+	*    FIXED: Fix potential bug
+	*    FIXED: Prevent pointer overflow
+	*    FIXED: Strip UTF-8 BOM from main files, not just transcluded files
+	*    UPDATED: Add HTML comment test cases to further demonstrate
+	*    UPDATED: Adjust libMultiMarkdown.h so it does not recursively include other files
+	*    UPDATED: Fix issue with AStyle indent settings
+	*    UPDATED: Refactor file utilities into file.c/h
+	*    UPDATED: Silence Xcode static analyzer false positives
+	*    UPDATED: Silence analyzer warnings
+	*    UPDATED: Update function name in swift file
+
 
 * 2017-10-13 - v 6.2.2.:
 
