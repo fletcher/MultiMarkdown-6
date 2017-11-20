@@ -105,6 +105,7 @@
 	#include <curl/curl.h>
 #endif
 
+#include "file.h"
 #include "miniz.h"
 #include "opendocument.h"
 #include "opendocument-content.h"
