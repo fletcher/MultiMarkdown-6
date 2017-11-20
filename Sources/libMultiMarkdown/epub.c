@@ -63,10 +63,10 @@
 #endif
 
 #include "epub.h"
+#include "file.h"
 #include "html.h"
 #include "i18n.h"
 #include "miniz.h"
-#include "transclude.h"
 #include "uuid.h"
 #include "writer.h"
 #include "zip.h"
@@ -211,7 +211,7 @@ char * epub_package_document(scratch_pad * scratch) {
 		struct tm * today = localtime(&t);
 
 		d_string_append_printf(out, "<meta property=\"dcterms:modified\">%d-%02d-%02d</meta>\n",
-		                       today->tm_year + 1900, today->tm_mon + 1, today->tm_mday);
+							   today->tm_year + 1900, today->tm_mon + 1, today->tm_mday);
 	}
 
 	d_string_append(out, "</metadata>\n");

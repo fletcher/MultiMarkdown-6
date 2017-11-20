@@ -418,8 +418,8 @@ char * label_from_string(const char * str) {
 				next_char++;
 			}
 		} else if ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'Z')
-		           || (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str == '_')
-		           || (*str == '-') || (*str == ':')) {
+				   || (*str >= 'a' && *str <= 'z') || (*str == '.') || (*str == '_')
+				   || (*str == '-') || (*str == ':')) {
 			// Allow 0-9, A-Z, a-z, ., _, -, :
 			d_string_append_c(out, tolower(*str));
 		}
@@ -598,8 +598,10 @@ attr * parse_attributes(char * source) {
 			a->next = attr_new(key, value);
 			a = a->next;
 		} else {
+#ifndef __clang_analyzer__
 			a = attr_new(key, value);
 			attributes = a;
+#endif
 		}
 
 		free(value);	// We stored a modified copy
@@ -909,7 +911,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 
 			// Advance remainder to end of destination
 			while ((*remainder)->next &&
-			        (*remainder)->next->start < start + scan_len) {
+					(*remainder)->next->start < start + scan_len) {
 				*remainder = (*remainder)->next;
 			}
 
@@ -962,7 +964,7 @@ char * url_accept(const char * source, size_t start, size_t max_len, size_t * en
 
 		// Is this <foo>?
 		if ((source[start] == '<') &&
-		        (source[start + scan_len - 1] == '>')) {
+				(source[start + scan_len - 1] == '>')) {
 			// Strip '<' and '>'
 			start++;
 			scan_len -= 2;
@@ -1367,8 +1369,8 @@ void process_definition_block(mmd_engine * e, token * block) {
 					f->label_text = f->clean_text;
 
 					if (f->content->child &&
-					        f->content->child->next &&
-					        f->content->child->next->next) {
+							f->content->child->next &&
+							f->content->child->next->next) {
 						f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
 					} else {
 						f->clean_text = NULL;
@@ -1542,7 +1544,7 @@ void process_table_to_link(mmd_engine * e, token * t) {
 		token * temp_token = t->next->child;
 
 		if (temp_token->next &&
-		        temp_token->next->type == PAIR_BRACKET) {
+				temp_token->next->type == PAIR_BRACKET) {
 			temp_token = temp_token->next;
 		}
 
@@ -1571,7 +1573,7 @@ void process_table_stack(mmd_engine * e) {
 /// Parse metadata
 void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 	if ((scratch->extensions & EXT_NO_METADATA) ||
-	        (scratch->extensions & EXT_COMPATIBILITY)) {
+			(scratch->extensions & EXT_COMPATIBILITY)) {
 		return;
 	}
 
@@ -1601,13 +1603,13 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			}
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 			if ((scratch->output_format == FORMAT_LATEX) ||
-			        (scratch->output_format == FORMAT_BEAMER) ||
-			        (scratch->output_format == FORMAT_MEMOIR)) {
+					(scratch->output_format == FORMAT_BEAMER) ||
+					(scratch->output_format == FORMAT_MEMOIR)) {
 				header_level = atoi(m->value);
 			}
 		} else if (strcmp(m->key, "odfheaderlevel") == 0) {
 			if ((scratch->output_format == FORMAT_ODT) ||
-			        (scratch->output_format == FORMAT_FODT)) {
+					(scratch->output_format == FORMAT_FODT)) {
 				header_level = atoi(m->value);
 			}
 		} else if (strcmp(m->key, "language") == 0) {
@@ -1650,18 +1652,18 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			temp_char = label_from_string(m->value);
 
 			if ((strcmp(temp_char, "dutch") == 0) ||
-			        (strcmp(temp_char, "nl") == 0)) {
+					(strcmp(temp_char, "nl") == 0)) {
 				scratch->quotes_lang = DUTCH;
 			} else if ((strcmp(temp_char, "french") == 0) ||
-			           (strcmp(temp_char, "fr") == 0)) {
+					   (strcmp(temp_char, "fr") == 0)) {
 				scratch->quotes_lang = FRENCH;
 			} else if ((strcmp(temp_char, "german") == 0) ||
-			           (strcmp(temp_char, "de") == 0)) {
+					   (strcmp(temp_char, "de") == 0)) {
 				scratch->quotes_lang = GERMAN;
 			} else if (strcmp(temp_char, "germanguillemets") == 0) {
 				scratch->quotes_lang = GERMANGUILL;
 			} else if ((strcmp(temp_char, "swedish") == 0) ||
-			           (strcmp(temp_char, "sv") == 0)) {
+					   (strcmp(temp_char, "sv") == 0)) {
 				scratch->quotes_lang = SWEDISH;
 			} else {
 				scratch->quotes_lang = ENGLISH;
@@ -2468,13 +2470,13 @@ bool table_has_caption(token * t) {
 			t = t->next;
 
 			if (t && t->next &&
-			        t->next->type == PAIR_BRACKET) {
+					t->next->type == PAIR_BRACKET) {
 				t = t->next;
 			}
 
 			if (t && t->next &&
-			        ((t->next->type == TEXT_NL) ||
-			         (t->next->type == TEXT_LINEBREAK))) {
+					((t->next->type == TEXT_NL) ||
+					 (t->next->type == TEXT_LINEBREAK))) {
 				t = t->next;
 			}
 

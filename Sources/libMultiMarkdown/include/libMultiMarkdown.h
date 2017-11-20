@@ -8,7 +8,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 
 	******IMPORTANT******
@@ -20,7 +20,7 @@
 	2. Properly manage the `token_pool_init` and `token_pool_free` functions.
 
 
-	I recommend option #1, unless you absolutely need the best performance for 
+	I recommend option #1, unless you absolutely need the best performance for
 	long documents.  Doing #2 properly is tricky in any program that can handle
 	multiple MMD text strings at overlapping times.
 
@@ -32,30 +32,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -74,8 +74,20 @@
 #include <stdlib.h>
 
 
-#include "d_string.h"
-#include "token.h"
+/// typedefs for internal data structures.  If you intend to work with these structures
+/// in your own code, you may need to import additional header files.
+
+/// From token.h:
+typedef struct token token;
+
+/// From d_string.h:
+typedef struct DString DString;
+
+/// From mmd.h
+typedef struct mmd_engine mmd_engine;
+
+/// From stack.h
+typedef struct stack stack;
 
 
 /// There are 3 main versions of the primary functions:
@@ -181,10 +193,6 @@ struct stack * mmd_d_string_transclusion_manifest(DString * source, const char *
 	MMD Engine variants
 */
 
-/// MMD Engine is used for storing configuration information for MMD parser
-typedef struct mmd_engine mmd_engine;
-
-
 /// Create MMD Engine using an existing DString (A new copy is *not* made)
 mmd_engine * mmd_engine_create_with_dstring(
 	DString *		d,
@@ -206,8 +214,8 @@ void mmd_engine_reset(mmd_engine * e);
 
 /// Free an existing MMD Engine
 void mmd_engine_free(
-	mmd_engine * e,
-	bool freeDString
+	mmd_engine *	e,
+	bool			freeDString
 );
 
 
@@ -279,10 +287,6 @@ char * mmd_version(void);
 
 // Read file into memory
 DString * scan_file(const char * fname);
-
-
-/// MMD Engine is used for storing configuration information for MMD parser
-typedef struct stack stack;
 
 
 /// Recursively transclude source text, given a search directory.
@@ -440,7 +444,7 @@ enum token_types {
 	HTML_COMMENT_START,
 	HTML_COMMENT_STOP,
 	PAIR_HTML_COMMENT,
-	
+
 	MATH_PAREN_OPEN,
 	MATH_PAREN_CLOSE,
 	MATH_BRACKET_OPEN,
@@ -452,7 +456,7 @@ enum token_types {
 	PIPE,
 	PLUS,
 	SLASH,
-	
+
 	SUPERSCRIPT,
 	SUBSCRIPT,
 
@@ -481,7 +485,7 @@ enum token_types {
 	TABLE_DIVIDER,
 
 	TOC,
-	
+
 	TEXT_BACKSLASH,
 	RAW_FILTER_LEFT,
 	TEXT_BRACE_LEFT,

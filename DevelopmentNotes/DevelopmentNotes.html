@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Development Notes</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="date" content="2017-10-13"/>
+	<meta name="date" content="2017-11-20"/>
 	<meta name="uuid" content="dd2d8e76-dc2d-416d-9acd-5395d20871c2"/>
 </head>
 <body>
@@ -209,7 +209,7 @@ added up and slowed down performance.</p>
 
 <p>After reading for a bit, I ended up coming up with an approach that uses
 larger chunks of memory. I allocate pools of of memory in large slabs for
-smaller &#8220;objects&#8221;&quot;. For example, I allocate memory for 1024 tokens at a
+smaller &quot;objects. For example, I allocate memory for 1024 tokens at a
 single time, and then dole that memory out as needed. When the slab is empty,
 a new one is allocated. This dramatically improved performance.</p>
 
@@ -244,7 +244,7 @@ measurable difference.</p>
 <p>I experimented with different approaches to creating the output after parsing.
 I tried printing directly to <code>stdout</code>, and even played with different
 buffering settings. None of those seemed to work well, and all were slower
-than using the <code>d_string</code> approach (formerly call <code>GString</code> in MMD 5).</p>
+than using the <code>d_string</code> approach (formerly called <code>GString</code> in MMD 5).</p>
 
 <h4 id="fastsearches">Fast Searches </h4>
 
@@ -362,10 +362,10 @@ application with every release.</p>
 
 <h4 id="fuzztesting">Fuzz Testing </h4>
 
-<p>I was not familiar with the concept of <a href="#fuzztesting">Fuzz Testing</a>
-(https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned something about
-it to me a year or two ago. I had never used it before, but it seemed like a
-good idea. I implement it in two ways.</p>
+<p>I was not familiar with the concept of
+<a href="https://en.wikipedia.org/wiki/Fuzzing">Fuzz Testing</a> until a user mentioned
+something about it to me a year or two ago. I had never used it before, but
+it seemed like a good idea. I implemented it in two ways.</p>
 
 <p>The first is that I created a simplified version of the line parser that
 simply accepts various combinations of line type identifiers to see if they
@@ -380,13 +380,13 @@ several combinations of lines that did not pass.</p>
 <p><strong>NOTE</strong>: This does not verify accurate parsing, simply that the parser does
 not crash by an unacceptable combination of lines.</p>
 
-<p>The second form of fuzz testing I have started using more recently. This is
-using the <a href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</a> program to try
-to find text input that crashes <abbr title="MultiMarkdown">MMD</abbr>. This works by taking sample input (e.g.
-files from the test suite), modifying them slightly, and trying the modified
+<p>The second form of fuzz testing I started using later. This is using the
+<a href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</a> program to try to find
+text input that crashes <abbr title="MultiMarkdown">MMD</abbr>. This works by taking sample input (e.g. files
+from the test suite), modifying them slightly, and trying the modified
 versions. Do this over and over and over, and some interesting edge cases are
 sometimes identified. I have found some interesting edge cases this way.
-Definitely a very useful tool!</p>
+Definitely a useful tool!</p>
 
 <h4 id="unittesting">Unit Testing </h4>
 
@@ -432,6 +432,24 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <h3 id="changelog">Changelog </h3>
 
 <ul>
+<li><p>2017&#8211;11&#8211;20 - v 6.2.3:</p>
+
+<ul>
+<li>CHANGED: Fix typos</li>
+<li>CHANGED: Update superscript/subscript algorithm to allow leading instances</li>
+<li>FIXED: Fix bug with multiple footnotes in single paragraph when exporting to LaTeX</li>
+<li>FIXED: Fix potential NULL pointer dereference</li>
+<li>FIXED: Fix potential bug</li>
+<li>FIXED: Prevent pointer overflow</li>
+<li>FIXED: Strip UTF-8 BOM from main files, not just transcluded files</li>
+<li>UPDATED: Add HTML comment test cases to further demonstrate</li>
+<li>UPDATED: Adjust libMultiMarkdown.h so it does not recursively include other files</li>
+<li>UPDATED: Fix issue with AStyle indent settings</li>
+<li>UPDATED: Refactor file utilities into file.c/h</li>
+<li>UPDATED: Silence Xcode static analyzer false positives</li>
+<li>UPDATED: Silence analyzer warnings</li>
+<li>UPDATED: Update function name in swift file</li>
+</ul></li>
 <li><p>2017&#8211;10&#8211;13 - v 6.2.2.:</p>
 
 <ul>

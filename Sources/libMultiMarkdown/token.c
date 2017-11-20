@@ -190,7 +190,7 @@ token * token_new_parent(token * child, unsigned short type) {
 /// may or may not also be the start of a chain
 void token_chain_append(token * chain_start, token * t) {
 	if ((chain_start == NULL) ||
-	        (t == NULL)) {
+			(t == NULL)) {
 		return;
 	}
 
@@ -465,15 +465,15 @@ void token_tree_describe(token * t, const char * string) {
 /// Find the child node of a given parent that contains the specified
 /// offset position.
 token * token_child_for_offset(
-    token * parent,						//!< Pointer to parent token
-    size_t offset						//!< Search position
+	token * parent,						//!< Pointer to parent token
+	size_t offset						//!< Search position
 ) {
 	if (parent == NULL) {
 		return NULL;
 	}
 
 	if ((parent->start > offset) ||
-	        (parent->start + parent->len < offset)) {
+			(parent->start + parent->len < offset)) {
 		return NULL;
 	}
 
@@ -505,16 +505,16 @@ static bool ranges_intersect(size_t start1, size_t len1, size_t start2, size_t l
 /// Find first child node of a given parent that intersects the specified
 /// offset range.
 token * token_first_child_in_range(
-    token * parent,						//!< Pointer to parent token
-    size_t start,						//!< Start search position
-    size_t len							//!< Search length
+	token * parent,						//!< Pointer to parent token
+	size_t start,						//!< Start search position
+	size_t len							//!< Search length
 ) {
 	if (parent == NULL) {
 		return NULL;
 	}
 
 	if ((parent->start > start + len) ||
-	        (parent->start + parent->len < start)) {
+			(parent->start + parent->len < start)) {
 		return NULL;
 	}
 
@@ -539,16 +539,16 @@ token * token_first_child_in_range(
 /// Find last child node of a given parent that intersects the specified
 /// offset range.
 token * token_last_child_in_range(
-    token * parent,						//!< Pointer to parent token
-    size_t start,						//!< Start search position
-    size_t len							//!< Search length
+	token * parent,						//!< Pointer to parent token
+	size_t start,						//!< Start search position
+	size_t len							//!< Search length
 ) {
 	if (parent == NULL) {
 		return NULL;
 	}
 
 	if ((parent->start > start + len) ||
-	        (parent->start + parent->len < start)) {
+			(parent->start + parent->len < start)) {
 		return NULL;
 	}
 

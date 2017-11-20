@@ -8,3 +8,5 @@ Inline.[^foo *bar*
 **foo**.]
 
 Inline.[^foo *bar*]
+
+Inline.[^foo][^foo][^bar]

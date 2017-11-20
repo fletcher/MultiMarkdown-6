@@ -21,13 +21,13 @@ latex config:	article</p>
 
 <p>--&gt;</p>
 
+<p>5</p>
+
 <!--
 
 *foo*
 
 -->
-
-<p>5</p>
 
 <p>foo &lt;!--</p>
 
@@ -37,7 +37,13 @@ latex config:	article</p>
 
 <p><em>bar</em></p>
 
+<p>--&gt;</p>
+
+<p><em>foo</em></p>
+
 <!--
+
+*foo* --> *bar*
 
 *foo*
 

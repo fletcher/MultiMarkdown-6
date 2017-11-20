@@ -285,7 +285,7 @@ void ac_trie_node_prepare(trie * a, size_t s, char * buffer, unsigned short dept
 	// Prepare children
 	for (int i = 0; i < 256; ++i) {
 		if ((n->child[i] != 0) &&
-		        (n->child[i] != s)) {
+				(n->child[i] != s)) {
 			buffer[depth] = i;
 
 			ac_trie_node_prepare(a, n->child[i], buffer, depth + 1, last_match_state);
@@ -403,7 +403,7 @@ match * ac_trie_search(trie * a, const char * source, size_t start, size_t len) 
 				}
 
 				m = match_add(m, counter - a->node[temp_state].len,
-				              a->node[temp_state].len, a->node[temp_state].match_type);
+							  a->node[temp_state].len, a->node[temp_state].match_type);
 			}
 
 			// Iterate to find shorter matches
@@ -445,7 +445,7 @@ int match_count(match * m) {
 
 void match_describe(match * m, const char * source) {
 	fprintf(stderr, "'%.*s'(%d) at %lu:%lu\n", (int)m->len, &source[m->start],
-	        m->match_type, m->start, m->start + m->len);
+			m->match_type, m->start, m->start + m->len);
 }
 
 
@@ -475,14 +475,16 @@ void match_set_filter_leftmost_longest(match * header) {
 			}
 
 			while (m->next &&
-			        m->next->start > m->start &&
-			        m->next->start < m->start + m->len) {
+					m->next->start > m->start &&
+					m->next->start < m->start + m->len) {
 				// This match is "lefter" than next
+#ifndef __clang_analyzer__
 				match_excise(m->next);
+#endif
 			}
 
 			while (m->next &&
-			        m->next->start < m->start) {
+					m->next->start < m->start) {
 				// Next match is "lefter" than us
 				n = m;
 				m = m->prev;
@@ -491,11 +493,13 @@ void match_set_filter_leftmost_longest(match * header) {
 		}
 
 		while (m->prev &&
-		        m->prev->len &&
-		        m->prev->start >= m->start) {
+				m->prev->len &&
+				m->prev->start >= m->start) {
 			// We are "lefter" than previous
 			n = m->prev;
+#ifndef __clang_analyzer__
 			match_excise(n);
+#endif
 		}
 
 		m = m->next;

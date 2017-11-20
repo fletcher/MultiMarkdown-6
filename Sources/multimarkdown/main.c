@@ -63,6 +63,7 @@
 
 #include "argtable3.h"
 #include "d_string.h"
+#include "file.h"
 #include "i18n.h"
 #include "libMultiMarkdown.h"
 #include "token.h"
@@ -74,8 +75,8 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-	       *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
-	       *a_notransclude, *a_nosmart;
+		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+		   *a_notransclude, *a_nosmart;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -95,25 +96,6 @@ static char * my_strdup(const char * source) {
 	}
 
 	return result;
-}
-
-
-DString * stdin_buffer() {
-	/* Read from stdin and return a DString *
-		`buffer` will need to be freed elsewhere */
-
-	char chunk[kBUFFERSIZE];
-	size_t bytes;
-
-	DString * buffer = d_string_new("");
-
-	while ((bytes = fread(chunk, 1, kBUFFERSIZE, stdin)) > 0) {
-		d_string_append_c_array(buffer, chunk, bytes);
-	}
-
-	fclose(stdin);
-
-	return buffer;
 }
 
 

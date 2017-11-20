@@ -1,0 +1,5 @@
+<p>Title:	Inline Citations
+latex config:	article</p>
+
+<p>Inline. [#John Doe. <em>A Totally Fake Book 1</em>. Vanity Press, 2006.]
+[#John Doe. <em>A Totally Fake Book 2</em>. Vanity Press, 2006.]</p>

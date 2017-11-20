@@ -109,9 +109,9 @@
 	#include <curl/curl.h>
 #endif
 
-#include "textbundle.h"
+#include "file.h"
 #include "miniz.h"
-#include "transclude.h"
+#include "textbundle.h"
 #include "writer.h"
 #include "zip.h"
 

@@ -70,11 +70,19 @@ foo
 longer
  *comment* -->
 
+<!--
+This
+
+is
+
+a comment
+-->
+
+15
+
 <!-- This is not a
 
 *comment* -->
-
-15
 
 <div>
 <div>
@@ -111,6 +119,7 @@ longer
 
 </div>
 
+20
 
 <div>
 <div>
@@ -118,5 +127,3 @@ longer
 **foo5**
 </div>
 </div>
-
-20

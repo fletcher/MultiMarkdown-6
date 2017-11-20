@@ -883,7 +883,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				temp_token = t->next->child;
 
 				if (temp_token->next &&
-				        temp_token->next->type == PAIR_BRACKET) {
+						temp_token->next->type == PAIR_BRACKET) {
 					temp_token = temp_token->next;
 				}
 
@@ -1125,7 +1125,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 		case ESCAPED_CHARACTER:
 			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
-			        (source[t->start + 1] == ' ')) {
+					(source[t->start + 1] == ' ')) {
 				print_const("&nbsp;");
 			} else {
 				mmd_print_char_html(out, source[t->start + 1], false);
@@ -1344,7 +1344,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 		case PAIR_BRACKET:
 			if ((scratch->extensions & EXT_NOTES) &&
-			        (t->next && t->next->type == PAIR_BRACKET_CITATION)) {
+					(t->next && t->next->type == PAIR_BRACKET_CITATION)) {
 				goto parse_citation;
 			}
 
@@ -1360,8 +1360,8 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 					temp_token = t->next;
 
 					if (temp_token &&
-					        ((temp_token->type == PAIR_BRACKET) ||
-					         (temp_token->type == PAIR_PAREN))) {
+							((temp_token->type == PAIR_BRACKET) ||
+							 (temp_token->type == PAIR_PAREN))) {
 						temp_token = temp_token->next;
 					}
 
@@ -1519,11 +1519,11 @@ parse_citation:
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
 							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
-							       temp_short, LC("see citation"), temp_short);
+								   temp_short, LC("see citation"), temp_short);
 						} else {
 							// This is the first time this note was used
 							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
-							       temp_short, temp_short, LC("see citation"), temp_short);
+								   temp_short, temp_short, LC("see citation"), temp_short);
 						}
 					} else {
 						// Locator present
@@ -1531,11 +1531,11 @@ parse_citation:
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
 							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
-							       temp_short, LC("see citation"), temp_char, temp_short);
+								   temp_short, LC("see citation"), temp_char, temp_short);
 						} else {
 							// This is the first time this note was used
 							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
-							       temp_short, temp_short, LC("see citation"), temp_char, temp_short);
+								   temp_short, temp_short, LC("see citation"), temp_char, temp_short);
 						}
 					}
 				} else {
@@ -1582,7 +1582,7 @@ parse_citation:
 					}
 
 					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
-					       temp_short3, LC("see footnote"), temp_short);
+						   temp_short3, LC("see footnote"), temp_short);
 				} else {
 					// This is the first time this note was used
 
@@ -1594,7 +1594,7 @@ parse_citation:
 					}
 
 					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
-					       temp_short3, temp_short3, LC("see footnote"), temp_short);
+						   temp_short3, temp_short3, LC("see footnote"), temp_short);
 				}
 			} else {
 				// Note-based syntax disabled
@@ -1634,7 +1634,7 @@ parse_citation:
 					// This is a re-use of a previously used note
 
 					printf("<a href=\"#gn:%d\" title=\"%s\" class=\"glossary\">",
-					       temp_short, LC("see glossary"));
+						   temp_short, LC("see glossary"));
 					mmd_print_string_html(out, temp_note->clean_text, false);
 					print_const("</a>");
 				} else {
@@ -1642,7 +1642,7 @@ parse_citation:
 
 
 					printf("<a href=\"#gn:%d\" id=\"gnref:%d\" title=\"%s\" class=\"glossary\">",
-					       temp_short, temp_short, LC("see glossary"));
+						   temp_short, temp_short, LC("see glossary"));
 					mmd_print_string_html(out, temp_note->clean_text, false);
 					print_const("</a>");
 				}
@@ -1719,7 +1719,7 @@ parse_citation:
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
+					(scratch->extensions & EXT_CRITIC_ACCEPT)) {
 				break;
 			}
 
@@ -1739,7 +1739,7 @@ parse_citation:
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
-			        (scratch->extensions & EXT_CRITIC_ACCEPT)) {
+					(scratch->extensions & EXT_CRITIC_ACCEPT)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 				mmd_export_token_tree_html(out, source, t->child, scratch);
@@ -1768,8 +1768,8 @@ parse_citation:
 
 		case PAIR_CRITIC_SUB_DEL:
 			if ((scratch->extensions & EXT_CRITIC) &&
-			        (t->next) &&
-			        (t->next->type == PAIR_CRITIC_SUB_ADD)) {
+					(t->next) &&
+					(t->next->type == PAIR_CRITIC_SUB_ADD)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 
@@ -1790,8 +1790,8 @@ parse_citation:
 
 		case PAIR_CRITIC_SUB_ADD:
 			if ((scratch->extensions & EXT_CRITIC) &&
-			        (t->prev) &&
-			        (t->prev->type == PAIR_CRITIC_SUB_DEL)) {
+					(t->prev) &&
+					(t->prev->type == PAIR_CRITIC_SUB_DEL)) {
 				t->child->type = TEXT_EMPTY;
 				t->child->mate->type = TEXT_EMPTY;
 

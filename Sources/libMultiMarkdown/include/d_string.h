@@ -10,7 +10,7 @@
 
 	@author	Daniel Jalkut, modified by Fletcher T. Penney and Dan Lowe
 
-	@bug	
+	@bug
 
 **/
 
@@ -22,30 +22,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -63,26 +63,27 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-/* WE implement minimal mirror implementations of GLib's GString  
+/* WE implement minimal mirror implementations of GLib's GString
  * sufficient to cover the functionality required by MultiMarkdown.
  *
- * NOTE: THese are 100% clean, from-scratch implementations using only the 
+ * NOTE: THese are 100% clean, from-scratch implementations using only the
  * GLib function prototype as guide for behavior.
  */
 
 
 /// Structure for dynamic string
-typedef struct 
-{	
+struct DString {
 	char * str;								//!< Pointer to UTF-8 byte stream for string
 	unsigned long currentStringBufferSize;	//!< Size of buffer currently allocated
 	unsigned long currentStringLength;		//!< Size of current string
-} DString;
+};
+
+typedef struct DString DString;
 
 
 /// Create a new dynamic string
 DString * d_string_new(
-	const char * startingString				//!< Initial contents for string		
+	const char * startingString				//!< Initial contents for string
 );
 
 

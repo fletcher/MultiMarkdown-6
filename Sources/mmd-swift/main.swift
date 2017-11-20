@@ -24,7 +24,7 @@ let e = mmd_engine_create_with_string(text, 0)
 
 
 mmd_engine_parse_string(e)
-mmd_export_token_tree(output, e, format)
+mmd_engine_export_token_tree(output, e, format)
 token_pool_drain()
 
 

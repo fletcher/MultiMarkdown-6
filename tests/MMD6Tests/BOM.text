@@ -1,0 +1,4 @@
+﻿Title:	BOM
+latex config:	article
+
+This file leads with a Byte Order Marker (BOM).

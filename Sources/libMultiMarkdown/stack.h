@@ -71,39 +71,39 @@ typedef struct stack stack;
 /// Create a new stack with dynamic storage with an
 /// initial capacity (0 to use default capacity)
 stack * stack_new(
-    int startingSize				//!< Default capacity for stack
+	int startingSize				//!< Default capacity for stack
 );
 
 
 /// Free the stack
 void stack_free(
-    stack * s						//!< Stack to be freed
+	stack * s						//!< Stack to be freed
 );
 
 
 /// Add a new pointer to the stack
 void stack_push(
-    stack * s,						//!< Stack to use
-    void * element					//!< Pointer to push onto stack
+	stack * s,						//!< Stack to use
+	void * element					//!< Pointer to push onto stack
 );
 
 
 /// Pop the top pointer off the stack and return it
 void * stack_pop(
-    stack * s						//!< Stack to examine
+	stack * s						//!< Stack to examine
 );
 
 
 /// Peek at the top pointer on the stack (but don't remove it from stack)
 void * stack_peek(
-    stack * s						//!< Stack to examine
+	stack * s						//!< Stack to examine
 );
 
 
 /// Peek at a specific index in the stack
 void * stack_peek_index(
-    stack * s,						//!< Stack to examine
-    size_t index					//!< Index to peek at (0 is first pointer on stack)
+	stack * s,						//!< Stack to examine
+	size_t index					//!< Index to peek at (0 is first pointer on stack)
 );
 
 

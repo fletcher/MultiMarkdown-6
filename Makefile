@@ -128,4 +128,4 @@ CHANGELOG:
 # Use astyle
 .PHONY : astyle
 astyle:
-	astyle --options=.astylerc "Sources/libMultiMarkdown/*.c" "Sources/multimarkdown/*.c" "Sources/libMultiMarkdown/*.h" 
+	astyle --options=.astylerc "Sources/libMultiMarkdown/*.c" "Sources/multimarkdown/*.c" "Sources/libMultiMarkdown/*.h"  "Sources/libMultiMarkdown/include/*.h" 

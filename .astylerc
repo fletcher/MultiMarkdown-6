@@ -7,7 +7,7 @@
 
 
 # Indents
---indent=tab=4
+--indent=force-tab=4
 
 
 # Switch statements

@@ -10,7 +10,7 @@
 
 	@author	Fletcher T. Penney
 
-	@bug	
+	@bug
 
 **/
 
@@ -20,27 +20,27 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
 
@@ -59,17 +59,17 @@
 
 
 #define kUseObjectPool 1		//!< Use an object pool to allocate tokens to improve
-								//!< performance in memory allocation. Frees all
-								//!< tokens at once, however, at end of parsing.
+//!< performance in memory allocation. Frees all
+//!< tokens at once, however, at end of parsing.
 
 /// Should call init() once per thread/use, and drain() once per thread/use.
 /// This allows us to know when the pool is no longer being used and it is safe
 /// to free.
 
 #ifdef kUseObjectPool
-void token_pool_init(void);				//!< Initialize object pool for allocating tokens
-void token_pool_drain(void);			//!< Drain pool to free memory when parse complete
-void token_pool_free(void);				//!< Free the token object pool
+	void token_pool_init(void);			//!< Initialize object pool for allocating tokens
+	void token_pool_drain(void);		//!< Drain pool to free memory when parse complete
+	void token_pool_free(void);			//!< Free the token object pool
 #endif
 
 

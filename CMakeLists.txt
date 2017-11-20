@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-10-13")
+set (My_Project_Revised_Date "2017-11-20")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 2)
-set (My_Project_Version_Patch 2)
+set (My_Project_Version_Patch 3)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -183,6 +183,7 @@ set(src_files
 	Sources/libMultiMarkdown/critic_markup.c
 	Sources/libMultiMarkdown/d_string.c
 	Sources/libMultiMarkdown/epub.c
+	Sources/libMultiMarkdown/file.c
 	Sources/libMultiMarkdown/fodt.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
@@ -214,6 +215,7 @@ set(header_files
 	Sources/libMultiMarkdown/critic_markup.h
 	Sources/libMultiMarkdown/include/d_string.h
 	Sources/libMultiMarkdown/epub.h
+	Sources/libMultiMarkdown/file.h
 	Sources/libMultiMarkdown/fodt.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
