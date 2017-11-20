@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2017-10-13</meta:user-defined>
+	<meta:user-defined meta:name="date">2017-11-20</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -531,7 +531,7 @@ added up and slowed down performance.</text:p>
 
 <text:p text:style-name="Standard">After reading for a bit, I ended up coming up with an approach that uses
 larger chunks of memory. I allocate pools of of memory in large slabs for
-smaller &#8220;objects&#8221;&quot;. For example, I allocate memory for 1024 tokens at a
+smaller &quot;objects. For example, I allocate memory for 1024 tokens at a
 single time, and then dole that memory out as needed. When the slab is empty,
 a new one is allocated. This dramatically improved performance.</text:p>
 
@@ -566,7 +566,7 @@ measurable difference.</text:p>
 <text:p text:style-name="Standard">I experimented with different approaches to creating the output after parsing.
 I tried printing directly to <text:span text:style-name="Source_20_Text">stdout</text:span>, and even played with different
 buffering settings. None of those seemed to work well, and all were slower
-than using the <text:span text:style-name="Source_20_Text">d_string</text:span> approach (formerly call <text:span text:style-name="Source_20_Text">GString</text:span> in MMD 5).</text:p>
+than using the <text:span text:style-name="Source_20_Text">d_string</text:span> approach (formerly called <text:span text:style-name="Source_20_Text">GString</text:span> in MMD 5).</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="fastsearches"/>Fast Searches </text:h>
 
@@ -684,10 +684,10 @@ application with every release.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="fuzztesting"/>Fuzz Testing </text:h>
 
-<text:p text:style-name="Standard">I was not familiar with the concept of <text:a xlink:type="simple" xlink:href="#fuzztesting">Fuzz Testing</text:a>
-(https://en.wikipedia.org/wiki/Fuzzing) until a user mentioned something about
-it to me a year or two ago. I had never used it before, but it seemed like a
-good idea. I implement it in two ways.</text:p>
+<text:p text:style-name="Standard">I was not familiar with the concept of
+<text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Fuzzing">Fuzz Testing</text:a> until a user mentioned
+something about it to me a year or two ago. I had never used it before, but
+it seemed like a good idea. I implemented it in two ways.</text:p>
 
 <text:p text:style-name="Standard">The first is that I created a simplified version of the line parser that
 simply accepts various combinations of line type identifiers to see if they
@@ -702,13 +702,13 @@ several combinations of lines that did not pass.</text:p>
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: This does not verify accurate parsing, simply that the parser does
 not crash by an unacceptable combination of lines.</text:p>
 
-<text:p text:style-name="Standard">The second form of fuzz testing I have started using more recently. This is
-using the <text:a xlink:type="simple" xlink:href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</text:a> program to try
-to find text input that crashes MMD. This works by taking sample input (e.g.
-files from the test suite), modifying them slightly, and trying the modified
+<text:p text:style-name="Standard">The second form of fuzz testing I started using later. This is using the
+<text:a xlink:type="simple" xlink:href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</text:a> program to try to find
+text input that crashes MMD. This works by taking sample input (e.g. files
+from the test suite), modifying them slightly, and trying the modified
 versions. Do this over and over and over, and some interesting edge cases are
 sometimes identified. I have found some interesting edge cases this way.
-Definitely a very useful tool!</text:p>
+Definitely a useful tool!</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="unittesting"/>Unit Testing </text:h>
 
@@ -762,6 +762,67 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2017&#8211;11&#8211;20 - v 6.2.3:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Fix typos</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Update superscript/subscript algorithm to allow leading instances</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug with multiple footnotes in single paragraph when exporting to LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential NULL pointer dereference</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential bug</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Prevent pointer overflow</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Strip UTF-8 BOM from main files, not just transcluded files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add HTML comment test cases to further demonstrate</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Adjust libMultiMarkdown.h so it does not recursively include other files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix issue with AStyle indent settings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Refactor file utilities into file.c/h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Silence Xcode static analyzer false positives</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Silence analyzer warnings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update function name in swift file</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;10&#8211;13 - v 6.2.2.:</text:p>
 
