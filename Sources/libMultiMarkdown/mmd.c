@@ -2395,6 +2395,10 @@ char * mmd_d_string_metavalue_for_key(DString * source, const char * key) {
 /// Grab metadata without processing entire document
 /// Returned char * does not need to be freed
 char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
+	if (e == NULL || key == NULL) {
+		return NULL;
+	}
+	
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
 		if (!mmd_engine_has_metadata(e, NULL)) {
