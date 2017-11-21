@@ -306,8 +306,16 @@ void mmd_append_mmd_footer(DString * source);
 void mmd_critic_markup_accept(DString * d);
 
 
+/// Accept all CriticMarkup changes in the specified range
+void mmd_critic_markup_accept_range(DString * d, size_t start, size_t len);
+
+
 /// Reject all CriticMarkup changes in the source string
 void mmd_critic_markup_reject(DString * d);
+
+
+/// Reject all CriticMarkup changes in the specified range
+void mmd_critic_markup_reject_range(DString * d, size_t start, size_t len);
 
 
 /// Token types for parse tree
