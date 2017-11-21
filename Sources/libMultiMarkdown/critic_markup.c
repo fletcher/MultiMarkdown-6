@@ -391,6 +391,20 @@ void Test_critic(CuTest* tc) {
 	mmd_critic_markup_reject(test);
 	CuAssertStrEquals(tc, "foo bar", test->str);
 
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{==foo bar==}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "foo bar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{>>foo bar<<}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{>>foo bar<<}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "", test->str);
 
 	// Decrement counter and clean up token pool
 	token_pool_drain();
