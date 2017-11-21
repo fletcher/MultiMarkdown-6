@@ -191,6 +191,8 @@ void accept_token(DString * d, token * t) {
 		case CM_SUB_OPEN:
 		case CM_ADD_OPEN:
 		case CM_ADD_CLOSE:
+		case CM_HI_OPEN:
+		case CM_HI_CLOSE:
 			if (!t->mate) {
 				break;
 			}
@@ -281,6 +283,8 @@ void reject_token(DString * d, token * t) {
 		case CM_SUB_OPEN:
 		case CM_DEL_OPEN:
 		case CM_DEL_CLOSE:
+		case CM_HI_OPEN:
+		case CM_HI_CLOSE:
 			if (!t->mate) {
 				break;
 			}
@@ -326,8 +330,7 @@ void reject_token_tree(DString * d, token * t) {
 
 void mmd_critic_markup_reject_range(DString * d, size_t start, size_t len) {
 	token * t = critic_parse_substring(d->str, start, len);
-	token_tree_describe(t, d->str);
-	
+
 	if (t && t->child) {
 		reject_token_tree(d, t->child->tail);
 	}
@@ -378,11 +381,16 @@ void Test_critic(CuTest* tc) {
 	mmd_critic_markup_reject(test);
 	CuAssertStrEquals(tc, "foo bat bar", test->str);
 
-
 	d_string_erase(test, 0, -1);
 	d_string_append(test, "{--foo{++ bat ++}bar--}");
 	mmd_critic_markup_reject(test);
 	CuAssertStrEquals(tc, "foobar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{==foo bar==}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "foo bar", test->str);
+
 
 	// Decrement counter and clean up token pool
 	token_pool_drain();
