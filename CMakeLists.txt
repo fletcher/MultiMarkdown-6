@@ -426,13 +426,15 @@ endif (WIN32)
 # ==============
 
 # Is libcurl available?
-find_package(CURL)
-if (CURL_FOUND)
-	add_definitions(-DUSE_CURL)
-	message (STATUS "libcurl found")
-else ()
-	message (STATUS "libcurl not found")
-endif (CURL_FOUND)	
+if (NOT DEFINED TEST)
+	find_package(CURL)
+	if (CURL_FOUND)
+		add_definitions(-DUSE_CURL)
+		message (STATUS "libcurl found")
+	else ()
+		message (STATUS "libcurl not found")
+	endif (CURL_FOUND)	
+endif ()
 
 # Create a library?
 if (NOT DEFINED TEST)
