@@ -237,7 +237,7 @@ void mmd_engine_set_language(mmd_engine * e, short language) {
 			break;
 
 		case LC_ES:
-			e->quotes_lang = ENGLISH;
+			e->quotes_lang = SPANISH;
 			break;
 
 		case LC_FR:
@@ -2398,7 +2398,7 @@ char * mmd_engine_metavalue_for_key(mmd_engine * e, const char * key) {
 	if (e == NULL || key == NULL) {
 		return NULL;
 	}
-	
+
 	if (e->metadata_stack->size == 0) {
 		// Ensure we have checked for metadata
 		if (!mmd_engine_has_metadata(e, NULL)) {

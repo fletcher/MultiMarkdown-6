@@ -209,6 +209,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#171;");
 					break;
 
@@ -233,6 +234,7 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#187;");
 					break;
 

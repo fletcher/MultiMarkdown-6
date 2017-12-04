@@ -520,6 +520,7 @@ enum smart_quotes_language {
 	FRENCH,
 	GERMAN,
 	GERMANGUILL,
+	SPANISH,
 	SWEDISH,
 };
 

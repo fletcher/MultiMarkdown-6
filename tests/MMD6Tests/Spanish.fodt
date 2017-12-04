@@ -280,7 +280,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:text>
 <text:p text:style-name="Standard">&#8216;foo&#8217;</text:p>
 
-<text:p text:style-name="Standard">&#8220;foo&#8221;</text:p>
+<text:p text:style-name="Standard">&#171;foo&#187;</text:p>
 
 <text:p text:style-name="Standard">foo&#8217;s</text:p>
 

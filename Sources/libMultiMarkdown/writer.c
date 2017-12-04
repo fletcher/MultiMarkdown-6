@@ -598,10 +598,10 @@ attr * parse_attributes(char * source) {
 			a->next = attr_new(key, value);
 			a = a->next;
 		} else {
-#ifndef __clang_analyzer__
+			#ifndef __clang_analyzer__
 			a = attr_new(key, value);
 			attributes = a;
-#endif
+			#endif
 		}
 
 		free(value);	// We stored a modified copy
@@ -1620,7 +1620,7 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 				scratch->quotes_lang = GERMAN;
 			} else if (strcmp(temp_char, "es") == 0) {
 				scratch->language = LC_ES;
-				scratch->quotes_lang = ENGLISH;
+				scratch->quotes_lang = SPANISH;
 			} else if (strcmp(temp_char, "fr") == 0) {
 				scratch->language = LC_FR;
 				scratch->quotes_lang = FRENCH;
@@ -1662,6 +1662,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 				scratch->quotes_lang = GERMAN;
 			} else if (strcmp(temp_char, "germanguillemets") == 0) {
 				scratch->quotes_lang = GERMANGUILL;
+			} else if ((strcmp(temp_char, "spanish") == 0) ||
+					   (strcmp(temp_char, "es") == 0)) {
+				scratch->quotes_lang = SPANISH;
 			} else if ((strcmp(temp_char, "swedish") == 0) ||
 					   (strcmp(temp_char, "sv") == 0)) {
 				scratch->quotes_lang = SWEDISH;

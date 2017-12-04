@@ -214,6 +214,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("«");
 					break;
 
@@ -238,6 +239,7 @@ void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("»");
 					break;
 

@@ -200,6 +200,7 @@ void mmd_print_localized_char_odf(DString * out, unsigned short type, scratch_pa
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#171;");
 					break;
 
@@ -224,6 +225,7 @@ void mmd_print_localized_char_odf(DString * out, unsigned short type, scratch_pa
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#187;");
 					break;
 

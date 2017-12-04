@@ -246,6 +246,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#171;");
 					break;
 
@@ -270,6 +271,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#187;");
 					break;
 
