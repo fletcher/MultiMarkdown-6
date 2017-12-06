@@ -369,9 +369,16 @@ token * token_prune_graft(token * first, token * last, unsigned short container_
 		next->prev = first;
 	}
 
-	// Fix tail
+	// Fix tail (prior tail is now a child)
 	if (first->next == NULL) {
+		token * walker = first;
+
+		while (walker->prev) {
+			walker = walker->prev;
+		}
+
 		first->tail = first;
+		walker->tail = first;
 	}
 
 	return first;
