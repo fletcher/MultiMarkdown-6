@@ -126,8 +126,19 @@ typedef NS_ENUM(NSUInteger, #{objc_type_name}) {
 
   def self.case(type_name, line)
     if /(?<indent>\s*)(?<casename>\w+)(?<remainder>.*)/ =~ line
-      return %Q{#{indent}#{type_name}#{casename.camelize} = #{casename},}
+      # Drop redundant enum base prefixes:
+      # "MMD6OutputFormatFormatLatex"  => "MMD6OutputFormatLatex"
+      # "MMD6ParserExtensionExtCritic" => "MMD6ParserExtensionCritic"
+      camelized_case_name = if casename.start_with?("EXT_")
+                              casename[4..-1].camelize
+                            elsif casename.start_with?("FORMAT_")
+                              casename[7..-1].camelize
+                            else 
+                              casename.camelize
+                            end
+      return %Q{#{indent}#{type_name}#{camelized_case_name} = #{casename},}
     end
+    
     return line
   end
 end
