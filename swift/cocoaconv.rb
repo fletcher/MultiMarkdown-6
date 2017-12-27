@@ -93,27 +93,33 @@ class String
 end
 
 module NSEnum
-  def self.type_names(type)
+  def self.type_name(type)
     type_name = type.camelize
     # Remove plural "S"
-    type_name = if type_name == "TokenTypes"
-                  "TokenType"
-                elsif type_name == "ParserExtensions"
-                  "ParserExtension"
-                else
-                  type_name
-                end
-    return "MMD6#{type_name}", type_name
+    if type_name == "TokenTypes"
+      "TokenType"
+    elsif type_name == "ParserExtensions"
+      "ParserExtension"
+    else
+      type_name
+    end
+  end
+  
+  def type_name
+    NSEnum.type_name(type)
   end
 
   def ns_enum
-    type_name, swift_type_name = NSEnum.type_names(type)
+    base_type_name = NSEnum.type_name(type)
+    swift_type_name = base_type_name
+    objc_type_name = "MMD6#{base_type_name}"
+    
     ns_enum_cases = cases
-      .map { |line| NSEnum.case(type_name, line) }
+      .map { |line| NSEnum.case(objc_type_name, line) }
       .join("\n")
       
     return %Q{
-typedef NS_ENUM(NSUInteger, #{type_name}) {
+typedef NS_ENUM(NSUInteger, #{objc_type_name}) {
 #{ns_enum_cases}
 } NS_SWIFT_NAME(#{swift_type_name});}
   end
