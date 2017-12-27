@@ -69,7 +69,12 @@ extension #{type_name}: CustomStringConvertible {
   
   def self.description_for(type_name, enum_case)
     case_name = case_only(enum_case)
-    swift_case_name = case_name.camelize(lowercase_first: true)
+    
+    # Drop redundant enum base prefixes:
+    # ".formatLatex" => ".latex"
+    # ".extCritic"   => ".critic"
+    swift_case_name = case_name.camelize(drop_prefix: case_name.start_with?("EXT_", "FORMAT_"), 
+                                         lowercase_first: true)
     %Q{case .#{swift_case_name}: return "#{type_name}.#{swift_case_name}"}
   end
   
@@ -79,9 +84,10 @@ extension #{type_name}: CustomStringConvertible {
 end
 
 class String
-  def camelize(lowercase_first: false)
+  def camelize(drop_prefix: false, lowercase_first: false)
     self
       .split('_')
+      .drop(drop_prefix ? 1 : 0)
       .map.with_index { |part, i| 
         if lowercase_first && i == 0
           part.downcase
@@ -129,13 +135,8 @@ typedef NS_ENUM(NSUInteger, #{objc_type_name}) {
       # Drop redundant enum base prefixes:
       # "MMD6OutputFormatFormatLatex"  => "MMD6OutputFormatLatex"
       # "MMD6ParserExtensionExtCritic" => "MMD6ParserExtensionCritic"
-      camelized_case_name = if casename.start_with?("EXT_")
-                              casename[4..-1].camelize
-                            elsif casename.start_with?("FORMAT_")
-                              casename[7..-1].camelize
-                            else 
-                              casename.camelize
-                            end
+      drop_prefix = casename.start_with?("EXT_", "FORMAT_")            
+      camelized_case_name = casename.camelize(drop_prefix: drop_prefix)
       return %Q{#{indent}#{type_name}#{camelized_case_name} = #{casename},}
     end
     
