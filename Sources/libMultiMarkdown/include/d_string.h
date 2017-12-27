@@ -160,7 +160,7 @@ void d_string_insert_printf(
 void d_string_erase(
 	DString * baseString,					//!< DString to be appended
 	size_t pos,								//!< Offset at which to erase portion of string
-	size_t len								//!< Character to append
+	size_t len								//!< How many characters(bytes) to remove
 );
 
 /// Copy a portion of dynamic string
