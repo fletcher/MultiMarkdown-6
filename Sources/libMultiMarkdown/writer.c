@@ -1772,7 +1772,7 @@ void automatic_search(mmd_engine * e, token * t, trie * ac) {
 
 void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 	// Only search if we have a target
-	int count = e->abbreviation_stack->size + e->glossary_stack->size;
+	size_t count = e->abbreviation_stack->size + e->glossary_stack->size;
 
 	if (count == 0) {
 		return;
