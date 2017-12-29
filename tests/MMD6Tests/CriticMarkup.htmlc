@@ -61,6 +61,30 @@ latex config:	article</p>
 
 <p>25</p>
 
+<p><code>{++foo++}</code></p>
+
+<p><code>{--bar--}</code></p>
+
+<p><code>{~~foo~&gt;bar~~}</code></p>
+
+<p><code>{&gt;&gt;foo&lt;&lt;}</code></p>
+
+<p><code>{==bar==}</code></p>
+
+<p>30</p>
+
+<p>$${++foo++}$$</p>
+
+<p>$${--bar--}$$</p>
+
+<p>$${~~foo~&gt;bar~~}$$</p>
+
+<p>$${&gt;&gt;foo&lt;&lt;}$$</p>
+
+<p>$${==bar==}$$</p>
+
+<p>35</p>
+
 <p>{++foo{++ bar++}++}</p>
 
 <p>{--foo{-- bar--}--}</p>
