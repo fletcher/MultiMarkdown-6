@@ -280,7 +280,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:text>
 <text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
 draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
-<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" svg:height="20pt" svg:width="40pt" >
 <draw:image xlink:href="http://foo.bar/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
 </draw:frame></text:p>
 <text:p>Figure <text:sequence text:name="Figure" text:formula="ooow:Figure+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>: foo</text:p>
@@ -289,7 +289,7 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
 draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
-<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" svg:height="20pt" svg:width="40pt" >
 <draw:image xlink:href="http://foo.bar/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
 </draw:frame></text:p>
 <text:p>Figure <text:sequence text:name="Figure" text:formula="ooow:Figure+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>: <text:span text:style-name="MMD-Italic">bar</text:span></text:p>
@@ -298,11 +298,20 @@ draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
 
 <text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
 draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
-<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" svg:height="20pt" svg:width="40pt" >
 <draw:image xlink:href="http://foo.bar/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
 </draw:frame></text:p>
 </draw:text-box></draw:frame>
  bar</text:p>
+
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" svg:height="20pt" svg:width="40pt" >
+<draw:image xlink:href="http://foo.bar/" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+<text:p>Figure <text:sequence text:name="Figure" text:formula="ooow:Figure+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>: <text:span text:style-name="MMD-Italic">foo</text:span></text:p>
+</draw:text-box></draw:frame>
+</text:p>
 
 <text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
 draw:z-index="0" draw:style-name="fr1" svg:width="40pt">
