@@ -270,6 +270,15 @@ set (latex
 	texmf/tex/latex/mmd6/article/mmd6-article-footer.tex
 	texmf/tex/latex/mmd6/article/mmd6-article-leader.tex
 
+	texmf/tex/latex/mmd6/beamer/beamerthemekeynote-gradient.sty
+	texmf/tex/latex/mmd6/beamer/beamerthemekeynote-portfolio.sty
+	texmf/tex/latex/mmd6/beamer/beamerthemekeynote-vintage.sty
+	texmf/tex/latex/mmd6/beamer/mmd6-beamer-begin.tex
+	texmf/tex/latex/mmd6/beamer/mmd6-beamer-footer.tex
+	texmf/tex/latex/mmd6/beamer/mmd6-beamer-leader.tex
+	texmf/tex/latex/mmd6/beamer/Portfolio.png
+	texmf/tex/latex/mmd6/beamer/Vintage.png
+
 	texmf/tex/latex/mmd6/letterhead/mmd-envelope.sty
 	texmf/tex/latex/mmd6/letterhead/mmd-letterhead.sty
 	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-begin.tex
