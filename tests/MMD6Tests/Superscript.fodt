@@ -335,6 +335,16 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Subscript">t</text:span>p<text:span text:style-name="MMD-Subscript">x</text:span></text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Superscript">23</text:span>Na<text:span text:style-name="MMD-Superscript">1+</text:span></text:p>
+
+<text:p text:style-name="Standard">25</text:p>
+
+<text:p text:style-name="Standard">Na<text:span text:style-name="MMD-Superscript">1</text:span>+</text:p>
+
+<text:p text:style-name="Standard">Na<text:span text:style-name="MMD-Superscript">1+</text:span></text:p>
+
+<text:p text:style-name="Standard">Na^+</text:p>
+
+<text:p text:style-name="Standard">Na<text:span text:style-name="MMD-Superscript">+</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>

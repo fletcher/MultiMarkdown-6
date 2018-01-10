@@ -1576,7 +1576,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 				offset = t->start + t->len;
 
-				if (char_is_whitespace_or_line_ending_or_punctuation(str[offset])) {
+				if (char_is_whitespace_or_line_ending(str[offset])) {
 					t->can_open = 0;
 				}
 
