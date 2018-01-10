@@ -435,10 +435,10 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </table:table-row>
 <table:table-row>
 <table:table-cell>
-<text:p text:style-name="MMD-Table"> :&#8212;&#8211; </text:p>
+<text:p text:style-name="MMD-Table"> :&#8212;- </text:p>
 </table:table-cell>
 <table:table-cell>
-<text:p text:style-name="MMD-Table-Right"> &#8212;&#8211;: </text:p>
+<text:p text:style-name="MMD-Table-Right"> &#8212;-: </text:p>
 </table:table-cell>
 </table:table-row>
 <table:table-row>
