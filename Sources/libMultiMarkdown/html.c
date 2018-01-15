@@ -368,12 +368,12 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		if (strcmp(a->key, "width") == 0) {
 			width = strip_dimension_units(a->value);
 
-            if (strlen(width) + 2 == strlen(a->value)) {
-                if (strcmp(&(a->value[strlen(width)]), "px") == 0) {
-                    a->value[strlen(width)] = '\0';
-                }
-            }
-            
+			if (strlen(width) + 2 == strlen(a->value)) {
+				if (strcmp(&(a->value[strlen(width)]), "px") == 0) {
+					a->value[strlen(width)] = '\0';
+				}
+			}
+
 			if (strcmp(a->value, width) == 0) {
 				print_const(" ");
 				print(a->key);
@@ -389,12 +389,12 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 		} else if (strcmp(a->key, "height") == 0) {
 			height = strip_dimension_units(a->value);
 
-            if (strlen(height) + 2 == strlen(a->value)) {
-                if (strcmp(&(a->value[strlen(height)]), "px") == 0) {
-                    a->value[strlen(height)] = '\0';
-                }
-            }
-            
+			if (strlen(height) + 2 == strlen(a->value)) {
+				if (strcmp(&(a->value[strlen(height)]), "px") == 0) {
+					a->value[strlen(height)] = '\0';
+				}
+			}
+
 			if (strcmp(a->value, height) == 0) {
 				print_const(" ");
 				print(a->key);
@@ -2074,27 +2074,27 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			print_const("&lt;");
 			break;
 
-        case CRITIC_COM_OPEN:
-            print_const("{&gt;&gt;");
-            break;
-            
-        case CRITIC_COM_CLOSE:
-            print_const("&lt;&lt;}");
-            break;
+		case CRITIC_COM_OPEN:
+			print_const("{&gt;&gt;");
+			break;
 
-        case CRITIC_SUB_DIV:
-            print_const("~&gt;");
-            break;
-            
-        case CRITIC_SUB_DIV_A:
-            print_const("~");
-            break;
-            
-        case CRITIC_SUB_DIV_B:
-            print_const("&gt;");
-            break;
-            
-        case ESCAPED_CHARACTER:
+		case CRITIC_COM_CLOSE:
+			print_const("&lt;&lt;}");
+			break;
+
+		case CRITIC_SUB_DIV:
+			print_const("~&gt;");
+			break;
+
+		case CRITIC_SUB_DIV_A:
+			print_const("~");
+			break;
+
+		case CRITIC_SUB_DIV_B:
+			print_const("&gt;");
+			break;
+
+		case ESCAPED_CHARACTER:
 			print_const("\\");
 			mmd_print_char_html(out, source[t->start + 1], false);
 			break;

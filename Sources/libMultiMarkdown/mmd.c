@@ -1281,6 +1281,9 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case BLOCK_SETEXT_1:
 			case BLOCK_SETEXT_2:
 			case BLOCK_TABLE:
+			case BLOCK_TABLE_SECTION:
+			case TABLE_ROW:
+			case TABLE_CELL:
 			case BLOCK_TERM:
 			case LINE_LIST_BULLETED:
 			case LINE_LIST_ENUMERATED:
@@ -1573,7 +1576,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 				offset = t->start + t->len;
 
-				if (char_is_whitespace_or_line_ending_or_punctuation(str[offset])) {
+				if (char_is_whitespace_or_line_ending(str[offset])) {
 					t->can_open = 0;
 				}
 
