@@ -333,6 +333,7 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 			print_token(t);
 
 			temp = NULL;
+
 			if (t->next) {
 				temp = (char *) &source[t->next->start];
 			}
@@ -340,13 +341,14 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 			source = (char *) &source[t->start + t->len];
 
 			while (char_is_whitespace(*source) &&
-				   ((temp == NULL) ||
-					(source < temp))) {
-					   print_char(*source);
-					   source++;
-				   }
+					((temp == NULL) ||
+					 (source < temp))) {
+				print_char(*source);
+				source++;
+			}
+
 			break;
-			
+
 		case MATH_BRACKET_OPEN:
 		case MATH_BRACKET_CLOSE:
 		case MATH_PAREN_OPEN:

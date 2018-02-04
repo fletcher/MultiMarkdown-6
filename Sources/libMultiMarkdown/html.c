@@ -2052,6 +2052,7 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 	if (t == NULL) {
 		return;
 	}
+
 	char * temp;
 
 	switch (t->type) {
@@ -2110,6 +2111,7 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			print_token(t);
 
 			temp = NULL;
+
 			if (t->next) {
 				temp = (char *) &source[t->next->start];
 			}
@@ -2117,11 +2119,12 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			source = (char *) &source[t->start + t->len];
 
 			while (char_is_whitespace(*source) &&
-				   ((temp == NULL) ||
-					(source < temp))) {
+					((temp == NULL) ||
+					 (source < temp))) {
 				print_char(*source);
 				source++;
 			}
+
 			break;
 
 		case MATH_BRACKET_OPEN:
