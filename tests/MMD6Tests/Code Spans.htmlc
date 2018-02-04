@@ -35,3 +35,9 @@ baz</code></p>
 <p><code>-&lt;&gt;--&amp;\&amp;---...</code></p>
 
 <p><code>`foo`</code></p>
+
+<p>15</p>
+
+<p><code>$foo &lt;&lt; $bar</code></p>
+
+<p><code>#foo</code></p>

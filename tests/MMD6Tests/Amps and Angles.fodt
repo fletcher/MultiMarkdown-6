@@ -307,6 +307,10 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">&amp;#169; <text:span text:style-name="Source_20_Text">&amp;#169;</text:span></text:p>
 
 <text:p text:style-name="Standard">&amp;#xA9; <text:span text:style-name="Source_20_Text">&amp;#xA9;</text:span></text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">&amp; and &amp;amp; and &lt; and &gt; in code span.</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>

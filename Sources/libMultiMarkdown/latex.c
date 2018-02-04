@@ -2140,6 +2140,17 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			mmd_print_char_latex(out, source[t->start + 1]);
 			break;
 
+		case HASH1:
+		case HASH2:
+		case HASH3:
+		case HASH4:
+		case HASH5:
+		case HASH6:
+		case TEXT_HASH:
+			print_const("\\");
+			print_token(t);
+			break;
+
 		case HTML_ENTITY:
 			if (source[t->start + 1] == '#') {
 				print_const("\\&\\#");
@@ -2155,6 +2166,14 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			if (t->next) {
 				t->next->type = TEXT_EMPTY;
 			}
+
+		case MATH_DOLLAR_SINGLE:
+			print_const("\\$");
+			break;
+
+		case MATH_DOLLAR_DOUBLE:
+			print_const("\\$\\$");
+			break;
 
 		case MATH_BRACKET_OPEN:
 		case MATH_BRACKET_CLOSE:

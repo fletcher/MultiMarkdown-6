@@ -33,3 +33,7 @@ Here is an inline [link](</script?foo=1&bar=2>).
 &#169; `&#169;`
  
 &#xA9; `&#xA9;`
+
+15
+
+`& and &amp; and < and > in code span.`

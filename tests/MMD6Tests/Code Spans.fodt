@@ -311,6 +311,12 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">-&lt;&gt;--&amp;\&amp;---...</text:span></text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">`foo`</text:span></text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">$foo &lt;&lt; $bar</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">#foo</text:span></text:p>
 </office:text>
 </office:body>
 </office:document>
