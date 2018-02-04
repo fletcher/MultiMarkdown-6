@@ -291,6 +291,8 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 		return;
 	}
 
+	char * temp;
+
 	switch (t->type) {
 		case AMPERSAND:
 			print_const("&amp;");
@@ -326,6 +328,25 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 			print_const("&quot;");
 			break;
 
+		case MARKER_LIST_BULLET:
+		case MARKER_LIST_ENUMERATOR:
+			print_token(t);
+
+			temp = NULL;
+			if (t->next) {
+				temp = (char *) &source[t->next->start];
+			}
+
+			source = (char *) &source[t->start + t->len];
+
+			while (char_is_whitespace(*source) &&
+				   ((temp == NULL) ||
+					(source < temp))) {
+					   print_char(*source);
+					   source++;
+				   }
+			break;
+			
 		case MATH_BRACKET_OPEN:
 		case MATH_BRACKET_CLOSE:
 		case MATH_PAREN_OPEN:

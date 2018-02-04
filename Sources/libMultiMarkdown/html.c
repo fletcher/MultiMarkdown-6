@@ -2052,6 +2052,7 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 	if (t == NULL) {
 		return;
 	}
+	char * temp;
 
 	switch (t->type) {
 		case BACKTICK:
@@ -2102,6 +2103,25 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 		case HTML_ENTITY:
 			print_const("&amp;");
 			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
+			break;
+
+		case MARKER_LIST_BULLET:
+		case MARKER_LIST_ENUMERATOR:
+			print_token(t);
+
+			temp = NULL;
+			if (t->next) {
+				temp = (char *) &source[t->next->start];
+			}
+
+			source = (char *) &source[t->start + t->len];
+
+			while (char_is_whitespace(*source) &&
+				   ((temp == NULL) ||
+					(source < temp))) {
+				print_char(*source);
+				source++;
+			}
 			break;
 
 		case MATH_BRACKET_OPEN:

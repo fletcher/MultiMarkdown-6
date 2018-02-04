@@ -1985,6 +1985,8 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 		return;
 	}
 
+	char * temp;
+	
 	switch (t->type) {
 		case ESCAPED_CHARACTER:
 			print_const("\\");
@@ -1994,6 +1996,25 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 
 		case HTML_ENTITY:
 			print_token(t);
+			break;
+
+		case MARKER_LIST_BULLET:
+		case MARKER_LIST_ENUMERATOR:
+			print_token(t);
+
+			temp = NULL;
+			if (t->next) {
+				temp = (char *) &source[t->next->start];
+			}
+
+			source = (char *) &source[t->start + t->len];
+
+			while (char_is_whitespace(*source) &&
+				   ((temp == NULL) ||
+					(source < temp))) {
+				print_char(*source);
+				source++;
+			}
 			break;
 
 		case SUBSCRIPT:

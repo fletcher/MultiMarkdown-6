@@ -1873,6 +1873,8 @@ void mmd_export_token_odf_raw(DString * out, const char * source, token * t, scr
 		return;
 	}
 
+	char * temp;
+	
 	switch (t->type) {
 		case AMPERSAND:
 			print_const("&amp;");
@@ -1902,6 +1904,25 @@ void mmd_export_token_odf_raw(DString * out, const char * source, token * t, scr
 
 		case INDENT_TAB:
 			print_const("<text:tab/>");
+			break;
+
+		case MARKER_LIST_BULLET:
+		case MARKER_LIST_ENUMERATOR:
+			print_token(t);
+
+			temp = NULL;
+			if (t->next) {
+				temp = (char *) &source[t->next->start];
+			}
+
+			source = (char *) &source[t->start + t->len];
+
+			while (char_is_whitespace(*source) &&
+				   ((temp == NULL) ||
+					(source < temp))) {
+				print_char(*source);
+				source++;
+			}
 			break;
 
 		case QUOTE_DOUBLE:
