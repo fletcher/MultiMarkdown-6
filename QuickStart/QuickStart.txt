@@ -334,7 +334,7 @@ new system.
 ***In addition***, there is a new shortcut key -- `latex config`.  This allows
 you to specify a "document name" that is used to automatically identify the
 corresponding `latex leader`, `latex begin`, and `latex footer` files.  For
-example, using `latex config: artice` is the same as using:
+example, using `latex config: article` is the same as using:
 
 	latex leader:	mmd6-article-leader
 	latex begin:	mmd6-article-begin
