@@ -191,6 +191,8 @@ void accept_token(DString * d, token * t) {
 		case CM_SUB_OPEN:
 		case CM_ADD_OPEN:
 		case CM_ADD_CLOSE:
+		case CM_HI_OPEN:
+		case CM_HI_CLOSE:
 			if (!t->mate) {
 				break;
 			}
@@ -233,14 +235,20 @@ void accept_token_tree(DString * d, token * t) {
 	}
 }
 
-void mmd_critic_markup_accept(DString * d) {
-	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
+
+void mmd_critic_markup_accept_range(DString * d, size_t start, size_t len) {
+	token * t = critic_parse_substring(d->str, start, len);
 
 	if (t && t->child) {
 		accept_token_tree(d, t->child->tail);
 	}
 
 	token_free(t);
+}
+
+
+void mmd_critic_markup_accept(DString * d) {
+	mmd_critic_markup_accept_range(d, 0, d->currentStringLength);
 }
 
 
@@ -275,6 +283,8 @@ void reject_token(DString * d, token * t) {
 		case CM_SUB_OPEN:
 		case CM_DEL_OPEN:
 		case CM_DEL_CLOSE:
+		case CM_HI_OPEN:
+		case CM_HI_CLOSE:
 			if (!t->mate) {
 				break;
 			}
@@ -317,8 +327,9 @@ void reject_token_tree(DString * d, token * t) {
 	}
 }
 
-void mmd_critic_markup_reject(DString * d) {
-	token * t = critic_parse_substring(d->str, 0, d->currentStringLength);
+
+void mmd_critic_markup_reject_range(DString * d, size_t start, size_t len) {
+	token * t = critic_parse_substring(d->str, start, len);
 
 	if (t && t->child) {
 		reject_token_tree(d, t->child->tail);
@@ -328,3 +339,88 @@ void mmd_critic_markup_reject(DString * d) {
 
 }
 
+
+void mmd_critic_markup_reject(DString * d) {
+	mmd_critic_markup_reject_range(d, 0, d->currentStringLength);
+}
+
+
+#ifdef TEST
+void Test_critic(CuTest* tc) {
+	#ifdef kUseObjectPool
+	token_pool_init();
+	#endif
+
+	DString * test = d_string_new("{--foo bar--}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "foo bar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{++foo bar++}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "", test->str);
+
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{--foo bar--}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{++foo bar++}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "foo bar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{++foo{--bat--}bar++}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "foobar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{--foo{-- bat --}bar--}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "foo bat bar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{--foo{++ bat ++}bar--}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "foobar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{==foo bar==}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "foo bar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{==foo bar==}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "foo bar", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{>>foo bar<<}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{>>foo bar<<}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{++foo++}{>>bar<<}");
+	mmd_critic_markup_accept(test);
+	CuAssertStrEquals(tc, "foo", test->str);
+
+	d_string_erase(test, 0, -1);
+	d_string_append(test, "{++foo++}{>>bar<<}");
+	mmd_critic_markup_reject(test);
+	CuAssertStrEquals(tc, "", test->str);
+
+	#ifdef kUseObjectPool
+	// Decrement counter and clean up token pool
+	token_pool_drain();
+
+	token_pool_free();
+	#endif
+}
+#endif

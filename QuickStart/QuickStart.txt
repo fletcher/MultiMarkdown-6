@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.2.2
+Version:	6.3.0
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
@@ -334,7 +334,7 @@ new system.
 ***In addition***, there is a new shortcut key -- `latex config`.  This allows
 you to specify a "document name" that is used to automatically identify the
 corresponding `latex leader`, `latex begin`, and `latex footer` files.  For
-example, using `latex config: artice` is the same as using:
+example, using `latex config: article` is the same as using:
 
 	latex leader:	mmd6-article-leader
 	latex begin:	mmd6-article-begin

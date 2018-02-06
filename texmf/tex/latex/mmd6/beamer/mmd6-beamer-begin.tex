@@ -1,0 +1,47 @@
+%
+%	Get ready for the actual document
+%
+
+%
+% Use default MMD metadata for beamer equivalents
+%
+
+\ifx\subtitle\undefined
+\else
+	\oldSubtitle{\subtitle}
+\fi
+
+\ifx\affiliation\undefined
+\else
+	\institute{\affiliation}
+\fi
+
+\ifx\mydate\undefined
+	\def\mydate{\today}
+\else
+	\date{\mydate}
+\fi
+
+\ifx\event\undefined
+\else
+	\date[\mydate]{\mydate~ / \event }
+\fi
+
+
+%\input{mmd-title}
+
+% Show "current/total" slide counter in footer
+\title[\mytitle\hspace{2em}\insertframenumber/
+\inserttotalframenumber]{\mytitle}
+
+
+\author{\myauthor}
+\addtolength{\parskip}{\baselineskip}
+
+\ifx\theme\undefined
+\else
+	\usetheme{\theme}
+\fi
+
+\begin{document}
+\frame{\setlength\parskip{0pt}\titlepage}

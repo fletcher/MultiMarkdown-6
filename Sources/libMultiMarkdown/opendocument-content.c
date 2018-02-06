@@ -246,6 +246,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#171;");
 					break;
 
@@ -270,6 +271,7 @@ void mmd_print_localized_char_opendocument(DString * out, unsigned short type, s
 					break;
 
 				case FRENCH:
+				case SPANISH:
 					print_const("&#187;");
 					break;
 
@@ -288,6 +290,8 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 	if (t == NULL) {
 		return;
 	}
+
+	char * temp;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -322,6 +326,27 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case QUOTE_DOUBLE:
 			print_const("&quot;");
+			break;
+
+		case MARKER_LIST_BULLET:
+		case MARKER_LIST_ENUMERATOR:
+			print_token(t);
+
+			temp = NULL;
+
+			if (t->next) {
+				temp = (char *) &source[t->next->start];
+			}
+
+			source = (char *) &source[t->start + t->len];
+
+			while (char_is_whitespace(*source) &&
+					((temp == NULL) ||
+					 (source < temp))) {
+				print_char(*source);
+				source++;
+			}
+
 			break;
 
 		case MATH_BRACKET_OPEN:

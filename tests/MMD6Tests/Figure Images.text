@@ -7,6 +7,9 @@ latex config:	article
 
 ![*bar*][foo] bar
 
+![*foo*](http://foo.bar/ "foo" width="40px" height="20px")
+
 ![*foo*](http://foo.bar/ "foo" width="40px")
 
-[foo]: http://foo.bar/	"foo" width="40px"
+[foo]: http://foo.bar/	"foo" width="40px" height="20px"
+

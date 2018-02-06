@@ -1,0 +1,56 @@
+% Originally by Shawn Lankton
+%	<http://www.shawnlankton.com/2008/02/beamer-and-latex-with-keynote-theme/>
+% Modified by Fletcher Penney
+%	<http://fletcherpenney.net/>
+
+
+\renewcommand\sfdefault{phv}
+\renewcommand\familydefault{\sfdefault}
+\usetheme{default}
+\usepackage{color}
+\useoutertheme{default}
+%\usepackage{texnansi}
+\usepackage{marvosym}
+\definecolor{bottomcolour}{rgb}{0.32,0.3,0.38}
+\definecolor{middlecolour}{rgb}{0.08,0.08,0.16}
+\definecolor{mycolor}{rgb}{0.4,0.4, 0.4}
+\setbeamerfont{title}{size=\Huge}
+\setbeamercolor{structure}{fg=bottomcolour}
+\setbeamercolor{section in toc}{fg=white}	% Changed by FTP for visibility
+\setbeamertemplate{frametitle}[default]%[center]
+\setbeamercolor{normal text}{bg=black, fg=white}
+\setbeamertemplate{background canvas}[vertical shading]
+[bottom=bottomcolour, middle=middlecolour, top=black]
+\setbeamertemplate{items}[circle]
+\setbeamerfont{frametitle}{size={\fontsize{14}{16}}}
+
+\setbeamertemplate{navigation symbols}{}				% no nav symbols
+\setbeamercolor{titlelike}{parent=structure,fg=white}	% no box on titlepage
+\setbeamertemplate{footline}[frame number]{} 			% remove bottom bars
+\setbeamertemplate{headline}{}							% remove top bars
+
+% Ensure bibliography items can be read
+\setbeamercolor{bibliography entry author}{parent=structure,fg=white}
+
+% from http://newsgroups.derkeiler.com/Archive/Comp/comp.text.tex/2008-11/msg00945.html
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+
+\newcommand{\maxFrameImage}[1]{
+\begin{changemargin}{-1cm}{-1cm}
+\begin{center}
+\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]
+{#1}
+\end{center}
+\end{changemargin}
+}

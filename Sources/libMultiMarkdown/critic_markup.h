@@ -60,6 +60,11 @@
 
 #include "d_string.h"
 
+#ifdef TEST
+	#include "CuTest.h"
+#endif
+
+
 enum cm_types {
 	CM_ADD_OPEN = 1,		// Can't use type 0
 	CM_ADD_CLOSE,
@@ -88,7 +93,9 @@ enum cm_types {
 
 
 void mmd_critic_markup_accept(DString * d);
+void mmd_critic_markup_accept_range(DString * d, size_t start, size_t len);
 
 void mmd_critic_markup_reject(DString * d);
+void mmd_critic_markup_reject_range(DString * d, size_t start, size_t len);
 
 #endif

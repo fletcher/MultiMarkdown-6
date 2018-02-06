@@ -8,14 +8,14 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2017-11-20")
+set (My_Project_Revised_Date "2018-02-05")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 2)
-set (My_Project_Version_Patch 3)
+set (My_Project_Version_Minor 3)
+set (My_Project_Version_Patch 0)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
-set (My_Project_Copyright_Date "2016 - 2017")
+set (My_Project_Copyright_Date "2016 - 2018")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
@@ -104,7 +104,7 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 	
 	SET_TARGET_PROPERTIES(${target} PROPERTIES
 		XCODE_ATTRIBUTE_SUPPORTED_PLATFORMS
-		"macos iphonesimulator iphoneos"
+		"macosx iphonesimulator iphoneos"
 	)
 
 	SET_TARGET_PROPERTIES(${target} PROPERTIES
@@ -184,7 +184,6 @@ set(src_files
 	Sources/libMultiMarkdown/d_string.c
 	Sources/libMultiMarkdown/epub.c
 	Sources/libMultiMarkdown/file.c
-	Sources/libMultiMarkdown/fodt.c
 	Sources/libMultiMarkdown/html.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
@@ -216,7 +215,6 @@ set(header_files
 	Sources/libMultiMarkdown/include/d_string.h
 	Sources/libMultiMarkdown/epub.h
 	Sources/libMultiMarkdown/file.h
-	Sources/libMultiMarkdown/fodt.h
 	Sources/libMultiMarkdown/html.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
@@ -269,6 +267,15 @@ set (latex
 	texmf/tex/latex/mmd6/article/mmd6-article-begin.tex
 	texmf/tex/latex/mmd6/article/mmd6-article-footer.tex
 	texmf/tex/latex/mmd6/article/mmd6-article-leader.tex
+
+	texmf/tex/latex/mmd6/beamer/beamerthemekeynote-gradient.sty
+	texmf/tex/latex/mmd6/beamer/beamerthemekeynote-portfolio.sty
+	texmf/tex/latex/mmd6/beamer/beamerthemekeynote-vintage.sty
+	texmf/tex/latex/mmd6/beamer/mmd6-beamer-begin.tex
+	texmf/tex/latex/mmd6/beamer/mmd6-beamer-footer.tex
+	texmf/tex/latex/mmd6/beamer/mmd6-beamer-leader.tex
+	texmf/tex/latex/mmd6/beamer/Portfolio.png
+	texmf/tex/latex/mmd6/beamer/Vintage.png
 
 	texmf/tex/latex/mmd6/letterhead/mmd-envelope.sty
 	texmf/tex/latex/mmd6/letterhead/mmd-letterhead.sty
@@ -426,13 +433,15 @@ endif (WIN32)
 # ==============
 
 # Is libcurl available?
-find_package(CURL)
-if (CURL_FOUND)
-	add_definitions(-DUSE_CURL)
-	message (STATUS "libcurl found")
-else ()
-	message (STATUS "libcurl not found")
-endif (CURL_FOUND)	
+if (NOT DEFINED TEST)
+	find_package(CURL)
+	if (CURL_FOUND)
+		add_definitions(-DUSE_CURL)
+		message (STATUS "libcurl found")
+	else ()
+		message (STATUS "libcurl not found")
+	endif (CURL_FOUND)	
+endif ()
 
 # Create a library?
 if (NOT DEFINED TEST)

@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2017-11-20  
+Date: 2018-02-05  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -470,6 +470,39 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2018-02-05 - v 6.3.0:
+
+	*    ADDED: Add additional CM tests
+	*    ADDED: Add beamer LaTeX support files to installer
+	*    ADDED: Update beamer latex support files for MMD 6 latex config metadata support
+	*    FIXED: All test build on path with spaces
+	*    FIXED: Don't use libcurl on test build
+	*    FIXED: Fix HTML 5 compliance with image dimensions; Fix CriticMarkup inside code spans/blocks
+	*    FIXED: Fix bug in token pruning
+	*    FIXED: Fix bug with setting tail in token prune/graft
+	*    FIXED: Fix edge case with superscripts and punctuation
+	*    FIXED: Fix issue in Windows code
+	*    FIXED: Fix issue with list bullets in fenced code blocks
+	*    FIXED: Fix reject/accept with highlighting
+	*    FIXED: Fix typo in QuickStart.txt (fixes #111)
+	*    FIXED: Properly assign ambidextrous tokens in tables
+	*    Fix encoding of some markup inside LaTeX texttt environment (fixes #110 and #108)
+	*    UPDATED: Add Spanish style quotes support
+	*    UPDATED: Add test suite to d_string
+	*    UPDATED: Apply astyle to source
+	*    UPDATED: Improve commands for accepting/rejecting CriticMarkup
+	*    UPDATED: Remove deprecated fodt.c and fodt.h
+	*    UPDATED: Update dates
+	*    UPDATED: specify types to silence warnings and prevent theoretical errors
+	*    add cocoaconv.rb enum conversion script
+	*    change d_string_erase argument docstring
+	*    drop redundant enum case prefixes in Swift
+	*    drop redundant enum name prefixes from enum cases
+	*    expose singular-S type to Swift code generator
+	*    fix target platform spelling (macosx, not macos)
+	*    remove plural S from enum type names
+
 
 * 2017-11-20 - v 6.2.3:
 

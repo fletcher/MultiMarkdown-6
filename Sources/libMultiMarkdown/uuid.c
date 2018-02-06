@@ -149,6 +149,6 @@ void custom_seed_rand(void) {
 	// This is not a "cryptographically secure" random seed,
 	// but good enough for an EPUB id....
 	unsigned long seed = mix(clock(), time(NULL), clock());
-	srand(seed);
+	srand((unsigned int)seed);
 }
 

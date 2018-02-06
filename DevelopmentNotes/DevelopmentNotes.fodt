@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2017-11-20</meta:user-defined>
+	<meta:user-defined meta:name="date">2018-02-05</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -762,6 +762,127 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2018&#8211;02&#8211;05 - v 6.3.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add additional CM tests</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add beamer LaTeX support files to installer</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Update beamer latex support files for MMD 6 latex config metadata support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: All test build on path with spaces</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don&#8217;t use libcurl on test build</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix HTML 5 compliance with image dimensions; Fix CriticMarkup inside code spans/blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug in token pruning</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bug with setting tail in token prune/graft</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix edge case with superscripts and punctuation</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue in Windows code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with list bullets in fenced code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix reject/accept with highlighting</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix typo in QuickStart.txt (fixes #111)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Properly assign ambidextrous tokens in tables</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Fix encoding of some markup inside LaTeX texttt environment (fixes #110 and #108)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add Spanish style quotes support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add test suite to d_string</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Apply astyle to source</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Improve commands for accepting/rejecting CriticMarkup</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Remove deprecated fodt.c and fodt.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update dates</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: specify types to silence warnings and prevent theoretical errors</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+add cocoaconv.rb enum conversion script</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+change d_string_erase argument docstring</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+drop redundant enum case prefixes in Swift</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+drop redundant enum name prefixes from enum cases</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+expose singular-S type to Swift code generator</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+fix target platform spelling (macosx, not macos)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">remove plural S from enum type names</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2017&#8211;11&#8211;20 - v 6.2.3:</text:p>
 

@@ -1,0 +1,47 @@
+%
+%	Configure LaTeX to produce a PDF presentation using the beamer class
+%
+
+
+% Default is 16:9 widescreen ratio
+\documentclass[ignorenonframetext,12pt,aspectratio=169]{beamer}
+
+% For 4:3 ratio use this:
+% \documentclass[ignorenonframetext,11pt]{beamer}
+
+
+%\documentclass[onesided]{article}
+%\usepackage{graphicx}
+%\usepackage{beamerarticle}
+
+\usepackage{beamerthemesplit}
+\usepackage{patchcmd}
+\usepackage{tabulary}		% Support longer table cells
+\usepackage{booktabs}		% Support better tables
+\usepackage[sort&compress]{natbib}
+\usepackage{acronym}			% Support acronyms
+
+\usepackage{framed}			% Allow background color for images
+\definecolor{shadecolor}{named}{white}
+
+
+\usepackage{subfigure}
+
+\let\oldSubtitle\subtitle
+
+
+% Configure default metadata
+\input{mmd-default-metadata}
+
+
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \tableofcontents[currentsection,currentsubsection]
+   \end{frame}
+}
+
+
+\long\def\citefoot#1{\let\thefootnote\relax\footnotetext{\citet{#1}} }
+

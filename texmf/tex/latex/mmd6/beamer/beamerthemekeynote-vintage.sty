@@ -1,0 +1,34 @@
+% By Ed Long
+%	http://www.ucl.ac.uk/~ucbpeal/latexposter.html
+
+\usetheme{default}
+%\usepackage{texnansi}
+%\usepackage{gtamacdidot}
+
+\definecolor{textcolour}{rgb}{0.37,0.34,0.27}
+
+\setbeamertemplate{background canvas}{\includegraphics
+	[width=\paperwidth]{Vintage.png}}
+\setbeamercolor{structure}{fg=textcolour}
+\setbeamertemplate{items}[circle]
+\setbeamerfont{structure}{family = \rmfamily}
+
+\setbeamertemplate{frametitle} 
+{ 
+\begin{centering} 
+\vspace{0.3cm}
+\huge
+\insertframetitle
+\par 
+\end{centering} 
+} 
+
+\setbeamerfont{title}{size = \Huge}
+\usefonttheme{structuresmallcapsserif}
+\usefonttheme{serif}
+\setbeamercolor{normal text}{fg=textcolour}
+
+\setbeamertemplate{navigation symbols}{}				% no nav symbols
+\setbeamercolor{titlelike}{parent=structure,fg=textcolour}	% no box on titlepage
+\setbeamertemplate{footline}[page number]{} 			% remove bottom bars
+\setbeamertemplate{headline}{}							% remove top bars

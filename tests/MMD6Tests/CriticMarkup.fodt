@@ -338,6 +338,30 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">25</text:p>
 
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">{++foo++}</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">{--bar--}</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">{~~foo~>bar~~}</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">{>>foo<<}</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">{==bar==}</text:span></text:p>
+
+<text:p text:style-name="Standard">30</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${++foo++}$$</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${--bar--}$$</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${~~foo~>bar~~}$$</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${>>foo<<}$$</text:span></text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="math">$${==bar==}$$</text:span></text:p>
+
+<text:p text:style-name="Standard">35</text:p>
+
 <text:p text:style-name="Standard"><text:span text:style-name="Underline">foo<text:span text:style-name="Underline"> bar</text:span></text:span></text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Strike">foo<text:span text:style-name="Strike"> bar</text:span></text:span></text:p>
