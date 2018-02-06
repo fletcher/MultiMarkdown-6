@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="version">6.2.2</meta:user-defined>
+	<meta:user-defined meta:name="version">6.3.0</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -318,7 +318,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
-<text:p text:style-name="Standard">Version: 6.2.2</text:p>
+<text:p text:style-name="Standard">Version: 6.3.0</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
@@ -663,7 +663,7 @@ new system.</text:p>
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold"><text:span text:style-name="MMD-Italic">In addition</text:span></text:span>, there is a new shortcut key &#8211; <text:span text:style-name="Source_20_Text">latex config</text:span>. This allows
 you to specify a &#8220;document name&#8221; that is used to automatically identify the
 corresponding <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span> files. For
-example, using <text:span text:style-name="Source_20_Text">latex config: artice</text:span> is the same as using:</text:p>
+example, using <text:span text:style-name="Source_20_Text">latex config: article</text:span> is the same as using:</text:p>
 
 <text:p text:style-name="Preformatted Text">latex leader:<text:tab/>mmd6-article-leader<text:line-break/>latex begin:<text:tab/>mmd6-article-begin<text:line-break/>latex footer:<text:tab/>mmd6-article-footer<text:line-break/></text:p>
 
