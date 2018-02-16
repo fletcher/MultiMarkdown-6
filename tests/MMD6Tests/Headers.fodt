@@ -313,6 +313,8 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">####### foo #######</text:p>
 
 <text:p text:style-name="Standard">15</text:p>
+
+<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo </text:h>
 </office:text>
 </office:body>
 </office:document>

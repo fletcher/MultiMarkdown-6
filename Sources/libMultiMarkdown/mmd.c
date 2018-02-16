@@ -519,7 +519,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				} else {
 					if ((line->child->tail->type >= HASH1) &&
 							(line->child->tail->type <= HASH6)) {
-						line->child->tail->type -= TEXT_EMPTY;
+						line->child->tail->type -= HASH1;
 						line->child->tail->type += MARKER_H1;
 					}
 				}
