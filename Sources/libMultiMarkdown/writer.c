@@ -70,6 +70,7 @@
 #include "mmd.h"
 #include "opendocument-content.h"
 #include "parser.h"
+#include "rtf.h"
 #include "scanners.h"
 #include "token.h"
 #include "uuid.h"
@@ -1897,6 +1898,11 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 			if (scratch->extensions & EXT_COMPLETE) {
 				mmd_end_complete_latex(out, e->dstr->str, scratch);
 			}
+
+			break;
+
+		case FORMAT_RTF:
+			mmd_export_rtf(out, e->dstr->str, e->root, scratch);
 
 			break;
 

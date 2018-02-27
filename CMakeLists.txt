@@ -195,6 +195,7 @@ set(src_files
 	Sources/libMultiMarkdown/opendocument-content.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
+	Sources/libMultiMarkdown/rtf.c
 	Sources/libMultiMarkdown/scanners.c
 	Sources/libMultiMarkdown/stack.c
 	Sources/libMultiMarkdown/textbundle.c
@@ -225,6 +226,7 @@ set(header_files
 	Sources/libMultiMarkdown/object_pool.h
 	Sources/libMultiMarkdown/opendocument.h
 	Sources/libMultiMarkdown/opendocument-content.h
+	Sources/libMultiMarkdown/rtf.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
 	Sources/libMultiMarkdown/textbundle.c

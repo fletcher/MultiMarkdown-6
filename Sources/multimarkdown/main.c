@@ -286,6 +286,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_TEXTBUNDLE;
 		} else if (strcmp(a_format->sval[0], "bundlezip") == 0) {
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
+		} else if (strcmp(a_format->sval[0], "rtf") == 0) {
+			format = FORMAT_RTF;
 		} else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);

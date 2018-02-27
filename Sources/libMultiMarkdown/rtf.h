@@ -1,0 +1,1 @@
+void mmd_export_rtf(DString * out, const char * source, token * t, scratch_pad * scratch);
