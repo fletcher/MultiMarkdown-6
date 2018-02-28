@@ -1,0 +1,67 @@
+%
+%	For setup that must follow metadata included in the document
+%
+
+\usepackage[
+	plainpages=false,
+	pdfpagelabels,
+	pdftitle={\mytitle},
+	pagebackref,
+	pdfauthor={insert author here},
+	pdfkeywords={\mykeywords}
+	]{hyperref}
+\usepackage{memhfixc}
+
+
+\title{\mytitle}
+\author{\myauthor}
+
+\ifx\mydate\undefined
+\else
+	\date{\mydate}
+\fi
+
+\begin{document}
+
+\VerbatimFootnotes
+
+% Title Page
+\begin{titlingpage} 
+\aliaspagestyle{titlingpage}{title} 
+\setlength{\droptitle}{30pt} 
+
+\manuscript\noindent\myauthor \\
+\address
+\vskip 12pt
+\noindent\agent
+
+\vfill
+\renewcommand{\baselinestretch}{2}
+\normalsize\manuscript\centering\MakeUppercase\mytitle
+
+by \myauthor
+\vskip 4in
+
+\end{titlingpage} 
+
+% Change default commands to better fit manuscripts
+
+\renewcommand{\emph}[1]{\underline{#1}}
+
+\renewcommand{\section}[1]{\begin{center}
+\#
+\end{center}}
+
+%
+% Main Content
+%
+
+% Manuscript settings
+\renewcommand{\baselinestretch}{2}
+\raggedright\normalsize
+\font\body="Courier New" at 12pt\body
+
+% Layout settings
+\setlength{\parindent}{0.5in}
+
+\mainmatter
