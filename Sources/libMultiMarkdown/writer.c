@@ -611,7 +611,7 @@ attr * parse_attributes(char * source) {
 }
 
 
-link * link_new(const char * source, token * label, char * url, char * title, char * attributes) {
+link * link_new(const char * source, token * label, char * url, char * title, char * attributes, short flags) {
 	link * l = malloc(sizeof(link));
 
 	if (l) {
@@ -628,6 +628,8 @@ link * link_new(const char * source, token * label, char * url, char * title, ch
 		l->url = clean_string(url, false);
 		l->title = (title == NULL) ? NULL : my_strdup(title);
 		l->attributes = (attributes == NULL) ? NULL : parse_attributes(attributes);
+
+		l->flags = flags;
 	}
 
 	return l;
@@ -1029,7 +1031,7 @@ void extract_from_paren(token * paren, const char * source, char ** url, char **
 }
 
 
-/// Create a link from an explicit link `[foo](bar)`
+/// Create a link from an explicit "inline" link `[foo](bar)`
 link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, const char * source) {
 	char * url_char = NULL;
 	char * title_char = NULL;
@@ -1040,10 +1042,10 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 
 	if (attr_char) {
 		if (!(scratch->extensions & EXT_COMPATIBILITY)) {
-			l = link_new(source, NULL, url_char, title_char, attr_char);
+			l = link_new(source, NULL, url_char, title_char, attr_char, LINK_INLINE);
 		}
 	} else {
-		l = link_new(source, NULL, url_char, title_char, attr_char);
+		l = link_new(source, NULL, url_char, title_char, attr_char, LINK_INLINE);
 	}
 
 	free(url_char);
@@ -1296,12 +1298,12 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 						}
 					}
 
-					l = link_new(e->dstr->str, label, url_char, title_char, attr_char);
+					l = link_new(e->dstr->str, label, url_char, title_char, attr_char, LINK_REFERENCE);
 				} else {
 					// Not valid match
 				}
 			} else {
-				l = link_new(e->dstr->str, label, url_char, title_char, attr_char);
+				l = link_new(e->dstr->str, label, url_char, title_char, attr_char, LINK_REFERENCE);
 			}
 
 			// Store link for later use
@@ -1516,7 +1518,7 @@ void process_header_to_links(mmd_engine * e, token * h) {
 
 	d_string_append(url, label);
 
-	link * l = link_new(e->dstr->str, h, url->str, NULL, NULL);
+	link * l = link_new(e->dstr->str, h, url->str, NULL, NULL, LINK_AUTO);
 
 	// Store link for later use
 	stack_push(e->link_stack, l);
@@ -1553,7 +1555,7 @@ void process_table_to_link(mmd_engine * e, token * t) {
 		DString * url = d_string_new("#");
 		d_string_append(url, label);
 
-		link * l = link_new(e->dstr->str, temp_token, url->str, NULL, NULL);
+		link * l = link_new(e->dstr->str, temp_token, url->str, NULL, NULL, LINK_AUTO);
 
 		stack_push(e->link_stack, l);
 
