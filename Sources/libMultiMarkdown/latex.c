@@ -1933,6 +1933,7 @@ parse_citation:
 		case TEXT_BRACE_RIGHT:
 			print_const("\\");
 
+		case PAIR_RAW_FILTER:
 		case RAW_FILTER_LEFT:
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
