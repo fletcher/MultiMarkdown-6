@@ -275,6 +275,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
  </office:master-styles>
 <office:meta>
 	<dc:title>*foo* &quot;bar&quot;</dc:title>
+	<meta:user-defined meta:name="empty"></meta:user-defined>
 	<meta:user-defined meta:name="foo">bar foo bar foo bar</meta:user-defined>
 </office:meta>
 <office:body>

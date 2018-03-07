@@ -1,4 +1,5 @@
 <p>title:	<em>foo</em> &quot;bar&quot;
+empty:
 css:	http://foo.com/bar.css
 HTML header:	<script type="text/javascript"
 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">

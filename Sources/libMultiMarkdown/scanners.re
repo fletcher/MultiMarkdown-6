@@ -139,7 +139,7 @@
 
 	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \240\t\-\.]*;
 
-	meta_value	= [^\n\r\x00]+;
+	meta_value	= [^\n\r\x00]*;
 
 	meta_line	= meta_key sp ':' meta_value nl_eof;	// meta_line can't match url above
 
