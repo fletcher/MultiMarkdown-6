@@ -650,15 +650,19 @@ char * d_string_copy_substring(DString * d, size_t start, size_t len) {
 	if (d) {
 		char * result;
 
-		if ((len == -1) && (start < d->currentStringLength)) {
-			len = d->currentStringLength - start;
-		} else {
-			if (start + len > d->currentStringLength) {
-				fprintf(stderr, "d_string: Asked to copy invalid substring range.\n");
-				fprintf(stderr, "start: %lu  len: %lu  string: %lu\n", start, len,
-						d->currentStringLength);
-				return NULL;
+		if (len == -1) {
+			if (start <= d->currentStringLength) {
+				len = d->currentStringLength - start;
+			} else {
+				len = 0;
 			}
+		}
+
+		if (start + len > d->currentStringLength) {
+			fprintf(stderr, "d_string: Asked to copy invalid substring range.\n");
+			fprintf(stderr, "start: %lu  len: %lu  string: %lu\n", start, len,
+					d->currentStringLength);
+			return NULL;
 		}
 
 		result = malloc(len + 1);
