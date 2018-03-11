@@ -2258,6 +2258,7 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 /// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
+	token * old_root;
 
 	if (!e) {
 		return false;
@@ -2274,10 +2275,8 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		return false;
 	}
 
-	// Free existing parse tree
-	if (e->root) {
-		token_tree_free(e->root);
-	}
+	// Preserve existing parse tree (if any)
+	old_root = e->root;
 
 	// Tokenize the string (up until first empty line)
 	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
@@ -2296,6 +2295,9 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 
 		token_tree_free(doc);
 	}
+
+	// Restore previous parse tree
+	e->root = old_root;
 
 	return result;
 }
