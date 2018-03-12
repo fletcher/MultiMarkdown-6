@@ -115,6 +115,10 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		e->allow_meta = (extensions & EXT_COMPATIBILITY) ? false : true;
 
+		if (e->allow_meta) {
+			e->allow_meta = (extensions & EXT_NO_METADATA) ? false : true;
+		}
+
 		e->language = LC_EN;
 		e->quotes_lang = ENGLISH;
 
@@ -966,6 +970,9 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 	// Reset metadata flag
 	e->allow_meta = (e->extensions & EXT_COMPATIBILITY) ? false : true;
 
+	if (e->allow_meta) {
+		e->allow_meta = (e->extensions & EXT_NO_METADATA) ? false : true;
+	}
 
 	// Create a scanner (for re2c)
 	Scanner s;
