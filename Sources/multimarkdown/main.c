@@ -217,7 +217,7 @@ int main(int argc, char** argv) {
 	if (a_compatibility->count > 0) {
 		// Compatibility mode disables certain features
 		// Reset extensions
-		extensions = EXT_COMPATIBILITY | EXT_NO_LABELS | EXT_OBFUSCATE;
+		extensions = EXT_COMPATIBILITY | EXT_NO_LABELS | EXT_OBFUSCATE | EXT_NO_METADATA;
 	}
 
 	if (a_nosmart->count > 0) {
