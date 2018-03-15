@@ -647,6 +647,10 @@ ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 
 ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
 
+ADD_MMD_TEST(mmd-6-beamer "-t beamer" Beamer tex)
+
+ADD_MMD_TEST(mmd-6-memoir "-t memoir" Memoir tex)
+
 ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
 
 ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)

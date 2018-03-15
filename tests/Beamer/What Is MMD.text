@@ -1,4 +1,3 @@
-latex leader:		mmd-beamer-header
 Title:				What is MultiMarkdown?  
 Subtitle:			And why should you care? 
 Author:				Fletcher T. Penney  
@@ -10,8 +9,7 @@ base header level:	3
 latex mode:			beamer  
 latex header:		\input{mmd-natbib-plain}
 Theme:				keynote-gradient
-latex begin:		mmd-beamer-begin-doc
-latex footer:		mmd-beamer-footer
+latex config:		beamer
 
 
 # MultiMarkdown is a derivative of Markdown #
