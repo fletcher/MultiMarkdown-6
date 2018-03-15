@@ -1,0 +1,162 @@
+\input{mmd6-article-leader}
+\def\mytitle{Integrated}
+\longnewglossaryentry{term}{name=term}{A term to be defined.}
+
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\input{mmd6-article-begin}
+
+This file is a designed as a single test that incorporates most of the
+\emph{commonly} used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet -- particularly useful
+when developing a new output format.
+
+\part{Basic Blocks }
+\label{basicblocks}
+
+paragraph
+
+\begin{itemize}
+\item{} list
+
+\item{} items
+
+\end{itemize}
+
+\begin{adjustwidth}{2.5em}{2.5em}
+\begin{verbatim}
+fenced
+code
+\end{verbatim}
+\end{adjustwidth}
+
+\begin{adjustwidth}{2.5em}{2.5em}\begin{verbatim}
+indented
+code
+\end{verbatim}
+\end{adjustwidth}
+
+\begin{quote}
+blockquote
+\end{quote}
+
+\texttt{code span}
+
+\emph{emph} and \textbf{strong} and \textbf{\emph{both}}
+
+\emph{emph} and \textbf{strong} and \textbf{\emph{both}}
+
+\chapter{Escapes }
+\label{escaped}
+
+\begin{enumerate}
+\item{} \$
+
+\item{} \#
+
+\item{} [
+
+\end{enumerate}
+
+\part{Footnotes }
+\label{footnotes}
+
+Foo.\footnote{This is an inline footnote}
+
+Bar.\footnote{And a reference footnote.}
+
+Cite.~\citep{inlinecitation}
+
+Cite.~\citep{foo}
+
+\part{Links and Images }
+\label{linksandimages}
+
+\href{http://foo.net/}{link}\footnote{\href{http://foo.net/}{http:\slash \slash foo.net\slash }} and \href{http://bar.net}{link}\footnote{\href{http://bar.net}{http:\slash \slash bar.net}}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=40pt,height=400pt]{http://foo.bar/}
+\caption{test}
+\end{figure}
+
+Math (\autoref{math})
+
+foo (\autoref{math})
+
+bar (\autoref{bar})
+
+bar (\autoref{bar})
+
+\part{Math }
+\label{math}
+
+foo \({e}^{i\pi }+1=0\) bar
+
+\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]
+
+foo ${e}^{i\pi }+1=0$ bar
+
+foo ${e}^{i\pi }+1=0$, bar
+
+$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
+
+\part{Smart Quotes }
+\label{smartquotes}
+
+``foo'' and `bar' -- with --- dashes{\ldots}
+
+\part{CriticMarkup }
+\label{criticmarkup}
+
+\underline{foo}
+
+\sout{bar}
+
+\sout{foo}\underline{bar}
+
+\cmnote{foo}
+
+\hl{bar}
+
+\part{Definition Lists }
+\label{definitionlists}
+
+\begin{description}
+\item[foo]
+
+\item[bar]
+
+*foo bar
+
+baz bat*
+\end{description}
+
+\part{Horizontal Rules }
+\label{horizontalrules}
+
+\begin{center}\rule{3in}{0.4pt}\end{center}
+
+\part{Glossary }
+\label{glossary}
+
+\gls{term}
+
+\part{Abbreviations}
+\label{abbreviations}
+
+\gls{MMD}
+
+\begin{thebibliography}{0}
+
+\bibitem{inlinecitation}
+Inline Citation
+
+\bibitem{foo}
+bar
+
+
+\end{thebibliography}
+
+\input{mmd6-article-footer}
+\end{document}

@@ -1,0 +1,133 @@
+Title:	Integrated
+latex config:	article
+
+This file is a designed as a single test that incorporates most of the
+*commonly* used MultiMarkdown features. This allows a single test file to
+identify common structures that are not supported yet -- particularly useful
+when developing a new output format.
+# Basic Blocks #
+
+paragraph
+
+* list
+* items
+
+```
+fenced
+code
+```
+
+	indented
+	code
+
+> blockquote
+
+`code span`
+
+
+*emph* and **strong** and ***both***
+
+_emph_ and __strong__ and ___both___
+
+
+Escapes [escaped]
+----------------
+
+1. \$
+
+2. \#
+
+3. \[
+
+
+# Footnotes #
+
+Foo.[^This is an inline footnote]
+
+Bar.[^foot]
+
+[^foot]: And a reference footnote.
+
+Cite.[#Inline Citation]
+
+Cite.[#foo]
+
+[#foo]: bar
+
+
+# Links and Images #
+
+[link](http://foo.net/) and [link]
+
+[link]: http://bar.net "title" class="custom"
+
+![test](http://foo.bar/ "title" width="40px" height=400px)
+
+[Math]
+
+[foo][math]
+
+[bar][foo1]
+
+[bar][foo2]
+
+[foo1]:  #bar
+[foo2]: #bar
+
+
+# Math #
+
+foo \\({e}^{i\pi }+1=0\\) bar
+
+\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]
+
+foo ${e}^{i\pi }+1=0$ bar
+
+foo ${e}^{i\pi }+1=0$, bar
+
+$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
+
+
+# Smart Quotes # 
+
+"foo" and 'bar' -- with --- dashes...
+
+
+# CriticMarkup #
+
+{++foo++}
+
+{--bar--}
+
+{~~foo~>bar~~}
+
+{>>foo<<}
+
+{==bar==}
+
+
+# Definition Lists #
+
+foo
+bar
+:	*foo bar
+:	baz bat*
+
+
+# Horizontal Rules #
+
+----
+
+
+# Glossary #
+
+[?term]
+
+[?term]: A term to be defined.
+
+# Abbreviations
+
+[>MMD]
+
+[>MMD]: MultiMarkdown
+
