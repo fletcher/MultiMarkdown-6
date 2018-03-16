@@ -2129,7 +2129,7 @@ handle_line:
 
 				// Move children to parent
 				// Add ':' back
-				if (e->dstr->str[l->child->start - 1] == ':') {
+				if (l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
 					temp = token_new(COLON, l->child->start - 1, 1);
 					token_append_child(block, temp);
 				}
