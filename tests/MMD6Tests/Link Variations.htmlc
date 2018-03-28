@@ -1,0 +1,18 @@
+<p>Title:	Link Variations
+latex config:	article</p>
+
+<h2>Foo Bar </h2>
+
+<p>Link to [Foo Bar].</p>
+
+<p>Link to [foo bar].</p>
+
+<p>Link to [foobar].</p>
+
+<p>Link to <a href="#foobar">Foo Bar</a>.</p>
+
+<p>Link to <a href="#foobar"></a>.</p>
+
+<p>5</p>
+
+<p>Link to [Foo][Foo Bar].</p>

@@ -311,6 +311,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#developernotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Developer Notes  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#objectpools" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Object Pools  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlbooleanattributes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Boolean Attributes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
@@ -901,6 +904,75 @@ subfolder:</text:p>
 whether a file is being processed by itself or as part of a &#8220;parent&#8221; file.
 This can be useful when a particular file can either be a standalone document,
 or a chapter inside a larger document.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="developernotes"/>Developer Notes </text:h>
+
+<text:p text:style-name="Standard">If you&#8217;re using MMD as a library in another application, there are a few
+things to be aware of.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="objectpools"/>Object Pools </text:h>
+
+<text:p text:style-name="Standard">To improve performance, MMD has the option to allocate the memory for the
+tokens used in parsing in large chunks (&#8220;object pools&#8221;). Allocating a single
+large chunk of memory is more efficient than allocating many smaller chunks.
+However, this does complicate memory management.</text:p>
+
+<text:p text:style-name="Standard">By default <text:span text:style-name="Source_20_Text">token.h</text:span> defines <text:span text:style-name="Source_20_Text">kUseObjectPool</text:span> which enables this performance
+improvement. This does require more caution with the way that memory is
+managed. (See <text:span text:style-name="Source_20_Text">main.c</text:span> for an example of how the object pool is allocated and
+drained.) I recommend disabling object pools unless you really understand C
+memory management, and understand MultiMarkdown&#8217;s program flow. Failure to
+properly manage the object pool can lead to massive memory leaks, freeing
+memory before that is still in use, or other potential problems.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="htmlbooleanattributes"/>HTML Boolean Attributes </text:h>
+
+<text:p text:style-name="Standard">Most HTML attributes are of the key-value type (e.g. <text:span text:style-name="Source_20_Text">key=&quot;value&quot;</text:span>). But some
+less frequently used attributes are boolean attributes (e.g. <text:span text:style-name="Source_20_Text">&lt;video<text:line-break/>controls&gt;</text:span>). Properly distinguishing HTML from other uses of the <text:span text:style-name="Source_20_Text">&lt;</text:span>
+character requires matching both types under certain circumstances.</text:p>
+
+<text:p text:style-name="Standard">There are some trade-offs to be made:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Performance when compiling MultiMarkdown</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Performance when processing parts of documents that are <text:span text:style-name="MMD-Italic">not</text:span> HTML</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Accuracy when matching HTML</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">So far, there seem to be four main approaches:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Ignore boolean attributes &#8211; this is how MMD-6 started. This is fast, but
+not accurate for some users. Several users found issues with the <text:span text:style-name="Source_20_Text">&lt;video&gt;</text:span> tag
+when MMD was used in HTML heavy documents.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Use regexp to match all boolean attributes. This is fast to compile, but
+adds roughly 5&#8211;8% processing time (probably due to false positive HTML
+matches). This <text:span text:style-name="MMD-Italic">may</text:span> cause some text to be classified as HTML when it
+shouldn&#8217;t.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Explicitly match all possible boolean attributes &#8211; This would presumably be
+relatively fast when processing (due to the nature of re2c lexers), but it may
+be prohibitively slow to compile for some users. As someone who compiles MMD
+frequently, it is too slow to compile be useful for me during development.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Use a hand-curated list of boolean attributes that are most commonly used &#8211;
+this does not incur much of a performance hit when parsing, and compiles
+faster than the complete list of all boolean attributes. For now, this is the
+option I have chosen as default for MMD &#8211; it seems to be a reasonable trade-
+off. I will continue to research additional options.</text:p></text:list-item>
+
+</text:list>
 
 <text:h text:outline-level="3"><text:bookmark text:name="futuresteps"/>Future Steps </text:h>
 

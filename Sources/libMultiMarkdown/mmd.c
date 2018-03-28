@@ -115,6 +115,10 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 
 		e->allow_meta = (extensions & EXT_COMPATIBILITY) ? false : true;
 
+		if (e->allow_meta) {
+			e->allow_meta = (extensions & EXT_NO_METADATA) ? false : true;
+		}
+
 		e->language = LC_EN;
 		e->quotes_lang = ENGLISH;
 
@@ -519,7 +523,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				} else {
 					if ((line->child->tail->type >= HASH1) &&
 							(line->child->tail->type <= HASH6)) {
-						line->child->tail->type -= TEXT_EMPTY;
+						line->child->tail->type -= HASH1;
 						line->child->tail->type += MARKER_H1;
 					}
 				}
@@ -966,6 +970,9 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 	// Reset metadata flag
 	e->allow_meta = (e->extensions & EXT_COMPATIBILITY) ? false : true;
 
+	if (e->allow_meta) {
+		e->allow_meta = (e->extensions & EXT_NO_METADATA) ? false : true;
+	}
 
 	// Create a scanner (for re2c)
 	Scanner s;
@@ -2122,7 +2129,7 @@ handle_line:
 
 				// Move children to parent
 				// Add ':' back
-				if (e->dstr->str[l->child->start - 1] == ':') {
+				if (l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
 					temp = token_new(COLON, l->child->start - 1, 1);
 					token_append_child(block, temp);
 				}
@@ -2258,6 +2265,7 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 /// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
+	token * old_root;
 
 	if (!e) {
 		return false;
@@ -2274,10 +2282,8 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		return false;
 	}
 
-	// Free existing parse tree
-	if (e->root) {
-		token_tree_free(e->root);
-	}
+	// Preserve existing parse tree (if any)
+	old_root = e->root;
 
 	// Tokenize the string (up until first empty line)
 	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
@@ -2296,6 +2302,9 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 
 		token_tree_free(doc);
 	}
+
+	// Restore previous parse tree
+	e->root = old_root;
 
 	return result;
 }

@@ -81,8 +81,9 @@ int scan(Scanner * s, const char * stop) {
 		NL								= "\r\n" | '\n' | '\r';
 		WS 								= [ \t\240];	// Whitespace from char_lookup.c
 		SP								= WS+;
+		EOF								= '\x00';
 
-		SPNL							= WS* NL;
+		SPNL							= WS* ( NL | EOF);
 
 		INDENT_TAB 						= '\t';
 		INDENT_SPACE 					= [ \240]{4};

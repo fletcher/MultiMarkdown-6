@@ -274,15 +274,25 @@ office:mimetype="application/vnd.oasis.opendocument.text">
   <style:master-page style:name="Footnote" style:page-layout-name="pm2"/>
  </office:master-styles>
 <office:meta>
-	<dc:title>*foo* &quot;bar&quot;</dc:title>
-	<meta:user-defined meta:name="empty"></meta:user-defined>
-	<meta:user-defined meta:name="foo">bar foo bar foo bar</meta:user-defined>
+	<dc:title>Link Variations</dc:title>
 </office:meta>
 <office:body>
 <office:text>
-<text:p text:style-name="Standard">foo:<text:tab/>bar</text:p>
+<text:h text:outline-level="2"><text:bookmark text:name="foobar"/>Foo Bar </text:h>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo </text:h>
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">Foo Bar</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">foo bar</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">foobar</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">Foo Bar</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar"></text:a>.</text:p>
+
+<text:p text:style-name="Standard">5</text:p>
+
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">Foo</text:a>.</text:p>
 </office:text>
 </office:body>
 </office:document>

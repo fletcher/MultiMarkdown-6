@@ -81,9 +81,63 @@
 	quoted_p	= "(" [^)\n\r\x00]* ")";
 	unquoted	= [\.A-Za-z0-9]+;
 
+
+	// IMPORTANT NOTE FOR DEVELOPERS!!
+	//
+	// Read about the three options you have for matching boolean attributes in HTML 
+	//
+
+	// Match complete list of possible HTML boolean attributes from HTML 5.1
+	// NOTE: Compile time of scanners.re.c goes up dramatically using the full list 
+	// (in fact, I haven't completed a build using it because it was taking so long)
+	//
+	// I would *guess* there should be a minimal performance hit with this option,
+	// but since I haven't compiled it, I haven't tested it.
+	//
+	// I recommend handpicking the attributes you consider necessary instead of using this,
+	// but if you are using MMD in a situation that makes extensive use of raw HTML, you
+	// may need to use this option or the regex-defined option.
+
+//	bool_attr	= 'allowFullscreen' | 'async' | 'autofocus' | 'autoplay' | 'badInput' | 'checked' |
+//					'compact' | 'complete' | 'controls' | 'cookieEnabled' | 'customError' |
+//					'declare' | 'default' | 'defaultChecked' | 'defaultMuted' | 'defaultSelected' |
+//					'defer' | 'disabled' | 'draggable' | 'enabled' | 'ended' | 'formNoValidate' |
+//					'hidden' | 'indeterminate' | 'isContentEditable' | 'isMap' | 'loop' | 'multiple' |
+//					'muted' | 'noHref' | 'noResize' | 'noShade' | 'noValidate' | 'noWrap' | 'onLine' |
+//					'open' | 'patternMismatch' | 'paused' | 'pauseOnExit' | 'persisted' |
+//					'rangeOverflow' | 'rangeUnderflow' | 'required' | 'reversed' | 'seeking' |
+//					'selected' | 'spellcheck' | 'stepMismatch' | 'tooLong' | 'tooShort' | 'translate' |
+//					'trueSpeed' | 'typeMismatch' | 'typeMustMatch' | 'valid' | 'valueMissing' |
+//					'visible' | 'willValidate' | 'readonlyclosed';
+
+	// Use a more minimal list of boolean attributes that have come up in real life
+	// e.g. those for `<video>`.  This approach maintains performance at the expense of
+	// possibly missing some rare edge cases involving raw HTML.
+	//
+	// Performance is on par with not including any boolean attributes using this option.
+	//
+	// Compilation is fast with this option.
+	//
+	// This is the default option for MMD 6 (at least for now)
+
+	bool_attr	= 'autoplay' | 'controls' | 'loop' | 'muted';
+
+
+	// Alternatively, use a regex-defined match for boolean attributes.
+	//
+	// This option causes many false positives and causes roughly a 5-8% performance hit,
+	// But it could be more in documents that use `<` frequently.
+	//
+	// This may or may not be meaningful for your purposes.
+	//
+	// Compilation is fast with this option
+
+//	bool_attr	= name;
+
+
 	value		= (quoted_d | quoted_s | unquoted);
 	attr		= spnl name '=' sp value;
-	attributes	= (attr)+;
+	attributes	= (bool_attr | attr)+;
 	title		= (quoted_d | quoted_s | quoted_p);
 
 	label		= [^\]\n\r\x00]* [^\]\n\r\x00\\];
@@ -139,7 +193,7 @@
 
 	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \240\t\-\.]*;
 
-	meta_value	= [^\n\r\x00]+;
+	meta_value	= [^\n\r\x00]*;
 
 	meta_line	= meta_key sp ':' meta_value nl_eof;	// meta_line can't match url above
 

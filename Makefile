@@ -87,7 +87,7 @@ windows-32: $(BUILD_DIR)
 .PHONY : windows-zip-32
 windows-zip-32: $(BUILD_DIR)
 	cd $(BUILD_DIR); touch README.html; \
-	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-mingw32.cmake -DCMAKE_BUILD_TYPE=Release -DZIP=1 ..
+	cmake -DCMAKE_TOOLCHAIN_FILE=../tools/Toolchain-MinGW-w64-32bit.cmake -DCMAKE_BUILD_TYPE=Release -DZIP=1 ..
 
 # Build the documentation using doxygen
 .PHONY : documentation

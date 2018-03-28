@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2018-02-05")
+set (My_Project_Revised_Date "2018-03-27")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 3)
-set (My_Project_Version_Patch 0)
+set (My_Project_Version_Patch 1)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -646,6 +646,10 @@ ADD_MMD_TEST(mmd-6 "" MMD6Tests html)
 ADD_MMD_TEST(mmd-6-compat "-c" MMD6Tests htmlc)
 
 ADD_MMD_TEST(mmd-6-latex "-t latex" MMD6Tests tex)
+
+ADD_MMD_TEST(mmd-6-beamer "-t beamer" Beamer tex)
+
+ADD_MMD_TEST(mmd-6-memoir "-t memoir" Memoir tex)
 
 ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
 

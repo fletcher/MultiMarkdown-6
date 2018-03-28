@@ -2050,6 +2050,7 @@ parse_citation:
 
 			break;
 
+		case PAIR_RAW_FILTER:
 		case RAW_FILTER_LEFT:
 		case TEXT_BACKSLASH:
 		case TEXT_BRACE_LEFT:

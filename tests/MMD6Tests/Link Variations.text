@@ -1,0 +1,19 @@
+Title:	Link Variations
+latex config:	article
+
+## Foo Bar ##
+
+Link to [Foo Bar].
+
+Link to [foo bar].
+
+Link to [foobar].
+
+Link to [Foo Bar](#foobar).
+
+Link to [](#foobar).
+
+5
+
+Link to [Foo][Foo Bar].
+

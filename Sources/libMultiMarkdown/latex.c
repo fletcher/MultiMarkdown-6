@@ -263,14 +263,13 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 			if (text && text->child) {
 				temp_char = label_from_token(source, text);
 
-				if (strcmp(temp_char, &(link->url[1])) == 0) {
-					// [bar][bar] or [bar](#bar) or [bar]
-					printf("\\autoref{%s}", &(link->url)[1]);
-				} else {
+				if (temp_char && temp_char[0] != '\0') {
 					mmd_export_token_tree_latex(out, source, text->child, scratch);
 					print_const(" (");
 					printf("\\autoref{%s}", &(link->url)[1]);
 					print_const(")");
+				} else {
+					printf("\\autoref{%s}", &(link->url)[1]);
 				}
 
 				free(temp_char);
@@ -1934,6 +1933,7 @@ parse_citation:
 		case TEXT_BRACE_RIGHT:
 			print_const("\\");
 
+		case PAIR_RAW_FILTER:
 		case RAW_FILTER_LEFT:
 		case TEXT_NUMBER_POSS_LIST:
 		case TEXT_PERIOD:
