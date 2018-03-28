@@ -491,6 +491,66 @@ This can be useful when a particular file can either be a standalone document,
 or a chapter inside a larger document.
 
 
+# Developer Notes #
+
+If you're using MMD as a library in another application, there are a few
+things to be aware of.
+
+
+## Object Pools ##
+
+To improve performance, MMD has the option to allocate the memory for the
+tokens used in parsing in large chunks ("object pools").  Allocating a single
+large chunk of memory is more efficient than allocating many smaller chunks.
+However, this does complicate memory management.
+
+By default `token.h` defines `kUseObjectPool` which enables this performance
+improvement.  This does require more caution with the way that memory is
+managed.  (See `main.c` for an example of how the object pool is allocated and
+drained.)  I recommend disabling object pools unless you really understand C
+memory management, and understand MultiMarkdown's program flow.  Failure to
+properly manage the object pool can lead to massive memory leaks, freeing
+memory before that is still in use, or other potential problems.
+
+
+## HTML Boolean Attributes ##
+
+Most HTML attributes are of the key-value type (e.g. `key="value"`).  But some
+less frequently used attributes are boolean attributes (e.g. `<video
+controls>`).  Properly distinguishing HTML from other uses of the `<`
+character requires matching both types under certain circumstances.
+
+There are some trade-offs to be made:
+
+* Performance when compiling MultiMarkdown
+
+* Performance when processing parts of documents that are *not* HTML
+
+* Accuracy when matching HTML
+
+So far, there seem to be four main approaches:
+
+* Ignore boolean attributes -- this is how MMD-6 started. This is fast, but
+not accurate for some users. Several users found issues with the `<video>` tag
+when MMD was used in HTML heavy documents.
+
+* Use regexp to match all boolean attributes. This is fast to compile, but
+adds roughly 5-8% processing time (probably due to false positive HTML
+matches). This *may* cause some text to be classified as HTML when it
+shouldn't.
+
+* Explicitly match all possible boolean attributes -- This would presumably be
+relatively fast when processing (due to the nature of re2c lexers), but it may
+be prohibitively slow to compile for some users.  As someone who compiles MMD
+frequently, it is too slow to compile be useful for me during development.
+
+* Use a hand-curated list of boolean attributes that are most commonly used --
+this  does not incur much of a performance hit when parsing, and compiles
+faster than the complete list of all boolean attributes.  For now, this is the
+option I have chosen as default for MMD -- it seems to be a reasonable trade-
+off.  I will continue to research additional options.
+
+
 # Future Steps #
 
 Some features I plan to implement at some point:
