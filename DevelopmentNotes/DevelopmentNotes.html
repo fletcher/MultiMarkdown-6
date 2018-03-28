@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Development Notes</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="date" content="2018-02-05"/>
+	<meta name="date" content="2018-03-38"/>
 	<meta name="uuid" content="dd2d8e76-dc2d-416d-9acd-5395d20871c2"/>
 </head>
 <body>
@@ -399,7 +399,8 @@ the code or used during the development.</p>
 <h3 id="dependencieslibraries">Dependencies/Libraries </h3>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 has no external dependencies when compiling, aside from the standard
-libraries for C development.</p>
+libraries for C development (Except that it will use <code>libcurl</code> if available in
+order to support downloading remote images/files for EPUB/FODT exporting.</p>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> can be compiled without any other tools beside the build system (cmake).</p>
 
@@ -432,6 +433,33 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <h3 id="changelog">Changelog </h3>
 
 <ul>
+<li><p>2018&#8211;03&#8211;28 - v 6.3.2:</p>
+
+<ul>
+<li>UPDATED: Update documentation</li>
+</ul></li>
+<li><p>2018&#8211;03&#8211;27 - v 6.3.1:</p>
+
+<ul>
+<li>ADDED: Add beamer support for code highlighting</li>
+<li>ADDED: Add extra tests for variations on link types</li>
+<li>ADDED: Add integrated memoir test</li>
+<li>ADDED: Migrate manuscript and memoir(book) LaTeX formats to <abbr title="MultiMarkdown">MMD</abbr>-6</li>
+<li>FIXED: Checking for metadata was partially erasing token tree and leaving engine in invalid state</li>
+<li>FIXED: Explicitly disable metadata in compatibility mode</li>
+<li>FIXED: Fix Makefile for Windows 32-bit zip</li>
+<li>FIXED: Fix detection of invalid request to copy substring of DString</li>
+<li>FIXED: Fix issue with empty metadata lines</li>
+<li>FIXED: Fix issue with raw source markers(fixes #115)</li>
+<li>FIXED: Fix issue with trailing ATX hash without final newline</li>
+<li>FIXED: Fix potential pointer overflow if line starts with &#8216;:::&#8217;</li>
+<li>FIXED: Improve internal link creation in LaTeX</li>
+<li>FIXED: Improve logic for disabling metadata</li>
+<li>FIXED: Improve parsing of HTML 5 <video> tag</li>
+<li>UPDATED: Add beginnings of Beamer test suite; add support for beamer/memoir and raw text blocks</li>
+<li>UPDATED: Update quick start guide</li>
+<li>UPDATED: Update remaining tests for LaTeX change</li>
+</ul></li>
 <li><p>2018&#8211;02&#8211;05 - v 6.3.0:</p>
 
 <ul>
