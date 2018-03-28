@@ -113,7 +113,9 @@ general, it seems to handle edge cases much more reliably, but there are still
 a couple of situations that I would like to take into account, if possible.
 These are not situations that should occur often in "real life."
 
-12. EPUB 3 output is supported without need of any external tools.
+12. EPUB 3 output is supported without need of any external tools (unless you
+want to support downloading remote images/files in which case `libcurl` is
+used.
 
 13. Internationalization support for HTML phrases, such as "see footnote". See
 [Github](https://github.com/fletcher/MultiMarkdown-6/issues/37) for more
