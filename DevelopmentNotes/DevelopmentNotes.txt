@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2018-02-05  
+Date: 2018-03-38  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -472,7 +472,12 @@ TextBundle/TextPack, OpenDocument, etc.
 
 # Changelog #
 
-* 2018-03-27 - v 6.3.1.:
+* 2018-03-28 - v 6.3.2:
+
+	* UPDATED: Update documentation
+
+
+* 2018-03-27 - v 6.3.1:
 
 	*    ADDED: Add beamer support for code highlighting
 	*    ADDED: Add extra tests for variations on link types
