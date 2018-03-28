@@ -422,7 +422,8 @@ the code or used during the development.
 # Dependencies/Libraries #
 
 MMD v6 has no external dependencies when compiling, aside from the standard
-libraries for C development.
+libraries for C development (Except that it will use `libcurl` if available in
+order to support downloading remote images/files for EPUB/FODT exporting.
 
 MMD can be compiled without any other tools beside the build system (cmake).
 
