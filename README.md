@@ -4,9 +4,9 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2018-03-27 |  
+| Date:      | 2018-03-28 |  
 | Copyright: | Copyright © 2016 - 2018 Fletcher T. Penney.    |  
-| Version:   | 6.3.1      |  
+| Version:   | 6.3.2      |  
 
 master branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=master)](https://travis-ci.org/fletcher/MultiMarkdown-6)  
 develop branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=develop)](https://travis-ci.org/fletcher/MultiMarkdown-6)
@@ -113,9 +113,7 @@ general, it seems to handle edge cases much more reliably, but there are still
 a couple of situations that I would like to take into account, if possible.
 These are not situations that should occur often in "real life."
 
-12. EPUB 3 output is supported without need of any external tools (unless you
-want to support downloading remote images/files in which case `libcurl` is
-used.
+12. EPUB 3 output is supported without need of any external tools.
 
 13. Internationalization support for HTML phrases, such as "see footnote". See
 [Github](https://github.com/fletcher/MultiMarkdown-6/issues/37) for more
