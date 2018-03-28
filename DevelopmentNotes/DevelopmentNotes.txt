@@ -472,6 +472,28 @@ TextBundle/TextPack, OpenDocument, etc.
 
 # Changelog #
 
+* 2018-03-27 - v 6.3.1.:
+
+	*    ADDED: Add beamer support for code highlighting
+	*    ADDED: Add extra tests for variations on link types
+	*    ADDED: Add integrated memoir test
+	*    ADDED: Migrate manuscript and memoir(book) LaTeX formats to MMD-6
+	*    FIXED: Checking for metadata was partially erasing token tree and leaving engine in invalid state
+	*    FIXED: Explicitly disable metadata in compatibility mode
+	*    FIXED: Fix Makefile for Windows 32-bit zip
+	*    FIXED: Fix detection of invalid request to copy substring of DString
+	*    FIXED: Fix issue with empty metadata lines
+	*    FIXED: Fix issue with raw source markers(fixes #115)
+	*    FIXED: Fix issue with trailing ATX hash without final newline
+	*    FIXED: Fix potential pointer overflow if line starts with ':::'
+	*    FIXED: Improve internal link creation in LaTeX
+	*    FIXED: Improve logic for disabling metadata
+	*    FIXED: Improve parsing of HTML 5 <video> tag
+	*    UPDATED: Add beginnings of Beamer test suite; add support for beamer/memoir and raw text blocks
+	*    UPDATED: Update quick start guide
+	*    UPDATED: Update remaining tests for LaTeX change
+
+
 * 2018-02-05 - v 6.3.0:
 
 	*    ADDED: Add additional CM tests
