@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2018-02-05</meta:user-defined>
+	<meta:user-defined meta:name="date">2018-03-38</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -721,7 +721,8 @@ the code or used during the development.</text:p>
 <text:h text:outline-level="3"><text:bookmark text:name="dependencieslibraries"/>Dependencies/Libraries </text:h>
 
 <text:p text:style-name="Standard">MMD v6 has no external dependencies when compiling, aside from the standard
-libraries for C development.</text:p>
+libraries for C development (Except that it will use <text:span text:style-name="Source_20_Text">libcurl</text:span> if available in
+order to support downloading remote images/files for EPUB/FODT exporting.</text:p>
 
 <text:p text:style-name="Standard">MMD can be compiled without any other tools beside the build system (cmake).</text:p>
 
@@ -762,6 +763,92 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2018&#8211;03&#8211;28 - v 6.3.2:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update documentation</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2018&#8211;03&#8211;27 - v 6.3.1:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add beamer support for code highlighting</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add extra tests for variations on link types</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add integrated memoir test</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Migrate manuscript and memoir(book) LaTeX formats to MMD-6</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Checking for metadata was partially erasing token tree and leaving engine in invalid state</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Explicitly disable metadata in compatibility mode</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix Makefile for Windows 32-bit zip</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix detection of invalid request to copy substring of DString</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with empty metadata lines</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with raw source markers(fixes #115)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with trailing ATX hash without final newline</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential pointer overflow if line starts with &#8216;:::&#8217;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve internal link creation in LaTeX</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve logic for disabling metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve parsing of HTML 5  tag</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add beginnings of Beamer test suite; add support for beamer/memoir and raw text blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update quick start guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update remaining tests for LaTeX change</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2018&#8211;02&#8211;05 - v 6.3.0:</text:p>
 
