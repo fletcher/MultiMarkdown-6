@@ -137,7 +137,7 @@
 
 	value		= (quoted_d | quoted_s | unquoted);
 	attr		= spnl name '=' sp value;
-	attributes	= ((spnl bool_attr) | attr)+;
+	attributes	= (bool_attr | attr)+;
 	title		= (quoted_d | quoted_s | quoted_p);
 
 	label		= [^\]\n\r\x00]* [^\]\n\r\x00\\];
