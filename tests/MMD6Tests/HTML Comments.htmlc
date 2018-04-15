@@ -23,6 +23,9 @@ latex config:	article</p>
 
 <p>5</p>
 
+<pre><code>&lt;!-- *foo* --&gt;
+</code></pre>
+
 <!--
 
 *foo*

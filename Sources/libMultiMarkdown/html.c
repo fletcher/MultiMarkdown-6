@@ -2101,6 +2101,14 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			mmd_print_char_html(out, source[t->start + 1], false);
 			break;
 
+		case HTML_COMMENT_START:
+			print_const("&lt;!--");
+			break;
+
+		case HTML_COMMENT_STOP:
+			print_const("--&gt;");
+			break;
+
 		case HTML_ENTITY:
 			print_const("&amp;");
 			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);

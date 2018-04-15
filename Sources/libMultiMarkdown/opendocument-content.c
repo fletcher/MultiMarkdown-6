@@ -315,6 +315,14 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 			mmd_print_char_opendocument(out, source[t->start + 1]);
 			break;
 
+		case HTML_COMMENT_START:
+			print_const("&lt;!--");
+			break;
+
+		case HTML_COMMENT_STOP:
+			print_const("--&gt;");
+			break;
+
 		case HTML_ENTITY:
 			print_const("&amp;");
 			d_string_append_c_array(out, &(source[t->start + 1]), t->len - 1);
