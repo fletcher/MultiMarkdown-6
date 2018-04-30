@@ -60,4 +60,5 @@ latex config:	article</p>
 <p>| bat ||
 | foo | bar |
 | --- | --- |
-| foo | bar |</p>
+| foo | bar |
+[<strong>no trailing newline</strong>]</p>

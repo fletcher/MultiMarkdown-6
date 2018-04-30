@@ -67,3 +67,4 @@ latex config:	article
 | foo | bar |
 | --- | --- |
 | foo | bar |
+[**no trailing newline**]

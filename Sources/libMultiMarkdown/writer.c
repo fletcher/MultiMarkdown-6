@@ -2479,6 +2479,11 @@ bool table_has_caption(token * t) {
 				t = t->next;
 			}
 
+			if (t == NULL) {
+				// End of file
+				return true;
+			}
+
 			if (t && t->next &&
 					((t->next->type == TEXT_NL) ||
 					 (t->next->type == TEXT_LINEBREAK))) {
