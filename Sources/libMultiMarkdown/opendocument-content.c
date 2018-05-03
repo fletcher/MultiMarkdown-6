@@ -336,6 +336,34 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 			print_const("&quot;");
 			break;
 
+		case MARKER_H1:
+		case MARKER_H2:
+		case MARKER_H3:
+		case MARKER_H4:
+		case MARKER_H5:
+		case MARKER_H6:
+			temp = (char *) &source[t->start];
+			while (temp) {
+				switch (*temp) {
+					case '#':
+						print_const("#");
+						temp++;
+						break;
+					case ' ':
+						print_const(" ");
+						temp++;
+						break;
+					case '\t':
+						print_const("<text:tab/>");
+						temp++;
+						break;
+					default:
+						temp = NULL;
+						break;
+				}
+			}
+			break;
+
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
 			print_token(t);
@@ -392,6 +420,8 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 		case TEXT_EMPTY:
 			break;
 
+		case TEXT_LINEBREAK:
+			print_const("  ");
 		case TEXT_NL:
 			print_const("<text:line-break/>");
 			break;

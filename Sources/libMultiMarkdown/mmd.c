@@ -510,9 +510,6 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (first_child->type - HASH1) + LINE_ATX_1;
 				first_child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
-				// Strip trailing whitespace from '#' sequence
-				first_child->len = first_child->type - MARKER_H1 + 1;
-
 				// Strip trailing '#' sequence if present
 				if (line->child->tail->type == TEXT_NL) {
 					if ((line->child->tail->prev->type >= HASH1) &&

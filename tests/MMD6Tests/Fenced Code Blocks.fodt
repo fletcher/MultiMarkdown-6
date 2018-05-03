@@ -307,6 +307,8 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Preformatted Text">* foo<text:line-break/>+  bar<text:line-break/>-   baz<text:line-break/>*    foo<text:line-break/>+     bar<text:line-break/>-      baz<text:line-break/><text:line-break/>1.   foo<text:line-break/>2.    bar<text:line-break/>3.     baz<text:line-break/></text:p>
 
+<text:p text:style-name="Preformatted Text"># foo<text:line-break/>##<text:tab/>bar<text:line-break/>### baz #<text:line-break/>####<text:tab/>foo<text:tab/>##  <text:line-break/>#####<text:tab/><text:tab/>bar<text:tab/><text:tab/>##<text:tab/><text:line-break/>###### baz#<text:line-break/></text:p>
+
 <text:p text:style-name="Preformatted Text">foo<text:line-break/></text:p>
 </office:text>
 </office:body>
