@@ -437,8 +437,6 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 		char destination[100] = "OEBPS/assets/";
 		destination[49] = '\0';
 
-		mz_bool status;
-
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
 
 			memcpy(&destination[13], a->asset_path, 36);

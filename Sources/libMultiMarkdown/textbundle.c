@@ -246,8 +246,6 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 		char destination[100] = "assets/";
 		destination[43] = '\0';
 
-		mz_bool status;
-
 		HASH_ITER(hh, e->asset_hash, a, a_tmp) {
 
 			memcpy(&destination[7], a->asset_path, 36);
