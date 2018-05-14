@@ -4,3 +4,5 @@
 \usepackage{todonotes}
 \newcommandx{\cmnote}[2][1=]{\linespread{1.0}\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
 
+% Use \ul instead of \underline since we are using soul
+\let\underline\ul
