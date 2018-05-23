@@ -98,7 +98,7 @@
 	// but if you are using MMD in a situation that makes extensive use of raw HTML, you
 	// may need to use this option or the regex-defined option.
 
-//	bool_attr	= 'allowFullscreen' | 'async' | 'autofocus' | 'autoplay' | 'badInput' | 'checked' |
+//	bool_attr	= 'allowfullscreen' | 'async' | 'autofocus' | 'autoplay' | 'badInput' | 'checked' |
 //					'compact' | 'complete' | 'controls' | 'cookieEnabled' | 'customError' |
 //					'declare' | 'default' | 'defaultChecked' | 'defaultMuted' | 'defaultSelected' |
 //					'defer' | 'disabled' | 'draggable' | 'enabled' | 'ended' | 'formNoValidate' |
@@ -120,7 +120,7 @@
 	//
 	// This is the default option for MMD 6 (at least for now)
 
-	bool_attr	= 'autoplay' | 'controls' | 'loop' | 'muted';
+	bool_attr	= 'autoplay' | 'controls' | 'loop' | 'muted' | 'allowfullscreen';
 
 
 	// Alternatively, use a regex-defined match for boolean attributes.
