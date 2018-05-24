@@ -19,3 +19,6 @@ latex config:	article</p>
 
 <foo>
 
+<p>%</p>
+
+<p><code>%</code></p>

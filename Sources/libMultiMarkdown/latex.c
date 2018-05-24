@@ -2047,6 +2047,10 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 		case TEXT_EMPTY:
 			break;
 
+		case TEXT_PERCENT:
+			print_const("\\%");
+			break;
+
 		default:
 			if (t->child) {
 				mmd_export_token_tree_latex_raw(out, source, t->child, scratch);
@@ -2251,6 +2255,10 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 
 		case TEXT_BRACE_RIGHT:
 			print_const("\\}");
+			break;
+
+		case TEXT_PERCENT:
+			print_const("\\%");
 			break;
 
 		case TOC:
