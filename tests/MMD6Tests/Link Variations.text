@@ -17,3 +17,14 @@ Link to [](#foobar).
 
 Link to [Foo][Foo Bar].
 
+[& link](http://example.com/?bar=foo&foo=bar)
+
+['%' Link](http://example.com/%25%20link)
+
+['#' link](http://example.com/#foo)
+
+10
+
+[_ link](http://example.com/_foo)
+
+[~ link](http://example.com/~foo)
