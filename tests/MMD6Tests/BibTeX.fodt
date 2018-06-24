@@ -291,6 +291,10 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">5</text:p>
 
 <text:p text:style-name="Standard">[#Knuth:1968,Knuth:1981;]</text:p>
+
+<text:p text:style-name="Standard">[#Knuth:1981][#Knuth:1981]</text:p>
+
+<text:p text:style-name="Standard">[#Knuth:1981;][#Knuth:1981;]</text:p>
 </office:text>
 </office:body>
 </office:document>
