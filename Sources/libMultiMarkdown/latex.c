@@ -1287,7 +1287,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 
 			// No links exist, so treat as normal
+			print_const("{");
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			print_const("}");
 			break;
 
 		case PAIR_BRACKET_ABBREVIATION:
@@ -1302,9 +1304,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 				if (temp_short == -1) {
 					// This instance is not properly formed
-					print_const("[>");
+					print_const("{[>");
 					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
-					print_const("]");
+					print_const("]}");
 					break;
 				}
 
@@ -1328,7 +1330,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				}
 			} else {
 				// Note-based syntax disabled
+				print_const("{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print_const("}");
 			}
 
 			break;
@@ -1369,9 +1373,9 @@ parse_citation:
 					// Ensure we aren't using BibTeX
 					if (!scratch->bibtex_file) {
 						// This instance is not properly formed
-						print_const("[#");
+						print_const("{[#");
 						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
-						print_const("]");
+						print_const("]}");
 
 						free(temp_char);
 						break;
@@ -1451,7 +1455,9 @@ parse_citation:
 				free(temp_char);
 			} else {
 				// Note-based syntax disabled
+				print_const("{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print_const("}");
 			}
 
 			break;
@@ -1466,9 +1472,9 @@ parse_citation:
 
 				if (temp_short == -1) {
 					// This instance is not properly formed
-					print_const("[?");
+					print_const("{[?");
 					mmd_export_token_tree_latex(out, source, t->child->next, scratch);
-					print_const("]");
+					print_const("]}");
 					break;
 				}
 
@@ -1500,7 +1506,9 @@ parse_citation:
 				}
 			} else {
 				// Note-based syntax disabled
+				print_const("{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print_const("}");
 			}
 
 			break;
@@ -1518,7 +1526,7 @@ parse_citation:
 
 				if (temp_short == -1) {
 					// This instance is not properly formed
-					print_const("[?");
+					print_const("{[?");
 
 					if (t->child) {
 						mmd_export_token_tree_latex(out, source, t->child->next, scratch);
@@ -1526,7 +1534,7 @@ parse_citation:
 						print_token(t);
 					}
 
-					print_const("]");
+					print_const("]}");
 					break;
 				}
 
@@ -1566,7 +1574,9 @@ parse_citation:
 				}
 			} else {
 				// Note-based syntax disabled
+				print_const("{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print_const("}");
 			}
 
 			break;
@@ -1578,7 +1588,9 @@ parse_citation:
 			if (temp_char2) {
 				mmd_print_string_latex(out, temp_char2);
 			} else {
+				print_const("{");
 				mmd_export_token_tree_latex(out, source, t->child, scratch);
+				print_const("}");
 			}
 
 			// Don't free temp_char2 (it belongs to meta *)
