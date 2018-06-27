@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Glossaries</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-27"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<h3 id="glossaries">Glossaries </h3>
+
+<p>MultiMarkdown has a feature that allows footnotes to be specified as glossary terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts the document into LaTeX is designed to convert these special footnotes into glossary entries.</p>
+
+<p><strong>NOTE</strong>: The syntax for glossary terms changed in MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) v6.</p>
+
+<p>If there are terms in your document you wish to define in a <a href="#gn:1" id="gnref:1" title="see glossary" class="glossary">glossary</a> at the end of your document, you can define them using the glossary syntax.</p>
+
+<p>Glossary terms can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the <code>?</code>.</p>
+
+<pre><code>[?(glossary) The glossary collects information about important
+terms used in your document] is a glossary term.
+
+[?glossary] is also a glossary term.
+
+[?glossary]: The glossary collects information about important
+terms used in your document
+</code></pre>
+
+<p>Much like abbreviations, there is also a &#8220;shortcut&#8221; method that is similar to the approach used in prior versions of <abbr title="MultiMarkdown">MMD</abbr>. You specify the definition for the glossary term in the usual manner, but <abbr title="MultiMarkdown">MMD</abbr> will automatically identify each instance where the term is used and substitute it automatically. In this case, the term is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex glossary terms, you must explicitly mark uses of the term.</p>
+
+<h4 id="latexglossaries">LaTeX Glossaries </h4>
+
+<p><strong>Note</strong>: <em>Getting glossaries to work is a slightly more advanced LaTeX
+feature, and might take some trial and error the first few times.</em></p>
+
+<p>Unfortunately, it takes an extra step to generate the glossary when creating a
+pdf from a latex file:</p>
+
+<ol>
+<li><p>You need to have the <code>basic.gst</code> file installed, which comes with the
+memoir class.</p></li>
+<li><p>You need to run a special makeindex command to generate the <code>.glo</code> file:
+<code>makeindex -s `kpsewhich basic.gst` -o &quot;filename.gls&quot; &quot;filename.glo&quot;</code></p></li>
+<li><p>Then you run the usual pdflatex command again a few times.</p></li>
+</ol>
+
+<p>Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like <code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/">TeXShop</a>, this is the way to go.</p>
+
+<pre><code>#!/bin/	
+
+set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current 
+	/usr/local/bin) # This is actually a continuation of the line above
+
+set basefile = `basename &quot;$1&quot; .tex`
+
+makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;
+</code></pre>
+
+<div class="glossary">
+<hr />
+<ol>
+
+<li id="gn:1">
+glossary: <p>The glossary collects information about important terms used in your document <a href="#gnref:1" title="return to body" class="reverseglossary">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
+</body>
+</html>
+

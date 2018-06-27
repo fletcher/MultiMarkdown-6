@@ -278,7 +278,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 	<meta:user-defined meta:name="latextitle">MultiMarkdown \\ User's Guide</meta:user-defined>
 	<dc:creator>Fletcher T. Penney</dc:creator>
 	<meta:user-defined meta:name="version">6.3.2</meta:user-defined>
-	<meta:user-defined meta:name="revised">2017-03-15</meta:user-defined>
+	<meta:user-defined meta:name="revised">2018-06-27</meta:user-defined>
 	<meta:user-defined meta:name="uuid">88e8f53c-9a02-4e49-a639-f2dbb0a2e338</meta:user-defined>
 </office:meta>
 <office:body>
@@ -286,7 +286,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide </text:h>
 
 <text:p text:style-name="Quotations">Version 6.3.2<text:line-break/>
-Revised 2017-03-15</text:p>
+Revised 2018-06-27</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
@@ -407,6 +407,265 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="syntax"/>Syntax </text:h>
 
+<text:h text:outline-level="3"><text:bookmark text:name="abbreviationsoracronyms"/>Abbreviations (or Acronyms)</text:h>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: The syntax for abbreviations changed in MMD v6.</text:p>
+
+<text:p text:style-name="Standard">Abbreviations can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the <text:span text:style-name="Source_20_Text">&gt;</text:span>.</text:p>
+
+<text:p text:style-name="Preformatted Text">[>MMD] is an abbreviation.  So is [>(MD) Markdown].<text:line-break/><text:line-break/>[>MMD]: MultiMarkdown<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">There is also a &#8220;shortcut&#8221; method for abbreviations that is similar to the approach used in prior versions of MMD. You specify the definition for the abbreviation in the usual manner, but MMD will automatically identify each instance where the abbreviation is used and substitute it automatically. In this case, the abbreviation is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex abbreviations, you must explicitly mark uses of the abbreviation.</text:p>
+
+<text:p text:style-name="Standard">There are a few limitations:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">When exporting to LaTeX, the <text:span text:style-name="Source_20_Text">acronym</text:span> package is used; this means that the first usage will result in <text:span text:style-name="Source_20_Text">full text (short)</text:span>, and subsequent uses will result in <text:span text:style-name="Source_20_Text">short</text:span>.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="citations"/>Citations </text:h>
+
+<text:p text:style-name="Standard">I have included support for <text:span text:style-name="MMD-Italic">basic</text:span> bibliography features in this version of MultiMarkdown. Please give me feedback on ways to improve this but keep the following in mind:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc). My XSLT files demonstrate how to make this format compatible with BibTeX, but I am not planning on personally providing compatibility with other tools. Feel free to post your ideas and tools to the wiki.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians will probably not be satisfied however.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">To use citations in MultiMarkdown, you use a syntax much like that for anchors:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a statement that should be attributed to<text:line-break/>its source[p. 23][#Doe:2006].<text:line-break/><text:line-break/>And following is the description of the reference to be<text:line-break/>used in the bibliography.<text:line-break/><text:line-break/>[#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">You are not required to use a locator (e.g. p. 23), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a statement that should be attributed to its<text:line-break/>source[][#Doe:2006].<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">There are no rules on the citation key format that you use (e.g. <text:span text:style-name="Source_20_Text">Doe:2006</text:span>), but it must be preceded by a <text:span text:style-name="Source_20_Text">#</text:span>, just like footnotes use <text:span text:style-name="Source_20_Text">^</text:span>.</text:p>
+
+<text:p text:style-name="Standard">As for the reference description, you can use Markup code within this section, and I recommend leaving a blank line afterwards to prevent concatenation of several references. Note that there is no way to reformat these references in different bibliography styles; for this you need a program designed for that purpose (e.g. BibTeX).</text:p>
+
+<text:p text:style-name="Standard">If you want to include a source in your bibliography that was not cited, you may use the following:</text:p>
+
+<text:p text:style-name="Preformatted Text">[Not cited][#citekey]<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">Not cited</text:span> bit is not case sensitive.</text:p>
+
+<text:p text:style-name="Standard">If you are creating a LaTeX document, the citations will be included, and natbib will be used by default. If you are not using BibTeX and are getting errors about your citations not being compatible with &#8216;Author-Year&#8217;, you can add the following to your documents metadata:</text:p>
+
+<text:p text:style-name="Preformatted Text">latex input:<text:tab/><text:tab/>mmd-natbib-plain<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This changes the citation style in natbib to avoid these errors, and is useful when you include your citations in the MultiMarkdown document itself.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: As of version 6, HTML wraps citation references in parentheses instead of brackets, e.g. <text:span text:style-name="Source_20_Text">(1)</text:span> instead of <text:span text:style-name="Source_20_Text">[1]</text:span>. Also, citations are now displayed in a separate section from footnotes when outputting to HTML.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="inlinecitations"/>Inline Citations </text:h>
+
+<text:p text:style-name="Standard">Citations can also be used in an inline syntax, just like inline footnotes:</text:p>
+
+<text:p text:style-name="Preformatted Text">As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]<text:line-break/></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="bibtex"/>BibTeX </text:h>
+
+<text:p text:style-name="Standard">If you are creating a LaTeX document, and need a bibliography, then you should definitely look into <text:a xlink:type="simple" xlink:href="http://www.bibtex.org/">BibTeX</text:a> and <text:a xlink:type="simple" xlink:href="http://merkel.zoneo.net/Latex/natbib.php">natbib</text:a>. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.</text:p>
+
+<text:p text:style-name="Standard">To use BibTeX in a MultiMarkdown document, you <text:span text:style-name="MMD-Italic">must</text:span> use the <text:a xlink:type="simple" xlink:href="#bibtex"><text:span text:style-name="Source_20_Text">BibTeX</text:span> metadata</text:a> to specify where your citations are stored. You may <text:span text:style-name="MMD-Italic">optionally</text:span> use the <text:span text:style-name="Source_20_Text">biblio style</text:span> metadata key.</text:p>
+
+<text:p text:style-name="Standard">Since <text:span text:style-name="Source_20_Text">natbib</text:span> is enabled by default, you have a choice between using the <text:span text:style-name="Source_20_Text">\citep</text:span> and <text:span text:style-name="Source_20_Text">\citet</text:span> commands. The following shows how this relates to the MultiMarkdown syntax used.</text:p>
+
+<text:p text:style-name="Preformatted Text">[#citekey]    =&gt; ~\citep{citekey}<text:line-break/>[#citekey][]  =&gt; ~\citep{citekey}<text:line-break/><text:line-break/>[foo][#citekey] =&gt; ~\citep[foo]{citekey}<text:line-break/><text:line-break/>[foo\]\[bar][#citekey] =&gt; ~\citep[foo][bar]{citekey}<text:line-break/><text:line-break/><text:line-break/>[#citekey;]    =&gt; \citet{citekey}<text:line-break/>[#citekey;][]  =&gt; \citet{citekey}<text:line-break/><text:line-break/>[foo][#citekey;] =&gt; \citet[foo]{citekey}<text:line-break/><text:line-break/>[foo\]\[bar][#citekey;] =&gt; \citet[foo][bar]{citekey}<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="criticmarkup"/>CriticMarkup </text:h>
+
+<text:h text:outline-level="4"><text:bookmark text:name="whatiscriticmarkup"/>What Is CriticMarkup? </text:h>
+
+<text:p text:style-name="Quotations">CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">http://criticmarkup.com/</text:a></text:p>
+
+<text:p text:style-name="Standard">CriticMarkup is integrated with MultiMarkdown itself, as well as <text:a xlink:type="simple" xlink:href="http://multimarkdown.com/">MultiMarkdown Composer</text:a>. I encourage you to check out the <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a> web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="thecriticmarkupsyntax"/>The CriticMarkup Syntax </text:h>
+
+<text:p text:style-name="Standard">The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <text:span text:style-name="MMD-Italic">before</text:span> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</text:p>
+
+<text:p text:style-name="Standard">When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</text:p>
+
+<text:p text:style-name="Standard">When using CriticMarkup with MultiMarkdown itself, you have four choices:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Leave the CriticMarkup syntax in place (<text:span text:style-name="Source_20_Text">multimarkdown foo.txt</text:span>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Accept all changes, giving you the &#8220;new&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -a foo.txt</text:span> or <text:span text:style-name="Source_20_Text">multimarkdown --accept foo.txt</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Reject all changes, giving you the &#8220;original&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -r foo.txt</text:span>)</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">CriticMarkup comments and highlighting are ignored when processing.</text:p>
+
+<text:p text:style-name="Standard">Deletions from the original text:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is {--is --}a test.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Additions:</text:p>
+
+<text:p text:style-name="Preformatted Text">This {++is ++}a test.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Substitutions:</text:p>
+
+<text:p text:style-name="Preformatted Text">This {~~isn't~>is~~} a test.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Highlighting:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a {==test==}.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Comments:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a test{>>What is it a test of?<<}.<text:line-break/></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="myphilosophyoncriticmarkup"/>My philosophy on CriticMarkup</text:h>
+
+<text:p text:style-name="Standard">I view CriticMarkup as two things:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">A means to display those notes/changes in the HTML output.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</text:p>
+
+<text:p text:style-name="Standard">CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</text:p>
+
+<text:p text:style-name="Standard">Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</text:p>
+
+<text:p text:style-name="Standard">There are other CriticMarkup tools besides MultiMarkdown and <text:a xlink:type="simple" xlink:href="http://multimarkdown.com/">MultiMarkdown Composer</text:a>, and you are more than welcome to use them.</text:p>
+
+<text:p text:style-name="Standard">For now, the <text:span text:style-name="MMD-Italic">official</text:span> MultiMarkdown support for CriticMarkup consists of:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="P1">
+CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The secondary to choice, when exporting to HTML, is to <text:span text:style-name="MMD-Italic">attempt</text:span> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="glossaries"/>Glossaries </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown has a feature that allows footnotes to be specified as glossary terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts the document into LaTeX is designed to convert these special footnotes into glossary entries.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: The syntax for glossary terms changed in MMD v6.</text:p>
+
+<text:p text:style-name="Standard">If there are terms in your document you wish to define in a glossary<text:note text:id="gn1" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">The glossary collects information about important terms used in your document</text:p></text:note-body></text:note> at the end of your document, you can define them using the glossary syntax.</text:p>
+
+<text:p text:style-name="Standard">Glossary terms can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the <text:span text:style-name="Source_20_Text">?</text:span>.</text:p>
+
+<text:p text:style-name="Preformatted Text">[?(glossary) The glossary collects information about important<text:line-break/>terms used in your document] is a glossary term.<text:line-break/><text:line-break/>[?glossary] is also a glossary term.<text:line-break/><text:line-break/>[?glossary]: The glossary collects information about important<text:line-break/>terms used in your document<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Much like abbreviations, there is also a &#8220;shortcut&#8221; method that is similar to the approach used in prior versions of MMD. You specify the definition for the glossary term in the usual manner, but MMD will automatically identify each instance where the term is used and substitute it automatically. In this case, the term is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex glossary terms, you must explicitly mark uses of the term.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexglossaries"/>LaTeX Glossaries </text:h>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">Note</text:span>: <text:span text:style-name="MMD-Italic">Getting glossaries to work is a slightly more advanced LaTeX
+feature, and might take some trial and error the first few times.</text:span></text:p>
+
+<text:p text:style-name="Standard">Unfortunately, it takes an extra step to generate the glossary when creating a
+pdf from a latex file:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">You need to have the <text:span text:style-name="Source_20_Text">basic.gst</text:span> file installed, which comes with the
+memoir class.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">You need to run a special makeindex command to generate the <text:span text:style-name="Source_20_Text">.glo</text:span> file:
+<text:span text:style-name="Source_20_Text">makeindex -s `kpsewhich basic.gst` -o &quot;filename.gls&quot; &quot;filename.glo&quot;</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Then you run the usual pdflatex command again a few times.</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <text:span text:style-name="Source_20_Text">~/Library/TeXShop/Engines</text:span>). You can name it something like <text:span text:style-name="Source_20_Text">MemoirGlossary.engine</text:span>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <text:a xlink:type="simple" xlink:href="http://www.uoregon.edu/~koch/texshop/">TeXShop</text:a>, this is the way to go.</text:p>
+
+<text:p text:style-name="Preformatted Text">#!/bin/<text:tab/><text:line-break/><text:line-break/>set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current<text:line-break/><text:tab/>/usr/local/bin) # This is actually a continuation of the line above<text:line-break/><text:line-break/>set basefile = `basename &quot;$1&quot; .tex`<text:line-break/><text:line-break/>makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="math"/>Math </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown 2.0 used <text:a xlink:type="simple" xlink:href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</text:a> to typeset mathematical equations. There
+were benefits to using ASCIIMathML, but also some disadvantages.</text:p>
+
+<text:p text:style-name="Standard">When rewriting for MultiMarkdown 3.0, there was no straightforward way to
+implement ASCIIMathML which lead me to look for alternatives. I settled on
+using <text:a xlink:type="simple" xlink:href="http://www.mathjax.org/">MathJax</text:a>. The advantage here is that the same syntax is supported by
+MathJax in browsers, and in native LaTeX syntax when creating LaTeX documents.</text:p>
+
+<text:p text:style-name="Standard">To enable MathJax support in web pages, you have to include a link to an
+active MathJax installation &#8212; setting this up is beyond the scope of this
+document, but it&#8217;s not too hard.</text:p>
+
+<text:p text:style-name="Standard">Here&#8217;s an example of the metadata setup, and some math:</text:p>
+
+<text:p text:style-name="Preformatted Text">latex input:<text:tab/>mmd-article-header  <text:line-break/>Title:<text:tab/><text:tab/><text:tab/>MultiMarkdown Math Example  <text:line-break/>latex input:<text:tab/>mmd-article-begin-doc  <text:line-break/>latex footer:<text:tab/>mmd-memoir-footer  <text:line-break/>HTML header:<text:tab/>&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;&lt;/script&gt;<text:line-break/><text:line-break/><text:tab/><text:tab/><text:line-break/>An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)<text:line-break/>--- easy enough.<text:line-break/><text:line-break/>And an equation on it's own:<text:line-break/><text:line-break/>\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]<text:line-break/><text:line-break/>That's it.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Here&#8217;s what it looks like in action (if you&#8217;re viewing this document in a
+supported format):</text:p>
+
+<text:p text:style-name="Quotations">An example of math within a paragraph &#8212; <text:span text:style-name="math">\({e}^{i\pi }+1=0\)</text:span>
+&#8212; easy enough.</text:p>
+
+<text:p text:style-name="Quotations">And an equation on it&#8217;s own:</text:p>
+
+<text:p text:style-name="Quotations"><text:span text:style-name="math">\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]</text:span></text:p>
+
+<text:p text:style-name="Quotations">That&#8217;s it.</text:p>
+
+<text:p text:style-name="Standard">In addition to the <text:span text:style-name="Source_20_Text">\\[ \\]</text:span> and <text:span text:style-name="Source_20_Text">\\( \\)</text:span> syntax, you can use LaTeX-style &#8220;dollar sign&#8221; delimiters:</text:p>
+
+<text:p text:style-name="Preformatted Text">An example of math within a paragraph --- ${e}^{i\pi }+1=0$<text:line-break/>--- easy enough.<text:line-break/><text:line-break/>And an equation on it's own:<text:line-break/><text:line-break/>$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$<text:line-break/><text:line-break/>That's it.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">In order to be correctly parsed as math, there <text:span text:style-name="MMD-Italic">must</text:span> not be any space between the <text:span text:style-name="Source_20_Text">$</text:span> and the actual math on the inside of the delimiter, and there <text:span text:style-name="MMD-Italic">must</text:span> be space on the outside. ASCII punctuation can also serve as &#8220;space&#8221; outside of the math.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="superscriptsandsubscripts"/>Superscripts and Subscripts </text:h>
+
+<text:p text:style-name="Standard">You can easily include superscripts and subscripts in MultiMarkdown as well:</text:p>
+
+<text:p text:style-name="Preformatted Text">This apartment has an area of 100m^2<text:line-break/>One must consider the value of x~z<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">becomes</text:p>
+
+<text:p text:style-name="Quotations">This apartment has an area of 100m<text:span text:style-name="MMD-Superscript">2</text:span><text:line-break/>
+One must consider the value of x<text:span text:style-name="MMD-Subscript">z</text:span></text:p>
+
+<text:p text:style-name="Standard">The subscript must not contain any whitespace or punctuation.</text:p>
+
+<text:p text:style-name="Standard">More complicated exponents and subscripts can be delimited like this:</text:p>
+
+<text:p text:style-name="Preformatted Text">y^(a+b)^<text:line-break/>x~y,z~<text:line-break/></text:p>
+
+<text:p text:style-name="Quotations">y<text:span text:style-name="MMD-Superscript">(a+b)</text:span><text:line-break/>
+x<text:span text:style-name="MMD-Subscript">y,z</text:span></text:p>
+
 <text:h text:outline-level="3"><text:bookmark text:name="metadata"/>Metadata </text:h>
 
 <text:p text:style-name="Standard">It is possible to include special metadata at the top of a MultiMarkdown
@@ -512,9 +771,7 @@ document. Obviously, this is only useful when outputting to HTML.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="htmlheader"/>HTML Header </text:h>
 
-<text:p text:style-name="Standard">You can include raw HTML information to be included in the header.
-MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
-it as is.</text:p>
+<text:p text:style-name="Standard">You can include raw HTML information to be included in the <text:span text:style-name="Source_20_Text">&lt;head&gt;</text:span> section of the document. MultiMarkdown doesn&#8217;t perform any validation or processing of this data &#8212; it just copies it as is.</text:p>
 
 <text:p text:style-name="Standard">As an example, this can be useful to link your document to a working MathJax
 installation (not provided by me):</text:p>
@@ -523,9 +780,7 @@ installation (not provided by me):</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="htmlfooter"/>HTML Footer </text:h>
 
-<text:p text:style-name="Standard">Raw HTML can be included here, and will be appended at the very end of the
-document, after footnotes, etc. Useful for linking to scripts that must
-be included after footnotes.</text:p>
+<text:p text:style-name="Standard">Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc. Useful for linking to scripts that must be included after footnotes.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="language"/>Language </text:h>
 
@@ -555,10 +810,15 @@ be included after footnotes.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="latexfooter"/>LaTeX Footer </text:h>
 
-<text:p text:style-name="Standard">A special case of the <text:span text:style-name="Source_20_Text">LaTeX Input</text:span> metadata below. This file will be linked
-to at the very end of the document.</text:p>
+<text:p text:style-name="Standard">The name of a file to be included at the end of a LaTeX document.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexheader"/>LaTeX Header </text:h>
+
+<text:p text:style-name="Standard">Raw LaTeX source to be added to the metadata section of the document. <text:span text:style-name="MMD-Bold">Note</text:span>: This is distinct from the <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span> metadata which can only contain a filename.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="latexleader"/>LaTeX Leader </text:h>
+
+<text:p text:style-name="Standard">The name of a file to be included at the very beginning of a LaTeX document, before the metadata.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="latexmode"/>LaTeX Mode </text:h>
 
@@ -636,6 +896,100 @@ change the language of a document in LaTeX is up to the individual.</text:p>
 <text:p text:style-name="Standard">When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</text:p>
 
 <text:p text:style-name="Standard">This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <text:span text:style-name="Source_20_Text">stdin</text:span> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="rawsource"/>Raw Source </text:h>
+
+<text:p text:style-name="Standard">In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn&#8217;t work well when exporting to multiple formats. It was time for something new.</text:p>
+
+<text:p text:style-name="Standard">MMD v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:</text:p>
+
+<text:p text:style-name="Preformatted Text">foo `*bar*`{=html}<text:line-break/><text:line-break/>```{=latex}<text:line-break/>*foo*<text:line-break/>```<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The contents of the span/block will be passed through unchanged.</text:p>
+
+<text:p text:style-name="Standard">You can specify which output format is compatible with the specified source:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">html</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">odt</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">epub</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">latex</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">*</text:span> &#8211; wildcard matches any output format</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="smarttypography"/>Smart Typography </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown incorporates John Gruber&#8217;s <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/smartypants/">SmartyPants</text:a> tool in addition to the core Markdown functionality. This program converts &#8220;plain&#8221; punctuation into &#8220;smarter&#8221; typographic punctuation.</text:p>
+
+<text:p text:style-name="Standard">Just like the original, MultiMarkdown converts:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+Straight quotes (<text:span text:style-name="Source_20_Text">&quot;</text:span> and <text:span text:style-name="Source_20_Text">'</text:span>) into &#8220;curly&#8221; quotes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Backticks-style quotes (<text:span text:style-name="Source_20_Text">``this''</text:span>) into &#8220;curly&#8221; quotes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Dashes (<text:span text:style-name="Source_20_Text">--</text:span> and <text:span text:style-name="Source_20_Text">---</text:span>) into en- and em- dashes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Three dots (<text:span text:style-name="Source_20_Text">...</text:span>) become an ellipsis</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">MultiMarkdown also includes support for quotes styles other than English (the default). Use the <text:span text:style-name="Source_20_Text">quotes language</text:span> metadata to choose:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+dutch (<text:span text:style-name="Source_20_Text">nl</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+german(<text:span text:style-name="Source_20_Text">de</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+germanguillemets</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+french(<text:span text:style-name="Source_20_Text">fr</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+spanish(<text:span text:style-name="Source_20_Text">en</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">swedish(<text:span text:style-name="Source_20_Text">sv</text:span>)</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">This feature is enabled by default, but is disabled in <text:span text:style-name="Source_20_Text">compatibility</text:span> mode, since it is not part of the original Markdown. You can also use the <text:span text:style-name="Source_20_Text">--nosmart</text:span> command line option to disable this feature.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="tableofcontents"/>Table of Contents </text:h>
+
+<text:p text:style-name="Standard">As of version 4.7, MultiMarkdown supports the use of <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.</text:p>
+
+<text:p text:style-name="Standard">When possible, MultiMarkdown uses the &#8220;native&#8221; TOC for a given output format. For example, <text:span text:style-name="Source_20_Text">\tableofcontents</text:span> when exporting to LaTeX.</text:p>
 </office:text>
 </office:body>
 </office:document>

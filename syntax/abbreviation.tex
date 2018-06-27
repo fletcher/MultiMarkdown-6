@@ -1,0 +1,36 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Abbreviations}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-27}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\section{Abbreviations (or Acronyms)}
+\label{abbreviationsoracronyms}
+
+\textbf{NOTE}: The syntax for abbreviations changed in \gls{MMD} v6.
+
+Abbreviations can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the \texttt{>}.
+
+\begin{verbatim}
+[>MMD] is an abbreviation.  So is [>(MD) Markdown].
+
+[>MMD]: MultiMarkdown
+\end{verbatim}
+
+There is also a ``shortcut'' method for abbreviations that is similar to the approach used in prior versions of \gls{MMD}. You specify the definition for the abbreviation in the usual manner, but \gls{MMD} will automatically identify each instance where the abbreviation is used and substitute it automatically. In this case, the abbreviation is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex abbreviations, you must explicitly mark uses of the abbreviation.
+
+There are a few limitations:
+
+\begin{itemize}
+\item The full name of the abbreviation is plain text only -- no MultiMarkdown markup will be processed.
+
+\item When exporting to LaTeX, the \texttt{acronym} package is used; this means that the first usage will result in \texttt{full text (short)}, and subsequent uses will result in \texttt{short}.
+
+\end{itemize}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

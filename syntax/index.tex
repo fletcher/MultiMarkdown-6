@@ -8,8 +8,366 @@
 
 \input{mmd6-tufte-handout-begin}
 
+\tableofcontents
+
 \chapter{Syntax }
 \label{syntax}
+
+\section{Abbreviations (or Acronyms)}
+\label{abbreviationsoracronyms}
+
+\textbf{NOTE}: The syntax for abbreviations changed in \gls{MMD} v6.
+
+Abbreviations can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the \texttt{>}.
+
+\begin{verbatim}
+[>MMD] is an abbreviation.  So is [>(MD) Markdown].
+
+[>MMD]: MultiMarkdown
+\end{verbatim}
+
+There is also a ``shortcut'' method for abbreviations that is similar to the approach used in prior versions of \gls{MMD}. You specify the definition for the abbreviation in the usual manner, but \gls{MMD} will automatically identify each instance where the abbreviation is used and substitute it automatically. In this case, the abbreviation is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex abbreviations, you must explicitly mark uses of the abbreviation.
+
+There are a few limitations:
+
+\begin{itemize}
+\item The full name of the abbreviation is plain text only -- no MultiMarkdown markup will be processed.
+
+\item When exporting to LaTeX, the \texttt{acronym} package is used; this means that the first usage will result in \texttt{full text (short)}, and subsequent uses will result in \texttt{short}.
+
+\end{itemize}
+
+\section{Citations }
+\label{citations}
+
+I have included support for \emph{basic} bibliography features in this version of MultiMarkdown. Please give me feedback on ways to improve this but keep the following in mind:
+
+\begin{enumerate}
+\item Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc). My XSLT files demonstrate how to make this format compatible with BibTeX, but I am not planning on personally providing compatibility with other tools. Feel free to post your ideas and tools to the wiki.
+
+\item Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians will probably not be satisfied however.
+
+\end{enumerate}
+
+To use citations in MultiMarkdown, you use a syntax much like that for anchors:
+
+\begin{verbatim}
+This is a statement that should be attributed to
+its source[p. 23][#Doe:2006].
+
+And following is the description of the reference to be
+used in the bibliography.
+
+[#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
+\end{verbatim}
+
+You are not required to use a locator (e.g. p. 23), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:
+
+\begin{verbatim}
+This is a statement that should be attributed to its 
+source[][#Doe:2006].
+\end{verbatim}
+
+There are no rules on the citation key format that you use (e.g. \texttt{Doe:2006}), but it must be preceded by a \texttt{\#}, just like footnotes use \texttt{\^{}}.
+
+As for the reference description, you can use Markup code within this section, and I recommend leaving a blank line afterwards to prevent concatenation of several references. Note that there is no way to reformat these references in different bibliography styles; for this you need a program designed for that purpose (e.g. BibTeX).
+
+If you want to include a source in your bibliography that was not cited, you may use the following:
+
+\begin{verbatim}
+[Not cited][#citekey]
+\end{verbatim}
+
+The \texttt{Not cited} bit is not case sensitive.
+
+If you are creating a LaTeX document, the citations will be included, and natbib will be used by default. If you are not using BibTeX and are getting errors about your citations not being compatible with `Author-Year', you can add the following to your documents metadata:
+
+\begin{verbatim}
+latex input:		mmd-natbib-plain
+\end{verbatim}
+
+This changes the citation style in natbib to avoid these errors, and is useful when you include your citations in the MultiMarkdown document itself.
+
+\textbf{NOTE}: As of version 6, HTML wraps citation references in parentheses instead of brackets, e.g. \texttt{(1)} instead of \texttt{[1]}. Also, citations are now displayed in a separate section from footnotes when outputting to HTML.
+
+\subsection{Inline Citations }
+\label{inlinecitations}
+
+Citations can also be used in an inline syntax, just like inline footnotes:
+
+\begin{verbatim}
+As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]
+\end{verbatim}
+
+\subsection{BibTeX }
+\label{bibtex}
+
+If you are creating a LaTeX document, and need a bibliography, then you should definitely look into \href{http://www.bibtex.org/}{BibTeX}\footnote{\href{http://www.bibtex.org/}{http:\slash \slash www.bibtex.org\slash }} and \href{http://merkel.zoneo.net/Latex/natbib.php}{natbib}\footnote{\href{http://merkel.zoneo.net/Latex/natbib.php}{http:\slash \slash merkel.zoneo.net\slash Latex\slash natbib.php}}. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.
+
+To use BibTeX in a MultiMarkdown document, you \emph{must} use the \texttt{BibTeX} metadata (\autoref{bibtex}) to specify where your citations are stored. You may \emph{optionally} use the \texttt{biblio style} metadata key.
+
+Since \texttt{natbib} is enabled by default, you have a choice between using the \texttt{\textbackslash{}citep} and \texttt{\textbackslash{}citet} commands. The following shows how this relates to the MultiMarkdown syntax used.
+
+\begin{verbatim}
+[#citekey]    => ~\citep{citekey}
+[#citekey][]  => ~\citep{citekey}
+
+[foo][#citekey] => ~\citep[foo]{citekey}
+
+[foo\]\[bar][#citekey] => ~\citep[foo][bar]{citekey}
+
+
+[#citekey;]    => \citet{citekey}
+[#citekey;][]  => \citet{citekey}
+
+[foo][#citekey;] => \citet[foo]{citekey}
+
+[foo\]\[bar][#citekey;] => \citet[foo][bar]{citekey}
+\end{verbatim}
+
+\section{CriticMarkup }
+\label{criticmarkup}
+
+\subsection{What Is CriticMarkup? }
+\label{whatiscriticmarkup}
+
+\begin{quote}
+CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. \href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }
+\end{quote}
+
+CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
+
+\subsection{The CriticMarkup Syntax }
+\label{thecriticmarkupsyntax}
+
+The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed \emph{before} any other MultiMarkdown is handled. It's almost like a separate layer on top of the MultiMarkdown syntax.
+
+When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.
+
+When using CriticMarkup with MultiMarkdown itself, you have four choices:
+
+\begin{itemize}
+\item Leave the CriticMarkup syntax in place (\texttt{multimarkdown foo.txt}). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.
+
+\item Accept all changes, giving you the ``new'' document (\texttt{multimarkdown -a foo.txt} or \texttt{multimarkdown -{}-accept foo.txt})
+
+\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt})
+
+\end{itemize}
+
+CriticMarkup comments and highlighting are ignored when processing.
+
+Deletions from the original text:
+
+\begin{verbatim}
+This is {--is --}a test.
+\end{verbatim}
+
+Additions:
+
+\begin{verbatim}
+This {++is ++}a test.
+\end{verbatim}
+
+Substitutions:
+
+\begin{verbatim}
+This {~~isn't~>is~~} a test.
+\end{verbatim}
+
+Highlighting:
+
+\begin{verbatim}
+This is a {==test==}.
+\end{verbatim}
+
+Comments:
+
+\begin{verbatim}
+This is a test{>>What is it a test of?<<}.
+\end{verbatim}
+
+\subsection{My philosophy on CriticMarkup}
+\label{myphilosophyoncriticmarkup}
+
+I view CriticMarkup as two things:
+
+\begin{enumerate}
+\item A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
+
+\item A means to display those notes\slash changes in the HTML output.
+
+\end{enumerate}
+
+I believe that \#1 is a really great idea, and well implemented. \#2 is not so well implemented, largely due to the ``orthogonal'' nature of CriticMarkup and the underlying Markdown syntax.
+
+CM is designed as a separate layer on top of Markdown\slash MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM\slash Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I've tried a few (fairly creative, in my opinion) approaches, but they didn't work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.
+
+Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a ``finished'' document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that's ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)
+
+There are other CriticMarkup tools besides MultiMarkdown and \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}, and you are more than welcome to use them.
+
+For now, the \emph{official} MultiMarkdown support for CriticMarkup consists of:
+
+\begin{enumerate}
+\item CriticMarkup syntax is ``understood'' by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.
+
+\item When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.
+
+\item The secondary to choice, when exporting to HTML, is to \emph{attempt} to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.
+
+\end{enumerate}
+
+\section{Glossaries }
+\label{glossaries}
+
+MultiMarkdown has a feature that allows footnotes to be specified as glossary terms. It doesn't do much for XHTML documents, but the XSLT file that converts the document into LaTeX is designed to convert these special footnotes into glossary entries.
+
+\textbf{NOTE}: The syntax for glossary terms changed in \gls{MMD} v6.
+
+If there are terms in your document you wish to define in a \newglossaryentry{glossary}{name=glossary, description={The glossary collects information about important terms used in your document}}\gls{glossary} at the end of your document, you can define them using the glossary syntax.
+
+Glossary terms can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the \texttt{?}.
+
+\begin{verbatim}
+[?(glossary) The glossary collects information about important
+terms used in your document] is a glossary term.
+
+[?glossary] is also a glossary term.
+
+[?glossary]: The glossary collects information about important
+terms used in your document
+\end{verbatim}
+
+Much like abbreviations, there is also a ``shortcut'' method that is similar to the approach used in prior versions of \gls{MMD}. You specify the definition for the glossary term in the usual manner, but \gls{MMD} will automatically identify each instance where the term is used and substitute it automatically. In this case, the term is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex glossary terms, you must explicitly mark uses of the term.
+
+\subsection{LaTeX Glossaries }
+\label{latexglossaries}
+
+\textbf{Note}: \emph{Getting glossaries to work is a slightly more advanced LaTeX
+feature, and might take some trial and error the first few times.}
+
+Unfortunately, it takes an extra step to generate the glossary when creating a
+pdf from a latex file:
+
+\begin{enumerate}
+\item You need to have the \texttt{basic.gst} file installed, which comes with the
+memoir class.
+
+\item You need to run a special makeindex command to generate the \texttt{.glo} file:
+\texttt{makeindex -s `kpsewhich basic.gst` -o "filename.gls" "filename.glo"}
+
+\item Then you run the usual pdflatex command again a few times.
+
+\end{enumerate}
+
+Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in \texttt{\ensuremath{\sim}\slash Library\slash TeXShop\slash Engines}). You can name it something like \texttt{MemoirGlossary.engine}. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use \href{http://www.uoregon.edu/~koch/texshop/}{TeXShop}\footnote{\href{http://www.uoregon.edu/~koch/texshop/}{http:\slash \slash www.uoregon.edu\slash \ensuremath{\sim}koch\slash texshop\slash }}, this is the way to go.
+
+\begin{verbatim}
+#!/bin/	
+
+set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current 
+	/usr/local/bin) # This is actually a continuation of the line above
+
+set basefile = `basename "$1" .tex`
+
+makeindex -s `kpsewhich basic.gst` -o "${basefile}.gls" "${basefile}.glo"
+\end{verbatim}
+
+\section{Math }
+\label{math}
+
+MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash \slash www1.chapman.edu\slash \ensuremath{\sim}jipsen\slash mathml\slash asciimath.html}} to typeset mathematical equations. There
+were benefits to using ASCIIMathML, but also some disadvantages.
+
+When rewriting for MultiMarkdown 3.0, there was no straightforward way to
+implement ASCIIMathML which lead me to look for alternatives. I settled on
+using \href{http://www.mathjax.org/}{MathJax}\footnote{\href{http://www.mathjax.org/}{http:\slash \slash www.mathjax.org\slash }}. The advantage here is that the same syntax is supported by
+MathJax in browsers, and in native LaTeX syntax when creating LaTeX documents.
+
+To enable MathJax support in web pages, you have to include a link to an
+active MathJax installation --- setting this up is beyond the scope of this
+document, but it's not too hard.
+
+Here's an example of the metadata setup, and some math:
+
+\begin{verbatim}
+latex input:	mmd-article-header  
+Title:			MultiMarkdown Math Example  
+latex input:	mmd-article-begin-doc  
+latex footer:	mmd-memoir-footer  
+HTML header:	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
+--- easy enough.
+
+And an equation on it's own:
+
+\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]
+
+That's it.
+\end{verbatim}
+
+Here's what it looks like in action (if you're viewing this document in a
+supported format):
+
+\begin{quote}
+An example of math within a paragraph --- \({e}^{i\pi }+1=0\)
+--- easy enough.
+
+And an equation on it's own:
+
+\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]
+
+That's it.
+\end{quote}
+
+In addition to the \texttt{\textbackslash{}\textbackslash{}[ \textbackslash{}\textbackslash{}]} and \texttt{\textbackslash{}\textbackslash{}( \textbackslash{}\textbackslash{})} syntax, you can use LaTeX-style ``dollar sign'' delimiters:
+
+\begin{verbatim}
+An example of math within a paragraph --- ${e}^{i\pi }+1=0$
+--- easy enough.
+
+And an equation on it's own:
+
+$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
+
+That's it.
+\end{verbatim}
+
+In order to be correctly parsed as math, there \emph{must} not be any space between the \texttt{\$} and the actual math on the inside of the delimiter, and there \emph{must} be space on the outside. ASCII punctuation can also serve as ``space'' outside of the math.
+
+\subsection{Superscripts and Subscripts }
+\label{superscriptsandsubscripts}
+
+You can easily include superscripts and subscripts in MultiMarkdown as well:
+
+\begin{verbatim}
+This apartment has an area of 100m^2
+One must consider the value of x~z
+\end{verbatim}
+
+becomes
+
+\begin{quote}
+This apartment has an area of 100m\textsuperscript{2}\\
+One must consider the value of x\textsubscript{z}
+\end{quote}
+
+The subscript must not contain any whitespace or punctuation.
+
+More complicated exponents and subscripts can be delimited like this:
+
+\begin{verbatim}
+y^(a+b)^
+x~y,z~
+\end{verbatim}
+
+\begin{quote}
+y\textsuperscript{(a+b)}\\
+x\textsubscript{y,z}
+\end{quote}
 
 \section{Metadata }
 \label{metadata}
@@ -127,9 +485,7 @@ Specify a date to be associated with the document.
 \subsection{HTML Header }
 \label{htmlheader}
 
-You can include raw HTML information to be included in the header.
-MultiMarkdown doesn't perform any validation on this data --- it just copies
-it as is.
+You can include raw HTML information to be included in the \texttt{<head>} section of the document. MultiMarkdown doesn't perform any validation or processing of this data --- it just copies it as is.
 
 As an example, this can be useful to link your document to a working MathJax
 installation (not provided by me):
@@ -143,9 +499,7 @@ HTML header:  <script type="text/javascript"
 \subsection{HTML Footer }
 \label{htmlfooter}
 
-Raw HTML can be included here, and will be appended at the very end of the
-document, after footnotes, etc. Useful for linking to scripts that must
-be included after footnotes.
+Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc. Useful for linking to scripts that must be included after footnotes.
 
 \subsection{Language }
 \label{language}
@@ -184,11 +538,17 @@ The standard LaTeX support files have been updated to support this naming config
 \subsection{LaTeX Footer }
 \label{latexfooter}
 
-A special case of the \texttt{LaTeX Input} metadata below. This file will be linked
-to at the very end of the document.
+The name of a file to be included at the end of a LaTeX document.
+
+\subsection{LaTeX Header }
+\label{latexheader}
+
+Raw LaTeX source to be added to the metadata section of the document. \textbf{Note}: This is distinct from the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata which can only contain a filename.
 
 \subsection{LaTeX Leader }
 \label{latexleader}
+
+The name of a file to be included at the very beginning of a LaTeX document, before the metadata.
 
 \subsection{LaTeX Mode }
 \label{latexmode}
@@ -261,6 +621,82 @@ Self-explanatory.
 When using the {[File Transclusion]} feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
 
 This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using \texttt{stdin} or another application that offers MultiMarkdown support). In this case, the path must be a complete path.
+
+\section{Raw Source }
+\label{rawsource}
+
+In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn't work well when exporting to multiple formats. It was time for something new.
+
+\gls{MMD} v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:
+
+\begin{verbatim}
+foo `*bar*`{=html}
+
+```{=latex}
+*foo*
+```
+\end{verbatim}
+
+The contents of the span\slash block will be passed through unchanged.
+
+You can specify which output format is compatible with the specified source:
+
+\begin{itemize}
+\item \texttt{html}
+
+\item \texttt{odt}
+
+\item \texttt{epub}
+
+\item \texttt{latex}
+
+\item \texttt{*} -- wildcard matches any output format
+
+\end{itemize}
+
+\section{Smart Typography }
+\label{smarttypography}
+
+MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash \slash daringfireball.net\slash projects\slash smartypants\slash }} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
+
+Just like the original, MultiMarkdown converts:
+
+\begin{itemize}
+\item Straight quotes (\texttt{"} and \texttt{'}) into ``curly'' quotes
+
+\item Backticks-style quotes (\texttt{``this''}) into ``curly'' quotes
+
+\item Dashes (\texttt{-{}-} and \texttt{-{}-{}-}) into en- and em- dashes
+
+\item Three dots (\texttt{...}) become an ellipsis
+
+\end{itemize}
+
+MultiMarkdown also includes support for quotes styles other than English (the default). Use the \texttt{quotes language} metadata to choose:
+
+\begin{itemize}
+\item dutch (\texttt{nl})
+
+\item german(\texttt{de})
+
+\item germanguillemets
+
+\item french(\texttt{fr})
+
+\item spanish(\texttt{en})
+
+\item swedish(\texttt{sv})
+
+\end{itemize}
+
+This feature is enabled by default, but is disabled in \texttt{compatibility} mode, since it is not part of the original Markdown. You can also use the \texttt{-{}-nosmart} command line option to disable this feature.
+
+\section{Table of Contents }
+\label{tableofcontents}
+
+As of version 4.7, MultiMarkdown supports the use of \texttt{\{\{TOC\}\}} to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.
+
+When possible, MultiMarkdown uses the ``native'' TOC for a given output format. For example, \texttt{\textbackslash{}tableofcontents} when exporting to LaTeX.
 
 \input{mmd6-tufte-handout-footer}
 \end{document}

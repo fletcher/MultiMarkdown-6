@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Raw Source</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-27"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<h3 id="rawsource">Raw Source </h3>
+
+<p>In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn&#8217;t work well when exporting to multiple formats. It was time for something new.</p>
+
+<p>MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:</p>
+
+<pre><code>foo `*bar*`{=html}
+
+```{=latex}
+*foo*
+```
+</code></pre>
+
+<p>The contents of the span/block will be passed through unchanged.</p>
+
+<p>You can specify which output format is compatible with the specified source:</p>
+
+<ul>
+<li><code>html</code></li>
+<li><code>odt</code></li>
+<li><code>epub</code></li>
+<li><code>latex</code></li>
+<li><code>*</code> &#8211; wildcard matches any output format</li>
+</ul>
+
+</body>
+</html>
+

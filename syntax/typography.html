@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Smart Typography</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-27"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<h3 id="smarttypography">Smart Typography </h3>
+
+<p>MultiMarkdown incorporates John Gruber&#8217;s <a href="http://daringfireball.net/projects/smartypants/">SmartyPants</a> tool in addition to the core Markdown functionality. This program converts &#8220;plain&#8221; punctuation into &#8220;smarter&#8221; typographic punctuation.</p>
+
+<p>Just like the original, MultiMarkdown converts:</p>
+
+<ul>
+<li>Straight quotes (<code>&quot;</code> and <code>'</code>) into &#8220;curly&#8221; quotes</li>
+<li>Backticks-style quotes (<code>``this''</code>) into &#8220;curly&#8221; quotes</li>
+<li>Dashes (<code>--</code> and <code>---</code>) into en- and em- dashes</li>
+<li>Three dots (<code>...</code>) become an ellipsis</li>
+</ul>
+
+<p>MultiMarkdown also includes support for quotes styles other than English (the default). Use the <code>quotes language</code> metadata to choose:</p>
+
+<ul>
+<li>dutch (<code>nl</code>)</li>
+<li>german(<code>de</code>)</li>
+<li>germanguillemets</li>
+<li>french(<code>fr</code>)</li>
+<li>spanish(<code>en</code>)</li>
+<li>swedish(<code>sv</code>)</li>
+</ul>
+
+<p>This feature is enabled by default, but is disabled in <code>compatibility</code> mode, since it is not part of the original Markdown. You can also use the <code>--nosmart</code> command line option to disable this feature.</p>
+
+</body>
+</html>
+

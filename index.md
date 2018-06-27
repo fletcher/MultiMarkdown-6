@@ -1,7 +1,7 @@
 Title:	MultiMarkdown User's Guide
 Author:	Fletcher T. Penney  
 Version:	6.3.2  
-Revised:	2018-06-26  
+Revised:	2018-06-27  
 Base Header Level:	2  
 CSS:	https://fletcher.github.io/MultiMarkdown-6/css/document.css  
 MMD Footer:	{{links.txt}}
@@ -11,6 +11,8 @@ HTML header:	<script type="text/javascript" src="https://cdnjs.cloudflare.com/aj
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 
+
+***The MultiMarkdown User's Guide is in the process of being rewritten for v6.  In the meantime, if you're looking for something that isn't here, check the [version 5 User's Guide](http://fletcher.github.io/MultiMarkdown-5/) .***
 
 #  [%title] #
 
@@ -29,4 +31,11 @@ Or as a set of web pages for individual sections:
 
 * [Introduction](introduction.html)
 * [Syntax](syntax/index.html)
+	* [Citations](syntax/citation.html)
+	* [CriticMarkup](syntax/critic.html)
+	* [Glossaries](syntax/glossary.html)
+	* [Math](syntax/math.html)
 	* [Metadata](syntax/metadata.html)
+	* [Raw Source](syntax/raw.html)
+	* [Smart Typograhy](syntax/typography.html)
+	* [Table of Contents](syntax/toc.html)

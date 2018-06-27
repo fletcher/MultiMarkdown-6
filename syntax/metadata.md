@@ -4,6 +4,8 @@ Revised:	2018-06-26
 Base Header Level:	2  
 Transclude Base:	.
 CSS:	https://fletcher.github.io/MultiMarkdown-6/css/document.css  
+HTML Footer:	{{../highlighting.txt}}
+MMD Header:	{{TOC}}  
 MMD Footer:	{{../links.txt}}  
 LaTeX Config:	tufte-handout  
 
@@ -117,9 +119,7 @@ Specify a date to be associated with the document.
 
 ### HTML Header ###
 
-You can include raw HTML information to be included in the header.
-MultiMarkdown doesn't perform any validation on this data --- it just copies
-it as is.
+You can include raw HTML information to be included in the `<head>` section of the document. MultiMarkdown doesn't perform any validation or processing of this data --- it just copies it as is. 
 
 As an example, this can be useful to link your document to a working MathJax
 installation (not provided by me):
@@ -131,9 +131,7 @@ installation (not provided by me):
 
 ### HTML Footer ###
 
-Raw HTML can be included here, and will be appended at the very end of the
-document, after footnotes, etc.  Useful for linking to scripts that must 
-be included after footnotes.
+Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc.  Useful for linking to scripts that must be included after footnotes. 
 
 
 ### Language ###
@@ -149,7 +147,6 @@ This metadata *must* come after the regular `author` metadata if it is also bein
 
 
 ### LaTeX Begin ###
-
 
 This is the name of a LaTeX file to be included (via `\input{foo}`) when exporting to LaTeX.  This file will be included after the metadata, and before the body of the document.  This is usually where the `\begin{document}` command occurs, hence the name.
 
@@ -172,11 +169,16 @@ The standard LaTeX support files have been updated to support this naming config
 
 ### LaTeX Footer ###
 
-A special case of the `LaTeX Input` metadata below. This file will be linked
-to at the very end of the document.
+The name of a file to be included at the end of a LaTeX document.
+
+### LaTeX Header ###
+
+Raw LaTeX source to be added to the metadata section of the document.  **Note**: This is distinct from the `latex leader`, `latex begin`, and `latex footer` metadata which can only contain a filename.
 
 
 ### LaTeX Leader ###
+
+The name of a file to be included at the very beginning of a LaTeX document, before the metadata.
 
 
 ### LaTeX Mode ###
@@ -203,7 +205,6 @@ This metadata *must* come after the regular `title` metadata if it is also being
 The `MMD Footer` metadata is like `MMD Header`, but it appends text at the end of the document, prior to parsing.  Use transclusion if you want to reference an external file.
 
 This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents.  If you're building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.
-
 
 
 ### ODF Header ###

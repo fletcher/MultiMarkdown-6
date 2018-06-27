@@ -32,6 +32,7 @@ Markdown"
 [RTF]:	http://en.wikipedia.org/wiki/Rich_Text_Format
 [Sample Gallery]:	https://github.com/fletcher/MultiMarkdown-Gallery
 [Scrivener]:	http://www.literatureandlatte.com/
+[SmartyPants]:	http://daringfireball.net/projects/smartypants/
 [support site]:	http://support.fletcherpenney.net/
 [test suite]:	https://github.com/fletcher/MMD-Test-Suite
 [TeXShop]:	http://www.uoregon.edu/~koch/texshop/ "TeXShop Homepage"
@@ -42,3 +43,4 @@ Markdown"
 
 [>MMD]: MultiMarkdown
 [>MD]: Markdown
+

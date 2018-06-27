@@ -1,0 +1,44 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Raw Source}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-27}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\section{Raw Source }
+\label{rawsource}
+
+In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn't work well when exporting to multiple formats. It was time for something new.
+
+\gls{MMD} v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:
+
+\begin{verbatim}
+foo `*bar*`{=html}
+
+```{=latex}
+*foo*
+```
+\end{verbatim}
+
+The contents of the span\slash block will be passed through unchanged.
+
+You can specify which output format is compatible with the specified source:
+
+\begin{itemize}
+\item \texttt{html}
+
+\item \texttt{odt}
+
+\item \texttt{epub}
+
+\item \texttt{latex}
+
+\item \texttt{*} -- wildcard matches any output format
+
+\end{itemize}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

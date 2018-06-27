@@ -1,0 +1,107 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Math}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-27}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\section{Math }
+\label{math}
+
+MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash \slash www1.chapman.edu\slash \ensuremath{\sim}jipsen\slash mathml\slash asciimath.html}} to typeset mathematical equations. There
+were benefits to using ASCIIMathML, but also some disadvantages.
+
+When rewriting for MultiMarkdown 3.0, there was no straightforward way to
+implement ASCIIMathML which lead me to look for alternatives. I settled on
+using \href{http://www.mathjax.org/}{MathJax}\footnote{\href{http://www.mathjax.org/}{http:\slash \slash www.mathjax.org\slash }}. The advantage here is that the same syntax is supported by
+MathJax in browsers, and in native LaTeX syntax when creating LaTeX documents.
+
+To enable MathJax support in web pages, you have to include a link to an
+active MathJax installation --- setting this up is beyond the scope of this
+document, but it's not too hard.
+
+Here's an example of the metadata setup, and some math:
+
+\begin{verbatim}
+latex input:	mmd-article-header  
+Title:			MultiMarkdown Math Example  
+latex input:	mmd-article-begin-doc  
+latex footer:	mmd-memoir-footer  
+HTML header:	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+		
+An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
+--- easy enough.
+
+And an equation on it's own:
+
+\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]
+
+That's it.
+\end{verbatim}
+
+Here's what it looks like in action (if you're viewing this document in a
+supported format):
+
+\begin{quote}
+An example of math within a paragraph --- \({e}^{i\pi }+1=0\)
+--- easy enough.
+
+And an equation on it's own:
+
+\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \]
+
+That's it.
+\end{quote}
+
+In addition to the \texttt{\textbackslash{}\textbackslash{}[ \textbackslash{}\textbackslash{}]} and \texttt{\textbackslash{}\textbackslash{}( \textbackslash{}\textbackslash{})} syntax, you can use LaTeX-style ``dollar sign'' delimiters:
+
+\begin{verbatim}
+An example of math within a paragraph --- ${e}^{i\pi }+1=0$
+--- easy enough.
+
+And an equation on it's own:
+
+$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
+
+That's it.
+\end{verbatim}
+
+In order to be correctly parsed as math, there \emph{must} not be any space between the \texttt{\$} and the actual math on the inside of the delimiter, and there \emph{must} be space on the outside. ASCII punctuation can also serve as ``space'' outside of the math.
+
+\subsection{Superscripts and Subscripts }
+\label{superscriptsandsubscripts}
+
+You can easily include superscripts and subscripts in MultiMarkdown as well:
+
+\begin{verbatim}
+This apartment has an area of 100m^2
+One must consider the value of x~z
+\end{verbatim}
+
+becomes
+
+\begin{quote}
+This apartment has an area of 100m\textsuperscript{2}\\
+One must consider the value of x\textsubscript{z}
+\end{quote}
+
+The subscript must not contain any whitespace or punctuation.
+
+More complicated exponents and subscripts can be delimited like this:
+
+\begin{verbatim}
+y^(a+b)^
+x~y,z~
+\end{verbatim}
+
+\begin{quote}
+y\textsuperscript{(a+b)}\\
+x\textsubscript{y,z}
+\end{quote}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

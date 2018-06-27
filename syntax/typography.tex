@@ -1,0 +1,49 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Smart Typography}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-27}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\section{Smart Typography }
+\label{smarttypography}
+
+MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash \slash daringfireball.net\slash projects\slash smartypants\slash }} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
+
+Just like the original, MultiMarkdown converts:
+
+\begin{itemize}
+\item Straight quotes (\texttt{"} and \texttt{'}) into ``curly'' quotes
+
+\item Backticks-style quotes (\texttt{``this''}) into ``curly'' quotes
+
+\item Dashes (\texttt{-{}-} and \texttt{-{}-{}-}) into en- and em- dashes
+
+\item Three dots (\texttt{...}) become an ellipsis
+
+\end{itemize}
+
+MultiMarkdown also includes support for quotes styles other than English (the default). Use the \texttt{quotes language} metadata to choose:
+
+\begin{itemize}
+\item dutch (\texttt{nl})
+
+\item german(\texttt{de})
+
+\item germanguillemets
+
+\item french(\texttt{fr})
+
+\item spanish(\texttt{en})
+
+\item swedish(\texttt{sv})
+
+\end{itemize}
+
+This feature is enabled by default, but is disabled in \texttt{compatibility} mode, since it is not part of the original Markdown. You can also use the \texttt{-{}-nosmart} command line option to disable this feature.
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

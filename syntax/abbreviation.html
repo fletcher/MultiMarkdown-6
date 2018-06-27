@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Abbreviations</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-27"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<h3 id="abbreviationsoracronyms">Abbreviations (or Acronyms)</h3>
+
+<p><strong>NOTE</strong>: The syntax for abbreviations changed in MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) v6.</p>
+
+<p>Abbreviations can be specified using inline or reference syntax. The inline variant requires that the abbreviation be wrapped in parentheses and immediately follows the <code>&gt;</code>.</p>
+
+<pre><code>[>MMD] is an abbreviation.  So is [>(MD) Markdown].
+
+[>MMD]: MultiMarkdown
+</code></pre>
+
+<p>There is also a &#8220;shortcut&#8221; method for abbreviations that is similar to the approach used in prior versions of <abbr title="MultiMarkdown">MMD</abbr>. You specify the definition for the abbreviation in the usual manner, but <abbr title="MultiMarkdown">MMD</abbr> will automatically identify each instance where the abbreviation is used and substitute it automatically. In this case, the abbreviation is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex abbreviations, you must explicitly mark uses of the abbreviation.</p>
+
+<p>There are a few limitations:</p>
+
+<ul>
+<li><p>The full name of the abbreviation is plain text only &#8211; no MultiMarkdown markup will be processed.</p></li>
+<li><p>When exporting to LaTeX, the <code>acronym</code> package is used; this means that the first usage will result in <code>full text (short)</code>, and subsequent uses will result in <code>short</code>.</p></li>
+</ul>
+
+</body>
+</html>
+

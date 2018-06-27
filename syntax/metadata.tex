@@ -8,6 +8,8 @@
 
 \input{mmd6-tufte-handout-begin}
 
+\tableofcontents
+
 \section{Metadata }
 \label{metadata}
 
@@ -124,9 +126,7 @@ Specify a date to be associated with the document.
 \subsection{HTML Header }
 \label{htmlheader}
 
-You can include raw HTML information to be included in the header.
-MultiMarkdown doesn't perform any validation on this data --- it just copies
-it as is.
+You can include raw HTML information to be included in the \texttt{<head>} section of the document. MultiMarkdown doesn't perform any validation or processing of this data --- it just copies it as is.
 
 As an example, this can be useful to link your document to a working MathJax
 installation (not provided by me):
@@ -140,9 +140,7 @@ HTML header:  <script type="text/javascript"
 \subsection{HTML Footer }
 \label{htmlfooter}
 
-Raw HTML can be included here, and will be appended at the very end of the
-document, after footnotes, etc. Useful for linking to scripts that must
-be included after footnotes.
+Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc. Useful for linking to scripts that must be included after footnotes.
 
 \subsection{Language }
 \label{language}
@@ -181,11 +179,17 @@ The standard LaTeX support files have been updated to support this naming config
 \subsection{LaTeX Footer }
 \label{latexfooter}
 
-A special case of the \texttt{LaTeX Input} metadata below. This file will be linked
-to at the very end of the document.
+The name of a file to be included at the end of a LaTeX document.
+
+\subsection{LaTeX Header }
+\label{latexheader}
+
+Raw LaTeX source to be added to the metadata section of the document. \textbf{Note}: This is distinct from the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata which can only contain a filename.
 
 \subsection{LaTeX Leader }
 \label{latexleader}
+
+The name of a file to be included at the very beginning of a LaTeX document, before the metadata.
 
 \subsection{LaTeX Mode }
 \label{latexmode}

@@ -9,6 +9,43 @@
 </head>
 <body>
 
+<div class="TOC">
+
+<ul>
+<li><a href="#metadata">Metadata </a></li>
+<li><a href="#metadatavariables">Metadata &#8220;Variables&#8221; </a></li>
+<li><a href="#standardmetadatakeys">&#8220;Standard&#8221; Metadata keys </a>
+<ul>
+<li><a href="#author">Author </a></li>
+<li><a href="#affiliation">Affiliation </a></li>
+<li><a href="#baseheaderlevel">Base Header Level </a></li>
+<li><a href="#bibliostyle">Biblio Style </a></li>
+<li><a href="#bibtex">BibTeX </a></li>
+<li><a href="#copyright">Copyright </a></li>
+<li><a href="#css">CSS </a></li>
+<li><a href="#date">Date </a></li>
+<li><a href="#htmlheader">HTML Header </a></li>
+<li><a href="#htmlfooter">HTML Footer </a></li>
+<li><a href="#language">Language </a></li>
+<li><a href="#latexauthor">LaTeX Author </a></li>
+<li><a href="#latexbegin">LaTeX Begin </a></li>
+<li><a href="#latexconfig">LaTeX Config </a></li>
+<li><a href="#latexfooter">LaTeX Footer </a></li>
+<li><a href="#latexheader">LaTeX Header </a></li>
+<li><a href="#latexleader">LaTeX Leader </a></li>
+<li><a href="#latexmode">LaTeX Mode </a></li>
+<li><a href="#latextitle">LaTeX Title </a></li>
+<li><a href="#mmdheader">MMD Header </a></li>
+<li><a href="#mmdfooter">MMD Footer </a></li>
+<li><a href="#odfheader">ODF Header </a></li>
+<li><a href="#quoteslanguage">Quotes Language </a></li>
+<li><a href="#title">Title </a></li>
+<li><a href="#transcludebase">Transclude Base </a></li>
+</ul>
+</li>
+</ul>
+</div>
+
 <h3 id="metadata">Metadata </h3>
 
 <p>It is possible to include special metadata at the top of a MultiMarkdown
@@ -101,9 +138,7 @@ document. Obviously, this is only useful when outputting to HTML.</p>
 
 <h4 id="htmlheader">HTML Header </h4>
 
-<p>You can include raw HTML information to be included in the header.
-MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
-it as is.</p>
+<p>You can include raw HTML information to be included in the <code>&lt;head&gt;</code> section of the document. MultiMarkdown doesn&#8217;t perform any validation or processing of this data &#8212; it just copies it as is.</p>
 
 <p>As an example, this can be useful to link your document to a working MathJax
 installation (not provided by me):</p>
@@ -115,9 +150,7 @@ installation (not provided by me):</p>
 
 <h4 id="htmlfooter">HTML Footer </h4>
 
-<p>Raw HTML can be included here, and will be appended at the very end of the
-document, after footnotes, etc. Useful for linking to scripts that must
-be included after footnotes.</p>
+<p>Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc. Useful for linking to scripts that must be included after footnotes.</p>
 
 <h4 id="language">Language </h4>
 
@@ -150,10 +183,15 @@ latex footer:	mmd6-article-footer
 
 <h4 id="latexfooter">LaTeX Footer </h4>
 
-<p>A special case of the <code>LaTeX Input</code> metadata below. This file will be linked
-to at the very end of the document.</p>
+<p>The name of a file to be included at the end of a LaTeX document.</p>
+
+<h4 id="latexheader">LaTeX Header </h4>
+
+<p>Raw LaTeX source to be added to the metadata section of the document. <strong>Note</strong>: This is distinct from the <code>latex leader</code>, <code>latex begin</code>, and <code>latex footer</code> metadata which can only contain a filename.</p>
 
 <h4 id="latexleader">LaTeX Leader </h4>
+
+<p>The name of a file to be included at the very beginning of a LaTeX document, before the metadata.</p>
 
 <h4 id="latexmode">LaTeX Mode </h4>
 
@@ -210,7 +248,8 @@ change the language of a document in LaTeX is up to the individual.</p>
 
 <p>When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
 
-<p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
+<p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>{{../highlighting.txt}}
+
 
 </body>
 </html>

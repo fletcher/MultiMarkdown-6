@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>CriticMarkup</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-27"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#criticmarkup">CriticMarkup </a>
+<ul>
+<li><a href="#whatiscriticmarkup">What Is CriticMarkup? </a></li>
+<li><a href="#thecriticmarkupsyntax">The CriticMarkup Syntax </a></li>
+<li><a href="#criticmarkuplimitations">CriticMarkup Limitations </a></li>
+<li><a href="#myphilosophyoncriticmarkup">My philosophy on CriticMarkup</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h3 id="criticmarkup">CriticMarkup </h3>
+
+<h4 id="whatiscriticmarkup">What Is CriticMarkup? </h4>
+
+<blockquote>
+<p>CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. <a href="http://criticmarkup.com/">http://criticmarkup.com/</a></p>
+</blockquote>
+
+<p>CriticMarkup is integrated with MultiMarkdown itself, as well as <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>. I encourage you to check out the <a href="http://criticmarkup.com/">CriticMarkup</a> web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.</p>
+
+<h4 id="thecriticmarkupsyntax">The CriticMarkup Syntax </h4>
+
+<p>The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <em>before</em> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</p>
+
+<p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</p>
+
+<p>When using CriticMarkup with MultiMarkdown itself, you have four choices:</p>
+
+<ul>
+<li><p>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.</p></li>
+<li><p>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code> or <code>multimarkdown --accept foo.txt</code>)</p></li>
+<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code> or <code>multimarkdown --reject foo.txt</code>)</p></li>
+</ul>
+
+<p>CriticMarkup comments and highlighting are ignored when processing.</p>
+
+<p>Deletions from the original text:</p>
+
+<pre><code>This is {--is --}a test.
+</code></pre>
+
+<p>Additions:</p>
+
+<pre><code>This {++is ++}a test.
+</code></pre>
+
+<p>Substitutions:</p>
+
+<pre><code>This {~~isn't~&gt;is~~} a test.
+</code></pre>
+
+<p>Highlighting:</p>
+
+<pre><code>This is a {==test==}.
+</code></pre>
+
+<p>Comments:</p>
+
+<pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
+</code></pre>
+
+<h4 id="criticmarkuplimitations">CriticMarkup Limitations </h4>
+
+<p>If you <code>--accept</code> or <code>--reject</code> CriticMarkup changes, then it should work properly in just about any document.</p>
+
+<p>If you want to try to include your changes as &#8220;notes&#8221; in the final document, then certain situations will lead to results that were probably not what you intended.</p>
+
+<ol>
+<li><p>CriticMarkup must be contained within a single block (e.g. paragraph, list item, etc.) CM that spans multiple blocks will not be recognized.</p></li>
+<li><p>CriticMarkup that crosses multiple MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) spans (e.g. <code>{++** foo} bar**</code>) will not properly manage the intended MultiMarkdown markup. This example would not result in bold being applied to <code>foo bar</code>.</p></li>
+</ol>
+
+<h4 id="myphilosophyoncriticmarkup">My philosophy on CriticMarkup</h4>
+
+<p>I view CriticMarkup as two things (in addition to the actual tools that implement these concepts):</p>
+
+<ol>
+<li><p>A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</p></li>
+<li><p>A means to display those notes/changes in the HTML output.</p></li>
+</ol>
+
+<p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the &#8220;orthogonal&#8221; nature of CriticMarkup and the underlying Markdown syntax.</p>
+
+<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I&#8217;ve tried a few (fairly creative, in my opinion) approaches, but they didn&#8217;t work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.</p>
+
+<p>Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a &#8220;finished&#8221; document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that&#8217;s ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)</p>
+
+<p>There are other CriticMarkup tools besides MultiMarkdown and <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>, and you are more than welcome to use them.</p>
+
+<p>For now, the <em>official</em> MultiMarkdown support for CriticMarkup consists of:</p>
+
+<ol>
+<li><p>CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</p></li>
+<li><p>When converting from MultiMarkdown text to an output format, you can ignore CM formatting with <code>compatibility</code> mode (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</p></li>
+<li><p>The secondary choice, is to <em>attempt</em> to show the changes in the exported document. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid output files.</p></li>
+</ol>
+
+</body>
+</html>
+
