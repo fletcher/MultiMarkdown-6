@@ -1,39 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
-     xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
-     xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
-     xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
-     xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
-     xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     xmlns:dc="http://purl.org/dc/elements/1.1/"
-     xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
-     xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
-     xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
-     xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
-     xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
-     xmlns:math="http://www.w3.org/1998/Math/MathML"
-     xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
-     xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
-     xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0"
-     xmlns:ooo="http://openoffice.org/2004/office"
-     xmlns:ooow="http://openoffice.org/2004/writer"
-     xmlns:oooc="http://openoffice.org/2004/calc"
-     xmlns:dom="http://www.w3.org/2001/xml-events"
-     xmlns:xforms="http://www.w3.org/2002/xforms"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xmlns:rpt="http://openoffice.org/2005/report"
-     xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
-     xmlns:xhtml="http://www.w3.org/1999/xhtml"
-     xmlns:grddl="http://www.w3.org/2003/g/data-view#"
-     xmlns:tableooo="http://openoffice.org/2009/table"
-     xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
-     xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
-     xmlns:css3t="http://www.w3.org/TR/css3-text/"
-     office:version="1.2"
-     grddl:transformation="http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl"
-     office:mimetype="application/vnd.oasis.opendocument.text">
+xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0"
+xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0"
+xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0"
+xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0"
+xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0"
+xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0"
+xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0"
+xmlns:math="http://www.w3.org/1998/Math/MathML"
+xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0"
+xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+xmlns:ooo="http://openoffice.org/2004/office"
+xmlns:ooow="http://openoffice.org/2004/writer"
+xmlns:oooc="http://openoffice.org/2004/calc"
+xmlns:dom="http://www.w3.org/2001/xml-events"
+xmlns:xforms="http://www.w3.org/2002/xforms"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:rpt="http://openoffice.org/2005/report"
+xmlns:of="urn:oasis:names:tc:opendocument:xmlns:of:1.2"
+xmlns:xhtml="http://www.w3.org/1999/xhtml"
+xmlns:grddl="http://www.w3.org/2003/g/data-view#"
+xmlns:officeooo="http://openoffice.org/2009/office"
+xmlns:tableooo="http://openoffice.org/2009/table"
+xmlns:drawooo="http://openoffice.org/2010/draw"
+xmlns:calcext="urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0"
+xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0"
+xmlns:field="urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0"
+xmlns:formx="urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0"
+xmlns:css3t="http://www.w3.org/TR/css3-text/"
+office:version="1.2"
+office:mimetype="application/vnd.oasis.opendocument.text">
 <office:font-face-decls>
    <style:font-face style:name="Courier New" svg:font-family="'Courier New'"
                     style:font-adornments="Regular"
@@ -274,8 +276,8 @@
 <office:meta>
 	<dc:title>MultiMarkdown User's Guide</dc:title>
 	<meta:user-defined meta:name="latextitle">MultiMarkdown \\ User's Guide</meta:user-defined>
-	<meta:user-defined meta:name="author">Fletcher T. Penney</meta:user-defined>
-	<meta:user-defined meta:name="version">6.0a</meta:user-defined>
+	<dc:creator>Fletcher T. Penney</dc:creator>
+	<meta:user-defined meta:name="version">6.3.2</meta:user-defined>
 	<meta:user-defined meta:name="revised">2017-03-15</meta:user-defined>
 	<meta:user-defined meta:name="uuid">88e8f53c-9a02-4e49-a639-f2dbb0a2e338</meta:user-defined>
 </office:meta>
@@ -283,15 +285,19 @@
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide </text:h>
 
-<text:p text:style-name="Quotations">Version 6.0a<text:line-break/>
+<text:p text:style-name="Quotations">Version 6.3.2<text:line-break/>
 Revised 2017-03-15</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="introduction"/>Introduction </text:h>
 
+<text:p text:style-name="Standard">MultiMarkdown is a superset of the <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/" office:name="Daring Fireball:
+Markdown">Markdown</text:a> lightweight markup syntax with support for additional output formats and features.</text:p>
+
 <text:h text:outline-level="3"><text:bookmark text:name="whatismarkdown"/>What is Markdown? </text:h>
 
 <text:p text:style-name="Standard">To understand what MultiMarkdown is, you first should be familiar with
-<text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/">Markdown</text:a>. The best description of what Markdown is comes from John Gruber&#8217;s
+<text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/" office:name="Daring Fireball:
+Markdown">Markdown</text:a>. The best description of what Markdown is comes from John Gruber&#8217;s
 Markdown web site:</text:p>
 
 <text:p text:style-name="Quotations">Markdown is a text-to-HTML conversion tool for web writers. Markdown
@@ -310,11 +316,326 @@ document should be publishable as-is, as plain text, without looking
 like it&#8217;s been marked up with tags or formatting instructions. While
 Markdown&#8217;s syntax has been influenced by several existing
 text-to-HTML filters, the single biggest source of inspiration for
-Markdown&#8217;s syntax is the format of plain text email. &#8212; <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/">John Gruber</text:a></text:p>
+Markdown&#8217;s syntax is the format of plain text email. &#8212; <text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/" office:name="Daring Fireball:
+Markdown">John Gruber</text:a></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="whatismultimarkdown"/>What is MultiMarkdown? </text:h>
+
+<text:p text:style-name="Standard">Markdown is great, but it lacked a few features that would allow it to work with entire documents, rather than just pieces of a web page.</text:p>
+
+<text:p text:style-name="Standard">I wrote MultiMarkdown in order to leverage Markdown&#8217;s syntax, but to extend it to work with complete documents that could ultimately be converted from text into other formats, including complete HTML documents, LaTeX, PDF, and ODF.</text:p>
+
+<text:p text:style-name="Standard">In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing <text:a xlink:type="simple" xlink:href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</text:a>. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.</text:p>
+
+<text:p text:style-name="Standard">John Gruber may disagree with me, but I really did try to stick with his proclaimed vision whenever I added a new syntax format to MultiMarkdown. The quality that attracted me to Markdown the most was its clean format. Reading a plain text document written in Markdown is <text:span text:style-name="MMD-Italic">easy</text:span>. It makes sense, and it looks like it was designed for people, not computers. To the extent possible, I tried to keep this same concept in mind when working on MultiMarkdown.</text:p>
+
+<text:p text:style-name="Standard">I may or may not have succeeded in this&#8230;.</text:p>
+
+<text:p text:style-name="Standard">In the vein of Markdown&#8217;s multiple definitions, you can think of MultiMarkdown as:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">A program to convert plain text to a fully formatted document.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The syntax used in the plain text to describe how to convert it to a complete document.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="whyshouldiusemultimarkdown"/>Why should I use MultiMarkdown? </text:h>
+
+<text:p text:style-name="Standard">Writing with MultiMarkdown allows you to separate the content and structure of your document from the formatting. You focus on the actual writing, without having to worry about making the styles of your chapter headers match, or ensuring the proper spacing between paragraphs. And with a little forethought, a single plain text document can easily be converted into multiple output formats without having to rewrite the entire thing or format it by hand. Even better, you don&#8217;t have to write in &#8220;computer-ese&#8221; to create well formatted HTML or LaTeX commands. You just write, MultiMarkdown takes care of the rest.</text:p>
+
+<text:p text:style-name="Standard">For example, instead of writing:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;In order to create valid<text:line-break/>&lt;a href=&quot;http://en.wikipedia.org/wiki/HTML&quot;&gt;HTML&lt;/a&gt;, you<text:line-break/>need properly coded syntax that can be cumbersome for<text:line-break/>&amp;#8220;non-programmers&amp;#8221; to write. Sometimes, you<text:line-break/>just want to easily make certain words &lt;strong&gt;bold<text:line-break/>&lt;/strong&gt;, and certain words &lt;em&gt;italicized&lt;/em&gt; without<text:line-break/>having to remember the syntax. Additionally, for example,<text:line-break/>creating lists:&lt;/p&gt;<text:line-break/><text:line-break/>&lt;ul&gt;<text:line-break/>&lt;li&gt;should be easy&lt;/li&gt;<text:line-break/>&lt;li&gt;should not involve programming&lt;/li&gt;<text:line-break/>&lt;/ul&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">You simply write:</text:p>
+
+<text:p text:style-name="Preformatted Text">In order to create valid [HTML], you need properly<text:line-break/>coded syntax that can be cumbersome for<text:line-break/>&quot;non-programmers&quot; to write. Sometimes, you just want<text:line-break/>to easily make certain words **bold**, and certain<text:line-break/>words *italicized* without having to remember the<text:line-break/>syntax. Additionally, for example, creating lists:<text:line-break/><text:line-break/>* should be easy<text:line-break/>* should not involve programming<text:line-break/><text:line-break/>[HTML]: http://en.wikipedia.org/wiki/HTML<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Additionally, you can write a MultiMarkdown document in any text editor, on any operating system, and know that it will be compatible with MultiMarkdown on any other operating system and processed into the same output. As a plain text format, your documents will be safe no matter how many times you switch computers, operating systems, or favorite applications. You will always be able to open and edit your documents, even when the version of the software you originally wrote them in is long gone.</text:p>
+
+<text:p text:style-name="Standard">These features have prompted several people to use MultiMarkdown in the process of writing their books, theses, and countless other documents.</text:p>
+
+<text:p text:style-name="Standard">There are many other reasons to use MultiMarkdown, but I won&#8217;t get into all of them here.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">By the way</text:span> &#8212; the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the MultiMarkdown (MMD) source for any page, add <text:span text:style-name="Source_20_Text">.txt</text:span> to the end of the URL. If the URL ends with <text:span text:style-name="Source_20_Text">/</text:span>, then add <text:span text:style-name="Source_20_Text">index.txt</text:span> to the end instead. The main MultiMarkdown page, for example, would be <text:a xlink:type="simple" xlink:href="http://fletcherpenney.net/multimarkdown/index.txt">http://fletcherpenney.net/multimarkdown/index.txt</text:a>.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="whatarethedifferentversionsofmultimarkdown"/>What Are the Different Versions of MultiMarkdown? </text:h>
+
+<text:p text:style-name="Standard">The first real version of MultiMarkdown was version 2. It was a modification of the original <text:span text:style-name="Source_20_Text">Markdown.pl</text:span> script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://github.com/fletcher/peg-multimarkdown">MultiMarkdown 3</text:a> (aka <text:span text:style-name="Source_20_Text">peg-multimarkdown</text:span>) was built using John MacFarlane&#8217;s <text:a xlink:type="simple" xlink:href="https://github.com/jgm/peg-markdown">peg-markdown</text:a> as a base. It was <text:span text:style-name="MMD-Italic">much</text:span> faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://github.com/fletcher/MultiMarkdown-4">MultiMarkdown 4</text:a> was a complete rewrite, keeping only the PEG and a few utility routines from MMD v3. This release fixed memory leaks and other problems from earlier MMD releases; it is safe to use in multithreaded applications and adds many new features.</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://github.com/fletcher/MultiMarkdown-5">MultiMarkdown 5</text:a> was mostly a restructuring of version 4, followed by further incremental improvements.</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://github.com/fletcher/MultiMarkdown-6">MultiMarkdown 6</text:a> was a complete rewrite from the ground up. The primary goals were:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">Improved performance &#8211; v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by <text:a xlink:type="simple" xlink:href="http://www.hwaci.com/sw/lemon/">lemon</text:a>. This is vastly faster than the PEG parser of versions 3&#8211;5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, <text:span text:style-name="MMD-Italic">and</text:span> provides more features.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Improved accuracy and consistency &#8211; v6 uses an entirely new test suite in order to ensure more consistent parsing across various edge cases.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">New features &#8211; several features were added to v6, and several were completely restructured to provide various improvements.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The v6 <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart">QuickStart guide</text:a> documents some of the changes in this latest iteration.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="whereisthisguidekept"/>Where is this Guide Kept? </text:h>
+
+<text:p text:style-name="Standard">This guide has been rewritten with the following changes:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">The source is now in the <text:span text:style-name="Source_20_Text">gh_pages</text:span> branch of the <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-6">MultiMarkdown project</text:a>. You can submit changes as a pull request, or by writing me.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">You can access this information on the web at <text:a xlink:type="simple" xlink:href="http://fletcher.github.io/MultiMarkdown-5">http://fletcher.github.io/MultiMarkdown-5</text:a></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.</text:p></text:list-item>
+
+</text:list>
 
 <text:h text:outline-level="2"><text:bookmark text:name="syntax"/>Syntax </text:h>
 
 <text:h text:outline-level="3"><text:bookmark text:name="metadata"/>Metadata </text:h>
+
+<text:p text:style-name="Standard">It is possible to include special metadata at the top of a MultiMarkdown
+document, such as title, author, etc. This information can then be used to
+control how MultiMarkdown processes the document, or can be used in certain
+output formats in special ways. For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">{{examples/metadata.text}}<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The syntax for including metadata is simple.</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a <text:span text:style-name="Source_20_Text">---</text:span> on the line before and after the metadata. The line after the metadata can also be <text:span text:style-name="Source_20_Text">...</text:span>. This is to provide better compatibility with <text:a xlink:type="simple" xlink:href="http://www.yaml.org/">YAML</text:a>, though MultiMarkdown doesn&#8217;t support all YAML metadata.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Metadata consists of two parts - the <text:span text:style-name="Source_20_Text">key</text:span> and the <text:span text:style-name="Source_20_Text">value</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The metadata key must begin at the beginning of the line. It must start with an ASCII letter or a number, then the following characters can consist of ASCII letters, numbers, spaces, hyphens, or underscore characters.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The end of the metadata key is specified with a colon (&#8216;:&#8217;)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">After the colon comes the metadata value, which can consist of pretty much any characters (including new lines). To keep multiline metadata values from being confused with additional metadata, I recommend indenting each new line of metadata. If your metadata value includes a colon, it <text:span text:style-name="MMD-Italic">must</text:span> be indented to keep it from being treated as a new key-value pair.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">While not required, I recommend using two spaces at the end of each line of metadata. This will improve the appearance of the metadata section if your document is processed by Markdown instead of MultiMarkdown.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Metadata keys are case insensitive and stripped of all spaces during processing. This means that <text:span text:style-name="Source_20_Text">Base Header Level</text:span>, <text:span text:style-name="Source_20_Text">base headerlevel</text:span>, and <text:span text:style-name="Source_20_Text">baseheaderlevel</text:span> are all the same.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Metadata is processed as plain text, so it should <text:span text:style-name="MMD-Italic">not</text:span> include MultiMarkdown markup.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">After the metadata is finished, a blank line triggers the beginning of the rest of the document.</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="3"><text:bookmark text:name="metadatavariables"/>Metadata &#8220;Variables&#8221; </text:h>
+
+<text:p text:style-name="Standard">You can substitute the <text:span text:style-name="Source_20_Text">value</text:span> for a metadata <text:span text:style-name="Source_20_Text">key</text:span> in the body of a document using the following format, where <text:span text:style-name="Source_20_Text">foo</text:span> and <text:span text:style-name="Source_20_Text">bar</text:span> are the <text:span text:style-name="Source_20_Text">key</text:span>s of the desired metadata.</text:p>
+
+<text:p text:style-name="Preformatted Text">{{examples/metadata-variable.text}}<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="standardmetadatakeys"/>&#8220;Standard&#8221; Metadata keys </text:h>
+
+<text:p text:style-name="Standard">There are a few metadata keys that are standardized in MultiMarkdown. You can
+use any other keys that you desire, but you have to make use of them yourself.</text:p>
+
+<text:p text:style-name="Standard">My goal is to keep the list of &#8220;standard&#8221; metadata keys as short as possible.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="author"/>Author </text:h>
+
+<text:p text:style-name="Standard">This value represents the author of the document and is used in LaTeX, ODF, and RTF
+documents to generate the title information.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="affiliation"/>Affiliation </text:h>
+
+<text:p text:style-name="Standard">This is used to enter further information about the author &#8212; a link to a
+website, the name of an employer, academic affiliation, etc.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="baseheaderlevel"/>Base Header Level </text:h>
+
+<text:p text:style-name="Standard">This is used to change the top level of organization of the document. For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">Base Header Level: 2<text:line-break/><text:line-break/># Introduction #<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Normally, the Introduction would be output as <text:span text:style-name="Source_20_Text">&lt;h1&gt;</text:span> in HTML, or <text:span text:style-name="Source_20_Text">\part{}</text:span> in LaTeX. If you&#8217;re writing a shorter document, you may wish for the largest division in the document to be <text:span text:style-name="Source_20_Text">&lt;h2&gt;</text:span> or <text:span text:style-name="Source_20_Text">\chapter{}</text:span>. The <text:span text:style-name="Source_20_Text">Base Header Level</text:span> metadata tells MultiMarkdown to change the largest division level to the specified value.</text:p>
+
+<text:p text:style-name="Standard">This can also be useful when using transclusion to combine multiple documents.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">Base Header Level</text:span> does not trigger a complete document.</text:p>
+
+<text:p text:style-name="Standard">Additionally, there are &#8220;flavors&#8221; of this metadata key for various output formats so that you can specify a different header level for different output formats &#8212; e.g. <text:span text:style-name="Source_20_Text">LaTeX Header Level</text:span>, <text:span text:style-name="Source_20_Text">HTML Header Level</text:span>, and <text:span text:style-name="Source_20_Text">ODF Header Level</text:span>.</text:p>
+
+<text:p text:style-name="Standard">If you are doing something interesting with [File Transclusion], you can also use a negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;, this allows you to use a different level of headings when a file is processed on its own.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="bibliostyle"/>Biblio Style </text:h>
+
+<text:p text:style-name="Standard">This metadata specifies the name of the BibTeX style to be used, if you are
+not using natbib.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="bibtex"/>BibTeX </text:h>
+
+<text:p text:style-name="Standard">This metadata specifies the name of the BibTeX file used to store citation
+information. Do not include the trailing &#8216;.bib&#8217;.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="copyright"/>Copyright </text:h>
+
+<text:p text:style-name="Standard">This can be used to provide a copyright string.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="css"/>CSS </text:h>
+
+<text:p text:style-name="Standard">This metadata specifies a URL to be used as a CSS file for the produced
+document. Obviously, this is only useful when outputting to HTML.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="date"/>Date </text:h>
+
+<text:p text:style-name="Standard">Specify a date to be associated with the document.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="htmlheader"/>HTML Header </text:h>
+
+<text:p text:style-name="Standard">You can include raw HTML information to be included in the header.
+MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
+it as is.</text:p>
+
+<text:p text:style-name="Standard">As an example, this can be useful to link your document to a working MathJax
+installation (not provided by me):</text:p>
+
+<text:p text:style-name="Preformatted Text">HTML header:  &lt;script type=&quot;text/javascript&quot;<text:line-break/><text:tab/>src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;<text:line-break/><text:tab/>&lt;/script&gt;<text:line-break/></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="htmlfooter"/>HTML Footer </text:h>
+
+<text:p text:style-name="Standard">Raw HTML can be included here, and will be appended at the very end of the
+document, after footnotes, etc. Useful for linking to scripts that must
+be included after footnotes.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="language"/>Language </text:h>
+
+<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">language</text:span> metadata key specified the content language for a document using the standardized two letter code (e.g. <text:span text:style-name="Source_20_Text">en</text:span> for English). Where possible, this will also set the <text:span text:style-name="Source_20_Text">quotes language</text:span> metadata key to the appropriate value.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexauthor"/>LaTeX Author </text:h>
+
+<text:p text:style-name="Standard">Since MultiMarkdown syntax is not processed inside of metadata, you can use the <text:span text:style-name="Source_20_Text">latex author</text:span> metadata to override the regular author metadata when exporting to LaTeX.</text:p>
+
+<text:p text:style-name="Standard">This metadata <text:span text:style-name="MMD-Italic">must</text:span> come after the regular <text:span text:style-name="Source_20_Text">author</text:span> metadata if it is also being used.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexbegin"/>LaTeX Begin </text:h>
+
+<text:p text:style-name="Standard">This is the name of a LaTeX file to be included (via <text:span text:style-name="Source_20_Text">\input{foo}</text:span>) when exporting to LaTeX. This file will be included after the metadata, and before the body of the document. This is usually where the <text:span text:style-name="Source_20_Text">\begin{document}</text:span> command occurs, hence the name.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexconfig"/>LaTeX Config </text:h>
+
+<text:p text:style-name="Standard">This is a shortcut key when exporting to LaTeX that automatically populates the <text:span text:style-name="Source_20_Text">latex leader</text:span>, <text:span text:style-name="Source_20_Text">latex begin</text:span>, and <text:span text:style-name="Source_20_Text">latex footer</text:span> metadata based on a standardized naming convention.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">latex config: article</text:span> would be the same as the following setup:</text:p>
+
+<text:p text:style-name="Preformatted Text">latex leader:<text:tab/>mmd6-article-leader<text:line-break/>latex begin:<text:tab/>mmd6-article-begin<text:line-break/>latex footer:<text:tab/>mmd6-article-footer<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The standard LaTeX support files have been updated to support this naming configuration:</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6">https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6</text:a></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexfooter"/>LaTeX Footer </text:h>
+
+<text:p text:style-name="Standard">A special case of the <text:span text:style-name="Source_20_Text">LaTeX Input</text:span> metadata below. This file will be linked
+to at the very end of the document.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexleader"/>LaTeX Leader </text:h>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latexmode"/>LaTeX Mode </text:h>
+
+<text:p text:style-name="Standard">When outputting a document to LaTeX, there are two special options that change
+the output slightly &#8212; <text:span text:style-name="Source_20_Text">memoir</text:span> and <text:span text:style-name="Source_20_Text">beamer</text:span>. These options are designed to
+be compatible with the LaTeX classes of the same names.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="latextitle"/>LaTeX Title </text:h>
+
+<text:p text:style-name="Standard">Since MultiMarkdown syntax is not processed inside of metadata, you can use the <text:span text:style-name="Source_20_Text">latex title</text:span> metadata to override the regular title metadata when exporting to LaTeX.</text:p>
+
+<text:p text:style-name="Standard">This metadata <text:span text:style-name="MMD-Italic">must</text:span> come after the regular <text:span text:style-name="Source_20_Text">title</text:span> metadata if it is also being used.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="mmdheader"/>MMD Header </text:h>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">MMD Header</text:span> provides text that will be inserted before the main body of text, prior to parsing the document. If you want to include an external file, use the transclusion syntax (<text:span text:style-name="Source_20_Text">{{foo.txt}}</text:span>).</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="mmdfooter"/>MMD Footer </text:h>
+
+<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">MMD Footer</text:span> metadata is like <text:span text:style-name="Source_20_Text">MMD Header</text:span>, but it appends text at the end of the document, prior to parsing. Use transclusion if you want to reference an external file.</text:p>
+
+<text:p text:style-name="Standard">This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you&#8217;re building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="odfheader"/>ODF Header </text:h>
+
+<text:p text:style-name="Standard">You can include raw XML to be included in the header of a file output in
+OpenDocument format. It&#8217;s up to you to properly format your XML and get it
+working &#8212; MultiMarkdown just copies it verbatim to the output.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="quoteslanguage"/>Quotes Language </text:h>
+
+<text:p text:style-name="Standard">This is used to specify which style of &#8220;smart&#8221; quotes to use in the output document. The available options are:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+dutch (or <text:span text:style-name="Source_20_Text">nl</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+english</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+french (<text:span text:style-name="Source_20_Text">fr</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+german (<text:span text:style-name="Source_20_Text">de</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+germanguillemets</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+spanish (<text:span text:style-name="Source_20_Text">es</text:span>)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">swedish (<text:span text:style-name="Source_20_Text">sv</text:span>)</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">The default is <text:span text:style-name="Source_20_Text">english</text:span> if not specified. This affects HTML output. To
+change the language of a document in LaTeX is up to the individual.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">Quotes Language</text:span> does not trigger a complete document.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="title"/>Title </text:h>
+
+<text:p text:style-name="Standard">Self-explanatory.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="transcludebase"/>Transclude Base </text:h>
+
+<text:p text:style-name="Standard">When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</text:p>
+
+<text:p text:style-name="Standard">This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <text:span text:style-name="Source_20_Text">stdin</text:span> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</text:p>
 </office:text>
 </office:body>
 </office:document>

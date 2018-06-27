@@ -1,0 +1,420 @@
+\input{mmd6-tufte-book-leader}
+\def\mytitle{MultiMarkdown User's Guide}
+\def\latextitle{MultiMarkdown \\ User's Guide}
+\def\myauthor{Fletcher T. Penney}
+\def\version{6.3.2}
+\def\revised{2017-03-15}
+\def\uuid{88e8f53c-9a02-4e49-a639-f2dbb0a2e338}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-book-begin}
+
+\chapter{MultiMarkdown User's Guide }
+\label{title}
+
+\begin{quote}
+Version 6.3.2\\
+Revised 2017-03-15
+\end{quote}
+
+\chapter{Introduction }
+\label{introduction}
+
+MultiMarkdown is a superset of the \href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }} lightweight markup syntax with support for additional output formats and features.
+
+\section{What is Markdown? }
+\label{whatismarkdown}
+
+To understand what MultiMarkdown is, you first should be familiar with
+\href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }}. The best description of what Markdown is comes from John Gruber's
+Markdown web site:
+
+\begin{quote}
+Markdown is a text-to-HTML conversion tool for web writers. Markdown
+allows you to write using an easy-to-read, easy-to-write plain text
+format, then convert it to structurally valid XHTML (or HTML).
+\end{quote}
+
+\begin{quote}
+Thus, ``Markdown'' is two things: (1) a plain text formatting
+syntax; and (2) a software tool, written in Perl, that converts
+the plain text formatting to HTML. See the Syntax page for details
+pertaining to Markdown's formatting syntax. You can try it out,
+right now, using the online Dingus.
+\end{quote}
+
+\begin{quote}
+The overriding design goal for Markdown's formatting syntax is to
+make it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it's been marked up with tags or formatting instructions. While
+Markdown's syntax has been influenced by several existing
+text-to-HTML filters, the single biggest source of inspiration for
+Markdown's syntax is the format of plain text email. --- \href{http://daringfireball.net/projects/markdown/}{John Gruber}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }}
+\end{quote}
+
+\section{What is MultiMarkdown? }
+\label{whatismultimarkdown}
+
+Markdown is great, but it lacked a few features that would allow it to work with entire documents, rather than just pieces of a web page.
+
+I wrote MultiMarkdown in order to leverage Markdown's syntax, but to extend it to work with complete documents that could ultimately be converted from text into other formats, including complete HTML documents, LaTeX, PDF, and ODF.
+
+In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.
+
+John Gruber may disagree with me, but I really did try to stick with his proclaimed vision whenever I added a new syntax format to MultiMarkdown. The quality that attracted me to Markdown the most was its clean format. Reading a plain text document written in Markdown is \emph{easy}. It makes sense, and it looks like it was designed for people, not computers. To the extent possible, I tried to keep this same concept in mind when working on MultiMarkdown.
+
+I may or may not have succeeded in this{\ldots}.
+
+In the vein of Markdown's multiple definitions, you can think of MultiMarkdown as:
+
+\begin{enumerate}
+\item A program to convert plain text to a fully formatted document.
+
+\item The syntax used in the plain text to describe how to convert it to a complete document.
+
+\end{enumerate}
+
+\section{Why should I use MultiMarkdown? }
+\label{whyshouldiusemultimarkdown}
+
+Writing with MultiMarkdown allows you to separate the content and structure of your document from the formatting. You focus on the actual writing, without having to worry about making the styles of your chapter headers match, or ensuring the proper spacing between paragraphs. And with a little forethought, a single plain text document can easily be converted into multiple output formats without having to rewrite the entire thing or format it by hand. Even better, you don't have to write in ``computer-ese'' to create well formatted HTML or LaTeX commands. You just write, MultiMarkdown takes care of the rest.
+
+For example, instead of writing:
+
+\begin{verbatim}
+<p>In order to create valid 
+<a href="http://en.wikipedia.org/wiki/HTML">HTML</a>, you 
+need properly coded syntax that can be cumbersome for 
+&#8220;non-programmers&#8221; to write. Sometimes, you
+just want to easily make certain words <strong>bold
+</strong>, and certain words <em>italicized</em> without
+having to remember the syntax. Additionally, for example,
+creating lists:</p>
+
+<ul>
+<li>should be easy</li>
+<li>should not involve programming</li>
+</ul>
+\end{verbatim}
+
+You simply write:
+
+\begin{verbatim}
+In order to create valid [HTML], you need properly
+coded syntax that can be cumbersome for 
+"non-programmers" to write. Sometimes, you just want
+to easily make certain words **bold**, and certain 
+words *italicized* without having to remember the 
+syntax. Additionally, for example, creating lists:
+
+* should be easy
+* should not involve programming
+
+[HTML]: http://en.wikipedia.org/wiki/HTML
+\end{verbatim}
+
+Additionally, you can write a MultiMarkdown document in any text editor, on any operating system, and know that it will be compatible with MultiMarkdown on any other operating system and processed into the same output. As a plain text format, your documents will be safe no matter how many times you switch computers, operating systems, or favorite applications. You will always be able to open and edit your documents, even when the version of the software you originally wrote them in is long gone.
+
+These features have prompted several people to use MultiMarkdown in the process of writing their books, theses, and countless other documents.
+
+There are many other reasons to use MultiMarkdown, but I won't get into all of them here.
+
+\emph{By the way} --- the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the \gls{MMD} source for any page, add \texttt{.txt} to the end of the URL. If the URL ends with \texttt{\slash }, then add \texttt{index.txt} to the end instead. The main MultiMarkdown page, for example, would be \href{http://fletcherpenney.net/multimarkdown/index.txt}{http:\slash \slash fletcherpenney.net\slash multimarkdown\slash index.txt}.
+
+\section{What Are the Different Versions of MultiMarkdown? }
+\label{whatarethedifferentversionsofmultimarkdown}
+
+The first real version of MultiMarkdown was version 2. It was a modification of the original \texttt{Markdown.pl} script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.
+
+\href{https://github.com/fletcher/peg-multimarkdown}{MultiMarkdown 3}\footnote{\href{https://github.com/fletcher/peg-multimarkdown}{https:\slash \slash github.com\slash fletcher\slash peg-multimarkdown}} (aka \texttt{peg-multimarkdown}) was built using John MacFarlane's \href{https://github.com/jgm/peg-markdown}{peg-markdown}\footnote{\href{https://github.com/jgm/peg-markdown}{https:\slash \slash github.com\slash jgm\slash peg-markdown}} as a base. It was \emph{much} faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.
+
+\href{http://github.com/fletcher/MultiMarkdown-4}{MultiMarkdown 4}\footnote{\href{http://github.com/fletcher/MultiMarkdown-4}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-4}} was a complete rewrite, keeping only the PEG and a few utility routines from \gls{MMD} v3. This release fixed memory leaks and other problems from earlier \gls{MMD} releases; it is safe to use in multithreaded applications and adds many new features.
+
+\href{http://github.com/fletcher/MultiMarkdown-5}{MultiMarkdown 5}\footnote{\href{http://github.com/fletcher/MultiMarkdown-5}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-5}} was mostly a restructuring of version 4, followed by further incremental improvements.
+
+\href{http://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown 6}\footnote{\href{http://github.com/fletcher/MultiMarkdown-6}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6}} was a complete rewrite from the ground up. The primary goals were:
+
+\begin{itemize}
+\item Improved performance -- v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by \href{http://www.hwaci.com/sw/lemon/}{lemon}\footnote{\href{http://www.hwaci.com/sw/lemon/}{http:\slash \slash www.hwaci.com\slash sw\slash lemon\slash }}. This is vastly faster than the PEG parser of versions 3--5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, \emph{and} provides more features.
+
+\item Improved accuracy and consistency -- v6 uses an entirely new test suite in order to ensure more consistent parsing across various edge cases.
+
+\item New features -- several features were added to v6, and several were completely restructured to provide various improvements.
+
+\item The v6 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{QuickStart guide}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash QuickStart}} documents some of the changes in this latest iteration.
+
+\end{itemize}
+
+\section{Where is this Guide Kept? }
+\label{whereisthisguidekept}
+
+This guide has been rewritten with the following changes:
+
+\begin{itemize}
+\item The source is now in the \texttt{gh\_pages} branch of the \href{https://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown project}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6}}. You can submit changes as a pull request, or by writing me.
+
+\item You can access this information on the web at \href{http://fletcher.github.io/MultiMarkdown-5}{http:\slash \slash fletcher.github.io\slash MultiMarkdown-5}
+
+\item The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.
+
+\end{itemize}
+
+\chapter{Syntax }
+\label{syntax}
+
+\section{Metadata }
+\label{metadata}
+
+It is possible to include special metadata at the top of a MultiMarkdown
+document, such as title, author, etc. This information can then be used to
+control how MultiMarkdown processes the document, or can be used in certain
+output formats in special ways. For example:
+
+\begin{verbatim}
+{{examples/metadata.text}}
+\end{verbatim}
+
+The syntax for including metadata is simple.
+
+\begin{itemize}
+\item The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a \texttt{-{}-{}-} on the line before and after the metadata. The line after the metadata can also be \texttt{...}. This is to provide better compatibility with \href{http://www.yaml.org/}{YAML}\footnote{\href{http://www.yaml.org/}{http:\slash \slash www.yaml.org\slash }}, though MultiMarkdown doesn't support all YAML metadata.
+
+\item Metadata consists of two parts - the \texttt{key} and the \texttt{value}
+
+\item The metadata key must begin at the beginning of the line. It must start with an ASCII letter or a number, then the following characters can consist of ASCII letters, numbers, spaces, hyphens, or underscore characters.
+
+\item The end of the metadata key is specified with a colon (`:')
+
+\item After the colon comes the metadata value, which can consist of pretty much any characters (including new lines). To keep multiline metadata values from being confused with additional metadata, I recommend indenting each new line of metadata. If your metadata value includes a colon, it \emph{must} be indented to keep it from being treated as a new key-value pair.
+
+\item While not required, I recommend using two spaces at the end of each line of metadata. This will improve the appearance of the metadata section if your document is processed by Markdown instead of MultiMarkdown.
+
+\item Metadata keys are case insensitive and stripped of all spaces during processing. This means that \texttt{Base Header Level}, \texttt{base headerlevel}, and \texttt{baseheaderlevel} are all the same.
+
+\item Metadata is processed as plain text, so it should \emph{not} include MultiMarkdown markup.
+
+\item After the metadata is finished, a blank line triggers the beginning of the rest of the document.
+
+\end{itemize}
+
+\section{Metadata ``Variables'' }
+\label{metadatavariables}
+
+You can substitute the \texttt{value} for a metadata \texttt{key} in the body of a document using the following format, where \texttt{foo} and \texttt{bar} are the \texttt{key}s of the desired metadata.
+
+\begin{verbatim}
+{{examples/metadata-variable.text}}
+\end{verbatim}
+
+\section{``Standard'' Metadata keys }
+\label{standardmetadatakeys}
+
+There are a few metadata keys that are standardized in MultiMarkdown. You can
+use any other keys that you desire, but you have to make use of them yourself.
+
+My goal is to keep the list of ``standard'' metadata keys as short as possible.
+
+\subsection{Author }
+\label{author}
+
+This value represents the author of the document and is used in LaTeX, ODF, and RTF
+documents to generate the title information.
+
+\subsection{Affiliation }
+\label{affiliation}
+
+This is used to enter further information about the author --- a link to a
+website, the name of an employer, academic affiliation, etc.
+
+\subsection{Base Header Level }
+\label{baseheaderlevel}
+
+This is used to change the top level of organization of the document. For example:
+
+\begin{verbatim}
+Base Header Level: 2
+
+# Introduction #
+\end{verbatim}
+
+Normally, the Introduction would be output as \texttt{<h1>} in HTML, or \texttt{\textbackslash{}part\{\}} in LaTeX. If you're writing a shorter document, you may wish for the largest division in the document to be \texttt{<h2>} or \texttt{\textbackslash{}chapter\{\}}. The \texttt{Base Header Level} metadata tells MultiMarkdown to change the largest division level to the specified value.
+
+This can also be useful when using transclusion to combine multiple documents.
+
+\texttt{Base Header Level} does not trigger a complete document.
+
+Additionally, there are ``flavors'' of this metadata key for various output formats so that you can specify a different header level for different output formats --- e.g. \texttt{LaTeX Header Level}, \texttt{HTML Header Level}, and \texttt{ODF Header Level}.
+
+If you are doing something interesting with {[File Transclusion]}, you can also use a negative number here. Since metadata is not used when a file is ``transcluded'', this allows you to use a different level of headings when a file is processed on its own.
+
+\subsection{Biblio Style }
+\label{bibliostyle}
+
+This metadata specifies the name of the BibTeX style to be used, if you are
+not using natbib.
+
+\subsection{BibTeX }
+\label{bibtex}
+
+This metadata specifies the name of the BibTeX file used to store citation
+information. Do not include the trailing `.bib'.
+
+\subsection{Copyright }
+\label{copyright}
+
+This can be used to provide a copyright string.
+
+\subsection{CSS }
+\label{css}
+
+This metadata specifies a URL to be used as a CSS file for the produced
+document. Obviously, this is only useful when outputting to HTML.
+
+\subsection{Date }
+\label{date}
+
+Specify a date to be associated with the document.
+
+\subsection{HTML Header }
+\label{htmlheader}
+
+You can include raw HTML information to be included in the header.
+MultiMarkdown doesn't perform any validation on this data --- it just copies
+it as is.
+
+As an example, this can be useful to link your document to a working MathJax
+installation (not provided by me):
+
+\begin{verbatim}
+HTML header:  <script type="text/javascript"
+	src="http://example.net/mathjax/MathJax.js">
+	</script>
+\end{verbatim}
+
+\subsection{HTML Footer }
+\label{htmlfooter}
+
+Raw HTML can be included here, and will be appended at the very end of the
+document, after footnotes, etc. Useful for linking to scripts that must
+be included after footnotes.
+
+\subsection{Language }
+\label{language}
+
+The \texttt{language} metadata key specified the content language for a document using the standardized two letter code (e.g. \texttt{en} for English). Where possible, this will also set the \texttt{quotes language} metadata key to the appropriate value.
+
+\subsection{LaTeX Author }
+\label{latexauthor}
+
+Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex author} metadata to override the regular author metadata when exporting to LaTeX.
+
+This metadata \emph{must} come after the regular \texttt{author} metadata if it is also being used.
+
+\subsection{LaTeX Begin }
+\label{latexbegin}
+
+This is the name of a LaTeX file to be included (via \texttt{\textbackslash{}input\{foo\}}) when exporting to LaTeX. This file will be included after the metadata, and before the body of the document. This is usually where the \texttt{\textbackslash{}begin\{document\}} command occurs, hence the name.
+
+\subsection{LaTeX Config }
+\label{latexconfig}
+
+This is a shortcut key when exporting to LaTeX that automatically populates the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata based on a standardized naming convention.
+
+\texttt{latex config: article} would be the same as the following setup:
+
+\begin{verbatim}
+latex leader:	mmd6-article-leader
+latex begin:	mmd6-article-begin
+latex footer:	mmd6-article-footer
+\end{verbatim}
+
+The standard LaTeX support files have been updated to support this naming configuration:
+
+\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash texmf\slash tex\slash latex\slash mmd6}
+
+\subsection{LaTeX Footer }
+\label{latexfooter}
+
+A special case of the \texttt{LaTeX Input} metadata below. This file will be linked
+to at the very end of the document.
+
+\subsection{LaTeX Leader }
+\label{latexleader}
+
+\subsection{LaTeX Mode }
+\label{latexmode}
+
+When outputting a document to LaTeX, there are two special options that change
+the output slightly --- \texttt{memoir} and \texttt{beamer}. These options are designed to
+be compatible with the LaTeX classes of the same names.
+
+\subsection{LaTeX Title }
+\label{latextitle}
+
+Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex title} metadata to override the regular title metadata when exporting to LaTeX.
+
+This metadata \emph{must} come after the regular \texttt{title} metadata if it is also being used.
+
+\subsection{MMD Header }
+\label{mmdheader}
+
+\texttt{MMD Header} provides text that will be inserted before the main body of text, prior to parsing the document. If you want to include an external file, use the transclusion syntax (\texttt{\{\{foo.txt\}\}}).
+
+\subsection{MMD Footer }
+\label{mmdfooter}
+
+The \texttt{MMD Footer} metadata is like \texttt{MMD Header}, but it appends text at the end of the document, prior to parsing. Use transclusion if you want to reference an external file.
+
+This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you're building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.
+
+\subsection{ODF Header }
+\label{odfheader}
+
+You can include raw XML to be included in the header of a file output in
+OpenDocument format. It's up to you to properly format your XML and get it
+working --- MultiMarkdown just copies it verbatim to the output.
+
+\subsection{Quotes Language }
+\label{quoteslanguage}
+
+This is used to specify which style of ``smart'' quotes to use in the output document. The available options are:
+
+\begin{itemize}
+\item dutch (or \texttt{nl})
+
+\item english
+
+\item french (\texttt{fr})
+
+\item german (\texttt{de})
+
+\item germanguillemets
+
+\item spanish (\texttt{es})
+
+\item swedish (\texttt{sv})
+
+\end{itemize}
+
+The default is \texttt{english} if not specified. This affects HTML output. To
+change the language of a document in LaTeX is up to the individual.
+
+\texttt{Quotes Language} does not trigger a complete document.
+
+\subsection{Title }
+\label{title}
+
+Self-explanatory.
+
+\subsection{Transclude Base }
+\label{transcludebase}
+
+When using the {[File Transclusion]} feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
+
+This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using \texttt{stdin} or another application that offers MultiMarkdown support). In this case, the path must be a complete path.
+
+\input{mmd6-tufte-book-footer}
+\end{document}

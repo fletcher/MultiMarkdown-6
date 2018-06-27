@@ -5,10 +5,10 @@
 	<title>MultiMarkdown User's Guide</title>
 	<meta name="latextitle" content="MultiMarkdown \\ User's Guide"/>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="version" content="6.0a"/>
+	<meta name="version" content="6.3.2"/>
 	<meta name="revised" content="2017-03-15"/>
 	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
 	<meta name="uuid" content="88e8f53c-9a02-4e49-a639-f2dbb0a2e338"/>
 </head>
 <body>
@@ -16,7 +16,7 @@
 <h2 id="title">MultiMarkdown User's Guide </h2>
 
 <blockquote>
-<p>Version 6.0a<br />
+<p>Version 6.3.2<br />
 Revised 2017-03-15</p>
 </blockquote>
 
@@ -27,11 +27,44 @@ Revised 2017-03-15</p>
 <li><a href="#introduction">Introduction </a>
 <ul>
 <li><a href="#whatismarkdown">What is Markdown? </a></li>
+<li><a href="#whatismultimarkdown">What is MultiMarkdown? </a></li>
+<li><a href="#whyshouldiusemultimarkdown">Why should I use MultiMarkdown? </a></li>
+<li><a href="#whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown? </a></li>
+<li><a href="#whereisthisguidekept">Where is this Guide Kept? </a></li>
 </ul>
 </li>
 <li><a href="#syntax">Syntax </a>
 <ul>
 <li><a href="#metadata">Metadata </a></li>
+<li><a href="#metadatavariables">Metadata &#8220;Variables&#8221; </a></li>
+<li><a href="#standardmetadatakeys">&#8220;Standard&#8221; Metadata keys </a>
+<ul>
+<li><a href="#author">Author </a></li>
+<li><a href="#affiliation">Affiliation </a></li>
+<li><a href="#baseheaderlevel">Base Header Level </a></li>
+<li><a href="#bibliostyle">Biblio Style </a></li>
+<li><a href="#bibtex">BibTeX </a></li>
+<li><a href="#copyright">Copyright </a></li>
+<li><a href="#css">CSS </a></li>
+<li><a href="#date">Date </a></li>
+<li><a href="#htmlheader">HTML Header </a></li>
+<li><a href="#htmlfooter">HTML Footer </a></li>
+<li><a href="#language">Language </a></li>
+<li><a href="#latexauthor">LaTeX Author </a></li>
+<li><a href="#latexbegin">LaTeX Begin </a></li>
+<li><a href="#latexconfig">LaTeX Config </a></li>
+<li><a href="#latexfooter">LaTeX Footer </a></li>
+<li><a href="#latexleader">LaTeX Leader </a></li>
+<li><a href="#latexmode">LaTeX Mode </a></li>
+<li><a href="#latextitle">LaTeX Title </a></li>
+<li><a href="#mmdheader">MMD Header </a></li>
+<li><a href="#mmdfooter">MMD Footer </a></li>
+<li><a href="#odfheader">ODF Header </a></li>
+<li><a href="#quoteslanguage">Quotes Language </a></li>
+<li><a href="#title">Title </a></li>
+<li><a href="#transcludebase">Transclude Base </a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -39,10 +72,14 @@ Revised 2017-03-15</p>
 
 <h2 id="introduction">Introduction </h2>
 
+<p>MultiMarkdown is a superset of the <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball:
+Markdown">Markdown</a> lightweight markup syntax with support for additional output formats and features.</p>
+
 <h3 id="whatismarkdown">What is Markdown? </h3>
 
 <p>To understand what MultiMarkdown is, you first should be familiar with
-<a href="http://daringfireball.net/projects/markdown/">Markdown</a>. The best description of what Markdown is comes from John Gruber&#8217;s
+<a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball:
+Markdown">Markdown</a>. The best description of what Markdown is comes from John Gruber&#8217;s
 Markdown web site:</p>
 
 <blockquote>
@@ -66,12 +103,306 @@ document should be publishable as-is, as plain text, without looking
 like it&#8217;s been marked up with tags or formatting instructions. While
 Markdown&#8217;s syntax has been influenced by several existing
 text-to-HTML filters, the single biggest source of inspiration for
-Markdown&#8217;s syntax is the format of plain text email. &#8212; <a href="http://daringfireball.net/projects/markdown/">John Gruber</a></p>
+Markdown&#8217;s syntax is the format of plain text email. &#8212; <a href="http://daringfireball.net/projects/markdown/" title="Daring Fireball:
+Markdown">John Gruber</a></p>
 </blockquote>
+
+<h3 id="whatismultimarkdown">What is MultiMarkdown? </h3>
+
+<p>Markdown is great, but it lacked a few features that would allow it to work with entire documents, rather than just pieces of a web page.</p>
+
+<p>I wrote MultiMarkdown in order to leverage Markdown&#8217;s syntax, but to extend it to work with complete documents that could ultimately be converted from text into other formats, including complete HTML documents, LaTeX, PDF, and ODF.</p>
+
+<p>In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a>. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.</p>
+
+<p>John Gruber may disagree with me, but I really did try to stick with his proclaimed vision whenever I added a new syntax format to MultiMarkdown. The quality that attracted me to Markdown the most was its clean format. Reading a plain text document written in Markdown is <em>easy</em>. It makes sense, and it looks like it was designed for people, not computers. To the extent possible, I tried to keep this same concept in mind when working on MultiMarkdown.</p>
+
+<p>I may or may not have succeeded in this&#8230;.</p>
+
+<p>In the vein of Markdown&#8217;s multiple definitions, you can think of MultiMarkdown as:</p>
+
+<ol>
+<li><p>A program to convert plain text to a fully formatted document.</p></li>
+<li><p>The syntax used in the plain text to describe how to convert it to a complete document.</p></li>
+</ol>
+
+<h3 id="whyshouldiusemultimarkdown">Why should I use MultiMarkdown? </h3>
+
+<p>Writing with MultiMarkdown allows you to separate the content and structure of your document from the formatting. You focus on the actual writing, without having to worry about making the styles of your chapter headers match, or ensuring the proper spacing between paragraphs. And with a little forethought, a single plain text document can easily be converted into multiple output formats without having to rewrite the entire thing or format it by hand. Even better, you don&#8217;t have to write in &#8220;computer-ese&#8221; to create well formatted HTML or LaTeX commands. You just write, MultiMarkdown takes care of the rest.</p>
+
+<p>For example, instead of writing:</p>
+
+<pre><code>&lt;p&gt;In order to create valid 
+&lt;a href=&quot;http://en.wikipedia.org/wiki/HTML&quot;&gt;HTML&lt;/a&gt;, you 
+need properly coded syntax that can be cumbersome for 
+&amp;#8220;non-programmers&amp;#8221; to write. Sometimes, you
+just want to easily make certain words &lt;strong&gt;bold
+&lt;/strong&gt;, and certain words &lt;em&gt;italicized&lt;/em&gt; without
+having to remember the syntax. Additionally, for example,
+creating lists:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;should be easy&lt;/li&gt;
+&lt;li&gt;should not involve programming&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>You simply write:</p>
+
+<pre><code>In order to create valid [HTML], you need properly
+coded syntax that can be cumbersome for 
+&quot;non-programmers&quot; to write. Sometimes, you just want
+to easily make certain words **bold**, and certain 
+words *italicized* without having to remember the 
+syntax. Additionally, for example, creating lists:
+
+* should be easy
+* should not involve programming
+
+[HTML]: http://en.wikipedia.org/wiki/HTML
+</code></pre>
+
+<p>Additionally, you can write a MultiMarkdown document in any text editor, on any operating system, and know that it will be compatible with MultiMarkdown on any other operating system and processed into the same output. As a plain text format, your documents will be safe no matter how many times you switch computers, operating systems, or favorite applications. You will always be able to open and edit your documents, even when the version of the software you originally wrote them in is long gone.</p>
+
+<p>These features have prompted several people to use MultiMarkdown in the process of writing their books, theses, and countless other documents.</p>
+
+<p>There are many other reasons to use MultiMarkdown, but I won&#8217;t get into all of them here.</p>
+
+<p><em>By the way</em> &#8212; the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) source for any page, add <code>.txt</code> to the end of the URL. If the URL ends with <code>/</code>, then add <code>index.txt</code> to the end instead. The main MultiMarkdown page, for example, would be <a href="http://fletcherpenney.net/multimarkdown/index.txt">http://fletcherpenney.net/multimarkdown/index.txt</a>.</p>
+
+<h3 id="whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown? </h3>
+
+<p>The first real version of MultiMarkdown was version 2. It was a modification of the original <code>Markdown.pl</code> script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.</p>
+
+<p><a href="https://github.com/fletcher/peg-multimarkdown">MultiMarkdown 3</a> (aka <code>peg-multimarkdown</code>) was built using John MacFarlane&#8217;s <a href="https://github.com/jgm/peg-markdown">peg-markdown</a> as a base. It was <em>much</em> faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.</p>
+
+<p><a href="http://github.com/fletcher/MultiMarkdown-4">MultiMarkdown 4</a> was a complete rewrite, keeping only the PEG and a few utility routines from <abbr title="MultiMarkdown">MMD</abbr> v3. This release fixed memory leaks and other problems from earlier <abbr title="MultiMarkdown">MMD</abbr> releases; it is safe to use in multithreaded applications and adds many new features.</p>
+
+<p><a href="http://github.com/fletcher/MultiMarkdown-5">MultiMarkdown 5</a> was mostly a restructuring of version 4, followed by further incremental improvements.</p>
+
+<p><a href="http://github.com/fletcher/MultiMarkdown-6">MultiMarkdown 6</a> was a complete rewrite from the ground up. The primary goals were:</p>
+
+<ul>
+<li><p>Improved performance &#8211; v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by <a href="http://www.hwaci.com/sw/lemon/">lemon</a>. This is vastly faster than the PEG parser of versions 3&#8211;5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, <em>and</em> provides more features.</p></li>
+<li><p>Improved accuracy and consistency &#8211; v6 uses an entirely new test suite in order to ensure more consistent parsing across various edge cases.</p></li>
+<li><p>New features &#8211; several features were added to v6, and several were completely restructured to provide various improvements.</p></li>
+<li><p>The v6 <a href="https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart">QuickStart guide</a> documents some of the changes in this latest iteration.</p></li>
+</ul>
+
+<h3 id="whereisthisguidekept">Where is this Guide Kept? </h3>
+
+<p>This guide has been rewritten with the following changes:</p>
+
+<ul>
+<li><p>The source is now in the <code>gh_pages</code> branch of the <a href="https://github.com/fletcher/MultiMarkdown-6">MultiMarkdown project</a>. You can submit changes as a pull request, or by writing me.</p></li>
+<li><p>You can access this information on the web at <a href="http://fletcher.github.io/MultiMarkdown-5">http://fletcher.github.io/MultiMarkdown-5</a></p></li>
+<li><p>The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.</p></li>
+</ul>
 
 <h2 id="syntax">Syntax </h2>
 
 <h3 id="metadata">Metadata </h3>
+
+<p>It is possible to include special metadata at the top of a MultiMarkdown
+document, such as title, author, etc. This information can then be used to
+control how MultiMarkdown processes the document, or can be used in certain
+output formats in special ways. For example:</p>
+
+<pre><code>{{examples/metadata.text}}
+</code></pre>
+
+<p>The syntax for including metadata is simple.</p>
+
+<ul>
+<li><p>The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a <code>---</code> on the line before and after the metadata. The line after the metadata can also be <code>...</code>. This is to provide better compatibility with <a href="http://www.yaml.org/">YAML</a>, though MultiMarkdown doesn&#8217;t support all YAML metadata.</p></li>
+<li><p>Metadata consists of two parts - the <code>key</code> and the <code>value</code></p></li>
+<li><p>The metadata key must begin at the beginning of the line. It must start with an ASCII letter or a number, then the following characters can consist of ASCII letters, numbers, spaces, hyphens, or underscore characters.</p></li>
+<li><p>The end of the metadata key is specified with a colon (&#8216;:&#8217;)</p></li>
+<li><p>After the colon comes the metadata value, which can consist of pretty much any characters (including new lines). To keep multiline metadata values from being confused with additional metadata, I recommend indenting each new line of metadata. If your metadata value includes a colon, it <em>must</em> be indented to keep it from being treated as a new key-value pair.</p></li>
+<li><p>While not required, I recommend using two spaces at the end of each line of metadata. This will improve the appearance of the metadata section if your document is processed by Markdown instead of MultiMarkdown.</p></li>
+<li><p>Metadata keys are case insensitive and stripped of all spaces during processing. This means that <code>Base Header Level</code>, <code>base headerlevel</code>, and <code>baseheaderlevel</code> are all the same.</p></li>
+<li><p>Metadata is processed as plain text, so it should <em>not</em> include MultiMarkdown markup.</p></li>
+<li><p>After the metadata is finished, a blank line triggers the beginning of the rest of the document.</p></li>
+</ul>
+
+<h3 id="metadatavariables">Metadata &#8220;Variables&#8221; </h3>
+
+<p>You can substitute the <code>value</code> for a metadata <code>key</code> in the body of a document using the following format, where <code>foo</code> and <code>bar</code> are the <code>key</code>s of the desired metadata.</p>
+
+<pre><code>{{examples/metadata-variable.text}}
+</code></pre>
+
+<h3 id="standardmetadatakeys">&#8220;Standard&#8221; Metadata keys </h3>
+
+<p>There are a few metadata keys that are standardized in MultiMarkdown. You can
+use any other keys that you desire, but you have to make use of them yourself.</p>
+
+<p>My goal is to keep the list of &#8220;standard&#8221; metadata keys as short as possible.</p>
+
+<h4 id="author">Author </h4>
+
+<p>This value represents the author of the document and is used in LaTeX, ODF, and RTF
+documents to generate the title information.</p>
+
+<h4 id="affiliation">Affiliation </h4>
+
+<p>This is used to enter further information about the author &#8212; a link to a
+website, the name of an employer, academic affiliation, etc.</p>
+
+<h4 id="baseheaderlevel">Base Header Level </h4>
+
+<p>This is used to change the top level of organization of the document. For example:</p>
+
+<pre><code>Base Header Level: 2
+
+# Introduction #
+</code></pre>
+
+<p>Normally, the Introduction would be output as <code>&lt;h1&gt;</code> in HTML, or <code>\part{}</code> in LaTeX. If you&#8217;re writing a shorter document, you may wish for the largest division in the document to be <code>&lt;h2&gt;</code> or <code>\chapter{}</code>. The <code>Base Header Level</code> metadata tells MultiMarkdown to change the largest division level to the specified value.</p>
+
+<p>This can also be useful when using transclusion to combine multiple documents.</p>
+
+<p><code>Base Header Level</code> does not trigger a complete document.</p>
+
+<p>Additionally, there are &#8220;flavors&#8221; of this metadata key for various output formats so that you can specify a different header level for different output formats &#8212; e.g. <code>LaTeX Header Level</code>, <code>HTML Header Level</code>, and <code>ODF Header Level</code>.</p>
+
+<p>If you are doing something interesting with [File Transclusion], you can also use a negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;, this allows you to use a different level of headings when a file is processed on its own.</p>
+
+<h4 id="bibliostyle">Biblio Style </h4>
+
+<p>This metadata specifies the name of the BibTeX style to be used, if you are
+not using natbib.</p>
+
+<h4 id="bibtex">BibTeX </h4>
+
+<p>This metadata specifies the name of the BibTeX file used to store citation
+information. Do not include the trailing &#8216;.bib&#8217;.</p>
+
+<h4 id="copyright">Copyright </h4>
+
+<p>This can be used to provide a copyright string.</p>
+
+<h4 id="css">CSS </h4>
+
+<p>This metadata specifies a URL to be used as a CSS file for the produced
+document. Obviously, this is only useful when outputting to HTML.</p>
+
+<h4 id="date">Date </h4>
+
+<p>Specify a date to be associated with the document.</p>
+
+<h4 id="htmlheader">HTML Header </h4>
+
+<p>You can include raw HTML information to be included in the header.
+MultiMarkdown doesn&#8217;t perform any validation on this data &#8212; it just copies
+it as is.</p>
+
+<p>As an example, this can be useful to link your document to a working MathJax
+installation (not provided by me):</p>
+
+<pre><code>HTML header:  &lt;script type=&quot;text/javascript&quot;
+	src=&quot;http://example.net/mathjax/MathJax.js&quot;&gt;
+	&lt;/script&gt;
+</code></pre>
+
+<h4 id="htmlfooter">HTML Footer </h4>
+
+<p>Raw HTML can be included here, and will be appended at the very end of the
+document, after footnotes, etc. Useful for linking to scripts that must
+be included after footnotes.</p>
+
+<h4 id="language">Language </h4>
+
+<p>The <code>language</code> metadata key specified the content language for a document using the standardized two letter code (e.g. <code>en</code> for English). Where possible, this will also set the <code>quotes language</code> metadata key to the appropriate value.</p>
+
+<h4 id="latexauthor">LaTeX Author </h4>
+
+<p>Since MultiMarkdown syntax is not processed inside of metadata, you can use the <code>latex author</code> metadata to override the regular author metadata when exporting to LaTeX.</p>
+
+<p>This metadata <em>must</em> come after the regular <code>author</code> metadata if it is also being used.</p>
+
+<h4 id="latexbegin">LaTeX Begin </h4>
+
+<p>This is the name of a LaTeX file to be included (via <code>\input{foo}</code>) when exporting to LaTeX. This file will be included after the metadata, and before the body of the document. This is usually where the <code>\begin{document}</code> command occurs, hence the name.</p>
+
+<h4 id="latexconfig">LaTeX Config </h4>
+
+<p>This is a shortcut key when exporting to LaTeX that automatically populates the <code>latex leader</code>, <code>latex begin</code>, and <code>latex footer</code> metadata based on a standardized naming convention.</p>
+
+<p><code>latex config: article</code> would be the same as the following setup:</p>
+
+<pre><code>latex leader:	mmd6-article-leader
+latex begin:	mmd6-article-begin
+latex footer:	mmd6-article-footer
+</code></pre>
+
+<p>The standard LaTeX support files have been updated to support this naming configuration:</p>
+
+<p><a href="https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6">https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6</a></p>
+
+<h4 id="latexfooter">LaTeX Footer </h4>
+
+<p>A special case of the <code>LaTeX Input</code> metadata below. This file will be linked
+to at the very end of the document.</p>
+
+<h4 id="latexleader">LaTeX Leader </h4>
+
+<h4 id="latexmode">LaTeX Mode </h4>
+
+<p>When outputting a document to LaTeX, there are two special options that change
+the output slightly &#8212; <code>memoir</code> and <code>beamer</code>. These options are designed to
+be compatible with the LaTeX classes of the same names.</p>
+
+<h4 id="latextitle">LaTeX Title </h4>
+
+<p>Since MultiMarkdown syntax is not processed inside of metadata, you can use the <code>latex title</code> metadata to override the regular title metadata when exporting to LaTeX.</p>
+
+<p>This metadata <em>must</em> come after the regular <code>title</code> metadata if it is also being used.</p>
+
+<h4 id="mmdheader">MMD Header </h4>
+
+<p><code>MMD Header</code> provides text that will be inserted before the main body of text, prior to parsing the document. If you want to include an external file, use the transclusion syntax (<code>{{foo.txt}}</code>).</p>
+
+<h4 id="mmdfooter">MMD Footer </h4>
+
+<p>The <code>MMD Footer</code> metadata is like <code>MMD Header</code>, but it appends text at the end of the document, prior to parsing. Use transclusion if you want to reference an external file.</p>
+
+<p>This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you&#8217;re building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.</p>
+
+<h4 id="odfheader">ODF Header </h4>
+
+<p>You can include raw XML to be included in the header of a file output in
+OpenDocument format. It&#8217;s up to you to properly format your XML and get it
+working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
+
+<h4 id="quoteslanguage">Quotes Language </h4>
+
+<p>This is used to specify which style of &#8220;smart&#8221; quotes to use in the output document. The available options are:</p>
+
+<ul>
+<li>dutch (or <code>nl</code>)</li>
+<li>english</li>
+<li>french (<code>fr</code>)</li>
+<li>german (<code>de</code>)</li>
+<li>germanguillemets</li>
+<li>spanish (<code>es</code>)</li>
+<li>swedish (<code>sv</code>)</li>
+</ul>
+
+<p>The default is <code>english</code> if not specified. This affects HTML output. To
+change the language of a document in LaTeX is up to the individual.</p>
+
+<p><code>Quotes Language</code> does not trigger a complete document.</p>
+
+<h4 id="title">Title </h4>
+
+<p>Self-explanatory.</p>
+
+<h4 id="transcludebase">Transclude Base </h4>
+
+<p>When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
+
+<p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
 
 </body>
 </html>

@@ -15,8 +15,11 @@
 [LibreOffice]:	http://www.libreoffice.org/
 [LyX]:	http://www.lyx.org/
 [MacPorts]:	http://www.macports.org/
-[Markdown]:	http://daringfireball.net/projects/markdown/
+[Markdown]:	http://daringfireball.net/projects/markdown/  "Daring Fireball:
+Markdown"
 [MMD-4]:	http://github.com/fletcher/MultiMarkdown-4
+[MMD-5]:	http://github.com/fletcher/MultiMarkdown-5
+[MMD-6]:	http://github.com/fletcher/MultiMarkdown-6
 [MathJax]:	http://www.mathjax.org/
 [MultiMarkdown]:	http://fletcherpenney.net/multimarkdown/
 [MultiMarkdown Composer]:	http://multimarkdown.com/

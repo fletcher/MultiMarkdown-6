@@ -22,11 +22,11 @@ ex-rtf := $(patsubst %.text, %.rtf, $(examples))
 
 ex-tex := $(patsubst %.text, %.tex, $(examples))
 
-ex-odf := $(patsubst %.text, %.fodt, $(examples))
+ex-fodt := $(patsubst %.text, %.fodt, $(examples))
 
 
 
-all: $(htmlfiles) $(texfiles) epub odf # $(rtffiles) $(odffiles)
+all: $(htmlfiles) $(texfiles) epub fodt # $(rtffiles) $(odffiles)
 
 guide: MMD_Users_Guide.html
 
@@ -42,7 +42,7 @@ pdf: MMD_Users_Guide.tex
 	latexmk -c MMD_Users_Guide
 	rm MMD_Users_Guide.tex MMD_Users_Guide.a* MMD_Users_Guide.gl*
 
-odf: MMD_Users_Guide.fodt
+fodt: MMD_Users_Guide.fodt
 
 %.html: %.md
 	../build/multimarkdown -b -t html $*.md
@@ -69,10 +69,10 @@ odf: MMD_Users_Guide.fodt
 	../build/multimarkdown -b -t latex $*.text
 
 %.fodt: %.md
-	../build/multimarkdown -b -t odf $*.md
+	../build/multimarkdown -b -t fodt $*.md
 
 %.fodt: %.text
-	../build/multimarkdown -b -t odf $*.text
+	../build/multimarkdown -b -t fodt $*.text
 
 
 examples: $(ex-html) $(ex-rtf) $(ex-tex) $(ex-odf)

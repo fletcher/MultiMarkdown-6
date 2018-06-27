@@ -1,8 +1,11 @@
 \input{mmd6-tufte-handout-leader}
 \def\mytitle{MultiMarkdown Syntax}
 \def\myauthor{Fletcher T. Penney}
-\def\version{6.0a}
 \def\revised{2017-06-07}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
 \input{mmd6-tufte-handout-begin}
 
 \chapter{Syntax }
@@ -10,6 +13,254 @@
 
 \section{Metadata }
 \label{metadata}
+
+It is possible to include special metadata at the top of a MultiMarkdown
+document, such as title, author, etc. This information can then be used to
+control how MultiMarkdown processes the document, or can be used in certain
+output formats in special ways. For example:
+
+\begin{verbatim}
+{{examples/metadata.text}}
+\end{verbatim}
+
+The syntax for including metadata is simple.
+
+\begin{itemize}
+\item The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a \texttt{-{}-{}-} on the line before and after the metadata. The line after the metadata can also be \texttt{...}. This is to provide better compatibility with \href{http://www.yaml.org/}{YAML}\footnote{\href{http://www.yaml.org/}{http:\slash \slash www.yaml.org\slash }}, though MultiMarkdown doesn't support all YAML metadata.
+
+\item Metadata consists of two parts - the \texttt{key} and the \texttt{value}
+
+\item The metadata key must begin at the beginning of the line. It must start with an ASCII letter or a number, then the following characters can consist of ASCII letters, numbers, spaces, hyphens, or underscore characters.
+
+\item The end of the metadata key is specified with a colon (`:')
+
+\item After the colon comes the metadata value, which can consist of pretty much any characters (including new lines). To keep multiline metadata values from being confused with additional metadata, I recommend indenting each new line of metadata. If your metadata value includes a colon, it \emph{must} be indented to keep it from being treated as a new key-value pair.
+
+\item While not required, I recommend using two spaces at the end of each line of metadata. This will improve the appearance of the metadata section if your document is processed by Markdown instead of MultiMarkdown.
+
+\item Metadata keys are case insensitive and stripped of all spaces during processing. This means that \texttt{Base Header Level}, \texttt{base headerlevel}, and \texttt{baseheaderlevel} are all the same.
+
+\item Metadata is processed as plain text, so it should \emph{not} include MultiMarkdown markup.
+
+\item After the metadata is finished, a blank line triggers the beginning of the rest of the document.
+
+\end{itemize}
+
+\section{Metadata ``Variables'' }
+\label{metadatavariables}
+
+You can substitute the \texttt{value} for a metadata \texttt{key} in the body of a document using the following format, where \texttt{foo} and \texttt{bar} are the \texttt{key}s of the desired metadata.
+
+\begin{verbatim}
+{{examples/metadata-variable.text}}
+\end{verbatim}
+
+\section{``Standard'' Metadata keys }
+\label{standardmetadatakeys}
+
+There are a few metadata keys that are standardized in MultiMarkdown. You can
+use any other keys that you desire, but you have to make use of them yourself.
+
+My goal is to keep the list of ``standard'' metadata keys as short as possible.
+
+\subsection{Author }
+\label{author}
+
+This value represents the author of the document and is used in LaTeX, ODF, and RTF
+documents to generate the title information.
+
+\subsection{Affiliation }
+\label{affiliation}
+
+This is used to enter further information about the author --- a link to a
+website, the name of an employer, academic affiliation, etc.
+
+\subsection{Base Header Level }
+\label{baseheaderlevel}
+
+This is used to change the top level of organization of the document. For example:
+
+\begin{verbatim}
+Base Header Level: 2
+
+# Introduction #
+\end{verbatim}
+
+Normally, the Introduction would be output as \texttt{<h1>} in HTML, or \texttt{\textbackslash{}part\{\}} in LaTeX. If you're writing a shorter document, you may wish for the largest division in the document to be \texttt{<h2>} or \texttt{\textbackslash{}chapter\{\}}. The \texttt{Base Header Level} metadata tells MultiMarkdown to change the largest division level to the specified value.
+
+This can also be useful when using transclusion to combine multiple documents.
+
+\texttt{Base Header Level} does not trigger a complete document.
+
+Additionally, there are ``flavors'' of this metadata key for various output formats so that you can specify a different header level for different output formats --- e.g. \texttt{LaTeX Header Level}, \texttt{HTML Header Level}, and \texttt{ODF Header Level}.
+
+If you are doing something interesting with {[File Transclusion]}, you can also use a negative number here. Since metadata is not used when a file is ``transcluded'', this allows you to use a different level of headings when a file is processed on its own.
+
+\subsection{Biblio Style }
+\label{bibliostyle}
+
+This metadata specifies the name of the BibTeX style to be used, if you are
+not using natbib.
+
+\subsection{BibTeX }
+\label{bibtex}
+
+This metadata specifies the name of the BibTeX file used to store citation
+information. Do not include the trailing `.bib'.
+
+\subsection{Copyright }
+\label{copyright}
+
+This can be used to provide a copyright string.
+
+\subsection{CSS }
+\label{css}
+
+This metadata specifies a URL to be used as a CSS file for the produced
+document. Obviously, this is only useful when outputting to HTML.
+
+\subsection{Date }
+\label{date}
+
+Specify a date to be associated with the document.
+
+\subsection{HTML Header }
+\label{htmlheader}
+
+You can include raw HTML information to be included in the header.
+MultiMarkdown doesn't perform any validation on this data --- it just copies
+it as is.
+
+As an example, this can be useful to link your document to a working MathJax
+installation (not provided by me):
+
+\begin{verbatim}
+HTML header:  <script type="text/javascript"
+	src="http://example.net/mathjax/MathJax.js">
+	</script>
+\end{verbatim}
+
+\subsection{HTML Footer }
+\label{htmlfooter}
+
+Raw HTML can be included here, and will be appended at the very end of the
+document, after footnotes, etc. Useful for linking to scripts that must
+be included after footnotes.
+
+\subsection{Language }
+\label{language}
+
+The \texttt{language} metadata key specified the content language for a document using the standardized two letter code (e.g. \texttt{en} for English). Where possible, this will also set the \texttt{quotes language} metadata key to the appropriate value.
+
+\subsection{LaTeX Author }
+\label{latexauthor}
+
+Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex author} metadata to override the regular author metadata when exporting to LaTeX.
+
+This metadata \emph{must} come after the regular \texttt{author} metadata if it is also being used.
+
+\subsection{LaTeX Begin }
+\label{latexbegin}
+
+This is the name of a LaTeX file to be included (via \texttt{\textbackslash{}input\{foo\}}) when exporting to LaTeX. This file will be included after the metadata, and before the body of the document. This is usually where the \texttt{\textbackslash{}begin\{document\}} command occurs, hence the name.
+
+\subsection{LaTeX Config }
+\label{latexconfig}
+
+This is a shortcut key when exporting to LaTeX that automatically populates the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata based on a standardized naming convention.
+
+\texttt{latex config: article} would be the same as the following setup:
+
+\begin{verbatim}
+latex leader:	mmd6-article-leader
+latex begin:	mmd6-article-begin
+latex footer:	mmd6-article-footer
+\end{verbatim}
+
+The standard LaTeX support files have been updated to support this naming configuration:
+
+\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash texmf\slash tex\slash latex\slash mmd6}
+
+\subsection{LaTeX Footer }
+\label{latexfooter}
+
+A special case of the \texttt{LaTeX Input} metadata below. This file will be linked
+to at the very end of the document.
+
+\subsection{LaTeX Leader }
+\label{latexleader}
+
+\subsection{LaTeX Mode }
+\label{latexmode}
+
+When outputting a document to LaTeX, there are two special options that change
+the output slightly --- \texttt{memoir} and \texttt{beamer}. These options are designed to
+be compatible with the LaTeX classes of the same names.
+
+\subsection{LaTeX Title }
+\label{latextitle}
+
+Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex title} metadata to override the regular title metadata when exporting to LaTeX.
+
+This metadata \emph{must} come after the regular \texttt{title} metadata if it is also being used.
+
+\subsection{MMD Header }
+\label{mmdheader}
+
+\texttt{MMD Header} provides text that will be inserted before the main body of text, prior to parsing the document. If you want to include an external file, use the transclusion syntax (\texttt{\{\{foo.txt\}\}}).
+
+\subsection{MMD Footer }
+\label{mmdfooter}
+
+The \texttt{MMD Footer} metadata is like \texttt{MMD Header}, but it appends text at the end of the document, prior to parsing. Use transclusion if you want to reference an external file.
+
+This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you're building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.
+
+\subsection{ODF Header }
+\label{odfheader}
+
+You can include raw XML to be included in the header of a file output in
+OpenDocument format. It's up to you to properly format your XML and get it
+working --- MultiMarkdown just copies it verbatim to the output.
+
+\subsection{Quotes Language }
+\label{quoteslanguage}
+
+This is used to specify which style of ``smart'' quotes to use in the output document. The available options are:
+
+\begin{itemize}
+\item dutch (or \texttt{nl})
+
+\item english
+
+\item french (\texttt{fr})
+
+\item german (\texttt{de})
+
+\item germanguillemets
+
+\item spanish (\texttt{es})
+
+\item swedish (\texttt{sv})
+
+\end{itemize}
+
+The default is \texttt{english} if not specified. This affects HTML output. To
+change the language of a document in LaTeX is up to the individual.
+
+\texttt{Quotes Language} does not trigger a complete document.
+
+\subsection{Title }
+\label{title}
+
+Self-explanatory.
+
+\subsection{Transclude Base }
+\label{transcludebase}
+
+When using the {[File Transclusion]} feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
+
+This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using \texttt{stdin} or another application that offers MultiMarkdown support). In this case, the path must be a complete path.
 
 \input{mmd6-tufte-handout-footer}
 \end{document}
