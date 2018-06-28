@@ -32,7 +32,7 @@ When using CriticMarkup with MultiMarkdown itself, you have four choices:
 *	Reject all changes, giving you the "original" document (`multimarkdown -r foo.txt` or `multimarkdown --reject foo.txt`)
 
 
-CriticMarkup comments and highlighting are ignored when processing. 
+CriticMarkup comments and highlighting are ignored when processing with `--accept` or `--reject`. 
 
 *	Deletions from the original text: 
 
