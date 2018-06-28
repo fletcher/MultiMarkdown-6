@@ -4,6 +4,7 @@ Revised:	2018-06-27
 Base Header Level:	2  
 Transclude Base:	.
 CSS:	https://fletcher.github.io/MultiMarkdown-6/css/document.css  
+MMD Header:	{{TOC}}  
 MMD Footer:	{{../links.txt}}  
 HTML Footer:	foo {{../highlighting.txt}}
 LaTeX Config:	tufte-handout  

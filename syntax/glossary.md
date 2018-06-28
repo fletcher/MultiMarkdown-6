@@ -3,6 +3,7 @@ Author:	Fletcher T. Penney
 Revised:	2018-06-27  
 Base Header Level:	2  
 CSS:	https://fletcher.github.io/MultiMarkdown-6/css/document.css  
+MMD Header:	{{TOC}}  
 MMD Footer:	{{../links.txt}}  
 LaTeX Config:	tufte-handout  
 

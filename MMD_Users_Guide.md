@@ -19,7 +19,8 @@ UUID:	88e8f53c-9a02-4e49-a639-f2dbb0a2e338
 > Version [%version]    
 > Revised [%revised]  
 
-{{toc.*}}
+{{TOC}}
+
 
 {{introduction.md}}
 {{syntax/index.md}}
