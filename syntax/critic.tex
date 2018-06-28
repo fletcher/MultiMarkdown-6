@@ -42,35 +42,48 @@ When using CriticMarkup with MultiMarkdown itself, you have four choices:
 
 CriticMarkup comments and highlighting are ignored when processing.
 
-Deletions from the original text:
+\begin{itemize}
+\item Deletions from the original text:
 
 \begin{verbatim}
 This is {--is --}a test.
 \end{verbatim}
 
-Additions:
+This is \sout{is }a test.
+
+\item Additions:
 
 \begin{verbatim}
 This {++is ++}a test.
 \end{verbatim}
 
-Substitutions:
+This \underline{is }a test.
+
+\item Substitutions:
 
 \begin{verbatim}
 This {~~isn't~>is~~} a test.
 \end{verbatim}
 
-Highlighting:
+This \sout{isn't}\underline{is} a test.
+
+\item Highlighting:
 
 \begin{verbatim}
 This is a {==test==}.
 \end{verbatim}
 
-Comments:
+This is a \hl{test}.
+
+\item Comments:
 
 \begin{verbatim}
 This is a test{>>What is it a test of?<<}.
 \end{verbatim}
+
+This is a test\cmnote{What is it a test of?}.
+
+\end{itemize}
 
 \subsection{CriticMarkup Limitations }
 \label{criticmarkuplimitations}

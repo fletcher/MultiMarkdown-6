@@ -49,30 +49,38 @@
 
 <p>CriticMarkup comments and highlighting are ignored when processing.</p>
 
-<p>Deletions from the original text:</p>
+<ul>
+<li><p>Deletions from the original text:</p>
 
 <pre><code>This is {--is --}a test.
 </code></pre>
 
-<p>Additions:</p>
+<p>This is <del>is </del>a test.</p></li>
+<li><p>Additions:</p>
 
 <pre><code>This {++is ++}a test.
 </code></pre>
 
-<p>Substitutions:</p>
+<p>This <ins>is </ins>a test.</p></li>
+<li><p>Substitutions:</p>
 
 <pre><code>This {~~isn't~&gt;is~~} a test.
 </code></pre>
 
-<p>Highlighting:</p>
+<p>This <del>isn&#8217;t</del><ins>is</ins> a test.</p></li>
+<li><p>Highlighting:</p>
 
 <pre><code>This is a {==test==}.
 </code></pre>
 
-<p>Comments:</p>
+<p>This is a <mark>test</mark>.</p></li>
+<li><p>Comments:</p>
 
 <pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
 </code></pre>
+
+<p>This is a test<span class="critic comment">What is it a test of?</span>.</p></li>
+</ul>
 
 <h4 id="criticmarkuplimitations">CriticMarkup Limitations </h4>
 

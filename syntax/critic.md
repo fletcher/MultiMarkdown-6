@@ -34,23 +34,33 @@ When using CriticMarkup with MultiMarkdown itself, you have four choices:
 
 CriticMarkup comments and highlighting are ignored when processing. 
 
-Deletions from the original text: 
+*	Deletions from the original text: 
+
+		This is {--is --}a test.
 
 	This is {--is --}a test.
 
-Additions: 
+*	Additions: 
+
+		This {++is ++}a test.
 
 	This {++is ++}a test.
 
-Substitutions: 
+*	Substitutions: 
+
+		This {~~isn't~>is~~} a test.
 
 	This {~~isn't~>is~~} a test.
 
-Highlighting: 
+* Highlighting: 
+
+		This is a {==test==}.
 
 	This is a {==test==}.
 
-Comments: 
+*	Comments: 
+
+		This is a test{>>What is it a test of?<<}.
 
 	This is a test{>>What is it a test of?<<}.
 
