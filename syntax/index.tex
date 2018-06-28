@@ -78,12 +78,12 @@ If you want to include a source in your bibliography that was not cited, you may
 [Not cited][#citekey]
 \end{verbatim}
 
-The \texttt{Not cited} bit is not case sensitive.
+The \texttt{Not cited} bit is case insensitive.
 
 If you are creating a LaTeX document, the citations will be included, and natbib will be used by default. If you are not using BibTeX and are getting errors about your citations not being compatible with `Author-Year', you can add the following to your documents metadata:
 
 \begin{verbatim}
-latex input:		mmd-natbib-plain
+latex input:	mmd-natbib-plain
 \end{verbatim}
 
 This changes the citation style in natbib to avoid these errors, and is useful when you include your citations in the MultiMarkdown document itself.
@@ -151,7 +151,7 @@ When using CriticMarkup with MultiMarkdown itself, you have four choices:
 
 \item Accept all changes, giving you the ``new'' document (\texttt{multimarkdown -a foo.txt} or \texttt{multimarkdown -{}-accept foo.txt})
 
-\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt})
+\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt} or \texttt{multimarkdown -{}-reject foo.txt})
 
 \end{itemize}
 
@@ -187,10 +187,24 @@ Comments:
 This is a test{>>What is it a test of?<<}.
 \end{verbatim}
 
+\subsection{CriticMarkup Limitations }
+\label{criticmarkuplimitations}
+
+If you \texttt{-{}-accept} or \texttt{-{}-reject} CriticMarkup changes, then it should work properly in just about any document.
+
+If you want to try to include your changes as ``notes'' in the final document, then certain situations will lead to results that were probably not what you intended.
+
+\begin{enumerate}
+\item CriticMarkup must be contained within a single block (e.g. paragraph, list item, etc.) CM that spans multiple blocks will not be recognized.
+
+\item CriticMarkup that crosses multiple \gls{MMD} spans (e.g. \texttt{\{++** foo\} bar**}) will not properly manage the intended MultiMarkdown markup. This example would not result in bold being applied to \texttt{foo bar}.
+
+\end{enumerate}
+
 \subsection{My philosophy on CriticMarkup}
 \label{myphilosophyoncriticmarkup}
 
-I view CriticMarkup as two things:
+I view CriticMarkup as two things (in addition to the actual tools that implement these concepts):
 
 \begin{enumerate}
 \item A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
@@ -212,9 +226,9 @@ For now, the \emph{official} MultiMarkdown support for CriticMarkup consists of:
 \begin{enumerate}
 \item CriticMarkup syntax is ``understood'' by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.
 
-\item When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.
+\item When converting from MultiMarkdown text to an output format, you can ignore CM formatting with \texttt{compatibility} mode (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.
 
-\item The secondary to choice, when exporting to HTML, is to \emph{attempt} to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.
+\item The secondary choice, is to \emph{attempt} to show the changes in the exported document. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid output files.
 
 \end{enumerate}
 

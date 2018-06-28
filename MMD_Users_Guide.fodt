@@ -457,11 +457,11 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:p text:style-name="Preformatted Text">[Not cited][#citekey]<text:line-break/></text:p>
 
-<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">Not cited</text:span> bit is not case sensitive.</text:p>
+<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">Not cited</text:span> bit is case insensitive.</text:p>
 
 <text:p text:style-name="Standard">If you are creating a LaTeX document, the citations will be included, and natbib will be used by default. If you are not using BibTeX and are getting errors about your citations not being compatible with &#8216;Author-Year&#8217;, you can add the following to your documents metadata:</text:p>
 
-<text:p text:style-name="Preformatted Text">latex input:<text:tab/><text:tab/>mmd-natbib-plain<text:line-break/></text:p>
+<text:p text:style-name="Preformatted Text">latex input:<text:tab/>mmd-natbib-plain<text:line-break/></text:p>
 
 <text:p text:style-name="Standard">This changes the citation style in natbib to avoid these errors, and is useful when you include your citations in the MultiMarkdown document itself.</text:p>
 
@@ -507,7 +507,7 @@ Markdown">John Gruber</text:a></text:p>
 <text:p text:style-name="Standard">Accept all changes, giving you the &#8220;new&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -a foo.txt</text:span> or <text:span text:style-name="Source_20_Text">multimarkdown --accept foo.txt</text:span>)</text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="Standard">Reject all changes, giving you the &#8220;original&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -r foo.txt</text:span>)</text:p></text:list-item>
+<text:p text:style-name="Standard">Reject all changes, giving you the &#8220;original&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -r foo.txt</text:span> or <text:span text:style-name="Source_20_Text">multimarkdown --reject foo.txt</text:span>)</text:p></text:list-item>
 
 </text:list>
 
@@ -533,9 +533,24 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:p text:style-name="Preformatted Text">This is a test{>>What is it a test of?<<}.<text:line-break/></text:p>
 
+<text:h text:outline-level="4"><text:bookmark text:name="criticmarkuplimitations"/>CriticMarkup Limitations </text:h>
+
+<text:p text:style-name="Standard">If you <text:span text:style-name="Source_20_Text">--accept</text:span> or <text:span text:style-name="Source_20_Text">--reject</text:span> CriticMarkup changes, then it should work properly in just about any document.</text:p>
+
+<text:p text:style-name="Standard">If you want to try to include your changes as &#8220;notes&#8221; in the final document, then certain situations will lead to results that were probably not what you intended.</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">CriticMarkup must be contained within a single block (e.g. paragraph, list item, etc.) CM that spans multiple blocks will not be recognized.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">CriticMarkup that crosses multiple MMD spans (e.g. <text:span text:style-name="Source_20_Text">{++** foo} bar**</text:span>) will not properly manage the intended MultiMarkdown markup. This example would not result in bold being applied to <text:span text:style-name="Source_20_Text">foo bar</text:span>.</text:p></text:list-item>
+
+</text:list>
+
 <text:h text:outline-level="4"><text:bookmark text:name="myphilosophyoncriticmarkup"/>My philosophy on CriticMarkup</text:h>
 
-<text:p text:style-name="Standard">I view CriticMarkup as two things:</text:p>
+<text:p text:style-name="Standard">I view CriticMarkup as two things (in addition to the actual tools that implement these concepts):</text:p>
 
 <text:list text:style-name="L2">
 <text:list-item>
@@ -558,15 +573,13 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:list text:style-name="L2">
 <text:list-item>
-<text:p text:style-name="P1">
-CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</text:p></text:list-item>
+<text:p text:style-name="Standard">CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="P1">
-When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</text:p></text:list-item>
+<text:p text:style-name="Standard">When converting from MultiMarkdown text to an output format, you can ignore CM formatting with <text:span text:style-name="Source_20_Text">compatibility</text:span> mode (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="Standard">The secondary to choice, when exporting to HTML, is to <text:span text:style-name="MMD-Italic">attempt</text:span> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</text:p></text:list-item>
+<text:p text:style-name="Standard">The secondary choice, is to <text:span text:style-name="MMD-Italic">attempt</text:span> to show the changes in the exported document. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid output files.</text:p></text:list-item>
 
 </text:list>
 

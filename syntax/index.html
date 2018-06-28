@@ -26,6 +26,7 @@
 <ul>
 <li><a href="#whatiscriticmarkup">What Is CriticMarkup? </a></li>
 <li><a href="#thecriticmarkupsyntax">The CriticMarkup Syntax </a></li>
+<li><a href="#criticmarkuplimitations">CriticMarkup Limitations </a></li>
 <li><a href="#myphilosophyoncriticmarkup">My philosophy on CriticMarkup</a></li>
 </ul>
 </li>
@@ -135,11 +136,11 @@ source[][#Doe:2006].
 <pre><code>[Not cited][#citekey]
 </code></pre>
 
-<p>The <code>Not cited</code> bit is not case sensitive.</p>
+<p>The <code>Not cited</code> bit is case insensitive.</p>
 
 <p>If you are creating a LaTeX document, the citations will be included, and natbib will be used by default. If you are not using BibTeX and are getting errors about your citations not being compatible with &#8216;Author-Year&#8217;, you can add the following to your documents metadata:</p>
 
-<pre><code>latex input:		mmd-natbib-plain
+<pre><code>latex input:	mmd-natbib-plain
 </code></pre>
 
 <p>This changes the citation style in natbib to avoid these errors, and is useful when you include your citations in the MultiMarkdown document itself.</p>
@@ -198,7 +199,7 @@ source[][#Doe:2006].
 <ul>
 <li><p>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.</p></li>
 <li><p>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code> or <code>multimarkdown --accept foo.txt</code>)</p></li>
-<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code>)</p></li>
+<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code> or <code>multimarkdown --reject foo.txt</code>)</p></li>
 </ul>
 
 <p>CriticMarkup comments and highlighting are ignored when processing.</p>
@@ -228,9 +229,20 @@ source[][#Doe:2006].
 <pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
 </code></pre>
 
+<h4 id="criticmarkuplimitations">CriticMarkup Limitations </h4>
+
+<p>If you <code>--accept</code> or <code>--reject</code> CriticMarkup changes, then it should work properly in just about any document.</p>
+
+<p>If you want to try to include your changes as &#8220;notes&#8221; in the final document, then certain situations will lead to results that were probably not what you intended.</p>
+
+<ol>
+<li><p>CriticMarkup must be contained within a single block (e.g. paragraph, list item, etc.) CM that spans multiple blocks will not be recognized.</p></li>
+<li><p>CriticMarkup that crosses multiple <abbr title="MultiMarkdown">MMD</abbr> spans (e.g. <code>{++** foo} bar**</code>) will not properly manage the intended MultiMarkdown markup. This example would not result in bold being applied to <code>foo bar</code>.</p></li>
+</ol>
+
 <h4 id="myphilosophyoncriticmarkup">My philosophy on CriticMarkup</h4>
 
-<p>I view CriticMarkup as two things:</p>
+<p>I view CriticMarkup as two things (in addition to the actual tools that implement these concepts):</p>
 
 <ol>
 <li><p>A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</p></li>
@@ -248,9 +260,9 @@ source[][#Doe:2006].
 <p>For now, the <em>official</em> MultiMarkdown support for CriticMarkup consists of:</p>
 
 <ol>
-<li>CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</li>
-<li>When converting from MultiMarkdown text to an output format, you can ignore CM formatting (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</li>
-<li>The secondary to choice, when exporting to HTML, is to <em>attempt</em> to show the changes in the HTML output. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid HTML output.</li>
+<li><p>CriticMarkup syntax is &#8220;understood&#8221; by the MultiMarkdown parser, and by MultiMarkdown Composer syntax highlighting.</p></li>
+<li><p>When converting from MultiMarkdown text to an output format, you can ignore CM formatting with <code>compatibility</code> mode (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</p></li>
+<li><p>The secondary choice, is to <em>attempt</em> to show the changes in the exported document. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid output files.</p></li>
 </ol>
 
 <h3 id="glossaries">Glossaries </h3>
