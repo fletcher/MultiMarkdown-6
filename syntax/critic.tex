@@ -22,25 +22,28 @@ CriticMarkup is a way for authors and editors to track changes to documents in p
 
 CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
 
+\subsection{Using CriticMarkup With MultiMarkdown }
+\label{usingcriticmarkupwithmultimarkdown}
+
+When using CriticMarkup with MultiMarkdown itself, you have three choices:
+
+\begin{itemize}
+\item Leave the CriticMarkup syntax in place (\texttt{multimarkdown foo.txt}). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible. This will not \emph{always} result in a valid output document.
+
+\item Accept all changes, giving you the ``new'' document (\texttt{multimarkdown -a foo.txt} or \texttt{multimarkdown -{}-accept foo.txt})
+
+\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt} or \texttt{multimarkdown -{}-reject foo.txt})
+
+\item CriticMarkup comments and highlighting are ignored when processing with \texttt{-{}-accept} or \texttt{-{}-reject}.
+
+\end{itemize}
+
 \subsection{The CriticMarkup Syntax }
 \label{thecriticmarkupsyntax}
 
 The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed \emph{before} any other MultiMarkdown is handled. It's almost like a separate layer on top of the MultiMarkdown syntax.
 
 When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.
-
-When using CriticMarkup with MultiMarkdown itself, you have four choices:
-
-\begin{itemize}
-\item Leave the CriticMarkup syntax in place (\texttt{multimarkdown foo.txt}). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.
-
-\item Accept all changes, giving you the ``new'' document (\texttt{multimarkdown -a foo.txt} or \texttt{multimarkdown -{}-accept foo.txt})
-
-\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt} or \texttt{multimarkdown -{}-reject foo.txt})
-
-\end{itemize}
-
-CriticMarkup comments and highlighting are ignored when processing with \texttt{-{}-accept} or \texttt{-{}-reject}.
 
 \begin{itemize}
 \item Deletions from the original text:
@@ -88,7 +91,7 @@ This is a test\cmnote{What is it a test of?}.
 \subsection{CriticMarkup Limitations }
 \label{criticmarkuplimitations}
 
-If you \texttt{-{}-accept} or \texttt{-{}-reject} CriticMarkup changes, then it should work properly in just about any document.
+If you \texttt{-{}-accept} or \texttt{-{}-reject} CriticMarkup changes, then it should work properly in any document.
 
 If you want to try to include your changes as ``notes'' in the final document, then certain situations will lead to results that were probably not what you intended.
 

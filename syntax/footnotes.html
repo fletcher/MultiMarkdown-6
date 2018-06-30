@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Footnotes</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-30"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#footnotes">Footnotes </a></li>
+</ul>
+</div>
+
+<h3 id="footnotes">Footnotes </h3>
+
+<p>I have added support for footnotes to MultiMarkdown, using the syntax proposed by John Gruber. Unfortunately, he never implemented footnotes in Markdown.</p>
+
+<p>To create a footnote, enter something like the following:</p>
+
+<pre><code>Here is some text containing a footnote.[^somesamplefootnote]
+
+[^somesamplefootnote]: Here is the text of the footnote itself.
+
+[somelink]:http://somelink.com
+</code></pre>
+
+<p>The footnote itself must be at the start of a line, just like links by reference. If you want a footnote to have multiple paragraphs, lists, etc., then the subsequent paragraphs need an extra tab preceding them. You may have to experiment to get this just right, and please let me know of any issues you find.</p>
+
+<p>This is what the final result looks like:</p>
+
+<blockquote>
+<p>Here is some text containing a footnote.<a href="#fn:1" id="fnref:1" title="see footnote" class="footnote"><sup>1</sup></a></p>
+</blockquote>
+
+<p>You can also use &#8220;inline footnotes&#8221;:</p>
+
+<pre><code>Here is another footnote.[^This is the footnote itself]
+</code></pre>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>Here is the text of the footnote itself. <a href="#fnref:1" title="return to body" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
+
+</body>
+</html>
+

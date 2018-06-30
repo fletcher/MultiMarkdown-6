@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Cross-References</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-30"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#cross-references">Cross-References </a></li>
+</ul>
+</div>
+
+<h3 id="cross-references">Cross-References </h3>
+
+<p>An oft-requested feature was the ability to have Markdown automatically handle
+within-document links as easily as it handled external links. To this aim, I
+added the ability to interpret <code>[Some Text][]</code> as a cross-link, if a header
+named &#8220;Some Text&#8221; exists.</p>
+
+<p>As an example, <code>[Metadata][]</code> will take you to the
+[section describing metadata][Metadata].</p>
+
+<p>Alternatively, you can include an optional label of your choosing to help
+disambiguate cases where multiple headers have the same title:</p>
+
+<pre><code>### Overview [MultiMarkdownOverview] ##
+</code></pre>
+
+<p>This allows you to use <code>[MultiMarkdownOverview]</code> to refer to this section
+specifically, and not another section named <code>Overview</code>. This works with atx-
+or settext-style headers.</p>
+
+<p>If you have already defined an anchor using the same id that is used by a
+header, then the defined anchor takes precedence.</p>
+
+<p>In addition to headers within the document, you can provide labels for images
+and tables which can then be used for cross-references as well.</p>
+
+</body>
+</html>
+

@@ -15,6 +15,7 @@
 <li><a href="#criticmarkup">CriticMarkup </a>
 <ul>
 <li><a href="#whatiscriticmarkup">What Is CriticMarkup? </a></li>
+<li><a href="#usingcriticmarkupwithmultimarkdown">Using CriticMarkup With MultiMarkdown </a></li>
 <li><a href="#thecriticmarkupsyntax">The CriticMarkup Syntax </a></li>
 <li><a href="#criticmarkuplimitations">CriticMarkup Limitations </a></li>
 <li><a href="#myphilosophyoncriticmarkup">My philosophy on CriticMarkup</a></li>
@@ -33,21 +34,22 @@
 
 <p>CriticMarkup is integrated with MultiMarkdown itself, as well as <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>. I encourage you to check out the <a href="http://criticmarkup.com/">CriticMarkup</a> web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.</p>
 
+<h4 id="usingcriticmarkupwithmultimarkdown">Using CriticMarkup With MultiMarkdown </h4>
+
+<p>When using CriticMarkup with MultiMarkdown itself, you have three choices:</p>
+
+<ul>
+<li><p>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible. This will not <em>always</em> result in a valid output document.</p></li>
+<li><p>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code> or <code>multimarkdown --accept foo.txt</code>)</p></li>
+<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code> or <code>multimarkdown --reject foo.txt</code>)</p></li>
+<li><p>CriticMarkup comments and highlighting are ignored when processing with <code>--accept</code> or <code>--reject</code>.</p></li>
+</ul>
+
 <h4 id="thecriticmarkupsyntax">The CriticMarkup Syntax </h4>
 
 <p>The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <em>before</em> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</p>
 
 <p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</p>
-
-<p>When using CriticMarkup with MultiMarkdown itself, you have four choices:</p>
-
-<ul>
-<li><p>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.</p></li>
-<li><p>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code> or <code>multimarkdown --accept foo.txt</code>)</p></li>
-<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code> or <code>multimarkdown --reject foo.txt</code>)</p></li>
-</ul>
-
-<p>CriticMarkup comments and highlighting are ignored when processing with <code>--accept</code> or <code>--reject</code>.</p>
 
 <ul>
 <li><p>Deletions from the original text:</p>
@@ -84,7 +86,7 @@
 
 <h4 id="criticmarkuplimitations">CriticMarkup Limitations </h4>
 
-<p>If you <code>--accept</code> or <code>--reject</code> CriticMarkup changes, then it should work properly in just about any document.</p>
+<p>If you <code>--accept</code> or <code>--reject</code> CriticMarkup changes, then it should work properly in any document.</p>
 
 <p>If you want to try to include your changes as &#8220;notes&#8221; in the final document, then certain situations will lead to results that were probably not what you intended.</p>
 

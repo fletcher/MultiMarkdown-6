@@ -17,7 +17,7 @@ control how MultiMarkdown processes the document, or can be used in certain
 output formats in special ways.  For example:
 
 ```
-{{examples/metadata.text}}
+{{../examples/metadata.text}}
 ```
 
 The syntax for including metadata is simple.
@@ -46,7 +46,7 @@ The syntax for including metadata is simple.
 You can substitute the `value` for a metadata `key` in the body of a document using the following format, where `foo` and `bar` are the `key`s of the desired metadata.
 
 ```
-{{examples/metadata-variable.text}}
+{{../examples/metadata-variable.text}}
 ```
 
 
@@ -219,7 +219,7 @@ working --- MultiMarkdown just copies it verbatim to the output.
 This is used to specify which style of "smart" quotes to use in the output document.  The available options are:
 
 *	dutch (or `nl`)
-*	english 
+*	english (`en`)
 *	french (`fr`)
 *	german (`de`)
 *	germanguillemets

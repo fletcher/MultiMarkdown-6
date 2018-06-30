@@ -15,12 +15,21 @@ HTML header:	<script type="text/javascript" src="https://cdnjs.cloudflare.com/aj
 
 # Syntax #
 
-{{abbreviation.md}}
+{{abbreviations.md}}
 {{citation.md}}
 {{critic.md}}
+{{cross-references.md}}
+{{definitions.md}}
+{{newlines.md}}
+{{fences.md}}
+{{transclusion.md}}
+{{footnotes.md}}
 {{glossary.md}}
+{{images.md}}
+{{attributes.md}}
 {{math.md}}
 {{metadata.md}}
 {{raw.md}}
 {{typography.md}}
 {{toc.md}}
+{{tables.md}}

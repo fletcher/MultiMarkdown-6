@@ -25,16 +25,31 @@
 <li><a href="#criticmarkup">CriticMarkup </a>
 <ul>
 <li><a href="#whatiscriticmarkup">What Is CriticMarkup? </a></li>
+<li><a href="#usingcriticmarkupwithmultimarkdown">Using CriticMarkup With MultiMarkdown </a></li>
 <li><a href="#thecriticmarkupsyntax">The CriticMarkup Syntax </a></li>
 <li><a href="#criticmarkuplimitations">CriticMarkup Limitations </a></li>
 <li><a href="#myphilosophyoncriticmarkup">My philosophy on CriticMarkup</a></li>
 </ul>
 </li>
+<li><a href="#cross-references">Cross-References </a></li>
+<li><a href="#definitionlists">Definition Lists </a></li>
+<li><a href="#escapednewlines">Escaped newlines </a></li>
+<li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
+<li><a href="#filetransclusion">File Transclusion </a>
+<ul>
+<li><a href="#searchpaths">Search Paths </a></li>
+<li><a href="#wildcardextensions">Wildcard Extensions </a></li>
+<li><a href="#transclusionpreprocessing">Transclusion Preprocessing </a></li>
+</ul>
+</li>
+<li><a href="#footnotes">Footnotes </a></li>
 <li><a href="#glossaries">Glossaries </a>
 <ul>
 <li><a href="#latexglossaries">LaTeX Glossaries </a></li>
 </ul>
 </li>
+<li><a href="#images">Images </a></li>
+<li><a href="#linkandimageattributes">Link and Image Attributes </a></li>
 <li><a href="#math">Math </a>
 <ul>
 <li><a href="#superscriptsandsubscripts">Superscripts and Subscripts </a></li>
@@ -74,6 +89,13 @@
 <li><a href="#rawsource">Raw Source </a></li>
 <li><a href="#smarttypography">Smart Typography </a></li>
 <li><a href="#tableofcontents">Table of Contents </a></li>
+<li><a href="#tables">Tables </a>
+<ul>
+<li><a href="#tablebasics">Table Basics </a></li>
+<li><a href="#tablerules">Table Rules </a></li>
+<li><a href="#limitationsoftables">Limitations of Tables </a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -103,14 +125,14 @@
 
 <h3 id="citations">Citations </h3>
 
-<p>I have included support for <em>basic</em> bibliography features in this version of MultiMarkdown. Please give me feedback on ways to improve this but keep the following in mind:</p>
+<p>I have included support for <em>basic</em> bibliography features in MultiMarkdown. I&#8217;m open to feedback on ways to improve this but keep the following in mind:</p>
 
 <ol>
-<li><p>Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc). My XSLT files demonstrate how to make this format compatible with BibTeX, but I am not planning on personally providing compatibility with other tools. Feel free to post your ideas and tools to the wiki.</p></li>
-<li><p>Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians will probably not be satisfied however.</p></li>
+<li><p>Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc).</p></li>
+<li><p>Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians, for example, will probably not be satisfied.</p></li>
 </ol>
 
-<p>To use citations in MultiMarkdown, you use a syntax much like that for anchors:</p>
+<p>To use citations in MultiMarkdown, you use a syntax much like that for links:</p>
 
 <pre><code>This is a statement that should be attributed to
 its source[p. 23][#Doe:2006].
@@ -121,7 +143,7 @@ used in the bibliography.
 [#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
 </code></pre>
 
-<p>You are not required to use a locator (e.g. p. 23), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:</p>
+<p>You are not required to use a locator (e.g. &#8220;p. 23&#8221;), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:</p>
 
 <pre><code>This is a statement that should be attributed to its 
 source[][#Doe:2006].
@@ -188,50 +210,59 @@ source[][#Doe:2006].
 
 <p>CriticMarkup is integrated with MultiMarkdown itself, as well as <a href="http://multimarkdown.com/">MultiMarkdown Composer</a>. I encourage you to check out the <a href="http://criticmarkup.com/">CriticMarkup</a> web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.</p>
 
+<h4 id="usingcriticmarkupwithmultimarkdown">Using CriticMarkup With MultiMarkdown </h4>
+
+<p>When using CriticMarkup with MultiMarkdown itself, you have three choices:</p>
+
+<ul>
+<li><p>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible. This will not <em>always</em> result in a valid output document.</p></li>
+<li><p>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code> or <code>multimarkdown --accept foo.txt</code>)</p></li>
+<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code> or <code>multimarkdown --reject foo.txt</code>)</p></li>
+<li><p>CriticMarkup comments and highlighting are ignored when processing with <code>--accept</code> or <code>--reject</code>.</p></li>
+</ul>
+
 <h4 id="thecriticmarkupsyntax">The CriticMarkup Syntax </h4>
 
 <p>The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <em>before</em> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</p>
 
 <p>When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</p>
 
-<p>When using CriticMarkup with MultiMarkdown itself, you have four choices:</p>
-
 <ul>
-<li><p>Leave the CriticMarkup syntax in place (<code>multimarkdown foo.txt</code>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.</p></li>
-<li><p>Accept all changes, giving you the &#8220;new&#8221; document (<code>multimarkdown -a foo.txt</code> or <code>multimarkdown --accept foo.txt</code>)</p></li>
-<li><p>Reject all changes, giving you the &#8220;original&#8221; document (<code>multimarkdown -r foo.txt</code> or <code>multimarkdown --reject foo.txt</code>)</p></li>
-</ul>
-
-<p>CriticMarkup comments and highlighting are ignored when processing.</p>
-
-<p>Deletions from the original text:</p>
+<li><p>Deletions from the original text:</p>
 
 <pre><code>This is {--is --}a test.
 </code></pre>
 
-<p>Additions:</p>
+<p>This is <del>is </del>a test.</p></li>
+<li><p>Additions:</p>
 
 <pre><code>This {++is ++}a test.
 </code></pre>
 
-<p>Substitutions:</p>
+<p>This <ins>is </ins>a test.</p></li>
+<li><p>Substitutions:</p>
 
 <pre><code>This {~~isn't~&gt;is~~} a test.
 </code></pre>
 
-<p>Highlighting:</p>
+<p>This <del>isn&#8217;t</del><ins>is</ins> a test.</p></li>
+<li><p>Highlighting:</p>
 
 <pre><code>This is a {==test==}.
 </code></pre>
 
-<p>Comments:</p>
+<p>This is a <mark>test</mark>.</p></li>
+<li><p>Comments:</p>
 
 <pre><code>This is a test{&gt;&gt;What is it a test of?&lt;&lt;}.
 </code></pre>
 
+<p>This is a test<span class="critic comment">What is it a test of?</span>.</p></li>
+</ul>
+
 <h4 id="criticmarkuplimitations">CriticMarkup Limitations </h4>
 
-<p>If you <code>--accept</code> or <code>--reject</code> CriticMarkup changes, then it should work properly in just about any document.</p>
+<p>If you <code>--accept</code> or <code>--reject</code> CriticMarkup changes, then it should work properly in any document.</p>
 
 <p>If you want to try to include your changes as &#8220;notes&#8221; in the final document, then certain situations will lead to results that were probably not what you intended.</p>
 
@@ -264,6 +295,268 @@ source[][#Doe:2006].
 <li><p>When converting from MultiMarkdown text to an output format, you can ignore CM formatting with <code>compatibility</code> mode (probably not what you want to do), accept all changes, or reject all changes (as above). These are the preferred choices.</p></li>
 <li><p>The secondary choice, is to <em>attempt</em> to show the changes in the exported document. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid output files.</p></li>
 </ol>
+
+<h3 id="cross-references">Cross-References </h3>
+
+<p>An oft-requested feature was the ability to have Markdown automatically handle
+within-document links as easily as it handled external links. To this aim, I
+added the ability to interpret <code>[Some Text][]</code> as a cross-link, if a header
+named &#8220;Some Text&#8221; exists.</p>
+
+<p>As an example, <code>[Metadata][]</code> will take you to the
+<a href="#metadata">section describing metadata</a>.</p>
+
+<p>Alternatively, you can include an optional label of your choosing to help
+disambiguate cases where multiple headers have the same title:</p>
+
+<pre><code>### Overview [MultiMarkdownOverview] ##
+</code></pre>
+
+<p>This allows you to use <code>[MultiMarkdownOverview]</code> to refer to this section
+specifically, and not another section named <code>Overview</code>. This works with atx-
+or settext-style headers.</p>
+
+<p>If you have already defined an anchor using the same id that is used by a
+header, then the defined anchor takes precedence.</p>
+
+<p>In addition to headers within the document, you can provide labels for images
+and tables which can then be used for cross-references as well.</p>
+
+<h3 id="definitionlists">Definition Lists </h3>
+
+<p>MultiMarkdown has support for definition lists using the same syntax used in
+<a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a>. Specifically:</p>
+
+<pre><code>Apple
+:	Pomaceous fruit of plants of the genus Malus in 
+	the family Rosaceae.
+:	An american computer company.
+
+Orange
+:	The fruit of an evergreen tree of the genus Citrus.
+</code></pre>
+
+<p>becomes:</p>
+
+<blockquote>
+<dl>
+<dt>Apple</dt>
+<dd> Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</dd>
+
+<dd> An american computer company.</dd>
+
+<dt>Orange</dt>
+<dd> The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+</blockquote>
+
+<p>You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.</p>
+
+<p>Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.</p>
+
+<p>Unlike PHP Markdown Extra, all definitions are wrapped in <code>&lt;p&gt;</code> tags. First, I
+was unable to get Markdown <em>not</em> to create paragraphs. Second, I didn&#8217;t see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a problem.</p>
+
+<p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
+
+<h3 id="escapednewlines">Escaped newlines </h3>
+
+<p>Thanks to a contribution from <a href="https://github.com/njmsdk">Nicolas</a>, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is &#8220;space-space-newline&#8221; &#8212; two spaces at the end of the line. For some users, this causes problems:</p>
+
+<ul>
+<li><p>the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them</p></li>
+<li><p>some users' text editors modify trailing space (IMHO, the proper fix for this is a new text editor&#8230;)</p></li>
+</ul>
+
+<p>Nicolas submitted a patch that enables a new option that interprets &#8220;\&#8221; before a newline as a marker that a line break should be used:</p>
+
+<pre><code>This is a line.\
+This is a new line.
+</code></pre>
+
+<h3 id="fencedcodeblocks">Fenced Code Blocks </h3>
+
+<p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
+
+<pre><code>```perl
+# Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print &quot;Hello, world!\n&quot;;
+$a = 0;
+while ($a &lt; 10) {
+print &quot;$a...\n&quot;;
+$a++;
+}
+```
+</code></pre>
+
+<pre><code class="perl"># Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print &quot;Hello, world!\n&quot;;
+$a = 0;
+while ($a &lt; 10) {
+print &quot;$a...\n&quot;;
+$a++;
+}
+</code></pre>
+
+<p>I don&#8217;t recommend any specific syntax highlighter, but have used the following metadata to set things up. It may or may not work for you:</p>
+
+<pre><code>html header:	&lt;link rel=&quot;stylesheet&quot; href=&quot;http://yandex.st/highlightjs/7.3/styles/default.min.css&quot;&gt;
+	&lt;script src=&quot;http://yandex.st/highlightjs/7.3/highlight.min.js&quot;&gt;&lt;/script&gt;
+	&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+</code></pre>
+
+<p>Fenced code blocks are particularly useful when including another file (<a href="#filetransclusion">File Transclusion</a>), and you want to show the <em>source</em> of the file, not what the file looks like when processed by MultiMarkdown.</p>
+
+<p><strong>NOTE</strong>: In MultiMarkdown v6, if there is no closing fence, then the code block continues until the end of the document.</p>
+
+<h3 id="filetransclusion">File Transclusion </h3>
+
+<p>File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:</p>
+
+<pre><code>This is some text.
+
+{{some_other_file.txt}}
+
+Another paragraph
+</code></pre>
+
+<p>If a file named <code>some_other_file.txt</code> exists, its contents will be inserted inside of this document <em>before</em> being processed by MultiMarkdown. This means that the contents of the file can also contain MultiMarkdown formatted text.</p>
+
+<p>If you want to display the <em>contents</em> of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):</p>
+
+<pre><code>This is some text
+
+```
+{{relative/path/to/some_other_file.txt}}
+```
+
+Another paragraph
+</code></pre>
+
+<p>Transclusion is recursive, so the file being inserted will be scanned to see if it references any other files.</p>
+
+<p>Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.</p>
+
+<p>You can use the <code>[Transclude Base]</code> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</p>
+
+<p><strong>Note:</strong> Thanks to David Richards for his ideas in developing support for this feature.</p>
+
+<h4 id="searchpaths">Search Paths </h4>
+
+<p>When you process a file with <abbr title="MultiMarkdown">MMD</abbr>, it uses that file&#8217;s directory as the search
+path for included files. For example:</p>
+
+<table>
+<colgroup>
+<col />
+<col />
+<col />
+</colgroup>
+
+<thead>
+<tr>
+	<th> Directory	</th>
+	<th> Transcluded Filename	</th>
+	<th> Resolved Path 	</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td> <code>/foo/bar/</code>	</td>
+	<td> <code>bat</code>	</td>
+	<td> <code>/foo/bar/bat</code>	</td>
+</tr>
+<tr>
+	<td> <code>/foo/bar/</code>	</td>
+	<td> <code>baz/bat</code>	</td>
+	<td> <code>/foo/bar/baz/bat</code>	</td>
+</tr>
+<tr>
+	<td> <code>/foo/bar/</code>	</td>
+	<td> <code>../bat</code> 	</td>
+	<td> <code>/foo/bat</code>	</td>
+</tr>
+</tbody>
+</table>
+
+<p>This is the same as <abbr title="MultiMarkdown">MMD</abbr> v 5. What&#8217;s different is that when you transclude a
+file, the search path stays the same as the &#8220;parent&#8221; file, <strong>UNLESS</strong> you use
+the <code>transclude base</code> metadata to override it. The simplest override is:</p>
+
+<pre><code>transclude base: .
+</code></pre>
+
+<p>This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.</p>
+
+<p>Alternatively you could specify that any transclusion happens inside a
+subfolder:</p>
+
+<pre><code>transclude base: folder/
+</code></pre>
+
+<p>Or you can specify an absolute path:</p>
+
+<pre><code>transclude base: /some/path
+</code></pre>
+
+<p>This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a &#8220;parent&#8221; file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.</p>
+
+<h4 id="wildcardextensions">Wildcard Extensions </h4>
+
+<p>Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension &#8220;.*&#8221; to have <abbr title="MultiMarkdown">MMD</abbr> choose the proper version of the file (e.g. <code>foo.tex</code>, <code>foo.fodt</code>, <code>foo.html</code>, etc.)</p>
+
+<pre><code>Insert a different version of a file here based on export format:
+{{foo.*}}
+</code></pre>
+
+<h4 id="transclusionpreprocessing">Transclusion Preprocessing </h4>
+
+<p>If you want to perform transclusion, <em>without</em> converting to another format, you can use <code>mmd</code> as the output format:</p>
+
+<pre><code>multimarkdown -t mmd foo.txt
+</code></pre>
+
+<p>This will only perform &#8220;basic&#8221; transclusion &#8211;it does not support wildcard extensions, since the final output format is not known.</p>
+
+<h3 id="footnotes">Footnotes </h3>
+
+<p>I have added support for footnotes to MultiMarkdown, using the syntax proposed by John Gruber. Unfortunately, he never implemented footnotes in Markdown.</p>
+
+<p>To create a footnote, enter something like the following:</p>
+
+<pre><code>Here is some text containing a footnote.[^somesamplefootnote]
+
+[^somesamplefootnote]: Here is the text of the footnote itself.
+
+[somelink]:http://somelink.com
+</code></pre>
+
+<p>The footnote itself must be at the start of a line, just like links by reference. If you want a footnote to have multiple paragraphs, lists, etc., then the subsequent paragraphs need an extra tab preceding them. You may have to experiment to get this just right, and please let me know of any issues you find.</p>
+
+<p>This is what the final result looks like:</p>
+
+<blockquote>
+<p>Here is some text containing a footnote.<a href="#fn:1" id="fnref:1" title="see footnote" class="footnote"><sup>1</sup></a></p>
+</blockquote>
+
+<p>You can also use &#8220;inline footnotes&#8221;:</p>
+
+<pre><code>Here is another footnote.[^This is the footnote itself]
+</code></pre>
 
 <h3 id="glossaries">Glossaries </h3>
 
@@ -312,6 +605,93 @@ set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current
 set basefile = `basename &quot;$1&quot; .tex`
 
 makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;
+</code></pre>
+
+<h3 id="images">Images </h3>
+
+<p>The basic syntax for images in Markdown is:</p>
+
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+
+
+![Alt text][id]
+
+[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre>
+
+<p>In addition to the attributes you can use with links and images (described in <a href="#linkandimageattributes">another section</a>), MultiMarkdown also adds a few additional features. If an image is the only thing in a paragraph, it is treated as a block level element:</p>
+
+<pre><code>This image (![Alt text](/path/to/img.jpg))
+is different than the following image:
+
+![Alt text](/path/to/img.jpg)
+</code></pre>
+
+<p>The resulting HTML is:</p>
+
+<pre><code>&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)
+is different than the following image:&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;
+&lt;figcaption&gt;Alt text&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+
+<p>The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
+
+<h3 id="linkandimageattributes">Link and Image Attributes </h3>
+
+<p>Adding attributes to links and images has been requested for a long time on
+the Markdown discussion list. I was fairly opposed to this, as most of the
+proposals really disrupted the readability of the syntax. I consider myself a
+&#8220;Markdown purist&#8221;, meaning that I took John&#8217;s introduction to heart:</p>
+
+<blockquote>
+<p>The overriding design goal for Markdown&#8217;s formatting syntax is to make
+it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&#8217;s been marked up with tags or formatting instructions. While
+Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+filters, the single biggest source of inspiration for Markdown&#8217;s
+syntax is the format of plain text email.</p>
+</blockquote>
+
+<p>Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.</p>
+
+<p>Then, Choan C. Gálvez <a href="http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html">proposed</a> a brilliantly simple syntax that
+stayed out of the way. By simply appending the attributes to the link
+reference information, which is already removed from the text itself, it
+doesn&#8217;t disturb the readability.</p>
+
+<p>For example:</p>
+
+<pre><code>This is a formatted ![image][] and a [link][] with attributes.
+
+[image]: http://path.to/image &quot;Image title&quot; width=40px height=400px
+[link]:  http://path.to/link.html &quot;Some Link&quot; class=external
+         style=&quot;border: solid black 1px;&quot;
+</code></pre>
+
+<p>This will generate width and height attributes for the image, and a border
+around the link. And while it can be argued that it does look &#8220;like it&#8217;s been
+marked up with tags [and] formatting instructions&#8221;, even I can&#8217;t argue too
+strongly against it. The link and the title in quotes already look like some
+form of markup, and the the additional tags are hardly that intrusive, and
+they offer a great deal of functionality. They might even be useful in further
+functions (citations?).</p>
+
+<p>The attributes must continue after the other link/image data, and may contain
+newlines, but must start at the beginning of the line. The format is
+<code>attribute=value</code> or <code>attribute=&quot;multi word value&quot;</code>. Currently, MultiMarkdown
+does not attempt to interpret or make any use of any of these attributes.
+Also, you can&#8217;t have a multiword attribute span a newline.</p>
+
+<p><strong>NOTE:</strong> As of version 6, MultiMarkdown will also allow attributes in inline links as well:</p>
+
+<pre><code>Colored [link](http://example.net &quot;Title&quot; style=&quot;color:red&quot;)
 </code></pre>
 
 <h3 id="math">Math </h3>
@@ -410,7 +790,14 @@ document, such as title, author, etc. This information can then be used to
 control how MultiMarkdown processes the document, or can be used in certain
 output formats in special ways. For example:</p>
 
-<pre><code>{{examples/metadata.text}}
+<pre><code>
+Title:    A Sample MultiMarkdown Document  
+Author:   Fletcher T. Penney  
+Date:     February 9, 2011  
+Comment:  This is a comment intended to demonstrate  
+          metadata that spans multiple lines, yet  
+          is treated as a single value.  
+CSS:      http://example.com/standard.css
 </code></pre>
 
 <p>The syntax for including metadata is simple.</p>
@@ -431,7 +818,13 @@ output formats in special ways. For example:</p>
 
 <p>You can substitute the <code>value</code> for a metadata <code>key</code> in the body of a document using the following format, where <code>foo</code> and <code>bar</code> are the <code>key</code>s of the desired metadata.</p>
 
-<pre><code>{{examples/metadata-variable.text}}
+<pre><code>
+foo:	foo-test
+bar:	bar-test
+
+# A Variable in a Heading [%foo] #
+
+A variable in the body [%bar].
 </code></pre>
 
 <h3 id="standardmetadatakeys">&#8220;Standard&#8221; Metadata keys </h3>
@@ -468,7 +861,7 @@ website, the name of an employer, academic affiliation, etc.</p>
 
 <p>Additionally, there are &#8220;flavors&#8221; of this metadata key for various output formats so that you can specify a different header level for different output formats &#8212; e.g. <code>LaTeX Header Level</code>, <code>HTML Header Level</code>, and <code>ODF Header Level</code>.</p>
 
-<p>If you are doing something interesting with [File Transclusion], you can also use a negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;, this allows you to use a different level of headings when a file is processed on its own.</p>
+<p>If you are doing something interesting with <a href="#filetransclusion">File Transclusion</a>, you can also use a negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;, this allows you to use a different level of headings when a file is processed on its own.</p>
 
 <h4 id="bibliostyle">Biblio Style </h4>
 
@@ -584,7 +977,7 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
 
 <ul>
 <li>dutch (or <code>nl</code>)</li>
-<li>english</li>
+<li>english (<code>en</code>)</li>
 <li>french (<code>fr</code>)</li>
 <li>german (<code>de</code>)</li>
 <li>germanguillemets</li>
@@ -603,7 +996,7 @@ change the language of a document in LaTeX is up to the individual.</p>
 
 <h4 id="transcludebase">Transclude Base </h4>
 
-<p>When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
+<p>When using the <a href="#filetransclusion">File Transclusion</a> feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</p>
 
 <p>This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <code>stdin</code> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</p>
 
@@ -663,6 +1056,119 @@ change the language of a document in LaTeX is up to the individual.</p>
 <p>As of version 4.7, MultiMarkdown supports the use of <code>{{TOC}}</code> to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.</p>
 
 <p>When possible, MultiMarkdown uses the &#8220;native&#8221; TOC for a given output format. For example, <code>\tableofcontents</code> when exporting to LaTeX.</p>
+
+<h3 id="tables">Tables </h3>
+
+<h4 id="tablebasics">Table Basics </h4>
+
+<p>MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a></p>
+
+<p>Basically, it allows you to turn:</p>
+
+<pre><code>
+|             |          Grouping           ||
+First Header  | Second Header | Third Header |
+ ------------ | :-----------: | -----------: |
+Content       |          *Long Cell*        ||
+Content       |   **Cell**    |         Cell |
+
+New section   |     More      |         Data |
+And more      | With an escaped '\|'         ||  
+[Prototype table]
+
+</code></pre>
+
+<p>into the following <a href="#prototypetable">table</a>.</p>
+
+<table>
+<caption style="caption-side: bottom;" id="prototypetable">Prototype table</caption>
+<colgroup>
+<col />
+<col style="text-align:center;"/>
+<col style="text-align:right;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th>    </th>
+	<th style="text-align:center;" colspan="2">   Grouping   </th>
+</tr>
+<tr>
+	<th>First Header </th>
+	<th style="text-align:center;"> Second Header </th>
+	<th style="text-align:right;"> Third Header </th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>Content  </td>
+	<td style="text-align:center;" colspan="2">   <em>Long Cell</em>  </td>
+</tr>
+<tr>
+	<td>Content  </td>
+	<td style="text-align:center;"> <strong>Cell</strong> </td>
+	<td style="text-align:right;">   Cell </td>
+</tr>
+</tbody>
+
+<tbody>
+<tr>
+	<td>New section </td>
+	<td style="text-align:center;">  More  </td>
+	<td style="text-align:right;">   Data </td>
+</tr>
+<tr>
+	<td>And more  </td>
+	<td style="text-align:center;" colspan="2"> With an escaped &#8216;|&#8217;   </td>
+</tr>
+</tbody>
+</table>
+
+<h4 id="tablerules">Table Rules </h4>
+
+<p>The requirements are:</p>
+
+<ul>
+<li><p>There must be at least one <code>|</code> per line</p></li>
+<li><p>The &#8220;separator&#8221; line between headers and table content must contain only <code>|</code>,<code>-</code>, <code>=</code>, <code>:</code>,<code>.</code>, <code>+</code>, or spaces</p></li>
+<li><p>Cell content must be on one line only</p></li>
+<li><p>Columns are separated by <code>|</code></p></li>
+<li><p>The first line of the table, and the alignment/divider line, must start at
+the beginning of the line</p></li>
+</ul>
+
+<p>Other notes:</p>
+
+<ul>
+<li><p>It is optional whether you have <code>|</code> characters at the beginning and end of lines.</p></li>
+<li><p>The &#8220;separator&#8221; line uses <code>----</code> or <code>====</code> to indicate the line between a header and cell. The length of the line doesn&#8217;t matter, but must have at least one character per cell.</p></li>
+<li><p>To set alignment, you can use a colon to designate left or right alignment, or a colon at each end to designate center alignment, as above. If no colon is present, the default alignment of your system is selected (left in most cases). If the separator line ends with <code>+</code>, then cells in that column will be wrapped when exporting to LaTeX if they are long enough.</p></li>
+<li><p>To indicate that a cell should span multiple columns, then simply add additional pipes (<code>|</code>) at the end of the cell, as shown in the example. If the cell in question is at the end of the row, then of course that means that pipes are not optional at the end of that row&#8230;. The number of pipes equals the number of columns the cell should span.</p></li>
+<li><p>You can use normal Markdown markup within the table cells.</p></li>
+<li><p>Captions are optional, but if present must be at the beginning of the line immediately following the table, start with <code>[</code>, and end with <code>]</code>. If you have a caption before and after the table, only the first match will be used.</p></li>
+<li><p>If you have a caption, you can also have a label, allowing you to create anchors pointing to the table. If there is no label, then the caption acts as the label</p></li>
+<li><p>Cells can be empty.</p></li>
+<li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for HTML) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
+</ul>
+
+<h4 id="limitationsoftables">Limitations of Tables </h4>
+
+<ul>
+<li><p>MultiMarkdown table support is designed to handle <em>most</em> tables for <em>most</em> people; it doesn&#8217;t cover <em>all</em> tables for <em>all</em> people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.</p></li>
+<li><p>Native RTF support for tables is <em>very</em> limited. If you need more complex tables, I recommend using the OpenDocument format, and then using <a href="http://www.libreoffice.org/">LibreOffice</a> to convert your document to RTF.</p></li>
+</ul>
+
+<div class="footnotes">
+<hr />
+<ol>
+
+<li id="fn:1">
+<p>Here is the text of the footnote itself. <a href="#fnref:1" title="return to body" class="reversefootnote">&#160;&#8617;</a></p>
+</li>
+
+</ol>
+</div>
 
 <div class="glossary">
 <hr />

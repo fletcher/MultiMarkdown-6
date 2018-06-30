@@ -1,0 +1,62 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Definition Lists}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-30}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\tableofcontents
+
+\section{Definition Lists }
+\label{definitionlists}
+
+MultiMarkdown has support for definition lists using the same syntax used in
+\href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Specifically:
+
+\begin{verbatim}
+Apple
+:	Pomaceous fruit of plants of the genus Malus in 
+	the family Rosaceae.
+:	An american computer company.
+
+Orange
+:	The fruit of an evergreen tree of the genus Citrus.
+\end{verbatim}
+
+becomes:
+
+\begin{quote}
+\begin{description}
+\item[Apple]
+
+ Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.
+
+ An american computer company.
+
+\item[Orange]
+
+ The fruit of an evergreen tree of the genus Citrus.
+\end{description}
+\end{quote}
+
+You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.
+
+Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.
+
+Unlike PHP Markdown Extra, all definitions are wrapped in \texttt{<p>} tags. First, I
+was unable to get Markdown \emph{not} to create paragraphs. Second, I didn't see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the \texttt{<p>} tags in place. Let me know if this is a problem.
+
+See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }} page for more information.
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

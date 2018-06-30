@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Images</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-30"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#images">Images </a></li>
+</ul>
+</div>
+
+<h3 id="images">Images </h3>
+
+<p>The basic syntax for images in Markdown is:</p>
+
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+
+
+![Alt text][id]
+
+[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre>
+
+<p>In addition to the attributes you can use with links and images (described in <a href="https://fletcher.github.io/MultiMarkdown-6/syntax/attributes.html">another section</a>), MultiMarkdown also adds a few additional features. If an image is the only thing in a paragraph, it is treated as a block level element:</p>
+
+<pre><code>This image (![Alt text](/path/to/img.jpg))
+is different than the following image:
+
+![Alt text](/path/to/img.jpg)
+</code></pre>
+
+<p>The resulting HTML is:</p>
+
+<pre><code>&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)
+is different than the following image:&lt;/p&gt;
+
+&lt;figure&gt;
+&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;
+&lt;figcaption&gt;Alt text&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+
+<p>The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <code>figure</code> element. In this case, the <code>alt</code> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</p>
+
+</body>
+</html>
+

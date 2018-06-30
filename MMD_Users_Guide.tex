@@ -194,16 +194,16 @@ There are a few limitations:
 \section{Citations }
 \label{citations}
 
-I have included support for \emph{basic} bibliography features in this version of MultiMarkdown. Please give me feedback on ways to improve this but keep the following in mind:
+I have included support for \emph{basic} bibliography features in MultiMarkdown. I'm open to feedback on ways to improve this but keep the following in mind:
 
 \begin{enumerate}
-\item Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc). My XSLT files demonstrate how to make this format compatible with BibTeX, but I am not planning on personally providing compatibility with other tools. Feel free to post your ideas and tools to the wiki.
+\item Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc).
 
-\item Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians will probably not be satisfied however.
+\item Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians, for example, will probably not be satisfied.
 
 \end{enumerate}
 
-To use citations in MultiMarkdown, you use a syntax much like that for anchors:
+To use citations in MultiMarkdown, you use a syntax much like that for links:
 
 \begin{verbatim}
 This is a statement that should be attributed to
@@ -215,7 +215,7 @@ used in the bibliography.
 [#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
 \end{verbatim}
 
-You are not required to use a locator (e.g. p. 23), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:
+You are not required to use a locator (e.g. ``p. 23''), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:
 
 \begin{verbatim}
 This is a statement that should be attributed to its 
@@ -291,6 +291,22 @@ CriticMarkup is a way for authors and editors to track changes to documents in p
 
 CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
 
+\subsection{Using CriticMarkup With MultiMarkdown }
+\label{usingcriticmarkupwithmultimarkdown}
+
+When using CriticMarkup with MultiMarkdown itself, you have three choices:
+
+\begin{itemize}
+\item Leave the CriticMarkup syntax in place (\texttt{multimarkdown foo.txt}). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible. This will not \emph{always} result in a valid output document.
+
+\item Accept all changes, giving you the ``new'' document (\texttt{multimarkdown -a foo.txt} or \texttt{multimarkdown -{}-accept foo.txt})
+
+\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt} or \texttt{multimarkdown -{}-reject foo.txt})
+
+\item CriticMarkup comments and highlighting are ignored when processing with \texttt{-{}-accept} or \texttt{-{}-reject}.
+
+\end{itemize}
+
 \subsection{The CriticMarkup Syntax }
 \label{thecriticmarkupsyntax}
 
@@ -298,53 +314,53 @@ The CriticMarkup syntax is fairly straightforward. The key thing to remember is 
 
 When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.
 
-When using CriticMarkup with MultiMarkdown itself, you have four choices:
-
 \begin{itemize}
-\item Leave the CriticMarkup syntax in place (\texttt{multimarkdown foo.txt}). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.
-
-\item Accept all changes, giving you the ``new'' document (\texttt{multimarkdown -a foo.txt} or \texttt{multimarkdown -{}-accept foo.txt})
-
-\item Reject all changes, giving you the ``original'' document (\texttt{multimarkdown -r foo.txt} or \texttt{multimarkdown -{}-reject foo.txt})
-
-\end{itemize}
-
-CriticMarkup comments and highlighting are ignored when processing.
-
-Deletions from the original text:
+\item Deletions from the original text:
 
 \begin{verbatim}
 This is {--is --}a test.
 \end{verbatim}
 
-Additions:
+This is \sout{is }a test.
+
+\item Additions:
 
 \begin{verbatim}
 This {++is ++}a test.
 \end{verbatim}
 
-Substitutions:
+This \underline{is }a test.
+
+\item Substitutions:
 
 \begin{verbatim}
 This {~~isn't~>is~~} a test.
 \end{verbatim}
 
-Highlighting:
+This \sout{isn't}\underline{is} a test.
+
+\item Highlighting:
 
 \begin{verbatim}
 This is a {==test==}.
 \end{verbatim}
 
-Comments:
+This is a \hl{test}.
+
+\item Comments:
 
 \begin{verbatim}
 This is a test{>>What is it a test of?<<}.
 \end{verbatim}
 
+This is a test\cmnote{What is it a test of?}.
+
+\end{itemize}
+
 \subsection{CriticMarkup Limitations }
 \label{criticmarkuplimitations}
 
-If you \texttt{-{}-accept} or \texttt{-{}-reject} CriticMarkup changes, then it should work properly in just about any document.
+If you \texttt{-{}-accept} or \texttt{-{}-reject} CriticMarkup changes, then it should work properly in any document.
 
 If you want to try to include your changes as ``notes'' in the final document, then certain situations will lead to results that were probably not what you intended.
 
@@ -385,6 +401,280 @@ For now, the \emph{official} MultiMarkdown support for CriticMarkup consists of:
 \item The secondary choice, is to \emph{attempt} to show the changes in the exported document. Because the syntaxes are orthogonal, this will not always work properly, and will not always give valid output files.
 
 \end{enumerate}
+
+\section{Cross-References }
+\label{cross-references}
+
+An oft-requested feature was the ability to have Markdown automatically handle
+within-document links as easily as it handled external links. To this aim, I
+added the ability to interpret \texttt{[Some Text][]} as a cross-link, if a header
+named ``Some Text'' exists.
+
+As an example, \texttt{[Metadata][]} will take you to the
+section describing metadata (\autoref{metadata}).
+
+Alternatively, you can include an optional label of your choosing to help
+disambiguate cases where multiple headers have the same title:
+
+\begin{verbatim}
+### Overview [MultiMarkdownOverview] ##
+\end{verbatim}
+
+This allows you to use \texttt{[MultiMarkdownOverview]} to refer to this section
+specifically, and not another section named \texttt{Overview}. This works with atx-
+or settext-style headers.
+
+If you have already defined an anchor using the same id that is used by a
+header, then the defined anchor takes precedence.
+
+In addition to headers within the document, you can provide labels for images
+and tables which can then be used for cross-references as well.
+
+\section{Definition Lists }
+\label{definitionlists}
+
+MultiMarkdown has support for definition lists using the same syntax used in
+\href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Specifically:
+
+\begin{verbatim}
+Apple
+:	Pomaceous fruit of plants of the genus Malus in 
+	the family Rosaceae.
+:	An american computer company.
+
+Orange
+:	The fruit of an evergreen tree of the genus Citrus.
+\end{verbatim}
+
+becomes:
+
+\begin{quote}
+\begin{description}
+\item[Apple]
+
+ Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.
+
+ An american computer company.
+
+\item[Orange]
+
+ The fruit of an evergreen tree of the genus Citrus.
+\end{description}
+\end{quote}
+
+You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.
+
+Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.
+
+Unlike PHP Markdown Extra, all definitions are wrapped in \texttt{<p>} tags. First, I
+was unable to get Markdown \emph{not} to create paragraphs. Second, I didn't see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the \texttt{<p>} tags in place. Let me know if this is a problem.
+
+See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }} page for more information.
+
+\section{Escaped newlines }
+\label{escapednewlines}
+
+Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash \slash github.com\slash njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
+
+\begin{itemize}
+\item the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them
+
+\item some users' text editors modify trailing space (IMHO, the proper fix for this is a new text editor{\ldots})
+
+\end{itemize}
+
+Nicolas submitted a patch that enables a new option that interprets ``\textbackslash{}'' before a newline as a marker that a line break should be used:
+
+\begin{verbatim}
+This is a line.\
+This is a new line.
+\end{verbatim}
+
+\section{Fenced Code Blocks }
+\label{fencedcodeblocks}
+
+In addition to the regular indented code block that Markdown uses, you can use ``fenced'' code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:
+
+\begin{verbatim}
+```perl
+# Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print "Hello, world!\n";
+$a = 0;
+while ($a < 10) {
+print "$a...\n";
+$a++;
+}
+```
+\end{verbatim}
+
+\begin{lstlisting}[language=perl]
+# Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print "Hello, world!\n";
+$a = 0;
+while ($a < 10) {
+print "$a...\n";
+$a++;
+}
+\end{lstlisting}
+
+I don't recommend any specific syntax highlighter, but have used the following metadata to set things up. It may or may not work for you:
+
+\begin{verbatim}
+html header:	<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css">
+	<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+\end{verbatim}
+
+Fenced code blocks are particularly useful when including another file (File Transclusion (\autoref{filetransclusion})), and you want to show the \emph{source} of the file, not what the file looks like when processed by MultiMarkdown.
+
+\textbf{NOTE}: In MultiMarkdown v6, if there is no closing fence, then the code block continues until the end of the document.
+
+\section{File Transclusion }
+\label{filetransclusion}
+
+File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:
+
+\begin{verbatim}
+This is some text.
+
+{{some_other_file.txt}}
+
+Another paragraph
+\end{verbatim}
+
+If a file named \texttt{some\_other\_file.txt} exists, its contents will be inserted inside of this document \emph{before} being processed by MultiMarkdown. This means that the contents of the file can also contain MultiMarkdown formatted text.
+
+If you want to display the \emph{contents} of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):
+
+\begin{verbatim}
+This is some text
+
+```
+{{relative/path/to/some_other_file.txt}}
+```
+
+Another paragraph
+\end{verbatim}
+
+Transclusion is recursive, so the file being inserted will be scanned to see if it references any other files.
+
+Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.
+
+You can use the \texttt{[Transclude Base]} metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.
+
+\textbf{Note:} Thanks to David Richards for his ideas in developing support for this feature.
+
+\subsection{Search Paths }
+\label{searchpaths}
+
+When you process a file with \gls{MMD}, it uses that file's directory as the search
+path for included files. For example:
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\begin{tabulary}{\textwidth}{@{}lll@{}} \toprule
+ Directory	& Transcluded Filename	& Resolved Path 	\\
+\midrule
+
+ \texttt{\slash foo\slash bar\slash }	& \texttt{bat}	& \texttt{\slash foo\slash bar\slash bat}	\\
+ \texttt{\slash foo\slash bar\slash }	& \texttt{baz\slash bat}	& \texttt{\slash foo\slash bar\slash baz\slash bat}	\\
+ \texttt{\slash foo\slash bar\slash }	& \texttt{..\slash bat} 	& \texttt{\slash foo\slash bat}	\\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
+This is the same as \gls{MMD} v 5. What's different is that when you transclude a
+file, the search path stays the same as the ``parent'' file, \textbf{UNLESS} you use
+the \texttt{transclude base} metadata to override it. The simplest override is:
+
+\begin{verbatim}
+transclude base: .
+\end{verbatim}
+
+This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.
+
+Alternatively you could specify that any transclusion happens inside a
+subfolder:
+
+\begin{verbatim}
+transclude base: folder/
+\end{verbatim}
+
+Or you can specify an absolute path:
+
+\begin{verbatim}
+transclude base: /some/path
+\end{verbatim}
+
+This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a ``parent'' file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.
+
+\subsection{Wildcard Extensions }
+\label{wildcardextensions}
+
+Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension ``.*'' to have \gls{MMD} choose the proper version of the file (e.g. \texttt{foo.tex}, \texttt{foo.fodt}, \texttt{foo.html}, etc.)
+
+\begin{verbatim}
+Insert a different version of a file here based on export format:
+{{foo.*}}
+\end{verbatim}
+
+\subsection{Transclusion Preprocessing }
+\label{transclusionpreprocessing}
+
+If you want to perform transclusion, \emph{without} converting to another format, you can use \texttt{mmd} as the output format:
+
+\begin{verbatim}
+multimarkdown -t mmd foo.txt
+\end{verbatim}
+
+This will only perform ``basic'' transclusion --it does not support wildcard extensions, since the final output format is not known.
+
+\section{Footnotes }
+\label{footnotes}
+
+I have added support for footnotes to MultiMarkdown, using the syntax proposed by John Gruber. Unfortunately, he never implemented footnotes in Markdown.
+
+To create a footnote, enter something like the following:
+
+\begin{verbatim}
+Here is some text containing a footnote.[^somesamplefootnote]
+
+[^somesamplefootnote]: Here is the text of the footnote itself.
+
+[somelink]:http://somelink.com
+\end{verbatim}
+
+The footnote itself must be at the start of a line, just like links by reference. If you want a footnote to have multiple paragraphs, lists, etc., then the subsequent paragraphs need an extra tab preceding them. You may have to experiment to get this just right, and please let me know of any issues you find.
+
+This is what the final result looks like:
+
+\begin{quote}
+Here is some text containing a footnote.\footnote{Here is the text of the footnote itself.}
+\end{quote}
+
+You can also use ``inline footnotes'':
+
+\begin{verbatim}
+Here is another footnote.[^This is the footnote itself]
+\end{verbatim}
 
 \section{Glossaries }
 \label{glossaries}
@@ -440,6 +730,100 @@ set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current
 set basefile = `basename "$1" .tex`
 
 makeindex -s `kpsewhich basic.gst` -o "${basefile}.gls" "${basefile}.glo"
+\end{verbatim}
+
+\section{Images }
+\label{images}
+
+The basic syntax for images in Markdown is:
+
+\begin{verbatim}
+![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg "Optional title")
+
+
+![Alt text][id]
+
+[id]: url/to/image  "Optional title attribute"
+\end{verbatim}
+
+In addition to the attributes you can use with links and images (described in another section (\autoref{linkandimageattributes})), MultiMarkdown also adds a few additional features. If an image is the only thing in a paragraph, it is treated as a block level element:
+
+\begin{verbatim}
+This image (![Alt text](/path/to/img.jpg))
+is different than the following image:
+
+![Alt text](/path/to/img.jpg)
+\end{verbatim}
+
+The resulting HTML is:
+
+\begin{verbatim}
+<p>This image (<img src="/path/to/img.jpg" alt="Alt text" />)
+is different than the following image:</p>
+
+<figure>
+<img src="/path/to/img.jpg" alt="Alt text" />
+<figcaption>Alt text</figcaption>
+</figure>
+\end{verbatim}
+
+The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML \texttt{figure} element. In this case, the \texttt{alt} text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren't supported.
+
+\section{Link and Image Attributes }
+\label{linkandimageattributes}
+
+Adding attributes to links and images has been requested for a long time on
+the Markdown discussion list. I was fairly opposed to this, as most of the
+proposals really disrupted the readability of the syntax. I consider myself a
+``Markdown purist'', meaning that I took John's introduction to heart:
+
+\begin{quote}
+The overriding design goal for Markdown's formatting syntax is to make
+it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it's been marked up with tags or formatting instructions. While
+Markdown's syntax has been influenced by several existing text-to-HTML
+filters, the single biggest source of inspiration for Markdown's
+syntax is the format of plain text email.
+\end{quote}
+
+Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.
+
+Then, Choan C. Gálvez \href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{proposed}\footnote{\href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{http:\slash \slash six.pairlist.net\slash pipermail\slash markdown-discuss\slash 2005-October\slash 001578.html}} a brilliantly simple syntax that
+stayed out of the way. By simply appending the attributes to the link
+reference information, which is already removed from the text itself, it
+doesn't disturb the readability.
+
+For example:
+
+\begin{verbatim}
+This is a formatted ![image][] and a [link][] with attributes.
+
+[image]: http://path.to/image "Image title" width=40px height=400px
+[link]:  http://path.to/link.html "Some Link" class=external
+         style="border: solid black 1px;"
+\end{verbatim}
+
+This will generate width and height attributes for the image, and a border
+around the link. And while it can be argued that it does look ``like it's been
+marked up with tags {[and]} formatting instructions'', even I can't argue too
+strongly against it. The link and the title in quotes already look like some
+form of markup, and the the additional tags are hardly that intrusive, and
+they offer a great deal of functionality. They might even be useful in further
+functions (citations?).
+
+The attributes must continue after the other link\slash image data, and may contain
+newlines, but must start at the beginning of the line. The format is
+\texttt{attribute=value} or \texttt{attribute="multi word value"}. Currently, MultiMarkdown
+does not attempt to interpret or make any use of any of these attributes.
+Also, you can't have a multiword attribute span a newline.
+
+\textbf{NOTE:} As of version 6, MultiMarkdown will also allow attributes in inline links as well:
+
+\begin{verbatim}
+Colored [link](http://example.net "Title" style="color:red")
 \end{verbatim}
 
 \section{Math }
@@ -546,7 +930,14 @@ control how MultiMarkdown processes the document, or can be used in certain
 output formats in special ways. For example:
 
 \begin{verbatim}
-{{examples/metadata.text}}
+
+Title:    A Sample MultiMarkdown Document  
+Author:   Fletcher T. Penney  
+Date:     February 9, 2011  
+Comment:  This is a comment intended to demonstrate  
+          metadata that spans multiple lines, yet  
+          is treated as a single value.  
+CSS:      http://example.com/standard.css
 \end{verbatim}
 
 The syntax for including metadata is simple.
@@ -578,7 +969,13 @@ The syntax for including metadata is simple.
 You can substitute the \texttt{value} for a metadata \texttt{key} in the body of a document using the following format, where \texttt{foo} and \texttt{bar} are the \texttt{key}s of the desired metadata.
 
 \begin{verbatim}
-{{examples/metadata-variable.text}}
+
+foo:	foo-test
+bar:	bar-test
+
+# A Variable in a Heading [%foo] #
+
+A variable in the body [%bar].
 \end{verbatim}
 
 \section{``Standard'' Metadata keys }
@@ -620,7 +1017,7 @@ This can also be useful when using transclusion to combine multiple documents.
 
 Additionally, there are ``flavors'' of this metadata key for various output formats so that you can specify a different header level for different output formats --- e.g. \texttt{LaTeX Header Level}, \texttt{HTML Header Level}, and \texttt{ODF Header Level}.
 
-If you are doing something interesting with {[File Transclusion]}, you can also use a negative number here. Since metadata is not used when a file is ``transcluded'', this allows you to use a different level of headings when a file is processed on its own.
+If you are doing something interesting with File Transclusion (\autoref{filetransclusion}), you can also use a negative number here. Since metadata is not used when a file is ``transcluded'', this allows you to use a different level of headings when a file is processed on its own.
 
 \subsection{Biblio Style }
 \label{bibliostyle}
@@ -759,7 +1156,7 @@ This is used to specify which style of ``smart'' quotes to use in the output doc
 \begin{itemize}
 \item dutch (or \texttt{nl})
 
-\item english
+\item english (\texttt{en})
 
 \item french (\texttt{fr})
 
@@ -786,7 +1183,7 @@ Self-explanatory.
 \subsection{Transclude Base }
 \label{transcludebase}
 
-When using the {[File Transclusion]} feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
+When using the File Transclusion (\autoref{filetransclusion}) feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
 
 This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using \texttt{stdin} or another application that offers MultiMarkdown support). In this case, the path must be a complete path.
 
@@ -865,6 +1262,108 @@ This feature is enabled by default, but is disabled in \texttt{compatibility} mo
 As of version 4.7, MultiMarkdown supports the use of \texttt{\{\{TOC\}\}} to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.
 
 When possible, MultiMarkdown uses the ``native'' TOC for a given output format. For example, \texttt{\textbackslash{}tableofcontents} when exporting to LaTeX.
+
+\section{Tables }
+\label{tables}
+
+\subsection{Table Basics }
+\label{tablebasics}
+
+MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}
+
+Basically, it allows you to turn:
+
+\begin{verbatim}
+
+|             |          Grouping           ||
+First Header  | Second Header | Third Header |
+ ------------ | :-----------: | -----------: |
+Content       |          *Long Cell*        ||
+Content       |   **Cell**    |         Cell |
+
+New section   |     More      |         Data |
+And more      | With an escaped '\|'         ||  
+[Prototype table]
+
+\end{verbatim}
+
+into the following table (\autoref{prototypetable}).
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\caption{Prototype table}
+\label{prototypetable}
+\begin{tabulary}{\textwidth}{@{}lcr@{}} \toprule
+    &\multicolumn{2}{c}{   Grouping   }\\
+First Header & Second Header & Third Header \\
+\midrule
+
+Content  &\multicolumn{2}{c}{   \emph{Long Cell}  }\\
+Content  & \textbf{Cell} &   Cell \\
+\bottomrule
+
+New section &  More  &   Data \\
+And more  &\multicolumn{2}{c}{ With an escaped `\textbar{}'   }\\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
+\subsection{Table Rules }
+\label{tablerules}
+
+The requirements are:
+
+\begin{itemize}
+\item There must be at least one \texttt{|} per line
+
+\item The ``separator'' line between headers and table content must contain only \texttt{|},\texttt{-}, \texttt{=}, \texttt{:},\texttt{.}, \texttt{+}, or spaces
+
+\item Cell content must be on one line only
+
+\item Columns are separated by \texttt{|}
+
+\item The first line of the table, and the alignment\slash divider line, must start at
+the beginning of the line
+
+\end{itemize}
+
+Other notes:
+
+\begin{itemize}
+\item It is optional whether you have \texttt{|} characters at the beginning and end of lines.
+
+\item The ``separator'' line uses \texttt{-{}-{}--} or \texttt{====} to indicate the line between a header and cell. The length of the line doesn't matter, but must have at least one character per cell.
+
+\item To set alignment, you can use a colon to designate left or right alignment, or a colon at each end to designate center alignment, as above. If no colon is present, the default alignment of your system is selected (left in most cases). If the separator line ends with \texttt{+}, then cells in that column will be wrapped when exporting to LaTeX if they are long enough.
+
+\item To indicate that a cell should span multiple columns, then simply add additional pipes (\texttt{|}) at the end of the cell, as shown in the example. If the cell in question is at the end of the row, then of course that means that pipes are not optional at the end of that row{\ldots}. The number of pipes equals the number of columns the cell should span.
+
+\item You can use normal Markdown markup within the table cells.
+
+\item Captions are optional, but if present must be at the beginning of the line immediately following the table, start with \texttt{[}, and end with \texttt{]}. If you have a caption before and after the table, only the first match will be used.
+
+\item If you have a caption, you can also have a label, allowing you to create anchors pointing to the table. If there is no label, then the caption acts as the label
+
+\item Cells can be empty.
+
+\item You can create multiple \texttt{<tbody>} tags (for HTML) within a table by having a \textbf{single} empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn't work in all output formats (e.g. RTF and OpenDocument).
+
+\end{itemize}
+
+\subsection{Limitations of Tables }
+\label{limitationsoftables}
+
+\begin{itemize}
+\item MultiMarkdown table support is designed to handle \emph{most} tables for \emph{most} people; it doesn't cover \emph{all} tables for \emph{all} people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.
+
+\item Native RTF support for tables is \emph{very} limited. If you need more complex tables, I recommend using the OpenDocument format, and then using \href{http://www.libreoffice.org/}{LibreOffice}\footnote{\href{http://www.libreoffice.org/}{http:\slash \slash www.libreoffice.org\slash }} to convert your document to RTF.
+
+\end{itemize}
 
 \input{mmd6-tufte-book-footer}
 \end{document}

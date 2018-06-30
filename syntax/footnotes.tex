@@ -1,0 +1,43 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Footnotes}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-30}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\tableofcontents
+
+\section{Footnotes }
+\label{footnotes}
+
+I have added support for footnotes to MultiMarkdown, using the syntax proposed by John Gruber. Unfortunately, he never implemented footnotes in Markdown.
+
+To create a footnote, enter something like the following:
+
+\begin{verbatim}
+Here is some text containing a footnote.[^somesamplefootnote]
+
+[^somesamplefootnote]: Here is the text of the footnote itself.
+
+[somelink]:http://somelink.com
+\end{verbatim}
+
+The footnote itself must be at the start of a line, just like links by reference. If you want a footnote to have multiple paragraphs, lists, etc., then the subsequent paragraphs need an extra tab preceding them. You may have to experiment to get this just right, and please let me know of any issues you find.
+
+This is what the final result looks like:
+
+\begin{quote}
+Here is some text containing a footnote.\footnote{Here is the text of the footnote itself.}
+\end{quote}
+
+You can also use ``inline footnotes'':
+
+\begin{verbatim}
+Here is another footnote.[^This is the footnote itself]
+\end{verbatim}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Definition Lists</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-30"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#definitionlists">Definition Lists </a></li>
+</ul>
+</div>
+
+<h3 id="definitionlists">Definition Lists </h3>
+
+<p>MultiMarkdown has support for definition lists using the same syntax used in
+<a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a>. Specifically:</p>
+
+<pre><code>Apple
+:	Pomaceous fruit of plants of the genus Malus in 
+	the family Rosaceae.
+:	An american computer company.
+
+Orange
+:	The fruit of an evergreen tree of the genus Citrus.
+</code></pre>
+
+<p>becomes:</p>
+
+<blockquote>
+<dl>
+<dt>Apple</dt>
+<dd> Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</dd>
+
+<dd> An american computer company.</dd>
+
+<dt>Orange</dt>
+<dd> The fruit of an evergreen tree of the genus Citrus.</dd>
+</dl>
+</blockquote>
+
+<p>You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.</p>
+
+<p>Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.</p>
+
+<p>Unlike PHP Markdown Extra, all definitions are wrapped in <code>&lt;p&gt;</code> tags. First, I
+was unable to get Markdown <em>not</em> to create paragraphs. Second, I didn&#8217;t see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the <code>&lt;p&gt;</code> tags in place. Let me know if this is a problem.</p>
+
+<p>See the <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a> page for more information.</p>
+
+</body>
+</html>
+

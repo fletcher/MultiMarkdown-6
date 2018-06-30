@@ -53,7 +53,14 @@ document, such as title, author, etc. This information can then be used to
 control how MultiMarkdown processes the document, or can be used in certain
 output formats in special ways. For example:</p>
 
-<pre><code>{{examples/metadata.text}}
+<pre><code>
+Title:    A Sample MultiMarkdown Document  
+Author:   Fletcher T. Penney  
+Date:     February 9, 2011  
+Comment:  This is a comment intended to demonstrate  
+          metadata that spans multiple lines, yet  
+          is treated as a single value.  
+CSS:      http://example.com/standard.css
 </code></pre>
 
 <p>The syntax for including metadata is simple.</p>
@@ -74,7 +81,13 @@ output formats in special ways. For example:</p>
 
 <p>You can substitute the <code>value</code> for a metadata <code>key</code> in the body of a document using the following format, where <code>foo</code> and <code>bar</code> are the <code>key</code>s of the desired metadata.</p>
 
-<pre><code>{{examples/metadata-variable.text}}
+<pre><code>
+foo:	foo-test
+bar:	bar-test
+
+# A Variable in a Heading [%foo] #
+
+A variable in the body [%bar].
 </code></pre>
 
 <h3 id="standardmetadatakeys">&#8220;Standard&#8221; Metadata keys </h3>
@@ -227,7 +240,7 @@ working &#8212; MultiMarkdown just copies it verbatim to the output.</p>
 
 <ul>
 <li>dutch (or <code>nl</code>)</li>
-<li>english</li>
+<li>english (<code>en</code>)</li>
 <li>french (<code>fr</code>)</li>
 <li>german (<code>de</code>)</li>
 <li>germanguillemets</li>

@@ -17,22 +17,24 @@ LaTeX Config:	tufte-handout
 CriticMarkup is integrated with MultiMarkdown itself, as well as [MultiMarkdown Composer].  I encourage you to check out the [CriticMarkup] web site to learn more as it can be a very useful tool.  There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer. 
 
 
-### The CriticMarkup Syntax ###
+### Using CriticMarkup With MultiMarkdown ###
 
-The CriticMarkup syntax is fairly straightforward.  The key thing to remember is that CriticMarkup is processed *before* any other MultiMarkdown is handled.  It's almost like a separate layer on top of the MultiMarkdown syntax. 
+When using CriticMarkup with MultiMarkdown itself, you have three choices: 
 
-When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window.  This will allow you to see changes in the HTML preview. 
-
-When using CriticMarkup with MultiMarkdown itself, you have four choices: 
-
-*	Leave the CriticMarkup syntax in place (`multimarkdown foo.txt`). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.
+*	Leave the CriticMarkup syntax in place (`multimarkdown foo.txt`). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.  This will not *always* result in a valid output document.
 
 *	Accept all changes, giving you the "new" document (`multimarkdown -a foo.txt` or `multimarkdown --accept foo.txt`)
 
 *	Reject all changes, giving you the "original" document (`multimarkdown -r foo.txt` or `multimarkdown --reject foo.txt`)
 
+*	CriticMarkup comments and highlighting are ignored when processing with `--accept` or `--reject`. 
 
-CriticMarkup comments and highlighting are ignored when processing with `--accept` or `--reject`. 
+
+### The CriticMarkup Syntax ###
+
+The CriticMarkup syntax is fairly straightforward.  The key thing to remember is that CriticMarkup is processed *before* any other MultiMarkdown is handled.  It's almost like a separate layer on top of the MultiMarkdown syntax. 
+
+When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window.  This will allow you to see changes in the HTML preview. 
 
 *	Deletions from the original text: 
 
@@ -67,7 +69,7 @@ CriticMarkup comments and highlighting are ignored when processing with `--accep
 
 ### CriticMarkup Limitations ###
 
-If you `--accept` or `--reject` CriticMarkup changes, then it should work properly in just about any document.
+If you `--accept` or `--reject` CriticMarkup changes, then it should work properly in any document.
 
 If you want to try to include your changes as "notes" in the final document, then certain situations will lead to results that were probably not what you intended.
 

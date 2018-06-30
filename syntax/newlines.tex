@@ -1,0 +1,33 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Escaped Newlines}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-30}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\tableofcontents
+
+\section{Escaped newlines }
+\label{escapednewlines}
+
+Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash \slash github.com\slash njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
+
+\begin{itemize}
+\item the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them
+
+\item some users' text editors modify trailing space (IMHO, the proper fix for this is a new text editor{\ldots})
+
+\end{itemize}
+
+Nicolas submitted a patch that enables a new option that interprets ``\textbackslash{}'' before a newline as a marker that a line break should be used:
+
+\begin{verbatim}
+This is a line.\
+This is a new line.
+\end{verbatim}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

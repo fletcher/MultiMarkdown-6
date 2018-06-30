@@ -1,0 +1,117 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{Tables}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-30}
+\def\transcluydebase{.}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\tableofcontents
+
+\section{Tables }
+\label{tables}
+
+\subsection{Table Basics }
+\label{tablebasics}
+
+MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}
+
+Basically, it allows you to turn:
+
+\begin{verbatim}
+
+|             |          Grouping           ||
+First Header  | Second Header | Third Header |
+ ------------ | :-----------: | -----------: |
+Content       |          *Long Cell*        ||
+Content       |   **Cell**    |         Cell |
+
+New section   |     More      |         Data |
+And more      | With an escaped '\|'         ||  
+[Prototype table]
+
+\end{verbatim}
+
+into the following table (\autoref{prototypetable}).
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\caption{Prototype table}
+\label{prototypetable}
+\begin{tabulary}{\textwidth}{@{}lcr@{}} \toprule
+    &\multicolumn{2}{c}{   Grouping   }\\
+First Header & Second Header & Third Header \\
+\midrule
+
+Content  &\multicolumn{2}{c}{   \emph{Long Cell}  }\\
+Content  & \textbf{Cell} &   Cell \\
+\bottomrule
+
+New section &  More  &   Data \\
+And more  &\multicolumn{2}{c}{ With an escaped `\textbar{}'   }\\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
+\subsection{Table Rules }
+\label{tablerules}
+
+The requirements are:
+
+\begin{itemize}
+\item There must be at least one \texttt{|} per line
+
+\item The ``separator'' line between headers and table content must contain only \texttt{|},\texttt{-}, \texttt{=}, \texttt{:},\texttt{.}, \texttt{+}, or spaces
+
+\item Cell content must be on one line only
+
+\item Columns are separated by \texttt{|}
+
+\item The first line of the table, and the alignment\slash divider line, must start at
+the beginning of the line
+
+\end{itemize}
+
+Other notes:
+
+\begin{itemize}
+\item It is optional whether you have \texttt{|} characters at the beginning and end of lines.
+
+\item The ``separator'' line uses \texttt{-{}-{}--} or \texttt{====} to indicate the line between a header and cell. The length of the line doesn't matter, but must have at least one character per cell.
+
+\item To set alignment, you can use a colon to designate left or right alignment, or a colon at each end to designate center alignment, as above. If no colon is present, the default alignment of your system is selected (left in most cases). If the separator line ends with \texttt{+}, then cells in that column will be wrapped when exporting to LaTeX if they are long enough.
+
+\item To indicate that a cell should span multiple columns, then simply add additional pipes (\texttt{|}) at the end of the cell, as shown in the example. If the cell in question is at the end of the row, then of course that means that pipes are not optional at the end of that row{\ldots}. The number of pipes equals the number of columns the cell should span.
+
+\item You can use normal Markdown markup within the table cells.
+
+\item Captions are optional, but if present must be at the beginning of the line immediately following the table, start with \texttt{[}, and end with \texttt{]}. If you have a caption before and after the table, only the first match will be used.
+
+\item If you have a caption, you can also have a label, allowing you to create anchors pointing to the table. If there is no label, then the caption acts as the label
+
+\item Cells can be empty.
+
+\item You can create multiple \texttt{<tbody>} tags (for HTML) within a table by having a \textbf{single} empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn't work in all output formats (e.g. RTF and OpenDocument).
+
+\end{itemize}
+
+\subsection{Limitations of Tables }
+\label{limitationsoftables}
+
+\begin{itemize}
+\item MultiMarkdown table support is designed to handle \emph{most} tables for \emph{most} people; it doesn't cover \emph{all} tables for \emph{all} people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.
+
+\item Native RTF support for tables is \emph{very} limited. If you need more complex tables, I recommend using the OpenDocument format, and then using \href{http://www.libreoffice.org/}{LibreOffice}\footnote{\href{http://www.libreoffice.org/}{http:\slash \slash www.libreoffice.org\slash }} to convert your document to RTF.
+
+\end{itemize}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

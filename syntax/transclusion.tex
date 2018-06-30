@@ -1,0 +1,123 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{File Transclusion}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-06-30}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\tableofcontents
+
+\section{File Transclusion }
+\label{filetransclusion}
+
+File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:
+
+\begin{verbatim}
+This is some text.
+
+{{some_other_file.txt}}
+
+Another paragraph
+\end{verbatim}
+
+If a file named \texttt{some\_other\_file.txt} exists, its contents will be inserted inside of this document \emph{before} being processed by MultiMarkdown. This means that the contents of the file can also contain MultiMarkdown formatted text.
+
+If you want to display the \emph{contents} of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):
+
+\begin{verbatim}
+This is some text
+
+```
+{{relative/path/to/some_other_file.txt}}
+```
+
+Another paragraph
+\end{verbatim}
+
+Transclusion is recursive, so the file being inserted will be scanned to see if it references any other files.
+
+Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.
+
+You can use the \texttt{[Transclude Base]} metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.
+
+\textbf{Note:} Thanks to David Richards for his ideas in developing support for this feature.
+
+\subsection{Search Paths }
+\label{searchpaths}
+
+When you process a file with \gls{MMD}, it uses that file's directory as the search
+path for included files. For example:
+
+\begin{table}[htbp]
+\begin{minipage}{\linewidth}
+\setlength{\tymax}{0.5\linewidth}
+\centering
+\small
+\begin{tabulary}{\textwidth}{@{}lll@{}} \toprule
+ Directory	& Transcluded Filename	& Resolved Path 	\\
+\midrule
+
+ \texttt{\slash foo\slash bar\slash }	& \texttt{bat}	& \texttt{\slash foo\slash bar\slash bat}	\\
+ \texttt{\slash foo\slash bar\slash }	& \texttt{baz\slash bat}	& \texttt{\slash foo\slash bar\slash baz\slash bat}	\\
+ \texttt{\slash foo\slash bar\slash }	& \texttt{..\slash bat} 	& \texttt{\slash foo\slash bat}	\\
+\bottomrule
+
+\end{tabulary}
+\end{minipage}
+\end{table}
+
+This is the same as \gls{MMD} v 5. What's different is that when you transclude a
+file, the search path stays the same as the ``parent'' file, \textbf{UNLESS} you use
+the \texttt{transclude base} metadata to override it. The simplest override is:
+
+\begin{verbatim}
+transclude base: .
+\end{verbatim}
+
+This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.
+
+Alternatively you could specify that any transclusion happens inside a
+subfolder:
+
+\begin{verbatim}
+transclude base: folder/
+\end{verbatim}
+
+Or you can specify an absolute path:
+
+\begin{verbatim}
+transclude base: /some/path
+\end{verbatim}
+
+This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a ``parent'' file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.
+
+\subsection{Wildcard Extensions }
+\label{wildcardextensions}
+
+Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension ``.*'' to have \gls{MMD} choose the proper version of the file (e.g. \texttt{foo.tex}, \texttt{foo.fodt}, \texttt{foo.html}, etc.)
+
+\begin{verbatim}
+Insert a different version of a file here based on export format:
+{{foo.*}}
+\end{verbatim}
+
+\subsection{Transclusion Preprocessing }
+\label{transclusionpreprocessing}
+
+If you want to perform transclusion, \emph{without} converting to another format, you can use \texttt{mmd} as the output format:
+
+\begin{verbatim}
+multimarkdown -t mmd foo.txt
+\end{verbatim}
+
+This will only perform ``basic'' transclusion --it does not support wildcard extensions, since the final output format is not known.
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

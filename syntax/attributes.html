@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Link and Image Attributes</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-30"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#linkandimageattributes">Link and Image Attributes </a></li>
+</ul>
+</div>
+
+<h3 id="linkandimageattributes">Link and Image Attributes </h3>
+
+<p>Adding attributes to links and images has been requested for a long time on
+the Markdown discussion list. I was fairly opposed to this, as most of the
+proposals really disrupted the readability of the syntax. I consider myself a
+&#8220;Markdown purist&#8221;, meaning that I took John&#8217;s introduction to heart:</p>
+
+<blockquote>
+<p>The overriding design goal for Markdown&#8217;s formatting syntax is to make
+it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&#8217;s been marked up with tags or formatting instructions. While
+Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+filters, the single biggest source of inspiration for Markdown&#8217;s
+syntax is the format of plain text email.</p>
+</blockquote>
+
+<p>Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.</p>
+
+<p>Then, Choan C. Gálvez <a href="http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html">proposed</a> a brilliantly simple syntax that
+stayed out of the way. By simply appending the attributes to the link
+reference information, which is already removed from the text itself, it
+doesn&#8217;t disturb the readability.</p>
+
+<p>For example:</p>
+
+<pre><code>This is a formatted ![image][] and a [link][] with attributes.
+
+[image]: http://path.to/image &quot;Image title&quot; width=40px height=400px
+[link]:  http://path.to/link.html &quot;Some Link&quot; class=external
+         style=&quot;border: solid black 1px;&quot;
+</code></pre>
+
+<p>This will generate width and height attributes for the image, and a border
+around the link. And while it can be argued that it does look &#8220;like it&#8217;s been
+marked up with tags [and] formatting instructions&#8221;, even I can&#8217;t argue too
+strongly against it. The link and the title in quotes already look like some
+form of markup, and the the additional tags are hardly that intrusive, and
+they offer a great deal of functionality. They might even be useful in further
+functions (citations?).</p>
+
+<p>The attributes must continue after the other link/image data, and may contain
+newlines, but must start at the beginning of the line. The format is
+<code>attribute=value</code> or <code>attribute=&quot;multi word value&quot;</code>. Currently, MultiMarkdown
+does not attempt to interpret or make any use of any of these attributes.
+Also, you can&#8217;t have a multiword attribute span a newline.</p>
+
+<p><strong>NOTE:</strong> As of version 6, MultiMarkdown will also allow attributes in inline links as well:</p>
+
+<pre><code>Colored [link](http://example.net &quot;Title&quot; style=&quot;color:red&quot;)
+</code></pre>
+
+</body>
+</html>
+

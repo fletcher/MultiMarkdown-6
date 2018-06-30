@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Fenced Code Blocks</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-06-30"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
+</ul>
+</div>
+
+<h3 id="fencedcodeblocks">Fenced Code Blocks </h3>
+
+<p>In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</p>
+
+<pre><code>```perl
+# Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print &quot;Hello, world!\n&quot;;
+$a = 0;
+while ($a &lt; 10) {
+print &quot;$a...\n&quot;;
+$a++;
+}
+```
+</code></pre>
+
+<pre><code class="perl"># Demonstrate Syntax Highlighting if you link to highlight.js #
+# http://softwaremaniacs.org/soft/highlight/en/
+print &quot;Hello, world!\n&quot;;
+$a = 0;
+while ($a &lt; 10) {
+print &quot;$a...\n&quot;;
+$a++;
+}
+</code></pre>
+
+<p>I don&#8217;t recommend any specific syntax highlighter, but have used the following metadata to set things up. It may or may not work for you:</p>
+
+<pre><code>html header:	&lt;link rel=&quot;stylesheet&quot; href=&quot;http://yandex.st/highlightjs/7.3/styles/default.min.css&quot;&gt;
+	&lt;script src=&quot;http://yandex.st/highlightjs/7.3/highlight.min.js&quot;&gt;&lt;/script&gt;
+	&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;
+</code></pre>
+
+<p>Fenced code blocks are particularly useful when including another file (<a href="https://fletcher.github.io/MultiMarkdown-6/syntax/transclusion.html">File Transclusion</a>), and you want to show the <em>source</em> of the file, not what the file looks like when processed by MultiMarkdown.</p>
+
+<p><strong>NOTE</strong>: In MultiMarkdown v6, if there is no closing fence, then the code block continues until the end of the document.</p>
+
+</body>
+</html>
+

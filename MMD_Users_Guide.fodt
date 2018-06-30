@@ -310,11 +310,23 @@ Revised 2018-06-27</text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtex" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatiscriticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Is CriticMarkup?  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usingcriticmarkupwithmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Using CriticMarkup With MultiMarkdown  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#thecriticmarkupsyntax" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">The CriticMarkup Syntax  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkuplimitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup Limitations  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#myphilosophyoncriticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">My philosophy on CriticMarkup <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#cross-references" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Cross-References  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#definitionlists" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Definition Lists  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#escapednewlines" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Escaped newlines  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#filetransclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">File Transclusion  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#searchpaths" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Search Paths  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#wildcardextensions" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Wildcard Extensions  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusionpreprocessing" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion Preprocessing  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#footnotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Footnotes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaries" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossaries  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexglossaries" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Glossaries  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#images" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Images  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#linkandimageattributes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Link and Image Attributes  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#math" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Math  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#superscriptsandsubscripts" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Superscripts and Subscripts  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
@@ -348,6 +360,10 @@ Revised 2018-06-27</text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#rawsource" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Raw Source  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#smarttypography" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Smart Typography  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablebasics" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Basics  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablerules" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Rules  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#limitationsoftables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Limitations of Tables  <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
 
@@ -494,22 +510,22 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="citations"/>Citations </text:h>
 
-<text:p text:style-name="Standard">I have included support for <text:span text:style-name="MMD-Italic">basic</text:span> bibliography features in this version of MultiMarkdown. Please give me feedback on ways to improve this but keep the following in mind:</text:p>
+<text:p text:style-name="Standard">I have included support for <text:span text:style-name="MMD-Italic">basic</text:span> bibliography features in MultiMarkdown. I&#8217;m open to feedback on ways to improve this but keep the following in mind:</text:p>
 
 <text:list text:style-name="L2">
 <text:list-item>
-<text:p text:style-name="Standard">Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc). My XSLT files demonstrate how to make this format compatible with BibTeX, but I am not planning on personally providing compatibility with other tools. Feel free to post your ideas and tools to the wiki.</text:p></text:list-item>
+<text:p text:style-name="Standard">Bibliography support in MultiMarkdown is rudimentary. The goal is to offer a basic standalone feature, that can be changed using the tool of your choice to a more robust format (e.g. BibTeX, CiteProc).</text:p></text:list-item>
 
 <text:list-item>
-<text:p text:style-name="Standard">Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians will probably not be satisfied however.</text:p></text:list-item>
+<text:p text:style-name="Standard">Those needing more detailed function sets for their bibliographies may need customized tools to provide those services. This is a basic tool that should work for most people. Reference librarians, for example, will probably not be satisfied.</text:p></text:list-item>
 
 </text:list>
 
-<text:p text:style-name="Standard">To use citations in MultiMarkdown, you use a syntax much like that for anchors:</text:p>
+<text:p text:style-name="Standard">To use citations in MultiMarkdown, you use a syntax much like that for links:</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a statement that should be attributed to<text:line-break/>its source[p. 23][#Doe:2006].<text:line-break/><text:line-break/>And following is the description of the reference to be<text:line-break/>used in the bibliography.<text:line-break/><text:line-break/>[#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.<text:line-break/></text:p>
 
-<text:p text:style-name="Standard">You are not required to use a locator (e.g. p. 23), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:</text:p>
+<text:p text:style-name="Standard">You are not required to use a locator (e.g. &#8220;p. 23&#8221;), and there are no special rules on what can be used as a locator if you choose to use one. If you prefer to omit the locator, just use an empty set of square brackets before the citation:</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a statement that should be attributed to its<text:line-break/>source[][#Doe:2006].<text:line-break/></text:p>
 
@@ -555,17 +571,13 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:p text:style-name="Standard">CriticMarkup is integrated with MultiMarkdown itself, as well as <text:a xlink:type="simple" xlink:href="http://multimarkdown.com/">MultiMarkdown Composer</text:a>. I encourage you to check out the <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a> web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="thecriticmarkupsyntax"/>The CriticMarkup Syntax </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="usingcriticmarkupwithmultimarkdown"/>Using CriticMarkup With MultiMarkdown </text:h>
 
-<text:p text:style-name="Standard">The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <text:span text:style-name="MMD-Italic">before</text:span> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</text:p>
-
-<text:p text:style-name="Standard">When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</text:p>
-
-<text:p text:style-name="Standard">When using CriticMarkup with MultiMarkdown itself, you have four choices:</text:p>
+<text:p text:style-name="Standard">When using CriticMarkup with MultiMarkdown itself, you have three choices:</text:p>
 
 <text:list text:style-name="L1">
 <text:list-item>
-<text:p text:style-name="Standard">Leave the CriticMarkup syntax in place (<text:span text:style-name="Source_20_Text">multimarkdown foo.txt</text:span>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible.</text:p></text:list-item>
+<text:p text:style-name="Standard">Leave the CriticMarkup syntax in place (<text:span text:style-name="Source_20_Text">multimarkdown foo.txt</text:span>). MultiMarkdown will attempt to show the changes as highlights in the exported document, where possible. This will not <text:span text:style-name="MMD-Italic">always</text:span> result in a valid output document.</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="Standard">Accept all changes, giving you the &#8220;new&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -a foo.txt</text:span> or <text:span text:style-name="Source_20_Text">multimarkdown --accept foo.txt</text:span>)</text:p></text:list-item>
@@ -573,33 +585,58 @@ Markdown">John Gruber</text:a></text:p>
 <text:list-item>
 <text:p text:style-name="Standard">Reject all changes, giving you the &#8220;original&#8221; document (<text:span text:style-name="Source_20_Text">multimarkdown -r foo.txt</text:span> or <text:span text:style-name="Source_20_Text">multimarkdown --reject foo.txt</text:span>)</text:p></text:list-item>
 
+<text:list-item>
+<text:p text:style-name="Standard">CriticMarkup comments and highlighting are ignored when processing with <text:span text:style-name="Source_20_Text">--accept</text:span> or <text:span text:style-name="Source_20_Text">--reject</text:span>.</text:p></text:list-item>
+
 </text:list>
 
-<text:p text:style-name="Standard">CriticMarkup comments and highlighting are ignored when processing.</text:p>
+<text:h text:outline-level="4"><text:bookmark text:name="thecriticmarkupsyntax"/>The CriticMarkup Syntax </text:h>
 
+<text:p text:style-name="Standard">The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed <text:span text:style-name="MMD-Italic">before</text:span> any other MultiMarkdown is handled. It&#8217;s almost like a separate layer on top of the MultiMarkdown syntax.</text:p>
+
+<text:p text:style-name="Standard">When editing in MultiMarkdown Composer, you can have CriticMarkup syntax flagged in the both the editor pane and the preview window. This will allow you to see changes in the HTML preview.</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
 <text:p text:style-name="Standard">Deletions from the original text:</text:p>
 
 <text:p text:style-name="Preformatted Text">This is {--is --}a test.<text:line-break/></text:p>
 
+<text:p text:style-name="Standard">This is <text:span text:style-name="Strike">is </text:span>a test.</text:p></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">Additions:</text:p>
 
 <text:p text:style-name="Preformatted Text">This {++is ++}a test.<text:line-break/></text:p>
 
+<text:p text:style-name="Standard">This <text:span text:style-name="Underline">is </text:span>a test.</text:p></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">Substitutions:</text:p>
 
 <text:p text:style-name="Preformatted Text">This {~~isn't~>is~~} a test.<text:line-break/></text:p>
 
+<text:p text:style-name="Standard">This <text:span text:style-name="Strike">isn&#8217;t</text:span><text:span text:style-name="Underline">is</text:span> a test.</text:p></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">Highlighting:</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a {==test==}.<text:line-break/></text:p>
 
+<text:p text:style-name="Standard">This is a <text:span text:style-name="Highlight">test</text:span>.</text:p></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">Comments:</text:p>
 
 <text:p text:style-name="Preformatted Text">This is a test{>>What is it a test of?<<}.<text:line-break/></text:p>
 
+<text:p text:style-name="Standard">This is a test<text:span text:style-name="Comment">What is it a test of?</text:span>.</text:p></text:list-item>
+
+</text:list>
+
 <text:h text:outline-level="4"><text:bookmark text:name="criticmarkuplimitations"/>CriticMarkup Limitations </text:h>
 
-<text:p text:style-name="Standard">If you <text:span text:style-name="Source_20_Text">--accept</text:span> or <text:span text:style-name="Source_20_Text">--reject</text:span> CriticMarkup changes, then it should work properly in just about any document.</text:p>
+<text:p text:style-name="Standard">If you <text:span text:style-name="Source_20_Text">--accept</text:span> or <text:span text:style-name="Source_20_Text">--reject</text:span> CriticMarkup changes, then it should work properly in any document.</text:p>
 
 <text:p text:style-name="Standard">If you want to try to include your changes as &#8220;notes&#8221; in the final document, then certain situations will lead to results that were probably not what you intended.</text:p>
 
@@ -647,6 +684,232 @@ Markdown">John Gruber</text:a></text:p>
 
 </text:list>
 
+<text:h text:outline-level="3"><text:bookmark text:name="cross-references"/>Cross-References </text:h>
+
+<text:p text:style-name="Standard">An oft-requested feature was the ability to have Markdown automatically handle
+within-document links as easily as it handled external links. To this aim, I
+added the ability to interpret <text:span text:style-name="Source_20_Text">[Some Text][]</text:span> as a cross-link, if a header
+named &#8220;Some Text&#8221; exists.</text:p>
+
+<text:p text:style-name="Standard">As an example, <text:span text:style-name="Source_20_Text">[Metadata][]</text:span> will take you to the
+<text:a xlink:type="simple" xlink:href="#metadata">section describing metadata</text:a>.</text:p>
+
+<text:p text:style-name="Standard">Alternatively, you can include an optional label of your choosing to help
+disambiguate cases where multiple headers have the same title:</text:p>
+
+<text:p text:style-name="Preformatted Text">### Overview [MultiMarkdownOverview] ##<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This allows you to use <text:span text:style-name="Source_20_Text">[MultiMarkdownOverview]</text:span> to refer to this section
+specifically, and not another section named <text:span text:style-name="Source_20_Text">Overview</text:span>. This works with atx-
+or settext-style headers.</text:p>
+
+<text:p text:style-name="Standard">If you have already defined an anchor using the same id that is used by a
+header, then the defined anchor takes precedence.</text:p>
+
+<text:p text:style-name="Standard">In addition to headers within the document, you can provide labels for images
+and tables which can then be used for cross-references as well.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="definitionlists"/>Definition Lists </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown has support for definition lists using the same syntax used in
+<text:a xlink:type="simple" xlink:href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</text:a>. Specifically:</text:p>
+
+<text:p text:style-name="Preformatted Text">Apple<text:line-break/>:<text:tab/>Pomaceous fruit of plants of the genus Malus in<text:line-break/><text:tab/>the family Rosaceae.<text:line-break/>:<text:tab/>An american computer company.<text:line-break/><text:line-break/>Orange<text:line-break/>:<text:tab/>The fruit of an evergreen tree of the genus Citrus.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">becomes:</text:p>
+
+<text:p><text:span text:style-name="MMD-Bold">Apple</text:span></text:p>
+<text:p text:style-name="Quotations"> Pomaceous fruit of plants of the genus Malus in
+the family Rosaceae.</text:p>
+
+<text:p text:style-name="Quotations"> An american computer company.</text:p>
+
+<text:p><text:span text:style-name="MMD-Bold">Orange</text:span></text:p>
+<text:p text:style-name="Quotations"> The fruit of an evergreen tree of the genus Citrus.</text:p>
+
+
+<text:p text:style-name="Standard">You can have more than one term per definition by placing each term on a
+separate line. Each definition starts with a colon, and you can have more than
+one definition per term. You may optionally have a blank line between the last
+term and the first definition.</text:p>
+
+<text:p text:style-name="Standard">Definitions may contain other block level elements, such as lists,
+blockquotes, or other definition lists.</text:p>
+
+<text:p text:style-name="Standard">Unlike PHP Markdown Extra, all definitions are wrapped in <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tags. First, I
+was unable to get Markdown <text:span text:style-name="MMD-Italic">not</text:span> to create paragraphs. Second, I didn&#8217;t see
+where it mattered - the only difference seems to be aesthetic, and I actually
+prefer the <text:span text:style-name="Source_20_Text">&lt;p&gt;</text:span> tags in place. Let me know if this is a problem.</text:p>
+
+<text:p text:style-name="Standard">See the <text:a xlink:type="simple" xlink:href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</text:a> page for more information.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="escapednewlines"/>Escaped newlines </text:h>
+
+<text:p text:style-name="Standard">Thanks to a contribution from <text:a xlink:type="simple" xlink:href="https://github.com/njmsdk">Nicolas</text:a>, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is &#8220;space-space-newline&#8221; &#8212; two spaces at the end of the line. For some users, this causes problems:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">some users' text editors modify trailing space (IMHO, the proper fix for this is a new text editor&#8230;)</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">Nicolas submitted a patch that enables a new option that interprets &#8220;\&#8221; before a newline as a marker that a line break should be used:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a line.  <text:line-break/>This is a new line.<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="fencedcodeblocks"/>Fenced Code Blocks </text:h>
+
+<text:p text:style-name="Standard">In addition to the regular indented code block that Markdown uses, you can use &#8220;fenced&#8221; code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:</text:p>
+
+<text:p text:style-name="Preformatted Text">```perl<text:line-break/># Demonstrate Syntax Highlighting if you link to highlight.js #<text:line-break/># http://softwaremaniacs.org/soft/highlight/en/<text:line-break/>print &quot;Hello, world!\n&quot;;<text:line-break/>$a = 0;<text:line-break/>while ($a &lt; 10) {<text:line-break/>print &quot;$a...\n&quot;;<text:line-break/>$a++;<text:line-break/>}<text:line-break/>```<text:line-break/></text:p>
+
+<text:p text:style-name="Preformatted Text"># Demonstrate Syntax Highlighting if you link to highlight.js #<text:line-break/># http://softwaremaniacs.org/soft/highlight/en/<text:line-break/>print &quot;Hello, world!\n&quot;;<text:line-break/>$a = 0;<text:line-break/>while ($a &lt; 10) {<text:line-break/>print &quot;$a...\n&quot;;<text:line-break/>$a++;<text:line-break/>}<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">I don&#8217;t recommend any specific syntax highlighter, but have used the following metadata to set things up. It may or may not work for you:</text:p>
+
+<text:p text:style-name="Preformatted Text">html header:<text:tab/>&lt;link rel=&quot;stylesheet&quot; href=&quot;http://yandex.st/highlightjs/7.3/styles/default.min.css&quot;&gt;<text:line-break/><text:tab/>&lt;script src=&quot;http://yandex.st/highlightjs/7.3/highlight.min.js&quot;&gt;&lt;/script&gt;<text:line-break/><text:tab/>&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Fenced code blocks are particularly useful when including another file (<text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a>), and you want to show the <text:span text:style-name="MMD-Italic">source</text:span> of the file, not what the file looks like when processed by MultiMarkdown.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE</text:span>: In MultiMarkdown v6, if there is no closing fence, then the code block continues until the end of the document.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="filetransclusion"/>File Transclusion </text:h>
+
+<text:p text:style-name="Standard">File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is some text.<text:line-break/><text:line-break/>{{some_other_file.txt}}<text:line-break/><text:line-break/>Another paragraph<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">If a file named <text:span text:style-name="Source_20_Text">some_other_file.txt</text:span> exists, its contents will be inserted inside of this document <text:span text:style-name="MMD-Italic">before</text:span> being processed by MultiMarkdown. This means that the contents of the file can also contain MultiMarkdown formatted text.</text:p>
+
+<text:p text:style-name="Standard">If you want to display the <text:span text:style-name="MMD-Italic">contents</text:span> of the file without processing it, you can include it in a code block (you may need to remove trailing newlines at the end of the document to be included):</text:p>
+
+<text:p text:style-name="Preformatted Text">This is some text<text:line-break/><text:line-break/>```<text:line-break/>{{relative/path/to/some_other_file.txt}}<text:line-break/>```<text:line-break/><text:line-break/>Another paragraph<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Transclusion is recursive, so the file being inserted will be scanned to see if it references any other files.</text:p>
+
+<text:p text:style-name="Standard">Metadata in the file being inserted will be ignored. This means that the file can contain certain metadata when viewed alone that will not be included when the file is transcluded by another file.</text:p>
+
+<text:p text:style-name="Standard">You can use the <text:span text:style-name="Source_20_Text">[Transclude Base]</text:span> metadata to specify where MultiMarkdown should look for the files to be included. All files must be in this folder. If this folder is not specified, then MultiMarkdown will look in the same folder as the parent file.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">Note:</text:span> Thanks to David Richards for his ideas in developing support for this feature.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="searchpaths"/>Search Paths </text:h>
+
+<text:p text:style-name="Standard">When you process a file with MMD, it uses that file&#8217;s directory as the search
+path for included files. For example:</text:p>
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+<table:table-column/>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Directory<text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Transcluded Filename<text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Resolved Path <text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span><text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">bat</text:span><text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/bat</text:span><text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span><text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">baz/bat</text:span><text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/baz/bat</text:span><text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bar/</text:span><text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">../bat</text:span> <text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="Source_20_Text">/foo/bat</text:span><text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+
+
+<text:p text:style-name="Standard">This is the same as MMD v 5. What&#8217;s different is that when you transclude a
+file, the search path stays the same as the &#8220;parent&#8221; file, <text:span text:style-name="MMD-Bold">UNLESS</text:span> you use
+the <text:span text:style-name="Source_20_Text">transclude base</text:span> metadata to override it. The simplest override is:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: .<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This means that any transclusions within the file will be calculated relative
+to the file, regardless of the original search path.</text:p>
+
+<text:p text:style-name="Standard">Alternatively you could specify that any transclusion happens inside a
+subfolder:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: folder/<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Or you can specify an absolute path:</text:p>
+
+<text:p text:style-name="Preformatted Text">transclude base: /some/path<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This flexibility means that you can transclude different files based on
+whether a file is being processed by itself or as part of a &#8220;parent&#8221; file.
+This can be useful when a particular file can either be a standalone document,
+or a chapter inside a larger document.</text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="wildcardextensions"/>Wildcard Extensions </text:h>
+
+<text:p text:style-name="Standard">Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension &#8220;.*&#8221; to have MMD choose the proper version of the file (e.g. <text:span text:style-name="Source_20_Text">foo.tex</text:span>, <text:span text:style-name="Source_20_Text">foo.fodt</text:span>, <text:span text:style-name="Source_20_Text">foo.html</text:span>, etc.)</text:p>
+
+<text:p text:style-name="Preformatted Text">Insert a different version of a file here based on export format:<text:line-break/>{{foo.*}}<text:line-break/></text:p>
+
+<text:h text:outline-level="4"><text:bookmark text:name="transclusionpreprocessing"/>Transclusion Preprocessing </text:h>
+
+<text:p text:style-name="Standard">If you want to perform transclusion, <text:span text:style-name="MMD-Italic">without</text:span> converting to another format, you can use <text:span text:style-name="Source_20_Text">mmd</text:span> as the output format:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -t mmd foo.txt<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This will only perform &#8220;basic&#8221; transclusion &#8211;it does not support wildcard extensions, since the final output format is not known.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="footnotes"/>Footnotes </text:h>
+
+<text:p text:style-name="Standard">I have added support for footnotes to MultiMarkdown, using the syntax proposed by John Gruber. Unfortunately, he never implemented footnotes in Markdown.</text:p>
+
+<text:p text:style-name="Standard">To create a footnote, enter something like the following:</text:p>
+
+<text:p text:style-name="Preformatted Text">Here is some text containing a footnote.[^somesamplefootnote]<text:line-break/><text:line-break/>[^somesamplefootnote]: Here is the text of the footnote itself.<text:line-break/><text:line-break/>[somelink]:http://somelink.com<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The footnote itself must be at the start of a line, just like links by reference. If you want a footnote to have multiple paragraphs, lists, etc., then the subsequent paragraphs need an extra tab preceding them. You may have to experiment to get this just right, and please let me know of any issues you find.</text:p>
+
+<text:p text:style-name="Standard">This is what the final result looks like:</text:p>
+
+<text:p text:style-name="Quotations">Here is some text containing a footnote.<text:note text:id="fn1" text:note-class="footnote"><text:note-body><text:p text:style-name="Footnote">Here is the text of the footnote itself.</text:p></text:note-body></text:note></text:p>
+
+<text:p text:style-name="Standard">You can also use &#8220;inline footnotes&#8221;:</text:p>
+
+<text:p text:style-name="Preformatted Text">Here is another footnote.[^This is the footnote itself]<text:line-break/></text:p>
+
 <text:h text:outline-level="3"><text:bookmark text:name="glossaries"/>Glossaries </text:h>
 
 <text:p text:style-name="Standard">MultiMarkdown has a feature that allows footnotes to be specified as glossary terms. It doesn&#8217;t do much for XHTML documents, but the XSLT file that converts the document into LaTeX is designed to convert these special footnotes into glossary entries.</text:p>
@@ -686,6 +949,66 @@ memoir class.</text:p></text:list-item>
 <text:p text:style-name="Standard">Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <text:span text:style-name="Source_20_Text">~/Library/TeXShop/Engines</text:span>). You can name it something like <text:span text:style-name="Source_20_Text">MemoirGlossary.engine</text:span>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <text:a xlink:type="simple" xlink:href="http://www.uoregon.edu/~koch/texshop/">TeXShop</text:a>, this is the way to go.</text:p>
 
 <text:p text:style-name="Preformatted Text">#!/bin/<text:tab/><text:line-break/><text:line-break/>set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current<text:line-break/><text:tab/>/usr/local/bin) # This is actually a continuation of the line above<text:line-break/><text:line-break/>set basefile = `basename &quot;$1&quot; .tex`<text:line-break/><text:line-break/>makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="images"/>Images </text:h>
+
+<text:p text:style-name="Standard">The basic syntax for images in Markdown is:</text:p>
+
+<text:p text:style-name="Preformatted Text">![Alt text](/path/to/img.jpg)<text:line-break/><text:line-break/>![Alt text](/path/to/img.jpg &quot;Optional title&quot;)<text:line-break/><text:line-break/><text:line-break/>![Alt text][id]<text:line-break/><text:line-break/>[id]: url/to/image  &quot;Optional title attribute&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">In addition to the attributes you can use with links and images (described in <text:a xlink:type="simple" xlink:href="#linkandimageattributes">another section</text:a>), MultiMarkdown also adds a few additional features. If an image is the only thing in a paragraph, it is treated as a block level element:</text:p>
+
+<text:p text:style-name="Preformatted Text">This image (![Alt text](/path/to/img.jpg))<text:line-break/>is different than the following image:<text:line-break/><text:line-break/>![Alt text](/path/to/img.jpg)<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The resulting HTML is:</text:p>
+
+<text:p text:style-name="Preformatted Text">&lt;p&gt;This image (&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;)<text:line-break/>is different than the following image:&lt;/p&gt;<text:line-break/><text:line-break/>&lt;figure&gt;<text:line-break/>&lt;img src=&quot;/path/to/img.jpg&quot; alt=&quot;Alt text&quot; /&gt;<text:line-break/>&lt;figcaption&gt;Alt text&lt;/figcaption&gt;<text:line-break/>&lt;/figure&gt;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML <text:span text:style-name="Source_20_Text">figure</text:span> element. In this case, the <text:span text:style-name="Source_20_Text">alt</text:span> text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren&#8217;t supported.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="linkandimageattributes"/>Link and Image Attributes </text:h>
+
+<text:p text:style-name="Standard">Adding attributes to links and images has been requested for a long time on
+the Markdown discussion list. I was fairly opposed to this, as most of the
+proposals really disrupted the readability of the syntax. I consider myself a
+&#8220;Markdown purist&#8221;, meaning that I took John&#8217;s introduction to heart:</text:p>
+
+<text:p text:style-name="Quotations">The overriding design goal for Markdown&#8217;s formatting syntax is to make
+it as readable as possible. The idea is that a Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it&#8217;s been marked up with tags or formatting instructions. While
+Markdown&#8217;s syntax has been influenced by several existing text-to-HTML
+filters, the single biggest source of inspiration for Markdown&#8217;s
+syntax is the format of plain text email.</text:p>
+
+<text:p text:style-name="Standard">Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.</text:p>
+
+<text:p text:style-name="Standard">Then, Choan C. Gálvez <text:a xlink:type="simple" xlink:href="http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html">proposed</text:a> a brilliantly simple syntax that
+stayed out of the way. By simply appending the attributes to the link
+reference information, which is already removed from the text itself, it
+doesn&#8217;t disturb the readability.</text:p>
+
+<text:p text:style-name="Standard">For example:</text:p>
+
+<text:p text:style-name="Preformatted Text">This is a formatted ![image][] and a [link][] with attributes.<text:line-break/><text:line-break/>[image]: http://path.to/image &quot;Image title&quot; width=40px height=400px<text:line-break/>[link]:  http://path.to/link.html &quot;Some Link&quot; class=external<text:line-break/>         style=&quot;border: solid black 1px;&quot;<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This will generate width and height attributes for the image, and a border
+around the link. And while it can be argued that it does look &#8220;like it&#8217;s been
+marked up with tags [and] formatting instructions&#8221;, even I can&#8217;t argue too
+strongly against it. The link and the title in quotes already look like some
+form of markup, and the the additional tags are hardly that intrusive, and
+they offer a great deal of functionality. They might even be useful in further
+functions (citations?).</text:p>
+
+<text:p text:style-name="Standard">The attributes must continue after the other link/image data, and may contain
+newlines, but must start at the beginning of the line. The format is
+<text:span text:style-name="Source_20_Text">attribute=value</text:span> or <text:span text:style-name="Source_20_Text">attribute=&quot;multi word value&quot;</text:span>. Currently, MultiMarkdown
+does not attempt to interpret or make any use of any of these attributes.
+Also, you can&#8217;t have a multiword attribute span a newline.</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="MMD-Bold">NOTE:</text:span> As of version 6, MultiMarkdown will also allow attributes in inline links as well:</text:p>
+
+<text:p text:style-name="Preformatted Text">Colored [link](http://example.net &quot;Title&quot; style=&quot;color:red&quot;)<text:line-break/></text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="math"/>Math </text:h>
 
@@ -750,7 +1073,7 @@ document, such as title, author, etc. This information can then be used to
 control how MultiMarkdown processes the document, or can be used in certain
 output formats in special ways. For example:</text:p>
 
-<text:p text:style-name="Preformatted Text">{{examples/metadata.text}}<text:line-break/></text:p>
+<text:p text:style-name="Preformatted Text"><text:line-break/>Title:    A Sample MultiMarkdown Document  <text:line-break/>Author:   Fletcher T. Penney  <text:line-break/>Date:     February 9, 2011  <text:line-break/>Comment:  This is a comment intended to demonstrate  <text:line-break/>          metadata that spans multiple lines, yet  <text:line-break/>          is treated as a single value.  <text:line-break/>CSS:      http://example.com/standard.css<text:line-break/></text:p>
 
 <text:p text:style-name="Standard">The syntax for including metadata is simple.</text:p>
 
@@ -788,7 +1111,7 @@ output formats in special ways. For example:</text:p>
 
 <text:p text:style-name="Standard">You can substitute the <text:span text:style-name="Source_20_Text">value</text:span> for a metadata <text:span text:style-name="Source_20_Text">key</text:span> in the body of a document using the following format, where <text:span text:style-name="Source_20_Text">foo</text:span> and <text:span text:style-name="Source_20_Text">bar</text:span> are the <text:span text:style-name="Source_20_Text">key</text:span>s of the desired metadata.</text:p>
 
-<text:p text:style-name="Preformatted Text">{{examples/metadata-variable.text}}<text:line-break/></text:p>
+<text:p text:style-name="Preformatted Text"><text:line-break/>foo:<text:tab/>foo-test<text:line-break/>bar:<text:tab/>bar-test<text:line-break/><text:line-break/># A Variable in a Heading [%foo] #<text:line-break/><text:line-break/>A variable in the body [%bar].<text:line-break/></text:p>
 
 <text:h text:outline-level="3"><text:bookmark text:name="standardmetadatakeys"/>&#8220;Standard&#8221; Metadata keys </text:h>
 
@@ -821,7 +1144,7 @@ website, the name of an employer, academic affiliation, etc.</text:p>
 
 <text:p text:style-name="Standard">Additionally, there are &#8220;flavors&#8221; of this metadata key for various output formats so that you can specify a different header level for different output formats &#8212; e.g. <text:span text:style-name="Source_20_Text">LaTeX Header Level</text:span>, <text:span text:style-name="Source_20_Text">HTML Header Level</text:span>, and <text:span text:style-name="Source_20_Text">ODF Header Level</text:span>.</text:p>
 
-<text:p text:style-name="Standard">If you are doing something interesting with [File Transclusion], you can also use a negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;, this allows you to use a different level of headings when a file is processed on its own.</text:p>
+<text:p text:style-name="Standard">If you are doing something interesting with <text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a>, you can also use a negative number here. Since metadata is not used when a file is &#8220;transcluded&#8221;, this allows you to use a different level of headings when a file is processed on its own.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="bibliostyle"/>Biblio Style </text:h>
 
@@ -936,7 +1259,7 @@ dutch (or <text:span text:style-name="Source_20_Text">nl</text:span>)</text:p></
 
 <text:list-item>
 <text:p text:style-name="P1">
-english</text:p></text:list-item>
+english (<text:span text:style-name="Source_20_Text">en</text:span>)</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="P1">
@@ -970,7 +1293,7 @@ change the language of a document in LaTeX is up to the individual.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="transcludebase"/>Transclude Base </text:h>
 
-<text:p text:style-name="Standard">When using the [File Transclusion] feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</text:p>
+<text:p text:style-name="Standard">When using the <text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a> feature to &#8220;link&#8221; to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.</text:p>
 
 <text:p text:style-name="Standard">This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using <text:span text:style-name="Source_20_Text">stdin</text:span> or another application that offers MultiMarkdown support). In this case, the path must be a complete path.</text:p>
 
@@ -1067,6 +1390,154 @@ spanish(<text:span text:style-name="Source_20_Text">en</text:span>)</text:p></te
 <text:p text:style-name="Standard">As of version 4.7, MultiMarkdown supports the use of <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.</text:p>
 
 <text:p text:style-name="Standard">When possible, MultiMarkdown uses the &#8220;native&#8221; TOC for a given output format. For example, <text:span text:style-name="Source_20_Text">\tableofcontents</text:span> when exporting to LaTeX.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="tables"/>Tables </text:h>
+
+<text:h text:outline-level="4"><text:bookmark text:name="tablebasics"/>Table Basics </text:h>
+
+<text:p text:style-name="Standard">MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for <text:a xlink:type="simple" xlink:href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</text:a></text:p>
+
+<text:p text:style-name="Standard">Basically, it allows you to turn:</text:p>
+
+<text:p text:style-name="Preformatted Text"><text:line-break/>|             |          Grouping           ||<text:line-break/>First Header  | Second Header | Third Header |<text:line-break/> ------------ | :-----------: | -----------: |<text:line-break/>Content       |          *Long Cell*        ||<text:line-break/>Content       |   **Cell**    |         Cell |<text:line-break/><text:line-break/>New section   |     More      |         Data |<text:line-break/>And more      | With an escaped '\|'         ||  <text:line-break/>[Prototype table]<text:line-break/><text:line-break/></text:p>
+
+<text:p text:style-name="Standard">into the following <text:a xlink:type="simple" xlink:href="#prototypetable">table</text:a>.</text:p>
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+<table:table-column/>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading">    </text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-spanned="2">
+<text:p text:style-name="Table_20_Heading">   Grouping   </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading">First Header </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Second Header </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> Third Header </text:p>
+</table:table-cell>
+</table:table-row>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table">Content  </text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-spanned="2">
+<text:p text:style-name="MMD-Table-Center">   <text:span text:style-name="MMD-Italic">Long Cell</text:span>  </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table">Content  </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table-Center"> <text:span text:style-name="MMD-Bold">Cell</text:span> </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table-Right">   Cell </text:p>
+</table:table-cell>
+</table:table-row>
+
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table">New section </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table-Center">  More  </text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table-Right">   Data </text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table">And more  </text:p>
+</table:table-cell>
+<table:table-cell table:number-columns-spanned="2">
+<text:p text:style-name="MMD-Table-Center"> With an escaped &#8216;|&#8217;   </text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+<text:p><text:bookmark text:name="prototypetable"/>Table <text:sequence text:name="Table" text:formula="ooow:Table+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>:Prototype table<text:bookmark-end text:name="prototypetable"/></text:p>
+
+
+<text:h text:outline-level="4"><text:bookmark text:name="tablerules"/>Table Rules </text:h>
+
+<text:p text:style-name="Standard">The requirements are:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">There must be at least one <text:span text:style-name="Source_20_Text">|</text:span> per line</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The &#8220;separator&#8221; line between headers and table content must contain only <text:span text:style-name="Source_20_Text">|</text:span>,<text:span text:style-name="Source_20_Text">-</text:span>, <text:span text:style-name="Source_20_Text">=</text:span>, <text:span text:style-name="Source_20_Text">:</text:span>,<text:span text:style-name="Source_20_Text">.</text:span>, <text:span text:style-name="Source_20_Text">+</text:span>, or spaces</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Cell content must be on one line only</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Columns are separated by <text:span text:style-name="Source_20_Text">|</text:span></text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The first line of the table, and the alignment/divider line, must start at
+the beginning of the line</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">Other notes:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">It is optional whether you have <text:span text:style-name="Source_20_Text">|</text:span> characters at the beginning and end of lines.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">The &#8220;separator&#8221; line uses <text:span text:style-name="Source_20_Text">----</text:span> or <text:span text:style-name="Source_20_Text">====</text:span> to indicate the line between a header and cell. The length of the line doesn&#8217;t matter, but must have at least one character per cell.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">To set alignment, you can use a colon to designate left or right alignment, or a colon at each end to designate center alignment, as above. If no colon is present, the default alignment of your system is selected (left in most cases). If the separator line ends with <text:span text:style-name="Source_20_Text">+</text:span>, then cells in that column will be wrapped when exporting to LaTeX if they are long enough.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">To indicate that a cell should span multiple columns, then simply add additional pipes (<text:span text:style-name="Source_20_Text">|</text:span>) at the end of the cell, as shown in the example. If the cell in question is at the end of the row, then of course that means that pipes are not optional at the end of that row&#8230;. The number of pipes equals the number of columns the cell should span.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">You can use normal Markdown markup within the table cells.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Captions are optional, but if present must be at the beginning of the line immediately following the table, start with <text:span text:style-name="Source_20_Text">[</text:span>, and end with <text:span text:style-name="Source_20_Text">]</text:span>. If you have a caption before and after the table, only the first match will be used.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">If you have a caption, you can also have a label, allowing you to create anchors pointing to the table. If there is no label, then the caption acts as the label</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Cells can be empty.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">You can create multiple <text:span text:style-name="Source_20_Text">&lt;tbody&gt;</text:span> tags (for HTML) within a table by having a <text:span text:style-name="MMD-Bold">single</text:span> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</text:p></text:list-item>
+
+</text:list>
+
+<text:h text:outline-level="4"><text:bookmark text:name="limitationsoftables"/>Limitations of Tables </text:h>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">MultiMarkdown table support is designed to handle <text:span text:style-name="MMD-Italic">most</text:span> tables for <text:span text:style-name="MMD-Italic">most</text:span> people; it doesn&#8217;t cover <text:span text:style-name="MMD-Italic">all</text:span> tables for <text:span text:style-name="MMD-Italic">all</text:span> people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Native RTF support for tables is <text:span text:style-name="MMD-Italic">very</text:span> limited. If you need more complex tables, I recommend using the OpenDocument format, and then using <text:a xlink:type="simple" xlink:href="http://www.libreoffice.org/">LibreOffice</text:a> to convert your document to RTF.</text:p></text:list-item>
+
+</text:list>
 </office:text>
 </office:body>
 </office:document>
