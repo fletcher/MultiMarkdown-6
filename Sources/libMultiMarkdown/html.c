@@ -2144,21 +2144,11 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			break;
 
 		case MATH_DOLLAR_SINGLE:
-			if (t->mate) {
-				(t->start < t->mate->start) ? ( print_const("\\(") ) : ( print_const("\\)") );
-			} else {
-				print_const("$");
-			}
-
+			print_const("$");
 			break;
 
 		case MATH_DOLLAR_DOUBLE:
-			if (t->mate) {
-				(t->start < t->mate->start) ? ( print_const("\\[") ) : ( print_const("\\]") );
-			} else {
-				print_const("$$");
-			}
-
+			print_const("$$");
 			break;
 
 		case MATH_PAREN_OPEN:
@@ -2225,6 +2215,24 @@ void mmd_export_token_html_math(DString * out, const char * source, token * t, s
 
 		case MATH_BRACKET_CLOSE:
 			print_const("\\]");
+			break;
+
+		case MATH_DOLLAR_SINGLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\(") ) : ( print_const("\\)") );
+			} else {
+				print_const("$");
+			}
+
+			break;
+
+		case MATH_DOLLAR_DOUBLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\[") ) : ( print_const("\\]") );
+			} else {
+				print_const("$$");
+			}
+
 			break;
 
 		case MATH_PAREN_OPEN:

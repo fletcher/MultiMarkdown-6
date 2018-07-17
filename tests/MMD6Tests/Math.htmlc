@@ -62,3 +62,11 @@ latex config:	article</p>
 <p>25</p>
 
 <p>\[\pi~2\]</p>
+
+<p><code>$a*x*y$</code></p>
+
+<p><code>$$a*x*y$$</code></p>
+
+<p><code>\\(a*x*y\\)</code></p>
+
+<p><code>\\[a*x*y\\]</code></p>
