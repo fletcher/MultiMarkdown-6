@@ -2316,12 +2316,14 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexconfig") == 0) {
 		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheader") == 0) {
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {
 		} else if (strcmp(m->key, "latexleader") == 0) {
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "odfheader") == 0) {
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\t<title>");
@@ -2346,6 +2348,17 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 
 
 void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch) {
+	meta * m;
+
+	// Iterate over metadata keys
+
+	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
+		if (strcmp(m->key, "htmlfooter") == 0) {
+			print(m->value);
+			print_char('\n');
+		}
+	}
+
 	print_const("\n\n</body>\n</html>\n");
 }
 

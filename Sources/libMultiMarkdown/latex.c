@@ -2387,6 +2387,7 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "odfheader") == 0) {
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\\def\\mytitle{");

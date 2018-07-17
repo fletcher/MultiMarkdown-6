@@ -189,12 +189,15 @@ char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch) {
 		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexconfig") == 0) {
 		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheader") == 0) {
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {
 		} else if (strcmp(m->key, "latexleader") == 0) {
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "odfheader") == 0) {
+			mmd_print_string_opendocument(out, m->value);
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\t<dc:title>");
