@@ -283,8 +283,19 @@ set (latex
 	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-footer.tex
 	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-leader.tex
 
+	texmf/tex/latex/mmd6/manuscript/manuscript.sty
+	texmf/tex/latex/mmd6/manuscript/mmd6-manuscript-begin.tex
+	texmf/tex/latex/mmd6/manuscript/mmd6-manuscript-footer.tex
+	texmf/tex/latex/mmd6/manuscript/mmd6-manuscript-leader.tex
+
+	texmf/tex/latex/mmd6/memoir-book/mmd6-memoir-book-begin.tex
+	texmf/tex/latex/mmd6/memoir-book/mmd6-memoir-book-footer.tex
+	texmf/tex/latex/mmd6/memoir-book/mmd6-memoir-book-leader.tex
+
 	texmf/tex/latex/mmd6/shared/mmd6-criticmarkup.tex
 	texmf/tex/latex/mmd6/shared/mmd6-default-metadata.tex
+	texmf/tex/latex/mmd6/shared/mmd6-manuscript-packages.tex
+	texmf/tex/latex/mmd6/shared/mmd6-memoir-copyright.tex
 	texmf/tex/latex/mmd6/shared/mmd6-memoir-footer.tex
 	texmf/tex/latex/mmd6/shared/mmd6-memoir-layout-8.5x11.tex
 	texmf/tex/latex/mmd6/shared/mmd6-memoir-packages.tex
