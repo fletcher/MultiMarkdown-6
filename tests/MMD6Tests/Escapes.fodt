@@ -356,7 +356,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Preformatted Text">\-<text:line-break/>\&amp;<text:line-break/>\%<text:line-break/>\\<text:line-break/>\`<text:line-break/></text:p>
 
-<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\- \&amp; \% \\ \`</text:span></text:p>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\- \&amp; \% \\ \ \</text:span></text:p>
 
 <text:p text:style-name="Standard">*foo*</text:p>
 
@@ -365,6 +365,16 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">_bar_</text:p>
 
 <text:p text:style-name="Standard">`foo`</text:p>
+
+<text:p text:style-name="Standard">`foo`</text:p>
+
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">foo\</text:span></text:p>
+
+<text:p text:style-name="Standard">`<text:span text:style-name="Source_20_Text">foo\</text:span></text:p>
+
+<text:p text:style-name="Standard">40</text:p>
+
+<text:p text:style-name="Standard">`<text:span text:style-name="Source_20_Text">foo</text:span></text:p>
 
 <text:p text:style-name="Standard">foo bar</text:p>
 

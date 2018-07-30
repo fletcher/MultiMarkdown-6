@@ -2098,7 +2098,12 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			mmd_print_char_html(out, source[t->start + 1], false);
+			
+			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
+			} else {
+				mmd_print_char_html(out, source[t->start + 1], false);
+			}
+
 			break;
 
 		case HTML_COMMENT_START:

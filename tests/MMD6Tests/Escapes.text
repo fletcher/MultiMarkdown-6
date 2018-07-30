@@ -83,7 +83,7 @@ latex config:	article
 	\\
 	\`
 
-`\- \& \% \\ \``
+`\- \& \% \\ \ \ `
 
 \*foo\*
 
@@ -92,6 +92,16 @@ latex config:	article
 \_bar\_
 
 \`foo\`
+
+\`foo`
+
+`foo\ `
+
+\``foo\ `
+
+40
+
+\``foo`
 
 foo\ bar
 

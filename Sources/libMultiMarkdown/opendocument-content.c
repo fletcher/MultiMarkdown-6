@@ -312,7 +312,10 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			mmd_print_char_opendocument(out, source[t->start + 1]);
+			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
+			} else {
+				mmd_print_char_opendocument(out, source[t->start + 1]);
+			}
 			break;
 
 		case HTML_COMMENT_START:

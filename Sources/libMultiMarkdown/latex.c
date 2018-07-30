@@ -2002,8 +2002,10 @@ void mmd_export_token_latex_raw(DString * out, const char * source, token * t, s
 	switch (t->type) {
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			print_char(source[t->start + 1]);
-//			mmd_print_char_latex(out, source[t->start + 1]);
+			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
+			} else {
+				print_char(source[t->start + 1]);
+			}
 			break;
 
 		case HTML_ENTITY:
