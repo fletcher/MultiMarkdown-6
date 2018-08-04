@@ -113,6 +113,7 @@ typedef struct {
 	stack *				header_stack;
 
 	stack *				outline_stack;
+	short				opml_item_closed;
 
 	short				recurse_depth;
 

@@ -69,6 +69,7 @@
 #include "memoir.h"
 #include "mmd.h"
 #include "opendocument-content.h"
+#include "opml.h"
 #include "parser.h"
 #include "scanners.h"
 #include "token.h"
@@ -153,6 +154,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->header_stack = e->header_stack;
 
 		p->outline_stack = stack_new(0);
+		p->opml_item_closed = 1;
 
 		p->recurse_depth = 0;
 
@@ -1832,6 +1834,7 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			mmd_export_token_tree_beamer(out, e->dstr->str, e->root, scratch);
 
+			// Close out any existing outline levels
 			mmd_outline_add_beamer(out, NULL, scratch);
 
 			mmd_export_citation_list_beamer(out, e->dstr->str, scratch);
@@ -1911,6 +1914,10 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 			mmd_export_token_tree_opendocument(out, e->dstr->str, e->root, scratch);
 
 //			mmd_end_complete_odf(out, e->dstr->str, scratch);
+			break;
+
+		case FORMAT_OPML:
+			mmd_export_token_tree_opml(out, e->dstr->str, e->root, scratch);
 			break;
 	}
 

@@ -153,7 +153,7 @@ int main(int argc, char** argv) {
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|bundle|bundlezip"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|opml|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("", ""),
@@ -286,6 +286,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_TEXTBUNDLE;
 		} else if (strcmp(a_format->sval[0], "bundlezip") == 0) {
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
+		} else if (strcmp(a_format->sval[0], "opml") == 0) {
+			format = FORMAT_OPML;
 		} else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -367,6 +369,10 @@ int main(int argc, char** argv) {
 
 				case FORMAT_TEXTBUNDLE_COMPRESSED:
 					output_filename = filename_with_extension(a_file->filename[i], ".textpack");
+					break;
+
+				case FORMAT_OPML:
+					output_filename = filename_with_extension(a_file->filename[i], ".opml");
 					break;
 			}
 

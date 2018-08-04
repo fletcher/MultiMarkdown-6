@@ -193,6 +193,7 @@ set(src_files
 	Sources/libMultiMarkdown/object_pool.c
 	Sources/libMultiMarkdown/opendocument.c
 	Sources/libMultiMarkdown/opendocument-content.c
+	Sources/libMultiMarkdown/opml.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
 	Sources/libMultiMarkdown/scanners.c
@@ -225,6 +226,7 @@ set(header_files
 	Sources/libMultiMarkdown/object_pool.h
 	Sources/libMultiMarkdown/opendocument.h
 	Sources/libMultiMarkdown/opendocument-content.h
+	Sources/libMultiMarkdown/opml.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
 	Sources/libMultiMarkdown/textbundle.c
@@ -663,6 +665,8 @@ ADD_MMD_TEST(mmd-6-beamer "-t beamer" Beamer tex)
 ADD_MMD_TEST(mmd-6-memoir "-t memoir" Memoir tex)
 
 ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
+
+ADD_MMD_TEST(mmd-6-opml "-t opml" MMD6Tests opml)
 
 ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)
 
