@@ -331,9 +331,7 @@ list</text:p></text:list-item>
 
 <text:p text:style-name="Standard">Cite.<text:note text:id="cite1" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">Inline Citation</text:p></text:note-body></text:note></text:p>
 
-<text:p text:style-name="Standard">Cite.<text:note text:id="cite2" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">bar
-
-</text:p></text:note-body></text:note></text:p>
+<text:p text:style-name="Standard">Cite.<text:note text:id="cite2" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">bar</text:p></text:note-body></text:note></text:p>
 
 <text:h text:outline-level="1"><text:bookmark text:name="linksandimages"/>Links and Images </text:h>
 

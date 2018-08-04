@@ -1060,6 +1060,7 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 
 footnote * footnote_new(const char * source, token * label, token * content, bool lowercase) {
 	footnote * f = malloc(sizeof(footnote));
+	token * walker;
 
 	if (f) {
 		f->label = label;
@@ -1078,6 +1079,24 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 					token_trim_leading_whitespace(content, source);
 
 				default:
+					// Trim trailing newlines
+					walker = content->tail;
+					while (walker) {
+						switch (walker->type) {
+							case TEXT_NL:
+							case TEXT_NL_SP:
+								content->tail = walker->prev;
+								token_free(walker);
+								walker = content->tail;
+								walker->next = NULL;
+								break;
+
+							default:
+								walker = NULL;
+								break;
+						}
+					}
+
 					f->content = token_new_parent(content, BLOCK_PARA);
 					f->free_para = true;
 					break;
