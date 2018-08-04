@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Amps and Angles</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;AT&amp;T has an ampersand in their name.&#10;&#10;AT&amp;amp;T is another way to write it.&#10;&#10;This &amp; that.&#10;&#10;4 &lt; 5.&#10;&#10;6 &gt; 5.&#10;&#10;5&#10;&#10;Here is a [link][1] with an ampersand in the URL.&#10;&#10;Here is a link with an amersand in the link text: [AT&amp;T][2].&#10;&#10;Here is an inline [link](/script%20here?foo=1&amp;bar=2).&#10;&#10;Here is an inline [link](&lt;/script%20here?foo=1&amp;bar=2&gt;).&#10;&#10;&#9;&amp; and &amp;amp; and &lt; and &gt; in code block.&#10;&#10;10&#10;&#10;[1]: http://example.com/?foo=1&amp;bar=2&#10;[2]: http://att.com/  &quot;AT&amp;T&quot;&#10;&#10;&amp;copy; `&amp;copy;`&#10; &#10;&amp;#169; `&amp;#169;`&#10; &#10;&amp;#xA9; `&amp;#xA9;`&#10;&#10;15&#10;&#10;`&amp; and &amp;amp; and &lt; and &gt; in code span.`&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Amps and Angles"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

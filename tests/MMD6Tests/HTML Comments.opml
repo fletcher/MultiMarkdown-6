@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>HTML Comments</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;foo &lt;!-- *bar* --&gt;&#10;&#10;foo &lt;!--&#10;*bar* --&gt;&#10;&#10;foo &lt;!--&#10;*bar*&#10;--&gt;&#10;&#10;foo &lt;!--&#10;*bar*&#10;&#10;--&gt;&#10;&#10;foo &lt;!--&#10;&#10;*bar*&#10;&#10;--&gt;&#10;&#10;5&#10;&#10;&#9;&lt;!-- *foo* --&gt;&#10;&#10;&lt;!--&#10;&#10;*foo*&#10;&#10;--&gt;&#10;&#10;foo &lt;!-- &#10;&#10;*bar* --&gt;&#10;&#10;&lt;!-- *foo*&#10;&#10;*bar*&#10;&#10;--&gt;&#10;&#10;*foo*&#10;&#10;&lt;!--&#10;&#10;*foo* --&gt; *bar*&#10;&#10;*foo*&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="HTML Comments"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Definition Lists</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;foo&#10;bar&#10;:&#9;*foo bar&#10;:&#9;baz bat*&#10;&#10;foo&#10;bar&#10;:&#9;*foo bar&#10;&#9;bar foo*&#10;:&#9;baz bat&#10;&#10;bat&#10;:&#9;*foo*&#10;&#10;foo&#10;:&#9;*foo bar&#10;&#9;bar foo&#10;:&#9;baz* bat&#10;&#10;foo&#10;&#10;:foo&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Definition Lists"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

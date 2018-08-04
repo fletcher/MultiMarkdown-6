@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>HTML Blocks</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;&lt;del&gt;*bar1*&lt;/del&gt;&#10;&#10;&lt;del&gt;&#10;*bar2*&#10;&lt;/del&gt;&#10;&#10;foo&#10;&lt;del&gt;&#10;*bar3*&#10;&lt;/del&gt;&#10;&#10;&lt;del&gt;&#10;*bar4*&#10;&#10;&lt;/del&gt;&#10;&#10;&#10;&lt;del&gt;&#10;&#10;*bar5*&#10;&#10;&lt;/del&gt;&#10;&#10;5&#10;&#10;&lt;div&gt;*bar1*&lt;/div&gt;&#10;&#10;&lt;div&gt;&#10;*bar2*&#10;&lt;/div&gt;&#10;&#10;foo&#10;&lt;div&gt;&#10;*bar3*&#10;&lt;/div&gt;&#10;&#10;&lt;div&gt;&#10;*bar4*&#10;&#10;&lt;/div&gt;&#10;&#10;&#10;&lt;div&gt;&#10;&#10;*bar5*&#10;&#10;&lt;/div&gt;&#10;&#10;10&#10;&#10;&lt;div&gt;&#10;# foo1 #&#10;[foo][foo1]&#10;&lt;/div&gt;&#10;&#10;&lt;div&gt;&#10;&#10;"></outline>
+<outline text="foo2 " _note="&#10;[foo][foo2]&#10;&#10;&lt;/div&gt;&#10;&#10;&lt;!-- This is a *comment* --&gt;&#10;&#10;&lt;!-- This is a&#10;longer&#10; *comment* --&gt;&#10;&#10;&lt;!--&#10;This&#10;&#10;is&#10;&#10;a comment&#10;--&gt;&#10;&#10;15&#10;&#10;&lt;!-- This is not a&#10;&#10;*comment* --&gt;&#10;&#10;&lt;div&gt;&#10;&lt;div&gt;&#10;**foo1**&#10;&lt;/div&gt;&#10;&lt;/div&gt;&#10;&#10;&#10;&lt;div&gt;&#10;&#10;&lt;div&gt;&#10;**foo2**&#10;&lt;/div&gt;&#10;&#10;&lt;/div&gt;&#10;&#10;&#10;&lt;div&gt;&#10;&#10;&lt;div&gt;&#10;&#10;**foo3**&#10;&#10;&lt;/div&gt;&#10;&#10;&lt;/div&gt;&#10;&#10;&#10;&lt;div&gt;&#10;&#10;&lt;div&gt;&#10;**foo4**&#10;&lt;/div&gt;&#10;&#10;&lt;/div&gt;&#10;&#10;20&#10;&#10;&lt;div&gt;&#10;&lt;div&gt;&#10;&#10;**foo5**&#10;&lt;/div&gt;&#10;&lt;/div&gt;&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="HTML Blocks"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

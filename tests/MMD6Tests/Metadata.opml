@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>*foo* &quot;bar&quot;</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;foo:&#9;bar&#10;&#10;"></outline>
+<outline text="foo " _note=""></outline>
+<outline text="Metadata">
+<outline text="title" _note="*foo* &quot;bar&quot;"/>
+<outline text="empty" _note=""/>
+<outline text="css" _note="http://foo.com/bar.css"/>
+<outline text="htmlheader" _note="&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt;"/>
+<outline text="latexleader" _note="mmd6-article-leader"/>
+<outline text="latexbegin" _note="mmd6-article-begin"/>
+<outline text="latexfooter" _note="mmd6-article-footer"/>
+<outline text="foo" _note="bar foo bar foo bar"/>
+<outline text="htmlheaderlevel" _note="2"/>
+<outline text="latexheaderlevel" _note="2"/>
+<outline text="baseheaderlevel" _note="3"/>
+</outline>
+</body>
+</opml>
+

@@ -281,7 +281,11 @@ void mmd_outline_add_opml(DString * out, const char * source, token * current, s
 			switch (t->type) {
 				case BLOCK_SETEXT_1:
 				case BLOCK_SETEXT_2:
-					start = t->next->start;
+					if (t->next) {
+						start = t->next->start;
+					} else {
+						start = t->start + t->len;
+					}
 					break;
 
 				case BLOCK_H1:

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Abbreviations</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;foo foo&#10;&#10;f.o.o. f.o.o.&#10;&#10;f-o-o f-o-o&#10;&#10;f o o f o o&#10;&#10;fo&apos;o fo&apos;o&#10;&#10;5&#10;&#10;[&gt;bar] [&gt;bar]&#10;&#10;[&gt;b.a.r.] [&gt;b.a.r.]&#10;&#10;[&gt;b-a-r] [&gt;b-a-r]&#10;&#10;[&gt;b a r] [&gt;b a r]&#10;&#10;[&gt;ba&apos;r] [&gt;ba&apos;r]&#10;&#10;10&#10;&#10;foo bar&#10;&#10;foo&#10;bar&#10;&#10;foo  bar&#10;&#10;[&gt;(baz) BAZ]&#10;&#10;&gt; foo bar&#10;&#10;15&#10;&#10;| foo | bar |&#10;| --- | --- |&#10;| foo | bar |&#10;[foo bar]&#10;&#10;"></outline>
+<outline text="foo bar " _note="&#10;"><outline text="foo bar " _note="&#10;"></outline>
+</outline>
+<outline text="foo bar" _note="&#10;![foo bar](http://foobar.net/)&#10;&#10;20&#10;&#10;[^foo and bar]&#10;&#10;[^note]&#10;&#10;* foo&#10;* foo&#10;* foo&#10;&#10;&#10;[&gt;foo]: FOO&#10;[&gt;f.o.o.]: F.O.O.&#10;[&gt;f-o-o]: F-O-O&#10;[&gt;f o o]: F O O&#10;[&gt;fo&apos;o]: FO&apos;O&#10;&#10;[&gt;bar]: BAR&#10;[&gt;b.a.r.]: B.A.R.&#10;[&gt;b-a-r]: B-A-R&#10;[&gt;b a r]: B A R&#10;[&gt;ba&apos;r]: BA&apos;R&#10;&#10;[&gt;foo bar]: FOO BAR&#10;&#10;[^note]: foo and bar&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Abbreviations"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+
