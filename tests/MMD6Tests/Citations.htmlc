@@ -1,7 +1,7 @@
 <p>Title:	Citations
 latex config:	article</p>
 
-<h1>citep </h1>
+<h1>citep</h1>
 
 <p>[#foo1]</p>
 
@@ -15,7 +15,7 @@ latex config:	article</p>
 
 <p>[#foo1][#foo2]</p>
 
-<h1>citet </h1>
+<h1>citet</h1>
 
 <p>[#foo1;]</p>
 

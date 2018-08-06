@@ -3,26 +3,26 @@ latex config:	article</p>
 
 <p>{{TOC}}</p>
 
-<h2>Second Level </h2>
+<h2>Second Level</h2>
 
-<h1>First Level </h1>
+<h1>First Level</h1>
 
-<h2>Second Level b </h2>
+<h2>Second Level b</h2>
 
-<h3>Third Level </h3>
+<h3>Third Level</h3>
 
-<h2>Second Level c </h2>
+<h2>Second Level c</h2>
 
-<h1>First Level b </h1>
+<h1>First Level b</h1>
 
-<h3>Third Level b </h3>
+<h3>Third Level b</h3>
 
-<h2>Second level d </h2>
+<h2>Second level d</h2>
 
-<h3>Third level d </h3>
+<h3>Third level d</h3>
 
-<h4>Fourth level d </h4>
+<h4>Fourth level d</h4>
 
-<h1>First level [First Level e] </h1>
+<h1>First level [First Level e]</h1>
 
-<h2>Second level [Second Level e] </h2>
+<h2>Second level [Second Level e]</h2>

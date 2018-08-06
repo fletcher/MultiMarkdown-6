@@ -278,7 +278,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="citep"/>citep </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="citep"/>citep</text:h>
 
 <text:p text:style-name="Standard"><text:note text:id="cite1" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">John Doe. <text:span text:style-name="MMD-Italic">A Totally Fake Book 1</text:span>. Vanity Press, 2006.</text:p></text:note-body></text:note></text:p>
 
@@ -292,7 +292,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"><text:span text:style-name="Footnote_20_anchor"><text:note-ref text:note-class="endnote" text:reference-format="text" text:ref-name="cite1">1</text:note-ref></text:span><text:note text:id="cite2" text:note-class="endnote"><text:note-body><text:p text:style-name="Footnote">John Doe. <text:span text:style-name="MMD-Italic">A Totally Fake Book 2</text:span>. Vanity Press, 2006.</text:p></text:note-body></text:note></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="citet"/>citet </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="citet"/>citet</text:h>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Footnote_20_anchor"><text:note-ref text:note-class="endnote" text:reference-format="text" text:ref-name="cite1">1</text:note-ref></text:span></text:p>
 

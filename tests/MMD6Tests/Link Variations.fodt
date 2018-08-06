@@ -278,7 +278,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="2"><text:bookmark text:name="foobar"/>Foo Bar </text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="foobar"/>Foo Bar</text:h>
 
 <text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">Foo Bar</text:a>.</text:p>
 

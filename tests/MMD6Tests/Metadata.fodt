@@ -282,7 +282,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:text>
 <text:p text:style-name="Standard">foo:<text:tab/>bar</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo</text:h>
 </office:text>
 </office:body>
 </office:document>

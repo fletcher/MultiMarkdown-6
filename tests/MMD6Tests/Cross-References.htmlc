@@ -1,24 +1,24 @@
 <p>Title:	Cross-References
 latex config:	article</p>
 
-<h1>A Section </h1>
+<h1>A Section</h1>
 
-<h1>109&amp;*&amp;#()^ Can Start With Digit </h1>
+<h1>109&amp;*&amp;#()^ Can Start With Digit</h1>
 
-<h1>Strip out &amp;%^ characters &amp;*^ </h1>
+<h1>Strip out &amp;%^ characters &amp;*^</h1>
 
 <p>[A Section].</p>
 
-<h2>1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^ </h2>
+<h2>1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^</h2>
 
 <p>5</p>
 
 <p>And now, link to [1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^][]</p>
 
-<h1>Заголовок по-русски </h1>
+<h1>Заголовок по-русски</h1>
 
 <p>И ссылка на [Заголовок по-русски].</p>
 
-<h1>Test 的 Multibyte </h1>
+<h1>Test 的 Multibyte</h1>
 
 <p>10</p>

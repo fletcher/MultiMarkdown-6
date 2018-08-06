@@ -3,12 +3,12 @@
 <head><title>Headers</title></head>
 <body>
 <outline text="(Untitled Preamble)" _note="&#10;"></outline>
-<outline text="foo " _note="&#10;"></outline>
-<outline text="foo " _note="&#10;"></outline>
-<outline text="foo " _note="&#10;"></outline>
-<outline text="foo " _note="&#10;    # foo #&#10;&#10;5&#10;&#10;#foo#&#10;&#10;#foo #&#10;&#10;"></outline>
-<outline text="foo # bar" _note="&#10;\# foo #&#10;&#10;"><outline text="foo " _note="&#10;10&#10;&#10;"><outline text="foo " _note="&#10;"><outline text="foo " _note="&#10;"><outline text="foo " _note="&#10;"><outline text="foo " _note="&#10;####### foo #######&#10;&#10;15&#10;&#10;"></outline>
-<outline text="foo " _note=""></outline>
+<outline text="foo" _note="&#10;"></outline>
+<outline text="foo" _note="&#10;"></outline>
+<outline text="foo" _note="&#10;"></outline>
+<outline text="foo" _note="&#10;    # foo #&#10;&#10;5&#10;&#10;#foo#&#10;&#10;#foo #&#10;&#10;"></outline>
+<outline text="foo # bar" _note="&#10;\# foo #&#10;&#10;"><outline text="foo" _note="&#10;10&#10;&#10;"><outline text="foo" _note="&#10;"><outline text="foo" _note="&#10;"><outline text="foo" _note="&#10;"><outline text="foo" _note="&#10;####### foo #######&#10;&#10;15&#10;&#10;"></outline>
+<outline text="foo" _note=""></outline>
 </outline>
 </outline>
 </outline>

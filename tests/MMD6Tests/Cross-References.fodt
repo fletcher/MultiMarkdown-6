@@ -278,25 +278,25 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="asection"/>A Section </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="asection"/>A Section</text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="109canstartwithdigit"/>109&amp;*&amp;#()^ Can Start With Digit </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="109canstartwithdigit"/>109&amp;*&amp;#()^ Can Start With Digit</text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="stripoutcharacters"/>Strip out &amp;%^ characters &amp;*^ </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="stripoutcharacters"/>Strip out &amp;%^ characters &amp;*^</text:h>
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#asection">A Section</text:a>.</text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="1cross-references:specialcharacters"/>1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^ </text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="1cross-references:specialcharacters"/>1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^</text:h>
 
 <text:p text:style-name="Standard">5</text:p>
 
 <text:p text:style-name="Standard">And now, link to <text:a xlink:type="simple" xlink:href="#1cross-references:specialcharacters">1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^</text:a></text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="Заголовокпо-русски"/>Заголовок по-русски </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="Заголовокпо-русски"/>Заголовок по-русски</text:h>
 
 <text:p text:style-name="Standard">И ссылка на <text:a xlink:type="simple" xlink:href="#Заголовокпо-русски">Заголовок по-русски</text:a>.</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="test的multibyte"/>Test 的 Multibyte </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="test的multibyte"/>Test 的 Multibyte</text:h>
 
 <text:p text:style-name="Standard">10</text:p>
 </office:text>

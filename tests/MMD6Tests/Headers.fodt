@@ -278,13 +278,13 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo</text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo</text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo</text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo"/>foo</text:h>
 
 <text:p text:style-name="Preformatted Text"># foo #<text:line-break/></text:p>
 
@@ -298,23 +298,23 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"># foo #</text:p>
 
-<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="foo"/>foo</text:h>
 
 <text:p text:style-name="Standard">10</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo</text:h>
 
-<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="foo"/>foo</text:h>
 
-<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="5"><text:bookmark text:name="foo"/>foo</text:h>
 
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo</text:h>
 
 <text:p text:style-name="Standard">####### foo #######</text:p>
 
 <text:p text:style-name="Standard">15</text:p>
 
-<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="6"><text:bookmark text:name="foo"/>foo</text:h>
 </office:text>
 </office:body>
 </office:document>

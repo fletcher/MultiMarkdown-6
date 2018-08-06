@@ -277,7 +277,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax</text:h>
 
 <text:list text:style-name="L1">
 <text:list-item>

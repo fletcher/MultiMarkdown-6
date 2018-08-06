@@ -682,6 +682,8 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			}
 
 			mmd_export_token_tree_html(out, source, t->child, scratch);
+			trim_trailing_whitespace_d_string(out);
+
 			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
@@ -2098,7 +2100,7 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			
+
 			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
 			} else {
 				mmd_print_char_html(out, source[t->start + 1], false);

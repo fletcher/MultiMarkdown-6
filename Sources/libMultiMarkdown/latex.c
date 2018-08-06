@@ -687,6 +687,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			}
 
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
+			trim_trailing_whitespace_d_string(out);
 
 			if (scratch->extensions & EXT_NO_LABELS) {
 				print_const("}");
@@ -2176,10 +2177,12 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 
 		case ESCAPED_CHARACTER:
 			print_const("\\textbackslash{}");
+
 			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
 			} else {
 				mmd_print_char_latex(out, source[t->start + 1]);
 			}
+
 			break;
 
 		case HASH1:

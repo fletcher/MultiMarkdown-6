@@ -1081,6 +1081,7 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 				default:
 					// Trim trailing newlines
 					walker = content->tail;
+
 					while (walker) {
 						switch (walker->type) {
 							case TEXT_NL:
@@ -2487,6 +2488,18 @@ void strip_leading_whitespace(token * chain, const char * source) {
 
 		if (chain) {
 			chain = chain->next;
+		}
+	}
+}
+
+
+void trim_trailing_whitespace_d_string(DString * d) {
+	if (d) {
+		char * c = &(d->str[d->currentStringLength - 1]);
+
+		while (d->currentStringLength && char_is_whitespace(*c)) {
+			*c-- = 0;
+			d->currentStringLength--;
 		}
 	}
 }

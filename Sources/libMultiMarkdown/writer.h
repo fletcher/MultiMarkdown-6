@@ -245,6 +245,8 @@ void read_table_column_alignments(const char * source, token * table, scratch_pa
 
 void strip_leading_whitespace(token * chain, const char * source);
 
+void trim_trailing_whitespace_d_string(DString * d);
+
 bool table_has_caption(token * table);
 
 char * get_fence_language_specifier(token * fence, const char * source);

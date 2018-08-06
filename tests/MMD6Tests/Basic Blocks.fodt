@@ -280,9 +280,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:text>
 <text:p text:style-name="Standard">foo</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="headingfoo"/>Heading <text:span text:style-name="MMD-Italic">foo</text:span> </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="headingfoo"/>Heading <text:span text:style-name="MMD-Italic">foo</text:span></text:h>
 
-<text:h text:outline-level="2"><text:bookmark text:name="heading"/>Heading </text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="heading"/>Heading</text:h>
 
 <text:p text:style-name="Standard">foo
 bar</text:p>
