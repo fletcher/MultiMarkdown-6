@@ -1,5 +1,5 @@
-<p>Title:	Fenced Code Blocks
-latex config:	article</p>
+<p>title:	Fenced Code Blocks
+latexconfig:	article</p>
 
 <p><code>*foo*</code></p>
 

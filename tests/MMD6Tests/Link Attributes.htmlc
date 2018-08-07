@@ -1,5 +1,5 @@
-<p>Title:	Link Attributes
-latex config:	article</p>
+<p>title:	Link Attributes
+latexconfig:	article</p>
 
 <p>foo ![image][]</p>
 

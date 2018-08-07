@@ -1,5 +1,5 @@
-<p>Title:	Raw Source
-latex config:	article</p>
+<p>title:	Raw Source
+latexconfig:	article</p>
 
 <p><code>*foo*</code>{*}</p>
 

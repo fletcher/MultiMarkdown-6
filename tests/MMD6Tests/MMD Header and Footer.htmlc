@@ -1,5 +1,5 @@
-<p>Title:	MMD Header and Footer
-latex config:	article
+<p>title:	MMD Header and Footer
+latexconfig:	article
 MMD Header:	{{header.txt}}
 MMD Footer:	{{footer.txt}}
 HTML Header: HTML <em>header</em>.

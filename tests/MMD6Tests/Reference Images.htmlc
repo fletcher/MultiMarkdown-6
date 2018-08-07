@@ -1,5 +1,5 @@
-<p>Title:	Reference Images
-latex config:	article</p>
+<p>title:	Reference Images
+latexconfig:	article</p>
 
 <p>Test <img src="http://test.1/" alt="foo" />.</p>
 

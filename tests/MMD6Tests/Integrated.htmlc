@@ -1,5 +1,5 @@
-<p>Title:	Integrated
-latex config:	article</p>
+<p>title:	Integrated
+latexconfig:	article</p>
 
 <p>This file is a designed as a single test that incorporates most of the
 <em>commonly</em> used MultiMarkdown features. This allows a single test file to

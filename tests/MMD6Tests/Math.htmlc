@@ -1,5 +1,5 @@
-<p>Title:	Math
-latex config:	article</p>
+<p>title:	Math
+latexconfig:	article</p>
 
 <p>foo \({e}^{i\pi }+1=0\) bar</p>
 

@@ -1,5 +1,5 @@
-<p>Title:	Inline Footnotes
-latex config:	article</p>
+<p>title:	Inline Footnotes
+latexconfig:	article</p>
 
 <p>Inline.[^foo <em>bar</em>]</p>
 

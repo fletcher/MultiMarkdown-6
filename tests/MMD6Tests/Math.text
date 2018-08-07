@@ -1,5 +1,5 @@
-Title:	Math
-latex config:	article
+title:	Math
+latexconfig:	article
 
 foo \\({e}^{i\pi }+1=0\\) bar
 

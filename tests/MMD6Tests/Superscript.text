@@ -1,5 +1,5 @@
-Title:	Superscript
-latex config:	article
+title:	Superscript
+latexconfig:	article
 
 x^2.
 

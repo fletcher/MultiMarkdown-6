@@ -1,5 +1,5 @@
-Title:	Dutch
-latex config:	article
+title:	Dutch
+latexconfig:	article
 language:	nl
 
 'foo'

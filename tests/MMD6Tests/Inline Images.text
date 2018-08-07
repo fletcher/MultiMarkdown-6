@@ -1,5 +1,5 @@
-Title:	Inline Images
-latex config:	article
+title:	Inline Images
+latexconfig:	article
 
 Just a ![URL](/url/).
 

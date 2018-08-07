@@ -1,5 +1,5 @@
-Title:	Spanish
-latex config:	article
+title:	Spanish
+latexconfig:	article
 language:	es
 
 'foo'

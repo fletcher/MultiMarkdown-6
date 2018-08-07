@@ -1,5 +1,5 @@
-<p>Title:	Tables
-latex config:	article</p>
+<p>title:	Tables
+latexconfig:	article</p>
 
 <p>| foo	| bar	|<br />
 -----+ | :--:+	|<br />

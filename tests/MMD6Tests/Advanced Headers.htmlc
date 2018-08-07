@@ -1,5 +1,5 @@
-<p>Title:	Advanced Headers
-latex config:	article</p>
+<p>title:	Advanced Headers
+latexconfig:	article</p>
 
 <h1>foo [bar]</h1>
 

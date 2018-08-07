@@ -1,5 +1,5 @@
-Title:	Reference Footnotes
-latex config:	article
+title:	Reference Footnotes
+latexconfig:	article
 
 foo.[^bar]
 

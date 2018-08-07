@@ -1,5 +1,5 @@
-<p>Title:	Linebreaks
-latex config:	article</p>
+<p>title:	Linebreaks
+latexconfig:	article</p>
 
 <p>foo
 bar</p>

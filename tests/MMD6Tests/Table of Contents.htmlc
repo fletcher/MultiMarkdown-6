@@ -1,5 +1,5 @@
-<p>Title:	Table of Contents
-latex config:	article</p>
+<p>title:	Table of Contents
+latexconfig:	article</p>
 
 <p>{{TOC}}</p>
 

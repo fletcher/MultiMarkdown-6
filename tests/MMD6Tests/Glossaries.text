@@ -1,5 +1,5 @@
-Title:	Glossaries
-latex config:	article
+title:	Glossaries
+latexconfig:	article
 
 foo foo
 

@@ -1,5 +1,5 @@
-Title:	Figure Images
-latex config:	article
+title:	Figure Images
+latexconfig:	article
 
 ![foo]
 

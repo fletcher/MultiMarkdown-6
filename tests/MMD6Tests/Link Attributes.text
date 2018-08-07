@@ -1,5 +1,5 @@
-Title:	Link Attributes
-latex config:	article
+title:	Link Attributes
+latexconfig:	article
 
 foo ![image][]
 

@@ -1,5 +1,5 @@
-<p>Title:	Headers
-latex config:	article</p>
+<p>title:	Headers
+latexconfig:	article</p>
 
 <h1>foo</h1>
 

@@ -1,5 +1,5 @@
-Title:	Tables
-latex config:	article
+title:	Tables
+latexconfig:	article
 
 | foo	| bar	|  
  -----+ | :--:+	|  

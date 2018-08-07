@@ -1,5 +1,5 @@
-<p>Title:	Emph and Strong Star
-latex config:	article</p>
+<p>title:	Emph and Strong Star
+latexconfig:	article</p>
 
 <p><em>foo</em></p>
 

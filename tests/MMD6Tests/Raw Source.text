@@ -1,5 +1,5 @@
-Title:	Raw Source
-latex config:	article
+title:	Raw Source
+latexconfig:	article
 
 `*foo*`{*}
 

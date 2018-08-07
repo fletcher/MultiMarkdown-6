@@ -1,5 +1,5 @@
-<p>Title:	Special Characters
-latex config:	article</p>
+<p>title:	Special Characters
+latexconfig:	article</p>
 
 <p>{foo}</p>
 

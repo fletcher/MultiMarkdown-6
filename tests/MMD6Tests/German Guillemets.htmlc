@@ -1,7 +1,7 @@
-<p>Title:	German Guillemets
-latex config:	article
+<p>title:	German Guillemets
+latexconfig:	article
 language:	de
-quotes language:	germanguillemets</p>
+quoteslanguage:	germanguillemets</p>
 
 <p>'foo'</p>
 

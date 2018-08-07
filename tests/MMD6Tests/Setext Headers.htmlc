@@ -1,5 +1,5 @@
-<p>Title:	Setext Headers
-latex config:	article</p>
+<p>title:	Setext Headers
+latexconfig:	article</p>
 
 <h1>foo bar</h1>
 

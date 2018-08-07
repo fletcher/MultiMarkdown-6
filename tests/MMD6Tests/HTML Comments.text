@@ -1,5 +1,5 @@
-Title:	HTML Comments
-latex config:	article
+title:	HTML Comments
+latexconfig:	article
 
 foo <!-- *bar* -->
 

@@ -1,5 +1,5 @@
-Title:	Swedish
-latex config:	article
+title:	Swedish
+latexconfig:	article
 language:	sv
 
 'foo'
