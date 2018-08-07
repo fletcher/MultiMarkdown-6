@@ -8,7 +8,10 @@ re2c -i -8 lexer.re > lexer.c
 
 re2c -i -8 scanners.re > scanners.c
 
+re2c -i  opml-lexer.re > opml-lexer.c
+
 # It seems that some other versions of lemon don't create valid 
 # parsers?? Using the version included here works
 # lemon -l parser.y
 ../../lemon/build/lemon -l parser.y
+../../lemon/build/lemon -l opml-parser.y

@@ -65,6 +65,7 @@
 #include "mmd.h"
 #include "object_pool.h"
 #include "opendocument.h"
+#include "opml-reader.h"
 #include "parser.h"
 #include "scanners.h"
 #include "stack.h"
@@ -2187,6 +2188,10 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		e->extensions |= EXT_NO_METADATA;
 	}
 
+	if (e->extensions & EXT_PARSE_OPML) {
+		// Convert from OPML first (if not done earlier)
+		mmd_convert_opml_string(e, byte_start, byte_len);
+	}
 
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
@@ -2759,6 +2764,11 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 	DString * result = NULL;
 
 	if (format == FORMAT_MMD) {
+		if (e->extensions & EXT_PARSE_OPML) {
+			// Convert from OPML first (if not done earlier)
+			mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+		}
+
 		// Simply return text (transclusion is handled externally)
 		d_string_append_c_array(output, e->dstr->str, e->dstr->currentStringLength);
 

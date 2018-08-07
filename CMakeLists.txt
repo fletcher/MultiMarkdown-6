@@ -194,6 +194,9 @@ set(src_files
 	Sources/libMultiMarkdown/opendocument.c
 	Sources/libMultiMarkdown/opendocument-content.c
 	Sources/libMultiMarkdown/opml.c
+	Sources/libMultiMarkdown/opml-lexer.c
+	Sources/libMultiMarkdown/opml-parser.c
+	Sources/libMultiMarkdown/opml-reader.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
 	Sources/libMultiMarkdown/scanners.c
@@ -227,6 +230,9 @@ set(header_files
 	Sources/libMultiMarkdown/opendocument.h
 	Sources/libMultiMarkdown/opendocument-content.h
 	Sources/libMultiMarkdown/opml.h
+	Sources/libMultiMarkdown/opml-lexer.h
+	Sources/libMultiMarkdown/opml-parser.h
+	Sources/libMultiMarkdown/opml-reader.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
 	Sources/libMultiMarkdown/textbundle.c
@@ -671,6 +677,20 @@ ADD_MMD_TEST(mmd-6-opml "-t opml" MMD6Tests opml)
 ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)
 
 ADD_MMD_TEST(mmd-6-critic-reject "-r" CriticMarkup htmlr)
+
+# Some of these will (properly) fail.
+# But it's useful to run manually at times to verify that
+# round-tripping through OPML generally works
+
+# add_test ( mmd-6-opml-parse 
+# 		${PROJECT_SOURCE_DIR}/tests/MarkdownTest.pl
+# 		--Script="${CMAKE_CURRENT_BINARY_DIR}/multimarkdown"
+# 		--testdir=${PROJECT_SOURCE_DIR}/tests/MMD6Tests
+# 		"--Flags=--opml -t mmd"
+# 		--ext=text
+# 		--source_ext=opml
+# )
+
 
 ADD_MMD_TEST(pathologic-compat "-c" ../build html)
 

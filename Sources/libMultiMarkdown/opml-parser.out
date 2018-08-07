@@ -1,0 +1,215 @@
+State 0:
+          doc ::= * doc_xml
+          doc_xml ::= * OPML_XML doc_opml
+          doc_xml ::= * OPML_XML doc_opml OPML_WSNL
+
+                      OPML_XML shift        10     
+                           doc accept
+                       doc_xml shift        17     
+
+State 1:
+          opml_outlines ::= * opml_outlines opml_outline
+          opml_outlines ::= * opml_outline
+          opml_outline ::= * OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+          opml_outline ::= OPML_OUTLINE_OPEN * OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= OPML_OUTLINE_OPEN * opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_SELF_CLOSE
+
+             OPML_OUTLINE_OPEN shift        1      
+            OPML_OUTLINE_CLOSE shift-reduce 12     opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+         OPML_OUTLINE_PREAMBLE shift        14     
+         OPML_OUTLINE_METADATA shift        3      
+       OPML_OUTLINE_SELF_CLOSE shift-reduce 16     opml_outline ::= OPML_OUTLINE_SELF_CLOSE
+                 opml_outlines shift        6      
+                  opml_outline shift        6        /* because opml_outline==opml_outlines */
+
+State 2:
+          opml_body ::= OPML_BODY_OPEN * opml_outlines OPML_BODY_CLOSE
+          opml_body ::= OPML_BODY_OPEN * OPML_BODY_CLOSE
+          opml_outlines ::= * opml_outlines opml_outline
+          opml_outlines ::= * opml_outline
+          opml_outline ::= * OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_SELF_CLOSE
+
+               OPML_BODY_CLOSE shift-reduce 9      opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE
+             OPML_OUTLINE_OPEN shift        1      
+         OPML_OUTLINE_PREAMBLE shift        14     
+         OPML_OUTLINE_METADATA shift        3      
+       OPML_OUTLINE_SELF_CLOSE shift-reduce 16     opml_outline ::= OPML_OUTLINE_SELF_CLOSE
+                 opml_outlines shift        7      
+                  opml_outline shift        7        /* because opml_outline==opml_outlines */
+
+State 3:
+          opml_outlines ::= * opml_outlines opml_outline
+          opml_outlines ::= * opml_outline
+          opml_outline ::= * OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= OPML_OUTLINE_METADATA * opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_SELF_CLOSE
+
+             OPML_OUTLINE_OPEN shift        1      
+         OPML_OUTLINE_PREAMBLE shift        14     
+         OPML_OUTLINE_METADATA shift        3      
+       OPML_OUTLINE_SELF_CLOSE shift-reduce 16     opml_outline ::= OPML_OUTLINE_SELF_CLOSE
+                 opml_outlines shift        5      
+                  opml_outline shift        5        /* because opml_outline==opml_outlines */
+
+State 4:
+          doc_opml ::= OPML_OPML_OPEN * opml_header opml_body OPML_OPML_CLOSE
+          doc_opml ::= OPML_OPML_OPEN * opml_body OPML_OPML_CLOSE
+          opml_header ::= * OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE
+          opml_header ::= * OPML_HEAD_OPEN OPML_HEAD_CLOSE
+          opml_body ::= * OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE
+          opml_body ::= * OPML_BODY_OPEN OPML_BODY_CLOSE
+
+                OPML_HEAD_OPEN shift        8      
+                OPML_BODY_OPEN shift        2      
+                   opml_header shift        9      
+                     opml_body shift        13     
+
+State 5:
+          opml_outlines ::= opml_outlines * opml_outline
+          opml_outline ::= * OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= OPML_OUTLINE_METADATA opml_outlines * OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_SELF_CLOSE
+
+             OPML_OUTLINE_OPEN shift        1      
+            OPML_OUTLINE_CLOSE shift-reduce 15     opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+         OPML_OUTLINE_PREAMBLE shift        14     
+         OPML_OUTLINE_METADATA shift        3      
+       OPML_OUTLINE_SELF_CLOSE shift-reduce 16     opml_outline ::= OPML_OUTLINE_SELF_CLOSE
+                  opml_outline shift-reduce 10     opml_outlines ::= opml_outlines opml_outline
+
+State 6:
+          opml_outlines ::= opml_outlines * opml_outline
+          opml_outline ::= * OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= OPML_OUTLINE_OPEN opml_outlines * OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_SELF_CLOSE
+
+             OPML_OUTLINE_OPEN shift        1      
+            OPML_OUTLINE_CLOSE shift-reduce 14     opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+         OPML_OUTLINE_PREAMBLE shift        14     
+         OPML_OUTLINE_METADATA shift        3      
+       OPML_OUTLINE_SELF_CLOSE shift-reduce 16     opml_outline ::= OPML_OUTLINE_SELF_CLOSE
+                  opml_outline shift-reduce 10     opml_outlines ::= opml_outlines opml_outline
+
+State 7:
+          opml_body ::= OPML_BODY_OPEN opml_outlines * OPML_BODY_CLOSE
+          opml_outlines ::= opml_outlines * opml_outline
+          opml_outline ::= * OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE
+          opml_outline ::= * OPML_OUTLINE_SELF_CLOSE
+
+               OPML_BODY_CLOSE shift-reduce 8      opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE
+             OPML_OUTLINE_OPEN shift        1      
+         OPML_OUTLINE_PREAMBLE shift        14     
+         OPML_OUTLINE_METADATA shift        3      
+       OPML_OUTLINE_SELF_CLOSE shift-reduce 16     opml_outline ::= OPML_OUTLINE_SELF_CLOSE
+                  opml_outline shift-reduce 10     opml_outlines ::= opml_outlines opml_outline
+
+State 8:
+          opml_header ::= OPML_HEAD_OPEN * opml_title OPML_HEAD_CLOSE
+          opml_header ::= OPML_HEAD_OPEN * OPML_HEAD_CLOSE
+          opml_title ::= * OPML_TITLE_OPEN OPML_TITLE_CLOSE
+
+               OPML_HEAD_CLOSE shift-reduce 6      opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE
+               OPML_TITLE_OPEN shift        11     
+                    opml_title shift        12     
+
+State 9:
+          doc_opml ::= OPML_OPML_OPEN opml_header * opml_body OPML_OPML_CLOSE
+          opml_body ::= * OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE
+          opml_body ::= * OPML_BODY_OPEN OPML_BODY_CLOSE
+
+                OPML_BODY_OPEN shift        2      
+                     opml_body shift        15     
+
+State 10:
+          doc_xml ::= OPML_XML * doc_opml
+          doc_xml ::= OPML_XML * doc_opml OPML_WSNL
+          doc_opml ::= * OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE
+          doc_opml ::= * OPML_OPML_OPEN opml_body OPML_OPML_CLOSE
+
+                OPML_OPML_OPEN shift        4      
+                      doc_opml shift        16     
+
+State 11:
+          opml_title ::= OPML_TITLE_OPEN * OPML_TITLE_CLOSE
+
+              OPML_TITLE_CLOSE shift-reduce 7      opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE
+
+State 12:
+          opml_header ::= OPML_HEAD_OPEN opml_title * OPML_HEAD_CLOSE
+
+               OPML_HEAD_CLOSE shift-reduce 5      opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE
+
+State 13:
+          doc_opml ::= OPML_OPML_OPEN opml_body * OPML_OPML_CLOSE
+
+               OPML_OPML_CLOSE shift-reduce 4      doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE
+
+State 14:
+          opml_outline ::= OPML_OUTLINE_PREAMBLE * OPML_OUTLINE_CLOSE
+
+            OPML_OUTLINE_CLOSE shift-reduce 13     opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE
+
+State 15:
+          doc_opml ::= OPML_OPML_OPEN opml_header opml_body * OPML_OPML_CLOSE
+
+               OPML_OPML_CLOSE shift-reduce 3      doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE
+
+State 16:
+      (1) doc_xml ::= OPML_XML doc_opml *
+          doc_xml ::= OPML_XML doc_opml * OPML_WSNL
+
+                     OPML_WSNL shift-reduce 2      doc_xml ::= OPML_XML doc_opml OPML_WSNL
+                     {default} reduce       1      doc_xml ::= OPML_XML doc_opml
+
+State 17:
+      (0) doc ::= doc_xml *
+
+                             $ reduce       0      doc ::= doc_xml
+
+----------------------------------------------------
+Symbols:
+    0: $:
+    1: OPML_XML
+    2: OPML_WSNL
+    3: OPML_OPML_OPEN
+    4: OPML_OPML_CLOSE
+    5: OPML_HEAD_OPEN
+    6: OPML_HEAD_CLOSE
+    7: OPML_TITLE_OPEN
+    8: OPML_TITLE_CLOSE
+    9: OPML_BODY_OPEN
+   10: OPML_BODY_CLOSE
+   11: OPML_OUTLINE_OPEN
+   12: OPML_OUTLINE_CLOSE
+   13: OPML_OUTLINE_PREAMBLE
+   14: OPML_OUTLINE_METADATA
+   15: OPML_OUTLINE_SELF_CLOSE
+   16: error:
+   17: doc: OPML_XML
+   18: doc_xml: OPML_XML
+   19: doc_opml: OPML_OPML_OPEN
+   20: opml_header: OPML_HEAD_OPEN
+   21: opml_body: OPML_BODY_OPEN
+   22: opml_title: OPML_TITLE_OPEN
+   23: opml_outlines: OPML_OUTLINE_OPEN OPML_OUTLINE_PREAMBLE OPML_OUTLINE_METADATA OPML_OUTLINE_SELF_CLOSE
+   24: opml_outline: OPML_OUTLINE_OPEN OPML_OUTLINE_PREAMBLE OPML_OUTLINE_METADATA OPML_OUTLINE_SELF_CLOSE

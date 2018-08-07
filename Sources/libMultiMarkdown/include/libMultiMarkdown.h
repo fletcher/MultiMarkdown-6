@@ -555,6 +555,7 @@ enum parser_extensions {
 	EXT_CRITIC_REJECT       = 1 << 11,   //!< Reject all proposed changes
 	EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
 	EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
+	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 
