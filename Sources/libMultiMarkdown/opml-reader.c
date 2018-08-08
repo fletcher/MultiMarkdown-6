@@ -337,18 +337,35 @@ void parse_opml_token_chain(mmd_engine * e, token * chain) {
 							print_const(":\t");
 						} else {
 							// Print header
-							for (int i = 0; i < header_level; ++i) {
-								print_char('#');
-							}
+							if (scan_encoded_newline(&(e->dstr->str[start + 1]), len - 2) == -1) {
+								// ATX header
+								for (int i = 0; i < header_level; ++i) {
+									print_char('#');
+								}
 
-							print_char(' ');
+								print_char(' ');
+							}
 
 							print_opml_text(out, e->dstr->str, start + 1, len - 2);
 
-							print_char(' ');
+							if (scan_encoded_newline(&(e->dstr->str[start + 1]), len - 2) == -1) {
+								// ATX header
+								print_char(' ');
 
-							for (int i = 0; i < header_level; ++i) {
-								print_char('#');
+								for (int i = 0; i < header_level; ++i) {
+									print_char('#');
+								}
+							} else {
+								// Print Setext Header
+								switch (header_level) {
+									case 1:
+										print_const("\n======");
+										break;
+
+									default:
+										print_const("\n------");
+										break;
+								}
 							}
 
 							print_const("\n");

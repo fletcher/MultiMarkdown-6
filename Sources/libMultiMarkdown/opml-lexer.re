@@ -138,6 +138,8 @@ int opml_scan(Scanner * s, const char * stop) {
 		text_attribute											= WSNL* 'text' WSNL* EQUAL WSNL*;
 		note_attribute											= WSNL* '_note' WSNL* EQUAL WSNL*;
 
+		contains_newline										= "&#10;" | "&#13;";
+
 		'<?xml' [^>\x00]* '>'									{ return OPML_XML; }
 
 		'<opml' [^>\x00]* '>'									{ return OPML_OPML_OPEN; }
@@ -184,7 +186,7 @@ size_t scan_text(const char * c) {
 	const char * start = c;
 
 /*!re2c
-	text_attribute / double_quoted		{ return (size_t)( c - start ); }
+	text_attribute / double_quoted			{ return (size_t)( c - start ); }
 	.?										{ return 0; }
 */	
 }
@@ -196,7 +198,7 @@ size_t scan_note(const char * c) {
 	const char * start = c;
 
 /*!re2c
-	note_attribute / double_quoted	{ return (size_t)( c - start ); }
+	note_attribute / double_quoted			{ return (size_t)( c - start ); }
 	.?										{ return 0; }
 */	
 }
@@ -211,4 +213,23 @@ size_t scan_double_quoted(const char * c) {
 	double_quoted							{ return (size_t)( c - start ); }
 	.?										{ return 0; }
 */	
+}
+
+
+/// Does the string include encoded newline?
+size_t scan_encoded_newline(const char * c, size_t len) {
+	const char * marker = NULL;
+	const char * start = c;
+
+	scan:
+
+	if ((*c == '\0') || ((c - start) > len)) {
+		// Not found
+		return -1;
+	}
+
+/*!re2c
+	contains_newline						{ return (size_t)(c - start); }
+	.										{ goto scan; }
+*/
 }
