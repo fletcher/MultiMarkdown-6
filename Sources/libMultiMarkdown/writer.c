@@ -1389,8 +1389,10 @@ void process_definition_block(mmd_engine * e, token * block) {
 					}
 
 					// Adjust the properties
-					free(f->label_text);
-					f->label_text = f->clean_text;
+					if (f) {
+						free(f->label_text);
+						f->label_text = f->clean_text;
+					}
 
 					if (f->content->child &&
 							f->content->child->next &&
