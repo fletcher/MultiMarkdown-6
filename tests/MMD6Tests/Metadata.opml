@@ -16,6 +16,7 @@
 <outline text="htmlheaderlevel" _note="2"/>
 <outline text="latexheaderlevel" _note="2"/>
 <outline text="baseheaderlevel" _note="3"/>
+<outline text="multiline" _note="first line&#10;second line"/>
 </outline>
 </body>
 </opml>

@@ -113,6 +113,11 @@ void mmd_print_char_html(DString * out, char c, bool obfuscate) {
 			print_const("&gt;");
 			break;
 
+		case '\n':
+		case '\r':
+			print_const("<br/>\n");
+			break;
+
 		default:
 			if (obfuscate && ((int) c == (((int) c) & 127))) {
 				if (ran_num_next() % 2 == 0) {

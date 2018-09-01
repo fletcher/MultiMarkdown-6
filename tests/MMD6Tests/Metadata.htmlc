@@ -13,7 +13,9 @@ foo bar
 foo:	<em>bar</em>
 htmlheader level: 2
 latexheader level: 2
-baseheader level: 3</p>
+baseheader level: 3
+multiline: first line<br />
+second line</p>
 
 <p>foo:	bar</p>
 

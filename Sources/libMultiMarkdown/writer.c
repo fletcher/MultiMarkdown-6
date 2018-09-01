@@ -477,6 +477,22 @@ char * clean_string(const char * str, bool lowercase) {
 
 	while (*str != '\0') {
 		switch (*str) {
+			case '\\':
+				switch (*(str + 1)) {
+					case '\n':
+					case '\r':
+						d_string_append_c(out, '\n');
+						block_whitespace = true;
+						break;
+
+					default:
+						d_string_append_c(out, '\\');
+						block_whitespace = false;
+						break;
+				}
+
+				break;
+
 			case '\t':
 			case ' ':
 			case '\n':

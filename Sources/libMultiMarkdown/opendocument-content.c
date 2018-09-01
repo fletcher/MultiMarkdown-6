@@ -154,6 +154,11 @@ void mmd_print_char_opendocument(DString * out, char c) {
 			print_const("&gt;");
 			break;
 
+		case '\n':
+		case '\r':
+			print_const("<text:line-break/>\n");
+			break;
+
 		case '\t':
 			print_const("<text:tab/>");
 

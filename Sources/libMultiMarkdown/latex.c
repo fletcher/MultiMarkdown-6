@@ -116,6 +116,10 @@ void mmd_print_char_latex(DString * out, char c) {
 			print_const("\\textbar{}");
 			break;
 
+		case '\n':
+		case '\r':
+			print_char('\\');
+
 		case '#':
 		case '{':
 		case '}':
