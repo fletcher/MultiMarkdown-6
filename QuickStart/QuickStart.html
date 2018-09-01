@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Quick Start Guide</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="version" content="6.3.2"/>
+	<meta name="version" content="6.4.0"/>
 	<meta name="uuid" content="0d6313fa-9135-477e-9c14-7d62c1977833"/>
 </head>
 <body>
@@ -47,15 +47,15 @@
 </ul>
 </div>
 
-<h3 id="introduction">Introduction </h3>
+<h3 id="introduction">Introduction</h3>
 
-<p>Version: 6.3.2</p>
+<p>Version: 6.4.0</p>
 
 <p>This document serves as a description of MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>) v6, as well as a sample
 document to demonstrate the various features. Specifically, differences from
 <abbr title="MultiMarkdown">MMD</abbr> v5 will be pointed out.</p>
 
-<h3 id="performance">Performance </h3>
+<h3 id="performance">Performance</h3>
 
 <p>A big motivating factor leading to the development of <abbr title="MultiMarkdown">MMD</abbr> v6 was
 performance. When <abbr title="MultiMarkdown">MMD</abbr> first migrated from Perl to C (based on <a href="https://github.com/jgm/peg-markdown">peg-
@@ -131,7 +131,7 @@ files, the additional features of <abbr title="MultiMarkdown">MMD</abbr> compare
 the increased legibility of the source code of <abbr title="MultiMarkdown">MMD</abbr> (in my biased opinion
 anyway) make this project worthwhile.</p>
 
-<h3 id="parsetree">Parse Tree </h3>
+<h3 id="parsetree">Parse Tree</h3>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 performs its parsing in the following steps:</p>
 
@@ -162,9 +162,9 @@ libMultiMarkdown is to be used in a multithreaded program, a separate
 slightly more abstracted <code>mmd_convert_string()</code> function that handles creating
 and destroying the <code>mmd_engine</code> automatically.</p>
 
-<h3 id="features">Features </h3>
+<h3 id="features">Features</h3>
 
-<h4 id="abbreviationsoracronyms">Abbreviations (Or Acronyms) </h4>
+<h4 id="abbreviationsoracronyms">Abbreviations (Or Acronyms)</h4>
 
 <p>This file includes the use of <abbr title="MultiMarkdown">MMD</abbr> as an abbreviation for MultiMarkdown. The
 abbreviation will be expanded on the first use, and the shortened form will be
@@ -187,7 +187,7 @@ this case, the abbreviation is limited to a more basic character set which
 includes letters, numbers, periods, and hyphens, but not much else. For more
 complex abbreviations, you must explicitly mark uses of the abbreviation.</p>
 
-<h4 id="citations">Citations </h4>
+<h4 id="citations">Citations</h4>
 
 <p>Citations can be specified using an inline syntax, just like inline footnotes.
 If you wish to use BibTeX, then configure the <code>bibtex</code> metadata (required) and
@@ -196,7 +196,7 @@ the <code>biblio style</code> metadata (optional).</p>
 <p>The HTML output for citations now uses parentheses instead of brackets, e.g.
 <code>(1)</code> instead of <code>[1]</code>.</p>
 
-<h4 id="criticmarkup">CriticMarkup </h4>
+<h4 id="criticmarkup">CriticMarkup</h4>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 has improved support for <a href="http://criticmarkup.com/">CriticMarkup</a>, both in terms of parsing, and
 in terms of support for each output format. You can <ins>insert text</ins>,
@@ -213,7 +213,7 @@ these two options, then CriticMarkup that spans a blank line is not recogniz</p>
 <p>T
 formats).</p>
 
-<h4 id="embeddedimages">Embedded Images </h4>
+<h4 id="embeddedimages">Embedded Images</h4>
 
 <p>Supported export formats (<code>odt</code>, <code>epub</code>, <code>bundle</code>, <code>bundlezip</code>) include
 images inside the export document:</p>
@@ -227,13 +227,13 @@ properly installed when <abbr title="MultiMarkdown">MMD</abbr> is compiled. This
 <p>ed
 as such. I working on options for this for the future.</p>
 
-<h4 id="emphandstrong">Emph and Strong </h4>
+<h4 id="emphandstrong">Emph and Strong</h4>
 
 <p>The basics of emphasis and strong emphasis are unchanged, but the parsing
 engine has been improved to be more accurate, particularly in various edge
 cases where proper parsing can be difficult.</p>
 
-<h4 id="epub3support">EPUB 3 Support </h4>
+<h4 id="epub3support">EPUB 3 Support</h4>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 now provides support for direct creation of <a href="https://en.wikipedia.org/wiki/EPUB">EPUB 3</a> files. Previously
 a separate tool was required to create EPUB files from <abbr title="MultiMarkdown">MMD</abbr>. It&#8217;s now built-
@@ -256,7 +256,7 @@ document formats you need. Same goes for Amazon&#8217;s ebook formats &#8211; th
 run in batch mode (using the <code>-b\--batch</code> options). Otherwise, it simply
 outputs the HTML 5 file that would serve as the primary content for the EPUB.</p>
 
-<h4 id="fencedcodeblocks">Fenced Code Blocks </h4>
+<h4 id="fencedcodeblocks">Fenced Code Blocks</h4>
 
 <p>Fenced code blocks are fundamentally the same as <abbr title="MultiMarkdown">MMD</abbr> v5, except:</p>
 
@@ -268,12 +268,12 @@ complex parser.</p></li>
 considered to be part of the code block.</p></li>
 </ol>
 
-<h4 id="footnotes">Footnotes </h4>
+<h4 id="footnotes">Footnotes</h4>
 
 <p>The HTML output for footnotes now uses superscripts instead of brackets, e.g.
 <code>&lt;sup&gt;1&lt;/sup&gt;</code> instead of <code>[1]</code>.</p>
 
-<h4 id="glossaryterms">Glossary Terms </h4>
+<h4 id="glossaryterms">Glossary Terms</h4>
 
 <p>If there are terms in your document you wish to define in a <a href="#gn:3" id="gnref:3" title="see glossary" class="glossary">glossary</a> at
 the end of your document, you can define them using the glossary syntax.</p>
@@ -299,7 +299,7 @@ case, the term is limited to a more basic character set which includes
 letters, numbers, periods, and hyphens, but not much else. For more complex
 glossary terms, you must explicitly mark uses of the term.</p>
 
-<h4 id="htmlcomments">HTML Comments </h4>
+<h4 id="htmlcomments">HTML Comments</h4>
 
 <p>Previously, HTML Comments were used by MultiMarkdown to include raw text for
 inclusion in the output file. This was useful, but limited, as it could only
@@ -311,12 +311,12 @@ format since they would cause errors.</p>
 <p>Take a look at the <code>HTML Comments.text</code> file in the test suite for a better
 understanding of comment blocks vs comment spans, and how they are parsed.</p>
 
-<h4 id="internationalization">Internationalization </h4>
+<h4 id="internationalization">Internationalization</h4>
 
 <p><abbr title="MultiMarkdown">MMD</abbr> v6 includes support for substituting certain text phrases in other
 languages. This only affects the HTML format.</p>
 
-<h4 id="latexchanges">LaTeX Changes </h4>
+<h4 id="latexchanges">LaTeX Changes</h4>
 
 <p>LaTeX support is slightly different than in prior versions of <abbr title="MultiMarkdown">MMD</abbr>. It is
 designed to be a bit more consistent, and easier for basic use.</p>
@@ -384,7 +384,7 @@ the following <code>latex config</code> values by default:</p>
 location for your system. I would like to make this easier, but haven&#8217;t found
 the best configuration yet.</p>
 
-<h4 id="metadata">Metadata </h4>
+<h4 id="metadata">Metadata</h4>
 
 <p>Metadata in <abbr title="MultiMarkdown">MMD</abbr> v6 includes new support for LaTeX &#8211; the <code>latex config</code> key
 allows you to automatically setup of multiple <code>latex include</code> files at once.
@@ -416,7 +416,7 @@ MMD Header:	This is *MMD* text.
 MMD Footer:	{{footer.txt}}
 </code></pre>
 
-<h4 id="outputformats">Output Formats </h4>
+<h4 id="outputformats">Output Formats</h4>
 
 <p>MultiMarkdown 6 supports the following output formats, using the <code>-t</code>
 command-line argument:</p>
@@ -442,11 +442,15 @@ and images between applications (on any OS, but especially on iOS)</li>
 package is compressed to a single zip file (similar to EPUB and ODor macOS builds.</li>
 </ul>
 
-<h4 id="rawsource">Raw Source </h4>
+<h4 id="rawsource">Raw Source</h4>
 
-<p>In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn&#8217;t work well when exporting to multiple formats. It was time for something new.</p>
+<p>In older versions of MultiMarkdown you could use an HTML comment to pass raw
+LaTeX or other content to the final document. This worked reasonably well,
+but was limited and didn&#8217;t work well when exporting to multiple formats. It
+was time for something new.</p>
 
-<p><abbr title="MultiMarkdown">MMD</abbr> v6 offers a new feature to handle this. Code spans and code blocks can be flagged as representing raw source:</p>
+<p><abbr title="MultiMarkdown">MMD</abbr> v6 offers a new feature to handle this. Code spans and code blocks can
+be flagged as representing raw source:</p>
 
 <pre><code>foo `*bar*`{=html}
 
@@ -467,19 +471,19 @@ package is compressed to a single zip file (similar to EPUB and ODor macOS build
 <li><code>*</code> &#8211; wildcard matches any output format</li>
 </ul>
 
-<h4 id="tableofcontents">Table of Contents </h4>
+<h4 id="tableofcontents">Table of Contents</h4>
 
 <p>By placing <code>{{TOC}}</code> in your document, you can insert an automatically
 generated Table of Contents in your document. As of <abbr title="MultiMarkdown">MMD</abbr> v6, the native
 Table of Contents functionality is used when exporting to LaTeX or
 OpenDocument formats.</p>
 
-<h4 id="tables">Tables </h4>
+<h4 id="tables">Tables</h4>
 
 <p>Tables in MultiMarkdown-6 work basically the same as before, but a caption, if
 present, must come <em>after</em> the body of the table, not <em>before</em>.</p>
 
-<h4 id="transclusion">Transclusion </h4>
+<h4 id="transclusion">Transclusion</h4>
 
 <p>File transclusion works basically the same way &#8211; <code>{{file}}</code> is used to
 indicate a file that needs to be transcluded. <code>{{file.*}}</code> allows for
@@ -549,12 +553,12 @@ whether a file is being processed by itself or as part of a &#8220;parent&#8221;
 This can be useful when a particular file can either be a standalone document,
 or a chapter inside a larger document.</p>
 
-<h3 id="developernotes">Developer Notes </h3>
+<h3 id="developernotes">Developer Notes</h3>
 
 <p>If you&#8217;re using <abbr title="MultiMarkdown">MMD</abbr> as a library in another application, there are a few
 things to be aware of.</p>
 
-<h4 id="objectpools">Object Pools </h4>
+<h4 id="objectpools">Object Pools</h4>
 
 <p>To improve performance, <abbr title="MultiMarkdown">MMD</abbr> has the option to allocate the memory for the
 tokens used in parsing in large chunks (&#8220;object pools&#8221;). Allocating a single
@@ -569,7 +573,7 @@ memory management, and understand MultiMarkdown&#8217;s program flow. Failure to
 properly manage the object pool can lead to massive memory leaks, freeing
 memory before that is still in use, or other potential problems.</p>
 
-<h4 id="htmlbooleanattributes">HTML Boolean Attributes </h4>
+<h4 id="htmlbooleanattributes">HTML Boolean Attributes</h4>
 
 <p>Most HTML attributes are of the key-value type (e.g. <code>key=&quot;value&quot;</code>). But some
 less frequently used attributes are boolean attributes (e.g. <code>&lt;video
@@ -605,7 +609,7 @@ option I have chosen as default for <abbr title="MultiMarkdown">MMD</abbr> &#821
 off. I will continue to research additional options.</p></li>
 </ul>
 
-<h3 id="futuresteps">Future Steps </h3>
+<h3 id="futuresteps">Future Steps</h3>
 
 <p>Some features I plan to implement at some point:</p>
 
