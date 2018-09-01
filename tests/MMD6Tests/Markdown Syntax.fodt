@@ -277,7 +277,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="markdown:syntax"/>Markdown: Syntax</text:h>
 
 <text:list text:style-name="L1">
 <text:list-item>
@@ -721,8 +721,7 @@ title for the link, surrounded in quotes. For example:</text:p>
 <text:p text:style-name="Standard">If you&#8217;re referring to a local resource on the same server, you can
 use relative paths:</text:p>
 
-<text:p text:style-name="Preformatted Text">See my [About](/about/) page for details.   
-</text:p>
+<text:p text:style-name="Preformatted Text">See my [About](/about/) page for details.  <text:line-break/></text:p>
 
 <text:p text:style-name="Standard">Reference-style links use a second set of square brackets, inside
 which you place a label of your choosing to identify the link:</text:p>

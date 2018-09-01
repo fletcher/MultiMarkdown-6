@@ -1,5 +1,5 @@
-Title:	Linebreaks
-latex config:	article
+title:	Linebreaks
+latexconfig:	article
 
 foo
 bar

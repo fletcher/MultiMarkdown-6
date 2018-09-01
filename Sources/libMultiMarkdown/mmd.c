@@ -65,6 +65,7 @@
 #include "mmd.h"
 #include "object_pool.h"
 #include "opendocument.h"
+#include "opml-reader.h"
 #include "parser.h"
 #include "scanners.h"
 #include "stack.h"
@@ -509,9 +510,6 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			if (scan_atx(&source[first_child->start])) {
 				line->type = (first_child->type - HASH1) + LINE_ATX_1;
 				first_child->type = (line->type - LINE_ATX_1) + MARKER_H1;
-
-				// Strip trailing whitespace from '#' sequence
-				first_child->len = first_child->type - MARKER_H1 + 1;
 
 				// Strip trailing '#' sequence if present
 				if (line->child->tail->type == TEXT_NL) {
@@ -2190,6 +2188,10 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		e->extensions |= EXT_NO_METADATA;
 	}
 
+	if (e->extensions & EXT_PARSE_OPML) {
+		// Convert from OPML first (if not done earlier)
+		mmd_convert_opml_string(e, byte_start, byte_len);
+	}
 
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
@@ -2762,6 +2764,11 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 	DString * result = NULL;
 
 	if (format == FORMAT_MMD) {
+		if (e->extensions & EXT_PARSE_OPML) {
+			// Convert from OPML first (if not done earlier)
+			mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+		}
+
 		// Simply return text (transclusion is handled externally)
 		d_string_append_c_array(output, e->dstr->str, e->dstr->currentStringLength);
 

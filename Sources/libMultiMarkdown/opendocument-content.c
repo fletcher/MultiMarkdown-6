@@ -154,6 +154,11 @@ void mmd_print_char_opendocument(DString * out, char c) {
 			print_const("&gt;");
 			break;
 
+		case '\n':
+		case '\r':
+			print_const("<text:line-break/>\n");
+			break;
+
 		case '\t':
 			print_const("<text:tab/>");
 
@@ -312,7 +317,20 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			mmd_print_char_opendocument(out, source[t->start + 1]);
+
+			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
+			} else {
+				mmd_print_char_opendocument(out, source[t->start + 1]);
+			}
+
+			break;
+
+		case HTML_COMMENT_START:
+			print_const("&lt;!--");
+			break;
+
+		case HTML_COMMENT_STOP:
+			print_const("--&gt;");
 			break;
 
 		case HTML_ENTITY:
@@ -326,6 +344,39 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case QUOTE_DOUBLE:
 			print_const("&quot;");
+			break;
+
+		case MARKER_H1:
+		case MARKER_H2:
+		case MARKER_H3:
+		case MARKER_H4:
+		case MARKER_H5:
+		case MARKER_H6:
+			temp = (char *) &source[t->start];
+
+			while (temp) {
+				switch (*temp) {
+					case '#':
+						print_const("#");
+						temp++;
+						break;
+
+					case ' ':
+						print_const(" ");
+						temp++;
+						break;
+
+					case '\t':
+						print_const("<text:tab/>");
+						temp++;
+						break;
+
+					default:
+						temp = NULL;
+						break;
+				}
+			}
+
 			break;
 
 		case MARKER_LIST_BULLET:
@@ -383,6 +434,9 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case TEXT_EMPTY:
 			break;
+
+		case TEXT_LINEBREAK:
+			print_const("  ");
 
 		case TEXT_NL:
 			print_const("<text:line-break/>");
@@ -834,6 +888,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				//printf("<text:bookmark-end text:name=\"%s\"/>", temp_char);
 				free(temp_char);
 			}
+
+			trim_trailing_whitespace_d_string(out);
 
 			print_const("</text:h>");
 			scratch->padded = 0;

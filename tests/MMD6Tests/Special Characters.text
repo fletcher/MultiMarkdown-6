@@ -1,5 +1,5 @@
-Title:	Special Characters
-latex config:	article
+title:	Special Characters
+latexconfig:	article
 
 {foo}
 
@@ -18,3 +18,31 @@ latex config:	article
 \foo\
 
 <foo>
+
+%
+
+`%`
+
+10
+
+& %  # _ { } ~ ^ \\
+
+`&`
+
+`%`
+
+`#`
+
+`_`
+
+15
+
+`{`
+
+`}`
+
+`~`
+
+`^`
+
+`\\`

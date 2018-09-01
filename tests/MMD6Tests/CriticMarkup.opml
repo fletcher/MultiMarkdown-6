@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>CriticMarkup</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;{++foo++}&#10;&#10;{--bar--}&#10;&#10;{~~foo~&gt;bar~~}&#10;&#10;{&gt;&gt;foo&lt;&lt;}&#10;&#10;{==bar==}&#10;&#10;5&#10;&#10;foo{++ bar++}&#10;&#10;foo{-- bar--}&#10;&#10;foo {~~foo~&gt;bar~~}&#10;&#10;foo {&gt;&gt;bar&lt;&lt;}&#10;&#10;foo {==bar==}&#10;&#10;10&#10;&#10;foo{++ **bar**++}&#10;&#10;foo{-- **bar**--}&#10;&#10;foo {~~**bar**~&gt;**bar**~~}&#10;&#10;foo {&gt;&gt;**bar**&lt;&lt;}&#10;&#10;foo {==**bar**==}&#10;&#10;15&#10;&#10;foo **{++bar++}**&#10;&#10;foo **{--bar--}**&#10;&#10;foo **{~~foo~&gt;bar~~}**&#10;&#10;foo **{&gt;&gt;bar&lt;&lt;}**&#10;&#10;foo **{==bar==}**&#10;&#10;20&#10;&#10;foo **{++bar**++}&#10;&#10;foo **{--bar**--}&#10;&#10;foo **{~~foo**~&gt;bar**~~}&#10;&#10;foo **{&gt;&gt;bar**&lt;&lt;}&#10;&#10;foo **{==bar**==}&#10;&#10;25&#10;&#10;`{++foo++}`&#10;&#10;`{--bar--}`&#10;&#10;`{~~foo~&gt;bar~~}`&#10;&#10;`{&gt;&gt;foo&lt;&lt;}`&#10;&#10;`{==bar==}`&#10;&#10;30&#10;&#10;$${++foo++}$$&#10;&#10;$${--bar--}$$&#10;&#10;$${~~foo~&gt;bar~~}$$&#10;&#10;$${&gt;&gt;foo&lt;&lt;}$$&#10;&#10;$${==bar==}$$&#10;&#10;35&#10;&#10;{++foo{++ bar++}++}&#10;&#10;{--foo{-- bar--}--}&#10;&#10;{++foo{-- bar--}++}&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="CriticMarkup"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

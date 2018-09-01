@@ -1,5 +1,5 @@
-Title:	Setext Headers
-latex config:	article
+title:	Setext Headers
+latexconfig:	article
 
 foo bar
 =======

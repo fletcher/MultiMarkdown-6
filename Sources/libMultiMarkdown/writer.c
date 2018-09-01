@@ -69,6 +69,7 @@
 #include "memoir.h"
 #include "mmd.h"
 #include "opendocument-content.h"
+#include "opml.h"
 #include "parser.h"
 #include "scanners.h"
 #include "token.h"
@@ -153,6 +154,7 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->header_stack = e->header_stack;
 
 		p->outline_stack = stack_new(0);
+		p->opml_item_closed = 1;
 
 		p->recurse_depth = 0;
 
@@ -475,6 +477,22 @@ char * clean_string(const char * str, bool lowercase) {
 
 	while (*str != '\0') {
 		switch (*str) {
+			case '\\':
+				switch (*(str + 1)) {
+					case '\n':
+					case '\r':
+						d_string_append_c(out, '\n');
+						block_whitespace = true;
+						break;
+
+					default:
+						d_string_append_c(out, '\\');
+						block_whitespace = false;
+						break;
+				}
+
+				break;
+
 			case '\t':
 			case ' ':
 			case '\n':
@@ -1058,6 +1076,7 @@ link * explicit_link(scratch_pad * scratch, token * bracket, token * paren, cons
 
 footnote * footnote_new(const char * source, token * label, token * content, bool lowercase) {
 	footnote * f = malloc(sizeof(footnote));
+	token * walker;
 
 	if (f) {
 		f->label = label;
@@ -1076,6 +1095,25 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 					token_trim_leading_whitespace(content, source);
 
 				default:
+					// Trim trailing newlines
+					walker = content->tail;
+
+					while (walker) {
+						switch (walker->type) {
+							case TEXT_NL:
+							case TEXT_NL_SP:
+								content->tail = walker->prev;
+								token_free(walker);
+								walker = content->tail;
+								walker->next = NULL;
+								break;
+
+							default:
+								walker = NULL;
+								break;
+						}
+					}
+
 					f->content = token_new_parent(content, BLOCK_PARA);
 					f->free_para = true;
 					break;
@@ -1367,8 +1405,10 @@ void process_definition_block(mmd_engine * e, token * block) {
 					}
 
 					// Adjust the properties
-					free(f->label_text);
-					f->label_text = f->clean_text;
+					if (f) {
+						free(f->label_text);
+						f->label_text = f->clean_text;
+					}
 
 					if (f->content->child &&
 							f->content->child->next &&
@@ -1832,6 +1872,7 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			mmd_export_token_tree_beamer(out, e->dstr->str, e->root, scratch);
 
+			// Close out any existing outline levels
 			mmd_outline_add_beamer(out, NULL, scratch);
 
 			mmd_export_citation_list_beamer(out, e->dstr->str, scratch);
@@ -1911,6 +1952,10 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 			mmd_export_token_tree_opendocument(out, e->dstr->str, e->root, scratch);
 
 //			mmd_end_complete_odf(out, e->dstr->str, scratch);
+			break;
+
+		case FORMAT_OPML:
+			mmd_export_token_tree_opml(out, e->dstr->str, e->root, scratch);
 			break;
 	}
 
@@ -2466,6 +2511,18 @@ void strip_leading_whitespace(token * chain, const char * source) {
 }
 
 
+void trim_trailing_whitespace_d_string(DString * d) {
+	if (d) {
+		char * c = &(d->str[d->currentStringLength - 1]);
+
+		while (d->currentStringLength && char_is_whitespace(*c)) {
+			*c-- = 0;
+			d->currentStringLength--;
+		}
+	}
+}
+
+
 bool table_has_caption(token * t) {
 
 	if (t->next && t->next->type == BLOCK_PARA) {
@@ -2477,6 +2534,11 @@ bool table_has_caption(token * t) {
 			if (t && t->next &&
 					t->next->type == PAIR_BRACKET) {
 				t = t->next;
+			}
+
+			if (t == NULL) {
+				// End of file
+				return true;
 			}
 
 			if (t && t->next &&

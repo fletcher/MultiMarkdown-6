@@ -1,11 +1,11 @@
-<p>Title:	Basic Blocks
-latex config:	article</p>
+<p>title:	Basic Blocks
+latexconfig:	article</p>
 
 <p>foo</p>
 
-<h1>Heading <em>foo</em> </h1>
+<h1>Heading <em>foo</em></h1>
 
-<h2>Heading </h2>
+<h2>Heading</h2>
 
 <p>foo
 bar</p>

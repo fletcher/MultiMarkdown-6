@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Quick Start Guide
 Author:	Fletcher T. Penney
-Version:	6.3.0
+Version:	6.4.0
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid:	0d6313fa-9135-477e-9c14-7d62c1977833
@@ -416,9 +416,13 @@ package is compressed to a single zip file (similar to EPUB and ODor macOS build
 
 ## Raw Source ##
 
-In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document.  This worked reasonably well, but was limited and didn't work well when exporting to multiple formats.  It was time for something new.
+In older versions of MultiMarkdown you could use an HTML comment to pass raw
+LaTeX or other content to the final document.  This worked reasonably well,
+but was limited and didn't work well when exporting to multiple formats.  It
+was time for something new.
 
-MMD  v6 offers a new feature to handle this.  Code spans and code blocks can be flagged as representing raw source:
+MMD  v6 offers a new feature to handle this.  Code spans and code blocks can
+be flagged as representing raw source:
 
 	foo `*bar*`{=html}
 	

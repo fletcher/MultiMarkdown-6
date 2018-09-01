@@ -1,5 +1,5 @@
-<p>Title:	Tables
-latex config:	article</p>
+<p>title:	Tables
+latexconfig:	article</p>
 
 <p>| foo	| bar	|<br />
 -----+ | :--:+	|<br />
@@ -60,4 +60,5 @@ latex config:	article</p>
 <p>| bat ||
 | foo | bar |
 | --- | --- |
-| foo | bar |</p>
+| foo | bar |
+[<strong>no trailing newline</strong>]</p>

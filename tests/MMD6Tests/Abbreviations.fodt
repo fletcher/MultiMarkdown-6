@@ -341,9 +341,9 @@ bar</text:p>
 <text:p><text:bookmark text:name="foobar"/>Table <text:sequence text:name="Table" text:formula="ooow:Table+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>:foo bar<text:bookmark-end text:name="foobar"/></text:p>
 
 
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo bar </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo bar</text:h>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foobar"/>foo bar </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="foobar"/>foo bar</text:h>
 
 <text:h text:outline-level="1"><text:bookmark text:name="foobar"/>foo bar</text:h>
 

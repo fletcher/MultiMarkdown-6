@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Metadata with YAML</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;---&#10;&#10;foo&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Metadata with YAML"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

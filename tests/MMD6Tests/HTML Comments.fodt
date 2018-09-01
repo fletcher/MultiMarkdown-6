@@ -297,6 +297,8 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">5</text:p>
 
+<text:p text:style-name="Preformatted Text">&lt;!-- *foo* --&gt;<text:line-break/></text:p>
+
 <text:p text:style-name="Standard">foo &lt;!&#8211;</text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="MMD-Italic">bar</text:span> &#8211;&gt;</text:p>

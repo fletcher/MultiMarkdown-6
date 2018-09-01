@@ -292,7 +292,7 @@ list</text:p></text:list-item>
 
 </text:list>
 
-<text:h text:outline-level="2"><text:bookmark text:name="escaped"/>:Escapes </text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="escaped"/>:Escapes</text:h>
 
 <text:p text:style-name="Standard">[>MM]: MultiMarkdown</text:p>
 

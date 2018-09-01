@@ -1,5 +1,5 @@
-<p>Title:	Fenced Code Blocks
-latex config:	article</p>
+<p>title:	Fenced Code Blocks
+latexconfig:	article</p>
 
 <p><code>*foo*</code></p>
 
@@ -64,6 +64,22 @@ foo</p>
 <li> baz
 ```</li>
 </ol>
+
+<p>```</p>
+
+<h1>foo</h1>
+
+<h2>bar</h2>
+
+<h3>baz</h3>
+
+<h4>foo	##</h4>
+
+<h5>bar		##</h5>
+
+<h6>baz</h6>
+
+<p>```</p>
 
 <p>```
 foo</p>

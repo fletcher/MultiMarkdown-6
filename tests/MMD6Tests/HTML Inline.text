@@ -1,5 +1,5 @@
-Title:	HTML Inline
-latex config:	article
+title:	HTML Inline
+latexconfig:	article
 
 <foo>*bar*</foo>
 

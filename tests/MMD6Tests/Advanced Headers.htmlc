@@ -1,7 +1,7 @@
-<p>Title:	Advanced Headers
-latex config:	article</p>
+<p>title:	Advanced Headers
+latexconfig:	article</p>
 
-<h1>foo [bar] </h1>
+<h1>foo [bar]</h1>
 
 <h1>foo[bar]</h1>
 
@@ -15,7 +15,7 @@ latex config:	article</p>
 
 <h1>foo [bar]</h1>
 
-<h1><em>foo</em> bar </h1>
+<h1><em>foo</em> bar</h1>
 
 <h1><em>foo
 bar</em></h1>

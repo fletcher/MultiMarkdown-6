@@ -1,5 +1,5 @@
-<p>Title:	Figure Images
-latex config:	article</p>
+<p>title:	Figure Images
+latexconfig:	article</p>
 
 <p>![foo]</p>
 

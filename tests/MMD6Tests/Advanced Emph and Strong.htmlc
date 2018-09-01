@@ -1,5 +1,5 @@
-<p>Title:	Advanced Emph and Strong
-latex config:	article</p>
+<p>title:	Advanced Emph and Strong
+latexconfig:	article</p>
 
 <p>foo<em>bar</em></p>
 

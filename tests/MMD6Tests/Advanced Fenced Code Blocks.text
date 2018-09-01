@@ -1,5 +1,5 @@
-Title:	Advanced Fenced Code Blocks
-latex config:	article
+title:	Advanced Fenced Code Blocks
+latexconfig:	article
 
 ``
 foo *2*

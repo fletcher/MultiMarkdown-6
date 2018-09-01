@@ -1,5 +1,5 @@
-Title:	Reference Images
-latex config:	article
+title:	Reference Images
+latexconfig:	article
 
 Test ![*foo*][bar].
 

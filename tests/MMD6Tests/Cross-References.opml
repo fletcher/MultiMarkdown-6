@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Cross-References</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;"></outline>
+<outline text="A Section" _note="&#10;"></outline>
+<outline text="109&amp;*&amp;#()^ Can Start With Digit" _note="&#10;"></outline>
+<outline text="Strip out &amp;%^ characters &amp;*^" _note="&#10;[A Section].&#10;&#10;"><outline text="1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^" _note="&#10;5&#10;&#10;And now, link to [1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^][]&#10;&#10;"></outline>
+</outline>
+<outline text="Заголовок по-русски" _note="&#10;И ссылка на [Заголовок по-русски].&#10;&#10;"></outline>
+<outline text="Test 的 Multibyte" _note="&#10;10&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Cross-References"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

@@ -270,6 +270,7 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 			}
 
 			mmd_export_token_tree_beamer(out, source, t->child, scratch);
+			trim_trailing_whitespace_d_string(out);
 
 			if (scratch->extensions & EXT_NO_LABELS) {
 				print_const("}");

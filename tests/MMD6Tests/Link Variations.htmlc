@@ -1,7 +1,7 @@
-<p>Title:	Link Variations
-latex config:	article</p>
+<p>title:	Link Variations
+latexconfig:	article</p>
 
-<h2>Foo Bar </h2>
+<h2>Foo Bar</h2>
 
 <p>Link to [Foo Bar].</p>
 
@@ -16,3 +16,15 @@ latex config:	article</p>
 <p>5</p>
 
 <p>Link to [Foo][Foo Bar].</p>
+
+<p><a href="http://example.com/?bar=foo&amp;foo=bar">&amp; link</a></p>
+
+<p><a href="http://example.com/%25%20link">'%' Link</a></p>
+
+<p><a href="http://example.com/#foo">'#' link</a></p>
+
+<p>10</p>
+
+<p><a href="http://example.com/_foo">_ link</a></p>
+
+<p><a href="http://example.com/~foo">~ link</a></p>

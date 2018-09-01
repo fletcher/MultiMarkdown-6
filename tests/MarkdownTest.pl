@@ -24,6 +24,8 @@ my $flags = "";
 my $file_ext = "html";
 my $trail = "";
 
+my $source_ext = "text";
+
 GetOptions (
 			"script=s"   => \$script,
 			"testdir=s"  => \$test_dir,
@@ -32,6 +34,7 @@ GetOptions (
 			"flags=s"	 => \$flags,
 			"ext=s"		 => \$file_ext,
 			"trailflags=s" => \$trail,
+			"source_ext=s" => \$source_ext,
 			);
 
 if($flag_version) {
@@ -57,14 +60,14 @@ my $tests_failed = 0;
 TEST:
 $test_dir =~ s/ /\\ /g;
 
-foreach my $testfile (glob "$test_dir/*.text") {
+foreach my $testfile (glob "$test_dir/*.$source_ext") {
 	my $testname = $testfile;
-	$testname =~ s{.*/(.+)\.text$}{$1}i; 
+	$testname =~ s{.*/(.+)\.$source_ext$}{$1}i; 
 	print "$testname ... ";
 
 	# Look for a corresponding .html file for each .text file:
 	my $resultfile = $testfile;
-	$resultfile =~ s{\.text$}{\.$file_ext}i;
+	$resultfile =~ s{\.$source_ext$}{\.$file_ext}i;
 	unless (-f $resultfile) {
 		print "'$resultfile' does not exist.\n\n";
 		$tests_failed++;

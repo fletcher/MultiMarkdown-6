@@ -1,5 +1,5 @@
-<p>Title:	CriticMarkup
-latex config:	article</p>
+<p>title:	CriticMarkup
+latexconfig:	article</p>
 
 <p>{++foo++}</p>
 

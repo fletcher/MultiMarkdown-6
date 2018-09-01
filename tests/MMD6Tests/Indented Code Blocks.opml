@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Indented Code Blocks</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;&#9;foo&#10;&#10;foo&#10;&#10;&#9;bar&#10;&#10;foo&#10;&#10; foo&#10;&#10;5&#10;&#10;  foo&#10;&#10;   foo&#10;&#10;    bar&#10;&#10;foo&#10;&#10;&#9;&#9;bar&#10;&#10;10&#10;&#10;foo&#10;&#10;&#9;bar&#10;&#9;&#9;bar&#10;&#10;foo&#10;&#10;&#9;bar&#10;&#10;15&#10;&#10;foo&#10;&#9;bar&#10;&#9;&#9;bar&#10;&#10;foo&#10;&#10;&#9;bar&#10;&#10;foo&#10;&#9;&#10;&#9;bar&#10;&#10;&#9;bar&#10;&#10;&#9;bar&#10;&#10;foo&#10;&#10;&#9;-&lt;&gt;--&amp;\&amp;---...&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Indented Code Blocks"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

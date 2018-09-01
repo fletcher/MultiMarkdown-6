@@ -406,6 +406,10 @@ para				::= defs.
 #endif
 }
 
+%parse_accept {
+//	printf("parsing completed successfully!\n");
+}
+
 %parse_failure {
 	fprintf(stderr, "Parser failed to successfully parse.\n");
 }

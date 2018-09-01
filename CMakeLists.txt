@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2018-03-27")
+set (My_Project_Revised_Date "2018-09-01")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 3)
-set (My_Project_Version_Patch 1)
+set (My_Project_Version_Minor 4)
+set (My_Project_Version_Patch 0)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -193,6 +193,10 @@ set(src_files
 	Sources/libMultiMarkdown/object_pool.c
 	Sources/libMultiMarkdown/opendocument.c
 	Sources/libMultiMarkdown/opendocument-content.c
+	Sources/libMultiMarkdown/opml.c
+	Sources/libMultiMarkdown/opml-lexer.c
+	Sources/libMultiMarkdown/opml-parser.c
+	Sources/libMultiMarkdown/opml-reader.c
 	Sources/libMultiMarkdown/parser.c
 	Sources/libMultiMarkdown/rng.c
 	Sources/libMultiMarkdown/scanners.c
@@ -225,6 +229,10 @@ set(header_files
 	Sources/libMultiMarkdown/object_pool.h
 	Sources/libMultiMarkdown/opendocument.h
 	Sources/libMultiMarkdown/opendocument-content.h
+	Sources/libMultiMarkdown/opml.h
+	Sources/libMultiMarkdown/opml-lexer.h
+	Sources/libMultiMarkdown/opml-parser.h
+	Sources/libMultiMarkdown/opml-reader.h
 	Sources/libMultiMarkdown/scanners.h
 	Sources/libMultiMarkdown/stack.h
 	Sources/libMultiMarkdown/textbundle.c
@@ -283,8 +291,19 @@ set (latex
 	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-footer.tex
 	texmf/tex/latex/mmd6/letterhead/mmd6-letterhead-leader.tex
 
+	texmf/tex/latex/mmd6/manuscript/manuscript.sty
+	texmf/tex/latex/mmd6/manuscript/mmd6-manuscript-begin.tex
+	texmf/tex/latex/mmd6/manuscript/mmd6-manuscript-footer.tex
+	texmf/tex/latex/mmd6/manuscript/mmd6-manuscript-leader.tex
+
+	texmf/tex/latex/mmd6/memoir-book/mmd6-memoir-book-begin.tex
+	texmf/tex/latex/mmd6/memoir-book/mmd6-memoir-book-footer.tex
+	texmf/tex/latex/mmd6/memoir-book/mmd6-memoir-book-leader.tex
+
 	texmf/tex/latex/mmd6/shared/mmd6-criticmarkup.tex
 	texmf/tex/latex/mmd6/shared/mmd6-default-metadata.tex
+	texmf/tex/latex/mmd6/shared/mmd6-manuscript-packages.tex
+	texmf/tex/latex/mmd6/shared/mmd6-memoir-copyright.tex
 	texmf/tex/latex/mmd6/shared/mmd6-memoir-footer.tex
 	texmf/tex/latex/mmd6/shared/mmd6-memoir-layout-8.5x11.tex
 	texmf/tex/latex/mmd6/shared/mmd6-memoir-packages.tex
@@ -653,9 +672,25 @@ ADD_MMD_TEST(mmd-6-memoir "-t memoir" Memoir tex)
 
 ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
 
+ADD_MMD_TEST(mmd-6-opml "-t opml" MMD6Tests opml)
+
 ADD_MMD_TEST(mmd-6-critic-accept "-a" CriticMarkup htmla)
 
 ADD_MMD_TEST(mmd-6-critic-reject "-r" CriticMarkup htmlr)
+
+# Some of these will (properly) fail.
+# But it's useful to run manually at times to verify that
+# round-tripping through OPML generally works
+
+# add_test ( mmd-6-opml-parse 
+# 		${PROJECT_SOURCE_DIR}/tests/MarkdownTest.pl
+# 		--Script="${CMAKE_CURRENT_BINARY_DIR}/multimarkdown"
+# 		--testdir=${PROJECT_SOURCE_DIR}/tests/MMD6Tests
+# 		"--Flags=--opml -t mmd"
+# 		--ext=text
+# 		--source_ext=opml
+# )
+
 
 ADD_MMD_TEST(pathologic-compat "-c" ../build html)
 

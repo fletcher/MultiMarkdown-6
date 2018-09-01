@@ -145,7 +145,7 @@ DString * scan_file(const char * fname) {
 	while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
 		d_string_append_c_array(buffer, chunk, bytes);
 
-		if (buffer->currentStringLength < kBUFFERSIZE) {
+		if (buffer->currentStringLength <= kBUFFERSIZE) {
 			// Strip BOM
 			if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
 				d_string_erase(buffer, 0, 3);

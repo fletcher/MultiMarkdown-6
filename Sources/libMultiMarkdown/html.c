@@ -113,6 +113,11 @@ void mmd_print_char_html(DString * out, char c, bool obfuscate) {
 			print_const("&gt;");
 			break;
 
+		case '\n':
+		case '\r':
+			print_const("<br/>\n");
+			break;
+
 		default:
 			if (obfuscate && ((int) c == (((int) c) & 127))) {
 				if (ran_num_next() % 2 == 0) {
@@ -682,6 +687,8 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			}
 
 			mmd_export_token_tree_html(out, source, t->child, scratch);
+			trim_trailing_whitespace_d_string(out);
+
 			printf("</h%1d>", temp_short + scratch->base_header_level - 1);
 			scratch->padded = 0;
 			break;
@@ -2098,7 +2105,20 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			mmd_print_char_html(out, source[t->start + 1], false);
+
+			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
+			} else {
+				mmd_print_char_html(out, source[t->start + 1], false);
+			}
+
+			break;
+
+		case HTML_COMMENT_START:
+			print_const("&lt;!--");
+			break;
+
+		case HTML_COMMENT_STOP:
+			print_const("--&gt;");
 			break;
 
 		case HTML_ENTITY:
@@ -2136,21 +2156,11 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 			break;
 
 		case MATH_DOLLAR_SINGLE:
-			if (t->mate) {
-				(t->start < t->mate->start) ? ( print_const("\\(") ) : ( print_const("\\)") );
-			} else {
-				print_const("$");
-			}
-
+			print_const("$");
 			break;
 
 		case MATH_DOLLAR_DOUBLE:
-			if (t->mate) {
-				(t->start < t->mate->start) ? ( print_const("\\[") ) : ( print_const("\\]") );
-			} else {
-				print_const("$$");
-			}
-
+			print_const("$$");
 			break;
 
 		case MATH_PAREN_OPEN:
@@ -2217,6 +2227,24 @@ void mmd_export_token_html_math(DString * out, const char * source, token * t, s
 
 		case MATH_BRACKET_CLOSE:
 			print_const("\\]");
+			break;
+
+		case MATH_DOLLAR_SINGLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\(") ) : ( print_const("\\)") );
+			} else {
+				print_const("$");
+			}
+
+			break;
+
+		case MATH_DOLLAR_DOUBLE:
+			if (t->mate) {
+				(t->start < t->mate->start) ? ( print_const("\\[") ) : ( print_const("\\]") );
+			} else {
+				print_const("$$");
+			}
+
 			break;
 
 		case MATH_PAREN_OPEN:
@@ -2300,12 +2328,14 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 		} else if (strcmp(m->key, "latexbegin") == 0) {
 		} else if (strcmp(m->key, "latexconfig") == 0) {
 		} else if (strcmp(m->key, "latexfooter") == 0) {
+		} else if (strcmp(m->key, "latexheader") == 0) {
 		} else if (strcmp(m->key, "latexheaderlevel") == 0) {
 		} else if (strcmp(m->key, "latexinput") == 0) {
 		} else if (strcmp(m->key, "latexleader") == 0) {
 		} else if (strcmp(m->key, "latexmode") == 0) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
+		} else if (strcmp(m->key, "odfheader") == 0) {
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\t<title>");
@@ -2330,6 +2360,17 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 
 
 void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch) {
+	meta * m;
+
+	// Iterate over metadata keys
+
+	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
+		if (strcmp(m->key, "htmlfooter") == 0) {
+			print(m->value);
+			print_char('\n');
+		}
+	}
+
 	print_const("\n\n</body>\n</html>\n");
 }
 

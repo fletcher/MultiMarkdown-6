@@ -277,12 +277,14 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 	<dc:title>*foo* &quot;bar&quot;</dc:title>
 	<meta:user-defined meta:name="empty"></meta:user-defined>
 	<meta:user-defined meta:name="foo">bar foo bar foo bar</meta:user-defined>
+	<meta:user-defined meta:name="multiline">first line<text:line-break/>
+second line</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>
 <text:p text:style-name="Standard">foo:<text:tab/>bar</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="foo"/>foo</text:h>
 </office:text>
 </office:body>
 </office:document>

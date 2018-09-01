@@ -1,7 +1,7 @@
-Title:	Bibliography
-latex config:	article
+title:	Bibliography
+latexconfig:	article
 bibtex:	bibtex
-biblio style:	apalike
+bibliostyle:	apalike
 
 
 [#Knuth:1968]
@@ -17,3 +17,7 @@ biblio style:	apalike
 5
 
 [#Knuth:1968,Knuth:1981;]
+
+[chap. 2][#Knuth:1981]
+
+[chap. 2][#Knuth:1981;]

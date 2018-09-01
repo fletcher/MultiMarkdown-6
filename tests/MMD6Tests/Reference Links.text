@@ -1,5 +1,5 @@
-Title:	Reference Links
-latex config:	article
+title:	Reference Links
+latexconfig:	article
 
 [*foo*][bar].
 

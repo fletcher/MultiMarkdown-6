@@ -1,5 +1,5 @@
-<p>Title:	Blockquotes
-latex config:	article</p>
+<p>title:	Blockquotes
+latexconfig:	article</p>
 
 <blockquote>
 <p>foo

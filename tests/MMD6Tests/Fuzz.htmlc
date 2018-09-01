@@ -1,5 +1,5 @@
-<p>Title:	Fuzz Testing
-latex config:	article</p>
+<p>title:	Fuzz Testing
+latexconfig:	article</p>
 
 <p>Collection of test cases identified by <a href="http://lcamtuf.coredump.cx/afl/">American fuzzy lop</a>.</p>
 

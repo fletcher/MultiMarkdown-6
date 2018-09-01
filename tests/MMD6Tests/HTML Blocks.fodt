@@ -295,7 +295,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">10</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foo2"/>foo2 </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foo2"/>foo2</text:h>
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#foo2">foo</text:a></text:p>
 

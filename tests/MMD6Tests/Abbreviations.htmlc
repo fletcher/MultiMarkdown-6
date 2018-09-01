@@ -1,5 +1,5 @@
-<p>Title:	Abbreviations
-latex config:	article</p>
+<p>title:	Abbreviations
+latexconfig:	article</p>
 
 <p>foo foo</p>
 
@@ -45,9 +45,9 @@ bar</p>
 | foo | bar |
 [foo bar]</p>
 
-<h1>foo bar </h1>
+<h1>foo bar</h1>
 
-<h3>foo bar </h3>
+<h3>foo bar</h3>
 
 <h1>foo bar</h1>
 

@@ -98,7 +98,7 @@
 	// but if you are using MMD in a situation that makes extensive use of raw HTML, you
 	// may need to use this option or the regex-defined option.
 
-//	bool_attr	= 'allowFullscreen' | 'async' | 'autofocus' | 'autoplay' | 'badInput' | 'checked' |
+//	bool_attr	= 'allowfullscreen' | 'async' | 'autofocus' | 'autoplay' | 'badInput' | 'checked' |
 //					'compact' | 'complete' | 'controls' | 'cookieEnabled' | 'customError' |
 //					'declare' | 'default' | 'defaultChecked' | 'defaultMuted' | 'defaultSelected' |
 //					'defer' | 'disabled' | 'draggable' | 'enabled' | 'ended' | 'formNoValidate' |
@@ -120,7 +120,7 @@
 	//
 	// This is the default option for MMD 6 (at least for now)
 
-	bool_attr	= 'autoplay' | 'controls' | 'loop' | 'muted';
+	bool_attr	= 'autoplay' | 'controls' | 'loop' | 'muted' | 'allowfullscreen';
 
 
 	// Alternatively, use a regex-defined match for boolean attributes.
@@ -137,7 +137,7 @@
 
 	value		= (quoted_d | quoted_s | unquoted);
 	attr		= spnl name '=' sp value;
-	attributes	= (bool_attr | attr)+;
+	attributes	= ((spnl bool_attr) | attr)+;
 	title		= (quoted_d | quoted_s | quoted_p);
 
 	label		= [^\]\n\r\x00]* [^\]\n\r\x00\\];
@@ -187,9 +187,9 @@
 
 	html_block	= '<' '/'? block_tag attributes? '/'? '>';
 
-	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00]+ nl_eof;
+	fence_start	= non_indent ('`'{3,} | '~'{3,}) [^`'\n\r\x00]+ nl_eof;
 
-	fence_end	= non_indent [`~]{3,} sp nl_eof;
+	fence_end	= non_indent ('`'{3,} | '~'{3,}) sp nl_eof;
 
 	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \240\t\-\.]*;
 

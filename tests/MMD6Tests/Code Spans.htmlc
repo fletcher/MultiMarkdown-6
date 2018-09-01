@@ -1,5 +1,5 @@
-<p>Title:	Code Spans
-latex config:	article</p>
+<p>title:	Code Spans
+latexconfig:	article</p>
 
 <p><code>foo</code></p>
 

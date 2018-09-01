@@ -278,7 +278,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="2"><text:bookmark text:name="foobar"/>Foo Bar </text:h>
+<text:h text:outline-level="2"><text:bookmark text:name="foobar"/>Foo Bar</text:h>
 
 <text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">Foo Bar</text:a>.</text:p>
 
@@ -293,6 +293,18 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard">5</text:p>
 
 <text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#foobar">Foo</text:a>.</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://example.com/?bar=foo&amp;foo=bar">&amp; link</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://example.com/%25%20link">&#8216;%&#8217; Link</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://example.com/#foo">&#8216;#&#8217; link</text:a></text:p>
+
+<text:p text:style-name="Standard">10</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://example.com/_foo">_ link</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://example.com/~foo">~ link</text:a></text:p>
 </office:text>
 </office:body>
 </office:document>

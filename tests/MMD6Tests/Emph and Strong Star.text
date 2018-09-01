@@ -1,5 +1,5 @@
-Title:	Emph and Strong Star
-latex config:	article
+title:	Emph and Strong Star
+latexconfig:	article
 
 *foo*
 

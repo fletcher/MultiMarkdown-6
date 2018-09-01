@@ -1,5 +1,5 @@
-Title:	Inline Links
-latex config:	article
+title:	Inline Links
+latexconfig:	article
 
 Just a [URL](http://url/file.txt).
 

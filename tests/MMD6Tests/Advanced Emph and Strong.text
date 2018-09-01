@@ -1,5 +1,5 @@
-Title:	Advanced Emph and Strong
-latex config:	article
+title:	Advanced Emph and Strong
+latexconfig:	article
 
 foo*bar*
 

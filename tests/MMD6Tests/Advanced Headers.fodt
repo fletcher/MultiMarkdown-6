@@ -278,21 +278,21 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="1"><text:bookmark text:name="bar"/>foo  </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="bar"/>foo</text:h>
 
 <text:h text:outline-level="1"><text:bookmark text:name="bar"/>foo</text:h>
 
 <text:h text:outline-level="1"><text:bookmark text:name="foobarbat"/>foo <text:a xlink:type="simple" xlink:href="#bat">bar</text:a></text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="bat"/>foo <text:a xlink:type="simple" xlink:href="#bar">bar</text:a> </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="bat"/>foo <text:a xlink:type="simple" xlink:href="#bar">bar</text:a></text:h>
 
 <text:h text:outline-level="1"><text:bookmark text:name="baz"/>foo <text:a xlink:type="simple" xlink:href="#bat">bar</text:a></text:h>
 
 <text:p text:style-name="Standard">5</text:p>
 
-<text:h text:outline-level="1"><text:bookmark text:name="bar"/>foo </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="bar"/>foo</text:h>
 
-<text:h text:outline-level="1"><text:bookmark text:name="foobar"/><text:span text:style-name="MMD-Italic">foo</text:span> bar </text:h>
+<text:h text:outline-level="1"><text:bookmark text:name="foobar"/><text:span text:style-name="MMD-Italic">foo</text:span> bar</text:h>
 
 <text:h text:outline-level="1"><text:bookmark text:name="foobar"/><text:span text:style-name="MMD-Italic">foo
 bar</text:span></text:h>

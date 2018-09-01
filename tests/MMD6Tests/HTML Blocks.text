@@ -1,5 +1,5 @@
-Title:	HTML Blocks
-latex config:	article
+title:	HTML Blocks
+latexconfig:	article
 
 <del>*bar1*</del>
 

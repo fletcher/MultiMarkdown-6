@@ -113,6 +113,7 @@ typedef struct {
 	stack *				header_stack;
 
 	stack *				outline_stack;
+	short				opml_item_closed;
 
 	short				recurse_depth;
 
@@ -243,6 +244,8 @@ meta * extract_meta_from_stack(scratch_pad * scratch, const char * target);
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch);
 
 void strip_leading_whitespace(token * chain, const char * source);
+
+void trim_trailing_whitespace_d_string(DString * d);
 
 bool table_has_caption(token * table);
 

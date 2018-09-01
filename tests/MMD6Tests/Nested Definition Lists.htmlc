@@ -1,5 +1,5 @@
-<p>Title:	Nested Definition Lists
-latex config:	article</p>
+<p>title:	Nested Definition Lists
+latexconfig:	article</p>
 
 <p>bat
 :	<em>foo</em></p>

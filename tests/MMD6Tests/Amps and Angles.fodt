@@ -294,9 +294,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">Here is a link with an amersand in the link text: <text:a xlink:type="simple" xlink:href="http://att.com/" office:name="AT&amp;T">AT&amp;T</text:a>.</text:p>
 
-<text:p text:style-name="Standard">Here is an inline <text:a xlink:type="simple" xlink:href="/script?foo=1&amp;bar=2">link</text:a>.</text:p>
+<text:p text:style-name="Standard">Here is an inline <text:a xlink:type="simple" xlink:href="/script%20here?foo=1&amp;bar=2">link</text:a>.</text:p>
 
-<text:p text:style-name="Standard">Here is an inline <text:a xlink:type="simple" xlink:href="/script?foo=1&amp;bar=2">link</text:a>.</text:p>
+<text:p text:style-name="Standard">Here is an inline <text:a xlink:type="simple" xlink:href="/script%20here?foo=1&amp;bar=2">link</text:a>.</text:p>
 
 <text:p text:style-name="Preformatted Text">&amp; and &amp;amp; and &lt; and &gt; in code block.<text:line-break/></text:p>
 

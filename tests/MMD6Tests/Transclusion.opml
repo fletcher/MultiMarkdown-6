@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Transclusion</title></head>
+<body>
+<outline text="(Untitled Preamble)" _note="&#10;&#10;This text is included in `foo.txt`.&#10;&#10;This should not be transcluded to avoid an infinite loop -- {{foo.txt}}&#10;&#10;&#10;&#10;This text is included in `bar.txt`.&#10;&#10;This can be transcluded without causing an infinite loop -- &#10;This text is included in `foo.txt`.&#10;&#10;This should not be transcluded to avoid an infinite loop -- {{foo.txt}}&#10;&#10;&#10;```&#10;This is a file with no metadata.&#10;```&#10;&#10;```&#10;This is a file with no metadata.&#10;```&#10;&#10;&#10;{{transclusion/bat.*}}&#10;&#10;&#10;This text is included in `transclusion/baz.txt`.&#10;&#10;This should pull in `bar.txt`, *if* run from the parent directory, since it&#10;does *not* override the `transclude base` metadata.&#10;&#10;&#10;This text is included in `bar.txt`.&#10;&#10;This can be transcluded without causing an infinite loop -- &#10;This text is included in `foo.txt`.&#10;&#10;This should not be transcluded to avoid an infinite loop -- {{foo.txt}}&#10;&#10;&#10;```&#10;This is a file with no metadata.&#10;```&#10;&#10;```&#10;This is a file with no metadata.&#10;```&#10;&#10;&#10;&#10;&#10;This text is included in `transclusion/baz2.txt`.&#10;&#10;This should pull in `transclusion/bar.txt`, *even if* run from the parent&#10;directory, since it overrides the `transclude base` metadata.&#10;&#10;&#10;This text is included in `transclusion\bar.txt`.&#10;&#10;foo can no longer be found -- {{foo.txt}}&#10;&#10;"></outline>
+<outline text="Metadata">
+<outline text="title" _note="Transclusion"/>
+<outline text="latexconfig" _note="article"/>
+<outline text="transcludebase" _note="."/>
+</outline>
+</body>
+</opml>
+
