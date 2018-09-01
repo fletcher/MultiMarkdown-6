@@ -276,19 +276,19 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2018-03-38</meta:user-defined>
+	<meta:user-defined meta:name="date">2018-09-01</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>
-<text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction</text:h>
 
 <text:p text:style-name="Standard">This document includes some notes on the development of MultiMarkdown (MMD) v6. Most of it
 will be interesting only to other developers or those needing to choose the
 absolute &#8220;best&#8221; Markdown (MD) implementation for their needs &#8211; it is not required
 reading to understand how the software works.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="whyanewversion"/>Why a New Version? </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="whyanewversion"/>Why a New Version?</text:h>
 
 <text:p text:style-name="Standard">MultiMarkdown version 5 was released in November of 2015, but the codebase was
 essentially the same as that of v4 &#8211; and that was released in beta in April
@@ -319,7 +319,7 @@ had been using <text:a xlink:type="simple" xlink:href="https://github.com/ooc-la
 into parser code. It worked well overall, but lacked some features I needed,
 requiring a lot of workarounds.)</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="firstattempt"/>First Attempt </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="firstattempt"/>First Attempt</text:h>
 
 <text:p text:style-name="Standard">My first attempt started by hand-crafting a parser that scanned through the
 document a line at a time, deciding what to do with each line as it found
@@ -449,7 +449,7 @@ don&#8217;t follow the rules above. I&#8217;ll continue to work on this.</text:p
 <text:p text:style-name="Standard">In the end, I scrapped this effort, but kept the lessons learned in the token
 pairing algorithm.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="secondattempt"/>Second Attempt </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="secondattempt"/>Second Attempt</text:h>
 
 <text:p text:style-name="Standard">I tried again this past Fall. This time, I approached the problem with lots
 of reading. <text:span text:style-name="MMD-Italic">Lots and lots</text:span> of reading &#8211; tons of websites, computer science
@@ -517,13 +517,13 @@ anyway, if not better.</text:p>
 about how to create the grammar used. But so far, it has been able to handle
 everything I have thrown at it.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="optimization"/>Optimization </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="optimization"/>Optimization</text:h>
 
 <text:p text:style-name="Standard">One of my goals for MMD 6 was performance. So I&#8217;ve paid attention to speed
 along the way, and have tried to use a few tricks to keep things fast. Here
 are some things I&#8217;ve learned along the way. In no particular order:</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="memoryallocation"/>Memory Allocation </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="memoryallocation"/>Memory Allocation</text:h>
 
 <text:p text:style-name="Standard">When parsing a long document, a <text:span text:style-name="MMD-Italic">lot</text:span> of token structures are created. Each
 one requires a small bit of memory to be allocated. In aggregate, that time
@@ -552,7 +552,7 @@ reduces the number of tokens that need to be processed later on. The only
 downside is remember to check for a single space character in a few instances
 where it matters.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="properinputbuffering"/>Proper input buffering </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="properinputbuffering"/>Proper input buffering</text:h>
 
 <text:p text:style-name="Standard">When I first began last spring, I was amazed to see how much time was being
 spent by MultiMarkdown simply reading the input file. Then I discovered it
@@ -561,14 +561,14 @@ buffered read approach and the time to read the file went to almost nothing. I
 experimented with different buffer sizes, but they did not seem to make a
 measurable difference.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="outputbuffering"/>Output Buffering </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="outputbuffering"/>Output Buffering</text:h>
 
 <text:p text:style-name="Standard">I experimented with different approaches to creating the output after parsing.
 I tried printing directly to <text:span text:style-name="Source_20_Text">stdout</text:span>, and even played with different
 buffering settings. None of those seemed to work well, and all were slower
 than using the <text:span text:style-name="Source_20_Text">d_string</text:span> approach (formerly called <text:span text:style-name="Source_20_Text">GString</text:span> in MMD 5).</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="fastsearches"/>Fast Searches </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="fastsearches"/>Fast Searches</text:h>
 
 <text:p text:style-name="Standard">After getting basic Markdown functionality complete, I discovered during
 testing that the time required to parse a document grew exponentially as the
@@ -583,7 +583,7 @@ a link (or footnote, etc.) by &#8220;name&#8221; rather than searching through a
 This allowed me to get MMD&#8217;s performance back to O(n), taking roughly twice as
 much time to process a document that is twice as long.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="efficientutilityfunctions"/>Efficient Utility Functions </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="efficientutilityfunctions"/>Efficient Utility Functions</text:h>
 
 <text:p text:style-name="Standard">It is frequently necessary when parsing Markdown to check what sort of
 character we are dealing with at a certain position &#8211; a letter, whitespace,
@@ -594,7 +594,7 @@ programming time, and saved time tracking down bugs from handling things
 slightly differently under different circumstances. I also suspect it
 improved performance, but don&#8217;t have the data to back it up.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="testingwhilewriting"/>Testing While Writing </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="testingwhilewriting"/>Testing While Writing</text:h>
 
 <text:p text:style-name="Standard">I developed several chunks of code in parallel while creating MMD 6. The vast
 majority of it was developed largely in a <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven development</text:a> approach.
@@ -608,7 +608,7 @@ allowed me to ensure new features work properly and that old features aren&#8217
 broken. At this time, there are 29 text files in the test suite, and many
 more to come.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="otherlessons"/>Other Lessons </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="otherlessons"/>Other Lessons</text:h>
 
 <text:p text:style-name="Standard">Some things that didn&#8217;t do me any good&#8230;.</text:p>
 
@@ -626,7 +626,7 @@ automatically, there was no noticeable performance change, and I didn&#8217;t ha
 the tools to measure whether I could have improved memory usage at all. Not
 sure this would be worth the effort &#8211; much lower hanging fruit available.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="performance"/>Performance </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="performance"/>Performance</text:h>
 
 <text:p text:style-name="Standard">Basic tests show that currently MMD 6 takes about 20&#8211;25% longer the CommonMark
 0.27.0 to process long files (e.g. 0.2 MB). However, it is around 5% <text:span text:style-name="MMD-Italic">faster</text:span>
@@ -667,9 +667,9 @@ more challenging and see whether they can be reworked to improve performance.</t
 I&#8217;m sure there&#8217;s still a lot of room for further improvement to be made.
 Suggestions welcome!</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="testing"/>Testing </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="testing"/>Testing</text:h>
 
-<text:h text:outline-level="4"><text:bookmark text:name="testsuite"/>Test Suite </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="testsuite"/>Test Suite</text:h>
 
 <text:p text:style-name="Standard">The development of MMD v6 was heavily, but not absolutely, influenced by the
 philosophy of test-driven development. While coding, I made use of test
@@ -682,7 +682,7 @@ documents that will continue to be updated as new bugs and edge cases are
 identified. This helps make proper integration testing of the entire
 application with every release.</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="fuzztesting"/>Fuzz Testing </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="fuzztesting"/>Fuzz Testing</text:h>
 
 <text:p text:style-name="Standard">I was not familiar with the concept of
 <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/Fuzzing">Fuzz Testing</text:a> until a user mentioned
@@ -710,7 +710,7 @@ versions. Do this over and over and over, and some interesting edge cases are
 sometimes identified. I have found some interesting edge cases this way.
 Definitely a useful tool!</text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="unittesting"/>Unit Testing </text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="unittesting"/>Unit Testing</text:h>
 
 <text:p text:style-name="Standard">Some of the original development was done with unit testing in some other
 tools I developed. This code formed the basis of a few parts of MMD.
@@ -718,7 +718,7 @@ Otherwise, it was hard to see how to really create very good unit tests for
 the development of MMD. So there is really not much unit testing built into
 the code or used during the development.</text:p>
 
-<text:h text:outline-level="3"><text:bookmark text:name="dependencieslibraries"/>Dependencies/Libraries </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="dependencieslibraries"/>Dependencies/Libraries</text:h>
 
 <text:p text:style-name="Standard">MMD v6 has no external dependencies when compiling, aside from the standard
 libraries for C development (Except that it will use <text:span text:style-name="Source_20_Text">libcurl</text:span> if available in
@@ -760,9 +760,162 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 
 </text:list>
 
-<text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog </text:h>
+<text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog</text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2018&#8211;09&#8211;01 - v 6.4.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add ODF Header metadata and fix issue with LaTeX Header metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add additional tests for special characters</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add initial OPML export support (address #9)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add opml option to read for MultiMarkdown OPML files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Add missing Latex support files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Avoid potential error with stack_free</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Remove unnecessary code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Allow caption without trailing newline at end of document</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Escape square brackets, e.g. &#8216;{[foo]}&#8217; (addresses #128 and #129)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix escpaing of % character in LaTeX code spans and blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix html comments inside code blocks (fixes #118)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue where <text:span text:style-name="Source_20_Text">~</text:span> is mistakenly interpreted as fence delimiter</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with BOM and files &gt; 4k</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with dollar math delimiters inside code (fixes #134)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix token length in OPML</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve OPML export; add OPML tests</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Normalize line spacing in CriticMarkup notes in LaTeX (fixes #120)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Preserve tabs following leading hashes in code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Prevent potential null dereference</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Remove lock file</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Trim single remaining whitespace when exporting headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Trim trailing newlines in definition blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use Setext headers when necessary to convert from OPML to text (fixes #138)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use \ul instead of \underline when soul package is in use (fixes #121)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #132 from jlargentaye/develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATE: Clarify DevelopmentNotes re: libcurl</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATE: Clarify README re: libcurl</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: &#8216;\item{}&#8217; no longer needed since square brackets escaped on their own</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add 6.3.1 release notes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add allowfullscreen to list of boolean HTML attributes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add more BibTeX test cases</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Adjust metadata for test files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Allow '' to preserve line break in metadata. (Addresses #86)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Apply astyle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix whitespace with boolean HTML attributes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Ignore escaped space at end of code span</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Test % escaping in URLs</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2018&#8211;03&#8211;28 - v 6.3.2:</text:p>
 

@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2018-03-38  
+Date: 2018-09-01  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -471,6 +471,47 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2018-09-01 - v 6.4.0:
+
+	*    ADDED: Add ODF Header metadata and fix issue with LaTeX Header metadata
+	*    ADDED: Add additional tests for special characters
+	*    ADDED: Add initial OPML export support (address #9)
+	*    ADDED: Add opml option to read for MultiMarkdown OPML files
+	*    Add missing Latex support files
+	*    Avoid potential error with stack_free
+	*    CHANGED: Remove unnecessary code
+	*    FIXED: Allow caption without trailing newline at end of document
+	*    FIXED: Escape square brackets, e.g. '{[foo]}' (addresses #128 and #129)
+	*    FIXED: Fix escpaing of % character in LaTeX code spans and blocks
+	*    FIXED: Fix html comments inside code blocks (fixes #118)
+	*    FIXED: Fix issue where `~` is mistakenly interpreted as fence delimiter
+	*    FIXED: Fix issue with BOM and files > 4k
+	*    FIXED: Fix issue with dollar math delimiters inside code (fixes #134)
+	*    FIXED: Fix token length in OPML
+	*    FIXED: Improve OPML export; add OPML tests
+	*    FIXED: Normalize line spacing in CriticMarkup notes in LaTeX (fixes #120)
+	*    FIXED: Preserve tabs following leading hashes in code blocks
+	*    FIXED: Prevent potential null dereference
+	*    FIXED: Remove lock file
+	*    FIXED: Trim single remaining whitespace when exporting headers
+	*    FIXED: Trim trailing newlines in definition blocks
+	*    FIXED: Use Setext headers when necessary to convert from OPML to text (fixes #138)
+	*    FIXED: Use \ul instead of \underline when soul package is in use (fixes #121)
+	*    Merge pull request #132 from jlargentaye/develop
+	*    UPDATE: Clarify DevelopmentNotes re: libcurl
+	*    UPDATE: Clarify README re: libcurl
+	*    UPDATED: '\item{}' no longer needed since square brackets escaped on their own
+	*    UPDATED: Add 6.3.1 release notes
+	*    UPDATED: Add allowfullscreen to list of boolean HTML attributes
+	*    UPDATED: Add more BibTeX test cases
+	*    UPDATED: Adjust metadata for test files
+	*    UPDATED: Allow '\' to preserve line break in metadata.  (Addresses #86)
+	*    UPDATED: Apply astyle
+	*    UPDATED: Fix whitespace with boolean HTML attributes
+	*    UPDATED: Ignore escaped space at end of code span
+	*    UPDATED: Test % escaping in URLs
+
 
 * 2018-03-28 - v 6.3.2:
 
