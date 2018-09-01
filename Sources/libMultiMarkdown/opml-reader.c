@@ -138,7 +138,7 @@ token * tokenize_opml_string(mmd_engine * e, size_t start, size_t len) {
 	int type;								// TOKEN type
 	token * t;								// Create tokens for incorporation
 
-	token * root = token_new(0, start, 0);		// Store the final parse tree here
+	token * root = token_new(0, start, len);		// Store the final parse tree here
 
 	const char * last_stop = &e->dstr->str[start];	// Remember where last token ended
 
