@@ -1,11 +1,12 @@
 /**
 
-	MultiMarkdown 6 -- Lightweight markup processor to produce HTML, LaTeX, and more.
+	Dynamic string -- Lightweight dynamic string implementation.
 
 	@file d_string.c
 
-	@brief Dynamic string -- refactoring of old GLibFacade.  Provides a string
-	"object" that can grow to accomodate any size content that is appended.
+	@brief Dynamic string -- refactoring of old GLibFacade from MultiMarkdown.
+	Provides a string "object" that can grow to accomodate any size content
+	that is appended.
 
 
 	@author	Daniel Jalkut, modified by Fletcher T. Penney and Dan Lowe
@@ -342,10 +343,10 @@ void d_string_append_c_array(DString * baseString, const char * appendedChars, s
 				size_t newSizeNeeded = baseString->currentStringLength + bytes;
 				ensureStringBufferCanHold(baseString, newSizeNeeded);
 
-				memcpy(baseString->str + baseString->currentStringLength, appendedChars, bytes);
+				memcpy((void*)baseString->str + baseString->currentStringLength, appendedChars, bytes);
 
 				baseString->currentStringLength = newSizeNeeded;
-				baseString->str[baseString->currentStringLength] = '\0';
+				baseString->str[newSizeNeeded] = '\0';
 			}
 		}
 	}
@@ -783,3 +784,4 @@ void Test_d_string_replace_text_in_range(CuTest* tc) {
 	d_string_free(result, true);
 }
 #endif
+
