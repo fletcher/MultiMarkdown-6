@@ -2816,6 +2816,55 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 }
 
 
+/// Convert OPML string to MMD
+DString * mmd_string_convert_opml_to_text(const char * source) {
+       mmd_engine * e = mmd_engine_create_with_string(source, 0);
+
+       DString * result =  mmd_engine_convert_opml_to_text(e);
+
+       e->root = NULL;
+       mmd_engine_free(e, true);
+
+       return result;
+}
+
+
+/// Convert OPML DString to MMD
+DString * mmd_d_string_convert_opml_to_text(DString * source) {
+       mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+
+       DString * result =  mmd_engine_convert_opml_to_text(e);
+
+       e->root = NULL;
+       mmd_engine_free(e, false);
+
+       return result;
+}
+
+
+/// Convert OPML to text without modifying original engine source
+DString *  mmd_engine_convert_opml_to_text(mmd_engine * e) {
+       DString * original = d_string_new("");
+       d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
+
+       mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+
+       // Swap original and engine
+       char * temp = e->dstr->str;
+       size_t size = e->dstr->currentStringLength;
+
+       // Replace engine copy with original OPML text
+       e->dstr->str = original->str;
+       e->dstr->currentStringLength = original->currentStringLength;
+
+       // Original now contains the processed text
+       original->str = temp;
+       original->currentStringLength = size;
+
+       return original;
+}
+
+
 /// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;

@@ -101,6 +101,10 @@ typedef struct stack stack;
 	C string variants
 */
 
+/// Convert OPML string to MMD
+DString * mmd_string_convert_opml_to_text(const char * source);
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
@@ -146,6 +150,10 @@ struct stack * mmd_string_transclusion_manifest(const char * source, const char 
 /*
 	DString variants - DString ("dynamic string") is a mutable string implementation used in this project
 */
+
+/// Convert OPML DString to MMD
+DString * mmd_d_string_convert_opml_to_text(DString * source);
+
 
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
@@ -243,6 +251,10 @@ char * mmd_engine_convert(mmd_engine * e, short format);
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 /// multiple documents (e.g. EPUB)
 void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath);
+
+
+/// Convert OPML to text without modifying original engine source
+DString *  mmd_engine_convert_opml_to_text(mmd_engine * e);
 
 
 /// Convert MMD text to specified format using DString as a container for block of data
