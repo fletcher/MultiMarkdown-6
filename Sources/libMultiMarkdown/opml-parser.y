@@ -117,7 +117,9 @@
 doc				::=  doc_xml(B).												{ engine->root = B; }
 
 doc_xml			::= OPML_XML doc_opml.
+doc_xml			::= doc_opml.
 doc_xml			::= OPML_XML doc_opml OPML_WSNL.
+doc_xml			::= doc_opml OPML_WSNL.
 
 doc_opml		::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE.
 doc_opml		::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE.

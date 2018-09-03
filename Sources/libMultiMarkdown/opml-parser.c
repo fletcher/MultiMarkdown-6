@@ -106,16 +106,16 @@ typedef union {
 #define OPMLARG_PDECL , mmd_engine * engine
 #define OPMLARG_FETCH  mmd_engine * engine  = yypParser->engine
 #define OPMLARG_STORE yypParser->engine  = engine
-#define YYNSTATE             18
-#define YYNRULE              17
-#define YY_MAX_SHIFT         17
-#define YY_MIN_SHIFTREDUCE   33
-#define YY_MAX_SHIFTREDUCE   49
-#define YY_MIN_REDUCE        50
-#define YY_MAX_REDUCE        66
-#define YY_ERROR_ACTION      67
-#define YY_ACCEPT_ACTION     68
-#define YY_NO_ACTION         69
+#define YYNSTATE             19
+#define YYNRULE              19
+#define YY_MAX_SHIFT         18
+#define YY_MIN_SHIFTREDUCE   35
+#define YY_MAX_SHIFTREDUCE   53
+#define YY_MIN_REDUCE        54
+#define YY_MAX_REDUCE        72
+#define YY_ERROR_ACTION      73
+#define YY_ACCEPT_ACTION     74
+#define YY_NO_ACTION         75
 /************* End control #defines *******************************************/
 
 /* Define the yytestcase() macro to be a no-op if is not already defined
@@ -187,42 +187,42 @@ typedef union {
 **  yy_default[]       Default action for each state.
 **
 *********** Begin parsing tables **********************************************/
-#define YY_ACTTAB_COUNT (57)
+#define YY_ACTTAB_COUNT (60)
 static const YYACTIONTYPE yy_action[] = {
-	/*     0 */     1,   45,   14,    3,   49,   42,    1,   10,   14,    3,
-	/*    10 */    49,    1,   48,   14,    3,   49,    1,   47,   14,    3,
-	/*    20 */    49,   41,    1,   43,   14,    3,   49,    1,    2,   14,
-	/*    30 */     3,   49,   68,   17,   15,    6,    6,    7,    7,    8,
-	/*    40 */     5,    5,   12,    2,   40,    9,   13,   39,   11,    4,
-	/*    50 */    16,   38,   37,   36,   46,   35,   50,
+	/*     0 */     1,   49,   15,    3,   53,   46,    1,   47,   15,    3,
+	/*    10 */    53,    1,   52,   15,    3,   53,    1,   51,   15,    3,
+	/*    20 */    53,   45,    1,   13,   15,    3,   53,    1,   16,   15,
+	/*    30 */     3,   53,   74,   18,   11,   10,    2,    4,    9,   14,
+	/*    40 */     6,    6,    7,    7,    5,    5,    8,    4,   43,   12,
+	/*    50 */     2,   17,   39,   44,   42,   41,   40,   38,   50,   54,
 };
 static const YYCODETYPE yy_lookahead[] = {
-	/*     0 */    11,   12,   13,   14,   15,   10,   11,    1,   13,   14,
+	/*     0 */    11,   12,   13,   14,   15,   10,   11,   24,   13,   14,
 	/*    10 */    15,   11,   12,   13,   14,   15,   11,   12,   13,   14,
-	/*    20 */    15,   10,   11,   24,   13,   14,   15,   11,    9,   13,
-	/*    30 */    14,   15,   17,   18,   21,   23,   24,   23,   24,    5,
-	/*    40 */    23,   24,   22,    9,    8,   20,   21,    6,    7,    3,
-	/*    50 */    19,    6,    4,    4,   12,    2,    0,
+	/*    20 */    15,   10,   11,   22,   13,   14,   15,   11,   21,   13,
+	/*    30 */    14,   15,   17,   18,   19,    1,    9,    3,   20,   21,
+	/*    40 */    23,   24,   23,   24,   23,   24,    5,    3,    6,    7,
+	/*    50 */     9,   19,    2,    8,    6,    4,    4,    2,   12,    0,
 };
-#define YY_SHIFT_USE_DFLT (57)
-#define YY_SHIFT_COUNT    (17)
+#define YY_SHIFT_USE_DFLT (60)
+#define YY_SHIFT_COUNT    (18)
 #define YY_SHIFT_MIN      (-11)
-#define YY_SHIFT_MAX      (56)
+#define YY_SHIFT_MAX      (59)
 static const signed char yy_shift_ofst[] = {
-	/*     0 */     6,  -11,   -5,   16,   34,    0,    5,   11,   41,   19,
-	/*    10 */    46,   36,   45,   48,   42,   49,   53,   56,
+	/*     0 */    34,  -11,   -5,   16,   41,    0,    5,   11,   42,   27,
+	/*    10 */    44,   50,   45,   48,   51,   46,   52,   55,   59,
 };
-#define YY_REDUCE_USE_DFLT (-2)
+#define YY_REDUCE_USE_DFLT (-18)
 #define YY_REDUCE_COUNT (10)
-#define YY_REDUCE_MIN   (-1)
-#define YY_REDUCE_MAX   (31)
+#define YY_REDUCE_MIN   (-17)
+#define YY_REDUCE_MAX   (32)
 static const signed char yy_reduce_ofst[] = {
-	/*     0 */    15,   12,   14,   17,   25,   -1,   -1,   -1,   20,   13,
-	/*    10 */    31,
+	/*     0 */    15,   17,   19,   21,   18,  -17,  -17,  -17,    1,    7,
+	/*    10 */    32,
 };
 static const YYACTIONTYPE yy_default[] = {
-	/*     0 */    67,   67,   67,   67,   67,   67,   67,   67,   67,   67,
-	/*    10 */    67,   67,   67,   67,   67,   67,   51,   67,
+	/*     0 */    73,   73,   73,   73,   73,   73,   73,   73,   73,   73,
+	/*    10 */    73,   56,   73,   73,   73,   73,   73,   55,   73,
 };
 /********** End of lemon-generated parsing tables *****************************/
 
@@ -347,21 +347,23 @@ static const char *const yyTokenName[] = {
 static const char *const yyRuleName[] = {
 	/*   0 */ "doc ::= doc_xml",
 	/*   1 */ "doc_xml ::= OPML_XML doc_opml",
-	/*   2 */ "doc_xml ::= OPML_XML doc_opml OPML_WSNL",
-	/*   3 */ "doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE",
-	/*   4 */ "doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE",
-	/*   5 */ "opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE",
-	/*   6 */ "opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE",
-	/*   7 */ "opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE",
-	/*   8 */ "opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE",
-	/*   9 */ "opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE",
-	/*  10 */ "opml_outlines ::= opml_outlines opml_outline",
-	/*  11 */ "opml_outlines ::= opml_outline",
-	/*  12 */ "opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE",
-	/*  13 */ "opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE",
-	/*  14 */ "opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE",
-	/*  15 */ "opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE",
-	/*  16 */ "opml_outline ::= OPML_OUTLINE_SELF_CLOSE",
+	/*   2 */ "doc_xml ::= doc_opml",
+	/*   3 */ "doc_xml ::= OPML_XML doc_opml OPML_WSNL",
+	/*   4 */ "doc_xml ::= doc_opml OPML_WSNL",
+	/*   5 */ "doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE",
+	/*   6 */ "doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE",
+	/*   7 */ "opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE",
+	/*   8 */ "opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE",
+	/*   9 */ "opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE",
+	/*  10 */ "opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE",
+	/*  11 */ "opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE",
+	/*  12 */ "opml_outlines ::= opml_outlines opml_outline",
+	/*  13 */ "opml_outlines ::= opml_outline",
+	/*  14 */ "opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE",
+	/*  15 */ "opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE",
+	/*  16 */ "opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE",
+	/*  17 */ "opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE",
+	/*  18 */ "opml_outline ::= OPML_OUTLINE_SELF_CLOSE",
 };
 #endif /* NDEBUG */
 
@@ -770,7 +772,9 @@ static const struct {
 } yyRuleInfo[] = {
 	{ 17, 1 },
 	{ 18, 2 },
+	{ 18, 1 },
 	{ 18, 3 },
+	{ 18, 2 },
 	{ 19, 4 },
 	{ 19, 3 },
 	{ 20, 3 },
@@ -864,21 +868,23 @@ static void yy_reduce(
 		default:
 			/* (1) doc_xml ::= OPML_XML doc_opml */
 			yytestcase(yyruleno == 1);
-			/* (2) doc_xml ::= OPML_XML doc_opml OPML_WSNL */ yytestcase(yyruleno == 2);
-			/* (3) doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 3);
-			/* (4) doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 4);
-			/* (5) opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE */ yytestcase(yyruleno == 5);
-			/* (6) opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE */ yytestcase(yyruleno == 6);
-			/* (7) opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE */ yytestcase(yyruleno == 7);
-			/* (8) opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE */ yytestcase(yyruleno == 8);
-			/* (9) opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE */ yytestcase(yyruleno == 9);
-			/* (10) opml_outlines ::= opml_outlines opml_outline */ yytestcase(yyruleno == 10);
-			/* (11) opml_outlines ::= opml_outline (OPTIMIZED OUT) */ assert(yyruleno != 11);
-			/* (12) opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 12);
-			/* (13) opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 13);
-			/* (14) opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 14);
-			/* (15) opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 15);
-			/* (16) opml_outline ::= OPML_OUTLINE_SELF_CLOSE */ yytestcase(yyruleno == 16);
+			/* (2) doc_xml ::= doc_opml */ yytestcase(yyruleno == 2);
+			/* (3) doc_xml ::= OPML_XML doc_opml OPML_WSNL */ yytestcase(yyruleno == 3);
+			/* (4) doc_xml ::= doc_opml OPML_WSNL */ yytestcase(yyruleno == 4);
+			/* (5) doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 5);
+			/* (6) doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 6);
+			/* (7) opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE */ yytestcase(yyruleno == 7);
+			/* (8) opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE */ yytestcase(yyruleno == 8);
+			/* (9) opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE */ yytestcase(yyruleno == 9);
+			/* (10) opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE */ yytestcase(yyruleno == 10);
+			/* (11) opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE */ yytestcase(yyruleno == 11);
+			/* (12) opml_outlines ::= opml_outlines opml_outline */ yytestcase(yyruleno == 12);
+			/* (13) opml_outlines ::= opml_outline (OPTIMIZED OUT) */ assert(yyruleno != 13);
+			/* (14) opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 14);
+			/* (15) opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 15);
+			/* (16) opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 16);
+			/* (17) opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 17);
+			/* (18) opml_outline ::= OPML_OUTLINE_SELF_CLOSE */ yytestcase(yyruleno == 18);
 			break;
 			/********** End reduce actions ************************************************/
 	};
