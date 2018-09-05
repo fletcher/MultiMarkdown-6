@@ -548,6 +548,7 @@ enum output_format {
 	FORMAT_TEXTBUNDLE,
 	FORMAT_TEXTBUNDLE_COMPRESSED,
 	FORMAT_OPML,
+	FORMAT_ITMZ,
 	FORMAT_MMD,
 };
 
@@ -568,6 +569,7 @@ enum parser_extensions {
 	EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
 	EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
 	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
+	EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

@@ -118,7 +118,7 @@
 
 
 
-void mmd_print_source(DString * out, const char * source, size_t start, size_t len) {
+void mmd_print_source_opml(DString * out, const char * source, size_t start, size_t len) {
 	const char * s_start = &source[start];
 	const char * s_stop = &source[start + len];
 
@@ -190,7 +190,7 @@ void mmd_check_preamble_opml(DString * out, token * t, scratch_pad * scratch) {
 					break;
 
 				default:
-					print_const("<outline text=\"(Untitled Preamble)\" _note=\"");
+					print_const("<outline text=\"&gt;&gt;Preamble&lt;&lt;\" _note=\"");
 					scratch->opml_item_closed = 0;
 					stack_push(scratch->outline_stack, walker);
 					walker = NULL;
@@ -211,7 +211,7 @@ void mmd_export_title_opml(DString * out, const char * source, scratch_pad * scr
 		print_const("<head><title>");
 
 		size_t len = strlen(m->value);
-		mmd_print_source(out, m->value, 0, len);
+		mmd_print_source_opml(out, m->value, 0, len);
 
 		print_const("</title></head>\n");
 	}
@@ -224,16 +224,16 @@ void mmd_export_metadata_opml(DString * out, const char * source, scratch_pad * 
 	size_t len;
 
 	if (scratch->meta_hash) {
-		print_const("<outline text=\"Metadata\">\n");
+		print_const("<outline text=\"&gt;&gt;Metadata&lt;&lt;\">\n");
 
 		for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 			print_const("<outline text=\"");
 			len = strlen(m->key);
-			mmd_print_source(out, m->key, 0, len);
+			mmd_print_source_opml(out, m->key, 0, len);
 
 			print_const("\" _note=\"");
 			len = strlen(m->value);
-			mmd_print_source(out, m->value, 0, len);
+			mmd_print_source_opml(out, m->value, 0, len);
 
 			print_const("\"/>\n");
 		}
@@ -321,7 +321,7 @@ void mmd_outline_add_opml(DString * out, const char * source, token * current, s
 			}
 
 			// Output as XML string
-			mmd_print_source(out, source, start, len);
+			mmd_print_source_opml(out, source, start, len);
 
 			print_const("\">");
 			scratch->opml_item_closed = 1;
@@ -427,7 +427,7 @@ void mmd_export_header_opml(DString * out, const char * source, token * t, scrat
 			}
 		}
 
-		mmd_print_source(out, source, start, stop - start);
+		mmd_print_source_opml(out, source, start, stop - start);
 	}
 }
 

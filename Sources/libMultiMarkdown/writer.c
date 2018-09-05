@@ -64,6 +64,7 @@
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
+#include "itmz.h"
 #include "i18n.h"
 #include "latex.h"
 #include "memoir.h"
@@ -1956,6 +1957,10 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 		case FORMAT_OPML:
 			mmd_export_token_tree_opml(out, e->dstr->str, e->root, scratch);
+			break;
+
+		case FORMAT_ITMZ:
+			mmd_export_token_tree_itmz(out, e->dstr->str, e->root, scratch);
 			break;
 	}
 

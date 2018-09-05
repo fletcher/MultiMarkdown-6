@@ -185,6 +185,10 @@ set(src_files
 	Sources/libMultiMarkdown/epub.c
 	Sources/libMultiMarkdown/file.c
 	Sources/libMultiMarkdown/html.c
+	Sources/libMultiMarkdown/itmz.c
+	Sources/libMultiMarkdown/itmz-lexer.c
+	Sources/libMultiMarkdown/itmz-parser.c
+	Sources/libMultiMarkdown/itmz-reader.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
 	Sources/libMultiMarkdown/memoir.c
@@ -206,6 +210,7 @@ set(src_files
 	Sources/libMultiMarkdown/token_pairs.c
 	Sources/libMultiMarkdown/transclude.c
 	Sources/libMultiMarkdown/uuid.c
+	Sources/libMultiMarkdown/xml.c
 	Sources/libMultiMarkdown/writer.c
 	Sources/libMultiMarkdown/zip.c
 )
@@ -220,6 +225,10 @@ set(header_files
 	Sources/libMultiMarkdown/epub.h
 	Sources/libMultiMarkdown/file.h
 	Sources/libMultiMarkdown/html.h
+	Sources/libMultiMarkdown/itmz.h
+	Sources/libMultiMarkdown/itmz-lexer.h
+	Sources/libMultiMarkdown/itmz-parser.h
+	Sources/libMultiMarkdown/itmz-reader.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
 	Sources/libMultiMarkdown/include/libMultiMarkdown.h
@@ -241,6 +250,7 @@ set(header_files
 	Sources/libMultiMarkdown/transclude.h
 	Sources/libMultiMarkdown/uthash.h
 	Sources/libMultiMarkdown/uuid.h
+	Sources/libMultiMarkdown/xml.h
 	Sources/libMultiMarkdown/writer.h
 	Sources/libMultiMarkdown/zip.h
 )
@@ -670,7 +680,7 @@ ADD_MMD_TEST(mmd-6-beamer "-t beamer" Beamer tex)
 
 ADD_MMD_TEST(mmd-6-memoir "-t memoir" Memoir tex)
 
-ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
+ADD_MMD_TEST(mmd-6-fodt "-t fodt" MMD6Tests fodt)
 
 ADD_MMD_TEST(mmd-6-opml "-t opml" MMD6Tests opml)
 

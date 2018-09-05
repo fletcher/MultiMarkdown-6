@@ -101,6 +101,7 @@
 
 */
 
+#include "d_string.h"
 #include "zip.h"
 
 #include <dirent.h>
@@ -208,3 +209,39 @@ mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
 	return unzip_archive_to_path(&pZip, path);
 }
 
+
+// Extract single file from archive
+mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DString * destination) {
+	mz_zip_archive_file_stat pStat;
+
+	free(destination->str);
+
+	destination->str = mz_zip_reader_extract_file_to_heap(pZip, filename, &destination->currentStringLength, 0);
+
+	if (destination->str == NULL) {
+		fprintf(stderr, "mz_zip_reader_extract_file_to_mem() failed.\n");
+
+		// return an error
+		return 0;
+	} else {
+		destination->currentStringBufferSize = destination->currentStringLength;
+	}
+
+	return 1;
+}
+
+
+// Extract single file from archive
+mz_bool unzip_file_from_data(const void * data, size_t size, const char * filename, DString * destination) {
+	mz_zip_archive pZip;
+	memset(&pZip, 0, sizeof(mz_zip_archive));
+
+	mz_bool status = mz_zip_reader_init_mem(&pZip, data, size, 0);
+
+	if (!status) {
+		fprintf(stderr, "mz_zip_reader_init_mem() failed.\n");
+		return status;
+	}
+
+	return unzip_file_from_archive(&pZip, filename, destination);
+}

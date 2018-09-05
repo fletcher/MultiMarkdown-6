@@ -2,8 +2,8 @@
 <opml version="1.0">
 <head><title>Link Attributes</title></head>
 <body>
-<outline text="(Untitled Preamble)" _note="&#10;foo ![image][]&#10;&#10;foo [link][]&#10;&#10;foo [link2][]&#10;&#10;foo [link3][]&#10;&#10;![test](http://foo.bar/ &quot;title&quot; width=&quot;40px&quot; height=400px)&#10;&#10;5&#10;&#10;&#10;[image]:&#9;http://foo.bar/&#9;&quot;title&quot;&#9;width=&quot;40px&quot;&#9;height=400px&#10;[link]:&#9;&#9;&lt;http://foo.bar/1&gt; class=external&#10;&#9;&#9;&#9;style=&quot;border: solid black 1px;&quot;&#10;[link2]:&#9;http://foo.bar/2 class=external&#10;&#9;&#9;&#9;style=&quot;border: solid black 1px;&quot;&#10;[link3]:&#9;http://foo.bar/3&#9;class=external&#10;&#9;&#9;&#9;style=&quot;border: solid black 1px;&quot;&#10;"></outline>
-<outline text="Metadata">
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;foo ![image][]&#10;&#10;foo [link][]&#10;&#10;foo [link2][]&#10;&#10;foo [link3][]&#10;&#10;![test](http://foo.bar/ &quot;title&quot; width=&quot;40px&quot; height=400px)&#10;&#10;5&#10;&#10;&#10;[image]:&#9;http://foo.bar/&#9;&quot;title&quot;&#9;width=&quot;40px&quot;&#9;height=400px&#10;[link]:&#9;&#9;&lt;http://foo.bar/1&gt; class=external&#10;&#9;&#9;&#9;style=&quot;border: solid black 1px;&quot;&#10;[link2]:&#9;http://foo.bar/2 class=external&#10;&#9;&#9;&#9;style=&quot;border: solid black 1px;&quot;&#10;[link3]:&#9;http://foo.bar/3&#9;class=external&#10;&#9;&#9;&#9;style=&quot;border: solid black 1px;&quot;&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Link Attributes"/>
 <outline text="latexconfig" _note="article"/>
 </outline>

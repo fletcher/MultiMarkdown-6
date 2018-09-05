@@ -60,6 +60,8 @@
 #include "d_string.h"
 #include "epub.h"
 #include "i18n.h"
+#include "itmz.h"
+#include "itmz-reader.h"
 #include "lexer.h"
 #include "libMultiMarkdown.h"
 #include "mmd.h"
@@ -2191,6 +2193,17 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 	if (e->extensions & EXT_PARSE_OPML) {
 		// Convert from OPML first (if not done earlier)
 		mmd_convert_opml_string(e, byte_start, byte_len);
+
+		// Fix start/stop
+		byte_start = 0;
+		byte_len = e->dstr->currentStringLength;
+	} else if (e->extensions & EXT_PARSE_ITMZ) {
+		// Convert from ITMZ first (if not done earlier)
+		mmd_convert_itmz_string(e, byte_start, byte_len);
+
+		// Fix start/stop
+		byte_start = 0;
+		byte_len = e->dstr->currentStringLength;
 	}
 
 	// Tokenize the string
@@ -2703,7 +2716,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 
 	switch (format) {
 		case FORMAT_EPUB:
-			epub_write_wrapper(filepath, output->str, e, directory);
+			epub_write_wrapper(filepath, output, e, directory);
 			break;
 
 		case FORMAT_TEXTBUNDLE:
@@ -2711,7 +2724,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 			break;
 
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			textbundle_write_wrapper(filepath, output->str, e, directory);
+			textbundle_write_wrapper(filepath, output, e, directory);
 			break;
 
 		default:
@@ -2767,6 +2780,9 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 		if (e->extensions & EXT_PARSE_OPML) {
 			// Convert from OPML first (if not done earlier)
 			mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+		} else if (e->extensions & EXT_PARSE_ITMZ) {
+			// Convert from ITMZ first (if not done earlier)
+			mmd_convert_itmz_string(e, 0, e->dstr->currentStringLength);
 		}
 
 		// Simply return text (transclusion is handled externally)
@@ -2781,26 +2797,32 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 	switch (format) {
 		case FORMAT_EPUB:
-			result = epub_create(output->str, e, directory);
+			result = epub_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_TEXTBUNDLE:
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			result = textbundle_create(output->str, e, directory);
+			result = textbundle_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_ODT:
-			result = opendocument_text_create(output->str, e, directory);
+			result = opendocument_text_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_FODT:
-			result = opendocument_flat_text_create(output->str, e, directory);
+			result = opendocument_flat_text_create(output, e, directory);
+
+			d_string_free(output, true);
+			break;
+
+		case FORMAT_ITMZ:
+			result = itmz_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;

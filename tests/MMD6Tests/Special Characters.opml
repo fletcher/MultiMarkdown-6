@@ -2,8 +2,8 @@
 <opml version="1.0">
 <head><title>Special Characters</title></head>
 <body>
-<outline text="(Untitled Preamble)" _note="&#10;{foo}&#10;&#10;[foo]&#10;&#10;{{foo}}&#10;&#10;[[foo]]&#10;&#10;(foo)&#10;&#10;5&#10;&#10;|foo|&#10;&#10;\foo\&#10;&#10;&lt;foo&gt;&#10;&#10;%&#10;&#10;`%`&#10;&#10;10&#10;&#10;&amp; %  # _ { } ~ ^ \\&#10;&#10;`&amp;`&#10;&#10;`%`&#10;&#10;`#`&#10;&#10;`_`&#10;&#10;15&#10;&#10;`{`&#10;&#10;`}`&#10;&#10;`~`&#10;&#10;`^`&#10;&#10;`\\`&#10;"></outline>
-<outline text="Metadata">
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;{foo}&#10;&#10;[foo]&#10;&#10;{{foo}}&#10;&#10;[[foo]]&#10;&#10;(foo)&#10;&#10;5&#10;&#10;|foo|&#10;&#10;\foo\&#10;&#10;&lt;foo&gt;&#10;&#10;%&#10;&#10;`%`&#10;&#10;10&#10;&#10;&amp; %  # _ { } ~ ^ \\&#10;&#10;`&amp;`&#10;&#10;`%`&#10;&#10;`#`&#10;&#10;`_`&#10;&#10;15&#10;&#10;`{`&#10;&#10;`}`&#10;&#10;`~`&#10;&#10;`^`&#10;&#10;`\\`&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Special Characters"/>
 <outline text="latexconfig" _note="article"/>
 </outline>

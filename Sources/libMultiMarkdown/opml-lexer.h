@@ -138,20 +138,4 @@ int opml_scan(
 	const char * stop		//!< Pointer to position in string at which to stop parsing
 );
 
-
-/// skip through text attribute to find value
-size_t scan_text(const char * c);
-
-
-/// skip through _note attribute to find value
-size_t scan_note(const char * c);
-
-
-/// find end of double quoted value
-size_t scan_double_quoted(const char * c);
-
-/// Does the string include encoded newline?
-size_t scan_encoded_newline(const char * c, size_t len);
-
-
 #endif

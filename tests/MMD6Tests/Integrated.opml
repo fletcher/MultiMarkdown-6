@@ -2,7 +2,7 @@
 <opml version="1.0">
 <head><title>Integrated</title></head>
 <body>
-<outline text="(Untitled Preamble)" _note="&#10;This file is a designed as a single test that incorporates most of the&#10;*commonly* used MultiMarkdown features. This allows a single test file to&#10;identify common structures that are not supported yet -- particularly useful&#10;when developing a new output format.&#10;"></outline>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;This file is a designed as a single test that incorporates most of the&#10;*commonly* used MultiMarkdown features. This allows a single test file to&#10;identify common structures that are not supported yet -- particularly useful&#10;when developing a new output format.&#10;"></outline>
 <outline text="Basic Blocks" _note="&#10;paragraph&#10;&#10;* list&#10;* items&#10;&#10;```&#10;fenced&#10;code&#10;```&#10;&#10;&#9;indented&#10;&#9;code&#10;&#10;&gt; blockquote&#10;&#10;`code span`&#10;&#10;&#10;*emph* and **strong** and ***both***&#10;&#10;_emph_ and __strong__ and ___both___&#10;&#10;&#10;"><outline text="Escapes [escaped]" _note="&#10;1. \$&#10;&#10;2. \#&#10;&#10;3. \[&#10;&#10;&#10;"></outline>
 </outline>
 <outline text="Footnotes" _note="&#10;Foo.[^This is an inline footnote]&#10;&#10;Bar.[^foot]&#10;&#10;[^foot]: And a reference footnote.&#10;&#10;Cite.[#Inline Citation]&#10;&#10;Cite.[#foo]&#10;&#10;[#foo]: bar&#10;&#10;&#10;"></outline>
@@ -14,7 +14,7 @@
 <outline text="Horizontal Rules" _note="&#10;----&#10;&#10;&#10;"></outline>
 <outline text="Glossary" _note="&#10;[?term]&#10;&#10;[?term]: A term to be defined.&#10;&#10;"></outline>
 <outline text="Abbreviations" _note="&#10;[&gt;MMD]&#10;&#10;[&gt;MMD]: MultiMarkdown&#10;&#10;"></outline>
-<outline text="Metadata">
+<outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Integrated"/>
 <outline text="latexconfig" _note="article"/>
 </outline>

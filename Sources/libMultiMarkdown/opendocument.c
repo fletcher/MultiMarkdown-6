@@ -889,7 +889,7 @@ char * opendocument_content_file(const char * body, int format) {
 
 
 /// Create OpenDocument text file
-DString * opendocument_core_flat_create(const char * body, mmd_engine * e, int format) {
+DString * opendocument_core_flat_create(DString * body, mmd_engine * e, int format) {
 	DString * out = d_string_new("");
 	char * text;
 
@@ -919,7 +919,7 @@ DString * opendocument_core_flat_create(const char * body, mmd_engine * e, int f
 
 	// Add body
 	print_const("\n<office:body>\n<office:text>\n");
-	d_string_append(out, body);
+	d_string_append(out, body->str);
 	print_const("\n</office:text>\n</office:body>\n</office:document>\n");
 
 
@@ -931,7 +931,7 @@ DString * opendocument_core_flat_create(const char * body, mmd_engine * e, int f
 
 
 /// Create OpenDocument zip file version
-DString * opendocument_core_file_create(const char * body, mmd_engine * e, const char * directory, int format) {
+DString * opendocument_core_file_create(DString * body, mmd_engine * e, const char * directory, int format) {
 	DString * result = d_string_new("");
 
 	// Add common core elements
@@ -943,7 +943,7 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 
 
 	// Create content file
-	data = opendocument_content_file(body, format);
+	data = opendocument_content_file(body->str, format);
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "content.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
@@ -971,13 +971,13 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 
 
 /// Create OpenDocument flat text file (single xml file)
-DString * opendocument_flat_text_create(const char * body, mmd_engine * e, const char * directory) {
+DString * opendocument_flat_text_create(DString * body, mmd_engine * e, const char * directory) {
 	return opendocument_core_flat_create(body, e, FORMAT_FODT);
 }
 
 
 /// Create OpenDocument text file (zipped package)
-DString * opendocument_text_create(const char * body, mmd_engine * e, const char * directory) {
+DString * opendocument_text_create(DString * body, mmd_engine * e, const char * directory) {
 	return opendocument_core_file_create(body, e, directory, FORMAT_ODT);
 }
 

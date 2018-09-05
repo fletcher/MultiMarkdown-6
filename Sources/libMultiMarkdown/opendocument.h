@@ -112,7 +112,7 @@
 char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch);
 
 
-DString * opendocument_flat_text_create(const char * body, mmd_engine * e, const char * directory);
-DString * opendocument_text_create(const char * body, mmd_engine * e, const char * directory);
+DString * opendocument_flat_text_create(DString * body, mmd_engine * e, const char * directory);
+DString * opendocument_text_create(DString * body, mmd_engine * e, const char * directory);
 
 #endif

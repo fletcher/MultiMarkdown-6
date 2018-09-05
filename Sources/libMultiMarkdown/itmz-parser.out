@@ -1,0 +1,221 @@
+State 0:
+          doc ::= * doc_ithoughts
+          doc_ithoughts ::= * ITMZ_ITHOUGHTS_OPEN itmz_topics_section itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+          doc_ithoughts ::= * ITMZ_ITHOUGHTS_OPEN itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+
+           ITMZ_ITHOUGHTS_OPEN shift        1      
+                           doc accept
+                 doc_ithoughts shift        14     
+
+State 1:
+          doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN * itmz_topics_section itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+          doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN * itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+          itmz_topics_section ::= * ITMZ_TOPICS_OPEN itmz_topics ITMZ_TOPICS_CLOSE
+          itmz_topics_section ::= * ITMZ_TOPICS_OPEN ITMZ_TOPICS_CLOSE
+          itmz_topics_section ::= * itmz_topics
+          itmz_topics ::= * itmz_topics itmz_topic
+          itmz_topics ::= * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+          itmz_relationships ::= * ITMZ_RELATIONSHIPS_OPEN ITMZ_RELATIONSHIPS_CLOSE
+     (15) itmz_relationships ::= *
+
+              ITMZ_TOPICS_OPEN shift        4      
+               ITMZ_TOPIC_OPEN shift        3      
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+       ITMZ_RELATIONSHIPS_OPEN shift        12     
+           itmz_topics_section shift        9      
+            itmz_relationships shift        11     
+                   itmz_topics shift        8      
+                    itmz_topic shift        8        /* because itmz_topic==itmz_topics */
+                     {default} reduce       15     itmz_relationships ::=
+
+State 2:
+          itmz_topics ::= * itmz_topics itmz_topic
+          itmz_topics ::= * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= ITMZ_TOPIC_METADATA * itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= ITMZ_TOPIC_METADATA * ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+               ITMZ_TOPIC_OPEN shift        3      
+              ITMZ_TOPIC_CLOSE shift-reduce 12     itmz_topic ::= ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                   itmz_topics shift        5      
+                    itmz_topic shift        5        /* because itmz_topic==itmz_topics */
+
+State 3:
+          itmz_topics ::= * itmz_topics itmz_topic
+          itmz_topics ::= * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= ITMZ_TOPIC_OPEN * ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= ITMZ_TOPIC_OPEN * itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+               ITMZ_TOPIC_OPEN shift        3      
+              ITMZ_TOPIC_CLOSE shift-reduce 8      itmz_topic ::= ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                   itmz_topics shift        6      
+                    itmz_topic shift        6        /* because itmz_topic==itmz_topics */
+
+State 4:
+          itmz_topics_section ::= ITMZ_TOPICS_OPEN * itmz_topics ITMZ_TOPICS_CLOSE
+          itmz_topics_section ::= ITMZ_TOPICS_OPEN * ITMZ_TOPICS_CLOSE
+          itmz_topics ::= * itmz_topics itmz_topic
+          itmz_topics ::= * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+             ITMZ_TOPICS_CLOSE shift-reduce 4      itmz_topics_section ::= ITMZ_TOPICS_OPEN ITMZ_TOPICS_CLOSE
+               ITMZ_TOPIC_OPEN shift        3      
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                   itmz_topics shift        7      
+                    itmz_topic shift        7        /* because itmz_topic==itmz_topics */
+
+State 5:
+          itmz_topics ::= itmz_topics * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= ITMZ_TOPIC_METADATA itmz_topics * ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+               ITMZ_TOPIC_OPEN shift        3      
+              ITMZ_TOPIC_CLOSE shift-reduce 11     itmz_topic ::= ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                    itmz_topic shift-reduce 6      itmz_topics ::= itmz_topics itmz_topic
+
+State 6:
+          itmz_topics ::= itmz_topics * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= ITMZ_TOPIC_OPEN itmz_topics * ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+               ITMZ_TOPIC_OPEN shift        3      
+              ITMZ_TOPIC_CLOSE shift-reduce 10     itmz_topic ::= ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                    itmz_topic shift-reduce 6      itmz_topics ::= itmz_topics itmz_topic
+
+State 7:
+          itmz_topics_section ::= ITMZ_TOPICS_OPEN itmz_topics * ITMZ_TOPICS_CLOSE
+          itmz_topics ::= itmz_topics * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+             ITMZ_TOPICS_CLOSE shift-reduce 3      itmz_topics_section ::= ITMZ_TOPICS_OPEN itmz_topics ITMZ_TOPICS_CLOSE
+               ITMZ_TOPIC_OPEN shift        3      
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                    itmz_topic shift-reduce 6      itmz_topics ::= itmz_topics itmz_topic
+
+State 8:
+      (5) itmz_topics_section ::= itmz_topics *
+          itmz_topics ::= itmz_topics * itmz_topic
+          itmz_topic ::= * ITMZ_TOPIC_OPEN ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_OPEN itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA itmz_topics ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_METADATA ITMZ_TOPIC_CLOSE
+          itmz_topic ::= * ITMZ_TOPIC_SELF_CLOSE
+
+               ITMZ_TOPIC_OPEN shift        3      
+           ITMZ_TOPIC_PREAMBLE shift        10     
+           ITMZ_TOPIC_METADATA shift        2      
+         ITMZ_TOPIC_SELF_CLOSE shift-reduce 13     itmz_topic ::= ITMZ_TOPIC_SELF_CLOSE
+                    itmz_topic shift-reduce 6      itmz_topics ::= itmz_topics itmz_topic
+                     {default} reduce       5      itmz_topics_section ::= itmz_topics
+
+State 9:
+          doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN itmz_topics_section * itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+          itmz_relationships ::= * ITMZ_RELATIONSHIPS_OPEN ITMZ_RELATIONSHIPS_CLOSE
+     (15) itmz_relationships ::= *
+
+       ITMZ_RELATIONSHIPS_OPEN shift        12     
+            itmz_relationships shift        13     
+                     {default} reduce       15     itmz_relationships ::=
+
+State 10:
+          itmz_topic ::= ITMZ_TOPIC_PREAMBLE * ITMZ_TOPIC_CLOSE
+
+              ITMZ_TOPIC_CLOSE shift-reduce 9      itmz_topic ::= ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_CLOSE
+
+State 11:
+          doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN itmz_relationships * ITMZ_ITHOUGHTS_CLOSE
+
+          ITMZ_ITHOUGHTS_CLOSE shift-reduce 2      doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+
+State 12:
+          itmz_relationships ::= ITMZ_RELATIONSHIPS_OPEN * ITMZ_RELATIONSHIPS_CLOSE
+
+      ITMZ_RELATIONSHIPS_CLOSE shift-reduce 14     itmz_relationships ::= ITMZ_RELATIONSHIPS_OPEN ITMZ_RELATIONSHIPS_CLOSE
+
+State 13:
+          doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN itmz_topics_section itmz_relationships * ITMZ_ITHOUGHTS_CLOSE
+
+          ITMZ_ITHOUGHTS_CLOSE shift-reduce 1      doc_ithoughts ::= ITMZ_ITHOUGHTS_OPEN itmz_topics_section itmz_relationships ITMZ_ITHOUGHTS_CLOSE
+
+State 14:
+      (0) doc ::= doc_ithoughts *
+
+                             $ reduce       0      doc ::= doc_ithoughts
+
+----------------------------------------------------
+Symbols:
+    0: $:
+    1: ITMZ_ITHOUGHTS_OPEN
+    2: ITMZ_ITHOUGHTS_CLOSE
+    3: ITMZ_TOPICS_OPEN
+    4: ITMZ_TOPICS_CLOSE
+    5: ITMZ_TOPIC_OPEN
+    6: ITMZ_TOPIC_CLOSE
+    7: ITMZ_TOPIC_PREAMBLE
+    8: ITMZ_TOPIC_METADATA
+    9: ITMZ_TOPIC_SELF_CLOSE
+   10: ITMZ_RELATIONSHIPS_OPEN
+   11: ITMZ_RELATIONSHIPS_CLOSE
+   12: error:
+   13: doc: ITMZ_ITHOUGHTS_OPEN
+   14: doc_ithoughts: ITMZ_ITHOUGHTS_OPEN
+   15: itmz_topics_section: ITMZ_TOPICS_OPEN ITMZ_TOPIC_OPEN ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_METADATA ITMZ_TOPIC_SELF_CLOSE
+   16: itmz_relationships: <lambda> ITMZ_RELATIONSHIPS_OPEN
+   17: itmz_topics: ITMZ_TOPIC_OPEN ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_METADATA ITMZ_TOPIC_SELF_CLOSE
+   18: itmz_topic: ITMZ_TOPIC_OPEN ITMZ_TOPIC_PREAMBLE ITMZ_TOPIC_METADATA ITMZ_TOPIC_SELF_CLOSE

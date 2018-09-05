@@ -452,7 +452,7 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 
 
 // Use the miniz library to create a zip archive for the EPUB document
-void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
+void epub_write_wrapper(const char * filepath, DString * body, mmd_engine * e, const char * directory) {
 	FILE * output_stream;
 
 	DString * result = epub_create(body, e, directory);
@@ -469,7 +469,7 @@ void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e
 }
 
 
-DString * epub_create(const char * body, mmd_engine * e, const char * directory) {
+DString * epub_create(DString * body, mmd_engine * e, const char * directory) {
 	DString * result = d_string_new("");
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_EPUB);
 
@@ -534,8 +534,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	}
 
 	// Add main document
-	len = strlen(body);
-	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body, len, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body->str, body->currentStringLength, MZ_BEST_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
@@ -552,7 +551,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
 
 	if (!status) {
-		fprintf(stderr, "Error adding asset to zip.\n");
+		fprintf(stderr, "Error finalizing zip archive.\n");
 	}
 
 	return result;

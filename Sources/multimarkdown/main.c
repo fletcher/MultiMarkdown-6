@@ -76,7 +76,7 @@
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
 		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
-		   *a_notransclude, *a_nosmart, *a_opml;
+		   *a_notransclude, *a_nosmart, *a_opml, *a_itmz;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
 struct arg_end *a_end;
@@ -151,10 +151,11 @@ int main(int argc, char** argv) {
 		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
 		a_notransclude	= arg_lit0(NULL, "notransclude", "Disable file transclusion"),
 		a_opml			= arg_lit0(NULL, "opml", "Convert OPML source to plain text before processing"),
+		a_itmz			= arg_lit0(NULL, "itmz", "Convert ITMZ (iThoughts) source to plain text before processing"),
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|opml|bundle|bundlezip"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|opml|itmz|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("", ""),
@@ -239,6 +240,9 @@ int main(int argc, char** argv) {
 	if (a_opml->count > 0) {
 		// Attempt to convert from OPML
 		extensions |= EXT_PARSE_OPML;
+	} else if (a_itmz->count > 0) {
+		// Attempt to convert from ITMZ
+		extensions |=  EXT_PARSE_ITMZ;
 	}
 
 	if (a_accept->count > 0) {
@@ -294,6 +298,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
 		} else if (strcmp(a_format->sval[0], "opml") == 0) {
 			format = FORMAT_OPML;
+		} else if (strcmp(a_format->sval[0], "itmz") == 0) {
+			format = FORMAT_ITMZ;
 		} else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -379,6 +385,10 @@ int main(int argc, char** argv) {
 
 				case FORMAT_OPML:
 					output_filename = filename_with_extension(a_file->filename[i], ".opml");
+					break;
+
+				case FORMAT_ITMZ:
+					output_filename = filename_with_extension(a_file->filename[i], ".itmz");
 					break;
 			}
 

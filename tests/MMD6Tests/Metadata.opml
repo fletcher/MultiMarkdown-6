@@ -2,9 +2,9 @@
 <opml version="1.0">
 <head><title>*foo* &quot;bar&quot;</title></head>
 <body>
-<outline text="(Untitled Preamble)" _note="&#10;foo:&#9;bar&#10;&#10;"></outline>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;foo:&#9;bar&#10;&#10;"></outline>
 <outline text="foo" _note=""></outline>
-<outline text="Metadata">
+<outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="*foo* &quot;bar&quot;"/>
 <outline text="empty" _note=""/>
 <outline text="css" _note="http://foo.com/bar.css"/>
