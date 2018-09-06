@@ -437,10 +437,6 @@ void mmd_export_token_opml(DString * out, const char * source, token * t, scratc
 		return;
 	}
 
-	short	temp_short;
-	char *	temp_char	= NULL;
-	token *	temp_token	= NULL;
-
 	switch (t->type) {
 		case DOC_START_TOKEN:
 			print_const("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<opml version=\"1.0\">\n");

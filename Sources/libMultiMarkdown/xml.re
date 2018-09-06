@@ -180,7 +180,7 @@ size_t xml_scan_wsnl(const char * c) {
 
 /*!re2c
 	WSNL*									{ return (size_t)( c - start ); }
-	.?										{ return 0; }
+	*										{ return 0; }
 */	
 }
 
@@ -192,7 +192,7 @@ size_t xml_scan_attribute_name(const char * c) {
 
 /*!re2c
 	attribute_name 							{ return (size_t)( c - start ); }
-	.?										{ return 0; }
+	*										{ return 0; }
 */	
 }
 
@@ -204,7 +204,7 @@ size_t xml_scan_until_value(const char * c) {
 
 /*!re2c
 	WSNL* EQUAL WSNL* / quoted_value		{ return (size_t)( c - start ); }
-	.?										{ return 0; }
+	*										{ return 0; }
 */	
 }
 
@@ -216,7 +216,7 @@ size_t xml_scan_value(const char * c) {
 
 /*!re2c
 	quoted_value							{ return (size_t)( c - start ); }
-	.?										{ return 0; }
+	*										{ return 0; }
 */	
 }
 
@@ -235,7 +235,7 @@ size_t xml_scan_encoded_newline(const char * c, size_t len) {
 
 /*!re2c
 	contains_newline						{ return (size_t)(c - start); }
-	.										{ goto scan; }
+	*										{ goto scan; }
 */
 }
 

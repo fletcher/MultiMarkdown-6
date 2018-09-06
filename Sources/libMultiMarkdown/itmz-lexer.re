@@ -173,7 +173,7 @@ int itmz_scan(Scanner * s, const char * stop) {
 		'</relationships>'										{ return ITMZ_RELATIONSHIPS_CLOSE; }
 
 		// Skip over anything else - '.' does not include '\n'
-		.														{ goto scan; }
+		*														{ goto scan; }
 	*/
 }
 

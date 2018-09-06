@@ -254,6 +254,6 @@ int scan(Scanner * s, const char * stop) {
 		'|'+							{ return PIPE; }
 		
 		// Skip over anything else - '.' does not include '\n'
-		.								{ goto scan; }
+		*								{ goto scan; }
 	*/
 }

@@ -2918,7 +2918,7 @@ DString *  mmd_engine_convert_itmz_to_text(mmd_engine * e) {
 	DString * original = d_string_new("");
 	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
 
-	mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+	mmd_convert_itmz_string(e, 0, e->dstr->currentStringLength);
 
 	// Swap original and engine
 	char * temp = e->dstr->str;

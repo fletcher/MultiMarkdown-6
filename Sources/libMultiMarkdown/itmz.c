@@ -461,10 +461,6 @@ void mmd_export_token_itmz(DString * out, const char * source, token * t, scratc
 		return;
 	}
 
-	short	temp_short;
-	char *	temp_char	= NULL;
-	token *	temp_token	= NULL;
-
 	switch (t->type) {
 		case DOC_START_TOKEN:
 			print_const("<iThoughts>\n");
@@ -547,21 +543,9 @@ DString * itmz_create(DString * body, mmd_engine * e, const char * directory) {
 	DString * result = d_string_new("");
 
 	mz_bool status;
-	DString * data;
-	size_t len;
 
 	mz_zip_archive zip;
 	zip_new_archive(&zip);
-
-	/*
-		data = itmz_style();
-		status = mz_zip_writer_add_mem(&zip, "style.xml", data->str, data->currentStringLength, MZ_BEST_COMPRESSION);
-		d_string_free(data, true);
-
-		if (!status) {
-			fprintf(stderr, "Error adding asset to zip.\n");
-		}
-	*/
 
 	status = mz_zip_writer_add_mem(&zip, "mapdata.xml", body->str, body->currentStringLength, MZ_BEST_COMPRESSION);
 

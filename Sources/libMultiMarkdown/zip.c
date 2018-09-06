@@ -212,8 +212,6 @@ mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
 
 // Extract single file from archive
 mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DString * destination) {
-	mz_zip_archive_file_stat pStat;
-
 	free(destination->str);
 
 	destination->str = mz_zip_reader_extract_file_to_heap(pZip, filename, &destination->currentStringLength, 0);

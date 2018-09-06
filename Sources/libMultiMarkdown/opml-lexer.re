@@ -165,6 +165,6 @@ int opml_scan(Scanner * s, const char * stop) {
 		WSNL													{ return OPML_WSNL; }
 
 		// Skip over anything else - '.' does not include '\n'
-		.														{ goto scan; }
+		*														{ goto scan; }
 	*/
 }
