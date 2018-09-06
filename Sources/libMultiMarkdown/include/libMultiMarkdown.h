@@ -105,6 +105,10 @@ typedef struct stack stack;
 DString * mmd_string_convert_opml_to_text(const char * source);
 
 
+/// Convert ITMZ string to MMD
+DString * mmd_string_convert_itmz_to_text(const char * source);
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
@@ -153,6 +157,10 @@ struct stack * mmd_string_transclusion_manifest(const char * source, const char 
 
 /// Convert OPML DString to MMD
 DString * mmd_d_string_convert_opml_to_text(DString * source);
+
+
+/// Convert ITMZ DString to MMD
+DString * mmd_d_string_convert_itmz_to_text(DString * source);
 
 
 /// Convert MMD text to specified format, with specified extensions, and language
@@ -255,6 +263,10 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 
 /// Convert OPML to text without modifying original engine source
 DString *  mmd_engine_convert_opml_to_text(mmd_engine * e);
+
+
+/// Convert ITMZ to text without modifying original engine source
+DString *  mmd_engine_convert_itmz_to_text(mmd_engine * e);
 
 
 /// Convert MMD text to specified format using DString as a container for block of data
