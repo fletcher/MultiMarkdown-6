@@ -212,20 +212,35 @@ mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
 
 // Extract single file from archive
 mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DString * destination) {
-	free(destination->str);
+	mz_uint32 index;
+	mz_zip_archive_file_stat pStat;
+	mz_bool status;
 
-	destination->str = mz_zip_reader_extract_file_to_heap(pZip, filename, &destination->currentStringLength, 0);
+	int result = mz_zip_reader_locate_file_v2(pZip, filename, NULL, 0, &index);
 
-	if (destination->str == NULL) {
-		fprintf(stderr, "mz_zip_reader_extract_file_to_mem() failed.\n");
-
-		// return an error
+	if (result == -1) {
+		// Failed
 		return 0;
-	} else {
-		destination->currentStringBufferSize = destination->currentStringLength;
 	}
 
-	return 1;
+	mz_zip_reader_file_stat(pZip, index, &pStat);
+	size_t size = pStat.m_uncomp_size + 1;				// Allow for null terminator in case this is text
+
+	if (destination->currentStringBufferSize < size) {
+		// Buffer to small
+		free(destination->str);
+		destination->str = malloc(size);
+		destination->currentStringBufferSize = size;
+		destination->currentStringLength = size - 1;
+	}
+
+	status = mz_zip_reader_extract_to_mem(pZip, index, destination->str, destination->currentStringBufferSize, 0);
+
+	if (!status) {
+		fprintf(stderr, "mz_zip_reader_extract_to_mem() failed.\n");
+	}
+
+	return status;
 }
 
 
