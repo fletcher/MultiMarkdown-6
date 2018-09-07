@@ -9,7 +9,17 @@
 #
 
 # Be sure to include multimarkdown in our PATH
-export PATH="$PWD:/usr/local/bin:$PATH"
+unset CDPATH
+SCRIPT="$0"
+while
+	DIR="$(cd -P -- "$(dirname -- "$SCRIPT")" && pwd)"
+	test -h "$SCRIPT"
+do
+	SCRIPT="$(readlink "$SCRIPT")"
+	[ "$SCRIPT" = "${SCRIPT#/}" ] && SCRIPT="$DIR/$SCRIPT"
+done
+PATH="$DIR:/usr/local/bin:$PATH"
+export PATH
 
 which multimarkdown > /dev/null
 if [ $? = 1 ]
