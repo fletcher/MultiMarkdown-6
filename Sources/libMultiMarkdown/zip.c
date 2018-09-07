@@ -231,10 +231,11 @@ mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DS
 		free(destination->str);
 		destination->str = malloc(size);
 		destination->currentStringBufferSize = size;
-		destination->currentStringLength = size - 1;
 	}
 
 	status = mz_zip_reader_extract_to_mem(pZip, index, destination->str, destination->currentStringBufferSize, 0);
+	destination->currentStringLength = size - 1;
+	destination->str[destination->currentStringLength] = '\0';
 
 	if (!status) {
 		fprintf(stderr, "mz_zip_reader_extract_to_mem() failed.\n");
@@ -256,5 +257,11 @@ mz_bool unzip_file_from_data(const void * data, size_t size, const char * filena
 		return status;
 	}
 
+	status =  mz_zip_validate_archive(&pZip,0);
+
+	if (!status) {
+		fprintf(stderr, "mz_zip_validate_archive failed.\n");
+		return status;
+	}
 	return unzip_file_from_archive(&pZip, filename, destination);
 }
