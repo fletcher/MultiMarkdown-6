@@ -20,8 +20,7 @@ done
 PATH="$DIR:/usr/local/bin:$PATH"
 export PATH
 
-which multimarkdown > /dev/null
-if [ $? = 1 ]
+if ! command -v multimarkdown >/dev/null 2>&1
 then
 	echo multimarkdown executable not found! >&2
 	exit 1
