@@ -257,11 +257,12 @@ mz_bool unzip_file_from_data(const void * data, size_t size, const char * filena
 		return status;
 	}
 
-	status =  mz_zip_validate_archive(&pZip,0);
+	status =  mz_zip_validate_archive(&pZip, 0);
 
 	if (!status) {
 		fprintf(stderr, "mz_zip_validate_archive failed.\n");
 		return status;
 	}
+
 	return unzip_file_from_archive(&pZip, filename, destination);
 }
