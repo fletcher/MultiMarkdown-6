@@ -294,6 +294,19 @@ void parse_opml_token_chain(mmd_engine * e, token * chain) {
 
 					if (out == metadata) {
 						print_const("  \n");
+					} else {
+						// Ensure that contents end in newline
+						if (out->currentStringLength) {
+							switch (out->str[out->currentStringLength - 1]) {
+								case '\n':
+								case '\r':
+									break;
+
+								default:
+									d_string_append_c(out, '\n');
+									break;
+							}
+						}
 					}
 
 					if (walker->type == OPML_OUTLINE_SELF_CLOSE) {
