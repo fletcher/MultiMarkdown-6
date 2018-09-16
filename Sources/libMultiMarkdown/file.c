@@ -234,7 +234,7 @@ static char * my_strndup(const char * source, size_t n) {
 
 	// strlen is too slow if strlen(source) >> n
 	for (len = 0; len < n; ++len) {
-		if (test == '\0') {
+		if (*test == '\0') {
 			break;
 		}
 
