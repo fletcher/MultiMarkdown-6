@@ -160,7 +160,7 @@ DString * scan_file(const char * fname) {
 
 
 /// Scan from stdin into a DString
-DString * stdin_buffer() {
+DString * stdin_buffer(void) {
 	/* Read from stdin and return a GString *
 		`buffer` will need to be freed elsewhere */
 

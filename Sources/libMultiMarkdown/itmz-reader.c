@@ -114,10 +114,10 @@
 
 
 // Basic parser function declarations
-void * ITMZAlloc();
-void ITMZ();
-void ITMZFree();
-void ITMZTrace();
+void * ITMZAlloc(void *);
+void ITMZ(void *, int, void *, void *);
+void ITMZFree(void *, void *);
+void ITMZTrace(FILE *stream, char *zPrefix);
 
 
 #define print(x) d_string_append(out, x)

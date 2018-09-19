@@ -112,10 +112,10 @@
 #include "xml.h"
 
 // Basic parser function declarations
-void * OPMLAlloc();
-void OPML();
-void OPMLFree();
-void OPMLTrace();
+void * OPMLAlloc(void *);
+void OPML(void *, int, void *, void *);
+void OPMLFree(void *, void *);
+void OPMLTrace(FILE *stream, char *zPrefix);
 
 
 #define print(x) d_string_append(out, x)

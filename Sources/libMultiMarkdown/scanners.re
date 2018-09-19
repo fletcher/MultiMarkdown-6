@@ -231,7 +231,6 @@ size_t scan_spnl(const char * c) {
 
 
 size_t scan_key(const char * c) {
-	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c

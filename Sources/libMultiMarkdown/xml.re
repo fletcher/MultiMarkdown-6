@@ -175,7 +175,6 @@ static char * my_strndup(const char * source, size_t n) {
 
 /// skip through whitespace
 size_t xml_scan_wsnl(const char * c) {
-	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c
@@ -186,8 +185,7 @@ size_t xml_scan_wsnl(const char * c) {
 
 
 /// scan generic attribute_name
-size_t xml_scan_attribute_name(const char * c) {
-	const char * marker = NULL;
+size_t xml_scan_attribute_name(const char * c) {;
 	const char * start = c;
 
 /*!re2c

@@ -79,10 +79,10 @@
 
 
 // Basic parser function declarations
-void * ParseAlloc();
-void Parse();
-void ParseFree();
-void ParseTrace();
+void * ParseAlloc(void *);
+void Parse(void *, int, void *, void *);
+void ParseFree(void *, void *);
+void ParseTrace(FILE *stream, char *zPrefix);
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 

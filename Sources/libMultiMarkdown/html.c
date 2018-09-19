@@ -93,7 +93,7 @@ static char * my_strdup(const char * source) {
 
 
 // Use Knuth's pseudo random generator to obfuscate email addresses predictably
-long ran_num_next();
+long ran_num_next(void);
 
 void mmd_print_char_html(DString * out, char c, bool obfuscate) {
 	switch (c) {

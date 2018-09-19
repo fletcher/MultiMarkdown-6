@@ -2247,7 +2247,7 @@ static int arg_int_scanfn(struct arg_int *parent, const char *argval)
 
         /* if success then store result in parent->ival[] array */
         if (errorcode == 0)
-            parent->ival[parent->count++] = val;
+            parent->ival[parent->count++] = (int) val;
     }
 
     /* printf("%s:scanfn(%p,%p) returns %d\n",__FILE__,parent,argval,errorcode); */
@@ -3413,7 +3413,7 @@ static const TRexChar *trex_matchnode(TRex* exp,TRexNode *node,const TRexChar *s
 			} while((n->next != -1) && (n = &exp->_nodes[n->next]));
 
 			if(capture != -1)
-				exp->_matches[capture].len = cur - exp->_matches[capture].begin;
+				exp->_matches[capture].len = (int) (cur - exp->_matches[capture].begin);
 			return cur;
 	}
 	case OP_WB:
@@ -4766,7 +4766,7 @@ void arg_print_formatted( FILE *fp,
                           const unsigned rmargin,
                           const char *text )
 {
-    const unsigned textlen = strlen( text );
+    const unsigned textlen = (unsigned int) strlen( text );
     unsigned line_start = 0;
     unsigned line_end = textlen + 1;
     const unsigned colwidth = (rmargin - lmargin) + 1;
