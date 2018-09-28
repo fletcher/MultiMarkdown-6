@@ -178,6 +178,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				switch (format) {
 					case FORMAT_HTML:
+					case FORMAT_EPUB:
 						d_string_append(file_path, ".html");
 						break;
 
@@ -188,6 +189,8 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 						break;
 
 					case FORMAT_FODT:
+					case FORMAT_ODT:
+						// `.fodt` is the extension for historical reasons
 						d_string_append(file_path, ".fodt");
 						break;
 
