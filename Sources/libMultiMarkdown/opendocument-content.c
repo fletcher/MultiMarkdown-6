@@ -297,6 +297,7 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 	}
 
 	char * temp;
+	char * stop;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -353,8 +354,9 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 		case MARKER_H5:
 		case MARKER_H6:
 			temp = (char *) &source[t->start];
+			stop = (char *) &source[t->start + t->len];
 
-			while (temp) {
+			while (temp < stop) {
 				switch (*temp) {
 					case '#':
 						print_const("#");
@@ -372,7 +374,7 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 						break;
 
 					default:
-						temp = NULL;
+						temp = stop;
 						break;
 				}
 			}
@@ -700,6 +702,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
 	footnote * temp_note = NULL;
+	size_t	temp_size;
 
 	switch (t->type) {
 		case DOC_START_TOKEN:
@@ -889,7 +892,16 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				free(temp_char);
 			}
 
-			trim_trailing_whitespace_d_string(out);
+			temp_size = 0;
+
+			while (temp_size != out->currentStringLength) {
+				temp_size = out->currentStringLength;
+
+				trim_trailing_whitespace_d_string(out);
+				if (strcmp(&(out->str[out->currentStringLength - 11]), "<text:tab/>") == 0) {
+					d_string_erase(out, out->currentStringLength - 11, 11);
+				}
+			}
 
 			print_const("</text:h>");
 			scratch->padded = 0;

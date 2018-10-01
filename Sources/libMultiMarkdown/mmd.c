@@ -513,18 +513,32 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (first_child->type - HASH1) + LINE_ATX_1;
 				first_child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
+				t = line->child->tail;
+
 				// Strip trailing '#' sequence if present
-				if (line->child->tail->type == TEXT_NL) {
-					if ((line->child->tail->prev->type >= HASH1) &&
-							(line->child->tail->prev->type <= HASH6)) {
-						line->child->tail->prev->type -= HASH1;
-						line->child->tail->prev->type += MARKER_H1;
-					}
-				} else {
-					if ((line->child->tail->type >= HASH1) &&
-							(line->child->tail->type <= HASH6)) {
-						line->child->tail->type -= HASH1;
-						line->child->tail->type += MARKER_H1;
+				while (t) {
+					switch (t->type) {
+						case INDENT_TAB:
+						case INDENT_SPACE:
+						case NON_INDENT_SPACE:
+						case TEXT_NL:
+						case TEXT_LINEBREAK:
+						case TEXT_LINEBREAK_SP:
+							t = t->prev;
+							break;
+						case HASH1:
+						case HASH2:
+						case HASH3:
+						case HASH4:
+						case HASH5:
+						case HASH6:
+							t->type -= HASH1;
+							t->type += MARKER_H1;
+							t = NULL;
+							break;
+						default:
+							// Break out of loop
+							t = NULL;
 					}
 				}
 			} else {

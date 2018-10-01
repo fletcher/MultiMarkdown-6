@@ -23,3 +23,11 @@ bar</em></h1>
 <p>[bar]</p>
 
 <p>[foo][bar]</p>
+
+<p>10</p>
+
+<h1>foo [bar]</h1>
+
+<h1>foo [bar]</h1>
+
+<h1>foo [bar]</h1>

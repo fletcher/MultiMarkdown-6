@@ -25,3 +25,11 @@ bar*
 [bar]
 
 [foo][bar]
+
+10
+
+# foo [bar] # 
+
+# foo [bar] #	
+
+# foo [bar] #    
