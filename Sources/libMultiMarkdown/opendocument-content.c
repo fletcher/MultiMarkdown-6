@@ -136,7 +136,7 @@ static char * my_strdup(const char * source) {
 }
 
 
-void mmd_print_char_opendocument(DString * out, char c) {
+void mmd_print_char_opendocument(DString * out, char c, bool line_breaks) {
 	switch (c) {
 		case '"':
 			print_const("&quot;");
@@ -156,7 +156,11 @@ void mmd_print_char_opendocument(DString * out, char c) {
 
 		case '\n':
 		case '\r':
-			print_const("<text:line-break/>\n");
+			if (line_breaks) {
+				print_const("<text:line-break/>\n");
+			} else {
+				print_char(c);
+			}
 			break;
 
 		case '\t':
@@ -169,13 +173,13 @@ void mmd_print_char_opendocument(DString * out, char c) {
 }
 
 
-void mmd_print_string_opendocument(DString * out, const char * str) {
+void mmd_print_string_opendocument(DString * out, const char * str, bool line_breaks) {
 	if (str == NULL) {
 		return;
 	}
 
 	while (*str != '\0') {
-		mmd_print_char_opendocument(out, *str);
+		mmd_print_char_opendocument(out, *str, line_breaks);
 		str++;
 	}
 }
@@ -321,7 +325,7 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
 			} else {
-				mmd_print_char_opendocument(out, source[t->start + 1]);
+				mmd_print_char_opendocument(out, source[t->start + 1], false);
 			}
 
 			break;
@@ -513,7 +517,7 @@ void mmd_export_token_opendocument_math(DString * out, const char * source, toke
 void mmd_export_link_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	if (link->url) {
 		print_const("<text:a xlink:type=\"simple\" xlink:href=\"");
-		mmd_print_string_opendocument(out, link->url);
+		mmd_print_string_opendocument(out, link->url, false);
 		print_const("\"");
 	} else {
 		print_const("<a xlink:type=\"simple\" xlink:href=\"\"");
@@ -521,7 +525,7 @@ void mmd_export_link_opendocument(DString * out, const char * source, token * te
 
 	if (link->title && link->title[0] != '\0') {
 		print_const(" office:name=\"");
-		mmd_print_string_opendocument(out, link->title);
+		mmd_print_string_opendocument(out, link->title, false);
 		print_const("\"");
 	}
 
@@ -1244,7 +1248,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					(source[t->start + 1] == ' ')) {
 				print_const(" ");		// This is a non-breaking space character
 			} else {
-				mmd_print_char_opendocument(out, source[t->start + 1]);
+				mmd_print_char_opendocument(out, source[t->start + 1], false);
 			}
 
 			break;
@@ -1383,9 +1387,9 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					temp_bool = false;
 				}
 
-				mmd_print_string_opendocument(out, temp_char);
+				mmd_print_string_opendocument(out, temp_char, false);
 				print_const("\">");
-				mmd_print_string_opendocument(out, temp_char);
+				mmd_print_string_opendocument(out, temp_char, false);
 				print_const("</text:a>");
 			} else if (scan_html(&source[t->start])) {
 				// We ignore HTML blocks
@@ -1700,11 +1704,11 @@ parse_citation:
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 //						mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 					} else {
 						// This is an inline definition
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 //						mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 					}
 				} else {
@@ -1714,15 +1718,15 @@ parse_citation:
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
-						mmd_print_string_opendocument(out, temp_note->clean_text);
+						mmd_print_string_opendocument(out, temp_note->clean_text, true);
 						print_const(" (");
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 						print_const(")");
 					} else {
 						// This is an inline definition
-						mmd_print_string_opendocument(out, temp_note->clean_text);
+						mmd_print_string_opendocument(out, temp_note->clean_text, true);
 						print_const(" (");
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 						print_const(")");
 					}
 
@@ -1762,11 +1766,11 @@ parse_citation:
 				if (temp_short2 == scratch->used_glossaries->size) {
 					// This is a re-use of a previously used note
 
-					mmd_print_string_opendocument(out, temp_note->clean_text);
+					mmd_print_string_opendocument(out, temp_note->clean_text, true);
 				} else {
 					// This is the first time this note was used
 
-					mmd_print_string_opendocument(out, temp_note->clean_text);
+					mmd_print_string_opendocument(out, temp_note->clean_text, true);
 
 					printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
 					mmd_export_token_tree_opendocument(out, source, temp_note->content, scratch);
@@ -1786,7 +1790,7 @@ parse_citation:
 			temp_char2 = extract_metadata(scratch, temp_char);
 
 			if (temp_char2) {
-				mmd_print_string_opendocument(out, temp_char2);
+				mmd_print_string_opendocument(out, temp_char2, true);
 			} else {
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			}

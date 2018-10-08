@@ -310,6 +310,9 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.0/">foo</text:a>
 <text:a xlink:type="simple" xlink:href="http://test.1/file.txt">bar</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/" office:name="Daring Fireball:
+Markdown">Markdown</text:a></text:p>
 </office:text>
 </office:body>
 </office:document>

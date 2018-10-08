@@ -2,7 +2,7 @@
 <opml version="1.0">
 <head><title>Reference Links</title></head>
 <body>
-<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;[*foo*][bar].&#10;&#10;[*foo*][BAR].&#10;&#10;[*foo*][foobar].&#10;&#10;[*foo*][foo bar].&#10;&#10;[*foo*][foo  bar].&#10;&#10;5&#10;&#10;[*foo*][long].&#10;&#10;[foo][].&#10;&#10;[foo].&#10;&#10;[[foo]][bar]&#10;&#10;[[foo]][]&#10;&#10;10&#10;&#10;[[foo][bar]][]&#10;&#10;[foo][bar]&#10;&#10;[foo] [bar]&#10;&#10;[foo]&#10;[bar]&#10;&#10;&#10;[foo]: http://test.0/&#10;[bar]:&#9;http://test.1/file.txt&#10;[BAR]:      http://test.2/&#10;[foobar]: http://test.3/file.txt&#9;&quot;title&quot;&#10;[foo bar]: http://test.4/&#10;[foo  bar]: http://test.5/&#9;&quot;&quot;&#10;[long]: http://test.6/&#10;&quot;title&quot;&#10;"></outline>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;[*foo*][bar].&#10;&#10;[*foo*][BAR].&#10;&#10;[*foo*][foobar].&#10;&#10;[*foo*][foo bar].&#10;&#10;[*foo*][foo  bar].&#10;&#10;5&#10;&#10;[*foo*][long].&#10;&#10;[foo][].&#10;&#10;[foo].&#10;&#10;[[foo]][bar]&#10;&#10;[[foo]][]&#10;&#10;10&#10;&#10;[[foo][bar]][]&#10;&#10;[foo][bar]&#10;&#10;[foo] [bar]&#10;&#10;[foo]&#10;[bar]&#10;&#10;[Markdown]&#10;&#10;&#10;[foo]: http://test.0/&#10;[bar]:&#9;http://test.1/file.txt&#10;[BAR]:      http://test.2/&#10;[foobar]: http://test.3/file.txt&#9;&quot;title&quot;&#10;[foo bar]: http://test.4/&#10;[foo  bar]: http://test.5/&#9;&quot;&quot;&#10;[long]: http://test.6/&#10;&quot;title&quot;&#10;[Markdown]:&#9;http://daringfireball.net/projects/markdown/  &quot;Daring Fireball:&#10;Markdown&quot;&#10;"></outline>
 <outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Reference Links"/>
 <outline text="latexconfig" _note="article"/>

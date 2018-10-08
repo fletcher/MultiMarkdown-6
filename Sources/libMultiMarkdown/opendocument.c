@@ -176,7 +176,7 @@ char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch) {
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "author") == 0) {
 			print_const("\t<dc:creator>");
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 			print_const("</dc:creator>\n");
 		} else if (strcmp(m->key, "baseheaderlevel") == 0) {
 		} else if (strcmp(m->key, "bibliostyle") == 0) {
@@ -197,20 +197,20 @@ char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
 		} else if (strcmp(m->key, "odfheader") == 0) {
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\t<dc:title>");
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 			print_const("</dc:title>\n");
 		} else if (strcmp(m->key, "transcludebase") == 0) {
 		} else if (strcmp(m->key, "xhtmlheader") == 0) {
 		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
 		} else {
 			print_const("\t<meta:user-defined meta:name=\"");
-			mmd_print_string_opendocument(out, m->key);
+			mmd_print_string_opendocument(out, m->key, false);
 			print_const("\">");
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 			print_const("</meta:user-defined>\n");
 		}
 	}

@@ -133,7 +133,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:identifier>\n");
 	} else {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
@@ -149,7 +149,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:title>");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:title>\n");
 	} else {
 		print_const("<dc:title>Untitled</dc:title>\n");
@@ -160,7 +160,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:creator>");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:creator>\n");
 	}
 
@@ -170,7 +170,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:language>");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:language>\n");
 	} else {
 		switch (scratch->language) {
@@ -204,7 +204,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<meta property=\"dcterms:modified\">");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</meta>\n");
 	} else {
 		time_t t = time(NULL);
@@ -303,7 +303,7 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 	HASH_FIND_STR(scratch->meta_hash, "title", temp);
 
 	if (temp) {
-		mmd_print_string_html(out, temp->value, false);
+		mmd_print_string_html(out, temp->value, false, false);
 	} else {
 		print_const("Untitled");
 	}
