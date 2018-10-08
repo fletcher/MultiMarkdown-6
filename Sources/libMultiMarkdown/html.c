@@ -892,7 +892,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 		case BLOCK_TABLE:
 			pad(out, 2, scratch);
-			print_const("<table>\n");
+			print_const("<table");
 
 			// Are we followed by a caption?
 			if (table_has_caption(t)) {
@@ -904,7 +904,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				}
 
 				temp_char = label_from_token(source, temp_token);
-				printf("<caption style=\"caption-side: bottom;\" id=\"%s\">", temp_char);
+				printf(" id=\"%s\">\n<caption style=\"caption-side: bottom;\">", temp_char);
 				free(temp_char);
 
 				t->next->child->child->type = TEXT_EMPTY;
@@ -913,6 +913,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				print_const("</caption>\n");
 				temp_short = 1;
 			} else {
+				print_const(">\n");
 				temp_short = 0;
 			}
 
