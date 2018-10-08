@@ -6,7 +6,7 @@
 	<meta name="author" content="Fletcher T. Penney"/>
 	<meta name="revised" content="2018-06-30"/>
 	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 </ul>
 </div>
 
-<h3 id="filetransclusion">File Transclusion </h3>
+<h3 id="filetransclusion">File Transclusion</h3>
 
 <p>File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:</p>
 
@@ -55,7 +55,7 @@ Another paragraph
 
 <p><strong>Note:</strong> Thanks to David Richards for his ideas in developing support for this feature.</p>
 
-<h4 id="searchpaths">Search Paths </h4>
+<h4 id="searchpaths">Search Paths</h4>
 
 <p>When you process a file with MultiMarkdown (<abbr title="MultiMarkdown">MMD</abbr>), it uses that file&#8217;s directory as the search
 path for included files. For example:</p>
@@ -120,7 +120,7 @@ whether a file is being processed by itself or as part of a &#8220;parent&#8221;
 This can be useful when a particular file can either be a standalone document,
 or a chapter inside a larger document.</p>
 
-<h4 id="wildcardextensions">Wildcard Extensions </h4>
+<h4 id="wildcardextensions">Wildcard Extensions</h4>
 
 <p>Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension &#8220;.*&#8221; to have <abbr title="MultiMarkdown">MMD</abbr> choose the proper version of the file (e.g. <code>foo.tex</code>, <code>foo.fodt</code>, <code>foo.html</code>, etc.)</p>
 
@@ -128,7 +128,7 @@ or a chapter inside a larger document.</p>
 {{foo.*}}
 </code></pre>
 
-<h4 id="transclusionpreprocessing">Transclusion Preprocessing </h4>
+<h4 id="transclusionpreprocessing">Transclusion Preprocessing</h4>
 
 <p>If you want to perform transclusion, <em>without</em> converting to another format, you can use <code>mmd</code> as the output format:</p>
 

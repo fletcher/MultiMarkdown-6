@@ -10,7 +10,7 @@
 
 \tableofcontents
 
-\chapter{Syntax }
+\chapter{Syntax}
 \label{syntax}
 
 \section{Abbreviations (or Acronyms)}
@@ -37,7 +37,7 @@ There are a few limitations:
 
 \end{itemize}
 
-\section{Citations }
+\section{Citations}
 \label{citations}
 
 I have included support for \emph{basic} bibliography features in MultiMarkdown. I'm open to feedback on ways to improve this but keep the following in mind:
@@ -90,7 +90,7 @@ This changes the citation style in natbib to avoid these errors, and is useful w
 
 \textbf{NOTE}: As of version 6, HTML wraps citation references in parentheses instead of brackets, e.g. \texttt{(1)} instead of \texttt{[1]}. Also, citations are now displayed in a separate section from footnotes when outputting to HTML.
 
-\subsection{Inline Citations }
+\subsection{Inline Citations}
 \label{inlinecitations}
 
 Citations can also be used in an inline syntax, just like inline footnotes:
@@ -99,7 +99,7 @@ Citations can also be used in an inline syntax, just like inline footnotes:
 As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]
 \end{verbatim}
 
-\subsection{BibTeX }
+\subsection{BibTeX}
 \label{bibtex}
 
 If you are creating a LaTeX document, and need a bibliography, then you should definitely look into \href{http://www.bibtex.org/}{BibTeX}\footnote{\href{http://www.bibtex.org/}{http:\slash \slash www.bibtex.org\slash }} and \href{http://merkel.zoneo.net/Latex/natbib.php}{natbib}\footnote{\href{http://merkel.zoneo.net/Latex/natbib.php}{http:\slash \slash merkel.zoneo.net\slash Latex\slash natbib.php}}. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.
@@ -125,10 +125,10 @@ Since \texttt{natbib} is enabled by default, you have a choice between using the
 [foo\]\[bar][#citekey;] => \citet[foo][bar]{citekey}
 \end{verbatim}
 
-\section{CriticMarkup }
+\section{CriticMarkup}
 \label{criticmarkup}
 
-\subsection{What Is CriticMarkup? }
+\subsection{What Is CriticMarkup?}
 \label{whatiscriticmarkup}
 
 \begin{quote}
@@ -137,7 +137,7 @@ CriticMarkup is a way for authors and editors to track changes to documents in p
 
 CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
 
-\subsection{Using CriticMarkup With MultiMarkdown }
+\subsection{Using CriticMarkup With MultiMarkdown}
 \label{usingcriticmarkupwithmultimarkdown}
 
 When using CriticMarkup with MultiMarkdown itself, you have three choices:
@@ -153,7 +153,7 @@ When using CriticMarkup with MultiMarkdown itself, you have three choices:
 
 \end{itemize}
 
-\subsection{The CriticMarkup Syntax }
+\subsection{The CriticMarkup Syntax}
 \label{thecriticmarkupsyntax}
 
 The CriticMarkup syntax is fairly straightforward. The key thing to remember is that CriticMarkup is processed \emph{before} any other MultiMarkdown is handled. It's almost like a separate layer on top of the MultiMarkdown syntax.
@@ -203,7 +203,7 @@ This is a test\cmnote{What is it a test of?}.
 
 \end{itemize}
 
-\subsection{CriticMarkup Limitations }
+\subsection{CriticMarkup Limitations}
 \label{criticmarkuplimitations}
 
 If you \texttt{-{}-accept} or \texttt{-{}-reject} CriticMarkup changes, then it should work properly in any document.
@@ -248,7 +248,7 @@ For now, the \emph{official} MultiMarkdown support for CriticMarkup consists of:
 
 \end{enumerate}
 
-\section{Cross-References }
+\section{Cross-References}
 \label{cross-references}
 
 An oft-requested feature was the ability to have Markdown automatically handle
@@ -276,7 +276,7 @@ header, then the defined anchor takes precedence.
 In addition to headers within the document, you can provide labels for images
 and tables which can then be used for cross-references as well.
 
-\section{Definition Lists }
+\section{Definition Lists}
 \label{definitionlists}
 
 MultiMarkdown has support for definition lists using the same syntax used in
@@ -324,7 +324,7 @@ prefer the \texttt{<p>} tags in place. Let me know if this is a problem.
 
 See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }} page for more information.
 
-\section{Escaped newlines }
+\section{Escaped newlines}
 \label{escapednewlines}
 
 Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash \slash github.com\slash njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
@@ -343,7 +343,7 @@ This is a line.\
 This is a new line.
 \end{verbatim}
 
-\section{Fenced Code Blocks }
+\section{Fenced Code Blocks}
 \label{fencedcodeblocks}
 
 In addition to the regular indented code block that Markdown uses, you can use ``fenced'' code blocks in MultiMarkdown. These code blocks do not have to be indented, and can also be configured to be compatible with a third party syntax highlighter. These code blocks should begin with 3 to 5 backticks, an optional language specifier (if using a syntax highlighter), and should end with the same number of backticks you started with:
@@ -384,7 +384,7 @@ Fenced code blocks are particularly useful when including another file (File Tra
 
 \textbf{NOTE}: In MultiMarkdown v6, if there is no closing fence, then the code block continues until the end of the document.
 
-\section{File Transclusion }
+\section{File Transclusion}
 \label{filetransclusion}
 
 File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:
@@ -419,7 +419,7 @@ You can use the \texttt{[Transclude Base]} metadata to specify where MultiMarkdo
 
 \textbf{Note:} Thanks to David Richards for his ideas in developing support for this feature.
 
-\subsection{Search Paths }
+\subsection{Search Paths}
 \label{searchpaths}
 
 When you process a file with \gls{MMD}, it uses that file's directory as the search
@@ -472,7 +472,7 @@ whether a file is being processed by itself or as part of a ``parent'' file.
 This can be useful when a particular file can either be a standalone document,
 or a chapter inside a larger document.
 
-\subsection{Wildcard Extensions }
+\subsection{Wildcard Extensions}
 \label{wildcardextensions}
 
 Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension ``.*'' to have \gls{MMD} choose the proper version of the file (e.g. \texttt{foo.tex}, \texttt{foo.fodt}, \texttt{foo.html}, etc.)
@@ -482,7 +482,7 @@ Insert a different version of a file here based on export format:
 {{foo.*}}
 \end{verbatim}
 
-\subsection{Transclusion Preprocessing }
+\subsection{Transclusion Preprocessing}
 \label{transclusionpreprocessing}
 
 If you want to perform transclusion, \emph{without} converting to another format, you can use \texttt{mmd} as the output format:
@@ -493,7 +493,7 @@ multimarkdown -t mmd foo.txt
 
 This will only perform ``basic'' transclusion --it does not support wildcard extensions, since the final output format is not known.
 
-\section{Footnotes }
+\section{Footnotes}
 \label{footnotes}
 
 I have added support for footnotes to MultiMarkdown, using the syntax proposed by John Gruber. Unfortunately, he never implemented footnotes in Markdown.
@@ -522,7 +522,7 @@ You can also use ``inline footnotes'':
 Here is another footnote.[^This is the footnote itself]
 \end{verbatim}
 
-\section{Glossaries }
+\section{Glossaries}
 \label{glossaries}
 
 MultiMarkdown has a feature that allows footnotes to be specified as glossary terms. It doesn't do much for XHTML documents, but the XSLT file that converts the document into LaTeX is designed to convert these special footnotes into glossary entries.
@@ -545,7 +545,7 @@ terms used in your document
 
 Much like abbreviations, there is also a ``shortcut'' method that is similar to the approach used in prior versions of \gls{MMD}. You specify the definition for the glossary term in the usual manner, but \gls{MMD} will automatically identify each instance where the term is used and substitute it automatically. In this case, the term is limited to a more basic character set which includes letters, numbers, periods, and hyphens, but not much else. For more complex glossary terms, you must explicitly mark uses of the term.
 
-\subsection{LaTeX Glossaries }
+\subsection{LaTeX Glossaries}
 \label{latexglossaries}
 
 \textbf{Note}: \emph{Getting glossaries to work is a slightly more advanced LaTeX
@@ -578,7 +578,7 @@ set basefile = `basename "$1" .tex`
 makeindex -s `kpsewhich basic.gst` -o "${basefile}.gls" "${basefile}.glo"
 \end{verbatim}
 
-\section{Images }
+\section{Images}
 \label{images}
 
 The basic syntax for images in Markdown is:
@@ -617,7 +617,7 @@ is different than the following image:</p>
 
 The first one would be an inline image. The second one (in HTML) would be wrapped in an HTML \texttt{figure} element. In this case, the \texttt{alt} text is also used as a figure caption, and can contain MultiMarkdown syntax (e.g. bold, emph, etc.). The alt text is not specifically designed to limit which MultiMarkdown is supported, but there will be limits and block level elements aren't supported.
 
-\section{Link and Image Attributes }
+\section{Link and Image Attributes}
 \label{linkandimageattributes}
 
 Adding attributes to links and images has been requested for a long time on
@@ -672,7 +672,7 @@ Also, you can't have a multiword attribute span a newline.
 Colored [link](http://example.net "Title" style="color:red")
 \end{verbatim}
 
-\section{Math }
+\section{Math}
 \label{math}
 
 MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash \slash www1.chapman.edu\slash \ensuremath{\sim}jipsen\slash mathml\slash asciimath.html}} to typeset mathematical equations. There
@@ -694,7 +694,7 @@ latex input:	mmd-article-header
 Title:			MultiMarkdown Math Example  
 latex input:	mmd-article-begin-doc  
 latex footer:	mmd-memoir-footer  
-HTML header:	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+HTML header:	<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 		
 An example of math within a paragraph --- \\({e}^{i\pi }+1=0\\)
@@ -736,7 +736,7 @@ That's it.
 
 In order to be correctly parsed as math, there \emph{must} not be any space between the \texttt{\$} and the actual math on the inside of the delimiter, and there \emph{must} be space on the outside. ASCII punctuation can also serve as ``space'' outside of the math.
 
-\subsection{Superscripts and Subscripts }
+\subsection{Superscripts and Subscripts}
 \label{superscriptsandsubscripts}
 
 You can easily include superscripts and subscripts in MultiMarkdown as well:
@@ -767,7 +767,7 @@ y\textsuperscript{(a+b)}\\
 x\textsubscript{y,z}
 \end{quote}
 
-\section{Metadata }
+\section{Metadata}
 \label{metadata}
 
 It is possible to include special metadata at the top of a MultiMarkdown
@@ -809,7 +809,7 @@ The syntax for including metadata is simple.
 
 \end{itemize}
 
-\section{Metadata ``Variables'' }
+\section{Metadata ``Variables''}
 \label{metadatavariables}
 
 You can substitute the \texttt{value} for a metadata \texttt{key} in the body of a document using the following format, where \texttt{foo} and \texttt{bar} are the \texttt{key}s of the desired metadata.
@@ -824,7 +824,7 @@ bar:	bar-test
 A variable in the body [%bar].
 \end{verbatim}
 
-\section{``Standard'' Metadata keys }
+\section{``Standard'' Metadata keys}
 \label{standardmetadatakeys}
 
 There are a few metadata keys that are standardized in MultiMarkdown. You can
@@ -832,19 +832,19 @@ use any other keys that you desire, but you have to make use of them yourself.
 
 My goal is to keep the list of ``standard'' metadata keys as short as possible.
 
-\subsection{Author }
+\subsection{Author}
 \label{author}
 
 This value represents the author of the document and is used in LaTeX, ODF, and RTF
 documents to generate the title information.
 
-\subsection{Affiliation }
+\subsection{Affiliation}
 \label{affiliation}
 
 This is used to enter further information about the author --- a link to a
 website, the name of an employer, academic affiliation, etc.
 
-\subsection{Base Header Level }
+\subsection{Base Header Level}
 \label{baseheaderlevel}
 
 This is used to change the top level of organization of the document. For example:
@@ -865,35 +865,35 @@ Additionally, there are ``flavors'' of this metadata key for various output form
 
 If you are doing something interesting with File Transclusion (\autoref{filetransclusion}), you can also use a negative number here. Since metadata is not used when a file is ``transcluded'', this allows you to use a different level of headings when a file is processed on its own.
 
-\subsection{Biblio Style }
+\subsection{Biblio Style}
 \label{bibliostyle}
 
 This metadata specifies the name of the BibTeX style to be used, if you are
 not using natbib.
 
-\subsection{BibTeX }
+\subsection{BibTeX}
 \label{bibtex}
 
 This metadata specifies the name of the BibTeX file used to store citation
 information. Do not include the trailing `.bib'.
 
-\subsection{Copyright }
+\subsection{Copyright}
 \label{copyright}
 
 This can be used to provide a copyright string.
 
-\subsection{CSS }
+\subsection{CSS}
 \label{css}
 
 This metadata specifies a URL to be used as a CSS file for the produced
 document. Obviously, this is only useful when outputting to HTML.
 
-\subsection{Date }
+\subsection{Date}
 \label{date}
 
 Specify a date to be associated with the document.
 
-\subsection{HTML Header }
+\subsection{HTML Header}
 \label{htmlheader}
 
 You can include raw HTML information to be included in the \texttt{<head>} section of the document. MultiMarkdown doesn't perform any validation or processing of this data --- it just copies it as is.
@@ -907,29 +907,29 @@ HTML header:  <script type="text/javascript"
 	</script>
 \end{verbatim}
 
-\subsection{HTML Footer }
+\subsection{HTML Footer}
 \label{htmlfooter}
 
 Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc. Useful for linking to scripts that must be included after footnotes.
 
-\subsection{Language }
+\subsection{Language}
 \label{language}
 
 The \texttt{language} metadata key specified the content language for a document using the standardized two letter code (e.g. \texttt{en} for English). Where possible, this will also set the \texttt{quotes language} metadata key to the appropriate value.
 
-\subsection{LaTeX Author }
+\subsection{LaTeX Author}
 \label{latexauthor}
 
 Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex author} metadata to override the regular author metadata when exporting to LaTeX.
 
 This metadata \emph{must} come after the regular \texttt{author} metadata if it is also being used.
 
-\subsection{LaTeX Begin }
+\subsection{LaTeX Begin}
 \label{latexbegin}
 
 This is the name of a LaTeX file to be included (via \texttt{\textbackslash{}input\{foo\}}) when exporting to LaTeX. This file will be included after the metadata, and before the body of the document. This is usually where the \texttt{\textbackslash{}begin\{document\}} command occurs, hence the name.
 
-\subsection{LaTeX Config }
+\subsection{LaTeX Config}
 \label{latexconfig}
 
 This is a shortcut key when exporting to LaTeX that automatically populates the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata based on a standardized naming convention.
@@ -946,55 +946,55 @@ The standard LaTeX support files have been updated to support this naming config
 
 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash texmf\slash tex\slash latex\slash mmd6}
 
-\subsection{LaTeX Footer }
+\subsection{LaTeX Footer}
 \label{latexfooter}
 
 The name of a file to be included at the end of a LaTeX document.
 
-\subsection{LaTeX Header }
+\subsection{LaTeX Header}
 \label{latexheader}
 
 Raw LaTeX source to be added to the metadata section of the document. \textbf{Note}: This is distinct from the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata which can only contain a filename.
 
-\subsection{LaTeX Leader }
+\subsection{LaTeX Leader}
 \label{latexleader}
 
 The name of a file to be included at the very beginning of a LaTeX document, before the metadata.
 
-\subsection{LaTeX Mode }
+\subsection{LaTeX Mode}
 \label{latexmode}
 
 When outputting a document to LaTeX, there are two special options that change
 the output slightly --- \texttt{memoir} and \texttt{beamer}. These options are designed to
 be compatible with the LaTeX classes of the same names.
 
-\subsection{LaTeX Title }
+\subsection{LaTeX Title}
 \label{latextitle}
 
 Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex title} metadata to override the regular title metadata when exporting to LaTeX.
 
 This metadata \emph{must} come after the regular \texttt{title} metadata if it is also being used.
 
-\subsection{MMD Header }
+\subsection{MMD Header}
 \label{mmdheader}
 
 \texttt{MMD Header} provides text that will be inserted before the main body of text, prior to parsing the document. If you want to include an external file, use the transclusion syntax (\texttt{\{\{foo.txt\}\}}).
 
-\subsection{MMD Footer }
+\subsection{MMD Footer}
 \label{mmdfooter}
 
 The \texttt{MMD Footer} metadata is like \texttt{MMD Header}, but it appends text at the end of the document, prior to parsing. Use transclusion if you want to reference an external file.
 
 This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you're building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.
 
-\subsection{ODF Header }
+\subsection{ODF Header}
 \label{odfheader}
 
 You can include raw XML to be included in the header of a file output in
 OpenDocument format. It's up to you to properly format your XML and get it
 working --- MultiMarkdown just copies it verbatim to the output.
 
-\subsection{Quotes Language }
+\subsection{Quotes Language}
 \label{quoteslanguage}
 
 This is used to specify which style of ``smart'' quotes to use in the output document. The available options are:
@@ -1021,19 +1021,19 @@ change the language of a document in LaTeX is up to the individual.
 
 \texttt{Quotes Language} does not trigger a complete document.
 
-\subsection{Title }
+\subsection{Title}
 \label{title}
 
 Self-explanatory.
 
-\subsection{Transclude Base }
+\subsection{Transclude Base}
 \label{transcludebase}
 
 When using the File Transclusion (\autoref{filetransclusion}) feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
 
 This metadata can be particularly useful when using MultiMarkdown to parse a text string that does not exist as a file on the computer, and therefore does not have a parent folder (when using \texttt{stdin} or another application that offers MultiMarkdown support). In this case, the path must be a complete path.
 
-\section{Raw Source }
+\section{Raw Source}
 \label{rawsource}
 
 In older versions of MultiMarkdown you could use an HTML comment to pass raw LaTeX or other content to the final document. This worked reasonably well, but was limited and didn't work well when exporting to multiple formats. It was time for something new.
@@ -1065,7 +1065,7 @@ You can specify which output format is compatible with the specified source:
 
 \end{itemize}
 
-\section{Smart Typography }
+\section{Smart Typography}
 \label{smarttypography}
 
 MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash \slash daringfireball.net\slash projects\slash smartypants\slash }} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
@@ -1102,17 +1102,17 @@ MultiMarkdown also includes support for quotes styles other than English (the de
 
 This feature is enabled by default, but is disabled in \texttt{compatibility} mode, since it is not part of the original Markdown. You can also use the \texttt{-{}-nosmart} command line option to disable this feature.
 
-\section{Table of Contents }
+\section{Table of Contents}
 \label{tableofcontents}
 
 As of version 4.7, MultiMarkdown supports the use of \texttt{\{\{TOC\}\}} to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.
 
 When possible, MultiMarkdown uses the ``native'' TOC for a given output format. For example, \texttt{\textbackslash{}tableofcontents} when exporting to LaTeX.
 
-\section{Tables }
+\section{Tables}
 \label{tables}
 
-\subsection{Table Basics }
+\subsection{Table Basics}
 \label{tablebasics}
 
 MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}
@@ -1159,7 +1159,7 @@ And more  &\multicolumn{2}{c}{ With an escaped `\textbar{}'   }\\
 \end{minipage}
 \end{table}
 
-\subsection{Table Rules }
+\subsection{Table Rules}
 \label{tablerules}
 
 The requirements are:
@@ -1201,7 +1201,7 @@ Other notes:
 
 \end{itemize}
 
-\subsection{Limitations of Tables }
+\subsection{Limitations of Tables}
 \label{limitationsoftables}
 
 \begin{itemize}

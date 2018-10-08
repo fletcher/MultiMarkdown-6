@@ -10,7 +10,7 @@
 
 \tableofcontents
 
-\section{File Transclusion }
+\section{File Transclusion}
 \label{filetransclusion}
 
 File transclusion is the ability to tell MultiMarkdown to insert the contents of another file inside the current file being processed. For example:
@@ -45,7 +45,7 @@ You can use the \texttt{[Transclude Base]} metadata to specify where MultiMarkdo
 
 \textbf{Note:} Thanks to David Richards for his ideas in developing support for this feature.
 
-\subsection{Search Paths }
+\subsection{Search Paths}
 \label{searchpaths}
 
 When you process a file with \gls{MMD}, it uses that file's directory as the search
@@ -98,7 +98,7 @@ whether a file is being processed by itself or as part of a ``parent'' file.
 This can be useful when a particular file can either be a standalone document,
 or a chapter inside a larger document.
 
-\subsection{Wildcard Extensions }
+\subsection{Wildcard Extensions}
 \label{wildcardextensions}
 
 Sometimes you may wish to transclude alternate versions of a file depending on your output format. Simply use the extension ``.*'' to have \gls{MMD} choose the proper version of the file (e.g. \texttt{foo.tex}, \texttt{foo.fodt}, \texttt{foo.html}, etc.)
@@ -108,7 +108,7 @@ Insert a different version of a file here based on export format:
 {{foo.*}}
 \end{verbatim}
 
-\subsection{Transclusion Preprocessing }
+\subsection{Transclusion Preprocessing}
 \label{transclusionpreprocessing}
 
 If you want to perform transclusion, \emph{without} converting to another format, you can use \texttt{mmd} as the output format:

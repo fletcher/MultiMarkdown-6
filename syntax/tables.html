@@ -7,7 +7,7 @@
 	<meta name="revised" content="2018-06-30"/>
 	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
 	<meta name="transcluydebase" content="."/>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 
@@ -24,9 +24,9 @@
 </ul>
 </div>
 
-<h3 id="tables">Tables </h3>
+<h3 id="tables">Tables</h3>
 
-<h4 id="tablebasics">Table Basics </h4>
+<h4 id="tablebasics">Table Basics</h4>
 
 <p>MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for <a href="http://www.michelf.com/projects/php-markdown/extra/">PHP Markdown Extra</a></p>
 
@@ -47,8 +47,8 @@ And more      | With an escaped '\|'         ||
 
 <p>into the following <a href="#prototypetable">table</a>.</p>
 
-<table>
-<caption style="caption-side: bottom;" id="prototypetable">Prototype table</caption>
+<table id="prototypetable">
+<caption style="caption-side: bottom;">Prototype table</caption>
 <colgroup>
 <col />
 <col style="text-align:center;"/>
@@ -92,7 +92,7 @@ And more      | With an escaped '\|'         ||
 </tbody>
 </table>
 
-<h4 id="tablerules">Table Rules </h4>
+<h4 id="tablerules">Table Rules</h4>
 
 <p>The requirements are:</p>
 
@@ -119,7 +119,7 @@ the beginning of the line</p></li>
 <li><p>You can create multiple <code>&lt;tbody&gt;</code> tags (for HTML) within a table by having a <strong>single</strong> empty line between rows of the table. This allows your CSS to place horizontal borders to emphasize different sections of the table. This feature doesn&#8217;t work in all output formats (e.g. RTF and OpenDocument).</p></li>
 </ul>
 
-<h4 id="limitationsoftables">Limitations of Tables </h4>
+<h4 id="limitationsoftables">Limitations of Tables</h4>
 
 <ul>
 <li><p>MultiMarkdown table support is designed to handle <em>most</em> tables for <em>most</em> people; it doesn&#8217;t cover <em>all</em> tables for <em>all</em> people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.</p></li>

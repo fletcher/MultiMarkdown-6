@@ -10,7 +10,7 @@
 
 \tableofcontents
 
-\section{Metadata }
+\section{Metadata}
 \label{metadata}
 
 It is possible to include special metadata at the top of a MultiMarkdown
@@ -52,7 +52,7 @@ The syntax for including metadata is simple.
 
 \end{itemize}
 
-\section{Metadata ``Variables'' }
+\section{Metadata ``Variables''}
 \label{metadatavariables}
 
 You can substitute the \texttt{value} for a metadata \texttt{key} in the body of a document using the following format, where \texttt{foo} and \texttt{bar} are the \texttt{key}s of the desired metadata.
@@ -67,7 +67,7 @@ bar:	bar-test
 A variable in the body [%bar].
 \end{verbatim}
 
-\section{``Standard'' Metadata keys }
+\section{``Standard'' Metadata keys}
 \label{standardmetadatakeys}
 
 There are a few metadata keys that are standardized in MultiMarkdown. You can
@@ -75,19 +75,19 @@ use any other keys that you desire, but you have to make use of them yourself.
 
 My goal is to keep the list of ``standard'' metadata keys as short as possible.
 
-\subsection{Author }
+\subsection{Author}
 \label{author}
 
 This value represents the author of the document and is used in LaTeX, ODF, and RTF
 documents to generate the title information.
 
-\subsection{Affiliation }
+\subsection{Affiliation}
 \label{affiliation}
 
 This is used to enter further information about the author --- a link to a
 website, the name of an employer, academic affiliation, etc.
 
-\subsection{Base Header Level }
+\subsection{Base Header Level}
 \label{baseheaderlevel}
 
 This is used to change the top level of organization of the document. For example:
@@ -108,35 +108,35 @@ Additionally, there are ``flavors'' of this metadata key for various output form
 
 If you are doing something interesting with {[File Transclusion]}, you can also use a negative number here. Since metadata is not used when a file is ``transcluded'', this allows you to use a different level of headings when a file is processed on its own.
 
-\subsection{Biblio Style }
+\subsection{Biblio Style}
 \label{bibliostyle}
 
 This metadata specifies the name of the BibTeX style to be used, if you are
 not using natbib.
 
-\subsection{BibTeX }
+\subsection{BibTeX}
 \label{bibtex}
 
 This metadata specifies the name of the BibTeX file used to store citation
 information. Do not include the trailing `.bib'.
 
-\subsection{Copyright }
+\subsection{Copyright}
 \label{copyright}
 
 This can be used to provide a copyright string.
 
-\subsection{CSS }
+\subsection{CSS}
 \label{css}
 
 This metadata specifies a URL to be used as a CSS file for the produced
 document. Obviously, this is only useful when outputting to HTML.
 
-\subsection{Date }
+\subsection{Date}
 \label{date}
 
 Specify a date to be associated with the document.
 
-\subsection{HTML Header }
+\subsection{HTML Header}
 \label{htmlheader}
 
 You can include raw HTML information to be included in the \texttt{<head>} section of the document. MultiMarkdown doesn't perform any validation or processing of this data --- it just copies it as is.
@@ -150,29 +150,29 @@ HTML header:  <script type="text/javascript"
 	</script>
 \end{verbatim}
 
-\subsection{HTML Footer }
+\subsection{HTML Footer}
 \label{htmlfooter}
 
 Raw HTML can be included here, and will be appended at the very end of the document, after footnotes, etc. Useful for linking to scripts that must be included after footnotes.
 
-\subsection{Language }
+\subsection{Language}
 \label{language}
 
 The \texttt{language} metadata key specified the content language for a document using the standardized two letter code (e.g. \texttt{en} for English). Where possible, this will also set the \texttt{quotes language} metadata key to the appropriate value.
 
-\subsection{LaTeX Author }
+\subsection{LaTeX Author}
 \label{latexauthor}
 
 Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex author} metadata to override the regular author metadata when exporting to LaTeX.
 
 This metadata \emph{must} come after the regular \texttt{author} metadata if it is also being used.
 
-\subsection{LaTeX Begin }
+\subsection{LaTeX Begin}
 \label{latexbegin}
 
 This is the name of a LaTeX file to be included (via \texttt{\textbackslash{}input\{foo\}}) when exporting to LaTeX. This file will be included after the metadata, and before the body of the document. This is usually where the \texttt{\textbackslash{}begin\{document\}} command occurs, hence the name.
 
-\subsection{LaTeX Config }
+\subsection{LaTeX Config}
 \label{latexconfig}
 
 This is a shortcut key when exporting to LaTeX that automatically populates the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata based on a standardized naming convention.
@@ -189,55 +189,55 @@ The standard LaTeX support files have been updated to support this naming config
 
 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash texmf\slash tex\slash latex\slash mmd6}
 
-\subsection{LaTeX Footer }
+\subsection{LaTeX Footer}
 \label{latexfooter}
 
 The name of a file to be included at the end of a LaTeX document.
 
-\subsection{LaTeX Header }
+\subsection{LaTeX Header}
 \label{latexheader}
 
 Raw LaTeX source to be added to the metadata section of the document. \textbf{Note}: This is distinct from the \texttt{latex leader}, \texttt{latex begin}, and \texttt{latex footer} metadata which can only contain a filename.
 
-\subsection{LaTeX Leader }
+\subsection{LaTeX Leader}
 \label{latexleader}
 
 The name of a file to be included at the very beginning of a LaTeX document, before the metadata.
 
-\subsection{LaTeX Mode }
+\subsection{LaTeX Mode}
 \label{latexmode}
 
 When outputting a document to LaTeX, there are two special options that change
 the output slightly --- \texttt{memoir} and \texttt{beamer}. These options are designed to
 be compatible with the LaTeX classes of the same names.
 
-\subsection{LaTeX Title }
+\subsection{LaTeX Title}
 \label{latextitle}
 
 Since MultiMarkdown syntax is not processed inside of metadata, you can use the \texttt{latex title} metadata to override the regular title metadata when exporting to LaTeX.
 
 This metadata \emph{must} come after the regular \texttt{title} metadata if it is also being used.
 
-\subsection{MMD Header }
+\subsection{MMD Header}
 \label{mmdheader}
 
 \texttt{MMD Header} provides text that will be inserted before the main body of text, prior to parsing the document. If you want to include an external file, use the transclusion syntax (\texttt{\{\{foo.txt\}\}}).
 
-\subsection{MMD Footer }
+\subsection{MMD Footer}
 \label{mmdfooter}
 
 The \texttt{MMD Footer} metadata is like \texttt{MMD Header}, but it appends text at the end of the document, prior to parsing. Use transclusion if you want to reference an external file.
 
 This is useful for keeping a list of references, abbreviations, footnotes, links, etc. all in a single file that can be reused across multiple documents. If you're building a big document out of smaller documents, this allows you to use one list in all files, without multiple copies being inserted in the master file.
 
-\subsection{ODF Header }
+\subsection{ODF Header}
 \label{odfheader}
 
 You can include raw XML to be included in the header of a file output in
 OpenDocument format. It's up to you to properly format your XML and get it
 working --- MultiMarkdown just copies it verbatim to the output.
 
-\subsection{Quotes Language }
+\subsection{Quotes Language}
 \label{quoteslanguage}
 
 This is used to specify which style of ``smart'' quotes to use in the output document. The available options are:
@@ -264,12 +264,12 @@ change the language of a document in LaTeX is up to the individual.
 
 \texttt{Quotes Language} does not trigger a complete document.
 
-\subsection{Title }
+\subsection{Title}
 \label{title}
 
 Self-explanatory.
 
-\subsection{Transclude Base }
+\subsection{Transclude Base}
 \label{transcludebase}
 
 When using the {[File Transclusion]} feature to ``link'' to other documents inside a MultiMarkdown document, this metadata specifies a folder that contains the files being linked to. If omitted, the default is the folder containing the file in question. This can be a relative path or a complete path.
