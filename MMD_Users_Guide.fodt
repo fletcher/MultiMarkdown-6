@@ -307,7 +307,7 @@ Revised 2018-06-27</text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (or Acronyms) <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#inlinecitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Inline Citations  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtex" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtexcitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX Citations  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatiscriticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Is CriticMarkup?  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usingcriticmarkupwithmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Using CriticMarkup With MultiMarkdown  <text:tab/>1</text:a></text:p>
@@ -553,7 +553,7 @@ Markdown">John Gruber</text:a></text:p>
 
 <text:p text:style-name="Preformatted Text">As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]<text:line-break/></text:p>
 
-<text:h text:outline-level="4"><text:bookmark text:name="bibtex"/>BibTeX</text:h>
+<text:h text:outline-level="4"><text:bookmark text:name="bibtexcitations"/>BibTeX Citations</text:h>
 
 <text:p text:style-name="Standard">If you are creating a LaTeX document, and need a bibliography, then you should definitely look into <text:a xlink:type="simple" xlink:href="http://www.bibtex.org/">BibTeX</text:a> and <text:a xlink:type="simple" xlink:href="http://merkel.zoneo.net/Latex/natbib.php">natbib</text:a>. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.</text:p>
 
