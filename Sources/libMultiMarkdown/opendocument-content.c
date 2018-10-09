@@ -643,7 +643,8 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
+			scratch->label_counter = *counter;
+			temp_char = label_from_header(source, entry, scratch);
 			printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
 			mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
 			print_const(" <text:tab/>1</text:a></text:p>\n");
@@ -688,6 +689,8 @@ void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad
 	mmd_export_toc_entry_opendocument(out, source, scratch, &counter, 0);
 
 	print_const("</text:index-body>\n</text:table-of-content>\n\n");
+
+	scratch->label_counter = 0;
 }
 
 
@@ -889,7 +892,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			if (scratch->extensions & EXT_NO_LABELS) {
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			} else {
-				temp_char = label_from_header(source, t);
+				temp_char = label_from_header(source, t, scratch);
 				printf("<text:bookmark text:name=\"%s\"/>", temp_char);
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 				//printf("<text:bookmark-end text:name=\"%s\"/>", temp_char);

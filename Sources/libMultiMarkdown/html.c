@@ -470,7 +470,8 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
+			scratch->label_counter = *counter;
+			temp_char = label_from_header(source, entry, scratch);
 			printf("<li><a href=\"#%s\">", temp_char);
 			mmd_export_token_tree_html(out, source, entry->child, scratch);
 			print_const("</a>");
@@ -507,6 +508,8 @@ void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scrat
 	size_t counter = 0;
 
 	mmd_export_toc_entry_html(out, source, scratch, &counter, 0);
+
+	scratch->label_counter = 0;
 }
 
 
@@ -685,7 +688,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_char = label_from_header(source, t);
+				temp_char = label_from_header(source, t, scratch);
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
@@ -853,14 +856,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_token = manual_label_from_header(t, source);
-
-				if (temp_token) {
-					temp_char = label_from_token(source, temp_token);
-				} else {
-					temp_char = label_from_token(source, t);
-				}
-
+				temp_char = label_from_header(source, t, scratch);
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}
@@ -877,14 +873,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			if (scratch->extensions & EXT_NO_LABELS) {
 				printf("<h%1d>", temp_short + scratch->base_header_level - 1);
 			} else {
-				temp_token = manual_label_from_header(t, source);
-
-				if (temp_token) {
-					temp_char = label_from_token(source, temp_token);
-				} else {
-					temp_char = label_from_token(source, t);
-				}
-
+				temp_char = label_from_header(source, t, scratch);
 				printf("<h%1d id=\"%s\">", temp_short + scratch->base_header_level - 1, temp_char);
 				free(temp_char);
 			}

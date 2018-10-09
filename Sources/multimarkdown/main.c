@@ -75,7 +75,7 @@
 
 // argtable structs
 struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
+		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_unique, *a_meta,
 		   *a_notransclude, *a_nosmart, *a_opml, *a_itmz;
 struct arg_str *a_format, *a_lang, *a_extract;
 struct arg_file *a_file, *a_o;
@@ -147,6 +147,7 @@ int main(int argc, char** argv) {
 		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
 		a_random		= arg_lit0(NULL, "random", "use random numbers for footnote anchors"),
+		a_unique		= arg_lit0(NULL, "unique", "use random numbers for header labels unless manually specified"),
 		a_nosmart		= arg_lit0(NULL, "nosmart", "Disable smart typography"),
 		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
 		a_notransclude	= arg_lit0(NULL, "notransclude", "Disable file transclusion"),
@@ -273,6 +274,11 @@ int main(int argc, char** argv) {
 	if (a_random->count > 0) {
 		// Use random anchors
 		extensions |= EXT_RANDOM_FOOT;
+	}
+
+	if (a_unique->count > 0) {
+		// Use random header labels
+		extensions |= EXT_RANDOM_LABELS;
 	}
 
 	if (a_format->count > 0) {

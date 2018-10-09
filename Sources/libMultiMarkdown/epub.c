@@ -251,7 +251,8 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
+			scratch->label_counter = *counter;
+			temp_char = label_from_header(source, entry, scratch);
 			printf("<li><a href=\"main.xhtml#%s\">", temp_char);
 			mmd_export_token_tree_html(out, source, entry->child, scratch);
 			print_const("</a>");
@@ -287,8 +288,9 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 void epub_export_nav(DString * out, mmd_engine * e, scratch_pad * scratch) {
 	size_t counter = 0;
 
-
 	epub_export_nav_entry(out, e->dstr->str, scratch, &counter, 0);
+
+	scratch->label_counter = 0;
 }
 
 
@@ -472,6 +474,7 @@ void epub_write_wrapper(const char * filepath, DString * body, mmd_engine * e, c
 DString * epub_create(DString * body, mmd_engine * e, const char * directory) {
 	DString * result = d_string_new("");
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_EPUB);
+	scratch->random_seed_base_labels = e->random_seed_base_labels;
 
 	mz_bool status;
 	char * data;

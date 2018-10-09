@@ -582,6 +582,7 @@ enum parser_extensions {
 	EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
 	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
 	EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
+	EXT_RANDOM_LABELS		= 1 << 16,   //!< Use random numbers for header labels (unless manually defined)
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

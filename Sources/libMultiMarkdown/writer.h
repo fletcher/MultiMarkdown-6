@@ -90,6 +90,9 @@ typedef struct {
 
 	int 				random_seed_base;
 
+	int 				random_seed_base_labels;
+	int 				label_counter;
+
 	stack *				used_citations;
 	stack *				inline_citations_to_free;
 	struct fn_holder *	citation_hash;
@@ -219,7 +222,7 @@ void link_free(link * l);
 void footnote_free(footnote * f);
 
 char * label_from_token(const char * source, token * t);
-char * label_from_header(const char * source, token * t);
+char * label_from_header(const char * source, token * t, scratch_pad * scratch);
 
 void parse_brackets(const char * source, scratch_pad * scratch, token * bracket, link ** link, short * skip_token, bool * free_link);
 

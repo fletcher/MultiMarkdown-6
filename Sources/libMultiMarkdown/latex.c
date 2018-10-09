@@ -447,7 +447,8 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
+			scratch->label_counter = *counter;
+			temp_char = label_from_header(source, entry, scratch);
 			print_const("\\item ");
 			mmd_export_token_tree_latex(out, source, entry->child, scratch);
 			printf("(\\autoref{%s})\n\n", temp_char);
@@ -483,6 +484,8 @@ void mmd_export_toc_latex(DString * out, const char * source, scratch_pad * scra
 	size_t counter = 0;
 
 	mmd_export_toc_entry_latex(out, source, scratch, &counter, 0);
+
+	scratch->label_counter = 0;
 }
 
 
@@ -696,14 +699,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (scratch->extensions & EXT_NO_LABELS) {
 				print_const("}");
 			} else {
-				temp_token = manual_label_from_header(t, source);
-
-				if (temp_token) {
-					temp_char = label_from_token(source, temp_token);
-				} else {
-					temp_char = label_from_token(source, t);
-				}
-
+				temp_char = label_from_header(source, t, scratch);
 				printf("}\n\\label{%s}", temp_char);
 				free(temp_char);
 			}

@@ -169,6 +169,14 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 			p->random_seed_base = 0;
 		}
 
+		if (e->extensions & EXT_RANDOM_LABELS) {
+			p->random_seed_base_labels = rand() % 32000;
+		} else {
+			p->random_seed_base_labels = 0;
+		}
+
+		p->label_counter = 0;
+
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
 		link * l;
@@ -452,14 +460,25 @@ char * label_from_token(const char * source, token * t) {
 }
 
 
-char * label_from_header(const char * source, token * t) {
+char * label_from_header(const char * source, token * t, scratch_pad * scratch) {
 	char * result;
+	short temp_short;
+
 	token * temp_token = manual_label_from_header(t, source);
 
 	if (temp_token) {
 		result = label_from_token(source, temp_token);
 	} else {
-		result = label_from_token(source, t);
+		if (scratch->extensions & EXT_RANDOM_LABELS) {
+			srand(scratch->random_seed_base_labels + scratch->label_counter);
+			temp_short = rand() % 32000 + 1;
+			result = malloc(sizeof(char) * 6);
+			sprintf(result, "%d", temp_short);
+
+			scratch->label_counter++;
+		} else {
+			result = label_from_token(source, t);
+		}
 	}
 
 	return result;
@@ -1968,6 +1987,9 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 	// Preserve asset_hash for possible use in export
 	e->asset_hash = scratch->asset_hash;
 
+	// Preserve random label seed
+	e->random_seed_base_labels = scratch->random_seed_base_labels;
+	
 	scratch_pad_free(scratch);
 }
 
