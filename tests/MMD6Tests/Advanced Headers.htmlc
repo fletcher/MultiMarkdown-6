@@ -1,5 +1,6 @@
 <p>title:	Advanced Headers
-latexconfig:	article</p>
+latexconfig:	article
+baz:	bat</p>
 
 <h1>foo [bar]</h1>
 
@@ -25,6 +26,8 @@ bar</em></h1>
 <p>[foo][bar]</p>
 
 <p>10</p>
+
+<h1>[%baz]</h1>
 
 <h1>foo [bar]</h1>
 

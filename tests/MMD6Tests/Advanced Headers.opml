@@ -11,12 +11,14 @@
 <outline text="foo [bar]" _note="&#10;"></outline>
 <outline text="*foo* bar" _note="&#10;"></outline>
 <outline text="*foo&#10;bar*" _note="&#10;[bar]&#10;&#10;[foo][bar]&#10;&#10;10&#10;&#10;"></outline>
+<outline text="[%baz]" _note="&#10;"></outline>
 <outline text="foo [bar]" _note="&#10;"></outline>
 <outline text="foo [bar]" _note="&#10;"></outline>
 <outline text="foo [bar]" _note=""></outline>
 <outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Advanced Headers"/>
 <outline text="latexconfig" _note="article"/>
+<outline text="baz" _note="bat"/>
 </outline>
 </body>
 </opml>
