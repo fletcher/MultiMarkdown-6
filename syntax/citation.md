@@ -56,7 +56,7 @@ Citations can also be used in an inline syntax, just like inline footnotes:
 	As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]
 
 
-### BibTeX ###
+### BibTeX Citations ###
 
 If you are creating a LaTeX document, and need a bibliography, then you should definitely look into [BibTeX](http://www.bibtex.org/) and [natbib](http://merkel.zoneo.net/Latex/natbib.php). It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown. 
 
