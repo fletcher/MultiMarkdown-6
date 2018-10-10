@@ -303,6 +303,12 @@ Revised 2018-06-27</text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whyshouldiusemultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Why should I use MultiMarkdown?  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatarethedifferentversionsofmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Are the Different Versions of MultiMarkdown?  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whereisthisguidekept" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Where is this Guide Kept?  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Usage  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#basiccommandlineusage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Basic Command Line Usage  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#batchmode" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Batch Mode  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusiononly" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion Only  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#conveniencescripts" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Convenience Scripts  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#advancedoptions" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Advanced Options  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#syntax" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Syntax  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (or Acronyms) <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations  <text:tab/>1</text:a></text:p>
@@ -364,6 +370,11 @@ Revised 2018-06-27</text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablebasics" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Basics  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablerules" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Rules  <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#limitationsoftables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Limitations of Tables  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fileformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">File Formats  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#plaintext" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Plain Text  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#opml" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">OPML  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#itmz" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">ITMZ  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#advanceduse" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Advanced Use  <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
 
@@ -484,6 +495,135 @@ Markdown">John Gruber</text:a></text:p>
 <text:p text:style-name="Standard">The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.</text:p></text:list-item>
 
 </text:list>
+
+<text:h text:outline-level="2"><text:bookmark text:name="usage"/>Usage</text:h>
+
+<text:h text:outline-level="3"><text:bookmark text:name="basiccommandlineusage"/>Basic Command Line Usage</text:h>
+
+<text:p text:style-name="Standard">First, verify that you have properly installed MultiMarkdown:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --version<text:line-break/>multimarkdown --v<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To learn more about the command line options available:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --help<text:line-break/>multimarkdown --h<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To convert a file to HTML:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown file.txt<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To save the HTML to a file</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown file.txt &gt; file.html<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">To convert to a different format:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -t latex file.txt<text:line-break/>multimarkdown -t epub file.txt<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="batchmode"/>Batch Mode</text:h>
+
+<text:p text:style-name="Standard">Batch mode allows you to convert one or more files in a single command, saving each file to a separate output file with a file extension based on the output format (e.g. <text:span text:style-name="Source_20_Text">.html</text:span> or <text:span text:style-name="Source_20_Text">.tex</text:span>). This will overwrite existing files.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -b file.txt file2.txt<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="transclusiononly"/>Transclusion Only</text:h>
+
+<text:p text:style-name="Standard">You can output to the <text:span text:style-name="Source_20_Text">mmd</text:span> format to perform file transclusion and then output the raw MMD source before converting to another format:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -t mmd file.txt<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="conveniencescripts"/>Convenience Scripts</text:h>
+
+<text:p text:style-name="Standard">There are several convenience scripts to batch convert to a specified format:</text:p>
+
+<text:p text:style-name="Preformatted Text">mmd file.txt<text:line-break/>markdown file.txt<text:tab/><text:tab/>// Compatibility mode<text:line-break/>mmd2epub file.txt<text:line-break/>mmd2fodt file.txt<text:line-break/>mmd2odt file.txt<text:line-break/>mmd2opml file.txt<text:line-break/>mmd2pdf file.txt<text:tab/><text:tab/>// Convert to LaTeX and process to PDF<text:line-break/>mmd2tex file.txt<text:line-break/></text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="advancedoptions"/>Advanced Options</text:h>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -f, multimarkdown --full<text:line-break/>multimarkdown -s, multimarkdown --snippet<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Control whether MultiMarkdown outputs a complete document or just a &#8220;snippet&#8221;. A snippet includes just the section of text included in the document. A full/complete document includes header information and other structure to form a complete HTML or LaTeX document, for example. Additionally, if metadata is included (with a few exceptions), MultiMarkdown will automatically produce a complete document.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -c, multimarkdown --compatibility<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Compatibility mode forces MultiMarkdown to create HTML that matches the output of basic Markdown. In other words, it disables all the new features added in MultiMarkdown.</text:p>
+
+<text:p text:style-name="Standard">There are a few exceptions, however. The original <text:span text:style-name="Source_20_Text">Markdown.pl</text:span> script used recursive regular expressions to perform parsing. This is very flexible (though error-prone), but is extremely slow. MultiMarkdown v6 has a <text:span text:style-name="MMD-Italic">much</text:span> faster parser, but there is one key limitation &#8211; it parses in order and can&#8217;t look ahead indefinitely to see what might be coming up. The main situations where this occurs is in handling fenced code blocks (not a problem in compatibility mode, since they don&#8217;t exist in Markdown) and in handling raw HTML. For more information on this, see <text:a xlink:type="simple" xlink:href="https://github.com/fletcher/MultiMarkdown-6/issues/135">https://github.com/fletcher/MultiMarkdown-6/issues/135</text:a>.</text:p>
+
+<text:p text:style-name="Standard">The other potential difference is that MultiMarkdown v6 has a smarter strong/emphasis parser than <text:span text:style-name="Source_20_Text">Markdown.pl</text:span> &#8211; it better handles edge cases.</text:p>
+
+<text:p text:style-name="Standard">Because of these exceptions, there may be a few rare situations where the output generated by MultiMarkdown v6 does not match that by <text:span text:style-name="Source_20_Text">Markdown.pl</text:span>. If you find what you believe to be a bug that doesn&#8217;t fit one of these situations, please let me know and I&#8217;ll take a look. The goal is to match the original Markdown output as much as possible, but not to match the many bugs that are contained in <text:span text:style-name="Source_20_Text">Markdown.pl</text:span>.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --random<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Normally MultiMarkdown assigns consecutive numbers to the identifiers used for footnotes, citations, etc. (e.g. 1, 2, 3, etc.) This means that you have a &#8220;blog-style&#8221; web site that shows multiple articles on the home page, and multiple stories have footnotes, the anchors will collide. The <text:span text:style-name="Source_20_Text">random</text:span> option generates random anchor numbers to dramatically reduce the offs of a collision.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --unique<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">The <text:span text:style-name="Source_20_Text">unique</text:span> option uses a similar random number generator to provide unique anchors (&#8220;labels&#8221;) for headers that do not have a manually specified label. This prevents every &#8220;Introduction&#8221; header in a textbook, for example, from having the identical label <text:span text:style-name="Source_20_Text">#introduction</text:span>. This reduces validation errors in HTML, ePub, and LaTeX, and prevents collisions when using the <text:span text:style-name="Source_20_Text">{{TOC}}</text:span> function.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --nosmart<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Disable smart quotes (e.g. <text:span text:style-name="Source_20_Text">&quot;foo&quot;</text:span> does not become <text:span text:style-name="Source_20_Text">“foo”</text:span>).</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --nolabels<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Disables automatic generation of labels/anchors for headers.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --notransclude<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Disables file transclusion that allows inserting the contents of a file inside another file. See the section on <text:a xlink:type="simple" xlink:href="#filetransclusion">File Transclusion</text:a> for more information.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --opml<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Allows MultiMarkdown to read an <text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/OPML">OPML</text:a> source file. Outline Processor Markup Language is an XML file format commonly used for outliners and mind mapping programs. MultiMarkdown can read/write to this format in addition to using regular plain text files.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --itmz<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Similar to OPML, ITMZ is an outlining format specific to the <text:a xlink:type="simple" xlink:href="https://www.toketaware.com/">iThoughts</text:a> mind-mapping program. I added this format because:</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="Standard">iThoughts is my preferred mind-mapping tool</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">iThoughts supports OPML, but the support is (unfortunately) limited. I was unable to convince the author of the benefits of better read/write support for OPML.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Adding ITMZ support after adding OPML support wasn&#8217;t that hard.</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">Adding ITMZ support to MultiMarkdown allows me to do some interesting things in MultiMarkdown Composer, as well as in other workflows. (More to come on that.)</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">Though I reluctantly added support for this format to MultiMarkdown, I will not be adding support for a laundry list of other formats. Plain text and OPML should be enough. If the use of these outline file formats for MultiMarkdown (or regular Markdown) continues to gain traction, then hopefully other developers will include proper OPML support in their programs.</text:p>
+
+<text:p text:style-name="Standard">As an aside, the first use of this functionality came when I created an export plug-in for <text:a xlink:type="simple" xlink:href="https://www.omnigroup.com/omnioutliner/">OmniOutliner</text:a> that created a plain Markdown/MultiMarkdown text file when exporting from an Omnioutliner OPML file.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -t, multimarkdown --to=FORMAT<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Specify the output format.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -o, multimarkdown --output=FILE<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Specify the output file name.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -a, multimarkdown --accept<text:line-break/>multimarkdown -r, multimarkdown --reject<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Either accept or reject all proposed <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">CriticMarkup</text:a> changes contained within the document before processing. It basically allows you to output a &#8220;before&#8221; and an &#8220;after&#8221; version of a document containing edits. If neither option is used, MultiMarkdown attempts to show the edits in-line, but this is not always possible for poorly structured edits. See the section on <text:a xlink:type="simple" xlink:href="http://criticmarkup.com/">Criticmarkup</text:a> for more information.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -l, multimarkdown --lang=LANG<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Localize language/smart quotes for <text:span text:style-name="Source_20_Text">en, es, de, fr, he, nl, sv</text:span>. This can also be controlled via metadata.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -m, multimarkdown --metadata-keys<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">List all metadata keys contained in the document.</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown -e, multimarkdown --extract=KEY<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">Extract the value of a specified metadata key. This is useful for custom scripts, for example.</text:p>
 
 <text:h text:outline-level="2"><text:bookmark text:name="syntax"/>Syntax</text:h>
 
@@ -1538,6 +1678,57 @@ the beginning of the line</text:p></text:list-item>
 <text:p text:style-name="Standard">Native RTF support for tables is <text:span text:style-name="MMD-Italic">very</text:span> limited. If you need more complex tables, I recommend using the OpenDocument format, and then using <text:a xlink:type="simple" xlink:href="http://www.libreoffice.org/">LibreOffice</text:a> to convert your document to RTF.</text:p></text:list-item>
 
 </text:list>
+
+<text:h text:outline-level="2"><text:bookmark text:name="fileformats"/>File Formats</text:h>
+
+<text:h text:outline-level="3"><text:bookmark text:name="plaintext"/>Plain Text</text:h>
+
+<text:p text:style-name="Standard">The most common file format for containing Markdown/MultiMarkdown text is a plain text file. There is nothing special about these files, though things do tend to work best using:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+UTF-8 encoding</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UNIX-style line endings (<text:span text:style-name="Source_20_Text">\n</text:span>)</text:p></text:list-item>
+
+</text:list>
+
+<text:p text:style-name="Standard">I&#8217;ve tried to make MultiMarkdown as forgiving as possible when alternatives are used, but if you&#8217;re having trouble with specific files, this can be a place to start.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="opml"/>OPML</text:h>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://en.wikipedia.org/wiki/OPML">OPML</text:a>, or Outline Processor Markup Language, is an XML file format used for storing outlines. This fits well with the idea of a Markdown document containing multiple levels of headers that provide structure to the document, such as:</text:p>
+
+<text:p text:style-name="Preformatted Text"># Introduction #<text:line-break/>## Historical Background ##<text:line-break/>## Current State ##<text:line-break/># Technical Issues #<text:line-break/>## Production Capacity ##<text:line-break/>## Resolution Limits ##<text:line-break/>etc.<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">MultiMarkdown has had support for OPML for many years (almost as long as MultiMarkdown has been around), but the support in v6 is improved. Not only is OPML one of the output formats (allowing conversion of plain text into an OPML file), but MultiMarkdown can now read directly from an OPML file in order to convert to something else:</text:p>
+
+<text:p text:style-name="Preformatted Text">multimarkdown --opml file.opml &gt; file.html<text:line-break/></text:p>
+
+<text:p text:style-name="Standard">This means that you can work on your document using an editor that supports OPML (e.g. <text:a xlink:type="simple" xlink:href="https://multimarkdown.com/">MultiMarkdown Composer</text:a>), or you can use an outliner or mind-mapping program that supports OPML (most of them do, to varying degrees). When you&#8217;re ready to publish your work, you can simply process it like normal to create HTML, LaTeX, etc.</text:p>
+
+<text:p text:style-name="Standard">An advantage of this approach is that you can easily rearrange the structure of your document by dragging and dropping sections of the outline. (While not a full features outlining program, MultiMarkdown Composer allows you to do this as well.)</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="itmz"/>ITMZ</text:h>
+
+<text:p text:style-name="Standard">ITMZ is the file format used by the <text:a xlink:type="simple" xlink:href="https://www.toketaware.com/">iThoughts</text:a> line of mind-mapping programs. It is similar to the OPML format, but is a compressed bundle format rather than a plain text XML file.</text:p>
+
+<text:h text:outline-level="3"><text:bookmark text:name="advanceduse"/>Advanced Use</text:h>
+
+<text:p text:style-name="Standard">A key reason for the inclusion of the ITMZ format is to demonstrate the functionality provided by tightly coupling the idea of a text editor and an outliner/mind-mapping program.</text:p>
+
+<text:p text:style-name="Standard">For example, version 4.5 of MultiMarkdown Composer will include read/write support for both OPML and ITMZ as native document formats. Which means that you can work on a Markdown/MultiMarkdown document in Composer, while simultaneously opening the same ITMZ in iThoughts as a mind-map (or OPML as an outline in OmniOutliner.) Which means that you quickly switch applications to view (or rearrange) the overall structure of your document in a visual program (outliner, mind-mapping) while using a text-based editor for writing the content.</text:p>
+
+<text:p text:style-name="Standard"><draw:frame text:anchor-type="as-char"
+draw:z-index="0" draw:style-name="fr1" svg:width="95%">
+<draw:text-box><text:p><draw:frame text:anchor-type="as-char" draw:z-index="1" >
+<draw:image xlink:href="images/split-view.png" xlink:type="simple" xlink:show="embed" xlink:actuate="onLoad" draw:filter-name="&lt;All formats&gt;"/>
+</draw:frame></text:p>
+<text:p>Figure <text:sequence text:name="Figure" text:formula="ooow:Figure+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>: Example of advanced use of the ITMZ format</text:p>
+</draw:text-box></draw:frame>
+</text:p>
 </office:text>
 </office:body>
 </office:document>

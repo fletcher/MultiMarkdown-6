@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>MultiMarkdown File Formats</title>
+	<meta name="author" content="Fletcher T. Penney"/>
+	<meta name="revised" content="2018-10-10"/>
+	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+
+<div class="TOC">
+
+<ul>
+<li><a href="#fileformats">File Formats </a>
+<ul>
+<li><a href="#plaintext">Plain Text </a></li>
+<li><a href="#opml">OPML </a></li>
+<li><a href="#itmz">ITMZ </a></li>
+<li><a href="#advanceduse">Advanced Use </a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<h2 id="fileformats">File Formats</h2>
+
+<h3 id="plaintext">Plain Text</h3>
+
+<p>The most common file format for containing Markdown/MultiMarkdown text is a plain text file. There is nothing special about these files, though things do tend to work best using:</p>
+
+<ul>
+<li>UTF-8 encoding</li>
+<li>UNIX-style line endings (<code>\n</code>)</li>
+</ul>
+
+<p>I&#8217;ve tried to make MultiMarkdown as forgiving as possible when alternatives are used, but if you&#8217;re having trouble with specific files, this can be a place to start.</p>
+
+<h3 id="opml">OPML</h3>
+
+<p><a href="https://en.wikipedia.org/wiki/OPML">OPML</a>, or Outline Processor Markup Language, is an XML file format used for storing outlines. This fits well with the idea of a Markdown document containing multiple levels of headers that provide structure to the document, such as:</p>
+
+<pre><code># Introduction #
+## Historical Background ##
+## Current State ##
+# Technical Issues #
+## Production Capacity ##
+## Resolution Limits ##
+etc.
+</code></pre>
+
+<p>MultiMarkdown has had support for OPML for many years (almost as long as MultiMarkdown has been around), but the support in v6 is improved. Not only is OPML one of the output formats (allowing conversion of plain text into an OPML file), but MultiMarkdown can now read directly from an OPML file in order to convert to something else:</p>
+
+<pre><code>multimarkdown --opml file.opml &gt; file.html
+</code></pre>
+
+<p>This means that you can work on your document using an editor that supports OPML (e.g. <a href="https://multimarkdown.com/">MultiMarkdown Composer</a>), or you can use an outliner or mind-mapping program that supports OPML (most of them do, to varying degrees). When you&#8217;re ready to publish your work, you can simply process it like normal to create HTML, LaTeX, etc.</p>
+
+<p>An advantage of this approach is that you can easily rearrange the structure of your document by dragging and dropping sections of the outline. (While not a full features outlining program, MultiMarkdown Composer allows you to do this as well.)</p>
+
+<h3 id="itmz">ITMZ</h3>
+
+<p>ITMZ is the file format used by the <a href="https://www.toketaware.com/">iThoughts</a> line of mind-mapping programs. It is similar to the OPML format, but is a compressed bundle format rather than a plain text XML file.</p>
+
+<h3 id="advanceduse">Advanced Use</h3>
+
+<p>A key reason for the inclusion of the ITMZ format is to demonstrate the functionality provided by tightly coupling the idea of a text editor and an outliner/mind-mapping program.</p>
+
+<p>For example, version 4.5 of MultiMarkdown Composer will include read/write support for both OPML and ITMZ as native document formats. Which means that you can work on a Markdown/MultiMarkdown document in Composer, while simultaneously opening the same ITMZ in iThoughts as a mind-map (or OPML as an outline in OmniOutliner.) Which means that you quickly switch applications to view (or rearrange) the overall structure of your document in a visual program (outliner, mind-mapping) while using a text-based editor for writing the content.</p>
+
+<figure>
+<img src="images/split-view.png" alt="Example of advanced use of the ITMZ format" />
+<figcaption>Example of advanced use of the ITMZ format</figcaption>
+</figure>
+
+</body>
+</html>
+

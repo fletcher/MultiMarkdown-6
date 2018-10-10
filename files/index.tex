@@ -1,0 +1,74 @@
+\input{mmd6-tufte-handout-leader}
+\def\mytitle{MultiMarkdown File Formats}
+\def\myauthor{Fletcher T. Penney}
+\def\revised{2018-10-10}
+\newacronym{MMD}{MMD}{MultiMarkdown}
+
+\newacronym{MD}{MD}{Markdown}
+
+\input{mmd6-tufte-handout-begin}
+
+\tableofcontents
+
+\chapter{File Formats}
+\label{fileformats}
+
+\section{Plain Text}
+\label{plaintext}
+
+The most common file format for containing Markdown\slash MultiMarkdown text is a plain text file. There is nothing special about these files, though things do tend to work best using:
+
+\begin{itemize}
+\item UTF-8 encoding
+
+\item UNIX-style line endings (\texttt{\textbackslash{}n})
+
+\end{itemize}
+
+I've tried to make MultiMarkdown as forgiving as possible when alternatives are used, but if you're having trouble with specific files, this can be a place to start.
+
+\section{OPML}
+\label{opml}
+
+\href{https://en.wikipedia.org/wiki/OPML}{OPML}\footnote{\href{https://en.wikipedia.org/wiki/OPML}{https:\slash \slash en.wikipedia.org\slash wiki\slash OPML}}, or Outline Processor Markup Language, is an XML file format used for storing outlines. This fits well with the idea of a Markdown document containing multiple levels of headers that provide structure to the document, such as:
+
+\begin{verbatim}
+# Introduction #
+## Historical Background ##
+## Current State ##
+# Technical Issues #
+## Production Capacity ##
+## Resolution Limits ##
+etc.
+\end{verbatim}
+
+MultiMarkdown has had support for OPML for many years (almost as long as MultiMarkdown has been around), but the support in v6 is improved. Not only is OPML one of the output formats (allowing conversion of plain text into an OPML file), but MultiMarkdown can now read directly from an OPML file in order to convert to something else:
+
+\begin{verbatim}
+multimarkdown --opml file.opml > file.html
+\end{verbatim}
+
+This means that you can work on your document using an editor that supports OPML (e.g. \href{https://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{https://multimarkdown.com/}{https:\slash \slash multimarkdown.com\slash }}), or you can use an outliner or mind-mapping program that supports OPML (most of them do, to varying degrees). When you're ready to publish your work, you can simply process it like normal to create HTML, LaTeX, etc.
+
+An advantage of this approach is that you can easily rearrange the structure of your document by dragging and dropping sections of the outline. (While not a full features outlining program, MultiMarkdown Composer allows you to do this as well.)
+
+\section{ITMZ}
+\label{itmz}
+
+ITMZ is the file format used by the \href{https://www.toketaware.com/}{iThoughts}\footnote{\href{https://www.toketaware.com/}{https:\slash \slash www.toketaware.com\slash }} line of mind-mapping programs. It is similar to the OPML format, but is a compressed bundle format rather than a plain text XML file.
+
+\section{Advanced Use}
+\label{advanceduse}
+
+A key reason for the inclusion of the ITMZ format is to demonstrate the functionality provided by tightly coupling the idea of a text editor and an outliner\slash mind-mapping program.
+
+For example, version 4.5 of MultiMarkdown Composer will include read\slash write support for both OPML and ITMZ as native document formats. Which means that you can work on a Markdown\slash MultiMarkdown document in Composer, while simultaneously opening the same ITMZ in iThoughts as a mind-map (or OPML as an outline in OmniOutliner.) Which means that you quickly switch applications to view (or rearrange) the overall structure of your document in a visual program (outliner, mind-mapping) while using a text-based editor for writing the content.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[keepaspectratio,width=\textwidth,height=0.75\textheight]{images/split-view.png}
+\caption{Example of advanced use of the ITMZ format}
+\end{figure}
+
+\input{mmd6-tufte-handout-footer}
+\end{document}

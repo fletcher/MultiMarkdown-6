@@ -30,6 +30,7 @@ You can view the MultiMarkdown User's Guide as a **single document**:
 Or as a set of web pages for individual sections:
 
 * [Introduction](introduction.html)
+* [Usage](usage/index.html)
 * [Syntax](syntax/index.html)
 	* [Abbreviations](syntax/abbreviations.html)
 	* [Citations](syntax/citation.html)
@@ -49,3 +50,4 @@ Or as a set of web pages for individual sections:
 	* [Smart Typograhy](syntax/typography.html)
 	* [Table of Contents](syntax/toc.html)
 	* [Tables](syntax/tables.html)
+* [File Formats](files/index.html)
