@@ -194,6 +194,10 @@ char * epub_package_document(scratch_pad * scratch) {
 				print_const("<dc:language>sv</dc:language>\n");
 				break;
 
+			case LC_HE:
+				print_const("<dc:language>he</dc:language>\n");
+				break;
+
 			default:
 				print_const("<dc:language>en</dc:language>\n");
 		}

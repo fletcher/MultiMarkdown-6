@@ -2286,6 +2286,10 @@ void mmd_start_complete_html(DString * out, const char * source, scratch_pad * s
 				print_const(" lang=\"sv\"");
 				break;
 
+			case LC_HE:
+				print_const(" lang=\"he\"");
+				break;
+
 			default:
 				print_const(" lang=\"en\"");
 		}
