@@ -447,7 +447,7 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			scratch->label_counter = *counter;
+			scratch->label_counter = (int)*counter;
 			temp_char = label_from_header(source, entry, scratch);
 			print_const("\\item ");
 			mmd_export_token_tree_latex(out, source, entry->child, scratch);

@@ -643,7 +643,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			scratch->label_counter = *counter;
+			scratch->label_counter = (int)*counter;
 			temp_char = label_from_header(source, entry, scratch);
 			printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
 			mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
