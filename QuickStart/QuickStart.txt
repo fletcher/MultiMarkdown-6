@@ -177,12 +177,8 @@ formatting to the CriticMarkup formatting as in the preceding paragraph.
 Alternatively, you can use the `-a\--accept` or `-r\--reject` options to cause
 MMD to accept or reject, respectively, the proposed changes within the CM
 markup.  When doing this, CM will work across blank lines.  Without either of
-these two options, then CriticMarkup that spans a blank line is not recogniz
-
-T
-formats).
-
-[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
+these two options, then CriticMarkup that spans a blank line is not recognized
+as such.  I working on options for this for the future.
 
 
 ## Embedded Images ##
@@ -192,10 +188,9 @@ images inside the export document:
 
 * Local images are embedded automatically
 * Images stored on remote servers are embedded *if* [libCurl] is
-properly installed when MMD is compiled.  This is true f
+properly installed when MMD is compiled.  This is true for macOS builds.
 
-ed
-as such.  I working on options for this for the future.
+[libCurl]:	https://curl.haxx.se/libcurl/
 
 
 ## Emph and Strong ##
@@ -409,9 +404,11 @@ file package.
 text file and embedded images and CSS.  Useful for sharing Markdown files
 and images between applications (on any OS, but especially on iOS)
 *	`bundlezip` -- TextPack variant of the TextBundle format -- the file
-package is compressed to a single zip file (similar to EPUB and ODor macOS builds.
+package is compressed to a single zip file (similar to EPUB and ODT
+formats).
 
-[libCurl]:	https://curl.haxx.se/libcurl/
+
+[LaTeX]:	https://en.wikipedia.org/wiki/LaTeX
 
 
 ## Raw Source ##

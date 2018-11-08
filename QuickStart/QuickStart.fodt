@@ -493,10 +493,8 @@ formatting to the CriticMarkup formatting as in the preceding paragraph.
 Alternatively, you can use the <text:span text:style-name="Source_20_Text">-a\--accept</text:span> or <text:span text:style-name="Source_20_Text">-r\--reject</text:span> options to cause
 MMD to accept or reject, respectively, the proposed changes within the CM
 markup. When doing this, CM will work across blank lines. Without either of
-these two options, then CriticMarkup that spans a blank line is not recogniz</text:p>
-
-<text:p text:style-name="Standard">T
-formats).</text:p>
+these two options, then CriticMarkup that spans a blank line is not recognized
+as such. I working on options for this for the future.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="embeddedimages"/>Embedded Images</text:h>
 
@@ -510,12 +508,9 @@ Local images are embedded automatically</text:p></text:list-item>
 
 <text:list-item>
 <text:p text:style-name="Standard">Images stored on remote servers are embedded <text:span text:style-name="MMD-Italic">if</text:span> <text:a xlink:type="simple" xlink:href="https://curl.haxx.se/libcurl/">libCurl</text:a> is
-properly installed when MMD is compiled. This is true f</text:p></text:list-item>
+properly installed when MMD is compiled. This is true for macOS builds.</text:p></text:list-item>
 
 </text:list>
-
-<text:p text:style-name="Standard">ed
-as such. I working on options for this for the future.</text:p>
 
 <text:h text:outline-level="4"><text:bookmark text:name="emphandstrong"/>Emph and Strong</text:h>
 
@@ -768,7 +763,8 @@ and images between applications (on any OS, but especially on iOS)</text:p></tex
 
 <text:list-item>
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">bundlezip</text:span> &#8211; TextPack variant of the TextBundle format &#8211; the file
-package is compressed to a single zip file (similar to EPUB and ODor macOS builds.</text:p></text:list-item>
+package is compressed to a single zip file (similar to EPUB and ODT
+formats).</text:p></text:list-item>
 
 </text:list>
 
