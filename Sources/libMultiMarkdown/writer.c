@@ -1992,7 +1992,7 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 	// Preserve random label seed
 	e->random_seed_base_labels = scratch->random_seed_base_labels;
-	
+
 	scratch_pad_free(scratch);
 }
 

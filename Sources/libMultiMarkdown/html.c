@@ -120,6 +120,7 @@ void mmd_print_char_html(DString * out, char c, bool obfuscate, bool line_breaks
 			} else {
 				print_char(c);
 			}
+
 			break;
 
 		default:
@@ -470,7 +471,7 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			scratch->label_counter = (int)*counter;
+			scratch->label_counter = (int) * counter;
 			temp_char = label_from_header(source, entry, scratch);
 			printf("<li><a href=\"#%s\">", temp_char);
 			mmd_export_token_tree_html(out, source, entry->child, scratch);

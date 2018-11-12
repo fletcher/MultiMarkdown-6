@@ -161,6 +161,7 @@ void mmd_print_char_opendocument(DString * out, char c, bool line_breaks) {
 			} else {
 				print_char(c);
 			}
+
 			break;
 
 		case '\t':
@@ -643,7 +644,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			scratch->label_counter = (int)*counter;
+			scratch->label_counter = (int) * counter;
 			temp_char = label_from_header(source, entry, scratch);
 			printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
 			mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
@@ -905,6 +906,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 				temp_size = out->currentStringLength;
 
 				trim_trailing_whitespace_d_string(out);
+
 				if (strcmp(&(out->str[out->currentStringLength - 11]), "<text:tab/>") == 0) {
 					d_string_erase(out, out->currentStringLength - 11, 11);
 				}

@@ -526,6 +526,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 						case TEXT_LINEBREAK_SP:
 							t = t->prev;
 							break;
+
 						case HASH1:
 						case HASH2:
 						case HASH3:
@@ -536,6 +537,7 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 							t->type += MARKER_H1;
 							t = NULL;
 							break;
+
 						default:
 							// Break out of loop
 							t = NULL;
