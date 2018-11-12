@@ -244,51 +244,54 @@ void parse_itmz_token_chain(mmd_engine * e, token * chain) {
 					start = walker->start + 6;
 
 					char * text = xml_extract_named_attribute(e->dstr->str, start, "text");
-					len = strlen(text);
 
-					if (strcmp("&gt;&gt;Preamble&lt;&lt;", text) != 0) {
-						if (out == metadata) {
-							print_xml_as_text(out, text, 0, len);
-							print_const(":\t");
-						} else {
-							// Print header
+					if (text) {
+						len = strlen(text);
 
-							if (xml_scan_encoded_newline(text, len) == -1) {
-								// ATX header
-								for (int i = 0; i < header_level; ++i) {
-									print_char('#');
-								}
-
-								print_char(' ');
-							}
-
-							print_xml_as_text(out, text, 0, len);
-
-							if (xml_scan_encoded_newline(text, len) == -1) {
-								// ATX header
-								print_char(' ');
-
-								for (int i = 0; i < header_level; ++i) {
-									print_char('#');
-								}
+						if (strcmp("&gt;&gt;Preamble&lt;&lt;", text) != 0) {
+							if (out == metadata) {
+								print_xml_as_text(out, text, 0, len);
+								print_const(":\t");
 							} else {
-								// Setext Header
-								switch (header_level) {
-									case 1:
-										print_const("\n======");
-										break;
+								// Print header
 
-									default:
-										print_const("\n------");
-										break;
+								if (xml_scan_encoded_newline(text, len) == -1) {
+									// ATX header
+									for (int i = 0; i < header_level; ++i) {
+										print_char('#');
+									}
+
+									print_char(' ');
 								}
+
+								print_xml_as_text(out, text, 0, len);
+
+								if (xml_scan_encoded_newline(text, len) == -1) {
+									// ATX header
+									print_char(' ');
+
+									for (int i = 0; i < header_level; ++i) {
+										print_char('#');
+									}
+								} else {
+									// Setext Header
+									switch (header_level) {
+										case 1:
+											print_const("\n======");
+											break;
+
+										default:
+											print_const("\n------");
+											break;
+									}
+								}
+
+								print_const("\n");
 							}
-
-							print_const("\n");
 						}
-					}
 
-					free(text);
+						free(text);
+					}
 
 					// Print contents of topic
 					text = xml_extract_named_attribute(e->dstr->str, start, "note");
