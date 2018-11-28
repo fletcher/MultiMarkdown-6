@@ -224,17 +224,17 @@ mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DS
 	}
 
 	mz_zip_reader_file_stat(pZip, index, &pStat);
-	size_t size = pStat.m_uncomp_size + 1;				// Allow for null terminator in case this is text
+	unsigned long long size = pStat.m_uncomp_size + 1;				// Allow for null terminator in case this is text
 
 	if (destination->currentStringBufferSize < size) {
 		// Buffer to small
 		free(destination->str);
-		destination->str = malloc(size);
-		destination->currentStringBufferSize = size;
+		destination->str = malloc((unsigned long)size);
+		destination->currentStringBufferSize = (size_t)size;
 	}
 
 	status = mz_zip_reader_extract_to_mem(pZip, index, destination->str, destination->currentStringBufferSize, 0);
-	destination->currentStringLength = size - 1;
+	destination->currentStringLength = (size_t)size - 1;
 	destination->str[destination->currentStringLength] = '\0';
 
 	if (!status) {
