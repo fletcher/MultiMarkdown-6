@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown Syntax</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="revised" content="2017-06-07"/>
+	<meta name="revised" content="2018-11-29"/>
 	<link type="text/css" rel="stylesheet" href="https://fletcher.github.io/MultiMarkdown-6/css/document.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> <script>hljs.initHighlightingOnLoad();</script>
 </head>
@@ -1056,6 +1056,13 @@ change the language of a document in LaTeX is up to the individual.</p>
 <p>As of version 4.7, MultiMarkdown supports the use of <code>{{TOC}}</code> to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.</p>
 
 <p>When possible, MultiMarkdown uses the &#8220;native&#8221; TOC for a given output format. For example, <code>\tableofcontents</code> when exporting to LaTeX.</p>
+
+<p>As of version 6.5, MultiMarkdown also supports two additional versions:</p>
+
+<ul>
+<li><code>{{TOC:2}}</code> &#8211; this limits the TOC to &#8220;level 2&#8221; entries</li>
+<li><code>{{TOC:2-3}}</code> &#8211; this limts the TOC to levels 2 and 3</li>
+</ul>
 
 <h3 id="tables">Tables</h3>
 

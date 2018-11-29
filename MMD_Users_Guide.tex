@@ -2,8 +2,8 @@
 \def\mytitle{MultiMarkdown User's Guide}
 \def\latextitle{MultiMarkdown \\ User's Guide}
 \def\myauthor{Fletcher T. Penney}
-\def\version{6.3.2}
-\def\revised{2018-06-27}
+\def\version{6.4.0}
+\def\revised{2018-11-29}
 \def\uuid{88e8f53c-9a02-4e49-a639-f2dbb0a2e338}
 \newacronym{MMD}{MMD}{MultiMarkdown}
 
@@ -15,8 +15,8 @@
 \label{title}
 
 \begin{quote}
-Version 6.3.2\\
-Revised 2018-06-27
+Version 6.4.0\\
+Revised 2018-11-29
 \end{quote}
 
 \tableofcontents
@@ -1451,6 +1451,15 @@ This feature is enabled by default, but is disabled in \texttt{compatibility} mo
 As of version 4.7, MultiMarkdown supports the use of \texttt{\{\{TOC\}\}} to insert a Table of Contents in the document. This is automatically generated from the headers included in the document.
 
 When possible, MultiMarkdown uses the ``native'' TOC for a given output format. For example, \texttt{\textbackslash{}tableofcontents} when exporting to LaTeX.
+
+As of version 6.5, MultiMarkdown also supports two additional versions:
+
+\begin{itemize}
+\item \texttt{{{TOC:2}}} -- this limits the TOC to ``level 2'' entries
+
+\item \texttt{{{TOC:2-3}}} -- this limts the TOC to levels 2 and 3
+
+\end{itemize}
 
 \section{Tables}
 \label{tables}

@@ -1,6 +1,6 @@
 Title:	MultiMarkdown Syntax  
 Author:	Fletcher T. Penney  
-Revised:	2017-06-07  
+Revised:	2018-11-29  
 Base Header Level:	2  
 Transclude Base:	.
 CSS:	https://fletcher.github.io/MultiMarkdown-6/css/document.css  

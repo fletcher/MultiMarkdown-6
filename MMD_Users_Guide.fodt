@@ -277,16 +277,16 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 	<dc:title>MultiMarkdown User's Guide</dc:title>
 	<meta:user-defined meta:name="latextitle">MultiMarkdown \\ User's Guide</meta:user-defined>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="version">6.3.2</meta:user-defined>
-	<meta:user-defined meta:name="revised">2018-06-27</meta:user-defined>
+	<meta:user-defined meta:name="version">6.4.0</meta:user-defined>
+	<meta:user-defined meta:name="revised">2018-11-29</meta:user-defined>
 	<meta:user-defined meta:name="uuid">88e8f53c-9a02-4e49-a639-f2dbb0a2e338</meta:user-defined>
 </office:meta>
 <office:body>
 <office:text>
 <text:h text:outline-level="2"><text:bookmark text:name="title"/>MultiMarkdown User's Guide</text:h>
 
-<text:p text:style-name="Quotations">Version 6.3.2<text:line-break/>
-Revised 2018-06-27</text:p>
+<text:p text:style-name="Quotations">Version 6.4.0<text:line-break/>
+Revised 2018-11-29</text:p>
 
 <text:table-of-content text:style-name="Sect1" text:protected="true" text:name="Table of Contents1">
 <text:table-of-content-source text:outline-level="10">
