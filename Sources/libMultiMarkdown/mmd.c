@@ -766,6 +766,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			line->type = LINE_EMPTY;
 			break;
 
+		case TOC_SINGLE:
+		case TOC_RANGE:
 		case TOC:
 			line->type = (e->extensions & EXT_COMPATIBILITY) ? LINE_PLAIN : LINE_TOC;
 			break;

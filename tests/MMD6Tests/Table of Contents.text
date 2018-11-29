@@ -3,6 +3,26 @@ latexconfig:	article
 
 {{TOC}}
 
+{{TOC:2}}
+
+{{TOC:2-3}}
+
+
+foo {{TOC}}
+
+foo {{TOC:2}}
+
+foo {{TOC:2-3}}
+
+
+	{{TOC}}
+	
+	{{TOC:2}}
+	
+	{{TOC:2-3}}
+
+
+
 ## Second Level ##
 
 # First Level #

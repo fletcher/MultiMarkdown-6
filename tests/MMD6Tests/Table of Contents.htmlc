@@ -3,6 +3,23 @@ latexconfig:	article</p>
 
 <p>{{TOC}}</p>
 
+<p>{{TOC:2}}</p>
+
+<p>{{TOC:2-3}}</p>
+
+<p>foo {{TOC}}</p>
+
+<p>foo {{TOC:2}}</p>
+
+<p>foo {{TOC:2-3}}</p>
+
+<pre><code>{{TOC}}
+
+{{TOC:2}}
+
+{{TOC:2-3}}
+</code></pre>
+
 <h2>Second Level</h2>
 
 <h1>First Level</h1>

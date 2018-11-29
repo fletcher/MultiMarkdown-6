@@ -2,7 +2,7 @@
 <opml version="1.0">
 <head><title>Table of Contents</title></head>
 <body>
-<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;{{TOC}}&#10;&#10;"></outline>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;{{TOC}}&#10;&#10;{{TOC:2}}&#10;&#10;{{TOC:2-3}}&#10;&#10;&#10;foo {{TOC}}&#10;&#10;foo {{TOC:2}}&#10;&#10;foo {{TOC:2-3}}&#10;&#10;&#10;&#9;{{TOC}}&#10;&#9;&#10;&#9;{{TOC:2}}&#10;&#9;&#10;&#9;{{TOC:2-3}}&#10;&#10;&#10;&#10;"></outline>
 <outline text="Second Level" _note="&#10;"></outline>
 <outline text="First Level" _note="&#10;"><outline text="Second Level b" _note="&#10;"><outline text="Third Level" _note="&#10;"></outline>
 </outline>

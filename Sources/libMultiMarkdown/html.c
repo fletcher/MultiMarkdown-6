@@ -456,7 +456,7 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 }
 
 
-void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level) {
+void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level, short min, short max) {
 	token * entry, * next;
 	short entry_level, next_level;
 	char * temp_char;
@@ -469,32 +469,36 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 		entry = stack_peek_index(scratch->header_stack, *counter);
 		entry_level = raw_level_for_header(entry);
 
-		if (entry_level >= level) {
-			// This entry is a direct descendant of the parent
-			scratch->label_counter = (int) * counter;
-			temp_char = label_from_header(source, entry, scratch);
-			printf("<li><a href=\"#%s\">", temp_char);
-			mmd_export_token_tree_html(out, source, entry->child, scratch);
-			print_const("</a>");
+		if (entry_level < min || entry_level > max) {
+			// Ignore this one
+		} else {
+			if (entry_level >= level) {
+				// This entry is a direct descendant of the parent
+				scratch->label_counter = (int) * counter;
+				temp_char = label_from_header(source, entry, scratch);
+				printf("<li><a href=\"#%s\">", temp_char);
+				mmd_export_token_tree_html(out, source, entry->child, scratch);
+				print_const("</a>");
 
-			if (*counter < scratch->header_stack->size - 1) {
-				next = stack_peek_index(scratch->header_stack, *counter + 1);
-				next_level = next->type - BLOCK_H1 + 1;
+				if (*counter < scratch->header_stack->size - 1) {
+					next = stack_peek_index(scratch->header_stack, *counter + 1);
+					next_level = next->type - BLOCK_H1 + 1;
 
-				if (next_level > entry_level) {
-					// This entry has children
-					(*counter)++;
-					mmd_export_toc_entry_html(out, source, scratch, counter, entry_level + 1);
+					if (next_level > entry_level) {
+						// This entry has children
+						(*counter)++;
+						mmd_export_toc_entry_html(out, source, scratch, counter, entry_level + 1, min, max);
+					}
 				}
-			}
 
-			print_const("</li>\n");
-			free(temp_char);
-		} else if (entry_level < level ) {
-			// If entry < level, exit this level
-			// Decrement counter first, so that we can test it again later
-			(*counter)--;
-			break;
+				print_const("</li>\n");
+				free(temp_char);
+			} else if (entry_level < level ) {
+				// If entry < level, exit this level
+				// Decrement counter first, so that we can test it again later
+				(*counter)--;
+				break;
+			}
 		}
 
 		// Increment counter
@@ -505,10 +509,10 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 }
 
 
-void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scratch) {
+void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scratch, short min, short max) {
 	size_t counter = 0;
 
-	mmd_export_toc_entry_html(out, source, scratch, &counter, 0);
+	mmd_export_toc_entry_html(out, source, scratch, &counter, 0, min, max);
 
 	scratch->label_counter = 0;
 }
@@ -998,7 +1002,21 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			pad(out, 2, scratch);
 			print_const("<div class=\"TOC\">\n");
 
-			mmd_export_toc_html(out, source, scratch);
+			// Define range
+			if (t->child->child->type == TOC) {
+				temp_short = 1;
+				temp_short2 = 6;
+			} else {
+				temp_short = source[t->start + 6] - '0';
+
+				if (t->child->child->type == TOC_RANGE) {
+					temp_short2 = source[t->start + 8] - '0';
+				} else {
+					temp_short2 = temp_short;
+				}
+			}
+
+			mmd_export_toc_html(out, source, scratch, temp_short, temp_short2);
 			print_const("</div>");
 			scratch->padded = 0;
 			break;
@@ -2012,6 +2030,8 @@ parse_citation:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
 		case TOC:
+		case TOC_SINGLE:
+		case TOC_RANGE:
 			print_token(t);
 			break;
 

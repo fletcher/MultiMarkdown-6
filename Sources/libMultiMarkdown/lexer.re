@@ -102,6 +102,9 @@ int scan(Scanner * s, const char * stop) {
 
 		"{{TOC}}"						{ return TOC; }
 
+		"{{TOC:" [0-9] "}}"				{ return TOC_SINGLE; }
+		"{{TOC:" [0-9] "-" [0-9] "}}"	{ return TOC_RANGE; }
+
 		"{++"							{ return CRITIC_ADD_OPEN; }
 		"++}"							{ return CRITIC_ADD_CLOSE; }
 

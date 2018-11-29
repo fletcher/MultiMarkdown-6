@@ -890,6 +890,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 		case BLOCK_TOC:
 			pad(out, 2, scratch);
+
+			// Define range
+			if (t->child->child->type == TOC) {
+			} else {
+				temp_short = source[t->start + 6] - '0';
+
+				if (t->child->child->type == TOC_RANGE) {
+					temp_short2 = source[t->start + 8] - '0';
+				} else {
+					temp_short2 = temp_short;
+				}
+
+				// Adjust depth for LaTeX numbering -- -1 for part, 0 for chapter
+				printf("\\setcounter{tocdepth}{%d}\n", temp_short2 - 2);
+			}
+
 			print_const("\\tableofcontents");
 			scratch->padded = 0;
 			break;
@@ -1956,6 +1972,17 @@ parse_citation:
 
 		case TOC:
 			print_const("\\{\\{TOC\\}\\}");
+			break;
+
+		case TOC_SINGLE:
+			temp_short = source[t->start + 6] - '0';
+			printf("\\{\\{TOC:%d\\}\\}", temp_short);
+			break;
+
+		case TOC_RANGE:
+			temp_short = source[t->start + 6] - '0';
+			temp_short2 = source[t->start + 8] - '0';
+			printf("\\{\\{TOC:%d-%d\\}\\}", temp_short, temp_short2);
 			break;
 
 		case UL:

@@ -4,6 +4,26 @@
 
 \tableofcontents
 
+\setcounter{tocdepth}{0}
+\tableofcontents
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+foo \{\{TOC\}\}
+
+foo \{\{TOC:2\}\}
+
+foo \{\{TOC:2-3\}\}
+
+\begin{verbatim}
+{{TOC}}
+
+{{TOC:2}}
+
+{{TOC:2-3}}
+\end{verbatim}
+
 \chapter{Second Level}
 \label{secondlevel}
 

@@ -631,7 +631,7 @@ void mmd_export_image_opendocument(DString * out, const char * source, token * t
 }
 
 
-void mmd_export_toc_entry_opendocument(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level) {
+void mmd_export_toc_entry_opendocument(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level, short min, short max) {
 	token * entry, * next;
 	short entry_level, next_level;
 	char * temp_char;
@@ -642,31 +642,35 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 		entry = stack_peek_index(scratch->header_stack, *counter);
 		entry_level = raw_level_for_header(entry);
 
-		if (entry_level >= level) {
-			// This entry is a direct descendant of the parent
-			scratch->label_counter = (int) * counter;
-			temp_char = label_from_header(source, entry, scratch);
-			printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
-			mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
-			print_const(" <text:tab/>1</text:a></text:p>\n");
+		if (entry_level < min || entry_level > max) {
+			// Ignore this one
+		} else {
+			if (entry_level >= level) {
+				// This entry is a direct descendant of the parent
+				scratch->label_counter = (int) * counter;
+				temp_char = label_from_header(source, entry, scratch);
+				printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
+				mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
+				print_const(" <text:tab/>1</text:a></text:p>\n");
 
-			if (*counter < scratch->header_stack->size - 1) {
-				next = stack_peek_index(scratch->header_stack, *counter + 1);
-				next_level = next->type - BLOCK_H1 + 1;
+				if (*counter < scratch->header_stack->size - 1) {
+					next = stack_peek_index(scratch->header_stack, *counter + 1);
+					next_level = next->type - BLOCK_H1 + 1;
 
-				if (next_level > entry_level) {
-					// This entry has children
-					(*counter)++;
-					mmd_export_toc_entry_opendocument(out, source, scratch, counter, entry_level + 1);
+					if (next_level > entry_level) {
+						// This entry has children
+						(*counter)++;
+						mmd_export_toc_entry_opendocument(out, source, scratch, counter, entry_level + 1, min, max);
+					}
 				}
-			}
 
-			free(temp_char);
-		} else if (entry_level < level ) {
-			// If entry < level, exit this level
-			// Decrement counter first, so that we can test it again later
-			(*counter)--;
-			break;
+				free(temp_char);
+			} else if (entry_level < level ) {
+				// If entry < level, exit this level
+				// Decrement counter first, so that we can test it again later
+				(*counter)--;
+				break;
+			}
 		}
 
 		// Increment counter
@@ -675,7 +679,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 }
 
 
-void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad * scratch) {
+void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad * scratch, short min, short max) {
 	size_t counter = 0;
 
 	// TODO: Could use LC to internationalize this
@@ -687,7 +691,7 @@ void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad
 	print_const("<text:p text:style-name=\"Contents_20_Heading\">Table of Contents</text:p>\n");
 	print_const("</text:index-title>\n");
 
-	mmd_export_toc_entry_opendocument(out, source, scratch, &counter, 0);
+	mmd_export_toc_entry_opendocument(out, source, scratch, &counter, 0, min, max);
 
 	print_const("</text:index-body>\n</text:table-of-content>\n\n");
 
@@ -1120,7 +1124,21 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 		case BLOCK_TOC:
 			pad(out, 2, scratch);
 
-			mmd_export_toc_opendocument(out, source, scratch);
+			// Define range
+			if (t->child->child->type == TOC) {
+				temp_short = 1;
+				temp_short2 = 6;
+			} else {
+				temp_short = source[t->start + 6] - '0';
+
+				if (t->child->child->type == TOC_RANGE) {
+					temp_short2 = source[t->start + 8] - '0';
+				} else {
+					temp_short2 = temp_short;
+				}
+			}
+
+			mmd_export_toc_opendocument(out, source, scratch, temp_short, temp_short2);
 
 			scratch->padded = 1;
 			break;
@@ -2138,6 +2156,8 @@ parse_citation:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
 		case TOC:
+		case TOC_SINGLE:
+		case TOC_RANGE:
 		case UL:
 			print_token(t);
 			break;
