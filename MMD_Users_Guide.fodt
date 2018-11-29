@@ -1531,6 +1531,18 @@ spanish(<text:span text:style-name="Source_20_Text">en</text:span>)</text:p></te
 
 <text:p text:style-name="Standard">When possible, MultiMarkdown uses the &#8220;native&#8221; TOC for a given output format. For example, <text:span text:style-name="Source_20_Text">\tableofcontents</text:span> when exporting to LaTeX.</text:p>
 
+<text:p text:style-name="Standard">As of version 6.5, MultiMarkdown also supports two additional versions:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+<text:span text:style-name="Source_20_Text">{{TOC:2}}</text:span> &#8211; this limits the TOC to &#8220;level 2&#8221; entries</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">{{TOC:2-3}}</text:span> &#8211; this limts the TOC to levels 2 and 3</text:p></text:list-item>
+
+</text:list>
+
 <text:h text:outline-level="3"><text:bookmark text:name="tables"/>Tables</text:h>
 
 <text:h text:outline-level="4"><text:bookmark text:name="tablebasics"/>Table Basics</text:h>

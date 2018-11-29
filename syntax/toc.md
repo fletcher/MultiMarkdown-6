@@ -13,3 +13,8 @@ LaTeX Config:	tufte-handout
 As of version 4.7, MultiMarkdown supports the use of `{{TOC}}` to insert a Table of Contents in the document.  This is automatically generated from the headers included in the document.
 
 When possible, MultiMarkdown uses the "native" TOC for a given output format.  For example, `\tableofcontents` when exporting to LaTeX.
+
+As of version 6.5, MultiMarkdown also supports two additional versions:
+
+*	`{{TOC:2}}` -- this limits the TOC to "level 2" entries
+*	`{{TOC:2-3}}` -- this limts the TOC to levels 2 and 3
