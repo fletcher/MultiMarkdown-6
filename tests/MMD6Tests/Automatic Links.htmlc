@@ -1,5 +1,5 @@
-<p>Title:	Automatic Links
-latex config:	article</p>
+<p>title:	Automatic Links
+latexconfig:	article</p>
 
 <p><a href="http://foo.com/">http://foo.com/</a></p>
 

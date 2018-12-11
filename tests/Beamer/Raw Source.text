@@ -1,0 +1,48 @@
+Title:	Raw Source
+latex config:	beamer
+base header level:	3  
+
+# 0 #
+
+`*foo*`{*}
+
+`*foo*`{=html}
+
+`*foo*`{=latex}
+
+`*foo*`{=odt}
+
+`*foo*`{=*}
+
+# 5 #
+
+```{*}
+*foo*
+```
+
+```{=html}
+*foo*
+```
+
+```{=latex}
+*foo*
+```
+
+```{=odt}
+*foo*
+```
+
+```{=*}
+*foo*
+```
+
+# 10 #
+
+```{=beamer}
+*foo*
+```
+
+```{=*}
+*foo*
+
+*bar*

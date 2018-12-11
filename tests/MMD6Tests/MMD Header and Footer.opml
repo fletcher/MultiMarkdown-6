@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>MMD Header and Footer</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;&#10;MultiMarkdown *header*.&#10;&#10;&#10;Main Body&#10;&#10;&#10;MultiMarkdown *footer*."></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="MMD Header and Footer"/>
+<outline text="latexconfig" _note="article"/>
+<outline text="mmdheader" _note="{{header.txt}}"/>
+<outline text="mmdfooter" _note="{{footer.txt}}"/>
+<outline text="htmlheader" _note="HTML &lt;em&gt;header&lt;/em&gt;."/>
+<outline text="htmlfooter" _note="HTML &lt;em&gt;footer&lt;/em&gt;."/>
+<outline text="latexheader" _note="\LaTeX \emph{header}"/>
+<outline text="odfheader" _note="ODF header."/>
+</outline>
+</body>
+</opml>
+

@@ -1,5 +1,5 @@
-Title:	German
-latex config:	article
+title:	German
+latexconfig:	article
 language:	de
 
 'foo'

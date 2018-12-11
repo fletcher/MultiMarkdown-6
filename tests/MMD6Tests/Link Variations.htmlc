@@ -1,0 +1,30 @@
+<p>title:	Link Variations
+latexconfig:	article</p>
+
+<h2>Foo Bar</h2>
+
+<p>Link to [Foo Bar].</p>
+
+<p>Link to [foo bar].</p>
+
+<p>Link to [foobar].</p>
+
+<p>Link to <a href="#foobar">Foo Bar</a>.</p>
+
+<p>Link to <a href="#foobar"></a>.</p>
+
+<p>5</p>
+
+<p>Link to [Foo][Foo Bar].</p>
+
+<p><a href="http://example.com/?bar=foo&amp;foo=bar">&amp; link</a></p>
+
+<p><a href="http://example.com/%25%20link">'%' Link</a></p>
+
+<p><a href="http://example.com/#foo">'#' link</a></p>
+
+<p>10</p>
+
+<p><a href="http://example.com/_foo">_ link</a></p>
+
+<p><a href="http://example.com/~foo">~ link</a></p>

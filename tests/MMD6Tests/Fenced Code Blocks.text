@@ -1,5 +1,5 @@
-Title:	Fenced Code Blocks
-latex config:	article
+title:	Fenced Code Blocks
+latexconfig:	article
 
 ```
 *foo*
@@ -62,6 +62,14 @@ foo
 3.     baz
 ```
 
+```
+# foo
+##	bar
+### baz #
+####	foo	##  
+#####		bar		##	
+###### baz#
+```
 
 ```
 foo

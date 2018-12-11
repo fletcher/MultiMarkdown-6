@@ -1,0 +1,11 @@
+#define ITMZ_ITHOUGHTS_OPEN              1
+#define ITMZ_ITHOUGHTS_CLOSE             2
+#define ITMZ_TOPICS_OPEN                 3
+#define ITMZ_TOPICS_CLOSE                4
+#define ITMZ_TOPIC_OPEN                  5
+#define ITMZ_TOPIC_CLOSE                 6
+#define ITMZ_TOPIC_PREAMBLE              7
+#define ITMZ_TOPIC_METADATA              8
+#define ITMZ_TOPIC_SELF_CLOSE            9
+#define ITMZ_RELATIONSHIPS_OPEN         10
+#define ITMZ_RELATIONSHIPS_CLOSE        11

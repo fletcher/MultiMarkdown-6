@@ -1,5 +1,5 @@
-Title:	Escapes
-latex config:	article
+title:	Escapes
+latexconfig:	article
 
 \.
 
@@ -83,7 +83,7 @@ latex config:	article
 	\\
 	\`
 
-`\- \& \% \\ \``
+`\- \& \% \\ \ \ `
 
 \*foo\*
 
@@ -93,6 +93,20 @@ latex config:	article
 
 \`foo\`
 
+\`foo`
+
+`foo\ `
+
+\``foo\ `
+
+40
+
+\``foo`
+
 foo\ bar
 
 `\\[foo]`
+
+`\ `
+
+`\  `

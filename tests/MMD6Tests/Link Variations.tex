@@ -1,0 +1,35 @@
+\input{mmd6-article-leader}
+\def\mytitle{Link Variations}
+\input{mmd6-article-begin}
+
+\chapter{Foo Bar}
+\label{foobar}
+
+Link to Foo Bar (\autoref{foobar}).
+
+Link to foo bar (\autoref{foobar}).
+
+Link to foobar (\autoref{foobar}).
+
+Link to Foo Bar (\autoref{foobar}).
+
+Link to \autoref{foobar}.
+
+5
+
+Link to Foo (\autoref{foobar}).
+
+\href{http://example.com/?bar=foo&foo=bar}{\& link}\footnote{\href{http://example.com/?bar=foo&foo=bar}{http:\slash \slash example.com\slash ?bar=foo\&foo=bar}}
+
+\href{http://example.com/%25%20link}{`\%' Link}\footnote{\href{http://example.com/%25%20link}{http:\slash \slash example.com\slash \%25\%20link}}
+
+\href{http://example.com/#foo}{`\#' link}\footnote{\href{http://example.com/#foo}{http:\slash \slash example.com\slash \#foo}}
+
+10
+
+\href{http://example.com/_foo}{\_ link}\footnote{\href{http://example.com/_foo}{http:\slash \slash example.com\slash \_foo}}
+
+\href{http://example.com/~foo}{\ensuremath{\sim} link}\footnote{\href{http://example.com/~foo}{http:\slash \slash example.com\slash \ensuremath{\sim}foo}}
+
+\input{mmd6-article-footer}
+\end{document}

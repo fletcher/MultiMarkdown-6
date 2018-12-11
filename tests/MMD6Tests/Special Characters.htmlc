@@ -1,5 +1,5 @@
-<p>Title:	Special Characters
-latex config:	article</p>
+<p>title:	Special Characters
+latexconfig:	article</p>
 
 <p>{foo}</p>
 
@@ -19,3 +19,30 @@ latex config:	article</p>
 
 <foo>
 
+<p>%</p>
+
+<p><code>%</code></p>
+
+<p>10</p>
+
+<p>&amp; % # _ { } ~ ^ \</p>
+
+<p><code>&amp;</code></p>
+
+<p><code>%</code></p>
+
+<p><code>#</code></p>
+
+<p><code>_</code></p>
+
+<p>15</p>
+
+<p><code>{</code></p>
+
+<p><code>}</code></p>
+
+<p><code>~</code></p>
+
+<p><code>^</code></p>
+
+<p><code>\\</code></p>

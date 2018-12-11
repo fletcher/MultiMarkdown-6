@@ -1,5 +1,5 @@
-Title:	Indented Code Blocks
-latex config:	article
+title:	Indented Code Blocks
+latexconfig:	article
 
 	foo
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Fuzz Testing</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;Collection of test cases identified by [American fuzzy lop](http://lcamtuf.coredump.cx/afl/).&#10;&#10;û~~foo~&gt;bar~~}&#10;&#10;* list&#10;* &#9;tems&#10;&#10;"></outline>
+<outline text=":Escapes [escaped]" _note="&#10;[&gt;MM\]: MultiMarkdown&#10;&#10;[?terí¢ıı[?term]: A term to be defined.&#10;&#10;[foo1]&#10;&#10;[foo2]&#10;&#10;[foo1]:  #ba\&#10;[foo2]: #bar&#10;&#10;]: And aÄe footn.I^Thi1. \$&#10;&#10;[MMD]:&#10;&#10;f o o f o o&#10;&#10;[&gt;  o o]: F O O&#10;&#10;*  foo&#10;*       foo&#10;&#10;&#10;&#10;(This must be at end of file without trailing newline)&#10;&#10;"></outline>
+<outline text="A" _note=""></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Fuzz Testing"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

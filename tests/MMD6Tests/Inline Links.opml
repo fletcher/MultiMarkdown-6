@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Inline Links</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;Just a [URL](http://url/file.txt).&#10;&#10;[URL and title](/url/file.txt &quot;title&quot;).&#10;&#10;[URL and title](/url/file.txt  &quot;title preceded by two spaces&quot;).&#10;&#10;[URL and title](/url/file.txt&#9;&quot;title preceded by a tab&quot;).&#10;&#10;[URL and title](/url/file.txt &quot;title has spaces afterward&quot;  ).&#10;&#10;5&#10;&#10;[Empty]().&#10;&#10;[**URL** and *title*](/url/file.txt &quot;title&quot;).&#10;&#10;[URL and title](/url/file.txt &quot;title&quot;).&#10;&#10;[URL and title](/url/file.txt &apos;title&apos;).&#10;&#10;[URL and title](/url/file.txt (title)).&#10;&#10;10&#10;&#10;[URL and title](/url/file.txt &quot;&quot;).&#10;&#10;[URL and title](/url/file.txt &quot;*title*&quot;).&#10;&#10;[URL and title] (/url/file.txt &quot;*title*&quot;).&#10;&#10;[URL and title]&#10;(/url/file.txt &quot;*title*&quot;).&#10;&#10;[URL and title]( /url/file.txt &quot;title&quot;).&#10;&#10;15&#10;&#10;[URL and title](    /url/file.txt &quot;title&quot;).&#10;&#10;[URL and title](&lt;/url/file.txt&gt; &quot;title&quot;).&#10;&#10;[URL and title]( &lt;/url/file.txt&gt; &quot;title&quot;).&#10;&#10;[URL and title](  &lt;/url/file.txt&gt; &quot;title&quot;).&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Inline Links"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

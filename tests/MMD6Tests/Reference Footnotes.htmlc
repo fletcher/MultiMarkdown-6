@@ -1,5 +1,5 @@
-<p>Title:	Reference Footnotes
-latex config:	article</p>
+<p>title:	Reference Footnotes
+latexconfig:	article</p>
 
 <p>foo.<a href="*foo*">^bar</a></p>
 

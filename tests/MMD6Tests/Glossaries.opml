@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Glossaries</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;foo foo&#10;&#10;f.o.o. f.o.o.&#10;&#10;f-o-o f-o-o&#10;&#10;f o o f o o&#10;&#10;fo&apos;o fo&apos;o&#10;&#10;5&#10;&#10;[?bar] [?bar]&#10;&#10;[?b.a.r.] [?b.a.r.]&#10;&#10;[?b-a-r] [?b-a-r]&#10;&#10;[?b a r] [?b a r]&#10;&#10;[?ba&apos;r] [?ba&apos;r]&#10;&#10;10&#10;&#10;foo bar&#10;&#10;foo&#10;bar&#10;&#10;foo  bar&#10;&#10;[?(baz) BAZ]&#10;&#10;&#10;&#10;[?foo]: FOO&#10;[?f.o.o.]: F.O.O.&#10;[?f-o-o]: F-O-O&#10;[?f o o]: F O O&#10;[?fo&apos;o]: FO&apos;O&#10;&#10;[?bar]: BAR&#10;[?b.a.r.]: B.A.R.&#10;[?b-a-r]: B-A-R&#10;[?b a r]: B A R&#10;[?ba&apos;r]: BA&apos;R&#10;&#10;[?foo bar]: FOO BAR&#10;&#10;&#9;BAR FOO"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Glossaries"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

@@ -1,5 +1,5 @@
-<p>Title:	Inline Images
-latex config:	article</p>
+<p>title:	Inline Images
+latexconfig:	article</p>
 
 <p>Just a <img src="/url/" alt="URL" />.</p>
 

@@ -1,5 +1,5 @@
-Title:	Transclusion
-latex config:	article
+title:	Transclusion
+latexconfig:	article
 transclude base: .
 
 {{foo.txt}}

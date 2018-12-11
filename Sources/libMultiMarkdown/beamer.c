@@ -55,6 +55,7 @@
 
 #include "latex.h"
 #include "beamer.h"
+#include "parser.h"
 
 #define print(x) d_string_append(out, x)
 #define print_const(x) d_string_append_c_array(out, x, sizeof(x) - 1)
@@ -173,6 +174,33 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 			temp_char = get_fence_language_specifier(t->child->child, source);
 
 			if (temp_char) {
+				if (strncmp("{=", temp_char, 2) == 0) {
+					// Raw source
+					if (raw_filter_text_matches(temp_char, FORMAT_BEAMER)) {
+						switch (t->child->tail->type) {
+							case LINE_FENCE_BACKTICK_3:
+							case LINE_FENCE_BACKTICK_4:
+							case LINE_FENCE_BACKTICK_5:
+								temp_token = t->child->tail;
+								break;
+
+							default:
+								temp_token = NULL;
+						}
+
+						if (temp_token) {
+							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
+							scratch->padded = 1;
+						} else {
+							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							scratch->padded = 0;
+						}
+					}
+
+					free(temp_char);
+					break;
+				}
+
 				printf("\\begin{lstlisting}[language=%s]\n", temp_char);
 			} else {
 				print_const("\\begin{verbatim}\n");
@@ -242,6 +270,7 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 			}
 
 			mmd_export_token_tree_beamer(out, source, t->child, scratch);
+			trim_trailing_whitespace_d_string(out);
 
 			if (scratch->extensions & EXT_NO_LABELS) {
 				print_const("}");

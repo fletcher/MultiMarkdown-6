@@ -81,8 +81,9 @@ int scan(Scanner * s, const char * stop) {
 		NL								= "\r\n" | '\n' | '\r';
 		WS 								= [ \t\240];	// Whitespace from char_lookup.c
 		SP								= WS+;
+		EOF								= '\x00';
 
-		SPNL							= WS* NL;
+		SPNL							= WS* ( NL | EOF);
 
 		INDENT_TAB 						= '\t';
 		INDENT_SPACE 					= [ \240]{4};
@@ -100,6 +101,9 @@ int scan(Scanner * s, const char * stop) {
 		TEXT_LINEBREAK ' ' / [^ \t\r\n]	{ return TEXT_LINEBREAK_SP; }
 
 		"{{TOC}}"						{ return TOC; }
+
+		"{{TOC:" [0-9] "}}"				{ return TOC_SINGLE; }
+		"{{TOC:" [0-9] "-" [0-9] "}}"	{ return TOC_RANGE; }
 
 		"{++"							{ return CRITIC_ADD_OPEN; }
 		"++}"							{ return CRITIC_ADD_CLOSE; }
@@ -253,6 +257,6 @@ int scan(Scanner * s, const char * stop) {
 		'|'+							{ return PIPE; }
 		
 		// Skip over anything else - '.' does not include '\n'
-		.								{ goto scan; }
+		*								{ goto scan; }
 	*/
 }

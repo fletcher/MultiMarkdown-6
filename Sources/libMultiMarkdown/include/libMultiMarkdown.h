@@ -101,6 +101,14 @@ typedef struct stack stack;
 	C string variants
 */
 
+/// Convert OPML string to MMD
+DString * mmd_string_convert_opml_to_text(const char * source);
+
+
+/// Convert ITMZ string to MMD
+DString * mmd_string_convert_itmz_to_text(const char * source);
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
@@ -146,6 +154,14 @@ struct stack * mmd_string_transclusion_manifest(const char * source, const char 
 /*
 	DString variants - DString ("dynamic string") is a mutable string implementation used in this project
 */
+
+/// Convert OPML DString to MMD
+DString * mmd_d_string_convert_opml_to_text(DString * source);
+
+
+/// Convert ITMZ DString to MMD
+DString * mmd_d_string_convert_itmz_to_text(DString * source);
+
 
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
@@ -243,6 +259,14 @@ char * mmd_engine_convert(mmd_engine * e, short format);
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 /// multiple documents (e.g. EPUB)
 void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath);
+
+
+/// Convert OPML to text without modifying original engine source
+DString *  mmd_engine_convert_opml_to_text(mmd_engine * e);
+
+
+/// Convert ITMZ to text without modifying original engine source
+DString *  mmd_engine_convert_itmz_to_text(mmd_engine * e);
 
 
 /// Convert MMD text to specified format using DString as a container for block of data
@@ -493,6 +517,8 @@ enum token_types {
 	TABLE_DIVIDER,
 
 	TOC,
+	TOC_SINGLE,
+	TOC_RANGE,
 
 	TEXT_BACKSLASH,
 	RAW_FILTER_LEFT,
@@ -535,6 +561,8 @@ enum output_format {
 	FORMAT_ODT,
 	FORMAT_TEXTBUNDLE,
 	FORMAT_TEXTBUNDLE_COMPRESSED,
+	FORMAT_OPML,
+	FORMAT_ITMZ,
 	FORMAT_MMD,
 	FORMAT_RTF
 };
@@ -555,6 +583,9 @@ enum parser_extensions {
 	EXT_CRITIC_REJECT       = 1 << 11,   //!< Reject all proposed changes
 	EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
 	EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
+	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
+	EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
+	EXT_RANDOM_LABELS		= 1 << 16,   //!< Use random numbers for header labels (unless manually defined)
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

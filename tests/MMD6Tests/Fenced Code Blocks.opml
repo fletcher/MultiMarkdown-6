@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Fenced Code Blocks</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;```&#10;*foo*&#10;```&#10;&#10;````&#10;*foo*&#10;&#10;bar&#10;````&#10;&#10;* foo&#10;&#10;&#9;```&#10;&#9;*foo*&#10;&#9;```&#10;&#10;* foo&#10;&#10;&#9;````&#10;&#9;*foo*&#10;&#10;&#9;bar&#10;&#9;````&#10;&#10;```&#10;\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}&#10;```&#10;&#10;```tex&#10;\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}&#10;```&#10;&#10;5&#10;&#10;```&#10;&lt;p&gt;foo&lt;/p&gt;&#10;```&#10;&#10;```&#10;foo&#10;&#10;&#9;bar&#10;&#10;  bar&#10;&#10;    foo&#10;```&#10;&#10;```&#10;* foo&#10;+  bar&#10;-   baz&#10;*    foo&#10;+     bar&#10;-      baz&#10;&#10;1.   foo&#10;2.    bar&#10;3.     baz&#10;```&#10;&#10;```&#10;# foo&#10;##&#9;bar&#10;### baz #&#10;####&#9;foo&#9;##  &#10;#####&#9;&#9;bar&#9;&#9;##&#9;&#10;###### baz#&#10;```&#10;&#10;```&#10;foo&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Fenced Code Blocks"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

@@ -1,5 +1,5 @@
-<p>Title:	Reference Links
-latex config:	article</p>
+<p>title:	Reference Links
+latexconfig:	article</p>
 
 <p><a href="http://test.1/file.txt"><em>foo</em></a>.</p>
 
@@ -33,3 +33,5 @@ latex config:	article</p>
 
 <p><a href="http://test.0/">foo</a>
 <a href="http://test.1/file.txt">bar</a></p>
+
+<p>[Markdown]</p>

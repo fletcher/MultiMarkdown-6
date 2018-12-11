@@ -136,7 +136,7 @@ static char * my_strdup(const char * source) {
 }
 
 
-void mmd_print_char_opendocument(DString * out, char c) {
+void mmd_print_char_opendocument(DString * out, char c, bool line_breaks) {
 	switch (c) {
 		case '"':
 			print_const("&quot;");
@@ -154,6 +154,16 @@ void mmd_print_char_opendocument(DString * out, char c) {
 			print_const("&gt;");
 			break;
 
+		case '\n':
+		case '\r':
+			if (line_breaks) {
+				print_const("<text:line-break/>\n");
+			} else {
+				print_char(c);
+			}
+
+			break;
+
 		case '\t':
 			print_const("<text:tab/>");
 
@@ -164,13 +174,13 @@ void mmd_print_char_opendocument(DString * out, char c) {
 }
 
 
-void mmd_print_string_opendocument(DString * out, const char * str) {
+void mmd_print_string_opendocument(DString * out, const char * str, bool line_breaks) {
 	if (str == NULL) {
 		return;
 	}
 
 	while (*str != '\0') {
-		mmd_print_char_opendocument(out, *str);
+		mmd_print_char_opendocument(out, *str, line_breaks);
 		str++;
 	}
 }
@@ -292,6 +302,7 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 	}
 
 	char * temp;
+	char * stop;
 
 	switch (t->type) {
 		case AMPERSAND:
@@ -312,7 +323,20 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case ESCAPED_CHARACTER:
 			print_const("\\");
-			mmd_print_char_opendocument(out, source[t->start + 1]);
+
+			if (t->next && t->next->type == TEXT_EMPTY && source[t->start + 1] == ' ') {
+			} else {
+				mmd_print_char_opendocument(out, source[t->start + 1], false);
+			}
+
+			break;
+
+		case HTML_COMMENT_START:
+			print_const("&lt;!--");
+			break;
+
+		case HTML_COMMENT_STOP:
+			print_const("--&gt;");
 			break;
 
 		case HTML_ENTITY:
@@ -326,6 +350,40 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case QUOTE_DOUBLE:
 			print_const("&quot;");
+			break;
+
+		case MARKER_H1:
+		case MARKER_H2:
+		case MARKER_H3:
+		case MARKER_H4:
+		case MARKER_H5:
+		case MARKER_H6:
+			temp = (char *) &source[t->start];
+			stop = (char *) &source[t->start + t->len];
+
+			while (temp < stop) {
+				switch (*temp) {
+					case '#':
+						print_const("#");
+						temp++;
+						break;
+
+					case ' ':
+						print_const(" ");
+						temp++;
+						break;
+
+					case '\t':
+						print_const("<text:tab/>");
+						temp++;
+						break;
+
+					default:
+						temp = stop;
+						break;
+				}
+			}
+
 			break;
 
 		case MARKER_LIST_BULLET:
@@ -383,6 +441,9 @@ void mmd_export_token_opendocument_raw(DString * out, const char * source, token
 
 		case TEXT_EMPTY:
 			break;
+
+		case TEXT_LINEBREAK:
+			print_const("  ");
 
 		case TEXT_NL:
 			print_const("<text:line-break/>");
@@ -457,7 +518,7 @@ void mmd_export_token_opendocument_math(DString * out, const char * source, toke
 void mmd_export_link_opendocument(DString * out, const char * source, token * text, link * link, scratch_pad * scratch) {
 	if (link->url) {
 		print_const("<text:a xlink:type=\"simple\" xlink:href=\"");
-		mmd_print_string_opendocument(out, link->url);
+		mmd_print_string_opendocument(out, link->url, false);
 		print_const("\"");
 	} else {
 		print_const("<a xlink:type=\"simple\" xlink:href=\"\"");
@@ -465,7 +526,7 @@ void mmd_export_link_opendocument(DString * out, const char * source, token * te
 
 	if (link->title && link->title[0] != '\0') {
 		print_const(" office:name=\"");
-		mmd_print_string_opendocument(out, link->title);
+		mmd_print_string_opendocument(out, link->title, false);
 		print_const("\"");
 	}
 
@@ -570,7 +631,7 @@ void mmd_export_image_opendocument(DString * out, const char * source, token * t
 }
 
 
-void mmd_export_toc_entry_opendocument(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level) {
+void mmd_export_toc_entry_opendocument(DString * out, const char * source, scratch_pad * scratch, size_t * counter, short level, short min, short max) {
 	token * entry, * next;
 	short entry_level, next_level;
 	char * temp_char;
@@ -581,30 +642,35 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 		entry = stack_peek_index(scratch->header_stack, *counter);
 		entry_level = raw_level_for_header(entry);
 
-		if (entry_level >= level) {
-			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
-			printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
-			mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
-			print_const(" <text:tab/>1</text:a></text:p>\n");
+		if (entry_level < min || entry_level > max) {
+			// Ignore this one
+		} else {
+			if (entry_level >= level) {
+				// This entry is a direct descendant of the parent
+				scratch->label_counter = (int) * counter;
+				temp_char = label_from_header(source, entry, scratch);
+				printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
+				mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
+				print_const(" <text:tab/>1</text:a></text:p>\n");
 
-			if (*counter < scratch->header_stack->size - 1) {
-				next = stack_peek_index(scratch->header_stack, *counter + 1);
-				next_level = next->type - BLOCK_H1 + 1;
+				if (*counter < scratch->header_stack->size - 1) {
+					next = stack_peek_index(scratch->header_stack, *counter + 1);
+					next_level = next->type - BLOCK_H1 + 1;
 
-				if (next_level > entry_level) {
-					// This entry has children
-					(*counter)++;
-					mmd_export_toc_entry_opendocument(out, source, scratch, counter, entry_level + 1);
+					if (next_level > entry_level) {
+						// This entry has children
+						(*counter)++;
+						mmd_export_toc_entry_opendocument(out, source, scratch, counter, entry_level + 1, min, max);
+					}
 				}
-			}
 
-			free(temp_char);
-		} else if (entry_level < level ) {
-			// If entry < level, exit this level
-			// Decrement counter first, so that we can test it again later
-			(*counter)--;
-			break;
+				free(temp_char);
+			} else if (entry_level < level ) {
+				// If entry < level, exit this level
+				// Decrement counter first, so that we can test it again later
+				(*counter)--;
+				break;
+			}
 		}
 
 		// Increment counter
@@ -613,7 +679,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 }
 
 
-void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad * scratch) {
+void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad * scratch, short min, short max) {
 	size_t counter = 0;
 
 	// TODO: Could use LC to internationalize this
@@ -625,9 +691,11 @@ void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad
 	print_const("<text:p text:style-name=\"Contents_20_Heading\">Table of Contents</text:p>\n");
 	print_const("</text:index-title>\n");
 
-	mmd_export_toc_entry_opendocument(out, source, scratch, &counter, 0);
+	mmd_export_toc_entry_opendocument(out, source, scratch, &counter, 0, min, max);
 
 	print_const("</text:index-body>\n</text:table-of-content>\n\n");
+
+	scratch->label_counter = 0;
 }
 
 
@@ -646,6 +714,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 	bool	temp_bool	= 0;
 	token *	temp_token	= NULL;
 	footnote * temp_note = NULL;
+	size_t	temp_size;
 
 	switch (t->type) {
 		case DOC_START_TOKEN:
@@ -828,11 +897,23 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			if (scratch->extensions & EXT_NO_LABELS) {
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			} else {
-				temp_char = label_from_header(source, t);
+				temp_char = label_from_header(source, t, scratch);
 				printf("<text:bookmark text:name=\"%s\"/>", temp_char);
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 				//printf("<text:bookmark-end text:name=\"%s\"/>", temp_char);
 				free(temp_char);
+			}
+
+			temp_size = 0;
+
+			while (temp_size != out->currentStringLength) {
+				temp_size = out->currentStringLength;
+
+				trim_trailing_whitespace_d_string(out);
+
+				if (strcmp(&(out->str[out->currentStringLength - 11]), "<text:tab/>") == 0) {
+					d_string_erase(out, out->currentStringLength - 11, 11);
+				}
 			}
 
 			print_const("</text:h>");
@@ -1043,7 +1124,21 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 		case BLOCK_TOC:
 			pad(out, 2, scratch);
 
-			mmd_export_toc_opendocument(out, source, scratch);
+			// Define range
+			if (t->child->child->type == TOC) {
+				temp_short = 1;
+				temp_short2 = 6;
+			} else {
+				temp_short = source[t->start + 6] - '0';
+
+				if (t->child->child->type == TOC_RANGE) {
+					temp_short2 = source[t->start + 8] - '0';
+				} else {
+					temp_short2 = temp_short;
+				}
+			}
+
+			mmd_export_toc_opendocument(out, source, scratch, temp_short, temp_short2);
 
 			scratch->padded = 1;
 			break;
@@ -1176,7 +1271,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					(source[t->start + 1] == ' ')) {
 				print_const(" ");		// This is a non-breaking space character
 			} else {
-				mmd_print_char_opendocument(out, source[t->start + 1]);
+				mmd_print_char_opendocument(out, source[t->start + 1], false);
 			}
 
 			break;
@@ -1315,9 +1410,9 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					temp_bool = false;
 				}
 
-				mmd_print_string_opendocument(out, temp_char);
+				mmd_print_string_opendocument(out, temp_char, false);
 				print_const("\">");
-				mmd_print_string_opendocument(out, temp_char);
+				mmd_print_string_opendocument(out, temp_char, false);
 				print_const("</text:a>");
 			} else if (scan_html(&source[t->start])) {
 				// We ignore HTML blocks
@@ -1632,11 +1727,11 @@ parse_citation:
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 //						mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 					} else {
 						// This is an inline definition
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 //						mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 					}
 				} else {
@@ -1646,15 +1741,15 @@ parse_citation:
 
 					if (temp_short3 == scratch->inline_abbreviations_to_free->size) {
 						// This is a reference definition
-						mmd_print_string_opendocument(out, temp_note->clean_text);
+						mmd_print_string_opendocument(out, temp_note->clean_text, true);
 						print_const(" (");
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 						print_const(")");
 					} else {
 						// This is an inline definition
-						mmd_print_string_opendocument(out, temp_note->clean_text);
+						mmd_print_string_opendocument(out, temp_note->clean_text, true);
 						print_const(" (");
-						mmd_print_string_opendocument(out, temp_note->label_text);
+						mmd_print_string_opendocument(out, temp_note->label_text, true);
 						print_const(")");
 					}
 
@@ -1694,11 +1789,11 @@ parse_citation:
 				if (temp_short2 == scratch->used_glossaries->size) {
 					// This is a re-use of a previously used note
 
-					mmd_print_string_opendocument(out, temp_note->clean_text);
+					mmd_print_string_opendocument(out, temp_note->clean_text, true);
 				} else {
 					// This is the first time this note was used
 
-					mmd_print_string_opendocument(out, temp_note->clean_text);
+					mmd_print_string_opendocument(out, temp_note->clean_text, true);
 
 					printf("<text:note text:id=\"gn%d\" text:note-class=\"glossary\"><text:note-body>", temp_short);
 					mmd_export_token_tree_opendocument(out, source, temp_note->content, scratch);
@@ -1718,7 +1813,7 @@ parse_citation:
 			temp_char2 = extract_metadata(scratch, temp_char);
 
 			if (temp_char2) {
-				mmd_print_string_opendocument(out, temp_char2);
+				mmd_print_string_opendocument(out, temp_char2, true);
 			} else {
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
 			}
@@ -2050,6 +2145,7 @@ parse_citation:
 
 			break;
 
+		case PAIR_RAW_FILTER:
 		case RAW_FILTER_LEFT:
 		case TEXT_BACKSLASH:
 		case TEXT_BRACE_LEFT:
@@ -2060,6 +2156,8 @@ parse_citation:
 		case TEXT_PERIOD:
 		case TEXT_PLAIN:
 		case TOC:
+		case TOC_SINGLE:
+		case TOC_RANGE:
 		case UL:
 			print_token(t);
 			break;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Edge Cases</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;* foo&#10;bar&#10;&#10;foo&#10;* bar&#10;&#10;foo&#10;1. bar&#10;&#10;foo&#10;2. bar&#10;&#10;foo&#10;&gt; bar&#10;&#10;5&#10;&#10;foo&#10;"></outline>
+<outline text="bar" _note="&#10;foo&#10;&#9;bar&#10;&#10;The ***quick*** brown ***fox*** jumped&#10;&#10;The ***quick*** brown fox jumped&#10;&#10;The ***quick** brown fox* jumped&#10;&#10;10&#10;&#10;The ***quick* brown fox** jumped&#10;&#10;The ***quick* brown *fox*** jumped&#10;&#10;The ***quick** brown **fox*** jumped&#10;&#10;This *should* be parsed --  fo***o&#10;&#10;*test this*thing&#10;&#10;15&#10;&#10;_test this_thing&#10;&#10;**test this**thing&#10;&#10;__test this__thing&#10;&#10;***test this***thing&#10;&#10;___test this___thing&#10;&#10;20&#10;&#10;This is ***another* test** of *italics* and **bold**.&#10;&#10;This is ***another* test** of **bold** and *italics*.&#10;&#10;This is ***another** test* of **bold** and *italics*.&#10;&#10;This is ***another** test* of *italics* and **bold**.&#10;&#10;This is ___another_ test__ of _italics_ and __bold__.&#10;&#10;25&#10;&#10;This is ___another_ test__ of __bold__ and _italics_.&#10;&#10;This is ___another__ test_ of __bold__ and _italics_.&#10;&#10;This is ___another__ test_ of _italics_ and __bold__.&#10;&#10;*a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a *a &#10;&#10;[foo *bar] foo* *bar*&#10;&#10;30&#10;&#10;[foo *bar]: http://foo.bar&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Edge Cases"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

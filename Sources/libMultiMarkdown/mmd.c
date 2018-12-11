@@ -60,11 +60,14 @@
 #include "d_string.h"
 #include "epub.h"
 #include "i18n.h"
+#include "itmz.h"
+#include "itmz-reader.h"
 #include "lexer.h"
 #include "libMultiMarkdown.h"
 #include "mmd.h"
 #include "object_pool.h"
 #include "opendocument.h"
+#include "opml-reader.h"
 #include "parser.h"
 #include "scanners.h"
 #include "stack.h"
@@ -76,10 +79,10 @@
 
 
 // Basic parser function declarations
-void * ParseAlloc();
-void Parse();
-void ParseFree();
-void ParseTrace();
+void * ParseAlloc(void *);
+void Parse(void *, int, void *, void *);
+void ParseFree(void *, void *);
+void ParseTrace(FILE *stream, char *zPrefix);
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
@@ -114,6 +117,10 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->recurse_depth = 0;
 
 		e->allow_meta = (extensions & EXT_COMPATIBILITY) ? false : true;
+
+		if (e->allow_meta) {
+			e->allow_meta = (extensions & EXT_NO_METADATA) ? false : true;
+		}
 
 		e->language = LC_EN;
 		e->quotes_lang = ENGLISH;
@@ -506,21 +513,34 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (first_child->type - HASH1) + LINE_ATX_1;
 				first_child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
-				// Strip trailing whitespace from '#' sequence
-				first_child->len = first_child->type - MARKER_H1 + 1;
+				t = line->child->tail;
 
 				// Strip trailing '#' sequence if present
-				if (line->child->tail->type == TEXT_NL) {
-					if ((line->child->tail->prev->type >= HASH1) &&
-							(line->child->tail->prev->type <= HASH6)) {
-						line->child->tail->prev->type -= HASH1;
-						line->child->tail->prev->type += MARKER_H1;
-					}
-				} else {
-					if ((line->child->tail->type >= HASH1) &&
-							(line->child->tail->type <= HASH6)) {
-						line->child->tail->type -= TEXT_EMPTY;
-						line->child->tail->type += MARKER_H1;
+				while (t) {
+					switch (t->type) {
+						case INDENT_TAB:
+						case INDENT_SPACE:
+						case NON_INDENT_SPACE:
+						case TEXT_NL:
+						case TEXT_LINEBREAK:
+						case TEXT_LINEBREAK_SP:
+							t = t->prev;
+							break;
+
+						case HASH1:
+						case HASH2:
+						case HASH3:
+						case HASH4:
+						case HASH5:
+						case HASH6:
+							t->type -= HASH1;
+							t->type += MARKER_H1;
+							t = NULL;
+							break;
+
+						default:
+							// Break out of loop
+							t = NULL;
 					}
 				}
 			} else {
@@ -746,6 +766,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			line->type = LINE_EMPTY;
 			break;
 
+		case TOC_SINGLE:
+		case TOC_RANGE:
 		case TOC:
 			line->type = (e->extensions & EXT_COMPATIBILITY) ? LINE_PLAIN : LINE_TOC;
 			break;
@@ -966,6 +988,9 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 	// Reset metadata flag
 	e->allow_meta = (e->extensions & EXT_COMPATIBILITY) ? false : true;
 
+	if (e->allow_meta) {
+		e->allow_meta = (e->extensions & EXT_NO_METADATA) ? false : true;
+	}
 
 	// Create a scanner (for re2c)
 	Scanner s;
@@ -2122,7 +2147,7 @@ handle_line:
 
 				// Move children to parent
 				// Add ':' back
-				if (e->dstr->str[l->child->start - 1] == ':') {
+				if (l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
 					temp = token_new(COLON, l->child->start - 1, 1);
 					token_append_child(block, temp);
 				}
@@ -2183,6 +2208,21 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		e->extensions |= EXT_NO_METADATA;
 	}
 
+	if (e->extensions & EXT_PARSE_OPML) {
+		// Convert from OPML first (if not done earlier)
+		mmd_convert_opml_string(e, byte_start, byte_len);
+
+		// Fix start/stop
+		byte_start = 0;
+		byte_len = e->dstr->currentStringLength;
+	} else if (e->extensions & EXT_PARSE_ITMZ) {
+		// Convert from ITMZ first (if not done earlier)
+		mmd_convert_itmz_string(e, byte_start, byte_len);
+
+		// Fix start/stop
+		byte_start = 0;
+		byte_len = e->dstr->currentStringLength;
+	}
 
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
@@ -2258,6 +2298,7 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 /// Does the text have metadata?
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
+	token * old_root;
 
 	if (!e) {
 		return false;
@@ -2274,10 +2315,8 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		return false;
 	}
 
-	// Free existing parse tree
-	if (e->root) {
-		token_tree_free(e->root);
-	}
+	// Preserve existing parse tree (if any)
+	old_root = e->root;
 
 	// Tokenize the string (up until first empty line)
 	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
@@ -2296,6 +2335,9 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 
 		token_tree_free(doc);
 	}
+
+	// Restore previous parse tree
+	e->root = old_root;
 
 	return result;
 }
@@ -2692,7 +2734,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 
 	switch (format) {
 		case FORMAT_EPUB:
-			epub_write_wrapper(filepath, output->str, e, directory);
+			epub_write_wrapper(filepath, output, e, directory);
 			break;
 
 		case FORMAT_TEXTBUNDLE:
@@ -2700,7 +2742,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 			break;
 
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			textbundle_write_wrapper(filepath, output->str, e, directory);
+			textbundle_write_wrapper(filepath, output, e, directory);
 			break;
 
 		default:
@@ -2753,6 +2795,14 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 	DString * result = NULL;
 
 	if (format == FORMAT_MMD) {
+		if (e->extensions & EXT_PARSE_OPML) {
+			// Convert from OPML first (if not done earlier)
+			mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+		} else if (e->extensions & EXT_PARSE_ITMZ) {
+			// Convert from ITMZ first (if not done earlier)
+			mmd_convert_itmz_string(e, 0, e->dstr->currentStringLength);
+		}
+
 		// Simply return text (transclusion is handled externally)
 		d_string_append_c_array(output, e->dstr->str, e->dstr->currentStringLength);
 
@@ -2765,26 +2815,32 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 	switch (format) {
 		case FORMAT_EPUB:
-			result = epub_create(output->str, e, directory);
+			result = epub_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_TEXTBUNDLE:
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			result = textbundle_create(output->str, e, directory);
+			result = textbundle_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_ODT:
-			result = opendocument_text_create(output->str, e, directory);
+			result = opendocument_text_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_FODT:
-			result = opendocument_flat_text_create(output->str, e, directory);
+			result = opendocument_flat_text_create(output, e, directory);
+
+			d_string_free(output, true);
+			break;
+
+		case FORMAT_ITMZ:
+			result = itmz_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
@@ -2797,6 +2853,104 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 	}
 
 	return result;
+}
+
+
+/// Convert OPML string to MMD
+DString * mmd_string_convert_opml_to_text(const char * source) {
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+
+	DString * result =  mmd_engine_convert_opml_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Convert OPML DString to MMD
+DString * mmd_d_string_convert_opml_to_text(DString * source) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+
+	DString * result =  mmd_engine_convert_opml_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Convert OPML to text without modifying original engine source
+DString *  mmd_engine_convert_opml_to_text(mmd_engine * e) {
+	DString * original = d_string_new("");
+	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
+
+	mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+
+	// Swap original and engine
+	char * temp = e->dstr->str;
+	size_t size = e->dstr->currentStringLength;
+
+	// Replace engine copy with original OPML text
+	e->dstr->str = original->str;
+	e->dstr->currentStringLength = original->currentStringLength;
+
+	// Original now contains the processed text
+	original->str = temp;
+	original->currentStringLength = size;
+
+	return original;
+}
+
+
+/// Convert ITMZ string to MMD
+DString * mmd_string_convert_itmz_to_text(const char * source) {
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+
+	DString * result =  mmd_engine_convert_itmz_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Convert ITMZ DString to MMD
+DString * mmd_d_string_convert_itmz_to_text(DString * source) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+
+	DString * result =  mmd_engine_convert_itmz_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Convert ITMZ to text without modifying original engine source
+DString *  mmd_engine_convert_itmz_to_text(mmd_engine * e) {
+	DString * original = d_string_new("");
+	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
+
+	mmd_convert_itmz_string(e, 0, e->dstr->currentStringLength);
+
+	// Swap original and engine
+	char * temp = e->dstr->str;
+	size_t size = e->dstr->currentStringLength;
+
+	// Replace engine copy with original ITMZ text
+	e->dstr->str = original->str;
+	e->dstr->currentStringLength = original->currentStringLength;
+
+	// Original now contains the processed text
+	original->str = temp;
+	original->currentStringLength = size;
+
+	return original;
 }
 
 

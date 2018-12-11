@@ -145,7 +145,7 @@ DString * scan_file(const char * fname) {
 	while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
 		d_string_append_c_array(buffer, chunk, bytes);
 
-		if (buffer->currentStringLength < kBUFFERSIZE) {
+		if (buffer->currentStringLength <= kBUFFERSIZE) {
 			// Strip BOM
 			if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
 				d_string_erase(buffer, 0, 3);
@@ -160,7 +160,7 @@ DString * scan_file(const char * fname) {
 
 
 /// Scan from stdin into a DString
-DString * stdin_buffer() {
+DString * stdin_buffer(void) {
 	/* Read from stdin and return a GString *
 		`buffer` will need to be freed elsewhere */
 
@@ -234,7 +234,7 @@ static char * my_strndup(const char * source, size_t n) {
 
 	// strlen is too slow if strlen(source) >> n
 	for (len = 0; len < n; ++len) {
-		if (test == '\0') {
+		if (*test == '\0') {
 			break;
 		}
 

@@ -101,6 +101,7 @@
 
 */
 
+#include "d_string.h"
 #include "zip.h"
 
 #include <dirent.h>
@@ -208,3 +209,60 @@ mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
 	return unzip_archive_to_path(&pZip, path);
 }
 
+
+// Extract single file from archive
+mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DString * destination) {
+	mz_uint32 index;
+	mz_zip_archive_file_stat pStat;
+	mz_bool status;
+
+	int result = mz_zip_reader_locate_file_v2(pZip, filename, NULL, 0, &index);
+
+	if (result == -1) {
+		// Failed
+		return 0;
+	}
+
+	mz_zip_reader_file_stat(pZip, index, &pStat);
+	unsigned long long size = pStat.m_uncomp_size + 1;				// Allow for null terminator in case this is text
+
+	if (destination->currentStringBufferSize < size) {
+		// Buffer to small
+		free(destination->str);
+		destination->str = malloc((unsigned long)size);
+		destination->currentStringBufferSize = (size_t)size;
+	}
+
+	status = mz_zip_reader_extract_to_mem(pZip, index, destination->str, destination->currentStringBufferSize, 0);
+	destination->currentStringLength = (size_t)size - 1;
+	destination->str[destination->currentStringLength] = '\0';
+
+	if (!status) {
+		fprintf(stderr, "mz_zip_reader_extract_to_mem() failed.\n");
+	}
+
+	return status;
+}
+
+
+// Extract single file from archive
+mz_bool unzip_file_from_data(const void * data, size_t size, const char * filename, DString * destination) {
+	mz_zip_archive pZip;
+	memset(&pZip, 0, sizeof(mz_zip_archive));
+
+	mz_bool status = mz_zip_reader_init_mem(&pZip, data, size, 0);
+
+	if (!status) {
+		fprintf(stderr, "mz_zip_reader_init_mem() failed.\n");
+		return status;
+	}
+
+	status =  mz_zip_validate_archive(&pZip, 0);
+
+	if (!status) {
+		fprintf(stderr, "mz_zip_validate_archive failed.\n");
+		return status;
+	}
+
+	return unzip_file_from_archive(&pZip, filename, destination);
+}

@@ -563,6 +563,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 </table:table-row>
 
 </table:table>
+<text:p><text:bookmark text:name="notrailingnewline"/>Table <text:sequence text:name="Table" text:formula="ooow:Table+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>:<text:span text:style-name="MMD-Bold">no trailing newline</text:span><text:bookmark-end text:name="notrailingnewline"/></text:p>
 
 </office:text>
 </office:body>

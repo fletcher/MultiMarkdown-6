@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Emph and Strong Star</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;*foo*&#10;&#10;**foo*&#10;&#10;*foo**&#10;&#10;*foo bar*&#10;&#10;*foo* bar&#10;&#10;5&#10;&#10;foo *bar*&#10;&#10;**foo**&#10;&#10;**foo bar**&#10;&#10;**foo** bar&#10;&#10;foo **bar**&#10;&#10;10&#10;&#10;*foo *bar* foo*&#10;&#10;*foo **bar** foo*&#10;&#10;*foo ***bar*** foo*&#10;&#10;**foo *bar* foo**&#10;&#10;**foo **bar** foo**&#10;&#10;15&#10;&#10;**foo ***bar*** foo**&#10;&#10;***foo *bar* foo***&#10;&#10;***foo **bar** foo***&#10;&#10;***foo ***bar*** foo***&#10;&#10;***foo***&#10;&#10;20&#10;&#10;***foo** bar*&#10;&#10;***foo* bar**&#10;&#10;*foo **bar***&#10;&#10;**foo *bar***&#10;&#10;*foo*bar*&#10;&#10;25&#10;&#10;*foo *bar *foo *bar****&#10;&#10;****foo* bar* foo* bar*&#10;&#10;*foo bar*bar&#10;&#10;**foo bar**bar&#10;&#10;***foo bar***bar&#10;&#10;30&#10;&#10;foo*bar*foo&#10;&#10;foo**bar**foo&#10;&#10;foo***bar***foo&#10;&#10;foo*bar*foo&#10;&#10;**foo *foobarfoo* foo**&#10;&#10;35&#10;&#10;foo**`*bar*`**&#10;&#10;*(*foo*)&#10;&#10;*foo*:&#10;&#10;**foo**:&#10;&#10;***foo***:&#10;&#10;40&#10;&#10;foo*bar&#10;&#10;foo*bar foo*bar&#10;&#10;foo**bar&#10;&#10;foo**bar foo**bar&#10;&#10;foo***bar&#10;&#10;45&#10;&#10;foo***bar foo***bar&#10;&#10;foo **- bar**&#10;&#10;foo **1. bar**&#10;&#10;**foo:** bar&#10;&#10;*foo [bar]*&#10;&#10;50&#10;&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo&#10;*foo*&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Emph and Strong Star"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

@@ -11,15 +11,15 @@ This file is a designed as a single test that incorporates most of the
 identify common structures that are not supported yet -- particularly useful
 when developing a new output format.
 
-\part{Basic Blocks }
+\part{Basic Blocks}
 \label{basicblocks}
 
 paragraph
 
 \begin{itemize}
-\item{} list
+\item list
 
-\item{} items
+\item items
 
 \end{itemize}
 
@@ -43,19 +43,19 @@ blockquote
 
 \emph{emph} and \textbf{strong} and \textbf{\emph{both}}
 
-\chapter{Escapes }
+\chapter{Escapes}
 \label{escaped}
 
 \begin{enumerate}
-\item{} \$
+\item \$
 
-\item{} \#
+\item \#
 
-\item{} [
+\item [
 
 \end{enumerate}
 
-\part{Footnotes }
+\part{Footnotes}
 \label{footnotes}
 
 Foo.\footnote{This is an inline footnote}
@@ -66,7 +66,7 @@ Cite.~\citep{inlinecitation}
 
 Cite.~\citep{foo}
 
-\part{Links and Images }
+\part{Links and Images}
 \label{linksandimages}
 
 \href{http://foo.net/}{link}\footnote{\href{http://foo.net/}{http:\slash \slash foo.net\slash }} and \href{http://bar.net}{link}\footnote{\href{http://bar.net}{http:\slash \slash bar.net}}
@@ -77,15 +77,15 @@ Cite.~\citep{foo}
 \caption{test}
 \end{figure}
 
-\autoref{math}
+Math (\autoref{math})
 
 foo (\autoref{math})
 
-\autoref{bar}
+bar (\autoref{bar})
 
-\autoref{bar}
+bar (\autoref{bar})
 
-\part{Math }
+\part{Math}
 \label{math}
 
 foo \({e}^{i\pi }+1=0\) bar
@@ -98,12 +98,12 @@ foo ${e}^{i\pi }+1=0$, bar
 
 $${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
 
-\part{Smart Quotes }
+\part{Smart Quotes}
 \label{smartquotes}
 
 ``foo'' and `bar' -- with --- dashes{\ldots}
 
-\part{CriticMarkup }
+\part{CriticMarkup}
 \label{criticmarkup}
 
 \underline{foo}
@@ -116,7 +116,7 @@ $${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
 
 \hl{bar}
 
-\part{Definition Lists }
+\part{Definition Lists}
 \label{definitionlists}
 
 \begin{description}
@@ -129,12 +129,12 @@ $${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$
 baz bat*
 \end{description}
 
-\part{Horizontal Rules }
+\part{Horizontal Rules}
 \label{horizontalrules}
 
 \begin{center}\rule{3in}{0.4pt}\end{center}
 
-\part{Glossary }
+\part{Glossary}
 \label{glossary}
 
 \gls{term}
@@ -151,8 +151,6 @@ Inline Citation
 
 \bibitem{foo}
 bar
-
-
 \end{thebibliography}
 
 \input{mmd6-article-footer}

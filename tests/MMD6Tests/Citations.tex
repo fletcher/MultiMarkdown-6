@@ -2,12 +2,12 @@
 \def\mytitle{Citations}
 \input{mmd6-article-begin}
 
-\part{citep }
+\part{citep}
 \label{citep}
 
 ~\citep{foo1}
 
-~\citep{foo1}[]
+~\citep{foo1}{[]}
 
 ~\citep[p. 123]{foo1}
 
@@ -17,12 +17,12 @@
 
 ~\citep{foo1}~\citep{foo2}
 
-\part{citet }
+\part{citet}
 \label{citet}
 
 \citet{foo1}
 
-\citet{foo1}[]
+\citet{foo1}{[]}
 
 \citet[p. 123]{foo1}
 
@@ -39,10 +39,8 @@
 \bibitem{foo1}
 John Doe. \emph{A Totally Fake Book 1}. Vanity Press, 2006.
 
-
 \bibitem{foo2}
 John Doe. \emph{A Totally Fake Book 2}. Vanity Press, 2006.
-
 
 \bibitem{foo3}
 John Doe. \emph{A Totally Fake Book 3}. Vanity Press, 2006.

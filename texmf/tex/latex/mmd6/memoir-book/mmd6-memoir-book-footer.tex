@@ -1,0 +1,29 @@
+%
+%	MultiMarkdown default footer file
+%
+
+
+% Back Matter
+\if@mainmatter
+	we're in main
+	\backmatter
+\fi
+
+
+% Bibliography
+
+\ifx\bibliocommand\undefined
+\else
+	\bibliographystyle{\bibliostyle}
+	\bibliocommand
+\fi
+
+
+
+% Glossary
+\printglossaries
+
+
+% Index
+\printindex
+

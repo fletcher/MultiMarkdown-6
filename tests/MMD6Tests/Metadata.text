@@ -1,18 +1,21 @@
 title:	*foo* "bar"
+empty:
 css:	http://foo.com/bar.css
-HTML header:	<script type="text/javascript"
+htmlheader:	<script type="text/javascript"
 	src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 	</script>
-latex leader:	mmd6-article-leader
-latex begin:	mmd6-article-begin
-latex footer:	mmd6-article-footer
+latexleader:	mmd6-article-leader
+latexbegin:	mmd6-article-begin
+latexfooter:	mmd6-article-footer
 foo:	bar
 foo bar
 	foo bar
 foo:	*bar*
-html header level: 2
-latex header level: 2
-base header level: 3
+htmlheader level: 2
+latexheader level: 2
+baseheader level: 3
+multiline: first line\
+	second line
 
 foo:	bar
 

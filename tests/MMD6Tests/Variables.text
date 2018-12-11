@@ -1,5 +1,5 @@
-Title:	Variables
-latex config:	article
+title:	Variables
+latexconfig:	article
 foo:	bar
 foo bar
 	foo bar

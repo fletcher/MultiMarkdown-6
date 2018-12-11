@@ -114,7 +114,13 @@ void zip_new_archive(mz_zip_archive * pZip);
 mz_bool unzip_archive_to_path(mz_zip_archive * pZip, const char * path);
 
 // Unzip archive (as plain binary data) to specified file path
-mz_bool unzip_data_to_path(const void * data, size_t len, const char * path);
+mz_bool unzip_data_to_path(const void * data, size_t size, const char * path);
+
+// Extract single file from archive
+mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DString * destination);
+
+// Extract single file from archive
+mz_bool unzip_file_from_data(const void * data, size_t size, const char * filename, DString * file);
 
 
 #endif

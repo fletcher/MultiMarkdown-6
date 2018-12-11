@@ -1,0 +1,54 @@
+%
+%	Get ready for the actual document
+%
+
+\usepackage[
+	plainpages=false,
+	pdfpagelabels,
+	pdftitle={\mytitle},
+	pagebackref,
+	pdfauthor={\myauthor},
+	pdfkeywords={\mykeywords}
+	]{hyperref}
+\usepackage{memhfixc}
+
+
+\input{mmd6-title}
+\title{\mytitle}
+\author{\myauthor}
+
+\ifx\mydate\undefined
+\else
+	\date{\mydate}
+\fi
+
+
+\ifx\theme\undefined
+\else
+	\usetheme{\theme}
+\fi
+
+\begin{document}
+
+\VerbatimFootnotes
+
+
+\chapterstyle{\mychapterstyle}
+\pagestyle{\mypagestyle}
+
+% Frontmatter
+\frontmatter
+
+% Title Page
+\maketitle
+\clearpage
+
+\input{mmd6-memoir-copyright}
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+
+\mainmatter
+

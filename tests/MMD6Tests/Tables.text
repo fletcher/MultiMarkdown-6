@@ -1,5 +1,5 @@
-Title:	Tables
-latex config:	article
+title:	Tables
+latexconfig:	article
 
 | foo	| bar	|  
  -----+ | :--:+	|  
@@ -67,3 +67,4 @@ latex config:	article
 | foo | bar |
 | --- | --- |
 | foo | bar |
+[**no trailing newline**]

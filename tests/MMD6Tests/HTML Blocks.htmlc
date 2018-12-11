@@ -1,5 +1,5 @@
-<p>Title:	HTML Blocks
-latex config:	article</p>
+<p>title:	HTML Blocks
+latexconfig:	article</p>
 
 <p><del><em>bar1</em></del></p>
 
@@ -57,7 +57,7 @@ latex config:	article</p>
 
 <div>
 
-<h1>foo2 </h1>
+<h1>foo2</h1>
 
 <p>[foo][foo2]</p>
 

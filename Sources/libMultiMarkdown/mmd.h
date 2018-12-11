@@ -94,6 +94,8 @@ struct mmd_engine {
 	short					quotes_lang;
 
 	struct asset *			asset_hash;
+
+	int						random_seed_base_labels;
 };
 
 

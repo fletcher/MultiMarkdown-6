@@ -25,6 +25,8 @@
  **************************************************************************/
 
 #include  "miniz.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcomma"
 
 typedef unsigned char mz_validate_uint16[sizeof(mz_uint16) == 2 ? 1 : -1];
 typedef unsigned char mz_validate_uint32[sizeof(mz_uint32) == 4 ? 1 : -1];
@@ -60,7 +62,7 @@ mz_ulong mz_adler32(mz_ulong adler, const unsigned char *ptr, size_t buf_len)
         s1 %= 65521U, s2 %= 65521U;
         buf_len -= block_len;
         block_len = 5552;
-    }
+	}
     return (s2 << 16) + s1;
 }
 
@@ -2144,7 +2146,7 @@ void *tdefl_write_image_to_png_file_in_memory(const void *pImage, int w, int h, 
 /* Allocate the tdefl_compressor and tinfl_decompressor structures in C so that */
 /* non-C language bindings to tdefL_ and tinfl_ API don't need to worry about */
 /* structure size and allocation mechanism. */
-tdefl_compressor *tdefl_compressor_alloc()
+tdefl_compressor *tdefl_compressor_alloc(void)
 {
     return (tdefl_compressor *)MZ_MALLOC(sizeof(tdefl_compressor));
 }
@@ -2878,7 +2880,7 @@ int tinfl_decompress_mem_to_callback(const void *pIn_buf, size_t *pIn_buf_size, 
     return result;
 }
 
-tinfl_decompressor *tinfl_decompressor_alloc()
+tinfl_decompressor *tinfl_decompressor_alloc(void)
 {
     tinfl_decompressor *pDecomp = (tinfl_decompressor *)MZ_MALLOC(sizeof(tinfl_decompressor));
     if (pDecomp)
@@ -7555,3 +7557,5 @@ mz_bool mz_zip_end(mz_zip_archive *pZip)
 #endif
 
 #endif /*#ifndef MINIZ_NO_ARCHIVE_APIS*/
+
+#pragma clang diagnostic pop

@@ -107,8 +107,8 @@
 
 #include "writer.h"
 
-void mmd_print_char_opendocument(DString * out, char c);
-void mmd_print_string_opendocument(DString * out, const char * str);
+void mmd_print_char_opendocument(DString * out, char c, bool line_breaks);
+void mmd_print_string_opendocument(DString * out, const char * str, bool line_breaks);
 void mmd_print_localized_char_opendocument(DString * out, unsigned short type, scratch_pad * scratch);
 
 void mmd_export_token_opendocument_raw(DString * out, const char * source, token * t, scratch_pad * scratch);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Superscript</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;x^2.&#10;&#10;x^2xz.&#10;&#10;x^2.^&#10;&#10;x^2 3^&#10;&#10;x^2 3^2&#10;&#10;5&#10;&#10;x~z.&#10;&#10;x~xyz.&#10;&#10;z~z.~&#10;&#10;~/Library/MultiMarkdown&#10;&#10;^test&#10;&#10;10&#10;&#10;x\^y&#10;&#10;x\~y&#10;&#10;x~2 3~&#10;&#10;x~2 3~2&#10;&#10;H~2~O&#10;&#10;15&#10;&#10;CH~3~CH~2~CH~2~CH~3~&#10;&#10;CH~3~CH~2~CH~2~CH~3&#10;&#10;`\pi^2`&#10;&#10;`\pi^2^`&#10;&#10;`CH~4`&#10;&#10;20&#10;&#10;`CH~4~`&#10;&#10; ^238^U&#10;&#10; Ca^2+^&#10;&#10; ~t~p~x~&#10;&#10; ^23^Na^1+^&#10;&#10;25&#10;&#10;Na^1+&#10;&#10;Na^1+^&#10;&#10;Na^+&#10;&#10;Na^+^&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Superscript"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

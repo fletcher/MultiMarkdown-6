@@ -1,0 +1,62 @@
+\ProvidesPackage{manuscript}
+\typeout{Manuscript Formatting Package for Memoir - by Fletcher T. Penney}
+
+
+% Settings for manuscripts
+\usepackage{indentfirst}
+
+\usepackage{fontspec}
+\font\manuscript="Courier New" at 12pt
+
+
+\makepagestyle{manuscript}	% used for most pages
+\makeevenhead{manuscript}{}{}{\manuscript \surname~ / \MakeUppercase \mytitle~ / \thepage}
+\makeoddhead{manuscript}{}{}{\manuscript \surname~ / \MakeUppercase \mytitle~ / \thepage}
+\makeevenfoot{manuscript}{}{}{}
+\makeoddfoot{manuscript}{}{}{}
+
+\makepagestyle{plain}		% LaTeX defaults to plain on first page of chapters, etc
+\makeevenhead{plain}{}{}{\manuscript \surname~ / \MakeUppercase \mytitle~ / \thepage}
+\makeoddhead{plain}{}{}{\manuscript \surname~ / \MakeUppercase \mytitle~ / \thepage}
+\makeevenfoot{plain}{}{}{}
+\makeoddfoot{plain}{}{}{}
+
+\makepagestyle{title}		% Use for the title page
+\makeevenhead{title}{}{}{}
+\makeoddhead{title}{}{}{}
+\makeevenfoot{title}{}{}{}
+\makeoddfoot{title}{}{}{}
+
+
+\setlength{\beforechapskip}{1.4in}
+
+\makechapterstyle{manuscript}{%
+\pagestyle{manuscript}
+\renewcommand{\chapnumfont}{\manuscript} 
+\renewcommand{\chapterheadstart}{\vspace*{\beforechapskip}} 
+\renewcommand{\printchaptername}{} 
+\renewcommand{\chapternamenum}{} 
+\renewcommand*\printchapternum{ \chapnumfont\
+	\centering
+	\ifanappendix \thechapter \else Chapter \numtoName{\c@chapter}\fi 
+	\vskip 12pt} 
+\renewcommand{\printchaptertitle}[1]{}
+\renewcommand{\afterchaptertitle}{}
+\renewcommand{\afterchapternum}{} 
+} 
+
+
+
+% Page Layout
+\settrimmedsize{\stockheight}{\stockwidth}{*}	% Use entire page
+\settrims{0pt}{0pt}
+
+\setlrmarginsandblock{1.27in}{1.27in}{*}
+\setulmarginsandblock{1.5in}{1.5in}{*}
+
+\setmarginnotes{17pt}{51pt}{\onelineskip}
+\setheadfoot{\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{2\onelineskip}{*}
+\checkandfixthelayout
+
+\chapterstyle{manuscript}

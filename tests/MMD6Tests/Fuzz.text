@@ -1,5 +1,5 @@
-Title:	Fuzz Testing
-latex config:	article
+title:	Fuzz Testing
+latexconfig:	article
 
 Collection of test cases identified by [American fuzzy lop](http://lcamtuf.coredump.cx/afl/).
 

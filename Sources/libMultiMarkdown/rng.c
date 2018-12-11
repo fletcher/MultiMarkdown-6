@@ -85,6 +85,9 @@ long *ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 
 	x[1]++;              /* make x[1] (and only x[1]) odd */
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcomma"
+
 	for (ss = seed & (MM - 1), t = TT - 1; t; ) {
 		for (j = KK - 1; j > 0; j--) {
 			x[j + j] = x[j], x[j + j - 1] = 0; /* "square" */
@@ -109,6 +112,8 @@ long *ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 			t--;
 		}
 	}
+
+#pragma clang diagnostic pop
 
 	for (j = 0; j < LL; j++) {
 		ran_x[j + KK - LL] = x[j];
@@ -152,7 +157,7 @@ int main()
   return 0;
 } */
 
-long ran_num_next() {
+long ran_num_next(void) {
 	return ran_arr_next();
 }
 

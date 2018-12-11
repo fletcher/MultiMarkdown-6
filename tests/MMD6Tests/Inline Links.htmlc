@@ -1,5 +1,5 @@
-<p>Title:	Inline Links
-latex config:	article</p>
+<p>title:	Inline Links
+latexconfig:	article</p>
 
 <p>Just a <a href="http://url/file.txt">URL</a>.</p>
 

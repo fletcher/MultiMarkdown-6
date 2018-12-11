@@ -1,5 +1,5 @@
-Title:	Amps and Angles
-latex config:	article
+title:	Amps and Angles
+latexconfig:	article
 
 AT&T has an ampersand in their name.
 
@@ -17,9 +17,9 @@ Here is a [link][1] with an ampersand in the URL.
 
 Here is a link with an amersand in the link text: [AT&T][2].
 
-Here is an inline [link](/script?foo=1&bar=2).
+Here is an inline [link](/script%20here?foo=1&bar=2).
 
-Here is an inline [link](</script?foo=1&bar=2>).
+Here is an inline [link](</script%20here?foo=1&bar=2>).
 
 	& and &amp; and < and > in code block.
 

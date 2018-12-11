@@ -1,5 +1,5 @@
-Title:	Edge Cases 2
-latex config:	article
+title:	Edge Cases 2
+latexconfig:	article
 
 
 **b**, _u_, __v__, *__w__*, _**x**_, ***y***, ___z___, *t __w__ t*

@@ -81,9 +81,63 @@
 	quoted_p	= "(" [^)\n\r\x00]* ")";
 	unquoted	= [\.A-Za-z0-9]+;
 
+
+	// IMPORTANT NOTE FOR DEVELOPERS!!
+	//
+	// Read about the three options you have for matching boolean attributes in HTML 
+	//
+
+	// Match complete list of possible HTML boolean attributes from HTML 5.1
+	// NOTE: Compile time of scanners.re.c goes up dramatically using the full list 
+	// (in fact, I haven't completed a build using it because it was taking so long)
+	//
+	// I would *guess* there should be a minimal performance hit with this option,
+	// but since I haven't compiled it, I haven't tested it.
+	//
+	// I recommend handpicking the attributes you consider necessary instead of using this,
+	// but if you are using MMD in a situation that makes extensive use of raw HTML, you
+	// may need to use this option or the regex-defined option.
+
+//	bool_attr	= 'allowfullscreen' | 'async' | 'autofocus' | 'autoplay' | 'badInput' | 'checked' |
+//					'compact' | 'complete' | 'controls' | 'cookieEnabled' | 'customError' |
+//					'declare' | 'default' | 'defaultChecked' | 'defaultMuted' | 'defaultSelected' |
+//					'defer' | 'disabled' | 'draggable' | 'enabled' | 'ended' | 'formNoValidate' |
+//					'hidden' | 'indeterminate' | 'isContentEditable' | 'isMap' | 'loop' | 'multiple' |
+//					'muted' | 'noHref' | 'noResize' | 'noShade' | 'noValidate' | 'noWrap' | 'onLine' |
+//					'open' | 'patternMismatch' | 'paused' | 'pauseOnExit' | 'persisted' |
+//					'rangeOverflow' | 'rangeUnderflow' | 'required' | 'reversed' | 'seeking' |
+//					'selected' | 'spellcheck' | 'stepMismatch' | 'tooLong' | 'tooShort' | 'translate' |
+//					'trueSpeed' | 'typeMismatch' | 'typeMustMatch' | 'valid' | 'valueMissing' |
+//					'visible' | 'willValidate' | 'readonlyclosed';
+
+	// Use a more minimal list of boolean attributes that have come up in real life
+	// e.g. those for `<video>`.  This approach maintains performance at the expense of
+	// possibly missing some rare edge cases involving raw HTML.
+	//
+	// Performance is on par with not including any boolean attributes using this option.
+	//
+	// Compilation is fast with this option.
+	//
+	// This is the default option for MMD 6 (at least for now)
+
+	bool_attr	= 'autoplay' | 'controls' | 'loop' | 'muted' | 'allowfullscreen';
+
+
+	// Alternatively, use a regex-defined match for boolean attributes.
+	//
+	// This option causes many false positives and causes roughly a 5-8% performance hit,
+	// But it could be more in documents that use `<` frequently.
+	//
+	// This may or may not be meaningful for your purposes.
+	//
+	// Compilation is fast with this option
+
+//	bool_attr	= name;
+
+
 	value		= (quoted_d | quoted_s | unquoted);
 	attr		= spnl name '=' sp value;
-	attributes	= (attr)+;
+	attributes	= ((spnl bool_attr) | attr)+;
 	title		= (quoted_d | quoted_s | quoted_p);
 
 	label		= [^\]\n\r\x00]* [^\]\n\r\x00\\];
@@ -133,13 +187,13 @@
 
 	html_block	= '<' '/'? block_tag attributes? '/'? '>';
 
-	fence_start	= non_indent [`~]{3,} [^`'\n\r\x00]+ nl_eof;
+	fence_start	= non_indent ('`'{3,} | '~'{3,}) [^`'\n\r\x00]+ nl_eof;
 
-	fence_end	= non_indent [`~]{3,} sp nl_eof;
+	fence_end	= non_indent ('`'{3,} | '~'{3,}) sp nl_eof;
 
 	meta_key	= [A-Za-z0-9] [A-Za-z0-9_ \240\t\-\.]*;
 
-	meta_value	= [^\n\r\x00]+;
+	meta_value	= [^\n\r\x00]*;
 
 	meta_line	= meta_key sp ':' meta_value nl_eof;	// meta_line can't match url above
 
@@ -171,18 +225,17 @@ size_t scan_spnl(const char * c) {
 
 /*!re2c
 	spnl 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
 
 size_t scan_key(const char * c) {
-	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c
 	name 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -193,7 +246,7 @@ size_t scan_value(const char * c) {
 
 /*!re2c
 	value 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -204,7 +257,7 @@ size_t scan_attr(const char * c) {
 
 /*!re2c
 	attr		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -215,7 +268,7 @@ size_t scan_attributes(const char * c) {
 
 /*!re2c
 	attributes	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -226,7 +279,7 @@ size_t scan_email(const char * c) {
 
 /*!re2c
 	email		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -238,7 +291,7 @@ size_t scan_url(const char * c) {
 /*!re2c
 	email		{ return (size_t)( c - start ); }
 	url			{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -249,7 +302,7 @@ size_t scan_ref_abbreviation(const char * c) {
 
 /*!re2c
 	ref_abbr	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -260,7 +313,7 @@ size_t scan_ref_citation(const char * c) {
 
 /*!re2c
 	ref_citation	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -271,7 +324,7 @@ size_t scan_ref_foot(const char * c) {
 
 /*!re2c
 	ref_foot	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -282,7 +335,7 @@ size_t scan_ref_glossary(const char * c) {
 
 /*!re2c
 	ref_glossary	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -293,7 +346,7 @@ size_t scan_ref_link_no_attributes(const char * c) {
 
 /*!re2c
 	ref_link_no_attributes	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -304,7 +357,7 @@ size_t scan_ref_link(const char * c) {
 
 /*!re2c
 	ref_link	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -315,7 +368,7 @@ size_t scan_html(const char * c) {
 
 /*!re2c
 	html 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -326,7 +379,7 @@ size_t scan_html_comment(const char * c) {
 
 /*!re2c
 	tag_comment	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -337,7 +390,7 @@ size_t scan_html_block(const char * c) {
 
 /*!re2c
 	html_block	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -348,7 +401,7 @@ size_t scan_html_line(const char * c) {
 
 /*!re2c
 	html_line	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -359,7 +412,7 @@ size_t scan_fence_start(const char * c) {
 
 /*!re2c
 	fence_start	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -370,7 +423,7 @@ size_t scan_fence_end(const char * c) {
 
 /*!re2c
 	fence_end	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -382,7 +435,7 @@ size_t scan_meta_line(const char * c) {
 /*!re2c
 	non_indent '-'{3,} nl meta_line { return (size_t) ( c - start ); }
 	meta_line	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -393,7 +446,7 @@ size_t scan_meta_key(const char * c) {
 
 /*!re2c
 	meta_key	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -404,7 +457,7 @@ size_t scan_definition(const char * c) {
 
 /*!re2c
 	definition	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -415,7 +468,7 @@ size_t scan_table_separator(const char * c) {
 
 /*!re2c
 	table_separator	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -433,7 +486,7 @@ size_t scan_alignment_string(const char * c) {
 	align_wrap_right	{ return ALIGN_WRAP | ALIGN_RIGHT; }
 	align_wrap_center	{ return ALIGN_WRAP | ALIGN_CENTER; }
 
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -444,7 +497,7 @@ size_t scan_destination(const char * c) {
 
 /*!re2c
 	destination	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -455,7 +508,7 @@ size_t scan_title(const char * c) {
 
 /*!re2c
 	title	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -466,7 +519,7 @@ size_t scan_setext(const char * c) {
 /*!re2c
 	setext_1	{ return (size_t)( c - start ); }
 	setext_2	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 
@@ -476,7 +529,7 @@ size_t scan_atx(const char * c) {
 
 /*!re2c
 	atx			{ return (size_t)( c - start ); }
-	.?			{ return 0; }
+	*			{ return 0; }
 */	
 }
 

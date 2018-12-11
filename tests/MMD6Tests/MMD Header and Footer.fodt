@@ -275,7 +275,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
  </office:master-styles>
 <office:meta>
 	<dc:title>MMD Header and Footer</dc:title>
-</office:meta>
+ODF header.</office:meta>
 <office:body>
 <office:text>
 <text:p text:style-name="Standard">MultiMarkdown <text:span text:style-name="MMD-Italic">header</text:span>.</text:p>

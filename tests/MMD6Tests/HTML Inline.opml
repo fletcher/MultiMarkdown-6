@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>HTML Inline</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;&lt;foo&gt;*bar*&lt;/foo&gt;&#10;&#10;&lt;foo bar=&quot;foo&quot;&gt;*bar*&lt;/foo&gt;&#10;&#10;&#10;&#9;&lt;div&gt;&#10;&#9;    foo&#10;&#9;&lt;/div&gt;&#10;&#10;test.&lt;!-- Comment --&gt;&#10;&#10;test.&lt;!-- Comment &#10;with&#10;multiple&#10;lines. --&gt;&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="HTML Inline"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

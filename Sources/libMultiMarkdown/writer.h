@@ -90,6 +90,9 @@ typedef struct {
 
 	int 				random_seed_base;
 
+	int 				random_seed_base_labels;
+	int 				label_counter;
+
 	stack *				used_citations;
 	stack *				inline_citations_to_free;
 	struct fn_holder *	citation_hash;
@@ -113,6 +116,7 @@ typedef struct {
 	stack *				header_stack;
 
 	stack *				outline_stack;
+	short				opml_item_closed;
 
 	short				recurse_depth;
 
@@ -144,7 +148,15 @@ struct link {
 	char *				url;
 	char *				title;
 	attr *				attributes;
+	short				flags;
 	UT_hash_handle		hh;
+};
+
+enum link_flags {
+	LINK_INLINE       = 1 << 0,			//!< Inline link, e.g. [foo](#bar)
+	LINK_IMPLICIT     = 1 << 1,			//!< Implicit link, e.g. [foo]
+	LINK_REFERENCE    = 1 << 2,			//!< Reference definition
+	LINK_AUTO         = 1 << 3, 		//!< Automatically generated link (e.g. Headers, tables)
 };
 
 typedef struct link link;
@@ -210,7 +222,7 @@ void link_free(link * l);
 void footnote_free(footnote * f);
 
 char * label_from_token(const char * source, token * t);
-char * label_from_header(const char * source, token * t);
+char * label_from_header(const char * source, token * t, scratch_pad * scratch);
 
 void parse_brackets(const char * source, scratch_pad * scratch, token * bracket, link ** link, short * skip_token, bool * free_link);
 
@@ -235,6 +247,8 @@ meta * extract_meta_from_stack(scratch_pad * scratch, const char * target);
 void read_table_column_alignments(const char * source, token * table, scratch_pad * scratch);
 
 void strip_leading_whitespace(token * chain, const char * source);
+
+void trim_trailing_whitespace_d_string(DString * d);
 
 bool table_has_caption(token * table);
 

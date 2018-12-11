@@ -1,5 +1,5 @@
-<p>Title:	Nested Lists
-latex config:	article</p>
+<p>title:	Nested Lists
+latexconfig:	article</p>
 
 <ul>
 <li>foo

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Inline Images</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;Just a ![URL](/url/).&#10;&#10;![URL and title](/url/ &quot;title&quot;).&#10;&#10;![URL and title](/url/  &quot;title preceded by two spaces&quot;).&#10;&#10;![URL and title](/url/   &quot;title preceded by a tab&quot;).&#10;&#10;![URL and title](/url/ &quot;title has spaces afterward&quot;  ).&#10;&#10;5&#10;&#10;[Empty]().&#10;&#10;![**URL** and *title*](/url/ &quot;title&quot;).&#10;&#10;![URL and title](/url/ &quot;title&quot;).&#10;&#10;![URL and title](/url/ &apos;title&apos;).&#10;&#10;![URL and title](/url/ (title)).&#10;&#10;10&#10;&#10;![URL and title](/url/ &quot;&quot;).&#10;&#10;![URL and title](/url/ &quot;*title*&quot;).&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Inline Images"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

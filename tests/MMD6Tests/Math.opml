@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Math</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;foo \\({e}^{i\pi }+1=0\\) bar&#10;&#10;\\[ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} \\]&#10;&#10;foo ${e}^{i\pi }+1=0$ bar&#10;&#10;foo ${e}^{i\pi }+1=0$, bar&#10;&#10;$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$&#10;&#10;5&#10;&#10;foo $ {e}^{i\pi }+1=0$ bar&#10;&#10;$$ {x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$&#10;&#10;foo ${e}^{i\pi }+1=0 $ bar&#10;&#10;$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a} $$&#10;&#10;foo a${e}^{i\pi }+1=0$ bar&#10;&#10;10&#10;&#10;a$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$&#10;&#10;foo ${e}^{i\pi }+1=0$b bar&#10;&#10;$${x}_{1,2}=\frac{-b\pm \sqrt{{b}^{2}-4ac}}{2a}$$b&#10;&#10;$\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}$&#10;&#10;$$\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}$$&#10;&#10;15&#10;&#10;\\(\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\\)&#10;&#10;\\[\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\\]&#10;&#10;$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}$&#10;&#10;$$\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}$$&#10;&#10;\\(\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\\)&#10;&#10;20&#10;&#10;\\[\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}\\]&#10;&#10;`\begin{equation}\nabla \times \mathbf{E} = - \frac{\partial \mathbf{B}}{\partial t}\end{equation}`&#10;&#10;$a *foo* b$&#10;&#10;\\[a *foo* b\\]&#10;&#10;\\[\pi^2\\]&#10;&#10;25&#10;&#10;\\[\pi~2\\]&#10;&#10;`$a*x*y$`&#10;&#10;`$$a*x*y$$`&#10;&#10;`\\(a*x*y\\)`&#10;&#10;`\\[a*x*y\\]`&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Math"/>
+<outline text="latexconfig" _note="article"/>
+</outline>
+</body>
+</opml>
+

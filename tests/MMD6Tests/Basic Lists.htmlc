@@ -1,5 +1,5 @@
-<p>Title:	Basic Lists
-latex config:	article</p>
+<p>title:	Basic Lists
+latexconfig:	article</p>
 
 <ul>
 <li>foo</li>

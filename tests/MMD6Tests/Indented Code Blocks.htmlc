@@ -1,5 +1,5 @@
-<p>Title:	Indented Code Blocks
-latex config:	article</p>
+<p>title:	Indented Code Blocks
+latexconfig:	article</p>
 
 <pre><code>foo
 </code></pre>

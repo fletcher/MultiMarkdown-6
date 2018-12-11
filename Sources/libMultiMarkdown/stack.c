@@ -87,8 +87,10 @@ stack * stack_new(int startingSize) {
 
 /// Free the stack
 void stack_free(stack * s) {
-	free(s->element);
-	free(s);
+	if (s) {
+		free(s->element);
+		free(s);
+	}
 }
 
 

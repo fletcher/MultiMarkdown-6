@@ -1,11 +1,12 @@
 /**
 
-	MultiMarkdown 6 -- Lightweight markup processor to produce HTML, LaTeX, and more.
+	Dynamic string -- Lightweight dynamic string implementation.
 
 	@file d_string.h
 
-	@brief Dynamic string -- refactoring of old GLibFacade.  Provides a string
-	"object" that can grow to accomodate any size content that is appended.
+	@brief Dynamic string -- refactoring of old GLibFacade from MultiMarkdown.
+	Provides a string "object" that can grow to accomodate any size content
+	that is appended.
 
 
 	@author	Daniel Jalkut, modified by Fletcher T. Penney and Dan Lowe
@@ -73,9 +74,9 @@
 
 /// Structure for dynamic string
 struct DString {
-	char * str;								//!< Pointer to UTF-8 byte stream for string
-	unsigned long currentStringBufferSize;	//!< Size of buffer currently allocated
-	unsigned long currentStringLength;		//!< Size of current string
+	char * str;                             //!< Pointer to UTF-8 byte stream for string
+	unsigned long currentStringBufferSize;  //!< Size of buffer currently allocated
+	unsigned long currentStringLength;      //!< Size of current string
 };
 
 typedef struct DString DString;
@@ -83,91 +84,91 @@ typedef struct DString DString;
 
 /// Create a new dynamic string
 DString * d_string_new(
-	const char * startingString				//!< Initial contents for string
+	const char * startingString             //!< Initial contents for string
 );
 
 
 /// Free dynamic string
 char * d_string_free(
-	DString * ripString,					//!< DString to be freed
-	bool freeCharacterData					//!< Should the underlying str be freed as well?
+	DString * ripString,                    //!< DString to be freed
+	bool freeCharacterData                  //!< Should the underlying str be freed as well?
 );
 
 
 /// Append null-terminated string to end of dynamic string
 void d_string_append(
-	DString * baseString,					//!< DString to be appended
-	const char * appendedString				//!< String to be appended
+	DString * baseString,                   //!< DString to be appended
+	const char * appendedString             //!< String to be appended
 );
 
 
 /// Append single character to end of dynamic string
 void d_string_append_c(
-	DString * baseString,					//!< DString to be appended
-	char appendedCharacter					//!< Character to append
+	DString * baseString,                   //!< DString to be appended
+	char appendedCharacter                  //!< Character to append
 );
 
 
 /// Append array of characters to end of dynamic string
 void d_string_append_c_array(
-	DString * baseString,					//!< DString to be appended
-	const char * appendedChars,				//!< String to be appended
-	size_t bytes							//!< Number of bytes to append
+	DString * baseString,                   //!< DString to be appended
+	const char * appendedChars,             //!< String to be appended
+	size_t bytes                            //!< Number of bytes to append
 );
 
 
 /// Append to end of dynamic string using format specifier
 void d_string_append_printf(
-	DString * baseString,					//!< DString to be appended
-	const char * format,					//!< Format specifier for appending
-	...										//!< Arguments for format specifier
+	DString * baseString,                   //!< DString to be appended
+	const char * format,                    //!< Format specifier for appending
+	...                                     //!< Arguments for format specifier
 );
 
 
 /// Prepend null-terminated string to end of dynamic string
 void d_string_prepend(
-	DString * baseString,					//!< DString to be appended
-	const char * prependedString			//!< String to be prepended
+	DString * baseString,                   //!< DString to be appended
+	const char * prependedString            //!< String to be prepended
 );
 
 
 /// Insert null-terminated string inside dynamic string
 void d_string_insert(
-	DString * baseString,					//!< DString to be appended
-	size_t pos,								//!< Offset at which to insert string
-	const char * insertedString				//!< String to be inserted
+	DString * baseString,                   //!< DString to be appended
+	size_t pos,                             //!< Offset at which to insert string
+	const char * insertedString             //!< String to be inserted
 );
 
 
 /// Insert single character inside dynamic string
 void d_string_insert_c(
-	DString * baseString,					//!< DString to be appended
-	size_t pos,								//!< Offset at which to insert string
-	char insertedCharacter					//!< Character to insert
+	DString * baseString,                   //!< DString to be appended
+	size_t pos,                             //!< Offset at which to insert string
+	char insertedCharacter                  //!< Character to insert
 );
 
 
 /// Insert inside dynamic string using format specifier
 void d_string_insert_printf(
-	DString * baseString,					//!< DString to be appended
-	size_t pos,								//!< Offset at which to insert string
-	const char * format,					//!< Format specifier for appending
-	...										//!< Arguments for format specifier
+	DString * baseString,                   //!< DString to be appended
+	size_t pos,                             //!< Offset at which to insert string
+	const char * format,                    //!< Format specifier for appending
+	...                                     //!< Arguments for format specifier
 );
 
 
 /// Erase portion of dynamic string
 void d_string_erase(
-	DString * baseString,					//!< DString to be appended
-	size_t pos,								//!< Offset at which to erase portion of string
-	size_t len								//!< How many characters(bytes) to remove
+	DString * baseString,                   //!< DString to be appended
+	size_t pos,                             //!< Offset at which to erase portion of string
+	size_t len                              //!< Character to append
 );
 
 /// Copy a portion of dynamic string
 char * d_string_copy_substring(
-	DString * d,							//!< DString to copy
-	size_t start,							//!< Start position for copy
-	size_t len								//!< How many characters(bytes) to copy
+	DString * d,                            //!< DString to copy
+	size_t start,                           //!< Start position for copy
+	size_t len                              //!< How many characters(bytes) to copy
 );
 
 /// Replace occurences of "original" with "replace" inside the specified range

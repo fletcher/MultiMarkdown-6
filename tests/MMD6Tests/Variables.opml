@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+<head><title>Variables</title></head>
+<body>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;foo:&#9;bar&#10;&#10;[%foo]&#10;&#10;[%bar]&#10;&#10;[%bat]&#10;&#10;[%latex config]&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
+<outline text="title" _note="Variables"/>
+<outline text="latexconfig" _note="article"/>
+<outline text="foo" _note="bar foo bar foo bar"/>
+<outline text="bat" _note="**foo**"/>
+</outline>
+</body>
+</opml>
+

@@ -1,5 +1,5 @@
-Title:	CriticMarkup
-latex config:	article
+title:	CriticMarkup
+latexconfig:	article
 
 {++foo++}
 
