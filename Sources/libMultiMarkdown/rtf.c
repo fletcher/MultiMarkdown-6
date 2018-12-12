@@ -230,7 +230,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			break;
 
 		case DOC_START_TOKEN:
-			print_const("{\\rtf1\\ansi\\ansicpg1252\\cocoartf1504\\cocoasubrtf830\n{\\fonttbl\\f0\\fswiss\\fcharset0 Helvetica;}\n{\\colortbl;\\red255\\green255\\blue255;\\red191\\green191\\blue191;}\n{\\*\\expandedcolortbl;;\\csgray\\c79525;}\n{\\*\\listtable{\\list\\listtemplateid1\\listhybrid{\\listlevel\\levelnfc23\\levelnfcn23\\leveljc0\\leveljcn0\\levelfollow0\\levelstartat1\\levelspace360\\levelindent0{\\*\\levelmarker \\{disc\\}}{\\leveltext\\leveltemplateid1\\'01\\uc0\\u8226 ;}{\\levelnumbers;}\\fi-360\\li720\\lin720 }{\\listname ;}\\listid1}}\n{\\*\\listoverridetable{\\listoverride\\listid1\\listoverridecount0\\ls1}}\n\\margl1440\\margr1440\\vieww10800\\viewh8400\\viewkind0\n\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\n\\f0\\fs24 \\cf0 ");
+			print_const("{\\rtf1\\ansi\\ansicpg1252\\cocoartf1504\\cocoasubrtf830\n{\\fonttbl\\f0\\fswiss\\fcharset0 Helvetica;}\n{\\colortbl;\\red255\\green255\\blue255;\\red191\\green191\\blue191;}\n{\\*\\expandedcolortbl;;\\csgray\\c79525;}\n{\\*\\listtable{\\list\\listtemplateid1\\listhybrid{\\listlevel\\levelnfc23\\levelnfcn23\\leveljc0\\leveljcn0\\levelfollow0\\levelstartat1\\levelspace360\\levelindent0{\\*\\levelmarker \\{disc\\}}{\\leveltext\\leveltemplateid1\\'01\\uc0\\u8226 ;}{\\levelnumbers;}\\fi-360\\li720\\lin720 }{\\listname ;}\\listid1}}\n{\\*\\listoverridetable{\\listoverride\\listid1\\listoverridecount0\\ls1}}\n\\margl1440\\margr1440\\vieww10800\\viewh8400\\viewkind0\n\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\\sa360\n\n\\f0\\fs24 \\cf0 ");
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			}
@@ -337,19 +337,32 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 
 			break;
 
-		case PAIR_EMPH:
-			print_const(" \n\\i ");
-			if (t->child) {
-				mmd_export_token_tree_rtf(out, source, t->child, scratch);
-			}
-			print_const("\n\\i0  ");
+		case EMPH_START:
+			print_const("\\i ");
 			break;
-		case PAIR_STRONG:
-			print_const(" \n\\b ");
+
+		case EMPH_STOP:
+			print_const("\\i0 ");
+			break;
+
+		case EQUAL:
+			print_const("=");
+			break;
+
+		case PAIR_EMPH:
+			print_const("\\i ");
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			}
-			print_const("\n\\b0  ");
+			print_const("\\i0 ");
+			break;
+
+		case PAIR_STRONG:
+			print_const("\\b ");
+			if (t->child) {
+				mmd_export_token_tree_rtf(out, source, t->child, scratch);
+			}
+			print_const("\\b0 ");
 			break;
 
 		case QUOTE_SINGLE:
@@ -379,13 +392,43 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 
 			break;
 
-		case TEXT_PLAIN:
+		case SLASH:
+		case STAR:
 			print_token(t);
-			if (t->child) {
-				mmd_export_token_tree_rtf(out, source, t->child, scratch);
-			}
 			break;
+
+		case STRONG_START:
+			print_const("\\b ");
+			break;
+
+		case STRONG_STOP:
+			print_const("\\b0 ");
+			break;
+
+		case TEXT_NL:
+			if (t->next) {
+				print_char('\n');
+			}
+
+			break;
+
+		case RAW_FILTER_LEFT:
+		case TEXT_BACKSLASH:
+		case TEXT_BRACE_LEFT:
+		case TEXT_BRACE_RIGHT:
+		case TEXT_HASH:
+		case TEXT_NUMBER_POSS_LIST:
+		case TEXT_PERCENT:
+		case TEXT_PERIOD:
+		case TEXT_PLAIN:
+		case TOC:
+		case TOC_SINGLE:
+		case TOC_RANGE:
+			print_token(t);
+			break;
+
 		default:
+			fprintf(stderr, "Unknown token type: %d (%lu:%lu)\n", t->type, t->start, t->len);
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			} else {
