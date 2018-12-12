@@ -236,12 +236,14 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("}");
 			break;
+
 		case BLOCK_EMPTY:
 			print_const("\\\n");
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			}
 			break;
+
 		case BLOCK_H1:
 			print_const("\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\n\\b\\fs36 \\cf0 ");
 			if (t->child) {
@@ -249,6 +251,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\n\\b0\\fs24 \\\n");
 			break;
+
 		case BLOCK_H2:
 			print_const("\n\\b\\fs32 ");
 			if (t->child) {
@@ -256,6 +259,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\n\\b0\\fs24 \\\n");
 			break;
+
 		case BLOCK_H3:
 			print_const("\n\\b\\fs28 ");
 			if (t->child) {
@@ -263,6 +267,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\n\\b0\\fs24 \\\n");
 			break;
+
 		case BLOCK_H4:
 			print_const("\n\\i\\b\\fs26 ");
 			if (t->child) {
@@ -270,6 +275,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\n\\i0\\b0\\fs24 \\\n");
 			break;
+
 		case BLOCK_H5:
 			print_const("\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\n\\b \\cf0 ");
 			if (t->child) {
@@ -277,6 +283,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\n\\b0 \\\n");
 			break;
+
 		case BLOCK_H6:
 			print_const("\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\n\\i\\b \\cf0 ");
 			if (t->child) {
@@ -284,6 +291,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\n\\i0\\b0 \\\n");
 			break;
+
 		case BLOCK_LIST_BULLETED_LOOSE:
 			print_const("\\pard\\tx220\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\li720\\fi-720\\pardirnatural\\partightenfactor0\n\\ls1\\ilvl0\\cf0 ");
 			if (t->child) {
@@ -291,23 +299,117 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			}
 			print_const("\\pard\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\\cf0 ");
 			break;
+
 		case BLOCK_LIST_ITEM:
 			print_const("{\\listtext\t\\'95\t}");
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			}
 			break;
+
+		case BLOCK_META:
+			break;
+
 		case BLOCK_TABLE:
 			print_const("\n\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrt\\brdrnil \\trbrdrl\\brdrnil \\trbrdrr\\brdrnil \n\\clvertalc \\clshdrawnil \\clbrdrt\\brdrs\\brdrw20\\brdrcf2 \\clbrdrl\\brdrs\\brdrw20\\brdrcf2 \\clbrdrb\\brdrs\\brdrw20\\brdrcf2 \\clbrdrr\\brdrs\\brdrw20\\brdrcf2 \\clpadl100 \\clpadr100 \\gaph\\cellx4320\n\\clvertalc \\clshdrawnil \\clbrdrt\\brdrs\\brdrw20\\brdrcf2 \\clbrdrl\\brdrs\\brdrw20\\brdrcf2 \\clbrdrb\\brdrs\\brdrw20\\brdrcf2 \\clbrdrr\\brdrs\\brdrw20\\brdrcf2 \\clpadl100 \\clpadr100 \\gaph\\cel");
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			}
 			break;
+
 		case BLOCK_TABLE_SECTION:
 			print_const("bl\\itap1\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\\cf0 musical\\cell \n\\pard\\intbl\\itap1\\tx720\\tx1440\\tx2160\\tx2880\\tx3600\\tx4320\\tx5040\\tx5760\\tx6480\\tx7200\\tx7920\\tx8640\\pardirnatural\\partightenfactor0\n\\cf0 suspicion\\cell \\row\n\n\\itap1\\trowd \\taflags1 \\trgaph108\\trleft-108 \\trbrdrl\\brdrnil \\trbrdrt\\brdrnil \\trbrdrr\\brdrnil \n\\clvertalc \\clshdrawnil \\clbrdrt\\brdrs\\brdrw20\\brdrcf2 \\clbrdrl\\brdrs\\brdrw");
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			}
+			break;
+
+		case BRACE_DOUBLE_LEFT:
+			print_const("{{");
+			break;
+
+		case BRACE_DOUBLE_RIGHT:
+			print_const("}}");
+			break;
+
+		case BRACKET_LEFT:
+			print_const("[");
+			break;
+
+		case BRACKET_ABBREVIATION_LEFT:
+			print_const("[>");
+			break;
+
+		case BRACKET_CITATION_LEFT:
+			print_const("[#");
+			break;
+
+		case BRACKET_FOOTNOTE_LEFT:
+			print_const("[^");
+			break;
+
+		case BRACKET_GLOSSARY_LEFT:
+			print_const("[?");
+			break;
+
+		case BRACKET_IMAGE_LEFT:
+			print_const("![");
+			break;
+
+		case BRACKET_VARIABLE_LEFT:
+			print_const("[\%");
+			break;
+
+		case BRACKET_RIGHT:
+			print_const("]");
+			break;
+
+		case COLON:
+			print_const(":");
+			break;
+
+		case CRITIC_ADD_OPEN:
+			print_const("{++");
+			break;
+
+		case CRITIC_ADD_CLOSE:
+			print_const("++}");
+			break;
+
+		case CRITIC_COM_OPEN:
+			print_const("{&gt;&gt;");
+			break;
+
+		case CRITIC_COM_CLOSE:
+			print_const("&lt;&lt;}");
+			break;
+
+		case CRITIC_DEL_OPEN:
+			print_const("{--");
+			break;
+
+		case CRITIC_DEL_CLOSE:
+			print_const("--}");
+			break;
+
+		case CRITIC_HI_OPEN:
+			print_const("{==");
+			break;
+
+		case CRITIC_HI_CLOSE:
+			print_const("==}");
+			break;
+
+		case CRITIC_SUB_OPEN:
+			print_const("{~~");
+			break;
+
+		case CRITIC_SUB_DIV:
+			print_const("~&gt;");
+			break;
+
+		case CRITIC_SUB_CLOSE:
+			print_const("~~}");
 			break;
 
 		case DASH_M:
@@ -350,19 +452,15 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			break;
 
 		case PAIR_EMPH:
-			print_const("\\i ");
-			if (t->child) {
-				mmd_export_token_tree_rtf(out, source, t->child, scratch);
-			}
-			print_const("\\i0 ");
-			break;
-
+		case PAIR_PAREN:
+		case PAIR_QUOTE_DOUBLE:
+		case PAIR_QUOTE_SINGLE:
+		case PAIR_STAR:
 		case PAIR_STRONG:
-			print_const("\\b ");
-			if (t->child) {
-				mmd_export_token_tree_rtf(out, source, t->child, scratch);
-			}
-			print_const("\\b0 ");
+		case PAIR_SUBSCRIPT:
+		case PAIR_SUPERSCRIPT:
+		case PAIR_UL:
+			mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			break;
 
 		case QUOTE_SINGLE:
@@ -412,6 +510,11 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 
 			break;
 
+		case CODE_FENCE:
+		case TEXT_EMPTY:
+		case MANUAL_LABEL:
+			break;
+
 		case RAW_FILTER_LEFT:
 		case TEXT_BACKSLASH:
 		case TEXT_BRACE_LEFT:
@@ -428,7 +531,9 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			break;
 
 		default:
-			fprintf(stderr, "Unknown token type: %d (%lu:%lu)\n", t->type, t->start, t->len);
+			if (t->type != 77) {
+				fprintf(stderr, "Unknown token type: %d (%lu:%lu)\n", t->type, t->start, t->len);
+			}
 			if (t->child) {
 				mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			} else {
