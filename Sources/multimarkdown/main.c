@@ -395,6 +395,10 @@ int main(int argc, char** argv) {
 					output_filename = filename_with_extension(a_file->filename[i], ".opml");
 					break;
 
+				case FORMAT_RTF:
+					output_filename = filename_with_extension(a_file->filename[i], ".rtf");
+					break;
+
 				case FORMAT_ITMZ:
 					output_filename = filename_with_extension(a_file->filename[i], ".itmz");
 					break;
