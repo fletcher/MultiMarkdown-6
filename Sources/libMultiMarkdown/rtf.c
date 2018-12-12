@@ -451,6 +451,10 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 			print_const("=");
 			break;
 
+		case NON_INDENT_SPACE:
+			print_char(' ');
+			break;
+
 		case PAIR_EMPH:
 		case PAIR_PAREN:
 		case PAIR_QUOTE_DOUBLE:
@@ -461,6 +465,22 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 		case PAIR_SUPERSCRIPT:
 		case PAIR_UL:
 			mmd_export_token_tree_rtf(out, source, t->child, scratch);
+			break;
+
+		case PAREN_LEFT:
+			print_char('(');
+			break;
+
+		case PAREN_RIGHT:
+			print_char(')');
+			break;
+
+		case PIPE:
+			print_token(t);
+			break;
+
+		case PLUS:
+			print_token(t);
 			break;
 
 		case QUOTE_SINGLE:
@@ -474,7 +494,7 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 
 		case QUOTE_DOUBLE:
 			if ((t->mate == NULL) || (!(scratch->extensions & EXT_SMART))) {
-				print_const("&quot;");
+				print_const("\"");
 			} else {
 				(t->start < t->mate->start) ? ( print_localized(QUOTE_LEFT_DOUBLE) ) : ( print_localized(QUOTE_RIGHT_DOUBLE) );
 			}
