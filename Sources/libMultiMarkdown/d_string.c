@@ -558,6 +558,55 @@ void Test_d_string_insert_c(CuTest* tc) {
 #endif
 
 
+/// Insert array of characters inside dynamic string
+void d_string_insert_c_array(DString * baseString, size_t pos, const char * insertedString, size_t bytes) {
+	if (baseString && insertedString) {
+		if (bytes == -1) {
+			// Same as regular insertion
+			d_string_insert(baseString, pos, insertedString);
+		} else {
+			if (pos > baseString->currentStringLength) {
+				pos = baseString->currentStringLength;
+			}
+
+			size_t newSizeNeeded = baseString->currentStringLength + bytes;
+			ensureStringBufferCanHold(baseString, newSizeNeeded);
+
+			/* Shift following string to 'right' */
+			memmove(baseString->str + pos + bytes, baseString->str + pos, baseString->currentStringLength - pos);
+			strncpy(baseString->str + pos, insertedString, bytes);
+			baseString->currentStringLength = newSizeNeeded;
+			baseString->str[baseString->currentStringLength] = '\0';
+		}
+	}
+}
+
+
+#ifdef TEST
+void Test_d_string_insert_c_array(CuTest* tc) {
+	char * test = "foo";
+
+	DString * result = d_string_new(test);
+
+	d_string_insert_c_array(result, 2, "bar", 2);
+	CuAssertStrEquals(tc, "fobao", result->str);
+	CuAssertIntEquals(tc, 5, result->currentStringLength);
+
+	d_string_insert_c_array(result, -1, "bar", 3);
+	CuAssertStrEquals(tc, "fobaobar", result->str);
+	CuAssertIntEquals(tc, 8, result->currentStringLength);
+
+	d_string_insert_c_array(result, -1, NULL, -1);
+	CuAssertStrEquals(tc, "fobaobar", result->str);
+	CuAssertIntEquals(tc, 8, result->currentStringLength);
+
+	d_string_insert_c_array(NULL, 0, NULL, -1);
+
+	d_string_free(result, true);
+}
+#endif
+
+
 /// Insert inside dynamic string using format specifier
 void d_string_insert_printf(DString * baseString, size_t pos, const char * format, ...) {
 	if (baseString && format) {
@@ -712,6 +761,11 @@ void Test_d_string_copy_substring(CuTest* tc) {
 long d_string_replace_text_in_range(DString * d, size_t pos, size_t len, const char * original, const char * replace) {
 	if (d && original && replace) {
 		long delta = 0;		// Overall change in length
+
+		if (pos > d->currentStringLength) {
+			// Out of range
+			return 0;
+		}
 
 		long len_o = strlen(original);
 		long len_r = strlen(replace);
