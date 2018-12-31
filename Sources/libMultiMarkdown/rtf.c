@@ -92,6 +92,16 @@ static char * my_strdup(const char * source) {
 }
 
 
+void mmd_print_char_rtf(DString * out, char c, bool obfuscate, bool line_breaks) {
+	switch (c) {
+		default:
+			print_char(c);
+
+			break;
+	}
+}
+
+
 void mmd_print_localized_char_rtf(DString * out, unsigned short type, scratch_pad * scratch) {
 	switch (type) {
 		case DASH_N:
@@ -473,6 +483,25 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 
 		case EQUAL:
 			print_const("=");
+			break;
+
+		case ESCAPED_CHARACTER:
+			if (!(scratch->extensions & EXT_COMPATIBILITY) &&
+					(source[t->start + 1] == ' ')) {
+				print_const("\\~");
+			} else {
+				mmd_print_char_rtf(out, source[t->start + 1], false, false);
+			}
+
+			break;
+
+		case HASH1:
+		case HASH2:
+		case HASH3:
+		case HASH4:
+		case HASH5:
+		case HASH6:
+			print_token(t);
 			break;
 
 		case NON_INDENT_SPACE:
