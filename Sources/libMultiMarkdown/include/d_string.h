@@ -148,6 +148,15 @@ void d_string_insert_c(
 );
 
 
+/// Insert array of characters inside dynamic string
+void d_string_insert_c_array(
+	DString * baseString,                   //!< DString to be appended
+	size_t pos,                             //!< Offset at which to insert string
+	const char * insertedString,            //!< String to be inserted
+	size_t bytes                            //!< Number of bytes to insert
+);
+
+
 /// Insert inside dynamic string using format specifier
 void d_string_insert_printf(
 	DString * baseString,                   //!< DString to be appended
@@ -164,12 +173,14 @@ void d_string_erase(
 	size_t len                              //!< Character to append
 );
 
+
 /// Copy a portion of dynamic string
 char * d_string_copy_substring(
 	DString * d,                            //!< DString to copy
 	size_t start,                           //!< Start position for copy
 	size_t len                              //!< How many characters(bytes) to copy
 );
+
 
 /// Replace occurences of "original" with "replace" inside the specified range
 /// Returns the change in overall length
