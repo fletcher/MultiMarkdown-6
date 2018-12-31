@@ -94,6 +94,16 @@ static char * my_strdup(const char * source) {
 
 void mmd_print_char_rtf(DString * out, char c, bool obfuscate, bool line_breaks) {
 	switch (c) {
+		case '\n':
+		case '\r':
+			if (line_breaks) {
+				print_const("\n");
+			} else {
+				print_char(c);
+			}
+
+			break;
+
 		default:
 			print_char(c);
 
@@ -506,6 +516,12 @@ static void mmd_export_token_rtf(DString * out, const char * source, token * t, 
 
 		case NON_INDENT_SPACE:
 			print_char(' ');
+			break;
+
+		case PAIR_BRACE:
+		case PAIR_BRACES:
+		case PAIR_RAW_FILTER:
+			mmd_export_token_tree_rtf(out, source, t->child, scratch);
 			break;
 
 		case PAIR_EMPH:
