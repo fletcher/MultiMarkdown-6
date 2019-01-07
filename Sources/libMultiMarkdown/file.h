@@ -147,7 +147,7 @@ char * absolute_path_for_argument(const char * arg);
 
 #if (defined(_WIN32) || defined(__WIN32__))
 	// Windows does not know realpath(), so we need a "windows port"
-	char *realpath(const char *path, char *resolved_path);
+	char * realpath(const char * path, char * resolved_path);
 #endif
 
 #endif

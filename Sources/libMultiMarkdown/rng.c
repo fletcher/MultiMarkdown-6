@@ -29,7 +29,7 @@ long ran_x[KK];                    /* the generator state */
 	void ran_array(long aa[], int n)
 #else
 	void ran_array(aa, n)   /* put n new random numbers in aa */
-	long *aa;   /* destination */
+	long * aa;  /* destination */
 	int n;      /* array length (must be at least KK) */
 #endif
 {
@@ -58,7 +58,7 @@ long ran_x[KK];                    /* the generator state */
 #define QUALITY 1009 /* recommended quality level for high-res use */
 long ran_arr_buf[QUALITY];
 long ran_arr_dummy = -1, ran_arr_started = -1;
-long *ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
+long * ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 
 #define TT  70   /* guaranteed separation between streams */
 #define is_odd(x)  ((x)&1)          /* units bit of x */

@@ -115,7 +115,7 @@
 void * OPMLAlloc(void *);
 void OPML(void *, int, void *, void *);
 void OPMLFree(void *, void *);
-void OPMLTrace(FILE *stream, char *zPrefix);
+void OPMLTrace(FILE * stream, char * zPrefix);
 
 
 #define print(x) d_string_append(out, x)
@@ -190,7 +190,7 @@ token * tokenize_opml_string(mmd_engine * e, size_t start, size_t len) {
 
 void parse_opml_token_chain(mmd_engine * e, token * chain) {
 
-	void* pParser = OPMLAlloc (malloc);		// Create a parser (for lemon)
+	void * pParser = OPMLAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->next;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 

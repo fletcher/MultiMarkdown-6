@@ -259,8 +259,8 @@ void mmd_print_localized_char_html(DString * out, unsigned short type, scratch_p
 }
 
 
-static char * strip_dimension_units(char *original) {
-	char *result;
+static char * strip_dimension_units(char * original) {
+	char * result;
 	int i;
 
 	result = my_strdup(original);

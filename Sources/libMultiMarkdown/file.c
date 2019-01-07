@@ -191,7 +191,7 @@ bool is_separator(char c) {
 
 
 #ifdef TEST
-void Test_is_separator(CuTest* tc) {
+void Test_is_separator(CuTest * tc) {
 	char * test = "a/\\";
 
 #if defined(__WIN32)
@@ -301,7 +301,7 @@ char * path_from_dir_base(const char * dir, const char * base) {
 
 
 #ifdef TEST
-void Test_path_from_dir_base(CuTest* tc) {
+void Test_path_from_dir_base(CuTest * tc) {
 	char dir[10] = "/foo";
 	char base[10] = "bar";
 
@@ -359,7 +359,7 @@ void split_path_file(char ** dir, char ** file, const char * path) {
 
 
 #ifdef TEST
-void Test_split_path_file(CuTest* tc) {
+void Test_split_path_file(CuTest * tc) {
 	char * dir, * file;
 
 	char * path = "/foo/bar.txt";
@@ -388,15 +388,15 @@ void Test_split_path_file(CuTest* tc) {
 // Let compiler know where to find GetFullPathName()
 #include <windows.h>
 
-char *realpath(const char *path, char *resolved_path) {
+char * realpath(const char * path, char * resolved_path) {
 	DWORD  retval = 0;
 	DWORD  dwBufSize = 0; // Just in case MAX_PATH differs from PATH_MAX
-	TCHAR  *buffer = NULL;
+	TCHAR * buffer = NULL;
 
 	if (resolved_path == NULL) {
 		// realpath allocates appropiate bytes if resolved_path is null. This is to mimic realpath behavior
 		dwBufSize = PATH_MAX; // Use windows PATH_MAX constant, because we are in Windows context now.
-		buffer = (char*)malloc(dwBufSize);
+		buffer = (char *)malloc(dwBufSize);
 
 		if (buffer == NULL) {
 			return NULL; // some really weird is going on...

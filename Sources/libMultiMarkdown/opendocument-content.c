@@ -546,8 +546,8 @@ void mmd_export_link_opendocument(DString * out, const char * source, token * te
 }
 
 
-static char * correct_dimension_units(char *original) {
-	char *result;
+static char * correct_dimension_units(char * original) {
+	char * result;
 	int i;
 
 	result = my_strdup(original);

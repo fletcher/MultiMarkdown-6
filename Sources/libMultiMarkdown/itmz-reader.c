@@ -117,7 +117,7 @@
 void * ITMZAlloc(void *);
 void ITMZ(void *, int, void *, void *);
 void ITMZFree(void *, void *);
-void ITMZTrace(FILE *stream, char *zPrefix);
+void ITMZTrace(FILE * stream, char * zPrefix);
 
 
 #define print(x) d_string_append(out, x)
@@ -192,7 +192,7 @@ token * tokenize_itmz_string(mmd_engine * e, size_t start, size_t len) {
 
 void parse_itmz_token_chain(mmd_engine * e, token * chain) {
 
-	void* pParser = ITMZAlloc (malloc);		// Create a parser (for lemon)
+	void * pParser = ITMZAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->next;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 

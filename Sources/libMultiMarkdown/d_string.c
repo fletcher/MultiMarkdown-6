@@ -85,12 +85,12 @@
 // Some operating systems do not supply vasprintf() -- standardize on this
 // replacement from:
 //		https://github.com/esp8266/Arduino/issues/1954
-int vasprintf(char** strp, const char* fmt, va_list ap) {
+int vasprintf(char ** strp, const char * fmt, va_list ap) {
 	va_list ap2;
 	va_copy(ap2, ap);
 
 #if (defined(_WIN32) || defined(__WIN32__))
-	char *tmp = NULL;
+	char * tmp = NULL;
 	int size = vsnprintf(tmp, 0, fmt, ap2);
 #else
 	char tmp[1];
@@ -103,7 +103,7 @@ int vasprintf(char** strp, const char* fmt, va_list ap) {
 
 	va_end(ap2);
 	size += 1;
-	*strp = (char*)malloc(size * sizeof(char));
+	*strp = (char *)malloc(size * sizeof(char));
 	return vsnprintf(*strp, size, fmt, ap);
 }
 
@@ -116,8 +116,8 @@ int vasprintf(char** strp, const char* fmt, va_list ap) {
 
 
 /// Create a new dynamic string
-DString* d_string_new(const char * startingString) {
-	DString* newString = malloc(sizeof(DString));
+DString * d_string_new(const char * startingString) {
+	DString * newString = malloc(sizeof(DString));
 
 	if (!newString) {
 		return NULL;
@@ -151,7 +151,7 @@ DString* d_string_new(const char * startingString) {
 
 
 #ifdef TEST
-void Test_d_string_new(CuTest* tc) {
+void Test_d_string_new(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -176,12 +176,12 @@ void Test_d_string_new(CuTest* tc) {
 
 
 /// Free dynamic string
-char* d_string_free(DString * ripString, bool freeCharacterData) {
+char * d_string_free(DString * ripString, bool freeCharacterData) {
 	if (ripString == NULL) {
 		return NULL;
 	}
 
-	char* returnedString = ripString->str;
+	char * returnedString = ripString->str;
 
 	if (freeCharacterData) {
 		if (ripString->str != NULL) {
@@ -213,7 +213,7 @@ static void ensureStringBufferCanHold(DString * baseString, size_t newStringSize
 				}
 			}
 
-			char *temp;
+			char * temp;
 			temp = realloc(baseString->str, newBufferSize);
 
 			if (temp == NULL) {
@@ -231,7 +231,7 @@ static void ensureStringBufferCanHold(DString * baseString, size_t newStringSize
 
 
 #ifdef TEST
-void Test_ensureStringBufferCanHold(CuTest* tc) {
+void Test_ensureStringBufferCanHold(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -277,7 +277,7 @@ void d_string_append(DString * baseString, const char * appendedString) {
 
 
 #ifdef TEST
-void Test_d_string_append(CuTest* tc) {
+void Test_d_string_append(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -312,7 +312,7 @@ void d_string_append_c(DString * baseString, char appendedCharacter) {
 
 
 #ifdef TEST
-void Test_d_string_append_c(CuTest* tc) {
+void Test_d_string_append_c(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -343,7 +343,7 @@ void d_string_append_c_array(DString * baseString, const char * appendedChars, s
 				size_t newSizeNeeded = baseString->currentStringLength + bytes;
 				ensureStringBufferCanHold(baseString, newSizeNeeded);
 
-				memcpy((void*)baseString->str + baseString->currentStringLength, appendedChars, bytes);
+				memcpy((void *)baseString->str + baseString->currentStringLength, appendedChars, bytes);
 
 				baseString->currentStringLength = newSizeNeeded;
 				baseString->str[newSizeNeeded] = '\0';
@@ -354,7 +354,7 @@ void d_string_append_c_array(DString * baseString, const char * appendedChars, s
 
 
 #ifdef TEST
-void Test_d_string_append_c_array(CuTest* tc) {
+void Test_d_string_append_c_array(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -388,7 +388,7 @@ void d_string_append_printf(DString * baseString, const char * format, ...) {
 		va_list args;
 		va_start(args, format);
 
-		char* formattedString = NULL;
+		char * formattedString = NULL;
 		vasprintf(&formattedString, format, args);
 
 		if (formattedString != NULL) {
@@ -402,7 +402,7 @@ void d_string_append_printf(DString * baseString, const char * format, ...) {
 
 
 #ifdef TEST
-void Test_d_string_append_printf(CuTest* tc) {
+void Test_d_string_append_printf(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -445,7 +445,7 @@ void d_string_prepend(DString * baseString, const char * prependedString) {
 
 
 #ifdef TEST
-void Test_d_string_prepend(CuTest* tc) {
+void Test_d_string_prepend(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -489,7 +489,7 @@ void d_string_insert(DString * baseString, size_t pos, const char * insertedStri
 
 
 #ifdef TEST
-void Test_d_string_insert(CuTest* tc) {
+void Test_d_string_insert(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -534,7 +534,7 @@ void d_string_insert_c(DString * baseString, size_t pos, char insertedCharacter)
 
 
 #ifdef TEST
-void Test_d_string_insert_c(CuTest* tc) {
+void Test_d_string_insert_c(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -583,7 +583,7 @@ void d_string_insert_c_array(DString * baseString, size_t pos, const char * inse
 
 
 #ifdef TEST
-void Test_d_string_insert_c_array(CuTest* tc) {
+void Test_d_string_insert_c_array(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -613,7 +613,7 @@ void d_string_insert_printf(DString * baseString, size_t pos, const char * forma
 		va_list args;
 		va_start(args, format);
 
-		char* formattedString = NULL;
+		char * formattedString = NULL;
 		vasprintf(&formattedString, format, args);
 
 		if (formattedString != NULL) {
@@ -627,7 +627,7 @@ void d_string_insert_printf(DString * baseString, size_t pos, const char * forma
 
 
 #ifdef TEST
-void Test_d_string_insert_printf(CuTest* tc) {
+void Test_d_string_insert_printf(CuTest * tc) {
 	char * test = "foo";
 
 	DString * result = d_string_new(test);
@@ -671,7 +671,7 @@ void d_string_erase(DString * baseString, size_t pos, size_t len) {
 
 
 #ifdef TEST
-void Test_d_string_erase(CuTest* tc) {
+void Test_d_string_erase(CuTest * tc) {
 	char * test = "foobar";
 
 	DString * result = d_string_new(test);
@@ -727,7 +727,7 @@ char * d_string_copy_substring(DString * d, size_t start, size_t len) {
 
 
 #ifdef TEST
-void Test_d_string_copy_substring(CuTest* tc) {
+void Test_d_string_copy_substring(CuTest * tc) {
 	char * test = "foobar";
 
 	DString * result = d_string_new(test);
@@ -803,7 +803,7 @@ long d_string_replace_text_in_range(DString * d, size_t pos, size_t len, const c
 
 
 #ifdef TEST
-void Test_d_string_replace_text_in_range(CuTest* tc) {
+void Test_d_string_replace_text_in_range(CuTest * tc) {
 	char * test = "foobarfoobarfoo";
 	long delta = 0;
 

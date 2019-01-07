@@ -67,7 +67,7 @@
 
 #define USE_EXTENDED_ASCII_disabled 1
 
-int main( int argc, char** argv ) {
+int main( int argc, char ** argv ) {
 	unsigned char table[256] = {0};
 
 	// Define punctuation

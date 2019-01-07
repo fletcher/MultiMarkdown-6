@@ -82,7 +82,7 @@
 void * ParseAlloc(void *);
 void Parse(void *, int, void *, void *);
 void ParseFree(void *, void *);
-void ParseTrace(FILE *stream, char *zPrefix);
+void ParseTrace(FILE * stream, char * zPrefix);
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
@@ -1137,7 +1137,7 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 
 	e->recurse_depth++;
 
-	void* pParser = ParseAlloc (malloc);		// Create a parser (for lemon)
+	void * pParser = ParseAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
@@ -2883,7 +2883,7 @@ DString * mmd_d_string_convert_opml_to_text(DString * source) {
 
 
 /// Convert OPML to text without modifying original engine source
-DString *  mmd_engine_convert_opml_to_text(mmd_engine * e) {
+DString  * mmd_engine_convert_opml_to_text(mmd_engine * e) {
 	DString * original = d_string_new("");
 	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
 
@@ -2932,7 +2932,7 @@ DString * mmd_d_string_convert_itmz_to_text(DString * source) {
 
 
 /// Convert ITMZ to text without modifying original engine source
-DString *  mmd_engine_convert_itmz_to_text(mmd_engine * e) {
+DString  * mmd_engine_convert_itmz_to_text(mmd_engine * e) {
 	DString * original = d_string_new("");
 	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
 

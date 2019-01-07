@@ -211,7 +211,7 @@ struct stack * mmd_d_string_transclusion_manifest(DString * source, const char *
 
 /// Create MMD Engine using an existing DString (A new copy is *not* made)
 mmd_engine * mmd_engine_create_with_dstring(
-	DString *		d,
+	DString 	*	d,
 	unsigned long	extensions
 );
 
@@ -262,11 +262,11 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 
 
 /// Convert OPML to text without modifying original engine source
-DString *  mmd_engine_convert_opml_to_text(mmd_engine * e);
+DString  * mmd_engine_convert_opml_to_text(mmd_engine * e);
 
 
 /// Convert ITMZ to text without modifying original engine source
-DString *  mmd_engine_convert_itmz_to_text(mmd_engine * e);
+DString  * mmd_engine_convert_itmz_to_text(mmd_engine * e);
 
 
 /// Convert MMD text to specified format using DString as a container for block of data

@@ -73,7 +73,7 @@ struct trie {
 	size_t				size;				// How many nodes are in use?
 	size_t				capacity;			// How many nodes can we hold
 
-	trie_node *			node;				// Pointer to stack of nodes
+	trie_node 	*		node;				// Pointer to stack of nodes
 };
 
 typedef struct trie trie;
@@ -83,8 +83,8 @@ struct match {
 	size_t				start;				// Starting offset for this match
 	size_t				len;				// Length for this match
 	unsigned short		match_type;			// Match type
-	struct match *		next;				// Pointer to next match in list
-	struct match *		prev;				// Pointer to previous match in list
+	struct match 	*	next;				// Pointer to next match in list
+	struct match 	*	prev;				// Pointer to previous match in list
 };
 
 typedef struct match match;

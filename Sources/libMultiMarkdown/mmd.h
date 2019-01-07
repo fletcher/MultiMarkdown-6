@@ -68,32 +68,32 @@
 
 
 struct mmd_engine {
-	DString *				dstr;
-	token *					root;
+	DString 		*		dstr;
+	token 		*			root;
 	unsigned long			extensions;
 	unsigned short			recurse_depth;
 
 	bool					allow_meta;
 
-	token_pair_engine *		pairings1;
-	token_pair_engine *		pairings2;
-	token_pair_engine *		pairings3;
-	token_pair_engine *		pairings4;
+	token_pair_engine 	*	pairings1;
+	token_pair_engine 	*	pairings2;
+	token_pair_engine 	*	pairings3;
+	token_pair_engine 	*	pairings4;
 
-	stack *					abbreviation_stack;
-	stack *					citation_stack;
-	stack *					definition_stack;
-	stack *					footnote_stack;
-	stack *					glossary_stack;
-	stack *					header_stack;
-	stack *					link_stack;
-	stack *					metadata_stack;
-	stack *					table_stack;
+	stack 		*			abbreviation_stack;
+	stack 		*			citation_stack;
+	stack 		*			definition_stack;
+	stack 		*			footnote_stack;
+	stack 		*			glossary_stack;
+	stack 		*			header_stack;
+	stack 		*			link_stack;
+	stack 		*			metadata_stack;
+	stack 		*			table_stack;
 
 	short					language;
 	short					quotes_lang;
 
-	struct asset *			asset_hash;
+	struct asset 	*		asset_hash;
 
 	int						random_seed_base_labels;
 };
@@ -111,8 +111,8 @@ void is_list_loose(token * list);
 
 
 struct asset {
-	char *				url;
-	char *				asset_path;
+	char 		*		url;
+	char 		*		asset_path;
 	UT_hash_handle		hh;
 };
 

@@ -346,7 +346,7 @@ void mmd_critic_markup_reject(DString * d) {
 
 
 #ifdef TEST
-void Test_critic(CuTest* tc) {
+void Test_critic(CuTest * tc) {
 #ifdef kUseObjectPool
 	token_pool_init();
 #endif

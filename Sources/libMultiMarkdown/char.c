@@ -111,7 +111,7 @@ int char_is_windows_line_ending(char * c) {
 }
 
 #ifdef TEST
-void Test_char_is_windows_line_ending(CuTest* tc) {
+void Test_char_is_windows_line_ending(CuTest * tc) {
 	char * test = "\r\n\n";
 
 	CuAssertIntEquals(tc, 1, char_is_windows_line_ending(&test[0]));

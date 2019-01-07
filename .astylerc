@@ -21,7 +21,7 @@
 # Indent pre-processor directives
 --indent-preproc-block
 --indent-preproc-define
-#--indent-preproc-cond
+# --indent-preproc-cond
 
 
 # Line endings
@@ -42,7 +42,12 @@
 
 
 # Pointers/References
+--align-pointer=middle
 --align-reference=name
+
+
+# Line endings
+--lineend=linux
 
 
 # Excludes

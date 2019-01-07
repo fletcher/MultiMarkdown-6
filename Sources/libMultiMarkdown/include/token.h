@@ -85,13 +85,13 @@ struct token {
 	size_t				start;			//!< Starting offset in the source string
 	size_t				len;			//!< Length of the token in the source string
 
-	struct token *		next;			//!< Pointer to next token in the chain
-	struct token *		prev;			//!< Pointer to previous marker in the chain
-	struct token *		child;			//!< Pointer to child chain
+	struct token 	*	next;			//!< Pointer to next token in the chain
+	struct token 	*	prev;			//!< Pointer to previous marker in the chain
+	struct token 	*	child;			//!< Pointer to child chain
 
-	struct token *		tail;			//!< Pointer to last token in the chain
+	struct token 	*	tail;			//!< Pointer to last token in the chain
 
-	struct token *		mate;			//!< Pointer to other token in matched pair
+	struct token 	*	mate;			//!< Pointer to other token in matched pair
 };
 
 typedef struct token token;

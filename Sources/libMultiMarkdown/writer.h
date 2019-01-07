@@ -72,8 +72,8 @@
 #define kMaxTableColumns 48					//!< Maximum number of table columns for specifying alignment
 
 typedef struct {
-	struct link *		link_hash;
-	struct meta *		meta_hash;
+	struct link 	*	link_hash;
+	struct meta 	*	meta_hash;
 
 	unsigned long		extensions;
 	short				output_format;
@@ -83,8 +83,8 @@ typedef struct {
 	short				skip_token;
 
 	short				footnote_para_counter;
-	stack *				used_footnotes;
-	stack *				inline_footnotes_to_free;
+	stack 		*		used_footnotes;
+	stack 		*		inline_footnotes_to_free;
 	struct fn_holder *	footnote_hash;
 	short				footnote_being_printed;
 
@@ -93,19 +93,19 @@ typedef struct {
 	int 				random_seed_base_labels;
 	int 				label_counter;
 
-	stack *				used_citations;
-	stack *				inline_citations_to_free;
+	stack 		*		used_citations;
+	stack 		*		inline_citations_to_free;
 	struct fn_holder *	citation_hash;
 	short				citation_being_printed;
-	char *				bibtex_file;
+	char 		*		bibtex_file;
 
-	stack *				used_glossaries;
-	stack *				inline_glossaries_to_free;
+	stack 		*		used_glossaries;
+	stack 		*		inline_glossaries_to_free;
 	struct fn_holder *	glossary_hash;
 	short				glossary_being_printed;
 
-	stack *				used_abbreviations;
-	stack *				inline_abbreviations_to_free;
+	stack 		*		used_abbreviations;
+	stack 		*		inline_abbreviations_to_free;
 	struct fn_holder *	abbreviation_hash;
 
 	short				language;
@@ -113,9 +113,9 @@ typedef struct {
 
 	short				base_header_level;
 
-	stack *				header_stack;
+	stack 		*		header_stack;
 
-	stack *				outline_stack;
+	stack 		*		outline_stack;
 	short				opml_item_closed;
 
 	short				recurse_depth;
@@ -127,27 +127,27 @@ typedef struct {
 
 	short				odf_para_type;
 
-	struct asset *		asset_hash;
+	struct asset 	*	asset_hash;
 	short				store_assets;
 	short				remember_assets;
 } scratch_pad;
 
 
 struct attr {
-	char *				key;
-	char *				value;
-	struct attr *		next;
+	char 		*		key;
+	char 		*		value;
+	struct attr 	*	next;
 };
 
 typedef struct attr attr;
 
 struct link {
-	token *				label;
-	char * 				label_text;
-	char *				clean_text;
-	char *				url;
-	char *				title;
-	attr *				attributes;
+	token 		*		label;
+	char  	*			label_text;
+	char 		*		clean_text;
+	char 		*		url;
+	char 		*		title;
+	attr 		*		attributes;
 	short				flags;
 	UT_hash_handle		hh;
 };
@@ -162,10 +162,10 @@ enum link_flags {
 typedef struct link link;
 
 struct footnote {
-	token *				label;
-	char *				label_text;
-	char *				clean_text;
-	token *				content;
+	token 		*		label;
+	char 		*		label_text;
+	char 		*		clean_text;
+	token 		*		content;
 	size_t				count;
 	bool				free_para;
 
@@ -175,15 +175,15 @@ struct footnote {
 typedef struct footnote footnote;
 
 struct fn_holder {
-	footnote *			note;
+	footnote 	*		note;
 	UT_hash_handle		hh;
 };
 
 typedef struct fn_holder fn_holder;
 
 struct meta {
-	char *				key;
-	char *				value;
+	char 		*		key;
+	char 		*		value;
 	size_t				start;
 	UT_hash_handle		hh;
 };
@@ -191,9 +191,9 @@ struct meta {
 typedef struct meta meta;
 
 struct abbr {
-	char *				abbr;
+	char 		*		abbr;
 	size_t				abbr_len;
-	char *				expansion;
+	char 		*		expansion;
 	size_t				expansion_len;
 	UT_hash_handle		hh;
 };
