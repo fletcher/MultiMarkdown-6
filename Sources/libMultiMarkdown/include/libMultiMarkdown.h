@@ -428,6 +428,7 @@ enum token_types {
 	PAIR_UL,
 	PAIR_BRACES,
 
+	MARKUP,
 	STAR,
 	UL,
 	EMPH_START,
