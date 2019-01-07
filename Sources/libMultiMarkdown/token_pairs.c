@@ -213,9 +213,9 @@ close:
 						opener_count[peek->type]--;
 					}
 
-					#ifndef NDEBUG
+#ifndef NDEBUG
 					fprintf(stderr, "stack now sized %lu\n", s->size);
-					#endif
+#endif
 					// Prune matched section
 
 					if (e->should_prune[pair_type]) {
@@ -230,12 +230,12 @@ close:
 					break;
 				}
 
-				#ifndef NDEBUG
+#ifndef NDEBUG
 				else {
 					fprintf(stderr, "token type %d failed to match stack element\n", walker->type);
 				}
 
-				#endif
+#endif
 				i--;
 			}
 		}
@@ -246,17 +246,17 @@ open:
 		if (walker->can_open && e->can_open_pair[walker->type] && walker->unmatched) {
 			stack_push(s, walker);
 			opener_count[walker->type]++;
-			#ifndef NDEBUG
+#ifndef NDEBUG
 			fprintf(stderr, "push token type %d to stack (%lu elements)\n", walker->type, s->size);
-			#endif
+#endif
 		}
 
 		walker = walker->next;
 	}
 
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	fprintf(stderr, "token stack has %lu elements (of %lu)\n", s->size, s->capacity);
-	#endif
+#endif
 
 	// Remove unused tokens from stack and return to parent
 	s->size = start_counter;

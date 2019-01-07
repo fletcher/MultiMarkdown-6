@@ -126,16 +126,16 @@ DString * scan_file(const char * fname) {
 
 	FILE * file;
 
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	int wchars_num = MultiByteToWideChar(CP_UTF8, 0, fname, -1, NULL, 0);
 	wchar_t wstr[wchars_num];
 	MultiByteToWideChar(CP_UTF8, 0, fname, -1, wstr, wchars_num);
 
 	if ((file = _wfopen(wstr, L"rb")) == NULL) {
-	#else
+#else
 
 	if ((file = fopen(fname, "r")) == NULL ) {
-	#endif
+#endif
 
 		return NULL;
 	}
@@ -182,11 +182,11 @@ DString * stdin_buffer(void) {
 /// Windows can use either `\` or `/` as a separator -- thanks to t-beckmann on github
 ///	for suggesting a fix for this.
 bool is_separator(char c) {
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	return c == '\\' || c == '/';
-	#else
+#else
 	return c == '/';
-	#endif
+#endif
 }
 
 
@@ -194,26 +194,26 @@ bool is_separator(char c) {
 void Test_is_separator(CuTest* tc) {
 	char * test = "a/\\";
 
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	CuAssertIntEquals(tc, false, is_separator(test[0]));
 	CuAssertIntEquals(tc, true, is_separator(test[1]));
 	CuAssertIntEquals(tc, true, is_separator(test[2]));
-	#else
+#else
 	CuAssertIntEquals(tc, false, is_separator(test[0]));
 	CuAssertIntEquals(tc, true, is_separator(test[1]));
 	CuAssertIntEquals(tc, false, is_separator(test[2]));
-	#endif
+#endif
 }
 #endif
 
 
 /// Ensure that path ends in separator
 void add_trailing_sep(DString * path) {
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	char sep = '\\';
-	#else
+#else
 	char sep = '/';
-	#endif
+#endif
 
 	// Ensure that folder ends in separator
 	if ((path->currentStringLength == 0) || (!is_separator(path->str[path->currentStringLength - 1]))) {
@@ -307,11 +307,11 @@ void Test_path_from_dir_base(CuTest* tc) {
 
 	char * path = path_from_dir_base(dir, base);
 
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	CuAssertStrEquals(tc, "/foo\\bar", path);
-	#else
+#else
 	CuAssertStrEquals(tc, "/foo/bar", path);
-	#endif
+#endif
 
 	free(path);
 	strcpy(base, "/bar");
@@ -334,11 +334,11 @@ void Test_path_from_dir_base(CuTest* tc) {
 void split_path_file(char ** dir, char ** file, const char * path) {
 	const char * slash = path, * next;
 
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	const char sep[] = "\\/";	// Windows allows either variant
-	#else
+#else
 	const char sep[] = "/";
-	#endif
+#endif
 
 	while ((next = strpbrk(slash + 1, sep))) {
 		slash = next;
@@ -371,13 +371,13 @@ void Test_split_path_file(CuTest* tc) {
 	path = "\\foo\\bar.txt";
 	split_path_file(&dir, &file, path);
 
-	#if defined(__WIN32)
+#if defined(__WIN32)
 	CuAssertStrEquals(tc, "\\foo\\", dir);
 	CuAssertStrEquals(tc, "bar.txt", file);
-	#else
+#else
 	CuAssertStrEquals(tc, "", dir);
 	CuAssertStrEquals(tc, "\\foo\\bar.txt", file);
-	#endif
+#endif
 }
 #endif
 
@@ -421,15 +421,15 @@ char *realpath(const char *path, char *resolved_path) {
 // Convert argument to absolute path
 char * absolute_path_for_argument(const char * arg) {
 	char * result = NULL;
-	#ifdef PATH_MAX
+#ifdef PATH_MAX
 	// If PATH_MAX defined, use it
 	char absolute[PATH_MAX + 1];
 	realpath(arg, absolute);
 	result = my_strdup(absolute);
-	#else
+#else
 	// If undefined, then we *should* be able to use a NULL pointer to allocate
 	result = realpath(arg, NULL);
-	#endif
+#endif
 
 	return result;
 }

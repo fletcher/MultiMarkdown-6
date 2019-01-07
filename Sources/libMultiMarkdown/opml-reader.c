@@ -194,9 +194,9 @@ void parse_opml_token_chain(mmd_engine * e, token * chain) {
 	token * walker = chain->next;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	OPMLTrace(stderr, "parser >>");
-	#endif
+#endif
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -210,9 +210,9 @@ void parse_opml_token_chain(mmd_engine * e, token * chain) {
 	}
 
 	// Signal finish to parser
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	fprintf(stderr, "\nFinish parse\n");
-	#endif
+#endif
 	OPML(pParser, 0, NULL, e);
 
 	if (e->root) {

@@ -347,9 +347,9 @@ void mmd_critic_markup_reject(DString * d) {
 
 #ifdef TEST
 void Test_critic(CuTest* tc) {
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	token_pool_init();
-	#endif
+#endif
 
 	DString * test = d_string_new("{--foo bar--}");
 	mmd_critic_markup_reject(test);
@@ -416,11 +416,11 @@ void Test_critic(CuTest* tc) {
 	mmd_critic_markup_reject(test);
 	CuAssertStrEquals(tc, "", test->str);
 
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	// Decrement counter and clean up token pool
 	token_pool_drain();
 
 	token_pool_free();
-	#endif
+#endif
 }
 #endif

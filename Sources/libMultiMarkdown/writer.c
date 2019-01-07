@@ -636,10 +636,10 @@ attr * parse_attributes(char * source) {
 			a->next = attr_new(key, value);
 			a = a->next;
 		} else {
-			#ifndef __clang_analyzer__
+#ifndef __clang_analyzer__
 			a = attr_new(key, value);
 			attributes = a;
-			#endif
+#endif
 		}
 
 		free(value);	// We stored a modified copy
@@ -1150,11 +1150,11 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 void footnote_free(footnote * f) {
 	if (f) {
 		if (f->free_para) {
-			#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 			// Nothing to do here
-			#else
+#else
 			free(f->content);
-			#endif
+#endif
 		}
 
 		free(f->clean_text);

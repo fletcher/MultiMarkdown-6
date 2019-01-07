@@ -21,7 +21,7 @@
 # Indent pre-processor directives
 --indent-preproc-block
 --indent-preproc-define
---indent-preproc-cond
+#--indent-preproc-cond
 
 
 # Line endings

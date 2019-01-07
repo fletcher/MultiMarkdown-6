@@ -478,9 +478,9 @@ void match_set_filter_leftmost_longest(match * header) {
 					m->next->start > m->start &&
 					m->next->start < m->start + m->len) {
 				// This match is "lefter" than next
-				#ifndef __clang_analyzer__
+#ifndef __clang_analyzer__
 				match_excise(m->next);
-				#endif
+#endif
 			}
 
 			while (m->next &&
@@ -497,9 +497,9 @@ void match_set_filter_leftmost_longest(match * header) {
 				m->prev->start >= m->start) {
 			// We are "lefter" than previous
 			n = m->prev;
-			#ifndef __clang_analyzer__
+#ifndef __clang_analyzer__
 			match_excise(n);
-			#endif
+#endif
 		}
 
 		m = m->next;

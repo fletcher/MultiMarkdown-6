@@ -115,11 +115,11 @@ void token_pool_free(void) {
 token * token_new(unsigned short type, size_t start, size_t len) {
 
 
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	token * t = pool_allocate_object(token_pool);
-	#else
+#else
 	token * t = malloc(sizeof(token));
-	#endif
+#endif
 
 	if (t) {
 		t->type = type;
@@ -145,11 +145,11 @@ token * token_new(unsigned short type, size_t start, size_t len) {
 
 /// Duplicate an existing token
 token * token_copy(token * original) {
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	token * t = pool_allocate_object(token_pool);
-	#else
+#else
 	token * t = malloc(sizeof(token));
-	#endif
+#endif
 
 	if (t) {
 		* t = * original;
@@ -387,9 +387,9 @@ token * token_prune_graft(token * first, token * last, unsigned short container_
 
 /// Free token
 void token_free(token * t) {
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	return;
-	#else
+#else
 
 	if (t == NULL) {
 		return;
@@ -398,15 +398,15 @@ void token_free(token * t) {
 	token_tree_free(t->child);
 
 	free(t);
-	#endif
+#endif
 }
 
 
 /// Free token chain
 void token_tree_free(token * t) {
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	return;
-	#else
+#else
 	token * n;
 
 	while (t != NULL) {
@@ -416,7 +416,7 @@ void token_tree_free(token * t) {
 		t = n;
 	}
 
-	#endif
+#endif
 }
 
 
