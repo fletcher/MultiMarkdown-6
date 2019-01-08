@@ -239,6 +239,13 @@ void mmd_engine_free(
 void mmd_engine_set_language(mmd_engine * e, short language);
 
 
+/// Access DString directly
+DString * mmd_engine_d_string(mmd_engine * e);
+
+/// Return token tree after previous parsing
+token * mmd_engine_root(mmd_engine * e);
+
+
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len);
 

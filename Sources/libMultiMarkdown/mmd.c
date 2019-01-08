@@ -349,6 +349,18 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 }
 
 
+/// Access DString directly
+DString * mmd_engine_d_string(mmd_engine * e) {
+	return e->dstr;
+}
+
+
+/// Return token tree after previous parsing
+token * mmd_engine_root(mmd_engine * e) {
+	return e->root;
+}
+
+
 bool line_is_empty(token * t) {
 	while (t) {
 		switch (t->type) {
@@ -2197,6 +2209,11 @@ handle_line:
 
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len) {
+	// Fix indeterminant length
+	if (byte_len == -1) {
+		byte_len = e->dstr->currentStringLength - byte_start;
+	}
+
 	// First, clean up any leftovers from previous parse
 
 	mmd_engine_reset(e);

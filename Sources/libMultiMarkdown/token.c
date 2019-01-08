@@ -592,7 +592,7 @@ void token_trim_leading_whitespace(token * t, const char * string) {
 
 
 void token_trim_trailing_whitespace(token * t, const char * string) {
-	while (t->len && char_is_whitespace(string[t->start + t->len - 1])) {
+	while (t->len && char_is_whitespace_or_line_ending(string[t->start + t->len - 1])) {
 		t->len--;
 	}
 }
