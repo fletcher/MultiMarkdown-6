@@ -47,6 +47,13 @@ To build the Xcode framework project that you can include in your own projects, 
 	(OR)
 	make xcode-debug
 
+Depending on how you integrate libMultiMarkdown into your Xcode workflow, you may need also to do two things:
+
+1. Change the "Build Phases" on the libMultiMarkdown target.  The "Copy Files" destination should be "Products Directory".  Currently this cannot be set automatically by Cmake.
+
+2. If you are using libMultiMarkdown as a library in a "persistent" application, you should disable the object pool functionality.  In "token.h", disable the "#define kUseObjectPool" directive.  This features improves performance, but makes memory management much more difficult outside of the context of a "run once and quit" command line utility (like MultiMarkdown itself).
+
+
 ## Differences in the MultiMarkdown Syntax ##
 
 MultiMarkdown v6 is mostly about making a better MMD parser, but it involves a
