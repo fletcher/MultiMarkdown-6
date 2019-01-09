@@ -39,6 +39,13 @@ You can optionally test using the test suite:
 
 	ctest
 
+### Building an Xcode Framework ###
+
+To build the Xcode framework project that you can include in your own projects, there's only one build step:
+
+	make xcode
+	(OR)
+	make xcode-debug
 
 ## Differences in the MultiMarkdown Syntax ##
 
