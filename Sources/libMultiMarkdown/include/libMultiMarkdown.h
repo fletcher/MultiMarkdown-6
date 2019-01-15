@@ -2,7 +2,7 @@
 
 	MultiMarkdown 6 -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
-	@file mmd.h
+	@file libMultiMarkdown.h
 
 	@brief Header file for libMultiMarkdown.
 
