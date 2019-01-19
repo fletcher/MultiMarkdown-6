@@ -1153,9 +1153,8 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
-#ifndef NDEBUG
-	ParseTrace(stderr, "parser >>");
-#endif
+	// Enable to monitor parsing steps
+	// ParseTrace(stderr, "parser >>");
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -1171,19 +1170,12 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 			remainder->prev = NULL;
 		}
 
-#ifndef NDEBUG
-		fprintf(stderr, "\nNew line\n");
-#endif
-
 		Parse(pParser, walker->type, walker, e);
 
 		walker = remainder;
 	}
 
 	// Signal finish to parser
-#ifndef NDEBUG
-	fprintf(stderr, "\nFinish parse\n");
-#endif
 	Parse(pParser, 0, NULL, e);
 
 	// Disconnect of (now empty) root
@@ -2032,11 +2024,6 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 		return;
 	}
 
-#ifndef NDEBUG
-	fprintf(stderr, "Strip line tokens from %d (%lu:%lu) (child %d)\n", block->type, block->start, block->len, block->child->type);
-	token_tree_describe(block, e->dstr->str);
-#endif
-
 	token * l = block->child;
 
 	// Custom actions
@@ -2265,10 +2252,6 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		stack_free(pair_stack);
 
 		pair_emphasis_tokens(doc);
-
-#ifndef NDEBUG
-		token_tree_describe(doc, e->dstr->str);
-#endif
 	}
 
 	// Return original extensions
