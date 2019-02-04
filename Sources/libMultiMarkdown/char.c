@@ -14,7 +14,7 @@
 
 /*
 
-	Copyright © 2016 - 2017 Fletcher T. Penney.
+	Copyright © 2016 - 2019 Fletcher T. Penney.
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
@@ -61,7 +61,7 @@
 static unsigned char smart_char_type[256] = {
 	16,  0,  0,  0,  0,  0,  0,  0,  0,  1, 16,  0,  0, 16,  0,  0,
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	1,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
+	1,  2,  2,  2,  2,  2,  2, 34,  2,  2,  2,  2,  2, 34,  2,  2,
 	8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  2,  2,  2,  2,  2,  2,
 	2,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
 	4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  2,  2,  2,  2,  2,
@@ -74,7 +74,7 @@ static unsigned char smart_char_type[256] = {
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+	0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 };
 
 
@@ -85,6 +85,8 @@ static int CHAR_WHITESPACE_OR_PUNCTUATION = CHAR_WHITESPACE | CHAR_PUNCTUATION;
 static int CHAR_WHITESPACE_OR_LINE_ENDING = CHAR_WHITESPACE | CHAR_LINE_ENDING;
 
 static int CHAR_WHITESPACE_OR_LINE_ENDING_OR_PUNCTUATION = CHAR_WHITESPACE | CHAR_LINE_ENDING | CHAR_PUNCTUATION;
+
+static int CHAR_ALPHA_OR_INTRAWORD = CHAR_ALPHA | CHAR_INTRAWORD;
 
 
 // Is character whitespace?
@@ -138,6 +140,11 @@ int char_is_digit(char c) {
 // Is character alphanumeric?
 int char_is_alphanumeric(char c) {
 	return smart_char_type[(unsigned char) c] & CHAR_ALPHANUMERIC;
+}
+
+// Is character a valid intraword character?
+int char_is_intraword(char c) {
+	return smart_char_type[(unsigned char) c] & CHAR_ALPHA_OR_INTRAWORD;
 }
 
 // Is character either whitespace or line ending?
