@@ -471,7 +471,9 @@ int main(int argc, char ** argv) {
 			free(output_filename);
 
 			// Decrement counter and drain
+#ifdef kUseObjectPool
 			token_pool_drain();
+#endif
 		}
 	} else {
 		if (a_file->count) {
@@ -594,10 +596,10 @@ int main(int argc, char ** argv) {
 
 exit:
 
+#ifdef kUseObjectPool
 	// Decrement counter and clean up token pool
 	token_pool_drain();
 
-#ifdef kUseObjectPool
 	token_pool_free();
 #endif
 
