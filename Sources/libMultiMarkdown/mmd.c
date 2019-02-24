@@ -2957,6 +2957,8 @@ DString  * mmd_engine_convert_itmz_to_text(mmd_engine * e) {
 /// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;
+#ifndef TEST
 	result = my_strdup(MULTIMARKDOWN_VERSION);
+#endif
 	return result;
 }
