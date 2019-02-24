@@ -227,12 +227,6 @@ close:
 					break;
 				}
 
-#ifndef NDEBUG
-				else {
-					fprintf(stderr, "token type %d failed to match stack element\n", walker->type);
-				}
-
-#endif
 				i--;
 			}
 		}
