@@ -105,6 +105,21 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
+#ifdef __APPLE__
+	#include "TargetConditionals.h"
+	#if TARGET_IPHONE_SIMULATOR
+		// iOS Simulator
+		#undef USE_CURL
+	#elif TARGET_OS_IPHONE
+		// iOS device
+		#undef USE_CURL
+	#elif TARGET_OS_MAC
+		// Other kinds of Mac OS
+	#else
+		#   error "Unknown Apple platform"
+	#endif
+#endif
+
 #ifdef USE_CURL
 	#include <curl/curl.h>
 #endif
