@@ -1094,6 +1094,12 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 				if (e->allow_meta && root->child == line) {
 					if (line->type == LINE_SETEXT_2) {
 						line->type = LINE_YAML;
+					} else if (
+						(line->type == LINE_META) &&
+						scan_empty_meta_line(&e->dstr->str[line->start])) {
+						// Don't start metadata with empty meta line (e.g. "foo:\n")
+						e->allow_meta = false;
+						line->type = LINE_PLAIN;
 					} else if (line->type != LINE_META) {
 						e->allow_meta = false;
 					}

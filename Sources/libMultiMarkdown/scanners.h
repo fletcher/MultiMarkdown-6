@@ -76,6 +76,7 @@ size_t scan_atx(const char * c);
 size_t scan_definition(const char * c);
 size_t scan_destination(const char * c);
 size_t scan_email(const char * c);
+size_t scan_empty_meta_line(const char * c);
 size_t scan_fence_start(const char * c);
 size_t scan_fence_end(const char * c);
 size_t scan_html(const char * c);
