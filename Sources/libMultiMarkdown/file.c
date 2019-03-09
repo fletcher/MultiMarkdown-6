@@ -119,7 +119,7 @@
 /// Scan file into a DString
 DString * scan_file(const char * fname) {
 	/* Read from stdin and return a DString *
-		`buffer` will need to be freed elsewhere */
+	 `buffer` will need to be freed elsewhere */
 
 	char chunk[kBUFFERSIZE];
 	size_t bytes;
@@ -132,25 +132,35 @@ DString * scan_file(const char * fname) {
 	MultiByteToWideChar(CP_UTF8, 0, fname, -1, wstr, wchars_num);
 
 	if ((file = _wfopen(wstr, L"rb")) == NULL) {
+		return NULL;
+	}
+
 #else
 
 	if ((file = fopen(fname, "r")) == NULL ) {
-#endif
-
 		return NULL;
 	}
+
+#endif
 
 	DString * buffer = d_string_new("");
 
 	while ((bytes = fread(chunk, 1, kBUFFERSIZE, file)) > 0) {
 		d_string_append_c_array(buffer, chunk, bytes);
+	}
 
-		if (buffer->currentStringLength <= kBUFFERSIZE) {
-			// Strip BOM
-			if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
-				d_string_erase(buffer, 0, 3);
-			}
-		}
+	// Strip UTF-8 BOM
+	if (strncmp(buffer->str, "\xef\xbb\xbf", 3) == 0) {
+		d_string_erase(buffer, 0, 3);
+	}
+
+	// Strip UTF-16 BOMs
+	if (strncmp(buffer->str, "\xef\xff", 2) == 0) {
+		d_string_erase(buffer, 0, 2);
+	}
+
+	if (strncmp(buffer->str, "\xff\xfe", 2) == 0) {
+		d_string_erase(buffer, 0, 2);
 	}
 
 	fclose(file);
