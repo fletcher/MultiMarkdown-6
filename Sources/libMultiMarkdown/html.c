@@ -533,6 +533,8 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 	token *	temp_token	= NULL;
 	footnote * temp_note = NULL;
 
+	t->out_start = out->currentStringLength;
+
 	switch (t->type) {
 		case AMPERSAND:
 		case AMPERSAND_LONG:
@@ -2044,6 +2046,8 @@ parse_citation:
 			token_describe(t, source);
 			break;
 	}
+
+	t->out_len = out->currentStringLength - t->out_start;
 }
 
 
@@ -2227,6 +2231,8 @@ void mmd_export_token_html_raw(DString * out, const char * source, token * t, sc
 
 			break;
 	}
+
+	t->out_len = out->currentStringLength - t->out_start;
 }
 
 
