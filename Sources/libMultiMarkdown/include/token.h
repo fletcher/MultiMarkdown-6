@@ -85,6 +85,9 @@ struct token {
 	size_t				start;			//!< Starting offset in the source string
 	size_t				len;			//!< Length of the token in the source string
 
+	size_t				out_start;
+	size_t				out_len;
+
 	struct token 	*	next;			//!< Pointer to next token in the chain
 	struct token 	*	prev;			//!< Pointer to previous marker in the chain
 	struct token 	*	child;			//!< Pointer to child chain
