@@ -1882,7 +1882,12 @@ meta:
 				len = scan_meta_key(&source[l->start]);
 				m = meta_new(source, l->start, len);
 				start = l->start + len + 1;
-				len = l->start + l->len - start - 1;
+				len = l->start + l->len - start;
+
+				if (char_is_line_ending(&source[start + len])) {
+					len--;
+				}
+
 				d_string_append_c_array(d, &source[start], len);
 				stack_push(e->metadata_stack, m);
 				break;
