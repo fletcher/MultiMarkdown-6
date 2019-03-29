@@ -357,15 +357,21 @@ configure_file (
 # from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
 get_directory_property(hasParent PARENT_DIRECTORY)
 
+set(test_files
+	test/CuTest.c
+	test/CuTest.h
+	${PROJECT_BINARY_DIR}/AllTests.c
+)
+
+# Process source files to look for tests to run
+add_custom_command (
+	OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
+	COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
+)
+
 if(hasParent)
 	# Don't create "run_tests" when we're a sub-project for something else
 else()
-	set(test_files
-		test/CuTest.c
-		test/CuTest.h
-		${PROJECT_BINARY_DIR}/AllTests.c
-	)
-
 	if (DEFINED TEST)
 		add_definitions(-DTEST)
 
@@ -375,12 +381,6 @@ else()
 			${header_files}
 			${src_utility_files}
 			${header_utility_files}
-		)
-
-		# Process source files to look for tests to run
-		add_custom_command (
-			OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
-			COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
 		)
 
 		enable_testing()
