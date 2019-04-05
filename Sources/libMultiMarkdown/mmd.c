@@ -2329,11 +2329,21 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	// Preserve existing parse tree (if any)
 	old_root = e->root;
 
-	// Tokenize the string (up until first empty line)
-	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
+	token * doc;
 
-	// Parse tokens into blocks
-	mmd_parse_token_chain(e, doc);
+	if (old_root &&
+			(old_root->type == DOC_START_TOKEN) &&
+			(old_root->len == e->dstr->currentStringLength)
+	   ) {
+		// Already parsed
+		doc = old_root;
+	} else {
+		// Tokenize the string (up until first empty line)
+		doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
+
+		// Parse tokens into blocks
+		mmd_parse_token_chain(e, doc);
+	}
 
 	if (doc) {
 		if (doc->child && doc->child->type == BLOCK_META) {
@@ -2344,7 +2354,11 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 			}
 		}
 
-		token_tree_free(doc);
+		if (old_root != doc) {
+			token_tree_free(doc);
+
+			// TODO: Need to reset various stacks (e.g. header stack)...
+		}
 	}
 
 	// Restore previous parse tree
