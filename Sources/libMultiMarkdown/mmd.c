@@ -1884,7 +1884,7 @@ meta:
 				start = l->start + len + 1;
 				len = l->start + l->len - start;
 
-				if (char_is_line_ending(&source[start + len])) {
+				if (char_is_line_ending(source[start + len])) {
 					len--;
 				}
 
@@ -2310,6 +2310,7 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
 	token * old_root;
+	mmd_engine * temp = NULL;
 
 	if (!e) {
 		return false;
@@ -2329,7 +2330,7 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	// Preserve existing parse tree (if any)
 	old_root = e->root;
 
-	token * doc;
+	token * doc = NULL;
 
 	if (old_root &&
 			(old_root->type == DOC_START_TOKEN) &&
@@ -2338,6 +2339,20 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		// Already parsed
 		doc = old_root;
 	} else {
+		// Store stack sizes
+		temp = mmd_engine_create(NULL, 0);
+
+		temp->abbreviation_stack->size = e->abbreviation_stack->size;
+		temp->citation_stack->size = e->citation_stack->size;
+		temp->definition_stack->size = e->definition_stack->size;
+		temp->footnote_stack->size = e->footnote_stack->size;
+		temp->glossary_stack->size = e->glossary_stack->size;
+		temp->header_stack->size = e->header_stack->size;
+		temp->link_stack->size = e->link_stack->size;
+		temp->metadata_stack->size = e->metadata_stack->size;
+		temp->table_stack->size = e->table_stack->size;
+
+
 		// Tokenize the string (up until first empty line)
 		doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
 
@@ -2357,7 +2372,20 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 		if (old_root != doc) {
 			token_tree_free(doc);
 
-			// TODO: Need to reset various stacks (e.g. header stack)...
+			// Reset stack sizes
+			// Except metadata stack, since we will need that for any subseqeunt requests
+			// TODO: May need a more robust approach for this in the future
+			e->abbreviation_stack->size =	temp->abbreviation_stack->size;
+			e->citation_stack->size = 		temp->citation_stack->size;
+			e->definition_stack->size = 	temp->definition_stack->size;
+			e->footnote_stack->size = 		temp->footnote_stack->size;
+			e->glossary_stack->size = 		temp->glossary_stack->size;
+			e->header_stack->size = 		temp->header_stack->size;
+			e->link_stack->size = 			temp->link_stack->size;
+//			e->metadata_stack->size = 		temp->metadata_stack->size;
+			e->table_stack->size = 			temp->table_stack->size;
+
+			mmd_engine_free(temp, true);
 		}
 	}
 
