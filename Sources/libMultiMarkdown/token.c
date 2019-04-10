@@ -126,6 +126,9 @@ token * token_new(unsigned short type, size_t start, size_t len) {
 		t->start = start;
 		t->len = len;
 
+		t->out_start = 0;
+		t->out_len = 0;
+
 		t->next = NULL;
 		t->prev = NULL;
 		t->child = NULL;
