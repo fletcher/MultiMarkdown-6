@@ -380,6 +380,7 @@ para				::= defs.
 	#include "libMultiMarkdown.h"
 	#include "mmd.h"
 	#include "parser.h"
+	#include "stack.h"
 	#include "token.h"
 }
 

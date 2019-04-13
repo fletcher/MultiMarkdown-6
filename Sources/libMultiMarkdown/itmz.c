@@ -108,6 +108,7 @@
 
 #include "itmz.h"
 #include "parser.h"
+#include "stack.h"
 #include "uuid.h"
 #include "zip.h"
 

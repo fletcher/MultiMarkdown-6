@@ -107,9 +107,13 @@
 #include <string.h>
 
 #include "char.h"
+#include "d_string.h"
 #include "opendocument-content.h"
+#include "mmd.h"
 #include "parser.h"
 #include "scanners.h"
+#include "stack.h"
+#include "token.h"
 
 
 #define print(x) d_string_append(out, x)

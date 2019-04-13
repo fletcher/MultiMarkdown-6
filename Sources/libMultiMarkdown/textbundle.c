@@ -126,7 +126,9 @@
 
 #include "file.h"
 #include "miniz.h"
+#include "stack.h"
 #include "textbundle.h"
+#include "token.h"
 #include "writer.h"
 #include "zip.h"
 

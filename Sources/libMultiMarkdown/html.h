@@ -56,7 +56,8 @@
 #ifndef HTML_MULTIMARKDOWN_H
 #define HTML_MULTIMARKDOWN_H
 
-#include "d_string.h"
+typedef struct DString DString;
+
 #include "token.h"
 #include "writer.h"
 

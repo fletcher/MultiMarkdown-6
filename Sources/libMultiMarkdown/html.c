@@ -62,9 +62,11 @@
 #include "html.h"
 #include "i18n.h"
 #include "libMultiMarkdown.h"
+#include "mmd.h"
 #include "parser.h"
 #include "token.h"
 #include "scanners.h"
+#include "stack.h"
 #include "writer.h"
 
 
@@ -1699,6 +1701,7 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_ADD:
+			stack_push(scratch->critic_stack, t);
 
 			// Ignore if we're rejecting
 			if (scratch->extensions & EXT_CRITIC_REJECT) {
@@ -1723,6 +1726,7 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_DEL:
+			stack_push(scratch->critic_stack, t);
 
 			// Ignore if we're accepting
 			if (scratch->extensions & EXT_CRITIC_ACCEPT) {
@@ -1747,6 +1751,7 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_COM:
+			stack_push(scratch->critic_stack, t);
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
@@ -1798,6 +1803,8 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_SUB_DEL:
+			stack_push(scratch->critic_stack, t);
+
 			if ((scratch->extensions & EXT_CRITIC) &&
 					(t->next) &&
 					(t->next->type == PAIR_CRITIC_SUB_ADD)) {
@@ -1820,6 +1827,8 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_SUB_ADD:
+			stack_push(scratch->critic_stack, t);
+
 			if ((scratch->extensions & EXT_CRITIC) &&
 					(t->prev) &&
 					(t->prev->type == PAIR_CRITIC_SUB_DEL)) {

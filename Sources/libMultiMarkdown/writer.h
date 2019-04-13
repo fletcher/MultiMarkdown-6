@@ -60,16 +60,23 @@
 	#include "CuTest.h"
 #endif
 
-#include "d_string.h"
+#include "libMultiMarkdown.h"
+#include "uthash.h"
+
+/*
+ #include "d_string.h"
 #include "mmd.h"
 #include "stack.h"
 #include "token.h"
 #include "uthash.h"
-
+*/
 
 #define kMaxExportRecursiveDepth 1000		//!< Maximum recursion depth when exporting token tree -- to prevent stack overflow with "pathologic" input
 
 #define kMaxTableColumns 48					//!< Maximum number of table columns for specifying alignment
+
+typedef struct asset asset;
+typedef struct stack stack;
 
 typedef struct {
 	struct link 	*	link_hash;
@@ -130,6 +137,8 @@ typedef struct {
 	struct asset 	*	asset_hash;
 	short				store_assets;
 	short				remember_assets;
+
+	stack *				critic_stack;
 } scratch_pad;
 
 

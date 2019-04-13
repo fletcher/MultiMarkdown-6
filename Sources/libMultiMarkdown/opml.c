@@ -108,6 +108,8 @@
 
 #include "opml.h"
 #include "parser.h"
+#include "stack.h"
+
 
 #define print(x) d_string_append(out, x)
 #define print_const(x) d_string_append_c_array(out, x, sizeof(x) - 1)

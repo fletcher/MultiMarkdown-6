@@ -82,6 +82,7 @@
 #include "html.h"
 #include "i18n.h"
 #include "miniz.h"
+#include "stack.h"
 #include "uuid.h"
 #include "writer.h"
 #include "zip.h"

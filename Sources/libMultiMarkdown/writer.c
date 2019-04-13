@@ -73,6 +73,7 @@
 #include "opml.h"
 #include "parser.h"
 #include "scanners.h"
+#include "stack.h"
 #include "token.h"
 #include "uuid.h"
 #include "writer.h"
@@ -257,6 +258,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->asset_hash = NULL;
 		p->store_assets = 0;
 		p->remember_assets = 0;
+
+		p->critic_stack = e->critic_stack;
 	}
 
 	return p;

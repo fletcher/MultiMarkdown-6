@@ -32,6 +32,7 @@
 	#include "libMultiMarkdown.h"
 	#include "mmd.h"
 	#include "parser.h"
+	#include "stack.h"
 	#include "token.h"
 /**************** End of %include directives **********************************/
 /* These constants specify the various numeric values for terminal symbols

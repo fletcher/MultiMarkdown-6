@@ -104,6 +104,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "d_string.h"
 #include "mmd.h"
 #include "itmz-reader.h"
 #include "itmz-lexer.h"

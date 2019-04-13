@@ -126,6 +126,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->quotes_lang = ENGLISH;
 
 		e->abbreviation_stack = stack_new(0);
+		e->critic_stack = stack_new(0);
 		e->citation_stack = stack_new(0);
 		e->definition_stack = stack_new(0);
 		e->footnote_stack = stack_new(0);
@@ -309,6 +310,7 @@ void mmd_engine_reset(mmd_engine * e) {
 	}
 
 	// Reset other stacks
+	e->critic_stack->size = 0;
 	e->definition_stack->size = 0;
 	e->header_stack->size = 0;
 	e->table_stack->size = 0;
@@ -339,6 +341,7 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 
 	// Takedown
 	stack_free(e->abbreviation_stack);
+	stack_free(e->critic_stack);
 	stack_free(e->citation_stack);
 	stack_free(e->footnote_stack);
 	stack_free(e->glossary_stack);
