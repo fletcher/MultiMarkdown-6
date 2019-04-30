@@ -118,6 +118,8 @@ int char_is_whitespace_or_line_ending_or_punctuation(char c);
 // Is byte the first byte of a multibyte UTF-8 sequence?
 #define char_is_lead_multibyte(x) ((x & 0xC0) == 0xC0)
 
+// Is the string valid UTF-8? (Returns pointer to first sequence)
+unsigned char * utf8_check(unsigned char * s);
 
 #endif
 
