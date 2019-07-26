@@ -22,7 +22,6 @@ DerivedData
 
 lemon/build
 
-build
 build-xcode
 build-xcode-debug
 
