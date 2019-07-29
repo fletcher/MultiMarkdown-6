@@ -41,25 +41,28 @@ You can optionally test using the test suite:
 
 ### Xcode
 
-In order to use MultiMarkdown in your Xcode project:
+In order to use libMultiMarkdown in your Xcode project:
 
-1. `cd` into the root of your Xcode project folder (where the `.xcodeproj` file
+1.	`cd` into the root of your Xcode project folder (where the `.xcodeproj` file
 	resides).
-2. Add this project as a git submodule:
+
+2.	Add this project as a git submodule:
 
 		git submodule add https://github.com/fletcher/MultiMarkdown-6 MultiMarkdown-6
 
-3. Compile:
+3.	Compile:
 
 		cd MultiMarkdown-6
 		make xcode
 
-4. Drag the `build-xcode/MultiMarkdown.xcodeproj` file to the root of your Xcode
-	project as a subproject.
-5. Select the `MultiMarkdown` subproject, select the `libMultiMarkdown` target,
+4.	Drag the `build-xcode/MultiMarkdown.xcodeproj` file to the root of your
+	Xcode project as a subproject.
+
+5.	Select the `MultiMarkdown` subproject, select the `libMultiMarkdown` target,
 	and in Build Phases > Copy Files select Products Directory from the
 	Destination popup menu.
-6. Select your root project, select your target, add `libMultiMarkdown` under
+
+6.	Select your root project, select your target, add `libMultiMarkdown` under
 	Target Depencies and `libMultiMarkdown.framework/libMultiMarkdown` and
 	`libcurl.tdb` under Link Binary with Libraries.
 
@@ -67,18 +70,22 @@ Warning: if you move the project on disk or update the MultiMarkdown source
 files, you need to rerun step 3 above.
 
 You can now `#import <libMultiMarkdown/libMultiMarkdown.h>`. To get you started,
-here is a sample code that converts a `NSString`, similarly to how the command
-line utility does:
+here is (untested) demonstration code that converts a `NSString` to HTML:
 
-	token_pool_init(); // needs to be done once per app lifecycle
+	token_pool_init(); // needs to be done once per app lifecycle - PLEASE READ token.h!!!!!!!!!!!
 
-	NSString *input;
-	NSStringEncoding encoding;
-	const char *cString = [input cStringUsingEncoding:encoding];
+	NSString *input = @"Test *string* for **demonstration**.";
+	const char *cString = [input cStringUsingEncoding:NSUTF8StringEncoding];
 	const char *mmd = mmd_string_convert(cString, EXT_SMART | EXT_NOTES | EXT_CRITIC | EXT_TRANSCLUDE, FORMAT_HTML, ENGLISH);
-	NSString *output = [[NSString alloc] initWithCString:mmd encoding:encoding];
+	NSString *output = [[NSString alloc] initWithCString:mmd encoding:NSUTF8StringEncoding];
+
+	// Cleanup
+	free(mmd); 
+	token_pool_drain();		// again, PLEASE READ token.h!!!!!!
+	token_pool_free();
 
 There are 3 main versions of the primary functions:
+
 * `mmd_string...`: start from source text in c string
 * `mmd_d_string...`: start from a DString (Useful if you already use DString's for your text)
 * `mmd_engine...`: useful when you are processing the same source multiple times
@@ -177,21 +184,21 @@ The following enums can be used for the parameters `language`, `format` and `ext
 MultiMarkdown v6 is mostly about making a better MMD parser, but it involves a
 few changes to the MultiMarkdown syntax itself.
 
-1. Setext headers can consist of more than one line to be included in the
+1.	Setext headers can consist of more than one line to be included in the
 header:
 
 		This is
 		a header
 		========
 
-2. Whitespace is not allowed between the text brackets and label brackets in
+2.	Whitespace is not allowed between the text brackets and label brackets in
 reference links, images, footnotes, etc.  For example `[foo] [bar]` will no
 longer be the same as `[foo][bar]`.
 
-3. Link and image titles can be quoted with `'foo'`, `"foo"`, or `(foo)`.
+3.	Link and image titles can be quoted with `'foo'`, `"foo"`, or `(foo)`.
 Link attributes can be used in both reference and inline links/images.
 
-4. HTML elements are handled slightly differently.  There is no longer a
+4.	HTML elements are handled slightly differently.  There is no longer a
 `markdown="1"` feature.  Instead, HTML elements that are on a line by
 themselves will open an HTML block that will cause the rest of the "paragraph"
 to be treated as HTML such that Markdown will not be parsed in side of it.
@@ -214,40 +221,40 @@ MultiMarkdown parsing inside of the HTML block.
 
 		</div>
 
-5. "Malformed" reference link definitions are handled slightly differently.
+5.	"Malformed" reference link definitions are handled slightly differently.
 For example, the test suite file `Reference Footnotes.text` is parsed
 differently in compatibility mode than MMD-5.  This started as a side-effect
 of the parsing algorithm, but I actually think it makes sense.  This may or
 may not change in the future.
 
-6. Table captions in MMD-6 must come immediately *after* the table, not
+6.	Table captions in MMD-6 must come immediately *after* the table, not
 before it.
 
-7. Escaped linebreaks (`\` preceding a line break) will be interpreted as
+7.	Escaped linebreaks (`\` preceding a line break) will be interpreted as
 `<br />` (even in compatibility mode).  This was previously an optional
 feature in MMD, but I don't see a problem with just making it default 
 behavior.
 
-8. Escaped spaces (`\ `) will be interpreted as a non-breaking space, if the
+8.	Escaped spaces (`\ `) will be interpreted as a non-breaking space, if the
 output format supports it.
 
-9. CriticMarkup, Abbreviations, Glossary Terms, and Citations are handled
+9.	CriticMarkup, Abbreviations, Glossary Terms, and Citations are handled
 slightly differently.  See the QuickStart guide for more information.
 
-10. Fenced code blocks can use leading/trailing "fences" of 3, 4, or 5
+10.	Fenced code blocks can use leading/trailing "fences" of 3, 4, or 5
 backticks in length.  That should be sufficient for complex documents without
 requiring a more complex parser.  If there is no trailing fence, then the
 fenced block is considered to go through the end of the document.
 
-11. Emph and Strong parsing is conceptually the same, but the implementation
+11.	Emph and Strong parsing is conceptually the same, but the implementation
 is different.  It is designed for speed, accuracy, and consistency.  In
 general, it seems to handle edge cases much more reliably, but there are still
 a couple of situations that I would like to take into account, if possible.
 These are not situations that should occur often in "real life."
 
-12. EPUB 3 output is supported without need of any external tools.
+12.	EPUB 3 output is supported without need of any external tools.
 
-13. Internationalization support for HTML phrases, such as "see footnote". See
+13.	Internationalization support for HTML phrases, such as "see footnote". See
 [Github](https://github.com/fletcher/MultiMarkdown-6/issues/37) for more
 information.
 

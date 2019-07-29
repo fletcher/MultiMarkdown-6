@@ -66,6 +66,12 @@
 /// This allows us to know when the pool is no longer being used and it is safe
 /// to free.
 
+/// This is easy with a command line utility, but complex in a multithreaded
+/// application.  Unless you *really* know what you're doing, fully understand
+/// threads and C memory management, you should probably disable object pools 
+/// when creating a long-running GUI application.  (I disable them in
+/// MultiMarkdown Composer, for example.)
+
 #ifdef kUseObjectPool
 	void token_pool_init(void);			//!< Initialize object pool for allocating tokens
 	void token_pool_drain(void);		//!< Drain pool to free memory when parse complete
