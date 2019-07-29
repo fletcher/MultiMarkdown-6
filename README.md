@@ -39,6 +39,138 @@ You can optionally test using the test suite:
 
 	ctest
 
+### Xcode
+
+In order to use MultiMarkdown in your Xcode project:
+
+1. `cd` into the root of your Xcode project folder (where the `.xcodeproj` file
+	resides).
+2. Add this project as a git submodule:
+
+		git submodule add https://github.com/fletcher/MultiMarkdown-6 MultiMarkdown-6
+
+3. Compile:
+
+		cd MultiMarkdown-6
+		make xcode
+
+4. Drag the `build-xcode/MultiMarkdown.xcodeproj` file to the root of your Xcode
+	project as a subproject.
+5. Select the `MultiMarkdown` subproject, select the `libMultiMarkdown` target,
+	and in Build Phases > Copy Files select Products Directory from the
+	Destination popup menu.
+6. Select your root project, select your target, add `libMultiMarkdown` under
+	Target Depencies and `libMultiMarkdown.framework/libMultiMarkdown` and
+	`libcurl.tdb` under Link Binary with Libraries.
+
+Warning: if you move the project on disk or update the MultiMarkdown source
+files, you need to rerun step 3 above.
+
+You can now `#import <libMultiMarkdown/libMultiMarkdown.h>`. To get you started,
+here is a sample code that converts a `NSString`, similarly to how the command
+line utility does:
+
+	token_pool_init(); // needs to be done once per app lifecycle
+
+	NSString *input;
+	NSStringEncoding encoding;
+	const char *cString = [input cStringUsingEncoding:encoding];
+	const char *mmd = mmd_string_convert(cString, EXT_SMART | EXT_NOTES | EXT_CRITIC | EXT_TRANSCLUDE, FORMAT_HTML, ENGLISH);
+	NSString *output = [[NSString alloc] initWithCString:mmd encoding:encoding];
+
+There are 3 main versions of the primary functions:
+* `mmd_string...`: start from source text in c string
+* `mmd_d_string...`: start from a DString (Useful if you already use DString's for your text)
+* `mmd_engine...`: useful when you are processing the same source multiple times
+
+The C string variants are as follows:
+
+	// Convert OPML string to MMD
+	DString * mmd_string_convert_opml_to_text(const char * source);
+
+	// Convert ITMZ string to MMD
+	DString * mmd_string_convert_itmz_to_text(const char * source);
+
+	// Convert MMD text to specified format, with specified extensions, and language
+	// Returned char * must be freed
+	char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
+
+	// Convert MMD text to specified format using DString as a container for block of data
+	// and length of that block.  Must be used for "complex" output formats such as EPUB.
+	// Returned DString * must be freed
+	DString * mmd_string_convert_to_data(const char * source, unsigned long extensions, short format, short language, const char * directory);
+
+	// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
+	// multiple documents (e.g. EPUB)
+	void mmd_string_convert_to_file(const char * source, unsigned long extensions, short format, short language, const char * directory, const char * filepath);
+
+	// Does the text have metadata?
+	bool mmd_string_has_metadata(char * source, size_t * end);
+
+	// Return metadata keys, one per line
+	// Returned char * must be freed
+	char * mmd_string_metadata_keys(char * source);
+
+	// Extract desired metadata as string value
+	// Returned char * must be freed
+	char * mmd_string_metavalue_for_key(char * source, const char * key);
+
+	// Insert/replace metadata in string, returning new string
+	char * mmd_string_update_metavalue_for_key(const char * source, const char * key, const char * value);
+
+	// Grab list of all transcluded files, but we need to know directory to search,
+	// as well as the path to the file
+	// Returned stack needs to be freed
+	struct stack * mmd_string_transclusion_manifest(const char * source, const char * search_path, const char * source_path);
+
+The following enums can be used for the parameters `language`, `format` and `extensions`:
+
+	enum smart_quotes_language {
+		ENGLISH = 0,
+		DUTCH,
+		FRENCH,
+		GERMAN,
+		GERMANGUILL,
+		SPANISH,
+		SWEDISH,
+	};
+
+	enum output_format {
+		FORMAT_HTML,
+		FORMAT_EPUB,
+		FORMAT_LATEX,
+		FORMAT_BEAMER,
+		FORMAT_MEMOIR,
+		FORMAT_FODT,
+		FORMAT_ODT,
+		FORMAT_TEXTBUNDLE,
+		FORMAT_TEXTBUNDLE_COMPRESSED,
+		FORMAT_OPML,
+		FORMAT_ITMZ,
+		FORMAT_MMD,
+	};
+
+	enum parser_extensions {
+		EXT_COMPATIBILITY       = 1 << 0,    //!< Markdown compatibility mode
+		EXT_COMPLETE            = 1 << 1,    //!< Create complete document
+		EXT_SNIPPET             = 1 << 2,    //!< Create snippet only
+		EXT_SMART               = 1 << 3,    //!< Enable Smart quotes
+		EXT_NOTES               = 1 << 4,    //!< Enable Footnotes
+		EXT_NO_LABELS           = 1 << 5,    //!< Don't add anchors to headers, etc.
+		EXT_PROCESS_HTML        = 1 << 6,    //!< Process Markdown inside HTML
+		EXT_NO_METADATA         = 1 << 7,    //!< Don't parse Metadata
+		EXT_OBFUSCATE           = 1 << 8,    //!< Mask email addresses
+		EXT_CRITIC              = 1 << 9,    //!< Critic Markup Support
+		EXT_CRITIC_ACCEPT       = 1 << 10,   //!< Accept all proposed changes
+		EXT_CRITIC_REJECT       = 1 << 11,   //!< Reject all proposed changes
+		EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
+		EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
+		EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
+		EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
+		EXT_RANDOM_LABELS		= 1 << 16,   //!< Use random numbers for header labels (unless manually defined)
+		EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
+	};
+
 
 ## Differences in the MultiMarkdown Syntax ##
 
