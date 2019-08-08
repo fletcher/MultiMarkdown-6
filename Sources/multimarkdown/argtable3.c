@@ -355,7 +355,7 @@ static const char illoptstring[] = "unknown option -- %s";
 
 
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined (DJGPP)
 
 /* Windows needs warnx().  We change the definition though:
  *  1. (another) global is defined, opterrmsg, which holds the error message
@@ -380,7 +380,11 @@ static void warnx(const char *fmt, ...)
     */
     memset(opterrmsg, 0, sizeof opterrmsg);
 	if (fmt != NULL)
+#ifdef DJGPP
+		vsnprintf(opterrmsg, sizeof(opterrmsg) - 1, fmt, ap);
+#else
 		_vsnprintf(opterrmsg, sizeof(opterrmsg) - 1, fmt, ap);
+#fi
 	va_end(ap);
 
 #pragma warning(suppress: 6053)
@@ -389,7 +393,7 @@ static void warnx(const char *fmt, ...)
 
 #else
 #include <err.h>
-#endif /*_WIN32*/
+#endif /*_WIN32 or DJGPP*/
 
 
 /*
