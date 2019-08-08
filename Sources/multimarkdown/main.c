@@ -54,7 +54,9 @@
 */
 
 #include <ctype.h>
+#ifndef DJGPP
 #include <libgen.h>
+#endif
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
