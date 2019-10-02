@@ -57,7 +57,7 @@
 #define CHAR_SMART_STRING_H
 
 #ifdef TEST
-#include "CuTest.h"
+	#include "CuTest.h"
 #endif
 
 /// Define character types

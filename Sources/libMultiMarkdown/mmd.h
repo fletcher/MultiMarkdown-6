@@ -79,7 +79,7 @@ struct mmd_engine {
 
 	stack 		*			abbreviation_stack;
 	stack 		*			citation_stack;
-	stack		*			critic_stack;
+	stack			*		critic_stack;
 	stack 		*			definition_stack;
 	stack 		*			footnote_stack;
 	stack 		*			glossary_stack;

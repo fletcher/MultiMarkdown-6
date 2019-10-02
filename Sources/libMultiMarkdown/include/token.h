@@ -68,7 +68,7 @@
 
 /// This is easy with a command line utility, but complex in a multithreaded
 /// application.  Unless you *really* know what you're doing, fully understand
-/// threads and C memory management, you should probably disable object pools 
+/// threads and C memory management, you should probably disable object pools
 /// when creating a long-running GUI application.  (I disable them in
 /// MultiMarkdown Composer, for example.)
 

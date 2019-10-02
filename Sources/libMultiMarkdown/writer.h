@@ -138,7 +138,7 @@ typedef struct {
 	short				store_assets;
 	short				remember_assets;
 
-	stack *				critic_stack;
+	stack 		*		critic_stack;
 } scratch_pad;
 
 
