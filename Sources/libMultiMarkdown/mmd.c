@@ -1796,16 +1796,37 @@ void is_list_loose(token * list) {
 		return;
 	}
 
-	while (walker->next != NULL) {
+	if (walker->next == NULL) {
+		// Single item list
 		if (walker->type == BLOCK_LIST_ITEM) {
 			if (walker->child->type == BLOCK_PARA) {
-				loose = true;
+				walker = walker->child;
+
+				while (walker->next != NULL) {
+					if (walker->type == BLOCK_EMPTY) {
+						if (walker->next->type == BLOCK_PARA) {
+							loose = true;
+						}
+					}
+
+					walker = walker->next;
+				}
 			} else {
 				walker->type = BLOCK_LIST_ITEM_TIGHT;
 			}
 		}
+	} else {
+		while (walker->next != NULL) {
+			if (walker->type == BLOCK_LIST_ITEM) {
+				if (walker->child->type == BLOCK_PARA) {
+					loose = true;
+				} else {
+					walker->type = BLOCK_LIST_ITEM_TIGHT;
+				}
+			}
 
-		walker = walker->next;
+			walker = walker->next;
+		}
 	}
 
 	if (loose) {
