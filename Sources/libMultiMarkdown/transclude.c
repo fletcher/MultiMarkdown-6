@@ -122,7 +122,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	// Make sure we use a parse tree for children
 	stack * parse_stack = parsed;
 
-	if (parsed == NULL) {
+	if (parse_stack == NULL) {
 		// Create temporary stack
 		parse_stack = stack_new(0);
 	}
