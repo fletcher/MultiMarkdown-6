@@ -1539,8 +1539,12 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case QUOTE_DOUBLE:
 				offset = t->start;
 
-				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset - 1]))) {
+				if (offset == 0) {
 					t->can_close = 0;
+				} else if (char_is_whitespace_or_line_ending(str[offset - 1])) {
+					t->can_close = 0;
+				} else if (! char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) {
+					t->can_open = 0;
 				}
 
 				if (char_is_whitespace_or_line_ending(str[offset + 1])) {
