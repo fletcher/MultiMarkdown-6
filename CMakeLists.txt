@@ -523,6 +523,7 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
 	FRAMEWORK TRUE
 	FRAMEWORK_VERSION A
 	MACOSX_FRAMEWORK_IDENTIFIER net.multimarkdown.mmd6
+	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "net.multimarkdown.mmd6"
 )
 
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
