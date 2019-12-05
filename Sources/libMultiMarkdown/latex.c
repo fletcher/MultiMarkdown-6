@@ -417,7 +417,11 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 		print_const("\n");
 
 		if (text) {
-			print_const("\\caption{");
+			if (link->title && link->title[0] != '\0') {
+				printf("\\caption[%s]{", link->title);
+			} else {
+				print_const("\\caption{");
+			}
 			mmd_export_token_tree_latex(out, source, text->child, scratch);
 			print_const("}\n");
 		}
