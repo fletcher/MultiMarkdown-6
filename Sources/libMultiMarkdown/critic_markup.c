@@ -125,8 +125,9 @@ token * mmd_critic_tokenize_string(const char * source, size_t start, size_t len
 		}
 
 		match_free(m);
-		trie_free(ac);
 	}
+
+	trie_free(ac);
 
 	return root;
 }
