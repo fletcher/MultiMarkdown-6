@@ -2,7 +2,7 @@
 
 	MultiMarkdown 6 -- Lightweight markup processor to produce HTML, LaTeX, and more.
 
-	@file mmd.h
+	@file libMultiMarkdown.h
 
 	@brief Header file for libMultiMarkdown.
 
@@ -101,6 +101,14 @@ typedef struct stack stack;
 	C string variants
 */
 
+/// Convert OPML string to MMD
+DString * mmd_string_convert_opml_to_text(const char * source);
+
+
+/// Convert ITMZ string to MMD
+DString * mmd_string_convert_itmz_to_text(const char * source);
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);
@@ -146,6 +154,14 @@ struct stack * mmd_string_transclusion_manifest(const char * source, const char 
 /*
 	DString variants - DString ("dynamic string") is a mutable string implementation used in this project
 */
+
+/// Convert OPML DString to MMD
+DString * mmd_d_string_convert_opml_to_text(DString * source);
+
+
+/// Convert ITMZ DString to MMD
+DString * mmd_d_string_convert_itmz_to_text(DString * source);
+
 
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
@@ -195,7 +211,7 @@ struct stack * mmd_d_string_transclusion_manifest(DString * source, const char *
 
 /// Create MMD Engine using an existing DString (A new copy is *not* made)
 mmd_engine * mmd_engine_create_with_dstring(
-	DString *		d,
+	DString 	*	d,
 	unsigned long	extensions
 );
 
@@ -223,6 +239,13 @@ void mmd_engine_free(
 void mmd_engine_set_language(mmd_engine * e, short language);
 
 
+/// Access DString directly
+DString * mmd_engine_d_string(mmd_engine * e);
+
+/// Return token tree after previous parsing
+token * mmd_engine_root(mmd_engine * e);
+
+
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len);
 
@@ -243,6 +266,14 @@ char * mmd_engine_convert(mmd_engine * e, short format);
 /// Convert MMD text and write results to specified file -- used for "complex" output formats requiring
 /// multiple documents (e.g. EPUB)
 void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * directory, const char * filepath);
+
+
+/// Convert OPML to text without modifying original engine source
+DString  * mmd_engine_convert_opml_to_text(mmd_engine * e);
+
+
+/// Convert ITMZ to text without modifying original engine source
+DString  * mmd_engine_convert_itmz_to_text(mmd_engine * e);
 
 
 /// Convert MMD text to specified format using DString as a container for block of data
@@ -404,6 +435,7 @@ enum token_types {
 	PAIR_UL,
 	PAIR_BRACES,
 
+	MARKUP,
 	STAR,
 	UL,
 	EMPH_START,
@@ -493,6 +525,8 @@ enum token_types {
 	TABLE_DIVIDER,
 
 	TOC,
+	TOC_SINGLE,
+	TOC_RANGE,
 
 	TEXT_BACKSLASH,
 	RAW_FILTER_LEFT,
@@ -536,6 +570,7 @@ enum output_format {
 	FORMAT_TEXTBUNDLE,
 	FORMAT_TEXTBUNDLE_COMPRESSED,
 	FORMAT_OPML,
+	FORMAT_ITMZ,
 	FORMAT_MMD,
 };
 
@@ -556,6 +591,8 @@ enum parser_extensions {
 	EXT_RANDOM_FOOT         = 1 << 12,   //!< Use random numbers for footnote links
 	EXT_TRANSCLUDE          = 1 << 13,   //!< Perform transclusion(s)
 	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
+	EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
+	EXT_RANDOM_LABELS		= 1 << 16,   //!< Use random numbers for header labels (unless manually defined)
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

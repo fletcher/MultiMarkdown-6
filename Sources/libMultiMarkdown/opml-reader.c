@@ -14,7 +14,7 @@
 
 /*
 
-	Copyright © 2016 - 2018 Fletcher T. Penney.
+	Copyright © 2016 - 2019 Fletcher T. Penney.
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
@@ -104,18 +104,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "d_string.h"
 #include "mmd.h"
 #include "opml-reader.h"
 #include "opml-lexer.h"
 #include "opml-parser.h"
 #include "token.h"
-
+#include "xml.h"
 
 // Basic parser function declarations
-void * OPMLAlloc();
-void OPML();
-void OPMLFree();
-void OPMLTrace();
+void * OPMLAlloc(void *);
+void OPML(void *, int, void *, void *);
+void OPMLFree(void *, void *);
+void OPMLTrace(FILE * stream, char * zPrefix);
 
 
 #define print(x) d_string_append(out, x)
@@ -188,107 +189,15 @@ token * tokenize_opml_string(mmd_engine * e, size_t start, size_t len) {
 }
 
 
-void print_opml_text(DString * out, const char * source, size_t start, size_t len) {
-	const char * s_start = &source[start];
-	const char * s_stop = &source[start + len];
-
-	char * c = (char *) s_start;
-
-	while (c < s_stop) {
-		switch (*c) {
-			case '&':
-				switch (*++c) {
-					case '#':
-						if (strncmp(c, "#10;", 4) == 0) {
-							print_char('\n');
-							c += 4;
-							continue;
-						}
-
-						if (strncmp(c, "#9;", 3) == 0) {
-							print_char('\t');
-							c += 3;
-							continue;
-						}
-
-						if (strncmp(c, "#13;", 4) == 0) {
-							print_char('\r');
-							c += 4;
-							continue;
-						}
-
-						break;
-
-					case 'a':
-						if (strncmp(c, "amp;", 4) == 0) {
-							print_char('&');
-							c += 4;
-							continue;
-						}
-
-						if (strncmp(c, "apos;", 5) == 0) {
-							print_char('\'');
-							c += 5;
-							continue;
-						}
-
-						break;
-
-					case 'l':
-						if (strncmp(c, "lt;", 3) == 0) {
-							print_char('<');
-							c += 3;
-							continue;
-						}
-
-						break;
-
-					case 'g':
-						if (strncmp(c, "gt;", 3) == 0) {
-							print_char('>');
-							c += 3;
-							continue;
-						}
-
-						break;
-
-					case 'q':
-						if (strncmp(c, "quot;", 5) == 0) {
-							print_char('"');
-							c += 5;
-							continue;
-						}
-
-						break;
-
-					default:
-						break;
-				}
-
-				print_char('&');
-				continue;
-				break;
-
-			default:
-				print_char(*c);
-				break;
-		}
-
-		c++;
-	}
-}
-
-
-
 void parse_opml_token_chain(mmd_engine * e, token * chain) {
 
-	void* pParser = OPMLAlloc (malloc);		// Create a parser (for lemon)
+	void * pParser = OPMLAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->next;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	OPMLTrace(stderr, "parser >>");
-	#endif
+#endif
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -302,9 +211,9 @@ void parse_opml_token_chain(mmd_engine * e, token * chain) {
 	}
 
 	// Signal finish to parser
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	fprintf(stderr, "\nFinish parse\n");
-	#endif
+#endif
 	OPML(pParser, 0, NULL, e);
 
 	if (e->root) {
@@ -328,59 +237,80 @@ void parse_opml_token_chain(mmd_engine * e, token * chain) {
 					// Advance over `<outline`
 					start = walker->start + 8;
 
-					start += scan_text(&(e->dstr->str[start]));
-					len = scan_double_quoted(&(e->dstr->str[start]));
+					char * text = xml_extract_named_attribute(e->dstr->str, start, "text");
 
-					if (strncmp(&(e->dstr->str[start + 1]), "(Untitled Preamble)", 19) != 0) {
-						if (out == metadata) {
-							print_opml_text(out, e->dstr->str, start + 1, len - 2);
-							print_const(":\t");
-						} else {
-							// Print header
-							if (scan_encoded_newline(&(e->dstr->str[start + 1]), len - 2) == -1) {
-								// ATX header
-								for (int i = 0; i < header_level; ++i) {
-									print_char('#');
-								}
+					if (text) {
+						len = strlen(text);
 
-								print_char(' ');
-							}
-
-							print_opml_text(out, e->dstr->str, start + 1, len - 2);
-
-							if (scan_encoded_newline(&(e->dstr->str[start + 1]), len - 2) == -1) {
-								// ATX header
-								print_char(' ');
-
-								for (int i = 0; i < header_level; ++i) {
-									print_char('#');
-								}
+						if (strcmp("&gt;&gt;Preamble&lt;&lt;", text) != 0) {
+							if (out == metadata) {
+								print_xml_as_text(out, text, 0, len);
+								print_const(":\t");
 							} else {
-								// Print Setext Header
-								switch (header_level) {
-									case 1:
-										print_const("\n======");
-										break;
+								// Print header
 
-									default:
-										print_const("\n------");
-										break;
+								if (xml_scan_encoded_newline(text, len) == -1) {
+									// ATX header
+									for (int i = 0; i < header_level; ++i) {
+										print_char('#');
+									}
+
+									print_char(' ');
 								}
-							}
 
-							print_const("\n");
+								print_xml_as_text(out, text, 0, len);
+
+								if (xml_scan_encoded_newline(text, len) == -1) {
+									// ATX header
+									print_char(' ');
+
+									for (int i = 0; i < header_level; ++i) {
+										print_char('#');
+									}
+								} else {
+									// Print Setext Header
+									switch (header_level) {
+										case 1:
+											print_const("\n======");
+											break;
+
+										default:
+											print_const("\n------");
+											break;
+									}
+								}
+
+								print_const("\n");
+							}
 						}
+
+						free(text);
 					}
 
 					// Print contents
-					start += len;
-					start += scan_note(&(e->dstr->str[start]));
-					len = scan_double_quoted(&(e->dstr->str[start]));
+					text = xml_extract_named_attribute(e->dstr->str, start, "_note");
 
-					print_opml_text(out, e->dstr->str, start + 1, len - 2);
+					if (text) {
+						print_xml_as_text(out, text, 0, strlen(text));
+
+						free(text);
+					}
 
 					if (out == metadata) {
-						print_char('\n');
+						print_const("  \n");
+					} else {
+						// Ensure that contents end in newline
+						if (out->currentStringLength) {
+							switch (out->str[out->currentStringLength - 1]) {
+								case '\n':
+								case '\r':
+									break;
+
+								default:
+									d_string_append_c(out, '\n');
+									break;
+							}
+						}
 					}
 
 					if (walker->type == OPML_OUTLINE_SELF_CLOSE) {

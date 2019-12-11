@@ -14,7 +14,7 @@
 
 /*
 
-	Copyright © 2016 - 2018 Fletcher T. Penney.
+	Copyright © 2016 - 2019 Fletcher T. Penney.
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
@@ -117,7 +117,9 @@
 doc				::=  doc_xml(B).												{ engine->root = B; }
 
 doc_xml			::= OPML_XML doc_opml.
+doc_xml			::= doc_opml.
 doc_xml			::= OPML_XML doc_opml OPML_WSNL.
+doc_xml			::= doc_opml OPML_WSNL.
 
 doc_opml		::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE.
 doc_opml		::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE.

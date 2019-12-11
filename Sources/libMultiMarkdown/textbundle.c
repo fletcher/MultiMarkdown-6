@@ -105,13 +105,30 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
+#ifdef __APPLE__
+	#include "TargetConditionals.h"
+	#if TARGET_IPHONE_SIMULATOR
+		// iOS Simulator
+		#undef USE_CURL
+	#elif TARGET_OS_IPHONE
+		// iOS device
+		#undef USE_CURL
+	#elif TARGET_OS_MAC
+		// Other kinds of Mac OS
+	#else
+		#   error "Unknown Apple platform"
+	#endif
+#endif
+
 #ifdef USE_CURL
 	#include <curl/curl.h>
 #endif
 
 #include "file.h"
 #include "miniz.h"
+#include "stack.h"
 #include "textbundle.h"
+#include "token.h"
 #include "writer.h"
 #include "zip.h"
 
@@ -367,7 +384,7 @@ void sub_asset_paths(DString * text, mmd_engine * e) {
 }
 
 
-DString * textbundle_create(const char * body, mmd_engine * e, const char * directory) {
+DString * textbundle_create(DString * body, mmd_engine * e, const char * directory) {
 	DString * result = d_string_new("");
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_TEXTBUNDLE_COMPRESSED);
 
@@ -409,8 +426,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 	}
 
 	// Add html version document
-	len = strlen(body);
-	status = mz_zip_writer_add_mem(&zip, "text.html", body, len, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "text.html", body->str, body->currentStringLength, MZ_BEST_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding content to zip.\n");
@@ -436,7 +452,7 @@ DString * textbundle_create(const char * body, mmd_engine * e, const char * dire
 
 
 // Use the miniz library to create a zip archive for the TEXTBUNDLE_COMPRESSED document
-void textbundle_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
+void textbundle_write_wrapper(const char * filepath, DString * body, mmd_engine * e, const char * directory) {
 	FILE * output_stream;
 
 	DString * result = textbundle_create(body, e, directory);

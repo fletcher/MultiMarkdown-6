@@ -66,6 +66,12 @@
 /// This allows us to know when the pool is no longer being used and it is safe
 /// to free.
 
+/// This is easy with a command line utility, but complex in a multithreaded
+/// application.  Unless you *really* know what you're doing, fully understand
+/// threads and C memory management, you should probably disable object pools
+/// when creating a long-running GUI application.  (I disable them in
+/// MultiMarkdown Composer, for example.)
+
 #ifdef kUseObjectPool
 	void token_pool_init(void);			//!< Initialize object pool for allocating tokens
 	void token_pool_drain(void);		//!< Drain pool to free memory when parse complete
@@ -85,13 +91,16 @@ struct token {
 	size_t				start;			//!< Starting offset in the source string
 	size_t				len;			//!< Length of the token in the source string
 
-	struct token *		next;			//!< Pointer to next token in the chain
-	struct token *		prev;			//!< Pointer to previous marker in the chain
-	struct token *		child;			//!< Pointer to child chain
+	size_t				out_start;
+	size_t				out_len;
 
-	struct token *		tail;			//!< Pointer to last token in the chain
+	struct token 	*	next;			//!< Pointer to next token in the chain
+	struct token 	*	prev;			//!< Pointer to previous marker in the chain
+	struct token 	*	child;			//!< Pointer to child chain
 
-	struct token *		mate;			//!< Pointer to other token in matched pair
+	struct token 	*	tail;			//!< Pointer to last token in the chain
+
+	struct token 	*	mate;			//!< Pointer to other token in matched pair
 };
 
 typedef struct token token;

@@ -125,8 +125,9 @@ token * mmd_critic_tokenize_string(const char * source, size_t start, size_t len
 		}
 
 		match_free(m);
-		trie_free(ac);
 	}
+
+	trie_free(ac);
 
 	return root;
 }
@@ -346,10 +347,10 @@ void mmd_critic_markup_reject(DString * d) {
 
 
 #ifdef TEST
-void Test_critic(CuTest* tc) {
-	#ifdef kUseObjectPool
+void Test_critic(CuTest * tc) {
+#ifdef kUseObjectPool
 	token_pool_init();
-	#endif
+#endif
 
 	DString * test = d_string_new("{--foo bar--}");
 	mmd_critic_markup_reject(test);
@@ -416,11 +417,11 @@ void Test_critic(CuTest* tc) {
 	mmd_critic_markup_reject(test);
 	CuAssertStrEquals(tc, "", test->str);
 
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	// Decrement counter and clean up token pool
 	token_pool_drain();
 
 	token_pool_free();
-	#endif
+#endif
 }
 #endif

@@ -64,6 +64,7 @@
 #include "char.h"
 #include "d_string.h"
 #include "html.h"
+#include "itmz.h"
 #include "i18n.h"
 #include "latex.h"
 #include "memoir.h"
@@ -72,6 +73,7 @@
 #include "opml.h"
 #include "parser.h"
 #include "scanners.h"
+#include "stack.h"
 #include "token.h"
 #include "uuid.h"
 #include "writer.h"
@@ -102,7 +104,7 @@ static char * my_strndup(const char * source, size_t n) {
 
 	// strlen is too slow is strlen(source) >> n
 	for (len = 0; len < n; ++len) {
-		if (test == '\0') {
+		if (*test == '\0') {
 			break;
 		}
 
@@ -167,6 +169,14 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		} else {
 			p->random_seed_base = 0;
 		}
+
+		if (e->extensions & EXT_RANDOM_LABELS) {
+			p->random_seed_base_labels = rand() % 32000;
+		} else {
+			p->random_seed_base_labels = 0;
+		}
+
+		p->label_counter = 0;
 
 		// Store links in a hash for rapid retrieval when exporting
 		p->link_hash = NULL;
@@ -248,6 +258,8 @@ scratch_pad * scratch_pad_new(mmd_engine * e, short format) {
 		p->asset_hash = NULL;
 		p->store_assets = 0;
 		p->remember_assets = 0;
+
+		p->critic_stack = e->critic_stack;
 	}
 
 	return p;
@@ -451,14 +463,25 @@ char * label_from_token(const char * source, token * t) {
 }
 
 
-char * label_from_header(const char * source, token * t) {
+char * label_from_header(const char * source, token * t, scratch_pad * scratch) {
 	char * result;
+	short temp_short;
+
 	token * temp_token = manual_label_from_header(t, source);
 
 	if (temp_token) {
 		result = label_from_token(source, temp_token);
 	} else {
-		result = label_from_token(source, t);
+		if (scratch->extensions & EXT_RANDOM_LABELS) {
+			srand(scratch->random_seed_base_labels + scratch->label_counter);
+			temp_short = rand() % 32000 + 1;
+			result = malloc(sizeof(char) * 6);
+			sprintf(result, "%d", temp_short);
+
+			scratch->label_counter++;
+		} else {
+			result = label_from_token(source, t);
+		}
 	}
 
 	return result;
@@ -616,10 +639,10 @@ attr * parse_attributes(char * source) {
 			a->next = attr_new(key, value);
 			a = a->next;
 		} else {
-			#ifndef __clang_analyzer__
+#ifndef __clang_analyzer__
 			a = attr_new(key, value);
 			attributes = a;
-			#endif
+#endif
 		}
 
 		free(value);	// We stored a modified copy
@@ -1130,11 +1153,11 @@ footnote * footnote_new(const char * source, token * label, token * content, boo
 void footnote_free(footnote * f) {
 	if (f) {
 		if (f->free_para) {
-			#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 			// Nothing to do here
-			#else
+#else
 			free(f->content);
-			#endif
+#endif
 		}
 
 		free(f->clean_text);
@@ -1408,14 +1431,15 @@ void process_definition_block(mmd_engine * e, token * block) {
 					if (f) {
 						free(f->label_text);
 						f->label_text = f->clean_text;
-					}
 
-					if (f->content->child &&
-							f->content->child->next &&
-							f->content->child->next->next) {
-						f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
-					} else {
-						f->clean_text = NULL;
+						if (f->content &&
+								f->content->child &&
+								f->content->child->next &&
+								f->content->child->next->next) {
+							f->clean_text = clean_string_from_range(e->dstr->str, f->content->child->next->next->start, block->start + block->len - f->content->child->next->next->start, false);
+						} else {
+							f->clean_text = NULL;
+						}
 					}
 
 					stack_push(e->abbreviation_stack, f);
@@ -1666,6 +1690,9 @@ void process_metadata_stack(mmd_engine * e, scratch_pad * scratch) {
 			} else if (strcmp(temp_char, "fr") == 0) {
 				scratch->language = LC_FR;
 				scratch->quotes_lang = FRENCH;
+			} else if (strcmp(temp_char, "he") == 0) {
+				scratch->language = LC_HE;
+				scratch->quotes_lang = ENGLISH;
 			} else if (strcmp(temp_char, "nl") == 0) {
 				scratch->language = LC_NL;
 				scratch->quotes_lang = DUTCH;
@@ -1957,10 +1984,17 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 		case FORMAT_OPML:
 			mmd_export_token_tree_opml(out, e->dstr->str, e->root, scratch);
 			break;
+
+		case FORMAT_ITMZ:
+			mmd_export_token_tree_itmz(out, e->dstr->str, e->root, scratch);
+			break;
 	}
 
 	// Preserve asset_hash for possible use in export
 	e->asset_hash = scratch->asset_hash;
+
+	// Preserve random label seed
+	e->random_seed_base_labels = scratch->random_seed_base_labels;
 
 	scratch_pad_free(scratch);
 }

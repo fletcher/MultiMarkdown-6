@@ -84,17 +84,11 @@ blocks(A)			::= blocks(B) block(C).
 		if (B == NULL) { B = C; C = NULL;}
 		A = B;
 		token_chain_append(A, C);
-		#ifndef NDEBUG
-		fprintf(stderr, "Next block %d\n", A->tail->type);
-		#endif
 	}
 blocks(A)			::= block(B).
 	{
 		engine->root = B;	// In case the first block is metadata and we just want to know if it exists
 		strip_line_tokens_from_block(engine, B);
-		#ifndef NDEBUG
-		fprintf(stderr, "First block %d\n", B->type);
-		#endif
 		A = B;
 	}
 
@@ -386,6 +380,7 @@ para				::= defs.
 	#include "libMultiMarkdown.h"
 	#include "mmd.h"
 	#include "parser.h"
+	#include "stack.h"
 	#include "token.h"
 }
 

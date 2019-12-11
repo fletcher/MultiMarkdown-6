@@ -34,6 +34,8 @@ latexconfig:	article
 [foo]
 [bar]
 
+[Markdown]
+
 
 [foo]: http://test.0/
 [bar]:	http://test.1/file.txt
@@ -43,3 +45,5 @@ latexconfig:	article
 [foo  bar]: http://test.5/	""
 [long]: http://test.6/
 "title"
+[Markdown]:	http://daringfireball.net/projects/markdown/  "Daring Fireball:
+Markdown"

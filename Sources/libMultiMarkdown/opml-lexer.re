@@ -14,7 +14,7 @@
 
 /*
 
-	Copyright © 2016 - 2018 Fletcher T. Penney.
+	Copyright © 2016 - 2019 Fletcher T. Penney.
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
@@ -154,8 +154,8 @@ int opml_scan(Scanner * s, const char * stop) {
 		'<body' [^>\x00]* '>'									{ return OPML_BODY_OPEN; }
 		'</body>'												{ return OPML_BODY_CLOSE; }
 
-		'<outline' text_attribute '"(Untitled Preamble)"' note_attribute double_quoted WSNL* '>'		{ return OPML_OUTLINE_PREAMBLE; }
-		'<outline' text_attribute '"Metadata"' WSNL* '>'					{ return OPML_OUTLINE_METADATA; }
+		'<outline' text_attribute '"&gt;&gt;Preamble&lt;&lt;"' note_attribute double_quoted WSNL* '>'		{ return OPML_OUTLINE_PREAMBLE; }
+		'<outline' text_attribute '"&gt;&gt;Metadata&lt;&lt;"' WSNL* '>'	{ return OPML_OUTLINE_METADATA; }
 
 
 		'<outline' [^>\x00]* '/>'								{ return OPML_OUTLINE_SELF_CLOSE; }
@@ -165,71 +165,6 @@ int opml_scan(Scanner * s, const char * stop) {
 		WSNL													{ return OPML_WSNL; }
 
 		// Skip over anything else - '.' does not include '\n'
-		.														{ goto scan; }
+		*														{ goto scan; }
 	*/
-}
-
-
-/*!re2c
-
-	re2c:define:YYCTYPE = "unsigned char";
-	re2c:define:YYCURSOR = c;
-	re2c:define:YYMARKER = marker;
-	re2c:define:YYCTXMARKER = marker;
-	re2c:yyfill:enable = 0;
-
-*/
-
-/// skip through text attribute to find value
-size_t scan_text(const char * c) {
-	const char * marker = NULL;
-	const char * start = c;
-
-/*!re2c
-	text_attribute / double_quoted			{ return (size_t)( c - start ); }
-	.?										{ return 0; }
-*/	
-}
-
-
-/// skip through _note attribute to find value
-size_t scan_note(const char * c) {
-	const char * marker = NULL;
-	const char * start = c;
-
-/*!re2c
-	note_attribute / double_quoted			{ return (size_t)( c - start ); }
-	.?										{ return 0; }
-*/	
-}
-
-
-/// find end of double quoted value
-size_t scan_double_quoted(const char * c) {
-	const char * marker = NULL;
-	const char * start = c;
-
-/*!re2c
-	double_quoted							{ return (size_t)( c - start ); }
-	.?										{ return 0; }
-*/	
-}
-
-
-/// Does the string include encoded newline?
-size_t scan_encoded_newline(const char * c, size_t len) {
-	const char * marker = NULL;
-	const char * start = c;
-
-	scan:
-
-	if ((*c == '\0') || ((c - start) > len)) {
-		// Not found
-		return -1;
-	}
-
-/*!re2c
-	contains_newline						{ return (size_t)(c - start); }
-	.										{ goto scan; }
-*/
 }

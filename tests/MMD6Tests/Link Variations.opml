@@ -2,9 +2,9 @@
 <opml version="1.0">
 <head><title>Link Variations</title></head>
 <body>
-<outline text="(Untitled Preamble)" _note="&#10;"></outline>
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;"></outline>
 <outline text="Foo Bar" _note="&#10;Link to [Foo Bar].&#10;&#10;Link to [foo bar].&#10;&#10;Link to [foobar].&#10;&#10;Link to [Foo Bar](#foobar).&#10;&#10;Link to [](#foobar).&#10;&#10;5&#10;&#10;Link to [Foo][Foo Bar].&#10;&#10;[&amp; link](http://example.com/?bar=foo&amp;foo=bar)&#10;&#10;[&apos;%&apos; Link](http://example.com/%25%20link)&#10;&#10;[&apos;#&apos; link](http://example.com/#foo)&#10;&#10;10&#10;&#10;[_ link](http://example.com/_foo)&#10;&#10;[~ link](http://example.com/~foo)"></outline>
-<outline text="Metadata">
+<outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Link Variations"/>
 <outline text="latexconfig" _note="article"/>
 </outline>

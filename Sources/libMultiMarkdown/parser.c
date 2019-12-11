@@ -32,6 +32,7 @@
 	#include "libMultiMarkdown.h"
 	#include "mmd.h"
 	#include "parser.h"
+	#include "stack.h"
 	#include "token.h"
 /**************** End of %include directives **********************************/
 /* These constants specify the various numeric values for terminal symbols
@@ -1190,9 +1191,6 @@ static void yy_reduce(
 		if (yymsp[-1].minor.yy0 == NULL) { yymsp[-1].minor.yy0 = yymsp[0].minor.yy0; yymsp[0].minor.yy0 = NULL;}
 		yylhsminor.yy0 = yymsp[-1].minor.yy0;
 		token_chain_append(yylhsminor.yy0, yymsp[0].minor.yy0);
-		#ifndef NDEBUG
-		fprintf(stderr, "Next block %d\n", yylhsminor.yy0->tail->type);
-		#endif
 	}
   yymsp[-1].minor.yy0 = yylhsminor.yy0;
         break;
@@ -1200,9 +1198,6 @@ static void yy_reduce(
 {
 		engine->root = yymsp[0].minor.yy0;	// In case the first block is metadata and we just want to know if it exists
 		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
-		#ifndef NDEBUG
-		fprintf(stderr, "First block %d\n", yymsp[0].minor.yy0->type);
-		#endif
 		yylhsminor.yy0 = yymsp[0].minor.yy0;
 	}
   yymsp[0].minor.yy0 = yylhsminor.yy0;

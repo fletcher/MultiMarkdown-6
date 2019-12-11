@@ -106,16 +106,16 @@ typedef union {
 #define OPMLARG_PDECL , mmd_engine * engine
 #define OPMLARG_FETCH  mmd_engine * engine  = yypParser->engine
 #define OPMLARG_STORE yypParser->engine  = engine
-#define YYNSTATE             18
-#define YYNRULE              17
-#define YY_MAX_SHIFT         17
-#define YY_MIN_SHIFTREDUCE   33
-#define YY_MAX_SHIFTREDUCE   49
-#define YY_MIN_REDUCE        50
-#define YY_MAX_REDUCE        66
-#define YY_ERROR_ACTION      67
-#define YY_ACCEPT_ACTION     68
-#define YY_NO_ACTION         69
+#define YYNSTATE             19
+#define YYNRULE              19
+#define YY_MAX_SHIFT         18
+#define YY_MIN_SHIFTREDUCE   35
+#define YY_MAX_SHIFTREDUCE   53
+#define YY_MIN_REDUCE        54
+#define YY_MAX_REDUCE        72
+#define YY_ERROR_ACTION      73
+#define YY_ACCEPT_ACTION     74
+#define YY_NO_ACTION         75
 /************* End control #defines *******************************************/
 
 /* Define the yytestcase() macro to be a no-op if is not already defined
@@ -187,42 +187,42 @@ typedef union {
 **  yy_default[]       Default action for each state.
 **
 *********** Begin parsing tables **********************************************/
-#define YY_ACTTAB_COUNT (57)
+#define YY_ACTTAB_COUNT (60)
 static const YYACTIONTYPE yy_action[] = {
-	/*     0 */     1,   45,   14,    3,   49,   42,    1,   10,   14,    3,
-	/*    10 */    49,    1,   48,   14,    3,   49,    1,   47,   14,    3,
-	/*    20 */    49,   41,    1,   43,   14,    3,   49,    1,    2,   14,
-	/*    30 */     3,   49,   68,   17,   15,    6,    6,    7,    7,    8,
-	/*    40 */     5,    5,   12,    2,   40,    9,   13,   39,   11,    4,
-	/*    50 */    16,   38,   37,   36,   46,   35,   50,
+	/*     0 */     1,   49,   15,    3,   53,   46,    1,   47,   15,    3,
+	/*    10 */    53,    1,   52,   15,    3,   53,    1,   51,   15,    3,
+	/*    20 */    53,   45,    1,   13,   15,    3,   53,    1,   16,   15,
+	/*    30 */     3,   53,   74,   18,   11,   10,    2,    4,    9,   14,
+	/*    40 */     6,    6,    7,    7,    5,    5,    8,    4,   43,   12,
+	/*    50 */     2,   17,   39,   44,   42,   41,   40,   38,   50,   54,
 };
 static const YYCODETYPE yy_lookahead[] = {
-	/*     0 */    11,   12,   13,   14,   15,   10,   11,    1,   13,   14,
+	/*     0 */    11,   12,   13,   14,   15,   10,   11,   24,   13,   14,
 	/*    10 */    15,   11,   12,   13,   14,   15,   11,   12,   13,   14,
-	/*    20 */    15,   10,   11,   24,   13,   14,   15,   11,    9,   13,
-	/*    30 */    14,   15,   17,   18,   21,   23,   24,   23,   24,    5,
-	/*    40 */    23,   24,   22,    9,    8,   20,   21,    6,    7,    3,
-	/*    50 */    19,    6,    4,    4,   12,    2,    0,
+	/*    20 */    15,   10,   11,   22,   13,   14,   15,   11,   21,   13,
+	/*    30 */    14,   15,   17,   18,   19,    1,    9,    3,   20,   21,
+	/*    40 */    23,   24,   23,   24,   23,   24,    5,    3,    6,    7,
+	/*    50 */     9,   19,    2,    8,    6,    4,    4,    2,   12,    0,
 };
-#define YY_SHIFT_USE_DFLT (57)
-#define YY_SHIFT_COUNT    (17)
+#define YY_SHIFT_USE_DFLT (60)
+#define YY_SHIFT_COUNT    (18)
 #define YY_SHIFT_MIN      (-11)
-#define YY_SHIFT_MAX      (56)
+#define YY_SHIFT_MAX      (59)
 static const signed char yy_shift_ofst[] = {
-	/*     0 */     6,  -11,   -5,   16,   34,    0,    5,   11,   41,   19,
-	/*    10 */    46,   36,   45,   48,   42,   49,   53,   56,
+	/*     0 */    34,  -11,   -5,   16,   41,    0,    5,   11,   42,   27,
+	/*    10 */    44,   50,   45,   48,   51,   46,   52,   55,   59,
 };
-#define YY_REDUCE_USE_DFLT (-2)
+#define YY_REDUCE_USE_DFLT (-18)
 #define YY_REDUCE_COUNT (10)
-#define YY_REDUCE_MIN   (-1)
-#define YY_REDUCE_MAX   (31)
+#define YY_REDUCE_MIN   (-17)
+#define YY_REDUCE_MAX   (32)
 static const signed char yy_reduce_ofst[] = {
-	/*     0 */    15,   12,   14,   17,   25,   -1,   -1,   -1,   20,   13,
-	/*    10 */    31,
+	/*     0 */    15,   17,   19,   21,   18,  -17,  -17,  -17,    1,    7,
+	/*    10 */    32,
 };
 static const YYACTIONTYPE yy_default[] = {
-	/*     0 */    67,   67,   67,   67,   67,   67,   67,   67,   67,   67,
-	/*    10 */    67,   67,   67,   67,   67,   67,   51,   67,
+	/*     0 */    73,   73,   73,   73,   73,   73,   73,   73,   73,   73,
+	/*    10 */    73,   56,   73,   73,   73,   73,   73,   55,   73,
 };
 /********** End of lemon-generated parsing tables *****************************/
 
@@ -273,28 +273,28 @@ typedef struct yyStackEntry yyStackEntry;
 /* The state of the parser is completely contained in an instance of
 ** the following structure */
 struct yyParser {
-	yyStackEntry *yytos;          /* Pointer to top element of the stack */
-	#ifdef YYTRACKMAXSTACKDEPTH
+	yyStackEntry * yytos;         /* Pointer to top element of the stack */
+#ifdef YYTRACKMAXSTACKDEPTH
 	int yyhwm;                    /* High-water mark of the stack */
-	#endif
-	#ifndef YYNOERRORRECOVERY
+#endif
+#ifndef YYNOERRORRECOVERY
 	int yyerrcnt;                 /* Shifts left before out of the error */
-	#endif
+#endif
 	OPMLARG_SDECL                /* A place to hold %extra_argument */
-	#if YYSTACKDEPTH<=0
+#if YYSTACKDEPTH<=0
 	int yystksz;                  /* Current side of the stack */
-	yyStackEntry *yystack;        /* The parser's stack */
+	yyStackEntry * yystack;       /* The parser's stack */
 	yyStackEntry yystk0;          /* First stack entry */
-	#else
+#else
 	yyStackEntry yystack[YYSTACKDEPTH];  /* The parser's stack */
-	#endif
+#endif
 };
 typedef struct yyParser yyParser;
 
 #ifndef NDEBUG
 	#include <stdio.h>
-	static FILE *yyTraceFILE = 0;
-	static char *yyTracePrompt = 0;
+	static FILE * yyTraceFILE = 0;
+	static char * yyTracePrompt = 0;
 #endif /* NDEBUG */
 
 #ifndef NDEBUG
@@ -315,7 +315,7 @@ typedef struct yyParser yyParser;
 ** Outputs:
 ** None.
 */
-void OPMLTrace(FILE *TraceFILE, char *zTracePrompt) {
+void OPMLTrace(FILE * TraceFILE, char * zTracePrompt) {
 	yyTraceFILE = TraceFILE;
 	yyTracePrompt = zTracePrompt;
 
@@ -330,7 +330,7 @@ void OPMLTrace(FILE *TraceFILE, char *zTracePrompt) {
 #ifndef NDEBUG
 /* For tracing shifts, the names of all terminals and nonterminals
 ** are required.  The following table supplies these names */
-static const char *const yyTokenName[] = {
+static const char * const yyTokenName[] = {
 	"$",             "OPML_XML",      "OPML_WSNL",     "OPML_OPML_OPEN",
 	"OPML_OPML_CLOSE",  "OPML_HEAD_OPEN",  "OPML_HEAD_CLOSE",  "OPML_TITLE_OPEN",
 	"OPML_TITLE_CLOSE",  "OPML_BODY_OPEN",  "OPML_BODY_CLOSE",  "OPML_OUTLINE_OPEN",
@@ -344,24 +344,26 @@ static const char *const yyTokenName[] = {
 #ifndef NDEBUG
 /* For tracing reduce actions, the names of all rules are required.
 */
-static const char *const yyRuleName[] = {
+static const char * const yyRuleName[] = {
 	/*   0 */ "doc ::= doc_xml",
 	/*   1 */ "doc_xml ::= OPML_XML doc_opml",
-	/*   2 */ "doc_xml ::= OPML_XML doc_opml OPML_WSNL",
-	/*   3 */ "doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE",
-	/*   4 */ "doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE",
-	/*   5 */ "opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE",
-	/*   6 */ "opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE",
-	/*   7 */ "opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE",
-	/*   8 */ "opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE",
-	/*   9 */ "opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE",
-	/*  10 */ "opml_outlines ::= opml_outlines opml_outline",
-	/*  11 */ "opml_outlines ::= opml_outline",
-	/*  12 */ "opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE",
-	/*  13 */ "opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE",
-	/*  14 */ "opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE",
-	/*  15 */ "opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE",
-	/*  16 */ "opml_outline ::= OPML_OUTLINE_SELF_CLOSE",
+	/*   2 */ "doc_xml ::= doc_opml",
+	/*   3 */ "doc_xml ::= OPML_XML doc_opml OPML_WSNL",
+	/*   4 */ "doc_xml ::= doc_opml OPML_WSNL",
+	/*   5 */ "doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE",
+	/*   6 */ "doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE",
+	/*   7 */ "opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE",
+	/*   8 */ "opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE",
+	/*   9 */ "opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE",
+	/*  10 */ "opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE",
+	/*  11 */ "opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE",
+	/*  12 */ "opml_outlines ::= opml_outlines opml_outline",
+	/*  13 */ "opml_outlines ::= opml_outline",
+	/*  14 */ "opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE",
+	/*  15 */ "opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE",
+	/*  16 */ "opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE",
+	/*  17 */ "opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE",
+	/*  18 */ "opml_outline ::= OPML_OUTLINE_SELF_CLOSE",
 };
 #endif /* NDEBUG */
 
@@ -371,10 +373,10 @@ static const char *const yyRuleName[] = {
 ** Try to increase the size of the parser stack.  Return the number
 ** of errors.  Return 0 on success.
 */
-static int yyGrowStack(yyParser *p) {
+static int yyGrowStack(yyParser * p) {
 	int newSize;
 	int idx;
-	yyStackEntry *pNew;
+	yyStackEntry * pNew;
 
 	newSize = p->yystksz * 2 + 100;
 	idx = p->yytos ? (int)(p->yytos - p->yystack) : 0;
@@ -392,14 +394,14 @@ static int yyGrowStack(yyParser *p) {
 	if ( pNew ) {
 		p->yystack = pNew;
 		p->yytos = &p->yystack[idx];
-		#ifndef NDEBUG
+#ifndef NDEBUG
 
 		if ( yyTraceFILE ) {
 			fprintf(yyTraceFILE, "%sStack grows from %d to %d entries.\n",
 					yyTracePrompt, p->yystksz, newSize);
 		}
 
-		#endif
+#endif
 		p->yystksz = newSize;
 	}
 
@@ -428,15 +430,15 @@ static int yyGrowStack(yyParser *p) {
 ** A pointer to a parser.  This pointer is used in subsequent calls
 ** to OPML and OPMLFree.
 */
-void *OPMLAlloc(void *(*mallocProc)(YYMALLOCARGTYPE)) {
-	yyParser *pParser;
-	pParser = (yyParser*)(*mallocProc)( (YYMALLOCARGTYPE)sizeof(yyParser) );
+void * OPMLAlloc(void * (*mallocProc)(YYMALLOCARGTYPE)) {
+	yyParser * pParser;
+	pParser = (yyParser *)(*mallocProc)( (YYMALLOCARGTYPE)sizeof(yyParser) );
 
 	if ( pParser ) {
-		#ifdef YYTRACKMAXSTACKDEPTH
+#ifdef YYTRACKMAXSTACKDEPTH
 		pParser->yyhwm = 0;
-		#endif
-		#if YYSTACKDEPTH<=0
+#endif
+#if YYSTACKDEPTH<=0
 		pParser->yytos = NULL;
 		pParser->yystack = NULL;
 		pParser->yystksz = 0;
@@ -446,10 +448,10 @@ void *OPMLAlloc(void *(*mallocProc)(YYMALLOCARGTYPE)) {
 			pParser->yystksz = 1;
 		}
 
-		#endif
-		#ifndef YYNOERRORRECOVERY
+#endif
+#ifndef YYNOERRORRECOVERY
 		pParser->yyerrcnt = -1;
-		#endif
+#endif
 		pParser->yytos = pParser->yystack;
 		pParser->yystack[0].stateno = 0;
 		pParser->yystack[0].major = 0;
@@ -466,9 +468,9 @@ void *OPMLAlloc(void *(*mallocProc)(YYMALLOCARGTYPE)) {
 ** directives of the input grammar.
 */
 static void yy_destructor(
-	yyParser *yypParser,    /* The parser */
+	yyParser * yypParser,   /* The parser */
 	YYCODETYPE yymajor,     /* Type code for object to destroy */
-	YYMINORTYPE *yypminor   /* The object to be destroyed */
+	YYMINORTYPE * yypminor  /* The object to be destroyed */
 ) {
 	OPMLARG_FETCH;
 
@@ -496,12 +498,12 @@ static void yy_destructor(
 ** If there is a destructor routine associated with the token which
 ** is popped from the stack, then call it.
 */
-static void yy_pop_parser_stack(yyParser *pParser) {
-	yyStackEntry *yytos;
+static void yy_pop_parser_stack(yyParser * pParser) {
+	yyStackEntry * yytos;
 	assert( pParser->yytos != 0 );
 	assert( pParser->yytos > pParser->yystack );
 	yytos = pParser->yytos--;
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE ) {
 		fprintf(yyTraceFILE, "%sPopping %s\n",
@@ -509,7 +511,7 @@ static void yy_pop_parser_stack(yyParser *pParser) {
 				yyTokenName[yytos->major]);
 	}
 
-	#endif
+#endif
 	yy_destructor(pParser, yytos->major, &yytos->minor);
 }
 
@@ -522,38 +524,38 @@ static void yy_pop_parser_stack(yyParser *pParser) {
 ** assumed that the input pointer is never NULL.
 */
 void OPMLFree(
-	void *p,                    /* The parser to be deleted */
-	void (*freeProc)(void*)     /* Function used to reclaim memory */
+	void * p,                   /* The parser to be deleted */
+	void (*freeProc)(void *)    /* Function used to reclaim memory */
 ) {
-	yyParser *pParser = (yyParser*)p;
-	#ifndef YYPARSEFREENEVERNULL
+	yyParser * pParser = (yyParser *)p;
+#ifndef YYPARSEFREENEVERNULL
 
 	if ( pParser == 0 ) {
 		return;
 	}
 
-	#endif
+#endif
 
 	while ( pParser->yytos > pParser->yystack ) {
 		yy_pop_parser_stack(pParser);
 	}
 
-	#if YYSTACKDEPTH<=0
+#if YYSTACKDEPTH<=0
 
 	if ( pParser->yystack != &pParser->yystk0 ) {
 		free(pParser->yystack);
 	}
 
-	#endif
-	(*freeProc)((void*)pParser);
+#endif
+	(*freeProc)((void *)pParser);
 }
 
 /*
 ** Return the peak depth of the stack for a parser.
 */
 #ifdef YYTRACKMAXSTACKDEPTH
-int OPMLStackPeak(void *p) {
-	yyParser *pParser = (yyParser*)p;
+int OPMLStackPeak(void * p) {
+	yyParser * pParser = (yyParser *)p;
 	return pParser->yyhwm;
 }
 #endif
@@ -563,7 +565,7 @@ int OPMLStackPeak(void *p) {
 ** look-ahead token iLookAhead.
 */
 static unsigned int yy_find_shift_action(
-	yyParser *pParser,        /* The parser */
+	yyParser * pParser,       /* The parser */
 	YYCODETYPE iLookAhead     /* The look-ahead token */
 ) {
 	int i;
@@ -581,39 +583,39 @@ static unsigned int yy_find_shift_action(
 		i += iLookAhead;
 
 		if ( i < 0 || i >= YY_ACTTAB_COUNT || yy_lookahead[i] != iLookAhead ) {
-			#ifdef YYFALLBACK
+#ifdef YYFALLBACK
 			YYCODETYPE iFallback;            /* Fallback token */
 
 			if ( iLookAhead < sizeof(yyFallback) / sizeof(yyFallback[0])
 					&& (iFallback = yyFallback[iLookAhead]) != 0 ) {
-				#ifndef NDEBUG
+#ifndef NDEBUG
 
 				if ( yyTraceFILE ) {
 					fprintf(yyTraceFILE, "%sFALLBACK %s => %s\n",
 							yyTracePrompt, yyTokenName[iLookAhead], yyTokenName[iFallback]);
 				}
 
-				#endif
+#endif
 				assert( yyFallback[iFallback] == 0 ); /* Fallback loop must terminate */
 				iLookAhead = iFallback;
 				continue;
 			}
 
-			#endif
-			#ifdef YYWILDCARD
+#endif
+#ifdef YYWILDCARD
 			{
 				int j = i - iLookAhead + YYWILDCARD;
 
 				if (
-				#if YY_SHIFT_MIN+YYWILDCARD<0
+#if YY_SHIFT_MIN+YYWILDCARD<0
 					j >= 0 &&
-				#endif
-				#if YY_SHIFT_MAX+YYWILDCARD>=YY_ACTTAB_COUNT
+#endif
+#if YY_SHIFT_MAX+YYWILDCARD>=YY_ACTTAB_COUNT
 					j < YY_ACTTAB_COUNT &&
-				#endif
+#endif
 					yy_lookahead[j] == YYWILDCARD && iLookAhead > 0
 				) {
-					#ifndef NDEBUG
+#ifndef NDEBUG
 
 					if ( yyTraceFILE ) {
 						fprintf(yyTraceFILE, "%sWILDCARD %s => %s\n",
@@ -621,11 +623,11 @@ static unsigned int yy_find_shift_action(
 								yyTokenName[YYWILDCARD]);
 					}
 
-					#endif /* NDEBUG */
+#endif /* NDEBUG */
 					return yy_action[j];
 				}
 			}
-			#endif /* YYWILDCARD */
+#endif /* YYWILDCARD */
 			return yy_default[stateno];
 		} else {
 			return yy_action[i];
@@ -642,45 +644,45 @@ static int yy_find_reduce_action(
 	YYCODETYPE iLookAhead     /* The look-ahead token */
 ) {
 	int i;
-	#ifdef YYERRORSYMBOL
+#ifdef YYERRORSYMBOL
 
 	if ( stateno > YY_REDUCE_COUNT ) {
 		return yy_default[stateno];
 	}
 
-	#else
+#else
 	assert( stateno <= YY_REDUCE_COUNT );
-	#endif
+#endif
 	i = yy_reduce_ofst[stateno];
 	assert( i != YY_REDUCE_USE_DFLT );
 	assert( iLookAhead != YYNOCODE );
 	i += iLookAhead;
-	#ifdef YYERRORSYMBOL
+#ifdef YYERRORSYMBOL
 
 	if ( i < 0 || i >= YY_ACTTAB_COUNT || yy_lookahead[i] != iLookAhead ) {
 		return yy_default[stateno];
 	}
 
-	#else
+#else
 	assert( i >= 0 && i < YY_ACTTAB_COUNT );
 	assert( yy_lookahead[i] == iLookAhead );
-	#endif
+#endif
 	return yy_action[i];
 }
 
 /*
 ** The following routine is called if the stack overflows.
 */
-static void yyStackOverflow(yyParser *yypParser) {
+static void yyStackOverflow(yyParser * yypParser) {
 	OPMLARG_FETCH;
 	yypParser->yytos--;
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE ) {
 		fprintf(yyTraceFILE, "%sStack Overflow!\n", yyTracePrompt);
 	}
 
-	#endif
+#endif
 
 	while ( yypParser->yytos > yypParser->yystack ) {
 		yy_pop_parser_stack(yypParser);
@@ -697,7 +699,7 @@ static void yyStackOverflow(yyParser *yypParser) {
 ** Print tracing information for a SHIFT action
 */
 #ifndef NDEBUG
-static void yyTraceShift(yyParser *yypParser, int yyNewState) {
+static void yyTraceShift(yyParser * yypParser, int yyNewState) {
 	if ( yyTraceFILE ) {
 		if ( yyNewState < YYNSTATE ) {
 			fprintf(yyTraceFILE, "%sShift '%s', go to state %d\n",
@@ -717,29 +719,29 @@ static void yyTraceShift(yyParser *yypParser, int yyNewState) {
 ** Perform a shift action.
 */
 static void yy_shift(
-	yyParser *yypParser,          /* The parser to be shifted */
+	yyParser * yypParser,         /* The parser to be shifted */
 	int yyNewState,               /* The new state to shift in */
 	int yyMajor,                  /* The major token to shift in */
 	OPMLTOKENTYPE yyMinor        /* The minor token to shift in */
 ) {
-	yyStackEntry *yytos;
+	yyStackEntry * yytos;
 	yypParser->yytos++;
-	#ifdef YYTRACKMAXSTACKDEPTH
+#ifdef YYTRACKMAXSTACKDEPTH
 
 	if ( (int)(yypParser->yytos - yypParser->yystack) > yypParser->yyhwm ) {
 		yypParser->yyhwm++;
 		assert( yypParser->yyhwm == (int)(yypParser->yytos - yypParser->yystack) );
 	}
 
-	#endif
-	#if YYSTACKDEPTH>0
+#endif
+#if YYSTACKDEPTH>0
 
 	if ( yypParser->yytos >= &yypParser->yystack[YYSTACKDEPTH] ) {
 		yyStackOverflow(yypParser);
 		return;
 	}
 
-	#else
+#else
 
 	if ( yypParser->yytos >= &yypParser->yystack[yypParser->yystksz] ) {
 		if ( yyGrowStack(yypParser) ) {
@@ -748,7 +750,7 @@ static void yy_shift(
 		}
 	}
 
-	#endif
+#endif
 
 	if ( yyNewState > YY_MAX_SHIFT ) {
 		yyNewState += YY_MIN_REDUCE - YY_MIN_SHIFTREDUCE;
@@ -770,7 +772,9 @@ static const struct {
 } yyRuleInfo[] = {
 	{ 17, 1 },
 	{ 18, 2 },
+	{ 18, 1 },
 	{ 18, 3 },
+	{ 18, 2 },
 	{ 19, 4 },
 	{ 19, 3 },
 	{ 20, 3 },
@@ -787,23 +791,23 @@ static const struct {
 	{ 24, 1 },
 };
 
-static void yy_accept(yyParser*);  /* Forward Declaration */
+static void yy_accept(yyParser *); /* Forward Declaration */
 
 /*
 ** Perform a reduce action and the shift that must immediately
 ** follow the reduce.
 */
 static void yy_reduce(
-	yyParser *yypParser,         /* The parser */
+	yyParser * yypParser,        /* The parser */
 	unsigned int yyruleno        /* Number of the rule by which to reduce */
 ) {
 	int yygoto;                     /* The next state */
 	int yyact;                      /* The next action */
-	yyStackEntry *yymsp;            /* The top of the parser's stack */
+	yyStackEntry * yymsp;           /* The top of the parser's stack */
 	int yysize;                     /* Amount to pop the stack */
 	OPMLARG_FETCH;
 	yymsp = yypParser->yytos;
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE && yyruleno < (int)(sizeof(yyRuleName) / sizeof(yyRuleName[0])) ) {
 		yysize = yyRuleInfo[yyruleno].nrhs;
@@ -811,28 +815,28 @@ static void yy_reduce(
 				yyRuleName[yyruleno], yymsp[-yysize].stateno);
 	}
 
-	#endif /* NDEBUG */
+#endif /* NDEBUG */
 
 	/* Check that the stack is large enough to grow by a single entry
 	** if the RHS of the rule is empty.  This ensures that there is room
 	** enough on the stack to push the LHS value */
 	if ( yyRuleInfo[yyruleno].nrhs == 0 ) {
-		#ifdef YYTRACKMAXSTACKDEPTH
+#ifdef YYTRACKMAXSTACKDEPTH
 
 		if ( (int)(yypParser->yytos - yypParser->yystack) > yypParser->yyhwm ) {
 			yypParser->yyhwm++;
 			assert( yypParser->yyhwm == (int)(yypParser->yytos - yypParser->yystack));
 		}
 
-		#endif
-		#if YYSTACKDEPTH>0
+#endif
+#if YYSTACKDEPTH>0
 
 		if ( yypParser->yytos >= &yypParser->yystack[YYSTACKDEPTH - 1] ) {
 			yyStackOverflow(yypParser);
 			return;
 		}
 
-		#else
+#else
 
 		if ( yypParser->yytos >= &yypParser->yystack[yypParser->yystksz - 1] ) {
 			if ( yyGrowStack(yypParser) ) {
@@ -843,7 +847,7 @@ static void yy_reduce(
 			yymsp = yypParser->yytos;
 		}
 
-		#endif
+#endif
 	}
 
 	switch ( yyruleno ) {
@@ -864,21 +868,23 @@ static void yy_reduce(
 		default:
 			/* (1) doc_xml ::= OPML_XML doc_opml */
 			yytestcase(yyruleno == 1);
-			/* (2) doc_xml ::= OPML_XML doc_opml OPML_WSNL */ yytestcase(yyruleno == 2);
-			/* (3) doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 3);
-			/* (4) doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 4);
-			/* (5) opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE */ yytestcase(yyruleno == 5);
-			/* (6) opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE */ yytestcase(yyruleno == 6);
-			/* (7) opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE */ yytestcase(yyruleno == 7);
-			/* (8) opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE */ yytestcase(yyruleno == 8);
-			/* (9) opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE */ yytestcase(yyruleno == 9);
-			/* (10) opml_outlines ::= opml_outlines opml_outline */ yytestcase(yyruleno == 10);
-			/* (11) opml_outlines ::= opml_outline (OPTIMIZED OUT) */ assert(yyruleno != 11);
-			/* (12) opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 12);
-			/* (13) opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 13);
-			/* (14) opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 14);
-			/* (15) opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 15);
-			/* (16) opml_outline ::= OPML_OUTLINE_SELF_CLOSE */ yytestcase(yyruleno == 16);
+			/* (2) doc_xml ::= doc_opml */ yytestcase(yyruleno == 2);
+			/* (3) doc_xml ::= OPML_XML doc_opml OPML_WSNL */ yytestcase(yyruleno == 3);
+			/* (4) doc_xml ::= doc_opml OPML_WSNL */ yytestcase(yyruleno == 4);
+			/* (5) doc_opml ::= OPML_OPML_OPEN opml_header opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 5);
+			/* (6) doc_opml ::= OPML_OPML_OPEN opml_body OPML_OPML_CLOSE */ yytestcase(yyruleno == 6);
+			/* (7) opml_header ::= OPML_HEAD_OPEN opml_title OPML_HEAD_CLOSE */ yytestcase(yyruleno == 7);
+			/* (8) opml_header ::= OPML_HEAD_OPEN OPML_HEAD_CLOSE */ yytestcase(yyruleno == 8);
+			/* (9) opml_title ::= OPML_TITLE_OPEN OPML_TITLE_CLOSE */ yytestcase(yyruleno == 9);
+			/* (10) opml_body ::= OPML_BODY_OPEN opml_outlines OPML_BODY_CLOSE */ yytestcase(yyruleno == 10);
+			/* (11) opml_body ::= OPML_BODY_OPEN OPML_BODY_CLOSE */ yytestcase(yyruleno == 11);
+			/* (12) opml_outlines ::= opml_outlines opml_outline */ yytestcase(yyruleno == 12);
+			/* (13) opml_outlines ::= opml_outline (OPTIMIZED OUT) */ assert(yyruleno != 13);
+			/* (14) opml_outline ::= OPML_OUTLINE_OPEN OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 14);
+			/* (15) opml_outline ::= OPML_OUTLINE_PREAMBLE OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 15);
+			/* (16) opml_outline ::= OPML_OUTLINE_OPEN opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 16);
+			/* (17) opml_outline ::= OPML_OUTLINE_METADATA opml_outlines OPML_OUTLINE_CLOSE */ yytestcase(yyruleno == 17);
+			/* (18) opml_outline ::= OPML_OUTLINE_SELF_CLOSE */ yytestcase(yyruleno == 18);
 			break;
 			/********** End reduce actions ************************************************/
 	};
@@ -913,16 +919,16 @@ static void yy_reduce(
 */
 #ifndef YYNOERRORRECOVERY
 static void yy_parse_failed(
-	yyParser *yypParser           /* The parser */
+	yyParser * yypParser          /* The parser */
 ) {
 	OPMLARG_FETCH;
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE ) {
 		fprintf(yyTraceFILE, "%sFail!\n", yyTracePrompt);
 	}
 
-	#endif
+#endif
 
 	while ( yypParser->yytos > yypParser->yystack ) {
 		yy_pop_parser_stack(yypParser);
@@ -942,7 +948,7 @@ static void yy_parse_failed(
 ** The following code executes when a syntax error first occurs.
 */
 static void yy_syntax_error(
-	yyParser *yypParser,           /* The parser */
+	yyParser * yypParser,          /* The parser */
 	int yymajor,                   /* The major type of the error token */
 	OPMLTOKENTYPE yyminor         /* The minor type of the error token */
 ) {
@@ -951,7 +957,7 @@ static void yy_syntax_error(
 	/************ Begin %syntax_error code ****************************************/
 
 	fprintf(stderr, "Parser syntax error.\n");
-	#ifndef NDEBUG
+#ifndef NDEBUG
 	fprintf(stderr, "Parser syntax error.\n");
 	int n = sizeof(yyTokenName) / sizeof(yyTokenName[0]);
 
@@ -963,7 +969,7 @@ static void yy_syntax_error(
 		}
 	}
 
-	#endif
+#endif
 	/************ End %syntax_error code ******************************************/
 	OPMLARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
@@ -972,19 +978,19 @@ static void yy_syntax_error(
 ** The following is executed when the parser accepts
 */
 static void yy_accept(
-	yyParser *yypParser           /* The parser */
+	yyParser * yypParser          /* The parser */
 ) {
 	OPMLARG_FETCH;
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE ) {
 		fprintf(yyTraceFILE, "%sAccept!\n", yyTracePrompt);
 	}
 
-	#endif
-	#ifndef YYNOERRORRECOVERY
+#endif
+#ifndef YYNOERRORRECOVERY
 	yypParser->yyerrcnt = -1;
-	#endif
+#endif
 	assert( yypParser->yytos == yypParser->yystack );
 	/* Here code is inserted which will be executed whenever the
 	** parser accepts */
@@ -1015,61 +1021,61 @@ static void yy_accept(
 ** None.
 */
 void OPML(
-	void *yyp,                   /* The parser */
+	void * yyp,                  /* The parser */
 	int yymajor,                 /* The major token code number */
 	OPMLTOKENTYPE yyminor       /* The value for the token */
 	OPMLARG_PDECL               /* Optional %extra_argument parameter */
 ) {
 	YYMINORTYPE yyminorunion;
 	unsigned int yyact;   /* The parser action. */
-	#if !defined(YYERRORSYMBOL) && !defined(YYNOERRORRECOVERY)
+#if !defined(YYERRORSYMBOL) && !defined(YYNOERRORRECOVERY)
 	int yyendofinput;     /* True if we are at the end of input */
-	#endif
-	#ifdef YYERRORSYMBOL
+#endif
+#ifdef YYERRORSYMBOL
 	int yyerrorhit = 0;   /* True if yymajor has invoked an error */
-	#endif
-	yyParser *yypParser;  /* The parser */
+#endif
+	yyParser * yypParser; /* The parser */
 
-	yypParser = (yyParser*)yyp;
+	yypParser = (yyParser *)yyp;
 	assert( yypParser->yytos != 0 );
-	#if !defined(YYERRORSYMBOL) && !defined(YYNOERRORRECOVERY)
+#if !defined(YYERRORSYMBOL) && !defined(YYNOERRORRECOVERY)
 	yyendofinput = (yymajor == 0);
-	#endif
+#endif
 	OPMLARG_STORE;
 
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE ) {
 		fprintf(yyTraceFILE, "%sInput '%s'\n", yyTracePrompt, yyTokenName[yymajor]);
 	}
 
-	#endif
+#endif
 
 	do {
 		yyact = yy_find_shift_action(yypParser, (YYCODETYPE)yymajor);
 
 		if ( yyact <= YY_MAX_SHIFTREDUCE ) {
 			yy_shift(yypParser, yyact, yymajor, yyminor);
-			#ifndef YYNOERRORRECOVERY
+#ifndef YYNOERRORRECOVERY
 			yypParser->yyerrcnt--;
-			#endif
+#endif
 			yymajor = YYNOCODE;
 		} else if ( yyact <= YY_MAX_REDUCE ) {
 			yy_reduce(yypParser, yyact - YY_MIN_REDUCE);
 		} else {
 			assert( yyact == YY_ERROR_ACTION );
 			yyminorunion.yy0 = yyminor;
-			#ifdef YYERRORSYMBOL
+#ifdef YYERRORSYMBOL
 			int yymx;
-			#endif
-			#ifndef NDEBUG
+#endif
+#ifndef NDEBUG
 
 			if ( yyTraceFILE ) {
 				fprintf(yyTraceFILE, "%sSyntax Error!\n", yyTracePrompt);
 			}
 
-			#endif
-			#ifdef YYERRORSYMBOL
+#endif
+#ifdef YYERRORSYMBOL
 
 			/* A syntax error has occurred.
 			** The response to an error depends upon whether or not the
@@ -1097,14 +1103,14 @@ void OPML(
 			yymx = yypParser->yytos->major;
 
 			if ( yymx == YYERRORSYMBOL || yyerrorhit ) {
-				#ifndef NDEBUG
+#ifndef NDEBUG
 
 				if ( yyTraceFILE ) {
 					fprintf(yyTraceFILE, "%sDiscard input token %s\n",
 							yyTracePrompt, yyTokenName[yymajor]);
 				}
 
-				#endif
+#endif
 				yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
 				yymajor = YYNOCODE;
 			} else {
@@ -1120,9 +1126,9 @@ void OPML(
 				if ( yypParser->yytos < yypParser->yystack || yymajor == 0 ) {
 					yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
 					yy_parse_failed(yypParser);
-					#ifndef YYNOERRORRECOVERY
+#ifndef YYNOERRORRECOVERY
 					yypParser->yyerrcnt = -1;
-					#endif
+#endif
 					yymajor = YYNOCODE;
 				} else if ( yymx != YYERRORSYMBOL ) {
 					yy_shift(yypParser, yyact, YYERRORSYMBOL, yyminor);
@@ -1131,7 +1137,7 @@ void OPML(
 
 			yypParser->yyerrcnt = 3;
 			yyerrorhit = 1;
-			#elif defined(YYNOERRORRECOVERY)
+#elif defined(YYNOERRORRECOVERY)
 			/* If the YYNOERRORRECOVERY macro is defined, then do not attempt to
 			** do any kind of error recovery.  Instead, simply invoke the syntax
 			** error routine and continue going as if nothing had happened.
@@ -1143,7 +1149,7 @@ void OPML(
 			yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
 			yymajor = YYNOCODE;
 
-			#else  /* YYERRORSYMBOL is not defined */
+#else  /* YYERRORSYMBOL is not defined */
 
 			/* This is what we do if the grammar does not define ERROR:
 			**
@@ -1163,20 +1169,20 @@ void OPML(
 
 			if ( yyendofinput ) {
 				yy_parse_failed(yypParser);
-				#ifndef YYNOERRORRECOVERY
+#ifndef YYNOERRORRECOVERY
 				yypParser->yyerrcnt = -1;
-				#endif
+#endif
 			}
 
 			yymajor = YYNOCODE;
-			#endif
+#endif
 		}
 	} while ( yymajor != YYNOCODE && yypParser->yytos > yypParser->yystack );
 
-	#ifndef NDEBUG
+#ifndef NDEBUG
 
 	if ( yyTraceFILE ) {
-		yyStackEntry *i;
+		yyStackEntry * i;
 		char cDiv = '[';
 		fprintf(yyTraceFILE, "%sReturn. Stack=", yyTracePrompt);
 
@@ -1188,6 +1194,6 @@ void OPML(
 		fprintf(yyTraceFILE, "]\n");
 	}
 
-	#endif
+#endif
 	return;
 }

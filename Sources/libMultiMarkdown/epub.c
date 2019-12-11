@@ -58,6 +58,21 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
+#ifdef __APPLE__
+	#include "TargetConditionals.h"
+	#if TARGET_IPHONE_SIMULATOR
+		// iOS Simulator
+		#undef USE_CURL
+	#elif TARGET_OS_IPHONE
+		// iOS device
+		#undef USE_CURL
+	#elif TARGET_OS_MAC
+		// Other kinds of Mac OS
+	#else
+		#   error "Unknown Apple platform"
+	#endif
+#endif
+
 #ifdef USE_CURL
 	#include <curl/curl.h>
 #endif
@@ -67,6 +82,7 @@
 #include "html.h"
 #include "i18n.h"
 #include "miniz.h"
+#include "stack.h"
 #include "uuid.h"
 #include "writer.h"
 #include "zip.h"
@@ -133,7 +149,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:identifier>\n");
 	} else {
 		print_const("<dc:identifier id=\"pub-id\">urn:uuid:");
@@ -149,7 +165,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:title>");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:title>\n");
 	} else {
 		print_const("<dc:title>Untitled</dc:title>\n");
@@ -160,7 +176,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:creator>");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:creator>\n");
 	}
 
@@ -170,7 +186,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<dc:language>");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</dc:language>\n");
 	} else {
 		switch (scratch->language) {
@@ -194,6 +210,10 @@ char * epub_package_document(scratch_pad * scratch) {
 				print_const("<dc:language>sv</dc:language>\n");
 				break;
 
+			case LC_HE:
+				print_const("<dc:language>he</dc:language>\n");
+				break;
+
 			default:
 				print_const("<dc:language>en</dc:language>\n");
 		}
@@ -204,7 +224,7 @@ char * epub_package_document(scratch_pad * scratch) {
 
 	if (m) {
 		print_const("<meta property=\"dcterms:modified\">");
-		mmd_print_string_html(out, m->value, false);
+		mmd_print_string_html(out, m->value, false, false);
 		print_const("</meta>\n");
 	} else {
 		time_t t = time(NULL);
@@ -251,7 +271,8 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
+			scratch->label_counter = (int) * counter;
+			temp_char = label_from_header(source, entry, scratch);
 			printf("<li><a href=\"main.xhtml#%s\">", temp_char);
 			mmd_export_token_tree_html(out, source, entry->child, scratch);
 			print_const("</a>");
@@ -287,8 +308,9 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 void epub_export_nav(DString * out, mmd_engine * e, scratch_pad * scratch) {
 	size_t counter = 0;
 
-
 	epub_export_nav_entry(out, e->dstr->str, scratch, &counter, 0);
+
+	scratch->label_counter = 0;
 }
 
 
@@ -303,7 +325,7 @@ char * epub_nav(mmd_engine * e, scratch_pad * scratch) {
 	HASH_FIND_STR(scratch->meta_hash, "title", temp);
 
 	if (temp) {
-		mmd_print_string_html(out, temp->value, false);
+		mmd_print_string_html(out, temp->value, false, false);
 	} else {
 		print_const("Untitled");
 	}
@@ -452,7 +474,7 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 
 
 // Use the miniz library to create a zip archive for the EPUB document
-void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e, const char * directory) {
+void epub_write_wrapper(const char * filepath, DString * body, mmd_engine * e, const char * directory) {
 	FILE * output_stream;
 
 	DString * result = epub_create(body, e, directory);
@@ -469,9 +491,10 @@ void epub_write_wrapper(const char * filepath, const char * body, mmd_engine * e
 }
 
 
-DString * epub_create(const char * body, mmd_engine * e, const char * directory) {
+DString * epub_create(DString * body, mmd_engine * e, const char * directory) {
 	DString * result = d_string_new("");
 	scratch_pad * scratch = scratch_pad_new(e, FORMAT_EPUB);
+	scratch->random_seed_base_labels = e->random_seed_base_labels;
 
 	mz_bool status;
 	char * data;
@@ -534,8 +557,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	}
 
 	// Add main document
-	len = strlen(body);
-	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body, len, MZ_BEST_COMPRESSION);
+	status = mz_zip_writer_add_mem(&zip, "OEBPS/main.xhtml", body->str, body->currentStringLength, MZ_BEST_COMPRESSION);
 
 	if (!status) {
 		fprintf(stderr, "Error adding asset to zip.\n");
@@ -552,7 +574,7 @@ DString * epub_create(const char * body, mmd_engine * e, const char * directory)
 	status = mz_zip_writer_finalize_heap_archive(&zip, (void **) & (result->str), (size_t *) & (result->currentStringLength));
 
 	if (!status) {
-		fprintf(stderr, "Error adding asset to zip.\n");
+		fprintf(stderr, "Error finalizing zip archive.\n");
 	}
 
 	return result;

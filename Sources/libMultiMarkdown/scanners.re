@@ -9,7 +9,7 @@
 
 
 	@author	Fletcher T. Penney
-	@bug	
+	@bug
 
 **/
 
@@ -19,30 +19,30 @@
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
-	
+
 	GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
-	
+
 		https://github.com/fletcher/MultiMarkdown-4/
-	
+
 	MMD 4 is released under both the MIT License and GPL.
-	
-	
+
+
 	CuTest is released under the zlib/libpng license. See CuTest.c for the text
 	of the license.
-	
-	
+
+
 	## The MIT License ##
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in
 	all copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -84,11 +84,11 @@
 
 	// IMPORTANT NOTE FOR DEVELOPERS!!
 	//
-	// Read about the three options you have for matching boolean attributes in HTML 
+	// Read about the three options you have for matching boolean attributes in HTML
 	//
 
 	// Match complete list of possible HTML boolean attributes from HTML 5.1
-	// NOTE: Compile time of scanners.re.c goes up dramatically using the full list 
+	// NOTE: Compile time of scanners.re.c goes up dramatically using the full list
 	// (in fact, I haven't completed a build using it because it was taking so long)
 	//
 	// I would *guess* there should be a minimal performance hit with this option,
@@ -197,6 +197,8 @@
 
 	meta_line	= meta_key sp ':' meta_value nl_eof;	// meta_line can't match url above
 
+	empty_meta_line = meta_key sp ':' sp nl_eof;		// Meta key without value
+
 	definition	= non_indent ':' sp [^\n\r\x00];
 
 	table_sep_cell = [ \240\t]* [:\-=+]+ [ \240\t]*;
@@ -225,19 +227,18 @@ size_t scan_spnl(const char * c) {
 
 /*!re2c
 	spnl 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
 size_t scan_key(const char * c) {
-	const char * marker = NULL;
 	const char * start = c;
 
 /*!re2c
 	name 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -247,8 +248,8 @@ size_t scan_value(const char * c) {
 
 /*!re2c
 	value 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -258,8 +259,8 @@ size_t scan_attr(const char * c) {
 
 /*!re2c
 	attr		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -269,8 +270,8 @@ size_t scan_attributes(const char * c) {
 
 /*!re2c
 	attributes	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -280,8 +281,8 @@ size_t scan_email(const char * c) {
 
 /*!re2c
 	email		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -292,8 +293,8 @@ size_t scan_url(const char * c) {
 /*!re2c
 	email		{ return (size_t)( c - start ); }
 	url			{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -303,8 +304,8 @@ size_t scan_ref_abbreviation(const char * c) {
 
 /*!re2c
 	ref_abbr	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -314,8 +315,8 @@ size_t scan_ref_citation(const char * c) {
 
 /*!re2c
 	ref_citation	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -325,8 +326,8 @@ size_t scan_ref_foot(const char * c) {
 
 /*!re2c
 	ref_foot	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -336,8 +337,8 @@ size_t scan_ref_glossary(const char * c) {
 
 /*!re2c
 	ref_glossary	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -347,8 +348,8 @@ size_t scan_ref_link_no_attributes(const char * c) {
 
 /*!re2c
 	ref_link_no_attributes	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -358,8 +359,8 @@ size_t scan_ref_link(const char * c) {
 
 /*!re2c
 	ref_link	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -369,8 +370,8 @@ size_t scan_html(const char * c) {
 
 /*!re2c
 	html 		{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -380,8 +381,8 @@ size_t scan_html_comment(const char * c) {
 
 /*!re2c
 	tag_comment	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -391,8 +392,8 @@ size_t scan_html_block(const char * c) {
 
 /*!re2c
 	html_block	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -402,8 +403,8 @@ size_t scan_html_line(const char * c) {
 
 /*!re2c
 	html_line	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -413,8 +414,8 @@ size_t scan_fence_start(const char * c) {
 
 /*!re2c
 	fence_start	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -424,8 +425,8 @@ size_t scan_fence_end(const char * c) {
 
 /*!re2c
 	fence_end	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -436,8 +437,19 @@ size_t scan_meta_line(const char * c) {
 /*!re2c
 	non_indent '-'{3,} nl meta_line { return (size_t) ( c - start ); }
 	meta_line	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
+}
+
+
+size_t scan_empty_meta_line(const char * c) {
+	const char * marker = NULL;
+	const char * start = c;
+
+/*!re2c
+	empty_meta_line	{ return (size_t)( c - start ); }
+	*				{ return 0; }
+*/
 }
 
 
@@ -447,8 +459,8 @@ size_t scan_meta_key(const char * c) {
 
 /*!re2c
 	meta_key	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -458,8 +470,8 @@ size_t scan_definition(const char * c) {
 
 /*!re2c
 	definition	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -469,8 +481,8 @@ size_t scan_table_separator(const char * c) {
 
 /*!re2c
 	table_separator	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -487,8 +499,8 @@ size_t scan_alignment_string(const char * c) {
 	align_wrap_right	{ return ALIGN_WRAP | ALIGN_RIGHT; }
 	align_wrap_center	{ return ALIGN_WRAP | ALIGN_CENTER; }
 
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -498,8 +510,8 @@ size_t scan_destination(const char * c) {
 
 /*!re2c
 	destination	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 
@@ -509,8 +521,8 @@ size_t scan_title(const char * c) {
 
 /*!re2c
 	title	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 size_t scan_setext(const char * c) {
@@ -520,8 +532,8 @@ size_t scan_setext(const char * c) {
 /*!re2c
 	setext_1	{ return (size_t)( c - start ); }
 	setext_2	{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 size_t scan_atx(const char * c) {
@@ -530,8 +542,8 @@ size_t scan_atx(const char * c) {
 
 /*!re2c
 	atx			{ return (size_t)( c - start ); }
-	.?			{ return 0; }
-*/	
+	*			{ return 0; }
+*/
 }
 
 

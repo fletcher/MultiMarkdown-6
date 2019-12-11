@@ -56,44 +56,44 @@
 #ifndef MMD_MULTIMARKDOWN_H
 #define MMD_MULTIMARKDOWN_H
 
-#include "d_string.h"
 #include "libMultiMarkdown.h"
-#include "stack.h"
-#include "token.h"
-#include "token_pairs.h"
 #include "uthash.h"
 
+typedef struct token_pair_engine toke_pair_engine;
 
 #define kMaxParseRecursiveDepth 1000		//!< Maximum recursion depth when parsing -- to prevent stack overflow with "pathologic" input
 
 
 struct mmd_engine {
-	DString *				dstr;
-	token *					root;
+	DString 		*		dstr;
+	token 		*			root;
 	unsigned long			extensions;
 	unsigned short			recurse_depth;
 
 	bool					allow_meta;
 
-	token_pair_engine *		pairings1;
-	token_pair_engine *		pairings2;
-	token_pair_engine *		pairings3;
-	token_pair_engine *		pairings4;
+	struct token_pair_engine 	*	pairings1;
+	struct token_pair_engine 	*	pairings2;
+	struct token_pair_engine 	*	pairings3;
+	struct token_pair_engine 	*	pairings4;
 
-	stack *					abbreviation_stack;
-	stack *					citation_stack;
-	stack *					definition_stack;
-	stack *					footnote_stack;
-	stack *					glossary_stack;
-	stack *					header_stack;
-	stack *					link_stack;
-	stack *					metadata_stack;
-	stack *					table_stack;
+	stack 		*			abbreviation_stack;
+	stack 		*			citation_stack;
+	stack			*		critic_stack;
+	stack 		*			definition_stack;
+	stack 		*			footnote_stack;
+	stack 		*			glossary_stack;
+	stack 		*			header_stack;
+	stack 		*			link_stack;
+	stack 		*			metadata_stack;
+	stack 		*			table_stack;
 
 	short					language;
 	short					quotes_lang;
 
-	struct asset *			asset_hash;
+	struct asset 	*		asset_hash;
+
+	int						random_seed_base_labels;
 };
 
 
@@ -109,9 +109,9 @@ void is_list_loose(token * list);
 
 
 struct asset {
-	char *				url;
-	char *				asset_path;
-	UT_hash_handle		hh;
+	char 		*		url;
+	char 		*		asset_path;
+	struct UT_hash_handle		hh;
 };
 
 typedef struct asset asset;

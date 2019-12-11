@@ -101,6 +101,21 @@
 
 */
 
+#ifdef __APPLE__
+	#include "TargetConditionals.h"
+	#if TARGET_IPHONE_SIMULATOR
+		// iOS Simulator
+		#undef USE_CURL
+	#elif TARGET_OS_IPHONE
+		// iOS device
+		#undef USE_CURL
+	#elif TARGET_OS_MAC
+		// Other kinds of Mac OS
+	#else
+		#   error "Unknown Apple platform"
+	#endif
+#endif
+
 #ifdef USE_CURL
 	#include <curl/curl.h>
 #endif
@@ -176,7 +191,7 @@ char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch) {
 	for (m = scratch->meta_hash; m != NULL; m = m->hh.next) {
 		if (strcmp(m->key, "author") == 0) {
 			print_const("\t<dc:creator>");
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 			print_const("</dc:creator>\n");
 		} else if (strcmp(m->key, "baseheaderlevel") == 0) {
 		} else if (strcmp(m->key, "bibliostyle") == 0) {
@@ -197,20 +212,20 @@ char * opendocument_metadata(mmd_engine * e, scratch_pad * scratch) {
 		} else if (strcmp(m->key, "mmdfooter") == 0) {
 		} else if (strcmp(m->key, "mmdheader") == 0) {
 		} else if (strcmp(m->key, "odfheader") == 0) {
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 		} else if (strcmp(m->key, "quoteslanguage") == 0) {
 		} else if (strcmp(m->key, "title") == 0) {
 			print_const("\t<dc:title>");
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 			print_const("</dc:title>\n");
 		} else if (strcmp(m->key, "transcludebase") == 0) {
 		} else if (strcmp(m->key, "xhtmlheader") == 0) {
 		} else if (strcmp(m->key, "xhtmlheaderlevel") == 0) {
 		} else {
 			print_const("\t<meta:user-defined meta:name=\"");
-			mmd_print_string_opendocument(out, m->key);
+			mmd_print_string_opendocument(out, m->key, false);
 			print_const("\">");
-			mmd_print_string_opendocument(out, m->value);
+			mmd_print_string_opendocument(out, m->value, false);
 			print_const("</meta:user-defined>\n");
 		}
 	}
@@ -889,7 +904,7 @@ char * opendocument_content_file(const char * body, int format) {
 
 
 /// Create OpenDocument text file
-DString * opendocument_core_flat_create(const char * body, mmd_engine * e, int format) {
+DString * opendocument_core_flat_create(DString * body, mmd_engine * e, int format) {
 	DString * out = d_string_new("");
 	char * text;
 
@@ -919,7 +934,7 @@ DString * opendocument_core_flat_create(const char * body, mmd_engine * e, int f
 
 	// Add body
 	print_const("\n<office:body>\n<office:text>\n");
-	d_string_append(out, body);
+	d_string_append(out, body->str);
 	print_const("\n</office:text>\n</office:body>\n</office:document>\n");
 
 
@@ -931,7 +946,7 @@ DString * opendocument_core_flat_create(const char * body, mmd_engine * e, int f
 
 
 /// Create OpenDocument zip file version
-DString * opendocument_core_file_create(const char * body, mmd_engine * e, const char * directory, int format) {
+DString * opendocument_core_file_create(DString * body, mmd_engine * e, const char * directory, int format) {
 	DString * result = d_string_new("");
 
 	// Add common core elements
@@ -943,7 +958,7 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 
 
 	// Create content file
-	data = opendocument_content_file(body, format);
+	data = opendocument_content_file(body->str, format);
 	len = strlen(data);
 	status = mz_zip_writer_add_mem(zip, "content.xml", data, len, MZ_BEST_COMPRESSION);
 	free(data);
@@ -971,13 +986,13 @@ DString * opendocument_core_file_create(const char * body, mmd_engine * e, const
 
 
 /// Create OpenDocument flat text file (single xml file)
-DString * opendocument_flat_text_create(const char * body, mmd_engine * e, const char * directory) {
+DString * opendocument_flat_text_create(DString * body, mmd_engine * e, const char * directory) {
 	return opendocument_core_flat_create(body, e, FORMAT_FODT);
 }
 
 
 /// Create OpenDocument text file (zipped package)
-DString * opendocument_text_create(const char * body, mmd_engine * e, const char * directory) {
+DString * opendocument_text_create(DString * body, mmd_engine * e, const char * directory) {
 	return opendocument_core_file_create(body, e, directory, FORMAT_ODT);
 }
 

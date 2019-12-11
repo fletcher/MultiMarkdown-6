@@ -8,14 +8,14 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2018-09-01")
+set (My_Project_Revised_Date "2019-12-11")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 4)
+set (My_Project_Version_Minor 5)
 set (My_Project_Version_Patch 0)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
-set (My_Project_Copyright_Date "2016 - 2018")
+set (My_Project_Copyright_Date "2016 - 2019")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
@@ -46,12 +46,10 @@ include_directories( ${PROJECT_SOURCE_DIR}/Sources/multimarkdown)
 include_directories( ${PROJECT_SOURCE_DIR}/test )
 include_directories(${PROJECT_BINARY_DIR})
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
 	# using Clang
 	# Default is 256 -- needed for localization hash function
 	add_definitions("-fbracket-depth=264")	
-else()
-	add_definitions("-std=c99")
 endif()
 
 set(CMAKE_SUPPRESS_REGENERATION 1)
@@ -109,7 +107,7 @@ MACRO(ADD_PUBLIC_HEADER target filename)
 
 	SET_TARGET_PROPERTIES(${target} PROPERTIES
 		XCODE_ATTRIBUTE_VALID_ARCHITECTURES
-		"x86_64 i386 armv6 armv7 armv7s arm64"
+		"x86_64 armv6 armv7 armv7s arm64"
 	)
 
 ENDMACRO(ADD_PUBLIC_HEADER)
@@ -185,6 +183,10 @@ set(src_files
 	Sources/libMultiMarkdown/epub.c
 	Sources/libMultiMarkdown/file.c
 	Sources/libMultiMarkdown/html.c
+	Sources/libMultiMarkdown/itmz.c
+	Sources/libMultiMarkdown/itmz-lexer.c
+	Sources/libMultiMarkdown/itmz-parser.c
+	Sources/libMultiMarkdown/itmz-reader.c
 	Sources/libMultiMarkdown/latex.c
 	Sources/libMultiMarkdown/lexer.c
 	Sources/libMultiMarkdown/memoir.c
@@ -206,6 +208,7 @@ set(src_files
 	Sources/libMultiMarkdown/token_pairs.c
 	Sources/libMultiMarkdown/transclude.c
 	Sources/libMultiMarkdown/uuid.c
+	Sources/libMultiMarkdown/xml.c
 	Sources/libMultiMarkdown/writer.c
 	Sources/libMultiMarkdown/zip.c
 )
@@ -220,6 +223,10 @@ set(header_files
 	Sources/libMultiMarkdown/epub.h
 	Sources/libMultiMarkdown/file.h
 	Sources/libMultiMarkdown/html.h
+	Sources/libMultiMarkdown/itmz.h
+	Sources/libMultiMarkdown/itmz-lexer.h
+	Sources/libMultiMarkdown/itmz-parser.h
+	Sources/libMultiMarkdown/itmz-reader.h
 	Sources/libMultiMarkdown/latex.h
 	Sources/libMultiMarkdown/lexer.h
 	Sources/libMultiMarkdown/include/libMultiMarkdown.h
@@ -241,6 +248,7 @@ set(header_files
 	Sources/libMultiMarkdown/transclude.h
 	Sources/libMultiMarkdown/uthash.h
 	Sources/libMultiMarkdown/uuid.h
+	Sources/libMultiMarkdown/xml.h
 	Sources/libMultiMarkdown/writer.h
 	Sources/libMultiMarkdown/zip.h
 )
@@ -349,15 +357,21 @@ configure_file (
 # from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
 get_directory_property(hasParent PARENT_DIRECTORY)
 
+set(test_files
+	test/CuTest.c
+	test/CuTest.h
+	${PROJECT_BINARY_DIR}/AllTests.c
+)
+
+# Process source files to look for tests to run
+add_custom_command (
+	OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
+	COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
+)
+
 if(hasParent)
 	# Don't create "run_tests" when we're a sub-project for something else
 else()
-	set(test_files
-		test/CuTest.c
-		test/CuTest.h
-		${PROJECT_BINARY_DIR}/AllTests.c
-	)
-
 	if (DEFINED TEST)
 		add_definitions(-DTEST)
 
@@ -367,12 +381,6 @@ else()
 			${header_files}
 			${src_utility_files}
 			${header_utility_files}
-		)
-
-		# Process source files to look for tests to run
-		add_custom_command (
-			OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
-			COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
 		)
 
 		enable_testing()
@@ -397,11 +405,11 @@ endif()
 if (APPLE)
 
 	# Configure backwards-compatible support (if your project allows it)
-	SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.4" CACHE STRING "Deployment target for OSX" FORCE)
+	SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.6" CACHE STRING "Deployment target for OSX" FORCE)
 
 	# Compile for x86_64 and i386.  ppc no longer supported
 	if(CMAKE_BUILD_TYPE MATCHES "Release")
-		SET (CMAKE_OSX_ARCHITECTURES x86_64;i386)
+		SET (CMAKE_OSX_ARCHITECTURES x86_64)
 	endif(CMAKE_BUILD_TYPE MATCHES "Release")
 
 	# Use PackageMaker for installers?
@@ -515,6 +523,7 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
 	FRAMEWORK TRUE
 	FRAMEWORK_VERSION A
 	MACOSX_FRAMEWORK_IDENTIFIER net.multimarkdown.mmd6
+	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "net.multimarkdown.mmd6"
 )
 
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
@@ -670,7 +679,7 @@ ADD_MMD_TEST(mmd-6-beamer "-t beamer" Beamer tex)
 
 ADD_MMD_TEST(mmd-6-memoir "-t memoir" Memoir tex)
 
-ADD_MMD_TEST(mmd-6-odf "-t fodt" MMD6Tests fodt)
+ADD_MMD_TEST(mmd-6-fodt "-t fodt" MMD6Tests fodt)
 
 ADD_MMD_TEST(mmd-6-opml "-t opml" MMD6Tests opml)
 

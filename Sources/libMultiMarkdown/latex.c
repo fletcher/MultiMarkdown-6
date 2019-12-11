@@ -62,6 +62,8 @@
 #include "latex.h"
 #include "parser.h"
 #include "scanners.h"
+#include "stack.h"
+
 
 #define print(x) d_string_append(out, x)
 #define print_const(x) d_string_append_c_array(out, x, sizeof(x) - 1)
@@ -310,8 +312,8 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 }
 
 
-static char * correct_dimension_units(char *original) {
-	char *result;
+static char * correct_dimension_units(char * original) {
+	char * result;
 	int i;
 
 	result = my_strdup(original);
@@ -415,7 +417,12 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 		print_const("\n");
 
 		if (text) {
-			print_const("\\caption{");
+			if (link->title && link->title[0] != '\0') {
+				printf("\\caption[%s]{", link->title);
+			} else {
+				print_const("\\caption{");
+			}
+
 			mmd_export_token_tree_latex(out, source, text->child, scratch);
 			print_const("}\n");
 		}
@@ -447,7 +454,8 @@ void mmd_export_toc_entry_latex(DString * out, const char * source, scratch_pad 
 
 		if (entry_level >= level) {
 			// This entry is a direct descendant of the parent
-			temp_char = label_from_header(source, entry);
+			scratch->label_counter = (int) * counter;
+			temp_char = label_from_header(source, entry, scratch);
 			print_const("\\item ");
 			mmd_export_token_tree_latex(out, source, entry->child, scratch);
 			printf("(\\autoref{%s})\n\n", temp_char);
@@ -483,6 +491,8 @@ void mmd_export_toc_latex(DString * out, const char * source, scratch_pad * scra
 	size_t counter = 0;
 
 	mmd_export_toc_entry_latex(out, source, scratch, &counter, 0);
+
+	scratch->label_counter = 0;
 }
 
 
@@ -696,14 +706,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			if (scratch->extensions & EXT_NO_LABELS) {
 				print_const("}");
 			} else {
-				temp_token = manual_label_from_header(t, source);
-
-				if (temp_token) {
-					temp_char = label_from_token(source, temp_token);
-				} else {
-					temp_char = label_from_token(source, t);
-				}
-
+				temp_char = label_from_header(source, t, scratch);
 				printf("}\n\\label{%s}", temp_char);
 				free(temp_char);
 			}
@@ -808,6 +811,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_token->next &&
 						temp_token->next->type == PAIR_BRACKET) {
 					temp_token = temp_token->next;
+					print_const("\\caption");
+					print_token(temp_token);
+					print_const("{");
+				} else {
+					print_const("\\caption{");
 				}
 
 				temp_char = label_from_token(source, temp_token);
@@ -815,7 +823,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				t->next->child->child->type = TEXT_EMPTY;
 				t->next->child->child->mate->type = TEXT_EMPTY;
 
-				print_const("\\caption{");
 				mmd_export_token_tree_latex(out, source, t->next->child->child, scratch);
 				print_const("}\n");
 
@@ -894,6 +901,22 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 		case BLOCK_TOC:
 			pad(out, 2, scratch);
+
+			// Define range
+			if (t->child->child->type == TOC) {
+			} else {
+				temp_short = source[t->start + 6] - '0';
+
+				if (t->child->child->type == TOC_RANGE) {
+					temp_short2 = source[t->start + 8] - '0';
+				} else {
+					temp_short2 = temp_short;
+				}
+
+				// Adjust depth for LaTeX numbering -- -1 for part, 0 for chapter
+				printf("\\setcounter{tocdepth}{%d}\n", temp_short2 - 2);
+			}
+
 			print_const("\\tableofcontents");
 			scratch->padded = 0;
 			break;
@@ -1960,6 +1983,17 @@ parse_citation:
 
 		case TOC:
 			print_const("\\{\\{TOC\\}\\}");
+			break;
+
+		case TOC_SINGLE:
+			temp_short = source[t->start + 6] - '0';
+			printf("\\{\\{TOC:%d\\}\\}", temp_short);
+			break;
+
+		case TOC_RANGE:
+			temp_short = source[t->start + 6] - '0';
+			temp_short2 = source[t->start + 8] - '0';
+			printf("\\{\\{TOC:%d-%d\\}\\}", temp_short, temp_short2);
 			break;
 
 		case UL:

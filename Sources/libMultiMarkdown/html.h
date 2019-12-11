@@ -56,7 +56,8 @@
 #ifndef HTML_MULTIMARKDOWN_H
 #define HTML_MULTIMARKDOWN_H
 
-#include "d_string.h"
+typedef struct DString DString;
+
 #include "token.h"
 #include "writer.h"
 
@@ -75,7 +76,7 @@ void mmd_export_glossary_list_html(DString * out, const char * source, scratch_p
 void mmd_start_complete_html(DString * out, const char * source, scratch_pad * scratch);
 void mmd_end_complete_html(DString * out, const char * source, scratch_pad * scratch);
 
-void mmd_print_string_html(DString * out, const char * str, bool obfuscate);
+void mmd_print_string_html(DString * out, const char * str, bool obfuscate, bool line_breaks);
 
 
 #endif

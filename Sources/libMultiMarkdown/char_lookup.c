@@ -14,7 +14,7 @@
 
 /*
 
-	Copyright © 2016 - 2017 Fletcher T. Penney.
+	Copyright © 2016 - 2019 Fletcher T. Penney.
 
 
 	The `MultiMarkdown 6` project is released under the MIT License..
@@ -64,10 +64,11 @@
 #define alpha(x)		table[x] |= CHAR_ALPHA
 #define digit(x)		table[x] |= CHAR_DIGIT
 #define line_ending(x)	table[x] |= CHAR_LINE_ENDING
+#define intraword(x)	table[x] |= CHAR_INTRAWORD
 
 #define USE_EXTENDED_ASCII_disabled 1
 
-int main( int argc, char** argv ) {
+int main( int argc, char ** argv ) {
 	unsigned char table[256] = {0};
 
 	// Define punctuation
@@ -112,6 +113,10 @@ int main( int argc, char** argv ) {
 	punctuation('|');
 
 
+	// Define intra-word punctuation
+	intraword('\'');
+	intraword('-');
+
 	// Define whitespace
 	whitespace(' ');
 	whitespace('\t');
@@ -139,7 +144,7 @@ int main( int argc, char** argv ) {
 
 
 	// Extended ASCII
-	#ifdef USE_EXTENDED_ASCII
+#ifdef USE_EXTENDED_ASCII
 
 	// Punctuation ranges
 	for (int i = 132; i < 138; ++i) {
@@ -198,7 +203,7 @@ int main( int argc, char** argv ) {
 		}
 	}
 
-	#endif
+#endif
 
 
 	// Print output as 16 x 16 table

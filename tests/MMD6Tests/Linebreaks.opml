@@ -2,8 +2,8 @@
 <opml version="1.0">
 <head><title>Linebreaks</title></head>
 <body>
-<outline text="(Untitled Preamble)" _note="&#10;foo&#10;bar&#10;&#10;foo &#10;bar&#10;&#10;foo  &#10;bar&#10;&#10;foo   &#10;bar&#10;&#10;foo\&#10;bar&#10;&#10;5&#10;&#10;foo  &#10;bar  &#10;&#10;"></outline>
-<outline text="Metadata">
+<outline text="&gt;&gt;Preamble&lt;&lt;" _note="&#10;foo&#10;bar&#10;&#10;foo &#10;bar&#10;&#10;foo  &#10;bar&#10;&#10;foo   &#10;bar&#10;&#10;foo\&#10;bar&#10;&#10;5&#10;&#10;foo  &#10;bar  &#10;&#10;"></outline>
+<outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Linebreaks"/>
 <outline text="latexconfig" _note="article"/>
 </outline>

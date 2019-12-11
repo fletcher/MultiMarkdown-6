@@ -74,13 +74,13 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
-struct arg_lit *a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_meta,
-		   *a_notransclude, *a_nosmart, *a_opml;
-struct arg_str *a_format, *a_lang, *a_extract;
-struct arg_file *a_file, *a_o;
-struct arg_end *a_end;
-struct arg_rem *a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
+struct arg_lit * a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
+		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_unique, *a_meta,
+		   *a_notransclude, *a_nosmart, *a_opml, *a_itmz;
+struct arg_str * a_format, *a_lang, *a_extract;
+struct arg_file * a_file, *a_o;
+struct arg_end * a_end;
+struct arg_rem * a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
 
 
 /// strdup() not available on all platforms
@@ -129,14 +129,14 @@ char * filename_with_extension(const char * original, const char * new_extension
 }
 
 
-int main(int argc, char** argv) {
+int main(int argc, char ** argv) {
 	int exitcode = EXIT_SUCCESS;
 	char * binname = "multimarkdown";
 	short format = FORMAT_HTML;
 	short language = LC_EN;
 
 	// Initialize argtable structs
-	void *argtable[] = {
+	void * argtable[] = {
 		a_help			= arg_lit0(NULL, "help", "display this help and exit"),
 		a_version		= arg_lit0(NULL, "version", "display version info and exit"),
 
@@ -147,14 +147,16 @@ int main(int argc, char** argv) {
 		a_snippet		= arg_lit0("s", "snippet", "force a snippet"),
 		a_compatibility	= arg_lit0("c", "compatibility", "Markdown compatibility mode"),
 		a_random		= arg_lit0(NULL, "random", "use random numbers for footnote anchors"),
+		a_unique		= arg_lit0(NULL, "unique", "use random numbers for header labels unless manually specified"),
 		a_nosmart		= arg_lit0(NULL, "nosmart", "Disable smart typography"),
 		a_nolabels		= arg_lit0(NULL, "nolabels", "Disable id attributes for headers"),
 		a_notransclude	= arg_lit0(NULL, "notransclude", "Disable file transclusion"),
 		a_opml			= arg_lit0(NULL, "opml", "Convert OPML source to plain text before processing"),
+		a_itmz			= arg_lit0(NULL, "itmz", "Convert ITMZ (iThoughts) source to plain text before processing"),
 
 		a_rem2			= arg_rem("", ""),
 
-		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|opml|bundle|bundlezip"),
+		a_format		= arg_str0("t", "to", "FORMAT", "convert to FORMAT, FORMAT = html|latex|beamer|memoir|mmd|odt|fodt|epub|opml|itmz|bundle|bundlezip"),
 		a_o				= arg_file0("o", "output", "FILE", "send output to FILE"),
 
 		a_rem3			= arg_rem("", ""),
@@ -239,6 +241,9 @@ int main(int argc, char** argv) {
 	if (a_opml->count > 0) {
 		// Attempt to convert from OPML
 		extensions |= EXT_PARSE_OPML;
+	} else if (a_itmz->count > 0) {
+		// Attempt to convert from ITMZ
+		extensions |=  EXT_PARSE_ITMZ;
 	}
 
 	if (a_accept->count > 0) {
@@ -271,6 +276,11 @@ int main(int argc, char** argv) {
 		extensions |= EXT_RANDOM_FOOT;
 	}
 
+	if (a_unique->count > 0) {
+		// Use random header labels
+		extensions |= EXT_RANDOM_LABELS;
+	}
+
 	if (a_format->count > 0) {
 		if (strcmp(a_format->sval[0], "html") == 0) {
 			format = FORMAT_HTML;
@@ -294,6 +304,8 @@ int main(int argc, char** argv) {
 			format = FORMAT_TEXTBUNDLE_COMPRESSED;
 		} else if (strcmp(a_format->sval[0], "opml") == 0) {
 			format = FORMAT_OPML;
+		} else if (strcmp(a_format->sval[0], "itmz") == 0) {
+			format = FORMAT_ITMZ;
 		} else {
 			// No valid format found
 			fprintf(stderr, "%s: Unknown output format '%s'\n", binname, a_format->sval[0]);
@@ -320,9 +332,9 @@ int main(int argc, char** argv) {
 	char * output_filename;
 
 	// Increment counter and prepare token pool
-	#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 	token_pool_init();
-	#endif
+#endif
 
 	// Seed random numbers
 	custom_seed_rand();
@@ -380,6 +392,10 @@ int main(int argc, char** argv) {
 				case FORMAT_OPML:
 					output_filename = filename_with_extension(a_file->filename[i], ".opml");
 					break;
+
+				case FORMAT_ITMZ:
+					output_filename = filename_with_extension(a_file->filename[i], ".itmz");
+					break;
 			}
 
 			// Perform transclusion(s)
@@ -406,9 +422,9 @@ int main(int argc, char** argv) {
 			}
 
 			// Increment counter and prepare token pool
-			#ifdef kUseObjectPool
+#ifdef kUseObjectPool
 			token_pool_init();
-			#endif
+#endif
 
 			if (a_meta->count > 0) {
 				// List metadata keys
@@ -455,7 +471,9 @@ int main(int argc, char** argv) {
 			free(output_filename);
 
 			// Decrement counter and drain
+#ifdef kUseObjectPool
 			token_pool_drain();
+#endif
 		}
 	} else {
 		if (a_file->count) {
@@ -492,20 +510,20 @@ int main(int argc, char** argv) {
 			// Perform transclusion(s)
 
 			// Convert to absolute path for first file to enable proper path resolution
-			#ifdef PATH_MAX
+#ifdef PATH_MAX
 			// If PATH_MAX defined, use it
 			char absolute[PATH_MAX + 1];
 			realpath(a_file->filename[0], absolute);
 			folder = dirname((char *) a_file->filename[0]);
 
 			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
-			#else
+#else
 			// If undefined, then we *should* be able to use a NULL pointer to allocate
 			char * absolute = realpath(a_file->filename[0], NULL);
 			folder = dirname((char *) a_file->filename[0]);
 			mmd_transclude_source(buffer, folder, absolute, format, NULL, NULL);
 			free(absolute);
-			#endif
+#endif
 			// Don't free folder -- owned by dirname
 		}
 
@@ -578,12 +596,12 @@ int main(int argc, char** argv) {
 
 exit:
 
+#ifdef kUseObjectPool
 	// Decrement counter and clean up token pool
 	token_pool_drain();
 
-	#ifdef kUseObjectPool
 	token_pool_free();
-	#endif
+#endif
 
 exit2:
 

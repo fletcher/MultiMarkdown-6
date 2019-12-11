@@ -157,7 +157,7 @@ bool trie_insert(trie * a, const char * key, unsigned short match_type) {
 
 
 #ifdef TEST
-void Test_trie_insert(CuTest* tc) {
+void Test_trie_insert(CuTest * tc) {
 	trie * a = trie_new(0);
 
 	CuAssertIntEquals(tc, kTrieStartingSize, a->capacity);
@@ -227,7 +227,7 @@ unsigned short trie_search_match_type(trie * a, const char * query) {
 
 
 #ifdef TEST
-void Test_trie_search(CuTest* tc) {
+void Test_trie_search(CuTest * tc) {
 	trie * a = trie_new(0);
 
 	trie_insert(a, "foo", 42);
@@ -309,7 +309,7 @@ void ac_trie_prepare(trie * a) {
 
 
 #ifdef TEST
-void Test_trie_prepare(CuTest* tc) {
+void Test_trie_prepare(CuTest * tc) {
 	trie * a = trie_new(0);
 
 	trie_insert(a, "a", 1);
@@ -478,9 +478,9 @@ void match_set_filter_leftmost_longest(match * header) {
 					m->next->start > m->start &&
 					m->next->start < m->start + m->len) {
 				// This match is "lefter" than next
-				#ifndef __clang_analyzer__
+#ifndef __clang_analyzer__
 				match_excise(m->next);
-				#endif
+#endif
 			}
 
 			while (m->next &&
@@ -497,9 +497,9 @@ void match_set_filter_leftmost_longest(match * header) {
 				m->prev->start >= m->start) {
 			// We are "lefter" than previous
 			n = m->prev;
-			#ifndef __clang_analyzer__
+#ifndef __clang_analyzer__
 			match_excise(n);
-			#endif
+#endif
 		}
 
 		m = m->next;
@@ -519,7 +519,7 @@ match * ac_trie_leftmost_longest_search(trie * a, const char * source, size_t st
 
 
 #ifdef TEST
-void Test_aho_trie_search(CuTest* tc) {
+void Test_aho_trie_search(CuTest * tc) {
 	trie * a = trie_new(0);
 
 	trie_insert(a, "foo", 42);

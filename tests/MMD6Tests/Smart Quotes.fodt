@@ -365,6 +365,8 @@ foo-bar</text:p></text:list-item>
 <text:p text:style-name="Standard">foo-bar</text:p></text:list-item>
 
 </text:list>
+
+<text:p text:style-name="Standard">How wide a printer? 24&quot;? 48&quot;? 54&quot;?</text:p>
 </office:text>
 </office:body>
 </office:document>

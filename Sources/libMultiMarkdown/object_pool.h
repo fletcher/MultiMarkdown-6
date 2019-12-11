@@ -63,9 +63,9 @@
 
 /// Structure for an object allocator pool
 struct pool {
-	stack *			allocated;		//!< Stack of pointers to slabs that have been allocated
-	void *			next;			//!< Pointer to next available memory for allocation
-	void *			last;			//!< Pointer to end of available memory
+	stack 	*		allocated;		//!< Stack of pointers to slabs that have been allocated
+	void 	*		next;			//!< Pointer to next available memory for allocation
+	void 	*		last;			//!< Pointer to end of available memory
 	short			object_size;	//!< Size of individual objects to be allocated
 
 	char 			_PADDING[6];	//!< pad struct for alignment

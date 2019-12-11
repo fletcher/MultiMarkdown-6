@@ -60,6 +60,8 @@
 #include "d_string.h"
 #include "epub.h"
 #include "i18n.h"
+#include "itmz.h"
+#include "itmz-reader.h"
 #include "lexer.h"
 #include "libMultiMarkdown.h"
 #include "mmd.h"
@@ -77,10 +79,10 @@
 
 
 // Basic parser function declarations
-void * ParseAlloc();
-void Parse();
-void ParseFree();
-void ParseTrace();
+void * ParseAlloc(void *);
+void Parse(void *, int, void *, void *);
+void ParseFree(void *, void *);
+void ParseTrace(FILE * stream, char * zPrefix);
 
 void mmd_pair_tokens_in_block(token * block, token_pair_engine * e, stack * s);
 
@@ -124,6 +126,7 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 		e->quotes_lang = ENGLISH;
 
 		e->abbreviation_stack = stack_new(0);
+		e->critic_stack = stack_new(0);
 		e->citation_stack = stack_new(0);
 		e->definition_stack = stack_new(0);
 		e->footnote_stack = stack_new(0);
@@ -307,6 +310,7 @@ void mmd_engine_reset(mmd_engine * e) {
 	}
 
 	// Reset other stacks
+	e->critic_stack->size = 0;
 	e->definition_stack->size = 0;
 	e->header_stack->size = 0;
 	e->table_stack->size = 0;
@@ -337,6 +341,7 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 
 	// Takedown
 	stack_free(e->abbreviation_stack);
+	stack_free(e->critic_stack);
 	stack_free(e->citation_stack);
 	stack_free(e->footnote_stack);
 	stack_free(e->glossary_stack);
@@ -344,6 +349,18 @@ void mmd_engine_free(mmd_engine * e, bool freeDString) {
 	stack_free(e->metadata_stack);
 
 	free(e);
+}
+
+
+/// Access DString directly
+DString * mmd_engine_d_string(mmd_engine * e) {
+	return e->dstr;
+}
+
+
+/// Return token tree after previous parsing
+token * mmd_engine_root(mmd_engine * e) {
+	return e->root;
 }
 
 
@@ -511,18 +528,34 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 				line->type = (first_child->type - HASH1) + LINE_ATX_1;
 				first_child->type = (line->type - LINE_ATX_1) + MARKER_H1;
 
+				t = line->child->tail;
+
 				// Strip trailing '#' sequence if present
-				if (line->child->tail->type == TEXT_NL) {
-					if ((line->child->tail->prev->type >= HASH1) &&
-							(line->child->tail->prev->type <= HASH6)) {
-						line->child->tail->prev->type -= HASH1;
-						line->child->tail->prev->type += MARKER_H1;
-					}
-				} else {
-					if ((line->child->tail->type >= HASH1) &&
-							(line->child->tail->type <= HASH6)) {
-						line->child->tail->type -= HASH1;
-						line->child->tail->type += MARKER_H1;
+				while (t) {
+					switch (t->type) {
+						case INDENT_TAB:
+						case INDENT_SPACE:
+						case NON_INDENT_SPACE:
+						case TEXT_NL:
+						case TEXT_LINEBREAK:
+						case TEXT_LINEBREAK_SP:
+							t = t->prev;
+							break;
+
+						case HASH1:
+						case HASH2:
+						case HASH3:
+						case HASH4:
+						case HASH5:
+						case HASH6:
+							t->type -= HASH1;
+							t->type += MARKER_H1;
+							t = NULL;
+							break;
+
+						default:
+							// Break out of loop
+							t = NULL;
 					}
 				}
 			} else {
@@ -748,6 +781,8 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 			line->type = LINE_EMPTY;
 			break;
 
+		case TOC_SINGLE:
+		case TOC_RANGE:
 		case TOC:
 			line->type = (e->extensions & EXT_COMPATIBILITY) ? LINE_PLAIN : LINE_TOC;
 			break;
@@ -1062,6 +1097,12 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 				if (e->allow_meta && root->child == line) {
 					if (line->type == LINE_SETEXT_2) {
 						line->type = LINE_YAML;
+					} else if (
+						(line->type == LINE_META) &&
+						scan_empty_meta_line(&e->dstr->str[line->start])) {
+						// Don't start metadata with empty meta line (e.g. "foo:\n")
+						e->allow_meta = false;
+						line->type = LINE_PLAIN;
 					} else if (line->type != LINE_META) {
 						e->allow_meta = false;
 					}
@@ -1117,13 +1158,12 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 
 	e->recurse_depth++;
 
-	void* pParser = ParseAlloc (malloc);		// Create a parser (for lemon)
+	void * pParser = ParseAlloc (malloc);		// Create a parser (for lemon)
 	token * walker = chain->child;				// Walk the existing tree
 	token * remainder;							// Hold unparsed tail of chain
 
-	#ifndef NDEBUG
-	ParseTrace(stderr, "parser >>");
-	#endif
+	// Enable to monitor parsing steps
+	// ParseTrace(stderr, "parser >>");
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -1139,19 +1179,12 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 			remainder->prev = NULL;
 		}
 
-		#ifndef NDEBUG
-		fprintf(stderr, "\nNew line\n");
-		#endif
-
 		Parse(pParser, walker->type, walker, e);
 
 		walker = remainder;
 	}
 
 	// Signal finish to parser
-	#ifndef NDEBUG
-	fprintf(stderr, "\nFinish parse\n");
-	#endif
 	Parse(pParser, 0, NULL, e);
 
 	// Disconnect of (now empty) root
@@ -1506,8 +1539,12 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case QUOTE_DOUBLE:
 				offset = t->start;
 
-				if ((offset == 0) || (char_is_whitespace_or_line_ending(str[offset - 1]))) {
+				if (offset == 0) {
 					t->can_close = 0;
+				} else if (char_is_whitespace_or_line_ending(str[offset - 1])) {
+					t->can_close = 0;
+				} else if (! char_is_whitespace_or_line_ending_or_punctuation(str[offset - 1])) {
+					t->can_open = 0;
 				}
 
 				if (char_is_whitespace_or_line_ending(str[offset + 1])) {
@@ -1763,16 +1800,37 @@ void is_list_loose(token * list) {
 		return;
 	}
 
-	while (walker->next != NULL) {
+	if (walker->next == NULL) {
+		// Single item list
 		if (walker->type == BLOCK_LIST_ITEM) {
 			if (walker->child->type == BLOCK_PARA) {
-				loose = true;
+				walker = walker->child;
+
+				while (walker->next != NULL) {
+					if (walker->type == BLOCK_EMPTY) {
+						if (walker->next->type == BLOCK_PARA) {
+							loose = true;
+						}
+					}
+
+					walker = walker->next;
+				}
 			} else {
 				walker->type = BLOCK_LIST_ITEM_TIGHT;
 			}
 		}
+	} else {
+		while (walker->next != NULL) {
+			if (walker->type == BLOCK_LIST_ITEM) {
+				if (walker->child->type == BLOCK_PARA) {
+					loose = true;
+				} else {
+					walker->type = BLOCK_LIST_ITEM_TIGHT;
+				}
+			}
 
-		walker = walker->next;
+			walker = walker->next;
+		}
 	}
 
 	if (loose) {
@@ -1852,7 +1910,12 @@ meta:
 				len = scan_meta_key(&source[l->start]);
 				m = meta_new(source, l->start, len);
 				start = l->start + len + 1;
-				len = l->start + l->len - start - 1;
+				len = l->start + l->len - start;
+
+				if (char_is_line_ending(source[start + len])) {
+					len--;
+				}
+
 				d_string_append_c_array(d, &source[start], len);
 				stack_push(e->metadata_stack, m);
 				break;
@@ -2000,11 +2063,6 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 		return;
 	}
 
-	#ifndef NDEBUG
-	fprintf(stderr, "Strip line tokens from %d (%lu:%lu) (child %d)\n", block->type, block->start, block->len, block->child->type);
-	token_tree_describe(block, e->dstr->str);
-	#endif
-
 	token * l = block->child;
 
 	// Custom actions
@@ -2127,7 +2185,7 @@ handle_line:
 
 				// Move children to parent
 				// Add ':' back
-				if (l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
+				if (l->child && l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
 					temp = token_new(COLON, l->child->start - 1, 1);
 					token_append_child(block, temp);
 				}
@@ -2177,6 +2235,11 @@ handle_line:
 
 /// Parse part of the string into a token tree
 token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byte_len) {
+	// Fix indeterminant length
+	if (byte_len == -1) {
+		byte_len = e->dstr->currentStringLength - byte_start;
+	}
+
 	// First, clean up any leftovers from previous parse
 
 	mmd_engine_reset(e);
@@ -2191,6 +2254,17 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 	if (e->extensions & EXT_PARSE_OPML) {
 		// Convert from OPML first (if not done earlier)
 		mmd_convert_opml_string(e, byte_start, byte_len);
+
+		// Fix start/stop
+		byte_start = 0;
+		byte_len = e->dstr->currentStringLength;
+	} else if (e->extensions & EXT_PARSE_ITMZ) {
+		// Convert from ITMZ first (if not done earlier)
+		mmd_convert_itmz_string(e, byte_start, byte_len);
+
+		// Fix start/stop
+		byte_start = 0;
+		byte_len = e->dstr->currentStringLength;
 	}
 
 	// Tokenize the string
@@ -2217,10 +2291,6 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 		stack_free(pair_stack);
 
 		pair_emphasis_tokens(doc);
-
-		#ifndef NDEBUG
-		token_tree_describe(doc, e->dstr->str);
-		#endif
 	}
 
 	// Return original extensions
@@ -2268,6 +2338,7 @@ bool mmd_d_string_has_metadata(DString * source, size_t * end) {
 bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	bool result = false;
 	token * old_root;
+	mmd_engine * temp = NULL;
 
 	if (!e) {
 		return false;
@@ -2287,11 +2358,35 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 	// Preserve existing parse tree (if any)
 	old_root = e->root;
 
-	// Tokenize the string (up until first empty line)
-	token * doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
+	token * doc = NULL;
 
-	// Parse tokens into blocks
-	mmd_parse_token_chain(e, doc);
+	if (old_root &&
+			(old_root->type == DOC_START_TOKEN) &&
+			(old_root->len == e->dstr->currentStringLength)
+	   ) {
+		// Already parsed
+		doc = old_root;
+	} else {
+		// Store stack sizes
+		temp = mmd_engine_create(NULL, 0);
+
+		temp->abbreviation_stack->size = e->abbreviation_stack->size;
+		temp->citation_stack->size = e->citation_stack->size;
+		temp->definition_stack->size = e->definition_stack->size;
+		temp->footnote_stack->size = e->footnote_stack->size;
+		temp->glossary_stack->size = e->glossary_stack->size;
+		temp->header_stack->size = e->header_stack->size;
+		temp->link_stack->size = e->link_stack->size;
+		temp->metadata_stack->size = e->metadata_stack->size;
+		temp->table_stack->size = e->table_stack->size;
+
+
+		// Tokenize the string (up until first empty line)
+		doc = mmd_tokenize_string(e, 0, e->dstr->currentStringLength, true);
+
+		// Parse tokens into blocks
+		mmd_parse_token_chain(e, doc);
+	}
 
 	if (doc) {
 		if (doc->child && doc->child->type == BLOCK_META) {
@@ -2302,7 +2397,24 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 			}
 		}
 
-		token_tree_free(doc);
+		if (old_root != doc) {
+			token_tree_free(doc);
+
+			// Reset stack sizes
+			// Except metadata stack, since we will need that for any subseqeunt requests
+			// TODO: May need a more robust approach for this in the future
+			e->abbreviation_stack->size =	temp->abbreviation_stack->size;
+			e->citation_stack->size = 		temp->citation_stack->size;
+			e->definition_stack->size = 	temp->definition_stack->size;
+			e->footnote_stack->size = 		temp->footnote_stack->size;
+			e->glossary_stack->size = 		temp->glossary_stack->size;
+			e->header_stack->size = 		temp->header_stack->size;
+			e->link_stack->size = 			temp->link_stack->size;
+//			e->metadata_stack->size = 		temp->metadata_stack->size;
+			e->table_stack->size = 			temp->table_stack->size;
+
+			mmd_engine_free(temp, true);
+		}
 	}
 
 	// Restore previous parse tree
@@ -2703,7 +2815,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 
 	switch (format) {
 		case FORMAT_EPUB:
-			epub_write_wrapper(filepath, output->str, e, directory);
+			epub_write_wrapper(filepath, output, e, directory);
 			break;
 
 		case FORMAT_TEXTBUNDLE:
@@ -2711,7 +2823,7 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 			break;
 
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			textbundle_write_wrapper(filepath, output->str, e, directory);
+			textbundle_write_wrapper(filepath, output, e, directory);
 			break;
 
 		default:
@@ -2767,6 +2879,9 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 		if (e->extensions & EXT_PARSE_OPML) {
 			// Convert from OPML first (if not done earlier)
 			mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+		} else if (e->extensions & EXT_PARSE_ITMZ) {
+			// Convert from ITMZ first (if not done earlier)
+			mmd_convert_itmz_string(e, 0, e->dstr->currentStringLength);
 		}
 
 		// Simply return text (transclusion is handled externally)
@@ -2781,26 +2896,32 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 	switch (format) {
 		case FORMAT_EPUB:
-			result = epub_create(output->str, e, directory);
+			result = epub_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_TEXTBUNDLE:
 		case FORMAT_TEXTBUNDLE_COMPRESSED:
-			result = textbundle_create(output->str, e, directory);
+			result = textbundle_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_ODT:
-			result = opendocument_text_create(output->str, e, directory);
+			result = opendocument_text_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
 
 		case FORMAT_FODT:
-			result = opendocument_flat_text_create(output->str, e, directory);
+			result = opendocument_flat_text_create(output, e, directory);
+
+			d_string_free(output, true);
+			break;
+
+		case FORMAT_ITMZ:
+			result = itmz_create(output, e, directory);
 
 			d_string_free(output, true);
 			break;
@@ -2816,9 +2937,109 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 }
 
 
+/// Convert OPML string to MMD
+DString * mmd_string_convert_opml_to_text(const char * source) {
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+
+	DString * result =  mmd_engine_convert_opml_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Convert OPML DString to MMD
+DString * mmd_d_string_convert_opml_to_text(DString * source) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+
+	DString * result =  mmd_engine_convert_opml_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Convert OPML to text without modifying original engine source
+DString  * mmd_engine_convert_opml_to_text(mmd_engine * e) {
+	DString * original = d_string_new("");
+	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
+
+	mmd_convert_opml_string(e, 0, e->dstr->currentStringLength);
+
+	// Swap original and engine
+	char * temp = e->dstr->str;
+	size_t size = e->dstr->currentStringLength;
+
+	// Replace engine copy with original OPML text
+	e->dstr->str = original->str;
+	e->dstr->currentStringLength = original->currentStringLength;
+
+	// Original now contains the processed text
+	original->str = temp;
+	original->currentStringLength = size;
+
+	return original;
+}
+
+
+/// Convert ITMZ string to MMD
+DString * mmd_string_convert_itmz_to_text(const char * source) {
+	mmd_engine * e = mmd_engine_create_with_string(source, 0);
+
+	DString * result =  mmd_engine_convert_itmz_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, true);
+
+	return result;
+}
+
+
+/// Convert ITMZ DString to MMD
+DString * mmd_d_string_convert_itmz_to_text(DString * source) {
+	mmd_engine * e = mmd_engine_create_with_dstring(source, 0);
+
+	DString * result =  mmd_engine_convert_itmz_to_text(e);
+
+	e->root = NULL;
+	mmd_engine_free(e, false);
+
+	return result;
+}
+
+
+/// Convert ITMZ to text without modifying original engine source
+DString  * mmd_engine_convert_itmz_to_text(mmd_engine * e) {
+	DString * original = d_string_new("");
+	d_string_append_c_array(original, e->dstr->str, e->dstr->currentStringLength);
+
+	mmd_convert_itmz_string(e, 0, e->dstr->currentStringLength);
+
+	// Swap original and engine
+	char * temp = e->dstr->str;
+	size_t size = e->dstr->currentStringLength;
+
+	// Replace engine copy with original ITMZ text
+	e->dstr->str = original->str;
+	e->dstr->currentStringLength = original->currentStringLength;
+
+	// Original now contains the processed text
+	original->str = temp;
+	original->currentStringLength = size;
+
+	return original;
+}
+
+
 /// Return string containing engine version.
 char * mmd_version(void) {
 	char * result;
+#ifndef TEST
 	result = my_strdup(MULTIMARKDOWN_VERSION);
+#endif
 	return result;
 }

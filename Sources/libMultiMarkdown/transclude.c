@@ -122,7 +122,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 	// Make sure we use a parse tree for children
 	stack * parse_stack = parsed;
 
-	if (parsed == NULL) {
+	if (parse_stack == NULL) {
 		// Create temporary stack
 		parse_stack = stack_new(0);
 	}
@@ -172,12 +172,13 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 			// Adjust file wildcard extension for output format
 			// e.g. `foo.*`
-			if ((format != FORMAT_MMD) && strncmp(&text[stop - start - 4], ".*", 2) == 0) {
+			if ((stop - start > 3) && (format != FORMAT_MMD) && strncmp(&text[stop - start - 4], ".*", 2) == 0) {
 				// Trim '.*'
 				d_string_erase(file_path, file_path->currentStringLength - 2, 2);
 
 				switch (format) {
 					case FORMAT_HTML:
+					case FORMAT_EPUB:
 						d_string_append(file_path, ".html");
 						break;
 
@@ -188,6 +189,8 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 						break;
 
 					case FORMAT_FODT:
+					case FORMAT_ODT:
+						// `.fodt` is the extension for historical reasons
 						d_string_append(file_path, ".fodt");
 						break;
 

@@ -62,7 +62,7 @@
 struct stack {
 	size_t		size;				//!< Number of objects currently in stack
 	size_t		capacity;			//!< Total current capacity for stack
-	void **		element;			//!< Array of pointers to objects in stack
+	void 	**	element;			//!< Array of pointers to objects in stack
 };
 
 typedef struct stack stack;
