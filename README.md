@@ -4,9 +4,9 @@
 | ---------- | ------------------------- |  
 | Title:     | MultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2018-09-01 |  
-| Copyright: | Copyright © 2016 - 2018 Fletcher T. Penney.    |  
-| Version:   | 6.4.0      |  
+| Date:      | 2019-12-11 |  
+| Copyright: | Copyright © 2016 - 2019 Fletcher T. Penney.    |  
+| Version:   | 6.5.0      |  
 
 master branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=master)](https://travis-ci.org/fletcher/MultiMarkdown-6)  
 develop branch: [![Build Status](https://travis-ci.org/fletcher/MultiMarkdown-6.svg?branch=develop)](https://travis-ci.org/fletcher/MultiMarkdown-6)
