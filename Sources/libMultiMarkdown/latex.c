@@ -417,7 +417,12 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 		print_const("\n");
 
 		if (text) {
-			print_const("\\caption{");
+			if (link->title && link->title[0] != '\0') {
+				printf("\\caption[%s]{", link->title);
+			} else {
+				print_const("\\caption{");
+			}
+
 			mmd_export_token_tree_latex(out, source, text->child, scratch);
 			print_const("}\n");
 		}
@@ -806,6 +811,11 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				if (temp_token->next &&
 						temp_token->next->type == PAIR_BRACKET) {
 					temp_token = temp_token->next;
+					print_const("\\caption");
+					print_token(temp_token);
+					print_const("{");
+				} else {
+					print_const("\\caption{");
 				}
 
 				temp_char = label_from_token(source, temp_token);
@@ -813,7 +823,6 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 				t->next->child->child->type = TEXT_EMPTY;
 				t->next->child->child->mate->type = TEXT_EMPTY;
 
-				print_const("\\caption{");
 				mmd_export_token_tree_latex(out, source, t->next->child->child, scratch);
 				print_const("}\n");
 
