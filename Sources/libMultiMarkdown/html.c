@@ -652,7 +652,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
 						} else {
-							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							if (t->child->next) {
+								d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							}
+
 							scratch->padded = 0;
 						}
 					}
