@@ -1335,7 +1335,10 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 				new = token_new(CRITIC_SUB_DIV_B, t->start + 1, 1);
 
 				new->next = t->next;
-				new->next->prev = new;
+
+				if (new->next) {
+					new->next->prev = new;
+				}
 
 				t->next = new;
 				new->prev = t;
