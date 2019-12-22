@@ -1894,20 +1894,24 @@ parse_citation:
 				if (t->next->len > 1) {
 					printf("\\multicolumn{%lu}{", t->next->len);
 
-					switch (scratch->table_alignment[scratch->table_cell_count]) {
-						case 'l':
-						case 'L':
-							print_const("l}{");
-							break;
+					if (scratch->table_cell_count < kMaxTableColumns) {
+						switch (scratch->table_alignment[scratch->table_cell_count]) {
+							case 'l':
+							case 'L':
+								print_const("l}{");
+								break;
 
-						case 'r':
-						case 'R':
-							print_const("r}{");
-							break;
+							case 'r':
+							case 'R':
+								print_const("r}{");
+								break;
 
-						default:
-							print_const("c}{");
-							break;
+							default:
+								print_const("c}{");
+								break;
+						}
+					} else {
+						print_const("l}{");
 					}
 				}
 			}

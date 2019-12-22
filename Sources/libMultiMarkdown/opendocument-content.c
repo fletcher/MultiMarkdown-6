@@ -2092,22 +2092,26 @@ parse_citation:
 			} else {
 				print_const(">\n<text:p");
 
-				switch (scratch->table_alignment[scratch->table_cell_count]) {
-					case 'l':
-					case 'L':
-					default:
-						print_const(" text:style-name=\"MMD-Table\"");
-						break;
+				if (scratch->table_cell_count < kMaxTableColumns) {
+					switch (scratch->table_alignment[scratch->table_cell_count]) {
+						case 'l':
+						case 'L':
+						default:
+							print_const(" text:style-name=\"MMD-Table\"");
+							break;
 
-					case 'r':
-					case 'R':
-						print_const(" text:style-name=\"MMD-Table-Right\"");
-						break;
+						case 'r':
+						case 'R':
+							print_const(" text:style-name=\"MMD-Table-Right\"");
+							break;
 
-					case 'c':
-					case 'C':
-						print_const(" text:style-name=\"MMD-Table-Center\"");
-						break;
+						case 'c':
+						case 'C':
+							print_const(" text:style-name=\"MMD-Table-Center\"");
+							break;
+					}
+				} else {
+					print_const(" text:style-name=\"MMD-Table\"");
 				}
 			}
 
