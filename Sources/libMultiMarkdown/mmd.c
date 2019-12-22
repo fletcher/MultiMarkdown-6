@@ -1937,18 +1937,13 @@ plain:
 			case LINE_YAML:
 				break;
 
-			case LINE_TABLE:
-			case LINE_TABLE_SEPARATOR:
-			case LINE_DEFINITION:
+			default:
 				if (scan_meta_line(&source[l->start])) {
 					goto meta;
 				} else {
 					goto plain;
 				}
 
-			default:
-				fprintf(stderr, "ERROR!\n");
-				token_describe(l, NULL);
 				break;
 		}
 
