@@ -2596,6 +2596,10 @@ bool table_has_caption(token * t) {
 /// or
 /// ```` perl
 char * get_fence_language_specifier(token * fence, const char * source) {
+	if (fence == NULL) {
+		return NULL;
+	}
+
 	char * result = NULL;
 	size_t start = fence->start + fence->len;
 	size_t len = 0;
