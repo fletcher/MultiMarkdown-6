@@ -1163,7 +1163,7 @@ void mmd_parse_token_chain(mmd_engine * e, token * chain) {
 	token * remainder;							// Hold unparsed tail of chain
 
 	// Enable to monitor parsing steps
-	// ParseTrace(stderr, "parser >>");
+	// ParseTrace(stderr, "parser >> ");
 
 	// Remove existing token tree
 	e->root = NULL;
@@ -1971,15 +1971,16 @@ void strip_line_tokens_from_deflist(mmd_engine * e, token * deflist) {
 				walker->type = TEXT_EMPTY;
 				break;
 
-			case LINE_PLAIN:
-				walker->type = BLOCK_TERM;
-
 			case BLOCK_TERM:
 				break;
 
 			case BLOCK_DEFINITION:
 				strip_line_tokens_from_block(e, walker);
 				break;
+
+			default:
+				walker->type = BLOCK_TERM;
+
 		}
 
 		walker = walker->next;
@@ -2270,8 +2271,14 @@ token * mmd_engine_parse_substring(mmd_engine * e, size_t byte_start, size_t byt
 	// Tokenize the string
 	token * doc = mmd_tokenize_string(e, byte_start, byte_len, false);
 
+	// Describe token chain for debugging purposes
+	// token_describe(doc, NULL);
+
 	// Parse tokens into blocks
 	mmd_parse_token_chain(e, doc);
+
+	// Describe token blocks for debugging purposes
+	// token_describe(doc, NULL);
 
 	if (doc) {
 		// Parse blocks for pairs
