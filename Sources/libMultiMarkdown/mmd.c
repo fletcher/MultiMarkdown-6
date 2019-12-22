@@ -1282,6 +1282,7 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 	size_t lead_count, lag_count, pre_count, post_count;
 
 	token * t = block->child;
+	token * new;
 
 	char * str = e->dstr->str;
 
@@ -1331,10 +1332,14 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 
 			case CRITIC_SUB_DIV:
 				// Divide this into two tokens
-				t->child = token_new(CRITIC_SUB_DIV_B, t->start + 1, 1);
-				t->child->next = t->next;
-				t->next = t->child;
-				t->child = NULL;
+				new = token_new(CRITIC_SUB_DIV_B, t->start + 1, 1);
+
+				new->next = t->next;
+				new->next->prev = new;
+
+				t->next = new;
+				new->prev = t;
+
 				t->len = 1;
 				t->type = CRITIC_SUB_DIV_A;
 				break;
