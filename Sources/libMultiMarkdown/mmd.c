@@ -1938,6 +1938,7 @@ plain:
 				break;
 
 			case LINE_TABLE:
+			case LINE_TABLE_SEPARATOR:
 				if (scan_meta_line(&source[l->start])) {
 					goto meta;
 				} else {
