@@ -279,9 +279,28 @@ void token_remove_tail(token * head) {
 }
 
 
+/// Fix tail at head of token chain (e.g. after pruning)
+void fix_token_chain_tail(token * t) {
+	if (t) {
+		token * head = t;
+
+		// Find head of chain
+		while (head->prev) {
+			head = head->prev;
+		}
+
+		// Find tail
+		while (t->next) {
+			t = t->next;
+		}
+
+		// Fix tail
+		head->tail = t;
+	}
+}
+
 /// Pop token out of it's chain, connecting head and tail of chain back together.
 /// Token must be freed if it is no longer needed.
-/// \todo: If t is the tail token of a chain, the tail is no longer correct on the start of chain.
 void token_pop_link_from_chain(token * t) {
 	if (t == NULL) {
 		return;
@@ -296,6 +315,8 @@ void token_pop_link_from_chain(token * t) {
 
 	if (prev) {
 		prev->next = next;
+
+		fix_token_chain_tail(prev);
 	}
 
 	if (next) {
@@ -315,6 +336,8 @@ void tokens_prune(token * first, token * last) {
 
 	if (prev != NULL) {
 		prev->next = next;
+
+		fix_token_chain_tail(prev);
 	}
 
 	if (next != NULL) {
