@@ -327,6 +327,7 @@ meta_block(A)		::= LINE_YAML(B) LINE_META(C).				{ A = B; token_chain_append(B, 
 
 meta_line 			::= LINE_META.
 meta_line 			::= LINE_CONTINUATION.
+meta_line			::= LINE_FALLBACK.
 
 
 // Paragraphs

@@ -366,7 +366,7 @@ set(test_files
 # Process source files to look for tests to run
 add_custom_command (
 	OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
-	COMMAND sh ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
+	COMMAND bash ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
 )
 
 if(hasParent)

@@ -652,7 +652,10 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
 						} else {
-							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							if (t->child->next) {
+								d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							}
+
 							scratch->padded = 0;
 						}
 					}
@@ -1961,21 +1964,25 @@ parse_citation:
 				print_const("\t<td");
 			}
 
-			switch (scratch->table_alignment[scratch->table_cell_count]) {
-				case 'l':
-				case 'L':
-					print_const(" style=\"text-align:left;\"");
-					break;
+			if (scratch->table_cell_count < kMaxTableColumns) {
+				switch (scratch->table_alignment[scratch->table_cell_count]) {
+					case 'l':
+					case 'L':
+						print_const(" style=\"text-align:left;\"");
+						break;
 
-				case 'r':
-				case 'R':
-					print_const(" style=\"text-align:right;\"");
-					break;
+					case 'r':
+					case 'R':
+						print_const(" style=\"text-align:right;\"");
+						break;
 
-				case 'c':
-				case 'C':
-					print_const(" style=\"text-align:center;\"");
-					break;
+					case 'c':
+					case 'C':
+						print_const(" style=\"text-align:center;\"");
+						break;
+				}
+			} else {
+				print_const(" style=\"text-align:left;\"");
 			}
 
 			if (t->next && t->next->type == TABLE_DIVIDER) {
@@ -2053,6 +2060,7 @@ parse_citation:
 		default:
 			fprintf(stderr, "Unknown token type: %d (%lu:%lu)\n", t->type, t->start, t->len);
 			token_describe(t, source);
+			exit(0);
 			break;
 	}
 

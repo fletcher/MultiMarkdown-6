@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2018-09-01  
+Date: 2019-12-11  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -471,6 +471,89 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2019-12-11 - v 6.5.0:
+
+	*    ADDED: Add ASCII case detection
+	*    ADDED: Add conversion from ITMZ routines
+	*    ADDED: Add support for random header labels when not manually specified (Addresses #157)
+	*    ADDED: Add title as short caption for figures and tables to be used in list of figures and list of tables.  Addresses #177 -- thanks, 	MArpogaus
+	*    ADDED: Add {{TOC:1}} and {{TOC:1-2}} options
+	*    FIXED: Add byte for null terminator when extracting from zip archive
+	*    FIXED: Allow building libMMD has a child project for testing
+	*    FIXED: Clean up Quick Start guide
+	*    FIXED: Ensure newline at end of header contents when importing from OPML/ITMZ
+	*    FIXED: Fix CMake config for MacPorts (fixes #146)
+	*    FIXED: Fix PATH in convenience scripts
+	*    FIXED: Fix bugs in new zip extraction code
+	*    FIXED: Fix edge case with single item loose lists (fixes #174)
+	*    FIXED: Fix filename
+	*    FIXED: Fix handling of hebrew language option
+	*    FIXED: Fix length of metadata if no trailing line ending
+	*    FIXED: Fix letterhead reference to memoir-footer. (Fixes #143)
+	*    FIXED: Fix memory leak (#172) -- thanks Alfons
+	*    FIXED: Fix pointer dereference (fixes #152)
+	*    FIXED: Fix potential bug when reading OPML/ITMZ
+	*    FIXED: Fix potential errors related to checking for metadata
+	*    FIXED: Fix potential issue in d_string
+	*    FIXED: Fix potential memory address error
+	*    FIXED: Fix prior bad edits to quick start guide
+	*    FIXED: Fix regression
+	*    FIXED: Fix test suite for new captions
+	*    FIXED: Fix trim trailing whitespace
+	*    FIXED: Fix two small potential errors
+	*    FIXED: Fix warning
+	*    FIXED: Fix whitespace issues with headers with manual labels
+	*    FIXED: Improve BOM stripping
+	*    FIXED: Improve efficiency when checking for existence of metadata
+	*    FIXED: Include .html for EPUB and .fodt for ODT when transcluding with wildcard extension
+	*    FIXED: Prevent line breaks in HTML/ODF attributes
+	*    FIXED: Update Quick Start PDF
+	*    FIXED: Update README template
+	*    FIXED: Update re2c scanners and prevent crash on certain documents with unexpected encoding
+	*    FIXED: Use C11 (had old C99 as well, but I suspect that wasn't actually used
+	*    Fixes to README
+	*    Merge branch 'develop' of github.com:fletcher/MultiMarkdown-6 into develop
+	*    Merge branch 'release/6.4.0' into develop
+	*    Merge pull request #144 from cdhutch/patch-3
+	*    Merge pull request #162 from DivineDominion/patch-1
+	*    Merge pull request #167 from nickasd/develop
+	*    Revert "remove build folder"
+	*    UPDATED: Add MARKUP token type
+	*    UPDATED: Add OPML routines to libMultiMarkdown.h
+	*    UPDATED: Add UTF-8 validity check function
+	*    UPDATED: Additional README comments about Xcode
+	*    UPDATED: Apply astyle
+	*    UPDATED: Automatically disable libCurl on iOS
+	*    UPDATED: Change convenience scripts for better POSIX compliance (implements #150) (Thanks, Ryan)
+	*    UPDATED: Don't require opening <?xml> in OPML
+	*    UPDATED: Fix doxygen template
+	*    UPDATED: Fix main() when token pools disabled
+	*    UPDATED: Make astyle
+	*    UPDATED: Refactor XML parsing; improve OPML reading; add ITMZ (iThoughts) reading/writing (experimental feature); a few other small tweaks
+	*    UPDATED: Refactor header file inclusion
+	*    UPDATED: Remove debug statement
+	*    UPDATED: Remove i386 build architecture from default configuration
+	*    UPDATED: Remove some old debugging statements that aren't necessary anymore
+	*    UPDATED: Silence some Xcode warnings
+	*    UPDATED: Silence warnings
+	*    UPDATED: Tidy code
+	*    UPDATED: Tweak smart quote rules to avoid false positive matches when using double quote as inches mark
+	*    UPDATED: Update advanced headers test suite
+	*    UPDATED: Update astyle
+	*    UPDATED: Update astyle settings
+	*    UPDATED: Update char.c
+	*    UPDATED: Update cmake for xcode 11
+	*    UPDATED: Update d_string
+	*    UPDATED: Update macOS deployment version to 10.6 for Mojave
+	*    UPDATED: reduce false-positive rate of metadata where first line contains colon but metadata is not intended
+	*    UPDATED: remove reliance on version.h when testing
+	*    UPDATED: table id attribute should be on table not caption
+	*    Update mmd6-letterhead-leader.tex
+	*    add how to build Xcode framework to README
+	*    remove build folder
+	*    update README with instructions for Xcode
+
 
 * 2018-09-01 - v 6.4.0:
 

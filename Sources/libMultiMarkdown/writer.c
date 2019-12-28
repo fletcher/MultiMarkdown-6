@@ -102,7 +102,7 @@ static char * my_strndup(const char * source, size_t n) {
 	char * result;
 	const char * test = source;
 
-	// strlen is too slow is strlen(source) >> n
+	// strlen is too slow if strlen(source) >> n
 	for (len = 0; len < n; ++len) {
 		if (*test == '\0') {
 			break;
@@ -2596,6 +2596,10 @@ bool table_has_caption(token * t) {
 /// or
 /// ```` perl
 char * get_fence_language_specifier(token * fence, const char * source) {
+	if (fence == NULL) {
+		return NULL;
+	}
+
 	char * result = NULL;
 	size_t start = fence->start + fence->len;
 	size_t len = 0;

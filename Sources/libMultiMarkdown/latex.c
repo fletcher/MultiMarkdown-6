@@ -573,7 +573,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
 						} else {
-							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							if (t->child->next) {
+								d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							}
+
 							scratch->padded = 0;
 						}
 					}
@@ -1891,20 +1894,24 @@ parse_citation:
 				if (t->next->len > 1) {
 					printf("\\multicolumn{%lu}{", t->next->len);
 
-					switch (scratch->table_alignment[scratch->table_cell_count]) {
-						case 'l':
-						case 'L':
-							print_const("l}{");
-							break;
+					if (scratch->table_cell_count < kMaxTableColumns) {
+						switch (scratch->table_alignment[scratch->table_cell_count]) {
+							case 'l':
+							case 'L':
+								print_const("l}{");
+								break;
 
-						case 'r':
-						case 'R':
-							print_const("r}{");
-							break;
+							case 'r':
+							case 'R':
+								print_const("r}{");
+								break;
 
-						default:
-							print_const("c}{");
-							break;
+							default:
+								print_const("c}{");
+								break;
+						}
+					} else {
+						print_const("l}{");
 					}
 				}
 			}

@@ -59,7 +59,7 @@
 	#define H64(s,i,x)  H16(s,i,H16(s,i+16,H16(s,i+32,H16(s,i+48,x))))
 	#define H256(s,i,x) H64(s,i,H64(s,i+64,H64(s,i+128,H64(s,i+192,x))))
 
-	#define HASH(s)    ((uint32_t)(H256(s,0,0)^(H256(s,0,0)>>16)))
+	#define HASH(s)    ((uint32_t)(H64(s,0,0)^(H64(s,0,0)>>16)))
 
 	#define LC(x) Translate(HASH(x), scratch->language)
 

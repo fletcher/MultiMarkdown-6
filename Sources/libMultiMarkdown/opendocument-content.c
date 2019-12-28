@@ -799,7 +799,10 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 							d_string_append_c_array(out, &source[t->child->next->start], temp_token->start - t->child->next->start);
 							scratch->padded = 1;
 						} else {
-							d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							if (t->child->next) {
+								d_string_append_c_array(out, &source[t->child->start + t->child->len], t->start + t->len - t->child->next->start);
+							}
+
 							scratch->padded = 0;
 						}
 					}
@@ -2089,22 +2092,26 @@ parse_citation:
 			} else {
 				print_const(">\n<text:p");
 
-				switch (scratch->table_alignment[scratch->table_cell_count]) {
-					case 'l':
-					case 'L':
-					default:
-						print_const(" text:style-name=\"MMD-Table\"");
-						break;
+				if (scratch->table_cell_count < kMaxTableColumns) {
+					switch (scratch->table_alignment[scratch->table_cell_count]) {
+						case 'l':
+						case 'L':
+						default:
+							print_const(" text:style-name=\"MMD-Table\"");
+							break;
 
-					case 'r':
-					case 'R':
-						print_const(" text:style-name=\"MMD-Table-Right\"");
-						break;
+						case 'r':
+						case 'R':
+							print_const(" text:style-name=\"MMD-Table-Right\"");
+							break;
 
-					case 'c':
-					case 'C':
-						print_const(" text:style-name=\"MMD-Table-Center\"");
-						break;
+						case 'c':
+						case 'C':
+							print_const(" text:style-name=\"MMD-Table-Center\"");
+							break;
+					}
+				} else {
+					print_const(" text:style-name=\"MMD-Table\"");
 				}
 			}
 
