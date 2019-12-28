@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Development Notes</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="date" content="2018-09-01"/>
+	<meta name="date" content="2019-12-11"/>
 	<meta name="uuid" content="dd2d8e76-dc2d-416d-9acd-5395d20871c2"/>
 </head>
 <body>
@@ -433,6 +433,109 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <h3 id="changelog">Changelog</h3>
 
 <ul>
+<li><p>2019&#8211;12&#8211;28 - v 6.5.1:</p>
+
+<ul>
+<li>FIXED: Ensure use of bash for creating AllTests.c</li>
+<li>FIXED: Fix array overflow with wide tables</li>
+<li>FIXED: Fix edge case error in definition lists</li>
+<li>FIXED: Fix edge case in block parsing</li>
+<li>FIXED: Fix edge case in fenced code blocks</li>
+<li>FIXED: Fix error when pruning tokens</li>
+<li>FIXED: Fix memory leak</li>
+<li>FIXED: Fix metadata edge case</li>
+<li>FIXED: Fix metadata parsing edge case</li>
+<li>FIXED: Fix name mismatch of mmd6-default-metadata (Addresses #173)</li>
+<li>FIXED: Fix null dereference</li>
+<li>FIXED: Fix tests</li>
+<li>FIXED: Fix typos</li>
+<li>FIXED: Use more definitive edge case fix</li>
+<li>UPDATED: Shorten hash function for compiling speed since we are hashing shorter strings</li>
+<li>UPDATED: Update notes source text</li>
+</ul></li>
+<li><p>2019&#8211;12&#8211;11 - v 6.5.0:</p>
+
+<ul>
+<li>ADDED: Add ASCII case detection</li>
+<li>ADDED: Add conversion from ITMZ routines</li>
+<li>ADDED: Add support for random header labels when not manually specified (Addresses #157)</li>
+<li>ADDED: Add title as short caption for figures and tables to be used in list of figures and list of tables. Addresses #177 &#8211; thanks, 	MArpogaus</li>
+<li>ADDED: Add {{TOC:1}} and {{TOC:1-2}} options</li>
+<li>FIXED: Add byte for null terminator when extracting from zip archive</li>
+<li>FIXED: Allow building lib<abbr title="MultiMarkdown">MMD</abbr> has a child project for testing</li>
+<li>FIXED: Clean up Quick Start guide</li>
+<li>FIXED: Ensure newline at end of header contents when importing from OPML/ITMZ</li>
+<li>FIXED: Fix CMake config for MacPorts (fixes #146)</li>
+<li>FIXED: Fix PATH in convenience scripts</li>
+<li>FIXED: Fix bugs in new zip extraction code</li>
+<li>FIXED: Fix edge case with single item loose lists (fixes #174)</li>
+<li>FIXED: Fix filename</li>
+<li>FIXED: Fix handling of hebrew language option</li>
+<li>FIXED: Fix length of metadata if no trailing line ending</li>
+<li>FIXED: Fix letterhead reference to memoir-footer. (Fixes #143)</li>
+<li>FIXED: Fix memory leak (#172) &#8211; thanks Alfons</li>
+<li>FIXED: Fix pointer dereference (fixes #152)</li>
+<li>FIXED: Fix potential bug when reading OPML/ITMZ</li>
+<li>FIXED: Fix potential errors related to checking for metadata</li>
+<li>FIXED: Fix potential issue in d_string</li>
+<li>FIXED: Fix potential memory address error</li>
+<li>FIXED: Fix prior bad edits to quick start guide</li>
+<li>FIXED: Fix regression</li>
+<li>FIXED: Fix test suite for new captions</li>
+<li>FIXED: Fix trim trailing whitespace</li>
+<li>FIXED: Fix two small potential errors</li>
+<li>FIXED: Fix warning</li>
+<li>FIXED: Fix whitespace issues with headers with manual labels</li>
+<li>FIXED: Improve BOM stripping</li>
+<li>FIXED: Improve efficiency when checking for existence of metadata</li>
+<li>FIXED: Include .html for EPUB and .fodt for ODT when transcluding with wildcard extension</li>
+<li>FIXED: Prevent line breaks in HTML/ODF attributes</li>
+<li>FIXED: Update Quick Start PDF</li>
+<li>FIXED: Update README template</li>
+<li>FIXED: Update re2c scanners and prevent crash on certain documents with unexpected encoding</li>
+<li>FIXED: Use C11 (had old C99 as well, but I suspect that wasn&#8217;t actually used</li>
+<li>Fixes to README</li>
+<li>Merge branch &#8216;develop&#8217; of github.com:fletcher/MultiMarkdown-6 into develop</li>
+<li>Merge branch &#8216;release/6.4.0&#8217; into develop</li>
+<li>Merge pull request #144 from cdhutch/patch-3</li>
+<li>Merge pull request #162 from DivineDominion/patch-1</li>
+<li>Merge pull request #167 from nickasd/develop</li>
+<li>Revert &#8220;remove build folder&#8221;</li>
+<li>UPDATED: Add MARKUP token type</li>
+<li>UPDATED: Add OPML routines to libMultiMarkdown.h</li>
+<li>UPDATED: Add UTF-8 validity check function</li>
+<li>UPDATED: Additional README comments about Xcode</li>
+<li>UPDATED: Apply astyle</li>
+<li>UPDATED: Automatically disable libCurl on iOS</li>
+<li>UPDATED: Change convenience scripts for better POSIX compliance (implements #150) (Thanks, Ryan)</li>
+<li>UPDATED: Don&#8217;t require opening &lt;?xml&gt; in OPML</li>
+<li>UPDATED: Fix doxygen template</li>
+<li>UPDATED: Fix main() when token pools disabled</li>
+<li>UPDATED: Make astyle</li>
+<li>UPDATED: Refactor XML parsing; improve OPML reading; add ITMZ (iThoughts) reading/writing (experimental feature); a few other small tweaks</li>
+<li>UPDATED: Refactor header file inclusion</li>
+<li>UPDATED: Remove debug statement</li>
+<li>UPDATED: Remove i386 build architecture from default configuration</li>
+<li>UPDATED: Remove some old debugging statements that aren&#8217;t necessary anymore</li>
+<li>UPDATED: Silence some Xcode warnings</li>
+<li>UPDATED: Silence warnings</li>
+<li>UPDATED: Tidy code</li>
+<li>UPDATED: Tweak smart quote rules to avoid false positive matches when using double quote as inches mark</li>
+<li>UPDATED: Update advanced headers test suite</li>
+<li>UPDATED: Update astyle</li>
+<li>UPDATED: Update astyle settings</li>
+<li>UPDATED: Update char.c</li>
+<li>UPDATED: Update cmake for xcode 11</li>
+<li>UPDATED: Update d_string</li>
+<li>UPDATED: Update macOS deployment version to 10.6 for Mojave</li>
+<li>UPDATED: reduce false-positive rate of metadata where first line contains colon but metadata is not intended</li>
+<li>UPDATED: remove reliance on version.h when testing</li>
+<li>UPDATED: table id attribute should be on table not caption</li>
+<li>Update mmd6-letterhead-leader.tex</li>
+<li>add how to build Xcode framework to README</li>
+<li>remove build folder</li>
+<li>update README with instructions for Xcode</li>
+</ul></li>
 <li><p>2018&#8211;09&#8211;01 - v 6.4.0:</p>
 
 <ul>
