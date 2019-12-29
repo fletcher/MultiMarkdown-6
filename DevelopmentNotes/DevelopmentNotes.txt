@@ -472,6 +472,26 @@ TextBundle/TextPack, OpenDocument, etc.
 
 # Changelog #
 
+* 2019-12-28 - v 6.5.1:
+
+	*    FIXED: Ensure use of bash for creating AllTests.c
+	*    FIXED: Fix array overflow with wide tables
+	*    FIXED: Fix edge case error in definition lists
+	*    FIXED: Fix edge case in block parsing
+	*    FIXED: Fix edge case in fenced code blocks
+	*    FIXED: Fix error when pruning tokens
+	*    FIXED: Fix memory leak
+	*    FIXED: Fix metadata edge case
+	*    FIXED: Fix metadata parsing edge case
+	*    FIXED: Fix name mismatch of mmd6-default-metadata (Addresses #173)
+	*    FIXED: Fix null dereference
+	*    FIXED: Fix tests
+	*    FIXED: Fix typos
+	*    FIXED: Use more definitive edge case fix
+	*    UPDATED: Shorten hash function for compiling speed since we are hashing shorter strings
+	*    UPDATED: Update notes source text
+
+
 * 2019-12-11 - v 6.5.0:
 
 	*    ADDED: Add ASCII case detection

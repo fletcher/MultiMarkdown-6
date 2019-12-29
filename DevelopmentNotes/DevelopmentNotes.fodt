@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2018-09-01</meta:user-defined>
+	<meta:user-defined meta:name="date">2019-12-11</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -763,6 +763,396 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog</text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2019&#8211;12&#8211;28 - v 6.5.1:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Ensure use of bash for creating AllTests.c</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix array overflow with wide tables</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix edge case error in definition lists</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix edge case in block parsing</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix edge case in fenced code blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix error when pruning tokens</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix memory leak</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix metadata edge case</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix metadata parsing edge case</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix name mismatch of mmd6-default-metadata (Addresses #173)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix null dereference</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix tests</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix typos</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use more definitive edge case fix</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Shorten hash function for compiling speed since we are hashing shorter strings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Update notes source text</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">2019&#8211;12&#8211;11 - v 6.5.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add ASCII case detection</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add conversion from ITMZ routines</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add support for random header labels when not manually specified (Addresses #157)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add title as short caption for figures and tables to be used in list of figures and list of tables. Addresses #177 &#8211; thanks, <text:tab/>MArpogaus</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add {{TOC:1}} and {{TOC:1-2}} options</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Add byte for null terminator when extracting from zip archive</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Allow building libMMD has a child project for testing</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Clean up Quick Start guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Ensure newline at end of header contents when importing from OPML/ITMZ</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix CMake config for MacPorts (fixes #146)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix PATH in convenience scripts</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix bugs in new zip extraction code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix edge case with single item loose lists (fixes #174)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix filename</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix handling of hebrew language option</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix length of metadata if no trailing line ending</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix letterhead reference to memoir-footer. (Fixes #143)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix memory leak (#172) &#8211; thanks Alfons</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix pointer dereference (fixes #152)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential bug when reading OPML/ITMZ</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential errors related to checking for metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential issue in d_string</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix potential memory address error</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix prior bad edits to quick start guide</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix regression</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix test suite for new captions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix trim trailing whitespace</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix two small potential errors</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix warning</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix whitespace issues with headers with manual labels</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve BOM stripping</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve efficiency when checking for existence of metadata</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Include .html for EPUB and .fodt for ODT when transcluding with wildcard extension</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Prevent line breaks in HTML/ODF attributes</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Update Quick Start PDF</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Update README template</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Update re2c scanners and prevent crash on certain documents with unexpected encoding</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use C11 (had old C99 as well, but I suspect that wasn&#8217;t actually used</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Fixes to README</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge branch &#8216;develop&#8217; of github.com:fletcher/MultiMarkdown-6 into develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge branch &#8216;release/6.4.0&#8217; into develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #144 from cdhutch/patch-3</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #162 from DivineDominion/patch-1</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #167 from nickasd/develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Revert &#8220;remove build folder&#8221;</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add MARKUP token type</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add OPML routines to libMultiMarkdown.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Add UTF-8 validity check function</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Additional README comments about Xcode</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Apply astyle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Automatically disable libCurl on iOS</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Change convenience scripts for better POSIX compliance (implements #150) (Thanks, Ryan)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Don&#8217;t require opening &lt;?xml&gt; in OPML</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix doxygen template</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Fix main() when token pools disabled</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Make astyle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Refactor XML parsing; improve OPML reading; add ITMZ (iThoughts) reading/writing (experimental feature); a few other small tweaks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Refactor header file inclusion</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Remove debug statement</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Remove i386 build architecture from default configuration</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Remove some old debugging statements that aren&#8217;t necessary anymore</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Silence some Xcode warnings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Silence warnings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Tidy code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Tweak smart quote rules to avoid false positive matches when using double quote as inches mark</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update advanced headers test suite</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update astyle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update astyle settings</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update char.c</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update cmake for xcode 11</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update d_string</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update macOS deployment version to 10.6 for Mojave</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: reduce false-positive rate of metadata where first line contains colon but metadata is not intended</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: remove reliance on version.h when testing</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: table id attribute should be on table not caption</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Update mmd6-letterhead-leader.tex</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+add how to build Xcode framework to README</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+remove build folder</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">update README with instructions for Xcode</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2018&#8211;09&#8211;01 - v 6.4.0:</text:p>
 
