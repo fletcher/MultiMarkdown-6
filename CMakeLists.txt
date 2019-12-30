@@ -532,7 +532,8 @@ ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/token.h)
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/version.h)
 
 # Create a command-line app?
-# if (NOT DEFINED TEST)
+if(hasParent)
+else()
 	add_executable(multimarkdown
 		Sources/libMultiMarkdown/d_string.c
 		Sources/multimarkdown/main.c
@@ -541,15 +542,17 @@ ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/version.h)
 # 
 #	Link the library to the app?
 	target_link_libraries(multimarkdown libMultiMarkdown)
-# endif()
+
+	set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
+	set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
+	set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
+endif()
 
 # Xcode settings for fat binaries
 set_target_properties(libMultiMarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
-set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
 
 # Use C11
 set_property(TARGET libMultiMarkdown PROPERTY C_STANDARD 11)
-set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
 
 
 # ==========================
@@ -568,10 +571,13 @@ set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
 # install (FILES ${public_header_files} DESTINATION local/include/libFoo) 
 
 # Install MMD binary
-install (TARGETS multimarkdown
-	DESTINATION bin
-	COMPONENT application
-)
+if(hasParent)
+else()
+	install (TARGETS multimarkdown
+		DESTINATION bin
+		COMPONENT application
+	)
+endif()
 set (CPACK_COMPONENT_APPLICATION_DISPLAY_NAME "MultiMarkdown")
 set (CPACK_COMPONENT_APPLICATION_DESCRIPTION "Install the actual `multimarkdown` program.")
 
