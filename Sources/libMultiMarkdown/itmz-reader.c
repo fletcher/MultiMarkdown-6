@@ -382,5 +382,7 @@ void mmd_convert_itmz_string(mmd_engine * e, size_t start, size_t len) {
 		// Now convert mapdata.xml -> MMD text
 		token * chain = tokenize_itmz_string(e, 0, e->dstr->currentStringLength);
 		parse_itmz_token_chain(e, chain);
+	} else {
+		d_string_free(text, true);
 	}
 }
