@@ -416,7 +416,7 @@ if (APPLE)
 	if (DEFINED ZIP)
 		set (CPACK_GENERATOR ZIP)
 	else (DEFINED ZIP)
-		set (CPACK_GENERATOR PackageMaker)
+		set (CPACK_GENERATOR productbuild)
 	endif (DEFINED ZIP)
 
 endif (APPLE)
