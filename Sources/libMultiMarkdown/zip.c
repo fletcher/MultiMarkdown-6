@@ -196,17 +196,21 @@ mz_bool unzip_archive_to_path(mz_zip_archive * pZip, const char * path) {
 
 // Unzip archive (as plain binary data) to specified file path
 mz_bool unzip_data_to_path(const void * data, size_t size, const char * path) {
-	mz_zip_archive pZip;
-	memset(&pZip, 0, sizeof(mz_zip_archive));
+	mz_zip_archive * pZip = malloc(sizeof(mz_zip_archive));
+	memset(pZip, 0, sizeof(mz_zip_archive));
 
-	mz_bool status = mz_zip_reader_init_mem(&pZip, data, size, 0);
+	mz_bool status = mz_zip_reader_init_mem(pZip, data, size, 0);
 
 	if (!status) {
 		fprintf(stderr, "mz_zip_reader_init_mem() failed.\n");
+		mz_zip_reader_end(pZip);
 		return status;
 	}
 
-	return unzip_archive_to_path(&pZip, path);
+	status = unzip_archive_to_path(pZip, path);
+	mz_zip_reader_end(pZip);
+	free(pZip);
+	return status;
 }
 
 
@@ -247,22 +251,27 @@ mz_bool unzip_file_from_archive(mz_zip_archive * pZip, const char * filename, DS
 
 // Extract single file from archive
 mz_bool unzip_file_from_data(const void * data, size_t size, const char * filename, DString * destination) {
-	mz_zip_archive pZip;
-	memset(&pZip, 0, sizeof(mz_zip_archive));
+	mz_zip_archive * pZip = malloc(sizeof(mz_zip_archive));
+	memset(pZip, 0, sizeof(mz_zip_archive));
 
-	mz_bool status = mz_zip_reader_init_mem(&pZip, data, size, 0);
+	mz_bool status = mz_zip_reader_init_mem(pZip, data, size, 0);
 
 	if (!status) {
 		fprintf(stderr, "mz_zip_reader_init_mem() failed.\n");
+		mz_zip_reader_end(pZip);
 		return status;
 	}
 
-	status =  mz_zip_validate_archive(&pZip, 0);
+	status =  mz_zip_validate_archive(pZip, 0);
 
 	if (!status) {
 		fprintf(stderr, "mz_zip_validate_archive failed.\n");
+		mz_zip_reader_end(pZip);
 		return status;
 	}
 
-	return unzip_file_from_archive(&pZip, filename, destination);
+	status = unzip_file_from_archive(pZip, filename, destination);
+	mz_zip_reader_end(pZip);
+	free(pZip);
+	return status;
 }

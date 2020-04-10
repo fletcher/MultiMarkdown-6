@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2019-12-11  
+Date: 2020-04-10  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -471,6 +471,16 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2020-04-10 - v 6.5.2:
+
+	*    FIXED: Don't use undefined version string
+	*    FIXED: Fix memory leak in ITMZ reader
+	*    FIXED: Update cpack generator for macOS
+	*    Fix fsf address in files licenses.
+	*    Merge pull request #184 from LyesSaadi/develop
+	*    UPDATED: Adjust cmake to only make library when included from a parent project
+
 
 * 2019-12-28 - v 6.5.1:
 
