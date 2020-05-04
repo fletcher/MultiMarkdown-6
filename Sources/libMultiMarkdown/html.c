@@ -1775,6 +1775,7 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_HI:
+			stack_push(scratch->critic_stack, t);
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||
