@@ -452,6 +452,18 @@ bar</text:p></text:list-item>
 </text:list>
 
 <text:p text:style-name="Standard">bar</text:p>
+
+<text:list text:style-name="L2">
+<text:list-item>
+<text:p text:style-name="P1">
+foo</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">foo</text:p>
+
+<text:p text:style-name="Standard">bar</text:p></text:list-item>
+
+</text:list>
 </office:text>
 </office:body>
 </office:document>

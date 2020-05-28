@@ -1839,6 +1839,10 @@ void is_list_loose(token * list) {
 
 			walker = walker->next;
 		}
+
+		if (walker->child && walker->child->next && (walker->child->next->next != NULL)) {
+			loose = true;
+		}
 	}
 
 	if (loose) {
