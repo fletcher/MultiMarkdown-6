@@ -178,6 +178,7 @@ void mmd_transclude_source(DString * source, const char * search_path, const cha
 
 				switch (format) {
 					case FORMAT_HTML:
+					case FORMAT_HTML_WITH_ASSETS:
 					case FORMAT_EPUB:
 						d_string_append(file_path, ".html");
 						break;

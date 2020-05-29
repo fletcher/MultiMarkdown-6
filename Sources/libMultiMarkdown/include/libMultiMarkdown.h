@@ -572,6 +572,7 @@ enum output_format {
 	FORMAT_OPML,
 	FORMAT_ITMZ,
 	FORMAT_MMD,
+	FORMAT_HTML_WITH_ASSETS
 };
 
 
