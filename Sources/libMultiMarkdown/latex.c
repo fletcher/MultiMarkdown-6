@@ -337,11 +337,6 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 	char * width = NULL;
 	float temp_float;
 
-	// Compatibility mode doesn't allow figures
-	if (scratch->extensions & EXT_COMPATIBILITY) {
-		is_figure = false;
-	}
-
 	if (is_figure) {
 		print_const("\\begin{figure}[htbp]\n\\centering\n");
 		scratch->close_para = false;
