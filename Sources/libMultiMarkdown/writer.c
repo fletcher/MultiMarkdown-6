@@ -1926,6 +1926,10 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 
 			break;
 
+		case FORMAT_HTML_WITH_ASSETS:
+			scratch->remember_assets = true;
+			scratch->output_format = FORMAT_HTML;
+
 		case FORMAT_HTML:
 			if (scratch->extensions & EXT_COMPLETE) {
 				mmd_start_complete_html(out, e->dstr->str, scratch);
@@ -2704,6 +2708,7 @@ bool raw_filter_text_matches(char * pattern, short format) {
 	} else {
 		switch (format) {
 			case FORMAT_HTML:
+			case FORMAT_HTML_WITH_ASSETS:
 				if (strstr(pattern, "html")) {
 					return true;
 				}
