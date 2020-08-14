@@ -931,28 +931,47 @@ void deindent_block(mmd_engine * e, token * block) {
 }
 
 
+void prune_first_child_from_line(token * line) {
+	token * t = line->child;
+
+	if (t) {
+		line->child = t->next;
+		t->next = NULL;
+
+		if (line->child) {
+			line->child->prev = NULL;
+			line->child->tail = t->tail;
+		}
+
+		token_free(t);
+	}
+}
+
+
 /// Strip leading blockquote marker from line
 void strip_quote_markers_from_line(token * line, const char * source) {
 	if (!line || !line->child) {
 		return;
 	}
 
-	token * t;
+	token * t = NULL;
 
-	switch (line->child->type) {
-		case MARKER_BLOCKQUOTE:
-		case NON_INDENT_SPACE:
-			t = line->child;
-			line->child = t->next;
-			t->next = NULL;
+	while (t != line->child) {
+		t = line->child;
 
-			if (line->child) {
-				line->child->prev = NULL;
-				line->child->tail = t->tail;
-			}
+		switch (line->child->type) {
+			case TEXT_PLAIN:
+				if ((line->child->len == 1) && (source[line->child->start] == ' ')) {
+					prune_first_child_from_line(line);
+				}
 
-			token_free(t);
-			break;
+				break;
+
+			case MARKER_BLOCKQUOTE:
+			case NON_INDENT_SPACE:
+				prune_first_child_from_line(line);
+				break;
+		}
 	}
 
 	if (line->child && (line->child->type == TEXT_PLAIN)) {
