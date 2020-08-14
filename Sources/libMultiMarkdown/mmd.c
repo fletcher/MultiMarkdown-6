@@ -956,7 +956,7 @@ void strip_quote_markers_from_line(token * line, const char * source) {
 
 	token * t = NULL;
 
-	while (t != line->child) {
+	while (line->child && t != line->child) {
 		t = line->child;
 
 		switch (line->child->type) {
