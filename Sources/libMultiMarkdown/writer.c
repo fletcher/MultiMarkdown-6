@@ -862,24 +862,26 @@ void store_abbreviation(scratch_pad * scratch, footnote * f) {
 
 
 void link_free(link * l) {
-	free(l->label_text);
-	free(l->clean_text);
-	free(l->url);
-	free(l->title);
-//	free(l->id);
+	if (l) {
+		free(l->label_text);
+		free(l->clean_text);
+		free(l->url);
+		free(l->title);
+		//    free(l->id);
 
-	attr * a = l->attributes;
-	attr * b;
+		attr * a = l->attributes;
+		attr * b;
 
-	while (a) {
-		b = a->next;
-		free(a->key);
-		free(a->value);
-		free(a);
-		a = b;
+		while (a) {
+			b = a->next;
+			free(a->key);
+			free(a->value);
+			free(a);
+			a = b;
+		}
+
+		free(l);
 	}
-
-	free(l);
 }
 
 
@@ -1196,10 +1198,12 @@ void meta_set_value(meta * m, const char * value) {
 
 
 void meta_free(meta * m) {
-	free(m->key);
-	free(m->value);
+	if (m) {
+		free(m->key);
+		free(m->value);
 
-	free(m);
+		free(m);
+	}
 }
 
 
@@ -2669,9 +2673,9 @@ void asset_free(asset * a) {
 	if (a) {
 		free(a->url);
 		free(a->asset_path);
-	}
 
-	free(a);
+		free(a);
+	}
 }
 
 
