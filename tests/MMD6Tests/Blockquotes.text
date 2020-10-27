@@ -39,3 +39,13 @@ latexconfig:	article
  > 
  > bar
 
+> ```
+> *foo*
+> **bar**
+> ```
+
+> <pre>
+> <mark>Test</mark>
+> </pre>
+
+>	**foo**

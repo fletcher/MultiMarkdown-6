@@ -66,3 +66,14 @@ foo
 
 <p>bar</p>
 </blockquote>
+
+<blockquote>
+<p><code>*foo*
+**bar**</code></p>
+</blockquote>
+
+<blockquote>
+<pre>
+<mark>Test</mark>
+</pre>
+</blockquote>

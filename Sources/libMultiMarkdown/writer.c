@@ -370,10 +370,12 @@ void print_token_raw(DString * out, const char * source, token * t) {
 			case STRONG_START:
 			case STRONG_STOP:
 			case TEXT_EMPTY:
+			case MARKER_BLOCKQUOTE:
 				break;
 
 			case PAIR_EMPH:
 			case PAIR_STRONG:
+			case BLOCK_HTML:
 				print_token_tree_raw(out, source, t->child);
 				break;
 

@@ -2173,13 +2173,20 @@ handle_line:
 			case LINE_INDENTED_SPACE:
 
 				// Strip leading indent (Only the first one)
-				if (block->type != BLOCK_CODE_FENCED && l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
+				if (
+					(block->type != BLOCK_CODE_FENCED && block->type != BLOCK_HTML) &&
+					l->child &&
+					((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))
+				) {
 					token_remove_first_child(l);
 				}
 
 				// If we're not a code block, strip additional indents
-				if ((block->type != BLOCK_CODE_INDENTED) &&
-						(block->type != BLOCK_CODE_FENCED)) {
+				if (
+					(block->type != BLOCK_CODE_INDENTED) &&
+					(block->type != BLOCK_CODE_FENCED) &&
+					(block->type != BLOCK_HTML)
+				) {
 					while (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
 						token_remove_first_child(l);
 					}

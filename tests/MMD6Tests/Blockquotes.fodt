@@ -317,6 +317,10 @@ bar
 <text:p text:style-name="Quotations">foo</text:p>
 
 <text:p text:style-name="Quotations">bar</text:p>
+
+<text:p text:style-name="Preformatted Text">*foo*<text:line-break/>**bar**<text:line-break/></text:p>
+
+
 </office:text>
 </office:body>
 </office:document>
