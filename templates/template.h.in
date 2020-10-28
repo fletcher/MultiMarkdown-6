@@ -25,12 +25,5 @@
 #ifndef FILE_@My_Project_Title_Caps@_H
 #define FILE_@My_Project_Title_Caps@_H
 
-#ifdef TEST
-#include "CuTest.h"
-#endif
-
-
-/// This is a sample function with a doxygen description.
-// void void_f(void);
 
 #endif

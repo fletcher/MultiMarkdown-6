@@ -187,7 +187,7 @@ int main(int argc, char ** argv) {
 
 	// '--help' takes precedence
 	if (a_help->count > 0) {
-		printf("\n%s v%s -- %s\n\n", MULTIMARKDOWN_NAME, MULTIMARKDOWN_VERSION, MULTIMARKDOWN_COPYRIGHT);
+		printf("\n%s v%s -- %s\n\n", LIBMULTIMARKDOWN_NAME, LIBMULTIMARKDOWN_VERSION, LIBMULTIMARKDOWN_COPYRIGHT);
 		printf("\tUsage: %s", binname);
 		arg_print_syntax(stdout, argtable, "\n\n");
 		printf("Options:\n");
@@ -198,7 +198,7 @@ int main(int argc, char ** argv) {
 
 	if (nerrors > 0) {
 		// Report errors
-		arg_print_errors(stdout, a_end, MULTIMARKDOWN_NAME);
+		arg_print_errors(stdout, a_end, LIBMULTIMARKDOWN_NAME);
 		printf("Try '%s --help' for more information.\n", binname);
 		exitcode = 1;
 		goto exit2;
@@ -206,9 +206,9 @@ int main(int argc, char ** argv) {
 
 	// '--version' also takes precedence
 	if (a_version->count > 0) {
-		printf("\nMultiMarkdown 6 v%s\n", MULTIMARKDOWN_VERSION);
-		printf("%s\n\n", MULTIMARKDOWN_COPYRIGHT);
-		printf("%s\n", MULTIMARKDOWN_LICENSE);
+		printf("\nMultiMarkdown 6 v%s\n", LIBMULTIMARKDOWN_VERSION);
+		printf("%s\n\n", LIBMULTIMARKDOWN_COPYRIGHT);
+		printf("%s\n", LIBMULTIMARKDOWN_LICENSE);
 		printf("\n");
 		goto exit2;
 	}

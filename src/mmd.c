@@ -3081,7 +3081,7 @@ DString  * mmd_engine_convert_itmz_to_text(mmd_engine * e) {
 char * mmd_version(void) {
 	char * result = NULL;
 #ifndef TEST
-	result = my_strdup(MULTIMARKDOWN_VERSION);
+	result = my_strdup(LIBMULTIMARKDOWN_VERSION);
 #endif
 	return result;
 }

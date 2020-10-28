@@ -22,16 +22,19 @@
 */
 
 
+#include <stdlib.h>
+
 #include "file.h"
 
-static int void_function(void) {
-	return 0;
-}
 
 #ifdef TEST
-static void Test_void_function(CuTest* tc) {
-	int test = void_function();
+#include "CuTest.h"
+#endif
 
-	CuAssertIntEquals(tc, 0, test);
+
+#ifdef TEST
+// Remove static keyword to enable this test
+static void Test_void_function(CuTest* tc) {
+	CuAssertIntEquals(tc, 0, 0);
 }
 #endif

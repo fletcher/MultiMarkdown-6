@@ -22,7 +22,11 @@ DerivedData
 
 lemon/build
 
+build
+build-test
 build-xcode
+build-xcode-test
+
 build-xcode-debug
 
 test/parser_test.c
