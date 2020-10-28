@@ -764,6 +764,15 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 
 <text:list text:style-name="L1">
 <text:list-item>
+<text:p text:style-name="Standard">2020&#8211;10&#8211;28 - v 6.6.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">UPDATED: Restructure source code organization; Restructure Cmake configuration file; restructure Makefile</text:p></text:list-item>
+
+</text:list></text:list-item>
+
+<text:list-item>
 <text:p text:style-name="Standard">2020&#8211;10&#8211;28 - v 6.5.3:</text:p>
 
 <text:list text:style-name="L1">

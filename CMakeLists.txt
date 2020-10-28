@@ -1,144 +1,229 @@
-cmake_minimum_required (VERSION 2.6)
+#
+#	Boilerplate CMake configuration for a cross-platform library, 
+#	including configuration for a static framework on Xcode/macOS/iOS
+#
+#	Designed by Fletcher T. Penney
+#	See the LICENSE file for copyright and licensing information.
+#
+
+cmake_minimum_required(VERSION 2.6)
 
 
-# ==================
-# Define Our Project
-# ==================
+# ===================
+# Customize This Part
+# ===================
 
-set (My_Project_Title "MultiMarkdown")
+# Project Description
+
+set (My_Project_Title "libMultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
 set (My_Project_Revised_Date "2020-10-28")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 5)
-set (My_Project_Version_Patch 3)
-
-set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
+set (My_Project_Version_Minor 6)
+set (My_Project_Version_Patch 0)
 
 set (My_Project_Copyright_Date "2016 - 2020")
+
+set (My_Project_Identifier "net.fletcherpenney.multimarkdown")
+
+string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M")
+
+
+# Search for included files here
+include_directories( ${PROJECT_SOURCE_DIR}/src)
+
+
+# Source files and headers
+
+set(src_files
+	src/aho-corasick.c
+	src/beamer.c
+	src/char.c
+	src/critic_markup.c
+	src/d_string.c
+	src/epub.c
+	src/file.c
+	src/html.c
+	src/itmz.c
+	src/itmz-lexer.c
+	src/itmz-parser.c
+	src/itmz-reader.c
+	src/latex.c
+	src/lexer.c
+	src/memoir.c
+	src/miniz.c
+	src/mmd.c
+	src/object_pool.c
+	src/opendocument.c
+	src/opendocument-content.c
+	src/opml.c
+	src/opml-lexer.c
+	src/opml-parser.c
+	src/opml-reader.c
+	src/parser.c
+	src/rng.c
+	src/scanners.c
+	src/stack.c
+	src/textbundle.c
+	src/token.c
+	src/token_pairs.c
+	src/transclude.c
+	src/uuid.c
+	src/xml.c
+	src/writer.c
+	src/zip.c
+)
+
+set(public_headers
+	src/libMultiMarkdown.h
+	src/d_string.h
+	src/token.h
+)
+
+set(private_headers
+	src/aho-corasick.h
+	src/beamer.h
+	src/char.h
+	src/critic_markup.h
+	src/epub.h
+	src/file.h
+	src/html.h
+	src/itmz.h
+	src/itmz-lexer.h
+	src/itmz-parser.h
+	src/itmz-reader.h
+	src/latex.h
+	src/lexer.h
+	src/memoir.h
+	src/miniz.h
+	src/mmd.h
+	src/object_pool.h
+	src/opendocument.h
+	src/opendocument-content.h
+	src/opml.h
+	src/opml-lexer.h
+	src/opml-parser.h
+	src/opml-reader.h
+	src/scanners.h
+	src/stack.h
+	src/textbundle.c
+	src/token_pairs.h
+	src/transclude.h
+	src/uthash.h
+	src/uuid.h
+	src/xml.h
+	src/writer.h
+	src/zip.h
+)
+
+set(resources
+)
+
+set(main_storyboard
+)
+
+
+# Include other CMake projects?
+# add_subdirectory(submodules/foo)
+
+# Libraries for linking
+# on macOS can link to frameworks using: "-framework QuartzCore", for example
+set(libraries_to_link
+)
+
+# This is an ugly hack, but it seems to work.
+# When linking to a framework in Xcode, we need to be able to
+# search for public headers within that framework
+# "$SRCROOT/build-xcode/submodules/libFoo/$<CONFIG>/libFoo.framework/.."
+# 
+set(framework_search_paths
+)
+
+# Link to Cocoa Framework?
+# set (link_to_cocoa 1)
+
+# Enable ARC for Obj-C?
+# set (enable_arc 1)
+
+
+# =======================
+# Leave the rest alone...
+# =======================
+
+# Configuration
+
+set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 set (My_Project_Copyright "Copyright © ${My_Project_Copyright_Date} ${My_Project_Author}.")
 
 string(TOUPPER ${My_Project_Title} My_Project_Title_Caps  )
 string(REGEX REPLACE " " "_" My_Project_Title_Caps ${My_Project_Title_Caps} )
 
-project (${My_Project_Title})
+if (POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif (POLICY CMP0048)
+
+project (${My_Project_Title} VERSION "${My_Project_Version}")
 
 
-# Enable this if you want to be warned about struct alignment
-# add_definitions ("-Wpadded")
+# Search source directory
+include_directories(${PROJECT_SOURCE_DIR}/src)
+include_directories(${PROJECT_SOURCE_DIR}/test)
 
 
-# =========================
-# Build Submodules (if any)
-# =========================
-
-# add_subdirectory(submodules/foo)
-
-
-# =================
-# Configure Project
-# =================
-
-# Search for included files here
-include_directories( ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown)
-include_directories( ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/include)
-include_directories( ${PROJECT_SOURCE_DIR}/Sources/multimarkdown)
-include_directories( ${PROJECT_SOURCE_DIR}/test )
+# Search build directory (for version.h)
 include_directories(${PROJECT_BINARY_DIR})
 
-if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-	# using Clang
-	# Default is 256 -- needed for localization hash function
-	add_definitions("-fbracket-depth=264")	
-endif()
 
-set(CMAKE_SUPPRESS_REGENERATION 1)
+# Configure library/framework
 
+add_library("${My_Project_Title}"
+	STATIC
+	${src_files}
+	${private_headers}
+	${public_headers}
+	${resources}
+)
 
-# =================
-# Macro Definitions
-# =================
+string (REPLACE ";" " " framework_search_paths_string "${framework_search_paths}")
 
-MACRO(ADD_PUBLIC_HEADER target filename)
-	# Add filename to public_header_files list, flag it as 
-	# public header for libraries and OS X Frameworks
+set_target_properties("${My_Project_Title}"
+	PROPERTIES
+	PREFIX ""
+	FRAMEWORK_VERSION A
+	MACOSX_FRAMEWORK_IDENTIFIER "${My_Project_Identifier}"
+	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${My_Project_Identifier}"
+	XCODE_ATTRIBUTE_MARKETING_VERSION ${My_Project_Version}
+	RESOURCE "${resources}"
+	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
+	PUBLIC_HEADER "${public_headers}"
+	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
+)
 
-	# This will work for creating one library/framework with public headers
-	# per project. If you need more than one, you will need to customize
-	# the workflow as appropriate, since there is only one 
-	# public_header_files list.
+# Link to other libraries
+target_link_libraries("${My_Project_Title}"
+	${libraries_to_link}
+)
 
-	# This should only be run once per target
-	# SET_TARGET_PROPERTIES(${target} PROPERTIES PUBLIC_HEADER ${filename})
+# Link to Apple Cocoa Framework?
+if (link_to_cocoa)
+	target_link_libraries("${My_Project_Title}" "-framework Cocoa")
+endif (link_to_cocoa)
 
-	LIST(APPEND public_header_files ${filename})
-
-	SET_SOURCE_FILES_PROPERTIES(
-		${filename}
-		PROPERTIES
-		MACOSX_PACKAGE_LOCATION
-		include/\${PRODUCT_NAME}
+# Enable ARC
+if (enable_arc)
+	set_property (TARGET "${My_Project_Title}"
+		APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
 	)
+endif (enable_arc)
 
-	# Set Xcode project to configure public header location to allow
-	# use when this project is used in another workspace.
-	# NOTE: You must manually add a "Headers" build phase and add
-	# the desired public headers to that list for Xcode to use them.
-	#
-	# TODO: If anyone knows how to automate that in Cmake, I would be very
-	# grateful!!
-
-	SET_TARGET_PROPERTIES(${target} PROPERTIES
-		XCODE_ATTRIBUTE_PUBLIC_HEADERS_FOLDER_PATH
-		"include/$(TARGET_NAME)"
-	)
-
-	SET_TARGET_PROPERTIES(${target} PROPERTIES
-		XCODE_ATTRIBUTE_PRIVATE_HEADERS_FOLDER_PATH
-		"$(PUBLIC_HEADERS_FOLDER_PATH)/Private"
-	)
-	
-	# Set Xcode target to include settings for OS X and iOS
-	
-	SET_TARGET_PROPERTIES(${target} PROPERTIES
-		XCODE_ATTRIBUTE_SUPPORTED_PLATFORMS
-		"macosx iphonesimulator iphoneos"
-	)
-
-	SET_TARGET_PROPERTIES(${target} PROPERTIES
-		XCODE_ATTRIBUTE_VALID_ARCHITECTURES
-		"x86_64 armv6 armv7 armv7s arm64"
-	)
-
-ENDMACRO(ADD_PUBLIC_HEADER)
-
-
-# The target should be an OS X Bundle with a PList
-
-MACRO(MAKE_TARGET_BUNDLE targetname)
-
-	set_target_properties(
-		${targetname}
-		PROPERTIES
-		MACOSX_BUNDLE_INFO_PLIST
-		${PROJECT_SOURCE_DIR}/templates/plist.in
-	)
-
-ENDMACRO(MAKE_TARGET_BUNDLE)
-
-
-MACRO(ADD_LINKED_FRAMEWORK frame)
-
-	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGES} -framework ${frame}")
-
-ENDMACRO(ADD_LINKED_FRAMEWORK)
 
 
 # ======================
 # Process Template Files
 # ======================
 
-file(READ ${PROJECT_SOURCE_DIR}/LICENSE.txt My_Project_License)
+file(READ ${PROJECT_SOURCE_DIR}/LICENSE My_Project_License)
 
 string(REGEX REPLACE "\n" "\n\t" My_Project_License_Indented ${My_Project_License})
 
@@ -169,89 +254,113 @@ configure_file (
 )
 
 
-# ============
-# Source Files
-# ============
+# ===================================
+# Documentation Generation by doxygen
+# ===================================
 
-# src_files are the primary files, and will be included in doxygen documentation
-set(src_files
-	Sources/libMultiMarkdown/aho-corasick.c
-	Sources/libMultiMarkdown/beamer.c
-	Sources/libMultiMarkdown/char.c
-	Sources/libMultiMarkdown/critic_markup.c
-	Sources/libMultiMarkdown/d_string.c
-	Sources/libMultiMarkdown/epub.c
-	Sources/libMultiMarkdown/file.c
-	Sources/libMultiMarkdown/html.c
-	Sources/libMultiMarkdown/itmz.c
-	Sources/libMultiMarkdown/itmz-lexer.c
-	Sources/libMultiMarkdown/itmz-parser.c
-	Sources/libMultiMarkdown/itmz-reader.c
-	Sources/libMultiMarkdown/latex.c
-	Sources/libMultiMarkdown/lexer.c
-	Sources/libMultiMarkdown/memoir.c
-	Sources/libMultiMarkdown/miniz.c
-	Sources/libMultiMarkdown/mmd.c
-	Sources/libMultiMarkdown/object_pool.c
-	Sources/libMultiMarkdown/opendocument.c
-	Sources/libMultiMarkdown/opendocument-content.c
-	Sources/libMultiMarkdown/opml.c
-	Sources/libMultiMarkdown/opml-lexer.c
-	Sources/libMultiMarkdown/opml-parser.c
-	Sources/libMultiMarkdown/opml-reader.c
-	Sources/libMultiMarkdown/parser.c
-	Sources/libMultiMarkdown/rng.c
-	Sources/libMultiMarkdown/scanners.c
-	Sources/libMultiMarkdown/stack.c
-	Sources/libMultiMarkdown/textbundle.c
-	Sources/libMultiMarkdown/token.c
-	Sources/libMultiMarkdown/token_pairs.c
-	Sources/libMultiMarkdown/transclude.c
-	Sources/libMultiMarkdown/uuid.c
-	Sources/libMultiMarkdown/xml.c
-	Sources/libMultiMarkdown/writer.c
-	Sources/libMultiMarkdown/zip.c
+# Generate doxygen configuration file
+string(REPLACE ";" " " doxygen_src_files "${src_files}" )
+string(REPLACE ";" " " doxygen_header_files "${public_headers} {private_headers}" )
+
+configure_file (
+	"${PROJECT_SOURCE_DIR}/templates/doxygen.conf.in"
+	"${PROJECT_BINARY_DIR}/doxygen.conf"
 )
 
-# Primary header files, also for doxygen documentation
-set(header_files
-	Sources/libMultiMarkdown/aho-corasick.h
-	Sources/libMultiMarkdown/beamer.h
-	Sources/libMultiMarkdown/char.h
-	Sources/libMultiMarkdown/critic_markup.h
-	Sources/libMultiMarkdown/include/d_string.h
-	Sources/libMultiMarkdown/epub.h
-	Sources/libMultiMarkdown/file.h
-	Sources/libMultiMarkdown/html.h
-	Sources/libMultiMarkdown/itmz.h
-	Sources/libMultiMarkdown/itmz-lexer.h
-	Sources/libMultiMarkdown/itmz-parser.h
-	Sources/libMultiMarkdown/itmz-reader.h
-	Sources/libMultiMarkdown/latex.h
-	Sources/libMultiMarkdown/lexer.h
-	Sources/libMultiMarkdown/include/libMultiMarkdown.h
-	Sources/libMultiMarkdown/memoir.h
-	Sources/libMultiMarkdown/miniz.h
-	Sources/libMultiMarkdown/mmd.h
-	Sources/libMultiMarkdown/object_pool.h
-	Sources/libMultiMarkdown/opendocument.h
-	Sources/libMultiMarkdown/opendocument-content.h
-	Sources/libMultiMarkdown/opml.h
-	Sources/libMultiMarkdown/opml-lexer.h
-	Sources/libMultiMarkdown/opml-parser.h
-	Sources/libMultiMarkdown/opml-reader.h
-	Sources/libMultiMarkdown/scanners.h
-	Sources/libMultiMarkdown/stack.h
-	Sources/libMultiMarkdown/textbundle.c
-	Sources/libMultiMarkdown/include/token.h
-	Sources/libMultiMarkdown/token_pairs.h
-	Sources/libMultiMarkdown/transclude.h
-	Sources/libMultiMarkdown/uthash.h
-	Sources/libMultiMarkdown/uuid.h
-	Sources/libMultiMarkdown/xml.h
-	Sources/libMultiMarkdown/writer.h
-	Sources/libMultiMarkdown/zip.h
+
+# ===========================================
+# Build Test Suite with CuTest (unit testing)
+# ===========================================
+
+# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
+get_directory_property(hasParent PARENT_DIRECTORY)
+
+
+set(test_files
+	test/CuTest.c
+	test/CuTest.h
+	${PROJECT_BINARY_DIR}/AllTests.c
 )
+
+
+# Process source files to look for tests to run
+add_custom_command (
+	OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
+	COMMAND bash ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/src/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
+)
+
+
+if(hasParent)
+	# Don't create "run_tests" when we're a sub-project for something else
+else()
+	# Only create framework if we are the parent project
+	set_target_properties("${My_Project_Title}"
+		PROPERTIES
+		FRAMEWORK TRUE
+	)
+
+	if (DEFINED TEST)
+		add_definitions(-DTEST)
+
+		add_executable(run_tests
+			${src_files}
+			${private_headers}
+			${public_headers}
+			${test_files}
+		)
+
+		# Link to other libraries
+		target_link_libraries(run_tests
+			${libraries_to_link}
+		)
+
+		# Link to Apple Cocoa Framework?
+		if (link_to_cocoa)
+			target_link_libraries(run_tests "-framework Cocoa")
+		endif (link_to_cocoa)
+
+		# Enable ARC
+		if (enable_arc)
+			set_property (TARGET run_tests
+				APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc"
+			)
+		endif (enable_arc)
+
+		enable_testing()
+
+		add_test( test ${PROJECT_BINARY_DIR}/run_tests)
+
+		# valgrind memory testing
+	#	find_program (MEMORYCHECK_COMMAND valgrind)
+	#	SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
+	#
+	#	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
+
+	endif()
+endif()
+
+
+# Build MultiMarkdown app
+if (hasParent)
+else()
+	add_executable(multimarkdown
+		src/d_string.c
+
+		src/main.c
+		src/argtable3.c
+
+		${private_headers}
+		${public_headers}
+	)
+
+	target_link_libraries(multimarkdown "${My_Project_Title}")
+endif()
+
+
+# ==========================
+# Build Installer with CPack
+# ==========================
+
 
 if (WIN32)
 	set (scripts
@@ -327,339 +436,147 @@ set (latex
 	texmf/tex/latex/mmd6/tufte-handout/mmd6-tufte-handout-leader.tex
 )
 
-# Public headers, will be installed in 'include'
-# Do not manually add files here, use the ADD_PUBLIC_HEADER() macro
-set(public_header_files
-)
-
-# Utility source files will not be included in doxygen
-set(src_utility_files
-)
-
-set(header_utility_files
-	${PROJECT_BINARY_DIR}/version.h
-)
-
-# Generate doxygen configuration file
-string(REPLACE ";" " " doxygen_src_files "${src_files}" )
-string(REPLACE ";" " " doxygen_header_files "${header_files}" )
-
-configure_file (
-	"${PROJECT_SOURCE_DIR}/templates/doxygen.conf.in"
-	"${PROJECT_BINARY_DIR}/doxygen.conf"
-)
-
-
-# ===========================================
-# Build Test Suite with CuTest (unit testing)
-# ===========================================
-
-# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
-get_directory_property(hasParent PARENT_DIRECTORY)
-
-set(test_files
-	test/CuTest.c
-	test/CuTest.h
-	${PROJECT_BINARY_DIR}/AllTests.c
-)
-
-# Process source files to look for tests to run
-add_custom_command (
-	OUTPUT ${PROJECT_BINARY_DIR}/AllTests.c
-	COMMAND bash ${PROJECT_SOURCE_DIR}/test/make-tests.sh ${PROJECT_SOURCE_DIR}/Sources/libMultiMarkdown/*.c > ${PROJECT_BINARY_DIR}/AllTests.c
-)
-
-if(hasParent)
-	# Don't create "run_tests" when we're a sub-project for something else
-else()
-	if (DEFINED TEST)
-		add_definitions(-DTEST)
-
-		add_executable(run_tests
-			${test_files}
-			${src_files}
-			${header_files}
-			${src_utility_files}
-			${header_utility_files}
-		)
-
-		enable_testing()
-
-		add_test( test ${PROJECT_BINARY_DIR}/run_tests)
-
-		# valgrind memory testing
-	#	find_program (MEMORYCHECK_COMMAND valgrind)
-	#	SET (MEMORYCHECK_COMMAND_OPTIONS --leak-check=full --error-exitcode=1)
-	#
-	#	add_test( memory_test ${MEMORYCHECK_COMMAND} ${MEMORYCHECK_COMMAND_OPTIONS} ${PROJECT_BINARY_DIR}/run_tests)
-
-	endif()
-endif()
-
-
-# =======================
-# Configure for Target OS
-# =======================
-
-# OS X Builds
-if (APPLE)
-
-	# Configure backwards-compatible support (if your project allows it)
-	SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.6" CACHE STRING "Deployment target for OSX" FORCE)
-
-	# Compile for x86_64 and i386.  ppc no longer supported
-	if(CMAKE_BUILD_TYPE MATCHES "Release")
-		SET (CMAKE_OSX_ARCHITECTURES x86_64)
-	endif(CMAKE_BUILD_TYPE MATCHES "Release")
-
-	# Use PackageMaker for installers?
-	if (DEFINED ZIP)
-		set (CPACK_GENERATOR ZIP)
-	else (DEFINED ZIP)
-		set (CPACK_GENERATOR productbuild)
-	endif (DEFINED ZIP)
-
-endif (APPLE)
-
-# Windows Builds
-if (WIN32)
-
-	# Use NSIS to generate installers?
-	if (DEFINED ZIP)
-		set (CPACK_GENERATOR ZIP)
-	else (DEFINED ZIP)
-		set (CPACK_GENERATOR NSIS)
-	endif (DEFINED ZIP)
-
-# Linux Builds (not cross-compiling for Windows)
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-	# Create zip archive
-	set (CPACK_GENERATOR ZIP)
-
-	# Statically link libraries -- might make the binary slightly more
-	# compatible across Linux distributions, for example
-	#
-	# You may wish to disable this.
-	#
-	
-	# set (CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-	# set (BUILD_SHARED_LIBRARIES OFF)
-	# set (CMAKE_EXE_LINKER_FLAGS "-static")
-
-	# Some libraries need to be linked on some Linux builds
-	if (DEFINED TEST)
-		# target_link_libraries(run_tests m)
-	endif (DEFINED TEST)
-
-endif (WIN32)
-
-
-# ==============
-# Define targets
-# ==============
-
-# Is libcurl available?
-if (NOT DEFINED TEST)
-	find_package(CURL)
-	if (CURL_FOUND)
-		add_definitions(-DUSE_CURL)
-		message (STATUS "libcurl found")
-	else ()
-		message (STATUS "libcurl not found")
-	endif (CURL_FOUND)	
-endif ()
-
-# Create a library?
-if (NOT DEFINED TEST)
-	add_library(libMultiMarkdown STATIC
-		${src_files}
-		${src_utility_files}
-		${header_files}
-		${header_utility_files}
-	)
-else ()
-	add_library(libMultiMarkdown STATIC
-		${src_files}
-		${src_utility_files}
-		${header_files}
-		${header_utility_files}
-		${test_files}
-	)
-endif ()
-
-if (CURL_FOUND) 
-	target_link_libraries(libMultiMarkdown curl)
-endif (CURL_FOUND)	
-
-# Create a shared library if defined
-if (DEFINED SHAREDBUILD)
-
-	add_library(libMultiMarkdownShared SHARED
-		${src_files}
-		${src_utility_files}
-		${header_files}
-		${header_utility_files}
-	)
-
-	# Shared libraries require position independent code
-	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES POSITION_INDEPENDENT_CODE 1)
-
-	# Remove the extra "lib" from "liblibMultiMarkdown"
-	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES PREFIX "")
-
-	# Remove "Shared" from library name
-	SET_TARGET_PROPERTIES(libMultiMarkdownShared PROPERTIES OUTPUT_NAME libMultiMarkdown)
-
-	if (CURL_FOUND) 
-		target_link_libraries(libMultiMarkdown ${CURL_LIBRARY})
-	endif (CURL_FOUND)	
-
-endif (DEFINED SHAREDBUILD)
-
-# remove the extra "lib" from "liblibFOO"
-SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
-	PREFIX ""
-	FRAMEWORK TRUE
-	FRAMEWORK_VERSION A
-	MACOSX_FRAMEWORK_IDENTIFIER net.multimarkdown.mmd6
-	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "net.multimarkdown.mmd6"
-	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
-)
-
-ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)
-ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/d_string.h)
-ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/token.h)
-ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/version.h)
-
-# Create a command-line app?
-if(hasParent)
-else()
-	add_executable(multimarkdown
-		Sources/libMultiMarkdown/d_string.c
-		Sources/multimarkdown/main.c
-		Sources/multimarkdown/argtable3.c
-	)
-# 
-#	Link the library to the app?
-	target_link_libraries(multimarkdown libMultiMarkdown)
-
-	set_target_properties(multimarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
-	set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
-	set_property(TARGET multimarkdown PROPERTY C_STANDARD 11)
-endif()
-
-# Xcode settings for fat binaries
-set_target_properties(libMultiMarkdown PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "NO")
-
-# Use C11
-set_property(TARGET libMultiMarkdown PROPERTY C_STANDARD 11)
-
-
-# ==========================
-# Build Installer with CPack
-# ==========================
-
-# You're largely on your own here
-
-# install (FILES ${CMAKE_CURRENT_LIST_DIR}/README.md ${PROJECT_SOURCE_DIR}/LICENSE.txt
-# 	DESTINATION .
-# )
-
-# Use something like this to install public header files (after adding them
-# with the ADD_PUBLIC_HEADER() macro)
-
-# install (FILES ${public_header_files} DESTINATION local/include/libFoo) 
-
-# Install MMD binary
-if(hasParent)
-else()
-	install (TARGETS multimarkdown
-		DESTINATION bin
-		COMPONENT application
-	)
-endif()
-set (CPACK_COMPONENT_APPLICATION_DISPLAY_NAME "MultiMarkdown")
-set (CPACK_COMPONENT_APPLICATION_DESCRIPTION "Install the actual `multimarkdown` program.")
-
-
-# Install utility scripts
-install (FILES ${scripts}
-	DESTINATION bin
-	COMPONENT scripts
-	PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-)
-set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
-set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
-
-# Install Shared Library?
-if (DEFINED SHAREDBUILD)
-	install (TARGETS libMultiMarkdownShared
-		ARCHIVE DESTINATION lib
-		LIBRARY DESTINATION lib
-		COMPONENT sharedlib
-	)
-
-	install (FILES ${public_header_files}
-		DESTINATION include/multimarkdown
-		COMPONENT sharedlib
-	)
-
-	set (CPACK_COMPONENT_SHAREDLIB_DISPLAY_NAME "Shared Library")
-	set (CPACK_COMPONENT_SHAREDLIB_DESCRIPTION "MultiMarkdown shared library for use with third party software.")
-
-	set (CPACK_COMPONENTS_ALL application scripts sharedlib)
-
-	set (CPACK_COMPONENT_SHAREDLIB_GROUP "MultiMarkdown")
-endif (DEFINED SHAREDBUILD)
-
-# Install LaTeX support files
-install (FILES ${latex}
-	DESTINATION share/texmf/tex/latex/mmd6
-	COMPONENT latex
-	PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
-)
-set (CPACK_COMPONENT_LATEX_DISPLAY_NAME "LaTeX support files")
-set (CPACK_COMPONENT_LATEX_DESCRIPTION "Install configuration files for MultiMarkdown-based LaTex configurations.")
-
-
-# Which groups should be installed?
-set (CPACK_COMPONENTS_ALL application scripts latex)
 
 set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "${My_Project_Description}")
-set (CPACK_PACKAGE_VENDOR "fletcherpenney.net")
 set (CPACK_PACKAGE_VERSION "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 set (CPACK_PACKAGE_VERSION_MAJOR "${My_Project_Version_Major}")
 set (CPACK_PACKAGE_VERSION_MINOR "${My_Project_Version_Minor}")
 set (CPACK_PACKAGE_VERSION_PATCH "My_Project_Version_Patch")
 
-set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
+configure_file (
+	"${PROJECT_SOURCE_DIR}/LICENSE"
+	"${PROJECT_BINARY_DIR}/LICENSE.txt"
+)
+configure_file (
+	"${PROJECT_SOURCE_DIR}/README.md"
+	"${PROJECT_BINARY_DIR}/README.txt"
+)
 
-if (APPLE)
-	set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-Mac-${CPACK_PACKAGE_VERSION}")
-else (APPLE)
-	set (CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CMAKE_SYSTEM_NAME}-${CPACK_PACKAGE_VERSION}")
-endif (APPLE)
-
-# Use some default install locations (if appropriate)
-set(CPACK_SET_DESTDIR true)
-if (WIN32)
-	set (CPACK_INSTALL_PREFIX "")
-	set (CPACK_NSIS_MODIFY_PATH ON)
-else (WIN32)
-	set (CPACK_INSTALL_PREFIX /usr/local)
-endif (WIN32)
-
-set (CPACK_PACKAGE_INSTALL_DIRECTORY ${PROJECT})
-
-set (CPACK_PACKAGE_CONTACT "fletcher@fletcherpenney.net")
-
-include (CPack)
+set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_BINARY_DIR}/LICENSE.txt")
+set (CPACK_RESOURCE_FILE_README "${PROJECT_BINARY_DIR}/README.txt")
 
 
-# ======================
-# Integration Test Suite
-# ======================
+if(hasParent)
+else (hasParent)
+	if (DEFINED TEST)
+		# Don't install the test suite
+	else()
+		if (APPLE)
+			# Apple Builds
+
+			if (DEFINED ZIP)
+				set (CPACK_GENERATOR ZIP)
+			else (DEFINED ZIP)
+				set (CPACK_GENERATOR productbuild)
+			endif (DEFINED ZIP)
+		else (APPLE)
+			if (WIN32)
+				# Windows Builds
+
+				if (DEFINED ZIP)
+					set (CPACK_GENERATOR ZIP)
+				else (DEFINED ZIP)
+					set (CPACK_GENERATOR NSIS)
+				endif (DEFINED ZIP)
+			elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+				# Linux
+				set (CPACK_GENERATOR ZIP)
+			endif (WIN32)
+		endif (APPLE)
+
+		# Install Target
+		install (TARGETS multimarkdown
+			DESTINATION bin
+			COMPONENT MAIN
+		)
+		set (CPACK_COMPONENT_MAIN_DISPLAY_NAME "MultiMarkdown")
+		set (CPACK_COMPONENT_MAIN_DESCRIPTION "Install the actual `multimarkdown` program.")
+
+		# Install utility scripts
+		install (FILES ${scripts}
+			DESTINATION bin
+			COMPONENT scripts
+			PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+		)
+		set (CPACK_COMPONENT_SCRIPTS_DISPLAY_NAME "Convenience scripts")
+		set (CPACK_COMPONENT_SCRIPTS_DESCRIPTION "Install convenience scripts for common MultiMarkdown shortcuts, e.g. `mmd`, `mmd2tex`, etc.")
+
+		# Install Shared Library?
+		if (DEFINED SHAREDBUILD)
+			install (TARGETS "${My_Project_Title}"
+				ARCHIVE DESTINATION lib
+				FRAMEWORK DESTINATION lib
+				LIBRARY DESTINATION lib
+				COMPONENT sharedlib
+			)
+
+			if (public_headers)
+				# Install Headers
+				install(FILES
+					${public_headers}
+					DESTINATION include/${My_Project_Title}
+					COMPONENT sharedlib
+				)
+				set (CPACK_COMPONENT_SHAREDLIB_DISPLAY_NAME "Shared Library")
+				set (CPACK_COMPONENT_SHAREDLIB_DESCRIPTION "MultiMarkdown shared library for use with third party software.")
+
+				set (CPACK_COMPONENTS_ALL MAIN scripts sharedlib)
+				set (CPACK_COMPONENT_SHAREDLIB_GROUP "libMultiMarkdown")
+			else (public_headers)
+				set (CPACK_COMPONENTS_ALL Main)
+			endif (public_headers)
+		endif (DEFINED SHAREDBUILD)
+
+		# Install Documentation
+		install(FILES
+			"${PROJECT_BINARY_DIR}/LICENSE.txt"
+			"${PROJECT_BINARY_DIR}/README.txt"
+			COMPONENT Docs
+			DESTINATION .
+		)
+		set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "Documentation")
+		set (CPACK_COMPONENT_DOCS_DESCRIPTION "Install README and LICENSE.")
+
+		# Install LaTeX support files
+		install (FILES ${latex}
+			DESTINATION share/texmf/tex/latex/mmd6
+			COMPONENT latex
+			PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ
+		)
+		set (CPACK_COMPONENT_LATEX_DISPLAY_NAME "LaTeX support files")
+		set (CPACK_COMPONENT_LATEX_DESCRIPTION "Install configuration files for MultiMarkdown-based LaTex configurations.")
+
+		# Rename package
+		if (APPLE)
+			set (CPACK_PACKAGE_FILE_NAME "MultiMarkdown-Mac-${CPACK_PACKAGE_VERSION}")
+		else (APPLE)
+			set (CPACK_PACKAGE_FILE_NAME "MultiMarkdown-${CMAKE_SYSTEM_NAME}-${CPACK_PACKAGE_VERSION}")
+		endif (APPLE)
+
+		# Use default install locations (if appropriate)
+		# TODO: This may need tweaking
+		if (WIN32)
+			set (CPACK_INSTALL_PREFIX "")
+			set (CPACK_NSIS_MODIFY_PATH ON)
+			if (ZIP)
+					set(CPACK_SET_DESTDIR true)
+			endif (ZIP)
+		else (WIN32)
+			set(CPACK_SET_DESTDIR true)
+			set (CPACK_INSTALL_PREFIX /usr/local)
+		endif (WIN32)
+
+		set (CPACK_PACKAGE_CONTACT "fletcher@fletcherpenney.net")
+
+	endif (DEFINED TEST)
+endif (hasParent)
+
+include(CPack)
+
+
+# =====================================
+# MultiMarkdown Integration Test Suite
+# =====================================
 
 enable_testing()
 
