@@ -4,7 +4,7 @@
 | ---------- | ------------------------- |  
 | Title:     | libMultiMarkdown        |  
 | Author:    | Fletcher T. Penney       |  
-| Date:      | 2020-10-27 |  
+| Date:      | 2020-10-28 |  
 | Copyright: | Copyright © 2016 - 2020 Fletcher T. Penney.    |  
 | Version:   | 6.6.0      |  
 
