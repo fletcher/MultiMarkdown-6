@@ -472,6 +472,11 @@ TextBundle/TextPack, OpenDocument, etc.
 
 # Changelog #
 
+* 2020-10-28 - v 6.6.0:
+
+	*    UPDATED: Restructure source code organization; Restructure Cmake configuration file; restructure Makefile
+
+
 * 2020-10-28 - v 6.5.3:
 
 	*    ADDED: Add additional blockquote tests
