@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2020-04-10  
+Date: 2020-10-28  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -471,6 +471,24 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2020-10-28 - v 6.5.3:
+
+	*    ADDED: Add additional blockquote tests
+	*    ADDED: Add format to create HTML with storing of assets
+	*    FIXED: Add latex footer to beamer output format (fixes #185)
+	*    FIXED: Allow hyphen in image/link unquoted attributes
+	*    FIXED: Don't free NULL link
+	*    FIXED: Fix CMake issue
+	*    FIXED: Fix issue when parsing blockquote that contains raw HTML
+	*    FIXED: Fix issue with tight list where last item has multiple paragraphs not being recognized as a loose list
+	*    FIXED: Fix regression
+	*    FIXED: Fix test suite
+	*    FIXED: Improve blockquote parser
+	*    FIXED: Prevent iOS Safari from bastardizing left arrow unicode character with an ugly emoji
+	*    FIXED: tweak CriticMarkup highlight handling
+	*    Merge branch 'develop' of github.com:fletcher/MultiMarkdown-6 into develop
+
 
 * 2020-04-10 - v 6.5.2:
 
