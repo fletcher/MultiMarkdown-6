@@ -823,7 +823,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#cnref:%d\" title=\"%s\" class=\"reversecitation\">&#160;&#8617;</a>", scratch->citation_being_printed, LC("return to body"));
+					printf(" <a href=\"#cnref:%d\" title=\"%s\" class=\"reversecitation\">&#160;&#8617;&#xfe0e;</a>", scratch->citation_being_printed, LC("return to body"));
 				}
 			}
 
@@ -838,7 +838,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						temp_short = rand() % 32000 + 1;
 					}
 
-					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;</a>", temp_short, LC("return to body"));
+					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;&#xfe0e;</a>", temp_short, LC("return to body"));
 				}
 			}
 
@@ -846,7 +846,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#gnref:%d\" title=\"%s\" class=\"reverseglossary\">&#160;&#8617;</a>", scratch->glossary_being_printed, LC("return to body"));
+					printf(" <a href=\"#gnref:%d\" title=\"%s\" class=\"reverseglossary\">&#160;&#8617;&#xfe0e;</a>", scratch->glossary_being_printed, LC("return to body"));
 				}
 			}
 
@@ -1775,6 +1775,7 @@ parse_citation:
 			break;
 
 		case PAIR_CRITIC_HI:
+			stack_push(scratch->critic_stack, t);
 
 			// Ignore if we're rejecting or accepting
 			if ((scratch->extensions & EXT_CRITIC_REJECT) ||

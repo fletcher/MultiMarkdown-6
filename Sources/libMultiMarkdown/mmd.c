@@ -931,28 +931,47 @@ void deindent_block(mmd_engine * e, token * block) {
 }
 
 
+void prune_first_child_from_line(token * line) {
+	token * t = line->child;
+
+	if (t) {
+		line->child = t->next;
+		t->next = NULL;
+
+		if (line->child) {
+			line->child->prev = NULL;
+			line->child->tail = t->tail;
+		}
+
+		token_free(t);
+	}
+}
+
+
 /// Strip leading blockquote marker from line
 void strip_quote_markers_from_line(token * line, const char * source) {
 	if (!line || !line->child) {
 		return;
 	}
 
-	token * t;
+	token * t = NULL;
 
-	switch (line->child->type) {
-		case MARKER_BLOCKQUOTE:
-		case NON_INDENT_SPACE:
-			t = line->child;
-			line->child = t->next;
-			t->next = NULL;
+	while (line->child && t != line->child) {
+		t = line->child;
 
-			if (line->child) {
-				line->child->prev = NULL;
-				line->child->tail = t->tail;
-			}
+		switch (line->child->type) {
+			case TEXT_PLAIN:
+				if ((line->child->len == 1) && (source[line->child->start] == ' ')) {
+					prune_first_child_from_line(line);
+				}
 
-			token_free(t);
-			break;
+				break;
+
+			case MARKER_BLOCKQUOTE:
+			case NON_INDENT_SPACE:
+				prune_first_child_from_line(line);
+				break;
+		}
 	}
 
 	if (line->child && (line->child->type == TEXT_PLAIN)) {
@@ -1839,6 +1858,10 @@ void is_list_loose(token * list) {
 
 			walker = walker->next;
 		}
+
+		if (walker->child && walker->child->next && (walker->child->next->next != NULL)) {
+			loose = true;
+		}
 	}
 
 	if (loose) {
@@ -2150,13 +2173,20 @@ handle_line:
 			case LINE_INDENTED_SPACE:
 
 				// Strip leading indent (Only the first one)
-				if (block->type != BLOCK_CODE_FENCED && l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
+				if (
+					(block->type != BLOCK_CODE_FENCED && block->type != BLOCK_HTML) &&
+					l->child &&
+					((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))
+				) {
 					token_remove_first_child(l);
 				}
 
 				// If we're not a code block, strip additional indents
-				if ((block->type != BLOCK_CODE_INDENTED) &&
-						(block->type != BLOCK_CODE_FENCED)) {
+				if (
+					(block->type != BLOCK_CODE_INDENTED) &&
+					(block->type != BLOCK_CODE_FENCED) &&
+					(block->type != BLOCK_HTML)
+				) {
 					while (l->child && ((l->child->type == INDENT_SPACE) || (l->child->type == INDENT_TAB))) {
 						token_remove_first_child(l);
 					}

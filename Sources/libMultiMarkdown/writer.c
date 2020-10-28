@@ -370,10 +370,12 @@ void print_token_raw(DString * out, const char * source, token * t) {
 			case STRONG_START:
 			case STRONG_STOP:
 			case TEXT_EMPTY:
+			case MARKER_BLOCKQUOTE:
 				break;
 
 			case PAIR_EMPH:
 			case PAIR_STRONG:
+			case BLOCK_HTML:
 				print_token_tree_raw(out, source, t->child);
 				break;
 
@@ -862,24 +864,26 @@ void store_abbreviation(scratch_pad * scratch, footnote * f) {
 
 
 void link_free(link * l) {
-	free(l->label_text);
-	free(l->clean_text);
-	free(l->url);
-	free(l->title);
-//	free(l->id);
+	if (l) {
+		free(l->label_text);
+		free(l->clean_text);
+		free(l->url);
+		free(l->title);
+		//    free(l->id);
 
-	attr * a = l->attributes;
-	attr * b;
+		attr * a = l->attributes;
+		attr * b;
 
-	while (a) {
-		b = a->next;
-		free(a->key);
-		free(a->value);
-		free(a);
-		a = b;
+		while (a) {
+			b = a->next;
+			free(a->key);
+			free(a->value);
+			free(a);
+			a = b;
+		}
+
+		free(l);
 	}
-
-	free(l);
 }
 
 
@@ -1196,10 +1200,12 @@ void meta_set_value(meta * m, const char * value) {
 
 
 void meta_free(meta * m) {
-	free(m->key);
-	free(m->value);
+	if (m) {
+		free(m->key);
+		free(m->value);
 
-	free(m);
+		free(m);
+	}
 }
 
 
@@ -1925,6 +1931,10 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 			mmd_end_complete_html(out, e->dstr->str, scratch);
 
 			break;
+
+		case FORMAT_HTML_WITH_ASSETS:
+			scratch->remember_assets = true;
+			scratch->output_format = FORMAT_HTML;
 
 		case FORMAT_HTML:
 			if (scratch->extensions & EXT_COMPLETE) {
@@ -2665,9 +2675,9 @@ void asset_free(asset * a) {
 	if (a) {
 		free(a->url);
 		free(a->asset_path);
-	}
 
-	free(a);
+		free(a);
+	}
 }
 
 
@@ -2704,6 +2714,7 @@ bool raw_filter_text_matches(char * pattern, short format) {
 	} else {
 		switch (format) {
 			case FORMAT_HTML:
+			case FORMAT_HTML_WITH_ASSETS:
 				if (strstr(pattern, "html")) {
 					return true;
 				}

@@ -79,7 +79,7 @@
 	quoted_d	= '"' [^"\n\r\x00]* '"';
 	quoted_s	= "'" [^'\n\r\x00]* "'";
 	quoted_p	= "(" [^)\n\r\x00]* ")";
-	unquoted	= [\.A-Za-z0-9]+;
+	unquoted	= [\.A-Za-z0-9\-]+;
 
 
 	// IMPORTANT NOTE FOR DEVELOPERS!!

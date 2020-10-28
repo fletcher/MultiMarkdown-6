@@ -8,10 +8,10 @@ cmake_minimum_required (VERSION 2.6)
 set (My_Project_Title "MultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2020-04-10")
+set (My_Project_Revised_Date "2020-10-28")
 set (My_Project_Version_Major 6)
 set (My_Project_Version_Minor 5)
-set (My_Project_Version_Patch 2)
+set (My_Project_Version_Patch 3)
 
 set (My_Project_Version "${My_Project_Version_Major}.${My_Project_Version_Minor}.${My_Project_Version_Patch}")
 
@@ -524,6 +524,7 @@ SET_TARGET_PROPERTIES(libMultiMarkdown PROPERTIES
 	FRAMEWORK_VERSION A
 	MACOSX_FRAMEWORK_IDENTIFIER net.multimarkdown.mmd6
 	XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "net.multimarkdown.mmd6"
+	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
 )
 
 ADD_PUBLIC_HEADER(libMultiMarkdown Sources/libMultiMarkdown/include/libMultiMarkdown.h)

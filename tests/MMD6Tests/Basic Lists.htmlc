@@ -103,3 +103,10 @@ bar</li>
 </ol>
 
 <p>bar</p>
+
+<ol>
+<li><p>foo</p></li>
+<li><p>foo</p>
+
+<p>bar</p></li>
+</ol>

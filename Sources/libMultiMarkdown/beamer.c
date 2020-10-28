@@ -369,6 +369,12 @@ void mmd_end_complete_beamer(DString * out, const char * source, scratch_pad * s
 
 	if (m) {
 		printf("\\input{%s}\n\n", m->value);
+	} else {
+		m = extract_meta_from_stack(scratch, "latexconfig");
+
+		if (m) {
+			printf("\\input{mmd6-%s-footer}\n", m->value);
+		}
 	}
 
 	print_const("\\end{document}");
