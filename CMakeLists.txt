@@ -532,7 +532,7 @@ else (hasParent)
 			"${PROJECT_BINARY_DIR}/LICENSE.txt"
 			"${PROJECT_BINARY_DIR}/README.txt"
 			COMPONENT Docs
-			DESTINATION .
+			DESTINATION share/doc/MultiMarkdown
 		)
 		set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "Documentation")
 		set (CPACK_COMPONENT_DOCS_DESCRIPTION "Install README and LICENSE.")
