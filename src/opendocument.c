@@ -876,7 +876,13 @@ char * opendocument_content_file(const char * body, int format) {
 	print_const("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 	print_const("<office:document-content ");
 	opendocument_document_attr(out);
-	print_const(">\n<office:body>\n");
+	print_const(">\n");
+
+	char * style = opendocument_style(format);
+	d_string_append(out, style);
+	free(style);
+
+	print_const("<office:body>\n");
 
 	switch (format) {
 		case FORMAT_ODT:
