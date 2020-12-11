@@ -58,7 +58,8 @@
 #define TOKEN_PARSER_TEMPLATE_H
 
 
-#define kUseObjectPool 1		//!< Use an object pool to allocate tokens to improve
+#define kUseObjectPool 1
+//!< Use an object pool to allocate tokens to improve
 //!< performance in memory allocation. Frees all
 //!< tokens at once, however, at end of parsing.
 
