@@ -6,7 +6,7 @@
 #	See the LICENSE file for copyright and licensing information.
 #
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.9)
 
 
 # ===================
@@ -165,6 +165,19 @@ endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
 
+# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
+get_directory_property(hasParent PARENT_DIRECTORY)
+
+if (hasParent)
+else()
+	# If building the framework independently, we canset a deployment target
+	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
+
+	if (CMAKE_GENERATOR MATCHES "Xcode")
+		set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+	endif()
+endif()
+
 
 # Search source directory
 include_directories(${PROJECT_SOURCE_DIR}/src)
@@ -199,6 +212,18 @@ set_target_properties("${My_Project_Title}"
 	PUBLIC_HEADER "${public_headers}"
 	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
 )
+
+if (hasParent)
+else()
+	set_target_properties("${My_Project_Title}"
+		PROPERTIES
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+		XCODE_LINK_BUILD_PHASE_MODE "KNOWN_LOCATION"
+	)
+endif()
 
 # Link to other libraries
 target_link_libraries("${My_Project_Title}"
@@ -271,10 +296,6 @@ configure_file (
 # ===========================================
 # Build Test Suite with CuTest (unit testing)
 # ===========================================
-
-# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
-get_directory_property(hasParent PARENT_DIRECTORY)
-
 
 set(test_files
 	test/CuTest.c
