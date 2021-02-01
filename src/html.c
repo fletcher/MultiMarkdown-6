@@ -514,9 +514,11 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 void mmd_export_toc_html(DString * out, const char * source, scratch_pad * scratch, short min, short max) {
 	size_t counter = 0;
 
+	int old_label_counter = scratch->label_counter;
+
 	mmd_export_toc_entry_html(out, source, scratch, &counter, 0, min, max);
 
-	scratch->label_counter = 0;
+	scratch->label_counter = old_label_counter;
 }
 
 
