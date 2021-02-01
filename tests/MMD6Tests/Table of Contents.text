@@ -25,6 +25,8 @@ foo {{TOC:2-3}}
 
 ## Second Level ##
 
+{{TOC}}
+
 # First Level #
 
 ## Second Level b ##
@@ -42,6 +44,8 @@ foo {{TOC:2-3}}
 ### Third level d ##
 
 #### Fourth level d ####
+
+{{TOC}}
 
 # First level [First Level e] #
 
