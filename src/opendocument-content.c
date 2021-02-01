@@ -687,7 +687,7 @@ void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad
 	size_t counter = 0;
 
 	int old_label_counter = scratch->label_counter;
-	
+
 	// TODO: Could use LC to internationalize this
 	print_const("<text:table-of-content text:style-name=\"Sect1\" text:protected=\"true\" text:name=\"Table of Contents1\">\n");
 	print_const("<text:table-of-content-source text:outline-level=\"10\">\n");
