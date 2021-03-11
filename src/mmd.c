@@ -1321,6 +1321,10 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
 			case BLOCK_DEF_ABBREVIATION:
+			case BLOCK_DEF_CITATION:
+			case BLOCK_DEF_FOOTNOTE:
+			case BLOCK_DEF_GLOSSARY:
+			case BLOCK_DEF_LINK:
 			case BLOCK_DEFLIST:
 			case BLOCK_DEFINITION:
 			case BLOCK_H1:
