@@ -28,8 +28,8 @@
 --lineend=linux
 
 
-# Add brackets to one-liners
---add-brackets
+# Add braces to one-liners
+--add-braces
 
 
 # Pad with blank lines
@@ -37,8 +37,13 @@
 
 
 # Pad with spaces
+--pad-comma
 --pad-oper
 --pad-header
+--pad-method-prefix
+--pad-method-colon=none
+--pad-return-type
+--unpad-param-type
 
 
 # Pointers/References
@@ -51,16 +56,6 @@
 
 
 # Excludes
---exclude="Sources/libMultiMarkdown/scanners.c"
---exclude="Sources/libMultiMarkdown/parser.c"
---exclude="Sources/libMultiMarkdown/lexer.c"
-
---exclude="Sources/libMultiMarkdown/i18n.h"
---exclude="Sources/libMultiMarkdown/miniz.c"
---exclude="Sources/libMultiMarkdown/miniz.h"
---exclude="Sources/libMultiMarkdown/uthash.h"
-
---exclude="Sources/multimarkdown/argtable3.c"
---exclude="Sources/multimarkdown/argtable3.h"
 
 --ignore-exclude-errors
+
