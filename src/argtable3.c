@@ -4650,6 +4650,8 @@ int arg_parse(int argc, char * *argv, void * *argtable) {
  * of chars.
  * Does not append more than *pndest chars into *pdest[]
  * so as to prevent buffer overruns.
+ * Requires *pndest > 0 and then keeps *pndest > 0
+ * to account for the terminating '\0' that is always written.
  * Its something like strncat() but more efficient for repeated
  * calls on the same destination string.
  * Example of use:
@@ -4666,7 +4668,7 @@ int arg_parse(int argc, char * *argv, void * *argtable) {
 static
 void arg_cat(char * *pdest, const char * src, size_t * pndest) {
 	char * dest = *pdest;
-	char * end  = dest + *pndest;
+	char * end  = dest + *pndest - 1;
 
 	/*locate null terminator of dest string */
 	while (dest < end && *dest != 0) {
@@ -4682,7 +4684,7 @@ void arg_cat(char * *pdest, const char * src, size_t * pndest) {
 	*dest = 0;
 
 	/* update *pdest and *pndest */
-	*pndest = end - dest;
+	*pndest = end - dest + 1;
 	*pdest  = dest;
 }
 
