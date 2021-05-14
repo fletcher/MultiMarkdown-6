@@ -228,6 +228,7 @@ endif()
 # Link to other libraries
 target_link_libraries("${My_Project_Title}"
 	${libraries_to_link}
+	m
 )
 
 # Link to Apple Cocoa Framework?
