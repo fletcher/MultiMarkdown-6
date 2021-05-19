@@ -383,6 +383,10 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\</text:span></text:p>
 
 <text:p text:style-name="Standard"><text:span text:style-name="Source_20_Text">\ </text:span></text:p>
+
+<text:p text:style-name="Standard">45</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="https://www.test.com/foo?bar=XXX-YYY&amp;x=400">foo</text:a></text:p>
 </office:text>
 </office:body>
 </office:document>

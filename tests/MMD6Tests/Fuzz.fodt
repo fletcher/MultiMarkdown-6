@@ -296,7 +296,7 @@ list</text:p></text:list-item>
 
 <text:p text:style-name="Standard">[>MM]: MultiMarkdown</text:p>
 
-<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#ba\">foo1</text:a></text:p>
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#ba">foo1</text:a></text:p>
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="#bar">foo2</text:a></text:p>
 

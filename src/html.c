@@ -144,7 +144,24 @@ void mmd_print_char_html(DString * out, char c, bool obfuscate, bool line_breaks
 void mmd_print_string_html(DString * out, const char * str, bool obfuscate, bool line_breaks) {
 	if (str) {
 		while (*str != '\0') {
-			mmd_print_char_html(out, *str, obfuscate, line_breaks);
+			switch (*str) {
+				case '\\':
+					break;
+
+				case '&':
+					if (strncmp(str, "&amp;", 5) == 0) {
+						print_const("&");
+					} else {
+						mmd_print_char_html(out, *str, obfuscate, line_breaks);
+					}
+
+					break;
+
+				default:
+					mmd_print_char_html(out, *str, obfuscate, line_breaks);
+					break;
+			}
+
 			str++;
 		}
 	}
