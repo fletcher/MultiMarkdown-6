@@ -184,23 +184,7 @@ void mmd_print_string_opendocument(DString * out, const char * str, bool line_br
 	}
 
 	while (*str != '\0') {
-		switch (*str) {
-			case '\\':
-				break;
-
-			case '&':
-				if (strncmp(str, "&amp;", 5) == 0) {
-					print_const("&");
-				} else {
-					mmd_print_char_opendocument(out, *str, line_breaks);
-				}
-
-				break;
-
-			default:
-				mmd_print_char_opendocument(out, *str, line_breaks);
-				break;
-		}
+		mmd_print_char_opendocument(out, *str, line_breaks);
 
 		str++;
 	}

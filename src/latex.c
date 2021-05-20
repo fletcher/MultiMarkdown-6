@@ -144,10 +144,7 @@ void mmd_print_string_latex(DString * out, const char * str) {
 	}
 
 	while (*str != '\0') {
-		if (*str != '\\') {
-			mmd_print_char_latex(out, *str);
-		}
-
+		mmd_print_char_latex(out, *str);
 		str++;
 	}
 }
