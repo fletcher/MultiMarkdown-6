@@ -290,7 +290,7 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 
 					memcpy(url, &text->str[t->start + *offset + 1], t->len - 2);
 					url[t->len - 2] = '\0';
-					clean = clean_string(url, false);
+					clean = clean_string(url, false, true);
 
 					HASH_FIND_STR(e->asset_hash, clean, a);
 
