@@ -2459,6 +2459,17 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 //			e->metadata_stack->size = 		temp->metadata_stack->size;
 			e->table_stack->size = 			temp->table_stack->size;
 
+			// And reset temp stack sizes
+			temp->abbreviation_stack->size =	0;
+			temp->citation_stack->size = 		0;
+			temp->definition_stack->size = 		0;
+			temp->footnote_stack->size = 		0;
+			temp->glossary_stack->size = 		0;
+			temp->header_stack->size = 			0;
+			temp->link_stack->size = 			0;
+			temp->metadata_stack->size = 		0;
+			temp->table_stack->size = 			0;
+
 			mmd_engine_free(temp, true);
 		}
 	}
