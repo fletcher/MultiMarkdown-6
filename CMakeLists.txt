@@ -365,17 +365,20 @@ endif()
 # Build MultiMarkdown app
 if (hasParent)
 else()
-	add_executable(multimarkdown
-		src/d_string.c
+	if (DEFINED TEST)
+	else ()
+		add_executable(multimarkdown
+			src/d_string.c
 
-		src/main.c
-		src/argtable3.c
+			src/main.c
+			src/argtable3.c
 
-		${private_headers}
-		${public_headers}
-	)
+			${private_headers}
+			${public_headers}
+		)
 
-	target_link_libraries(multimarkdown "${My_Project_Title}")
+		target_link_libraries(multimarkdown "${My_Project_Title}")
+	endif()
 endif()
 
 
