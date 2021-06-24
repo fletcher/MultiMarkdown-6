@@ -2147,8 +2147,23 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 			case LINE_DEFINITION:
 				if (block->type == BLOCK_DEFINITION) {
-					// Remove leading colon
-					token_remove_first_child(l);
+					// Flag leading colon as markup
+					if (l->child) {
+						l->child->type = MARKER_DEFLIST_COLON;
+
+						temp = l->child->next;
+
+						if (temp->len) {
+							strip_leading_whitespace(temp, e->dstr->str);
+
+							if (temp->len == 0) {
+								token_pop_link_from_chain(temp);
+								token_free(temp);
+							}
+						} else {
+							strip_leading_whitespace(temp, e->dstr->str);
+						}
+					}
 				}
 
 			case LINE_ATX_1:

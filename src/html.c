@@ -631,6 +631,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			scratch->padded = 1;
 			break;
 
+		case MARKER_DEFLIST_COLON:
+			break;
+
 		case BLOCK_CODE_FENCED:
 			pad(out, 2, scratch);
 

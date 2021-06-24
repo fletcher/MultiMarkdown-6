@@ -648,6 +648,9 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			scratch->padded = 1;
 			break;
 
+		case MARKER_DEFLIST_COLON:
+			break;
+
 		case BLOCK_EMPTY:
 			break;
 
