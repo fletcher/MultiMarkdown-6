@@ -35,7 +35,7 @@ To build from source, download from Github.  Then:
 	cd build
 	make
 
-You can optionally test using the test suite:
+You can optionally test using the test suite from the `build` directory:
 
 	ctest
 
