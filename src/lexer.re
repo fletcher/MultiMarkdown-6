@@ -255,7 +255,9 @@ int scan(Scanner * s, const char * stop) {
 		'`'+							{ return BACKTICK; }
 
 		'|'+							{ return PIPE; }
-		
+
+		"\uFFFC"						{ return TEXT_REPLACEMENT_CHAR; }
+
 		// Skip over anything else - '.' does not include '\n'
 		*								{ goto scan; }
 	*/

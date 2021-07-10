@@ -544,6 +544,8 @@ enum token_types {
 	TEXT_PERIOD,
 	TEXT_PLAIN,
 
+	TEXT_REPLACEMENT_CHAR,
+
 	MANUAL_LABEL,
 };
 
