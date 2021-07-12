@@ -545,6 +545,8 @@ enum token_types {
 	TEXT_PLAIN,
 
 	MANUAL_LABEL,
+
+	OBJECT_REPLACEMENT_CHARACTER,
 };
 
 

@@ -2179,6 +2179,9 @@ parse_citation:
 			print_token(t);
 			break;
 
+		case OBJECT_REPLACEMENT_CHARACTER:
+			break;
+
 		default:
 			fprintf(stderr, "Unknown token type: %d\n", t->type);
 			token_describe(t, source);

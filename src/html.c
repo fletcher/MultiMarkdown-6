@@ -2036,6 +2036,7 @@ parse_citation:
 		case CODE_FENCE:
 		case TEXT_EMPTY:
 		case MANUAL_LABEL:
+		case OBJECT_REPLACEMENT_CHARACTER:
 			break;
 
 		case TEXT_NL:
