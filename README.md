@@ -35,7 +35,7 @@ To build from source, download from Github.  Then:
 	cd build
 	make
 
-You can optionally test using the test suite:
+You can optionally test using the test suite from the `build` directory:
 
 	ctest
 
@@ -59,13 +59,14 @@ In order to use libMultiMarkdown in your Xcode project:
 4.	Drag the `build-xcode/MultiMarkdown.xcodeproj` file to the root of your
 	Xcode project as a subproject.
 
-5.	Select the `MultiMarkdown` subproject, select the `libMultiMarkdown` target,
-	and in Build Phases > Copy Files select Products Directory from the
-	Destination popup menu.
-
-6.	Select your root project, select your target, add `libMultiMarkdown` under
+5.	Select your root project, select your target, add `libMultiMarkdown` under
 	Target Depencies and `libMultiMarkdown.framework/libMultiMarkdown` and
 	`libcurl.tdb` under Link Binary with Libraries.
+	
+6.      Select your root project, select your target, then under Build Settings,
+        add `$SRCROOT/MultiMarkdown-6/build-xcode/$CONFIGURATION` to the 
+        `FRAMEWORK_SEARCH_PATHS` so the `.framework` product can be found.
+
 
 Warning: if you move the project on disk or update the MultiMarkdown source
 files, you need to rerun step 3 above.
