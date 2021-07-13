@@ -1184,8 +1184,16 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			print_const("[");
 			break;
 
+		case BRACKET_DOUBLE_LEFT:
+			print_const("[[");
+			break;
+
 		case BRACKET_RIGHT:
 			print_const("]");
+			break;
+
+		case BRACKET_DOUBLE_RIGHT:
+			print_const("]]");
 			break;
 
 		case BRACKET_VARIABLE_LEFT:
