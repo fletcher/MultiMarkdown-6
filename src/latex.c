@@ -940,6 +940,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 			print_const("[");
 			break;
 
+		case BRACKET_DOUBLE_LEFT:
+			print_const("[[");
+			break;
+
 		case BRACKET_ABBREVIATION_LEFT:
 			print_const("[>");
 			break;
@@ -966,6 +970,10 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 
 		case BRACKET_RIGHT:
 			print_const("]");
+			break;
+
+		case BRACKET_DOUBLE_RIGHT:
+			print_const("]]");
 			break;
 
 		case CODE_FENCE:

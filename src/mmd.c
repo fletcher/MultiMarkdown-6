@@ -170,6 +170,10 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings3, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 
+		if (extensions & EXT_WIKILINKS) {
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_DOUBLE_LEFT, BRACKET_DOUBLE_RIGHT, PAIR_BRACKET_WIKILINK, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		}
+
 		token_pair_engine_add_pairing(e->pairings3, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		token_pair_engine_add_pairing(e->pairings3, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
@@ -1151,6 +1155,30 @@ token * mmd_tokenize_string(mmd_engine * e, size_t start, size_t len, bool stop_
 						break;
 				}
 
+				break;
+
+			case BRACKET_DOUBLE_LEFT:
+				if (e->extensions & EXT_WIKILINKS) {
+					t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
+					token_append_child(line, t);
+				} else {
+					t = token_new(BRACKET_LEFT, (size_t)(s.start - e->dstr->str), 1);
+					token_append_child(line, t);
+					t = token_new(BRACKET_LEFT, (size_t)(s.start - e->dstr->str + 1), 1);
+					token_append_child(line, t);
+				}
+				break;
+
+			case BRACKET_DOUBLE_RIGHT:
+				if (e->extensions & EXT_WIKILINKS) {
+					t = token_new(type, (size_t)(s.start - e->dstr->str), (size_t)(s.cur - s.start));
+					token_append_child(line, t);
+				} else {
+					t = token_new(BRACKET_RIGHT, (size_t)(s.start - e->dstr->str), 1);
+					token_append_child(line, t);
+					t = token_new(BRACKET_RIGHT, (size_t)(s.start - e->dstr->str + 1), 1);
+					token_append_child(line, t);
+				}
 				break;
 
 			default:

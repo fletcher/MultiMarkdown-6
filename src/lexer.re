@@ -124,6 +124,12 @@ int scan(Scanner * s, const char * stop) {
 		"["								{ return BRACKET_LEFT; }
 		"]"								{ return BRACKET_RIGHT; }
 
+		// Give double bracket pairs precedence over e.g. BRACKET_CITATION_LEFT inside
+		// another pair of brackets. Markdown dialects usually don't recognize nested
+		// brackets pairs at all.
+		"[["							{ return BRACKET_DOUBLE_LEFT; }
+		"]]"							{ return BRACKET_DOUBLE_RIGHT; }
+
 		"!["							{ return BRACKET_IMAGE_LEFT; }
 		"[>"							{ return BRACKET_ABBREVIATION_LEFT; }
 		"[#"							{ return BRACKET_CITATION_LEFT; }
