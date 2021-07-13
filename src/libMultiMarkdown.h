@@ -420,6 +420,7 @@ enum token_types {
 	PAIR_BRACKET_CITATION,
 	PAIR_BRACKET_IMAGE,
 	PAIR_BRACKET_VARIABLE,
+	PAIR_BRACKET_WIKILINK,
 	PAIR_BRACE,
 	PAIR_EMPH,
 	PAIR_MATH,
@@ -599,6 +600,7 @@ enum parser_extensions {
 	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
 	EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
 	EXT_RANDOM_LABELS		= 1 << 16,   //!< Use random numbers for header labels (unless manually defined)
+	EXT_WIKILINKS			= 1 << 17,   //!< Recognize double-bracket pairs as wikilinks
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

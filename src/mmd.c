@@ -170,6 +170,10 @@ mmd_engine * mmd_engine_create(DString * d, unsigned long extensions) {
 			token_pair_engine_add_pairing(e->pairings3, BRACKET_ABBREVIATION_LEFT, BRACKET_RIGHT, PAIR_BRACKET, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 		}
 
+		if (extensions & EXT_WIKILINKS) {
+			token_pair_engine_add_pairing(e->pairings3, BRACKET_DOUBLE_LEFT, BRACKET_DOUBLE_RIGHT, PAIR_BRACKET_WIKILINK, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
+		}
+
 		token_pair_engine_add_pairing(e->pairings3, BRACKET_VARIABLE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_VARIABLE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
 
 		token_pair_engine_add_pairing(e->pairings3, BRACKET_IMAGE_LEFT, BRACKET_RIGHT, PAIR_BRACKET_IMAGE, PAIRING_ALLOW_EMPTY | PAIRING_PRUNE_MATCH);
