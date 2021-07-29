@@ -27,7 +27,7 @@ set (My_Project_Copyright_Date "2016 - 2020")
 
 set (My_Project_Identifier "net.fletcherpenney.multimarkdown")
 
-string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M")
+string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M" UTC)
 
 
 # Search for included files here
