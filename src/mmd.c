@@ -3115,3 +3115,59 @@ char * mmd_version(void) {
 #endif
 	return result;
 }
+
+
+/// Add header block and clean up
+void add_header(mmd_engine * e, token * header) {
+	token * walker;
+	bool done = false;
+
+	// Add header to stack
+	if (header == NULL) {
+		return;
+	}
+
+	stack_push(e->header_stack, header);
+
+	walker = header->child;
+
+	if (walker == NULL) {
+		return;
+	}
+
+	switch (walker->type) {
+		case LINE_ATX_1:
+		case LINE_ATX_2:
+		case LINE_ATX_3:
+		case LINE_ATX_4:
+		case LINE_ATX_5:
+		case LINE_ATX_6:
+			// Clean up trailing whitespace
+			walker = walker->child;
+
+			if (walker) {
+				walker = walker->tail;
+
+				while (!done && walker) {
+					switch (walker->type) {
+						case TEXT_PLAIN:
+							done = true;
+
+						case TEXT_NL:
+						case TEXT_NL_SP:
+						case TEXT_LINEBREAK:
+						case TEXT_LINEBREAK_SP:
+							token_trim_trailing_whitespace(walker, e->dstr->str);
+							break;
+					}
+
+					walker = walker->prev;
+				}
+			}
+
+		case LINE_SETEXT_1:
+		case LINE_SETEXT_2:
+			break;
+	}
+}
+

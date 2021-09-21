@@ -103,7 +103,7 @@ void recursive_parse_list_item(mmd_engine * e, token * block);
 void recursive_parse_blockquote(mmd_engine * e, token * block);
 void strip_line_tokens_from_block(mmd_engine * e, token * block);
 void is_para_html(mmd_engine * e, token * block);
-
+void add_header(mmd_engine * e, token * header);
 
 void is_list_loose(token * list);
 

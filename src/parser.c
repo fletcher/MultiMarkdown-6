@@ -1287,7 +1287,7 @@ static void yy_reduce(
 
 		case 3: { /* block ::= LINE_ATX_1 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H1);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1295,7 +1295,7 @@ static void yy_reduce(
 
 		case 4: { /* block ::= LINE_ATX_2 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H2);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1303,7 +1303,7 @@ static void yy_reduce(
 
 		case 5: { /* block ::= LINE_ATX_3 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H3);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1311,7 +1311,7 @@ static void yy_reduce(
 
 		case 6: { /* block ::= LINE_ATX_4 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H4);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1319,7 +1319,7 @@ static void yy_reduce(
 
 		case 7: { /* block ::= LINE_ATX_5 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H5);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1327,7 +1327,7 @@ static void yy_reduce(
 
 		case 8: { /* block ::= LINE_ATX_6 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H6);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1478,7 +1478,7 @@ static void yy_reduce(
 
 		case 29: { /* block ::= setext_1 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_1);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
@@ -1486,7 +1486,7 @@ static void yy_reduce(
 
 		case 30: { /* block ::= setext_2 */
 			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_2);
-			stack_push(engine->header_stack, yylhsminor.yy0);
+			add_header(engine, yylhsminor.yy0);
 		}
 
 		yymsp[0].minor.yy0 = yylhsminor.yy0;
