@@ -271,6 +271,8 @@ char * clean_string(const char * str, bool lowercase, bool clean_url);
 
 short raw_level_for_header(token * header);
 
+void header_clean_trailing_whitespace(token * header, const char * source);
+
 void store_asset(scratch_pad * scratch_pad, char * url);
 asset * extract_asset(scratch_pad * scratch, char * url);
 void asset_free(asset * a);

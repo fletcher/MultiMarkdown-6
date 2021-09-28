@@ -97,12 +97,12 @@ blocks(A)			::= block(B).
 
 // Single line blocks
 
-block(A)			::= LINE_ATX_1(B).			{ A = token_new_parent(B, BLOCK_H1); add_header(engine, A); }
-block(A)			::= LINE_ATX_2(B).			{ A = token_new_parent(B, BLOCK_H2); add_header(engine, A); }
-block(A)			::= LINE_ATX_3(B).			{ A = token_new_parent(B, BLOCK_H3); add_header(engine, A); }
-block(A)			::= LINE_ATX_4(B).			{ A = token_new_parent(B, BLOCK_H4); add_header(engine, A); }
-block(A)			::= LINE_ATX_5(B).			{ A = token_new_parent(B, BLOCK_H5); add_header(engine, A); }
-block(A)			::= LINE_ATX_6(B).			{ A = token_new_parent(B, BLOCK_H6); add_header(engine, A); }
+block(A)			::= LINE_ATX_1(B).			{ A = token_new_parent(B, BLOCK_H1); stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_2(B).			{ A = token_new_parent(B, BLOCK_H2); stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_3(B).			{ A = token_new_parent(B, BLOCK_H3); stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_4(B).			{ A = token_new_parent(B, BLOCK_H4); stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_5(B).			{ A = token_new_parent(B, BLOCK_H5); stack_push(engine->header_stack, A); }
+block(A)			::= LINE_ATX_6(B).			{ A = token_new_parent(B, BLOCK_H6); stack_push(engine->header_stack, A); }
 
 block(A)			::= LINE_HR(B).				{ A = token_new_parent(B, BLOCK_HR); }
 block(A)			::= LINE_YAML(B).			{ A = token_new_parent(B, BLOCK_HR); }
@@ -129,8 +129,8 @@ block(A)			::= list_enum(B).			{ A = token_new_parent(B, BLOCK_LIST_ENUMERATED);
 block(A)			::= meta_block(B).			{ A = token_new_parent(B, BLOCK_META); }
 block(A)			::= meta_block(B) LINE_SETEXT_2(C).	{ A = token_new_parent(B, BLOCK_META); token_append_child(A, C); }
 block(A)			::= para(B).				{ A = token_new_parent(B, BLOCK_PARA); is_para_html(engine, A); }
-block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); add_header(engine, A); }
-block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); add_header(engine, A); }
+block(A)			::= setext_1(B).			{ A = token_new_parent(B, BLOCK_SETEXT_1); stack_push(engine->header_stack, A); }
+block(A)			::= setext_2(B).			{ A = token_new_parent(B, BLOCK_SETEXT_2); stack_push(engine->header_stack, A); }
 block(A)			::= table(B).				{ A = token_new_parent(B, BLOCK_TABLE); stack_push(engine->table_stack, A); }
 
 

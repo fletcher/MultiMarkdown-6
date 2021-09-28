@@ -481,6 +481,7 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 				temp_char = label_from_header(source, entry, scratch);
 				printf("<li><a href=\"#%s\">", temp_char);
 				mmd_export_token_tree_html(out, source, entry->child, scratch);
+				trim_trailing_whitespace_d_string(out);
 				print_const("</a>");
 
 				if (*counter < scratch->header_stack->size - 1) {
@@ -491,6 +492,7 @@ void mmd_export_toc_entry_html(DString * out, const char * source, scratch_pad *
 						// This entry has children
 						(*counter)++;
 						mmd_export_toc_entry_html(out, source, scratch, counter, entry_level + 1, min, max);
+						trim_trailing_whitespace_d_string(out);
 					}
 				}
 
@@ -711,6 +713,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				free(temp_char);
 			}
 
+			header_clean_trailing_whitespace(t->child, source);
 			mmd_export_token_tree_html(out, source, t->child, scratch);
 
 			printf("</h%1d>", temp_short + scratch->base_header_level - 1);

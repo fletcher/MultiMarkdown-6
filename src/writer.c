@@ -1548,6 +1548,11 @@ token * manual_label_from_header(token * h, const char * source) {
 				break;
 
 			case TEXT_PLAIN:
+				if (walker->len == 0) {
+					walker = walker->prev;
+					break;
+				}
+
 				if (walker->len == 1) {
 					if (source[walker->start] == ' ') {
 						walker = walker->prev;
@@ -2666,6 +2671,51 @@ short raw_level_for_header(token * header) {
 	}
 
 	return 0;
+}
+
+
+void header_clean_trailing_whitespace(token * header, const char * source) {
+	token * walker = header->tail;
+	bool done = false;
+
+	while (!done && walker) {
+		switch (walker->type) {
+			case TEXT_PLAIN:
+				token_trim_trailing_whitespace(walker, source);
+
+				if (walker->len) {
+					done = true;
+				}
+
+				break;
+
+			case INDENT_SPACE:
+			case INDENT_TAB:
+				walker->type = TEXT_PLAIN;
+
+			case TEXT_NL:
+			case TEXT_NL_SP:
+			case TEXT_LINEBREAK:
+			case TEXT_LINEBREAK_SP:
+				token_trim_trailing_whitespace(walker, source);
+				break;
+
+			case MARKER_H1:
+			case MARKER_H2:
+			case MARKER_H3:
+			case MARKER_H4:
+			case MARKER_H5:
+			case MARKER_H6:
+			case MANUAL_LABEL:
+				break;
+
+			default:
+				done = true;
+				break;
+		}
+
+		walker = walker->prev;
+	}
 }
 
 
