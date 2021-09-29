@@ -229,35 +229,35 @@ empty				::= LINE_EMPTY.
 
 // Fenced code blocks
 
-fenced_block(A)		::= fenced_3(B) LINE_FENCE_BACKTICK_3(C).	{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
-fenced_block(A)		::= fenced_3(B) LINE_FENCE_BACKTICK_4(C).	{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
-fenced_block(A)		::= fenced_3(B) LINE_FENCE_BACKTICK_5(C).	{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
+fenced_block(A)		::= fenced_3(B) LINE_FENCE_BACKTICK_3(C).	{ A = B; token_chain_append(B, C); C->type = CODE_FENCE_LINE; C->child->type = CODE_FENCE; }
+fenced_block(A)		::= fenced_3(B) LINE_FENCE_BACKTICK_4(C).	{ A = B; token_chain_append(B, C); C->type = CODE_FENCE_LINE; C->child->type = CODE_FENCE; }
+fenced_block(A)		::= fenced_3(B) LINE_FENCE_BACKTICK_5(C).	{ A = B; token_chain_append(B, C); C->type = CODE_FENCE_LINE; C->child->type = CODE_FENCE; }
 fenced_block		::= fenced_3.
 
-fenced_3(A)			::= fenced_3(B) fenced_line(C).				{ A = B; token_chain_append(B, C); }
+fenced_3(A)			::= fenced_3(B) fenced_line(C).				{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
 fenced_3			::= LINE_FENCE_BACKTICK_3.
 fenced_3			::= LINE_FENCE_BACKTICK_START_3.
 
 
-fenced_block(A)		::= fenced_4(B) LINE_FENCE_BACKTICK_4(C).	{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
-fenced_block(A)		::= fenced_4(B) LINE_FENCE_BACKTICK_5(C).	{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
+fenced_block(A)		::= fenced_4(B) LINE_FENCE_BACKTICK_4(C).	{ A = B; token_chain_append(B, C); C->type = CODE_FENCE_LINE; C->child->type = CODE_FENCE; }
+fenced_block(A)		::= fenced_4(B) LINE_FENCE_BACKTICK_5(C).	{ A = B; token_chain_append(B, C); C->type = CODE_FENCE_LINE; C->child->type = CODE_FENCE; }
 fenced_block		::= fenced_4.
 
-fenced_4(A)			::= fenced_4(B) fenced_line(C).				{ A = B; token_chain_append(B, C); }
-fenced_4(A)			::= fenced_4(B) LINE_FENCE_BACKTICK_3(C).	{ A = B; token_chain_append(B, C); }
-fenced_4(A)			::= fenced_4(B) LINE_FENCE_BACKTICK_START_3(C).	{ A = B; token_chain_append(B, C); }
+fenced_4(A)			::= fenced_4(B) fenced_line(C).				{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
+fenced_4(A)			::= fenced_4(B) LINE_FENCE_BACKTICK_3(C).	{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
+fenced_4(A)			::= fenced_4(B) LINE_FENCE_BACKTICK_START_3(C).	{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
 fenced_4			::= LINE_FENCE_BACKTICK_4.
 fenced_4			::= LINE_FENCE_BACKTICK_START_4.
 
 
-fenced_block(A)		::= fenced_5(B) LINE_FENCE_BACKTICK_5(C).	{ A = B; token_chain_append(B, C); C->child->type = CODE_FENCE; }
+fenced_block(A)		::= fenced_5(B) LINE_FENCE_BACKTICK_5(C).	{ A = B; token_chain_append(B, C); C->type = CODE_FENCE_LINE; C->child->type = CODE_FENCE; }
 fenced_block		::= fenced_5.
 
-fenced_5(A)			::= fenced_5(B) fenced_line(C).				{ A = B; token_chain_append(B, C); }
-fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_3(C).	{ A = B; token_chain_append(B, C); }
-fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_START_3(C).	{ A = B; token_chain_append(B, C); }
-fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_4(C).	{ A = B; token_chain_append(B, C); }
-fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_START_4(C).	{ A = B; token_chain_append(B, C); }
+fenced_5(A)			::= fenced_5(B) fenced_line(C).				{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
+fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_3(C).	{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
+fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_START_3(C).	{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
+fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_4(C).	{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
+fenced_5(A)			::= fenced_5(B) LINE_FENCE_BACKTICK_START_4(C).	{ A = B; token_chain_append(B, C); B->type = CODE_FENCE_LINE; }
 fenced_5			::= LINE_FENCE_BACKTICK_5.
 fenced_5			::= LINE_FENCE_BACKTICK_START_5.
 

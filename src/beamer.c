@@ -179,6 +179,7 @@ void mmd_export_token_beamer(DString * out, const char * source, token * t, scra
 					// Raw source
 					if (raw_filter_text_matches(temp_char, FORMAT_BEAMER)) {
 						switch (t->child->tail->type) {
+							case CODE_FENCE_LINE:
 							case LINE_FENCE_BACKTICK_3:
 							case LINE_FENCE_BACKTICK_4:
 							case LINE_FENCE_BACKTICK_5:

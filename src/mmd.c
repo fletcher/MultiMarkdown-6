@@ -2137,13 +2137,22 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 		switch (l->type) {
 			case LINE_SETEXT_1:
 			case LINE_SETEXT_2:
-				if ((block->type == BLOCK_SETEXT_1) ||
-						(block->type == BLOCK_SETEXT_2)) {
-					temp = l->next;
-					tokens_prune(l, l);
-					l = temp;
-					break;
+				temp = token_new_parent(l->child, MARKER_SETEXT_1 + l->type - LINE_SETEXT_1);
+
+				// Add contents of line to parent block
+				token_append_child(block, temp);
+
+				// Disconnect line from it's contents
+				l->child = NULL;
+
+				// Need to remember first line we strip
+				if (children == NULL) {
+					children = l;
 				}
+
+				// Advance to next line
+				l = l->next;
+				break;
 
 			case LINE_DEFINITION:
 				if (block->type == BLOCK_DEFINITION) {

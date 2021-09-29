@@ -1534,33 +1534,6 @@ static void yy_reduce(
 		case 48: /* empty ::= empty LINE_EMPTY */
 			yytestcase(yyruleno == 48);
 
-		case 52: /* fenced_3 ::= fenced_3 fenced_line */
-			yytestcase(yyruleno == 52);
-
-		case 55: /* fenced_4 ::= fenced_4 fenced_line */
-			yytestcase(yyruleno == 55);
-
-		case 56: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3 */
-			yytestcase(yyruleno == 56);
-
-		case 57: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3 */
-			yytestcase(yyruleno == 57);
-
-		case 59: /* fenced_5 ::= fenced_5 fenced_line */
-			yytestcase(yyruleno == 59);
-
-		case 60: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3 */
-			yytestcase(yyruleno == 60);
-
-		case 61: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3 */
-			yytestcase(yyruleno == 61);
-
-		case 62: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4 */
-			yytestcase(yyruleno == 62);
-
-		case 63: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4 */
-			yytestcase(yyruleno == 63);
-
 		case 64: /* html_block ::= html_block html_line */
 			yytestcase(yyruleno == 64);
 
@@ -1677,7 +1650,40 @@ static void yy_reduce(
 			{
 				yylhsminor.yy0 = yymsp[-1].minor.yy0;
 				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+				yymsp[0].minor.yy0->type = CODE_FENCE_LINE;
 				yymsp[0].minor.yy0->child->type = CODE_FENCE;
+			}
+			yymsp[-1].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 52: /* fenced_3 ::= fenced_3 fenced_line */
+		case 55: /* fenced_4 ::= fenced_4 fenced_line */
+			yytestcase(yyruleno == 55);
+
+		case 56: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3 */
+			yytestcase(yyruleno == 56);
+
+		case 57: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3 */
+			yytestcase(yyruleno == 57);
+
+		case 59: /* fenced_5 ::= fenced_5 fenced_line */
+			yytestcase(yyruleno == 59);
+
+		case 60: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3 */
+			yytestcase(yyruleno == 60);
+
+		case 61: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3 */
+			yytestcase(yyruleno == 61);
+
+		case 62: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4 */
+			yytestcase(yyruleno == 62);
+
+		case 63: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4 */
+			yytestcase(yyruleno == 63);
+			{
+				yylhsminor.yy0 = yymsp[-1].minor.yy0;
+				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+				yymsp[-1].minor.yy0->type = CODE_FENCE_LINE;
 			}
 			yymsp[-1].minor.yy0 = yylhsminor.yy0;
 			break;

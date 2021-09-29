@@ -656,6 +656,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 				temp_char = label_from_header(source, entry, scratch);
 				printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
 				mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
+				trim_trailing_whitespace_d_string(out);
 				print_const(" <text:tab/>1</text:a></text:p>\n");
 
 				if (*counter < scratch->header_stack->size - 1) {
@@ -666,6 +667,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 						// This entry has children
 						(*counter)++;
 						mmd_export_toc_entry_opendocument(out, source, scratch, counter, entry_level + 1, min, max);
+						trim_trailing_whitespace_d_string(out);
 					}
 				}
 
@@ -788,6 +790,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					// Raw source
 					if (raw_filter_text_matches(temp_char, FORMAT_ODT)) {
 						switch (t->child->tail->type) {
+							case CODE_FENCE_LINE:
 							case LINE_FENCE_BACKTICK_3:
 							case LINE_FENCE_BACKTICK_4:
 							case LINE_FENCE_BACKTICK_5:
@@ -906,6 +909,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			}
 
 			printf("<text:h text:outline-level=\"%d\">", temp_short + scratch->base_header_level - 1);
+
+			header_clean_trailing_whitespace(t->child, source);
 
 			if (scratch->extensions & EXT_NO_LABELS) {
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
@@ -1345,6 +1350,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 		case MARKER_H4:
 		case MARKER_H5:
 		case MARKER_H6:
+		case MARKER_SETEXT_1:
+		case MARKER_SETEXT_2:
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
 			break;

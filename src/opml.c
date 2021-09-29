@@ -419,6 +419,8 @@ void mmd_export_header_opml(DString * out, const char * source, token * t, scrat
 				case MARKER_H4:
 				case MARKER_H5:
 				case MARKER_H6:
+				case MARKER_SETEXT_1:
+				case MARKER_SETEXT_2:
 					walker = walker->prev;
 					break;
 

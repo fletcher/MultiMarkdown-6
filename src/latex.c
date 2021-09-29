@@ -560,6 +560,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					// Raw source
 					if (raw_filter_text_matches(temp_char, FORMAT_LATEX)) {
 						switch (t->child->tail->type) {
+							case CODE_FENCE_LINE:
 							case LINE_FENCE_BACKTICK_3:
 							case LINE_FENCE_BACKTICK_4:
 							case LINE_FENCE_BACKTICK_5:
@@ -707,6 +708,7 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 					break;
 			}
 
+			header_clean_trailing_whitespace(t->child, source);
 			mmd_export_token_tree_latex(out, source, t->child, scratch);
 			trim_trailing_whitespace_d_string(out);
 
@@ -1142,6 +1144,8 @@ void mmd_export_token_latex(DString * out, const char * source, token * t, scrat
 		case MARKER_H4:
 		case MARKER_H5:
 		case MARKER_H6:
+		case MARKER_SETEXT_1:
+		case MARKER_SETEXT_2:
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
 			break;
