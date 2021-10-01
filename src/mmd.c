@@ -1813,8 +1813,11 @@ void recursive_parse_indent(mmd_engine * e, token * block) {
 	// Strip tokens?
 	switch (block->type) {
 		case BLOCK_DEFINITION:
-			// Strip leading ':' from definition
-			token_remove_first_child(block->child);
+			// Flag leading ':' as markup
+			block->child->child->type = MARKER_DEFLIST_COLON;
+
+			// Strip whitespace between colon and remainder of line
+			strip_leading_whitespace(block->child->child->next, e->dstr->str);
 			break;
 	}
 
@@ -2162,16 +2165,7 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 
 						temp = l->child->next;
 
-						if (temp->len) {
-							strip_leading_whitespace(temp, e->dstr->str);
-
-							if (temp->len == 0) {
-								token_pop_link_from_chain(temp);
-								token_free(temp);
-							}
-						} else {
-							strip_leading_whitespace(temp, e->dstr->str);
-						}
+						strip_leading_whitespace(temp, e->dstr->str);
 					}
 				}
 
@@ -2248,10 +2242,9 @@ handle_line:
 				strip_line_tokens_from_block(e, l);
 
 				// Move children to parent
-				// Add ':' back
-				if (l->child && l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
-					temp = token_new(COLON, l->child->start - 1, 1);
-					token_append_child(block, temp);
+				// Add ':' back?
+				if (l->child && l->child->type == MARKER_DEFLIST_COLON) {
+					l->child->type = COLON;
 				}
 
 				token_append_child(block, l->child);
