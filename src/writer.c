@@ -2572,7 +2572,6 @@ void strip_leading_whitespace(token * chain, const char * source) {
 				chain->type = TEXT_EMPTY;
 
 			case TEXT_EMPTY:
-				chain = chain->next;
 				break;
 
 			case TEXT_PLAIN:
