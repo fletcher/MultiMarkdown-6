@@ -632,7 +632,7 @@ void token_trim_whitespace(token * t, const char * string) {
 
 /// Check whether first token in the chain matches the given type.
 /// If so, return and advance the chain.
-token * token_chain_accept(token ** t, short type) {
+token * token_chain_accept(token ** t, unsigned short type) {
 	token * result = NULL;
 
 	if (t && *t && ((*t)->type == type)) {
@@ -665,7 +665,7 @@ token * token_chain_accept_multiple(token ** t, int n, ...) {
 }
 
 
-void token_skip_until_type(token ** t, short type) {
+void token_skip_until_type(token ** t, unsigned short type) {
 	while ((*t) && ((*t)->type != type)) {
 		*t = (*t)->next;
 	}
