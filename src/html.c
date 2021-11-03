@@ -795,7 +795,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			print_const("<li>");
 
 			if (!scratch->list_is_tight) {
-				print_const("<p>");
+				if (t->child->type != BLOCK_PARA) {
+					print_const("<p>");
+				}
 			}
 
 			scratch->padded = 2;
@@ -803,7 +805,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 			if (scratch->close_para) {
 				if (!scratch->list_is_tight) {
-					print_const("</p>");
+					if (t->child->type != BLOCK_PARA) {
+						print_const("</p>");
+					}
 				}
 			} else {
 				scratch->close_para = true;
@@ -823,7 +827,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 			pad(out, 2, scratch);
 
 			if (!scratch->list_is_tight) {
-				print_const("<p>");
+				if (t->child->type != BLOCK_PARA) {
+					print_const("<p>");
+				}
 			}
 
 			mmd_export_token_tree_html(out, source, t->child, scratch);
@@ -861,7 +867,9 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 
 			if (scratch->close_para) {
 				if (!scratch->list_is_tight) {
-					print_const("</p>");
+					if (t->child->type != BLOCK_PARA) {
+						print_const("</p>");
+					}
 				}
 			} else {
 				scratch->close_para = true;
