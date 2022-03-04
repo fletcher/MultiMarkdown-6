@@ -415,7 +415,7 @@ void mmd_export_image_latex(DString * out, const char * source, token * text, li
 	if (is_figure) {
 		print_const("\n");
 
-		if (text) {
+		if ((text && text->len > 3) || (link->title && link->title[0] != '\0')) {
 			if (link->title && link->title[0] != '\0') {
 				printf("\\caption[%s]{", link->title);
 			} else {

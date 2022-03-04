@@ -623,7 +623,7 @@ void mmd_export_image_opendocument(DString * out, const char * source, token * t
 	print_const(" xlink:type=\"simple\" xlink:show=\"embed\" xlink:actuate=\"onLoad\" draw:filter-name=\"&lt;All formats&gt;\"/>\n</draw:frame></text:p>");
 
 	if (is_figure) {
-		if (text) {
+		if (text && text->len > 3) {
 			print_const("\n<text:p>Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
 			mmd_export_token_tree_opendocument(out, source, text->child, scratch);
 			print_const("</text:p>");

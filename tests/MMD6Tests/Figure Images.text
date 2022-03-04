@@ -13,3 +13,8 @@ latexconfig:	article
 
 [foo]: http://foo.bar/	"foo" width="40px" height="20px"
 
+5
+
+![](http://foo.bar/ width="40px")
+
+![](http://foo.bar/ "empty caption with title" width="40px")

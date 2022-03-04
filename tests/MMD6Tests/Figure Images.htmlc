@@ -12,3 +12,9 @@ latexconfig:	article</p>
 <p>![<em>foo</em>](http://foo.bar/ &quot;foo&quot; width=&quot;40px&quot;)</p>
 
 <p>[foo]: http://foo.bar/	&quot;foo&quot; width=&quot;40px&quot; height=&quot;20px&quot;</p>
+
+<p>5</p>
+
+<p>![](http://foo.bar/ width=&quot;40px&quot;)</p>
+
+<p>![](http://foo.bar/ &quot;empty caption with title&quot; width=&quot;40px&quot;)</p>

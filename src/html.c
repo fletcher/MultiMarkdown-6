@@ -448,7 +448,7 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 	print_const(" />");
 
 	if (is_figure) {
-		if (text) {
+		if (text && text->len > 3) {
 			print_const("\n<figcaption>");
 			mmd_export_token_tree_html(out, source, text->child, scratch);
 			print_const("</figcaption>");
