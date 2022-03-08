@@ -18,7 +18,7 @@
 /*
 
 	Copyright © 2011 Daniel Jalkut.
-	Modifications by Fletcher T. Penney, Copyright © 2011-2018 Fletcher T. Penney.
+	Modifications by Fletcher T. Penney, Copyright © 2011-2020 Fletcher T. Penney.
 	Modifications by Dan Lowe, Copyright © 2011 Dan Lowe.
 
 

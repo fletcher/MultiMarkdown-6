@@ -1,64 +1,50 @@
 /**
 
- MultiMarkdown 6 -- Lightweight markup processor to produce HTML, LaTeX, and more.
+	libCoreUtilities -- Reusable component libraries
 
- @file char.h
+	@file char.h
 
- @brief Character lookup utility functions
+	@brief Character lookup utility functions
 
 
- @author	Fletcher T. Penney
- @bug
+	@author	Fletcher T. Penney
+	@bug
 
  **/
 
 /*
 
- Copyright © 2016 - 2019 Fletcher T. Penney.
+	Copyright © 2016-2020 Fletcher T. Penney.
 
 
- The `MultiMarkdown 6` project is released under the MIT License..
+	MIT License
 
- GLibFacade.c and GLibFacade.h are from the MultiMarkdown v4 project:
+	Copyright (c) 2016-2020 Fletcher T. Penney
 
- https://github.com/fletcher/MultiMarkdown-4/
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
- MMD 4 is released under both the MIT License and GPL.
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
 
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 
- CuTest is released under the zlib/libpng license. See CuTest.c for the text
- of the license.
-
-
- ## The MIT License ##
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
-
- */
+*/
 
 
 #ifndef CHAR_SMART_STRING_H
 #define CHAR_SMART_STRING_H
 
-#ifdef TEST
-	#include "CuTest.h"
-#endif
 
 /// Define character types
 enum char_types {
