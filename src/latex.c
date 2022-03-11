@@ -2477,7 +2477,7 @@ void mmd_start_complete_latex(DString * out, const char * source, scratch_pad * 
 			print_const("}\n");
 		} else if (strcmp(m->key, "bibtex") == 0) {
 			print_const("\\def\\bibliocommand{\\bibliography{");
-			mmd_print_string_latex(out, m->value);
+			print(m->value);
 			print_const("}}\n");
 		} else if (strcmp(m->key, "transcludebase") == 0) {
 		} else if (strcmp(m->key, "xhtmlheader") == 0) {
