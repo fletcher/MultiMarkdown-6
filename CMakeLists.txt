@@ -381,6 +381,16 @@ else()
 		)
 
 		target_link_libraries(multimarkdown "${My_Project_Title}")
+
+		set_target_properties(multimarkdown
+			PROPERTIES
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+			XCODE_LINK_BUILD_PHASE_MODE "KNOWN_LOCATION"
+		)
+
 	endif()
 endif()
 
