@@ -36,6 +36,22 @@ latexconfig:	article
 
 [Markdown]
 
+15
+
+[angle1]
+
+[angle2]
+
+[angle3]
+
+[angle4]
+
+[angle5]
+
+20
+
+[angle6]
+
 
 [foo]: http://test.0/
 [bar]:	http://test.1/file.txt
@@ -47,3 +63,10 @@ latexconfig:	article
 "title"
 [Markdown]:	http://daringfireball.net/projects/markdown/  "Daring Fireball:
 Markdown"
+
+[angle1]: <http://test.7/>
+[angle2]:	<http://test.8/>
+[angle3]:  <http://test.9/>
+[angle4]:   <http://test.10/>
+[angle5]:    <http://test.11/>
+[angle6]:     <http://test.12/>

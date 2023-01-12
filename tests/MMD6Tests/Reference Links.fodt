@@ -313,6 +313,22 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://daringfireball.net/projects/markdown/" office:name="Daring Fireball:
 Markdown">Markdown</text:a></text:p>
+
+<text:p text:style-name="Standard">15</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.7/">angle1</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.8/">angle2</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.9/">angle3</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.10/">angle4</text:a></text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.11/">angle5</text:a></text:p>
+
+<text:p text:style-name="Standard">20</text:p>
+
+<text:p text:style-name="Standard"><text:a xlink:type="simple" xlink:href="http://test.12/">angle6</text:a></text:p>
 </office:text>
 </office:body>
 </office:document>

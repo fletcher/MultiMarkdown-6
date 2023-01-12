@@ -914,6 +914,24 @@ void link_free(link * l) {
 }
 
 
+/// Fix single whitespace characters
+void whitespace_fix(token * t, const char * source) {
+	while (t) {
+		if ((t->type == TEXT_PLAIN) && (t->len == 1)) {
+			if (source[t->start] == ' ') {
+				t->type = NON_INDENT_SPACE;
+			}
+		}
+
+		if (t->child) {
+			whitespace_fix(t->child, source);
+		}
+
+		t = t->next;
+	}
+}
+
+
 void whitespace_accept(token ** remainder) {
 	while (token_chain_accept_multiple(remainder, 3, NON_INDENT_SPACE, INDENT_SPACE, INDENT_TAB));
 }
@@ -1349,6 +1367,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 			}
 
 			// Skip space
+			whitespace_fix(*remainder, e->dstr->str);
 			whitespace_accept(remainder);
 
 			// Grab destination
