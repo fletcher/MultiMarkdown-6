@@ -1,0 +1,27 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure make
+      run: make release
+
+    - name: Test build
+      run: cd build && make all
+
+    - name: Test install
+      run: cd build && sudo make install
+      
+    - name: Run tests
+      run: cd build && ctest
