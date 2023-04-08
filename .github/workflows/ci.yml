@@ -45,7 +45,7 @@ jobs:
       run: make release
 
     - name: Test build
-      run: cwd build && make all
+      run: cd build && make all
 
     - name: Run tests
-      run: cwd build && ctest
+      run: cd build && ctest
