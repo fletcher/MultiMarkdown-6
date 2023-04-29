@@ -100,7 +100,7 @@ void mmd_print_char_latex(DString * out, char c) {
 			break;
 
 		case '/':
-			print_const("\\slash ");
+			print_const("\\slash{}");
 			break;
 
 		case '^':
@@ -1856,7 +1856,7 @@ parse_citation:
 			break;
 
 		case SLASH:
-			print_const("\\slash ");
+			print_const("\\slash{}");
 			break;
 
 		case STAR:
@@ -2288,7 +2288,7 @@ void mmd_export_token_latex_tt(DString * out, const char * source, token * t, sc
 			break;
 
 		case SLASH:
-			print_const("\\slash ");
+			print_const("\\slash{}");
 			break;
 
 		case TEXT_BACKSLASH:
