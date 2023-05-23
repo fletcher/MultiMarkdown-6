@@ -535,6 +535,42 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:p><text:bookmark text:name="bar"/>Table <text:sequence text:name="Table" text:formula="ooow:Table+1" style:num-format="1"> Update Fields to calculate numbers</text:sequence>:<text:span text:style-name="MMD-Italic">caption</text:span><text:bookmark-end text:name="bar"/></text:p>
 
 
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">foo</text:p>
+
+<table:table>
+<table:table-column/>
+<table:table-column/>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> foo<text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="Table_20_Heading"> bar<text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+
+<table:table-row>
+<table:table-cell>
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="MMD-Italic">foo</text:span><text:tab/></text:p>
+</table:table-cell>
+<table:table-cell>
+<text:p text:style-name="MMD-Table-Center"> <text:span text:style-name="MMD-Italic">bar</text:span><text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+<table:table-row>
+<table:table-cell table:number-columns-spanned="2">
+<text:p text:style-name="MMD-Table"> <text:span text:style-name="MMD-Bold">foo bar</text:span><text:tab/></text:p>
+</table:table-cell>
+</table:table-row>
+
+</table:table>
+</text:list-item>
+
+</text:list>
+
 <table:table>
 <table:table-column/>
 <table:table-column/>

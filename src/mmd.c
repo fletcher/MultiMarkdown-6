@@ -914,6 +914,7 @@ void deindent_line(token  * line) {
 			if (line->child) {
 				line->child->prev = NULL;
 				line->child->tail = t->tail;
+				line->start = line->child->start;
 			}
 
 			token_free(t);

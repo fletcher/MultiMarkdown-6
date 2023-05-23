@@ -63,6 +63,14 @@ latexconfig:	article
 [*caption*][bar]
 
 
+* foo
+
+	| foo	| bar	|  
+	| -----+ | :--:+	|  
+	| *foo*	| *bar*	|  
+	| **foo bar**	||  
+
+
 |    bat   ||
 | foo | bar |
 | --- | --- |

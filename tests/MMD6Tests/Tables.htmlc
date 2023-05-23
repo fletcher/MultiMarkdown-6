@@ -57,6 +57,15 @@ latexconfig:	article</p>
 | foo | bar |
 [<em>caption</em>][bar]</p>
 
+<ul>
+<li><p>foo</p>
+
+<p>| foo	| bar	|<br />
+| -----+ | :--:+	|<br />
+| <em>foo</em>	| <em>bar</em>	|<br />
+| <strong>foo bar</strong>	||</p></li>
+</ul>
+
 <p>| bat ||
 | foo | bar |
 | --- | --- |
