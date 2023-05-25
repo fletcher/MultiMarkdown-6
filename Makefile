@@ -35,10 +35,10 @@ html: $(htmlfiles)
 epub: MMD_Users_Guide.epub
 
 pdf: MMD_Users_Guide.tex
-	latexmk MMD_Users_Guide
+	pdflatex MMD_Users_Guide
 	makeglossaries MMD_Users_Guide
-	latexmk MMD_Users_Guide
-	latexmk MMD_Users_Guide
+	pdflatex MMD_Users_Guide
+	pdflatex MMD_Users_Guide
 	latexmk -c MMD_Users_Guide
 	rm MMD_Users_Guide.tex MMD_Users_Guide.a* MMD_Users_Guide.gl*
 
