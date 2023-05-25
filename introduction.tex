@@ -13,13 +13,13 @@
 \chapter{Introduction}
 \label{introduction}
 
-MultiMarkdown is a superset of the \href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }} lightweight markup syntax with support for additional output formats and features.
+MultiMarkdown is a superset of the \href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}markdown\slash{}}} lightweight markup syntax with support for additional output formats and features.
 
 \section{What is Markdown?}
 \label{whatismarkdown}
 
 To understand what MultiMarkdown is, you first should be familiar with
-\href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }}. The best description of what Markdown is comes from John Gruber's
+\href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}markdown\slash{}}}. The best description of what Markdown is comes from John Gruber's
 Markdown web site:
 
 \begin{quote}
@@ -43,7 +43,7 @@ document should be publishable as-is, as plain text, without looking
 like it's been marked up with tags or formatting instructions. While
 Markdown's syntax has been influenced by several existing
 text-to-HTML filters, the single biggest source of inspiration for
-Markdown's syntax is the format of plain text email. --- \href{http://daringfireball.net/projects/markdown/}{John Gruber}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }}
+Markdown's syntax is the format of plain text email. --- \href{http://daringfireball.net/projects/markdown/}{John Gruber}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}markdown\slash{}}}
 \end{quote}
 
 \section{What is MultiMarkdown?}
@@ -53,7 +53,7 @@ Markdown is great, but it lacked a few features that would allow it to work with
 
 I wrote MultiMarkdown in order to leverage Markdown's syntax, but to extend it to work with complete documents that could ultimately be converted from text into other formats, including complete HTML documents, LaTeX, PDF, and ODF.
 
-In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.
+In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}}. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.
 
 John Gruber may disagree with me, but I really did try to stick with his proclaimed vision whenever I added a new syntax format to MultiMarkdown. The quality that attracted me to Markdown the most was its clean format. Reading a plain text document written in Markdown is \emph{easy}. It makes sense, and it looks like it was designed for people, not computers. To the extent possible, I tried to keep this same concept in mind when working on MultiMarkdown.
 
@@ -113,29 +113,29 @@ These features have prompted several people to use MultiMarkdown in the process 
 
 There are many other reasons to use MultiMarkdown, but I won't get into all of them here.
 
-\emph{By the way} --- the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the \gls{MMD} source for any page, add \texttt{.txt} to the end of the URL. If the URL ends with \texttt{\slash }, then add \texttt{index.txt} to the end instead. The main MultiMarkdown page, for example, would be \href{http://fletcherpenney.net/multimarkdown/index.txt}{http:\slash \slash fletcherpenney.net\slash multimarkdown\slash index.txt}.
+\emph{By the way} --- the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the \gls{MMD} source for any page, add \texttt{.txt} to the end of the URL. If the URL ends with \texttt{\slash{}}, then add \texttt{index.txt} to the end instead. The main MultiMarkdown page, for example, would be \href{http://fletcherpenney.net/multimarkdown/index.txt}{http:\slash{}\slash{}fletcherpenney.net\slash{}multimarkdown\slash{}index.txt}.
 
 \section{What Are the Different Versions of MultiMarkdown?}
 \label{whatarethedifferentversionsofmultimarkdown}
 
 The first real version of MultiMarkdown was version 2. It was a modification of the original \texttt{Markdown.pl} script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.
 
-\href{https://github.com/fletcher/peg-multimarkdown}{MultiMarkdown 3}\footnote{\href{https://github.com/fletcher/peg-multimarkdown}{https:\slash \slash github.com\slash fletcher\slash peg-multimarkdown}} (aka \texttt{peg-multimarkdown}) was built using John MacFarlane's \href{https://github.com/jgm/peg-markdown}{peg-markdown}\footnote{\href{https://github.com/jgm/peg-markdown}{https:\slash \slash github.com\slash jgm\slash peg-markdown}} as a base. It was \emph{much} faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.
+\href{https://github.com/fletcher/peg-multimarkdown}{MultiMarkdown 3}\footnote{\href{https://github.com/fletcher/peg-multimarkdown}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}peg-multimarkdown}} (aka \texttt{peg-multimarkdown}) was built using John MacFarlane's \href{https://github.com/jgm/peg-markdown}{peg-markdown}\footnote{\href{https://github.com/jgm/peg-markdown}{https:\slash{}\slash{}github.com\slash{}jgm\slash{}peg-markdown}} as a base. It was \emph{much} faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.
 
-\href{http://github.com/fletcher/MultiMarkdown-4}{MultiMarkdown 4}\footnote{\href{http://github.com/fletcher/MultiMarkdown-4}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-4}} was a complete rewrite, keeping only the PEG and a few utility routines from \gls{MMD} v3. This release fixed memory leaks and other problems from earlier \gls{MMD} releases; it is safe to use in multithreaded applications and adds many new features.
+\href{http://github.com/fletcher/MultiMarkdown-4}{MultiMarkdown 4}\footnote{\href{http://github.com/fletcher/MultiMarkdown-4}{http:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-4}} was a complete rewrite, keeping only the PEG and a few utility routines from \gls{MMD} v3. This release fixed memory leaks and other problems from earlier \gls{MMD} releases; it is safe to use in multithreaded applications and adds many new features.
 
-\href{http://github.com/fletcher/MultiMarkdown-5}{MultiMarkdown 5}\footnote{\href{http://github.com/fletcher/MultiMarkdown-5}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-5}} was mostly a restructuring of version 4, followed by further incremental improvements.
+\href{http://github.com/fletcher/MultiMarkdown-5}{MultiMarkdown 5}\footnote{\href{http://github.com/fletcher/MultiMarkdown-5}{http:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-5}} was mostly a restructuring of version 4, followed by further incremental improvements.
 
-\href{http://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown 6}\footnote{\href{http://github.com/fletcher/MultiMarkdown-6}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6}} was a complete rewrite from the ground up. The primary goals were:
+\href{http://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown 6}\footnote{\href{http://github.com/fletcher/MultiMarkdown-6}{http:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6}} was a complete rewrite from the ground up. The primary goals were:
 
 \begin{itemize}
-\item Improved performance -- v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by \href{http://www.hwaci.com/sw/lemon/}{lemon}\footnote{\href{http://www.hwaci.com/sw/lemon/}{http:\slash \slash www.hwaci.com\slash sw\slash lemon\slash }}. This is vastly faster than the PEG parser of versions 3--5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, \emph{and} provides more features.
+\item Improved performance -- v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by \href{http://www.hwaci.com/sw/lemon/}{lemon}\footnote{\href{http://www.hwaci.com/sw/lemon/}{http:\slash{}\slash{}www.hwaci.com\slash{}sw\slash{}lemon\slash{}}}. This is vastly faster than the PEG parser of versions 3--5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, \emph{and} provides more features.
 
 \item Improved accuracy and consistency -- v6 uses an entirely new test suite in order to ensure more consistent parsing across various edge cases.
 
 \item New features -- several features were added to v6, and several were completely restructured to provide various improvements.
 
-\item The v6 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{QuickStart guide}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash QuickStart}} documents some of the changes in this latest iteration.
+\item The v6 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{QuickStart guide}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6\slash{}tree\slash{}master\slash{}QuickStart}} documents some of the changes in this latest iteration.
 
 \end{itemize}
 
@@ -145,9 +145,9 @@ The first real version of MultiMarkdown was version 2. It was a modification of 
 This guide has been rewritten with the following changes:
 
 \begin{itemize}
-\item The source is now in the \texttt{gh\_pages} branch of the \href{https://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown project}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6}}. You can submit changes as a pull request, or by writing me.
+\item The source is now in the \texttt{gh\_pages} branch of the \href{https://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown project}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6}}. You can submit changes as a pull request, or by writing me.
 
-\item You can access this information on the web at \href{http://fletcher.github.io/MultiMarkdown-5}{http:\slash \slash fletcher.github.io\slash MultiMarkdown-5}
+\item You can access this information on the web at \href{http://fletcher.github.io/MultiMarkdown-5}{http:\slash{}\slash{}fletcher.github.io\slash{}MultiMarkdown-5}
 
 \item The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.
 

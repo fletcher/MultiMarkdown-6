@@ -23,116 +23,116 @@ Revised 2018-11-29</p>
 <div class="TOC">
 
 <ul>
-<li><a href="#title">MultiMarkdown User's Guide </a></li>
-<li><a href="#introduction">Introduction </a>
+<li><a href="#title">MultiMarkdown User's Guide</a></li>
+<li><a href="#introduction">Introduction</a>
 <ul>
-<li><a href="#whatismarkdown">What is Markdown? </a></li>
-<li><a href="#whatismultimarkdown">What is MultiMarkdown? </a></li>
-<li><a href="#whyshouldiusemultimarkdown">Why should I use MultiMarkdown? </a></li>
-<li><a href="#whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown? </a></li>
-<li><a href="#whereisthisguidekept">Where is this Guide Kept? </a></li>
+<li><a href="#whatismarkdown">What is Markdown?</a></li>
+<li><a href="#whatismultimarkdown">What is MultiMarkdown?</a></li>
+<li><a href="#whyshouldiusemultimarkdown">Why should I use MultiMarkdown?</a></li>
+<li><a href="#whatarethedifferentversionsofmultimarkdown">What Are the Different Versions of MultiMarkdown?</a></li>
+<li><a href="#whereisthisguidekept">Where is this Guide Kept?</a></li>
 </ul>
 </li>
-<li><a href="#usage">Usage </a>
+<li><a href="#usage">Usage</a>
 <ul>
-<li><a href="#basiccommandlineusage">Basic Command Line Usage </a></li>
-<li><a href="#batchmode">Batch Mode </a></li>
-<li><a href="#transclusiononly">Transclusion Only </a></li>
-<li><a href="#conveniencescripts">Convenience Scripts </a></li>
-<li><a href="#advancedoptions">Advanced Options </a></li>
+<li><a href="#basiccommandlineusage">Basic Command Line Usage</a></li>
+<li><a href="#batchmode">Batch Mode</a></li>
+<li><a href="#transclusiononly">Transclusion Only</a></li>
+<li><a href="#conveniencescripts">Convenience Scripts</a></li>
+<li><a href="#advancedoptions">Advanced Options</a></li>
 </ul>
 </li>
-<li><a href="#syntax">Syntax </a>
+<li><a href="#syntax">Syntax</a>
 <ul>
 <li><a href="#abbreviationsoracronyms">Abbreviations (or Acronyms)</a></li>
-<li><a href="#citations">Citations </a>
+<li><a href="#citations">Citations</a>
 <ul>
-<li><a href="#inlinecitations">Inline Citations </a></li>
-<li><a href="#bibtexcitations">BibTeX Citations </a></li>
+<li><a href="#inlinecitations">Inline Citations</a></li>
+<li><a href="#bibtexcitations">BibTeX Citations</a></li>
 </ul>
 </li>
-<li><a href="#criticmarkup">CriticMarkup </a>
+<li><a href="#criticmarkup">CriticMarkup</a>
 <ul>
-<li><a href="#whatiscriticmarkup">What Is CriticMarkup? </a></li>
-<li><a href="#usingcriticmarkupwithmultimarkdown">Using CriticMarkup With MultiMarkdown </a></li>
-<li><a href="#thecriticmarkupsyntax">The CriticMarkup Syntax </a></li>
-<li><a href="#criticmarkuplimitations">CriticMarkup Limitations </a></li>
+<li><a href="#whatiscriticmarkup">What Is CriticMarkup?</a></li>
+<li><a href="#usingcriticmarkupwithmultimarkdown">Using CriticMarkup With MultiMarkdown</a></li>
+<li><a href="#thecriticmarkupsyntax">The CriticMarkup Syntax</a></li>
+<li><a href="#criticmarkuplimitations">CriticMarkup Limitations</a></li>
 <li><a href="#myphilosophyoncriticmarkup">My philosophy on CriticMarkup</a></li>
 </ul>
 </li>
-<li><a href="#cross-references">Cross-References </a></li>
-<li><a href="#definitionlists">Definition Lists </a></li>
-<li><a href="#escapednewlines">Escaped newlines </a></li>
-<li><a href="#fencedcodeblocks">Fenced Code Blocks </a></li>
-<li><a href="#filetransclusion">File Transclusion </a>
+<li><a href="#cross-references">Cross-References</a></li>
+<li><a href="#definitionlists">Definition Lists</a></li>
+<li><a href="#escapednewlines">Escaped newlines</a></li>
+<li><a href="#fencedcodeblocks">Fenced Code Blocks</a></li>
+<li><a href="#filetransclusion">File Transclusion</a>
 <ul>
-<li><a href="#searchpaths">Search Paths </a></li>
-<li><a href="#wildcardextensions">Wildcard Extensions </a></li>
-<li><a href="#transclusionpreprocessing">Transclusion Preprocessing </a></li>
+<li><a href="#searchpaths">Search Paths</a></li>
+<li><a href="#wildcardextensions">Wildcard Extensions</a></li>
+<li><a href="#transclusionpreprocessing">Transclusion Preprocessing</a></li>
 </ul>
 </li>
-<li><a href="#footnotes">Footnotes </a></li>
-<li><a href="#glossaries">Glossaries </a>
+<li><a href="#footnotes">Footnotes</a></li>
+<li><a href="#glossaries">Glossaries</a>
 <ul>
-<li><a href="#latexglossaries">LaTeX Glossaries </a></li>
+<li><a href="#latexglossaries">LaTeX Glossaries</a></li>
 </ul>
 </li>
-<li><a href="#images">Images </a></li>
-<li><a href="#linkandimageattributes">Link and Image Attributes </a></li>
-<li><a href="#math">Math </a>
+<li><a href="#images">Images</a></li>
+<li><a href="#linkandimageattributes">Link and Image Attributes</a></li>
+<li><a href="#math">Math</a>
 <ul>
-<li><a href="#superscriptsandsubscripts">Superscripts and Subscripts </a></li>
+<li><a href="#superscriptsandsubscripts">Superscripts and Subscripts</a></li>
 </ul>
 </li>
-<li><a href="#metadata">Metadata </a></li>
-<li><a href="#metadatavariables">Metadata &#8220;Variables&#8221; </a></li>
-<li><a href="#standardmetadatakeys">&#8220;Standard&#8221; Metadata keys </a>
+<li><a href="#metadata">Metadata</a></li>
+<li><a href="#metadatavariables">Metadata &#8220;Variables&#8221;</a></li>
+<li><a href="#standardmetadatakeys">&#8220;Standard&#8221; Metadata keys</a>
 <ul>
-<li><a href="#author">Author </a></li>
-<li><a href="#affiliation">Affiliation </a></li>
-<li><a href="#baseheaderlevel">Base Header Level </a></li>
-<li><a href="#bibliostyle">Biblio Style </a></li>
-<li><a href="#bibtex">BibTeX </a></li>
-<li><a href="#copyright">Copyright </a></li>
-<li><a href="#css">CSS </a></li>
-<li><a href="#date">Date </a></li>
-<li><a href="#htmlheader">HTML Header </a></li>
-<li><a href="#htmlfooter">HTML Footer </a></li>
-<li><a href="#language">Language </a></li>
-<li><a href="#latexauthor">LaTeX Author </a></li>
-<li><a href="#latexbegin">LaTeX Begin </a></li>
-<li><a href="#latexconfig">LaTeX Config </a></li>
-<li><a href="#latexfooter">LaTeX Footer </a></li>
-<li><a href="#latexheader">LaTeX Header </a></li>
-<li><a href="#latexleader">LaTeX Leader </a></li>
-<li><a href="#latexmode">LaTeX Mode </a></li>
-<li><a href="#latextitle">LaTeX Title </a></li>
-<li><a href="#mmdheader">MMD Header </a></li>
-<li><a href="#mmdfooter">MMD Footer </a></li>
-<li><a href="#odfheader">ODF Header </a></li>
-<li><a href="#quoteslanguage">Quotes Language </a></li>
-<li><a href="#title">Title </a></li>
-<li><a href="#transcludebase">Transclude Base </a></li>
+<li><a href="#author">Author</a></li>
+<li><a href="#affiliation">Affiliation</a></li>
+<li><a href="#baseheaderlevel">Base Header Level</a></li>
+<li><a href="#bibliostyle">Biblio Style</a></li>
+<li><a href="#bibtex">BibTeX</a></li>
+<li><a href="#copyright">Copyright</a></li>
+<li><a href="#css">CSS</a></li>
+<li><a href="#date">Date</a></li>
+<li><a href="#htmlheader">HTML Header</a></li>
+<li><a href="#htmlfooter">HTML Footer</a></li>
+<li><a href="#language">Language</a></li>
+<li><a href="#latexauthor">LaTeX Author</a></li>
+<li><a href="#latexbegin">LaTeX Begin</a></li>
+<li><a href="#latexconfig">LaTeX Config</a></li>
+<li><a href="#latexfooter">LaTeX Footer</a></li>
+<li><a href="#latexheader">LaTeX Header</a></li>
+<li><a href="#latexleader">LaTeX Leader</a></li>
+<li><a href="#latexmode">LaTeX Mode</a></li>
+<li><a href="#latextitle">LaTeX Title</a></li>
+<li><a href="#mmdheader">MMD Header</a></li>
+<li><a href="#mmdfooter">MMD Footer</a></li>
+<li><a href="#odfheader">ODF Header</a></li>
+<li><a href="#quoteslanguage">Quotes Language</a></li>
+<li><a href="#title">Title</a></li>
+<li><a href="#transcludebase">Transclude Base</a></li>
 </ul>
 </li>
-<li><a href="#rawsource">Raw Source </a></li>
-<li><a href="#smarttypography">Smart Typography </a></li>
-<li><a href="#tableofcontents">Table of Contents </a></li>
-<li><a href="#tables">Tables </a>
+<li><a href="#rawsource">Raw Source</a></li>
+<li><a href="#smarttypography">Smart Typography</a></li>
+<li><a href="#tableofcontents">Table of Contents</a></li>
+<li><a href="#tables">Tables</a>
 <ul>
-<li><a href="#tablebasics">Table Basics </a></li>
-<li><a href="#tablerules">Table Rules </a></li>
-<li><a href="#limitationsoftables">Limitations of Tables </a></li>
+<li><a href="#tablebasics">Table Basics</a></li>
+<li><a href="#tablerules">Table Rules</a></li>
+<li><a href="#limitationsoftables">Limitations of Tables</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#fileformats">File Formats </a>
+<li><a href="#fileformats">File Formats</a>
 <ul>
-<li><a href="#plaintext">Plain Text </a></li>
-<li><a href="#opml">OPML </a></li>
-<li><a href="#itmz">ITMZ </a></li>
-<li><a href="#advanceduse">Advanced Use </a></li>
+<li><a href="#plaintext">Plain Text</a></li>
+<li><a href="#opml">OPML</a></li>
+<li><a href="#itmz">ITMZ</a></li>
+<li><a href="#advanceduse">Advanced Use</a></li>
 </ul>
 </li>
 </ul>
@@ -663,13 +663,13 @@ Orange
 <blockquote>
 <dl>
 <dt>Apple</dt>
-<dd> Pomaceous fruit of plants of the genus Malus in
+<dd>Pomaceous fruit of plants of the genus Malus in
 the family Rosaceae.</dd>
 
-<dd> An american computer company.</dd>
+<dd>An american computer company.</dd>
 
 <dt>Orange</dt>
-<dd> The fruit of an evergreen tree of the genus Citrus.</dd>
+<dd>The fruit of an evergreen tree of the genus Citrus.</dd>
 </dl>
 </blockquote>
 
@@ -917,7 +917,7 @@ memoir class.</p></li>
 <li><p>Then you run the usual pdflatex command again a few times.</p></li>
 </ol>
 
-<p>Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like <code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/">TeXShop</a>, this is the way to go.</p>
+<p>Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like <code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/" title="TeXShop Homepage">TeXShop</a>, this is the way to go.</p>
 
 <pre><code>#!/bin/	
 
@@ -1543,7 +1543,7 @@ etc.
 <ol>
 
 <li id="fn:1">
-<p>Here is the text of the footnote itself. <a href="#fnref:1" title="return to body" class="reversefootnote">&#160;&#8617;</a></p>
+<p>Here is the text of the footnote itself. <a href="#fnref:1" title="return to body" class="reversefootnote">&#160;&#8617;&#xfe0e;</a></p>
 </li>
 
 </ol>
@@ -1554,7 +1554,7 @@ etc.
 <ol>
 
 <li id="gn:1">
-glossary: <p>The glossary collects information about important terms used in your document <a href="#gnref:1" title="return to body" class="reverseglossary">&#160;&#8617;</a></p>
+glossary: <p>The glossary collects information about important terms used in your document <a href="#gnref:1" title="return to body" class="reverseglossary">&#160;&#8617;&#xfe0e;</a></p>
 </li>
 
 </ol>

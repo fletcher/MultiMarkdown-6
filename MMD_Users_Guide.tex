@@ -19,18 +19,17 @@ Version 6.4.0\\
 Revised 2018-11-29
 \end{quote}
 
-\tableofcontents
 
 \chapter{Introduction}
 \label{introduction}
 
-MultiMarkdown is a superset of the \href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }} lightweight markup syntax with support for additional output formats and features.
+MultiMarkdown is a superset of the \href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}markdown\slash{}}} lightweight markup syntax with support for additional output formats and features.
 
 \section{What is Markdown?}
 \label{whatismarkdown}
 
 To understand what MultiMarkdown is, you first should be familiar with
-\href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }}. The best description of what Markdown is comes from John Gruber's
+\href{http://daringfireball.net/projects/markdown/}{Markdown}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}markdown\slash{}}}. The best description of what Markdown is comes from John Gruber's
 Markdown web site:
 
 \begin{quote}
@@ -54,7 +53,7 @@ document should be publishable as-is, as plain text, without looking
 like it's been marked up with tags or formatting instructions. While
 Markdown's syntax has been influenced by several existing
 text-to-HTML filters, the single biggest source of inspiration for
-Markdown's syntax is the format of plain text email. --- \href{http://daringfireball.net/projects/markdown/}{John Gruber}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash \slash daringfireball.net\slash projects\slash markdown\slash }}
+Markdown's syntax is the format of plain text email. --- \href{http://daringfireball.net/projects/markdown/}{John Gruber}\footnote{\href{http://daringfireball.net/projects/markdown/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}markdown\slash{}}}
 \end{quote}
 
 \section{What is MultiMarkdown?}
@@ -64,7 +63,7 @@ Markdown is great, but it lacked a few features that would allow it to work with
 
 I wrote MultiMarkdown in order to leverage Markdown's syntax, but to extend it to work with complete documents that could ultimately be converted from text into other formats, including complete HTML documents, LaTeX, PDF, and ODF.
 
-In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.
+In addition to the ability to work with complete documents and conversion to formats beyond HTML, the Markdown syntax was lacking a few other things. Michel Fortin added a few additional syntax features when writing \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}}. Some of his ideas were implemented and expanded on in MultiMarkdown, including tables, footnotes, citation support, image and link attributes, cross-references, math support, and more.
 
 John Gruber may disagree with me, but I really did try to stick with his proclaimed vision whenever I added a new syntax format to MultiMarkdown. The quality that attracted me to Markdown the most was its clean format. Reading a plain text document written in Markdown is \emph{easy}. It makes sense, and it looks like it was designed for people, not computers. To the extent possible, I tried to keep this same concept in mind when working on MultiMarkdown.
 
@@ -124,29 +123,29 @@ These features have prompted several people to use MultiMarkdown in the process 
 
 There are many other reasons to use MultiMarkdown, but I won't get into all of them here.
 
-\emph{By the way} --- the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the \gls{MMD} source for any page, add \texttt{.txt} to the end of the URL. If the URL ends with \texttt{\slash }, then add \texttt{index.txt} to the end instead. The main MultiMarkdown page, for example, would be \href{http://fletcherpenney.net/multimarkdown/index.txt}{http:\slash \slash fletcherpenney.net\slash multimarkdown\slash index.txt}.
+\emph{By the way} --- the MultiMarkdown web site is, of course, created using MultiMarkdown. To view the \gls{MMD} source for any page, add \texttt{.txt} to the end of the URL. If the URL ends with \texttt{\slash{}}, then add \texttt{index.txt} to the end instead. The main MultiMarkdown page, for example, would be \href{http://fletcherpenney.net/multimarkdown/index.txt}{http:\slash{}\slash{}fletcherpenney.net\slash{}multimarkdown\slash{}index.txt}.
 
 \section{What Are the Different Versions of MultiMarkdown?}
 \label{whatarethedifferentversionsofmultimarkdown}
 
 The first real version of MultiMarkdown was version 2. It was a modification of the original \texttt{Markdown.pl} script. It worked fine, but was slow when parsing longer documents. The plain text was converted to HTML, and then XSLT was used to convert the HTML to other formats (primarily LaTeX). Over time, maintaining the complicated nest of regular expressions became more difficult, and a better approach was needed.
 
-\href{https://github.com/fletcher/peg-multimarkdown}{MultiMarkdown 3}\footnote{\href{https://github.com/fletcher/peg-multimarkdown}{https:\slash \slash github.com\slash fletcher\slash peg-multimarkdown}} (aka \texttt{peg-multimarkdown}) was built using John MacFarlane's \href{https://github.com/jgm/peg-markdown}{peg-markdown}\footnote{\href{https://github.com/jgm/peg-markdown}{https:\slash \slash github.com\slash jgm\slash peg-markdown}} as a base. It was \emph{much} faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.
+\href{https://github.com/fletcher/peg-multimarkdown}{MultiMarkdown 3}\footnote{\href{https://github.com/fletcher/peg-multimarkdown}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}peg-multimarkdown}} (aka \texttt{peg-multimarkdown}) was built using John MacFarlane's \href{https://github.com/jgm/peg-markdown}{peg-markdown}\footnote{\href{https://github.com/jgm/peg-markdown}{https:\slash{}\slash{}github.com\slash{}jgm\slash{}peg-markdown}} as a base. It was \emph{much} faster than version 2, and the underlying PEG (parsing expression grammar) made things more reliable. There were still issues and limitations (some inherited from peg-markdown, but most were my errors), which lead to the development of version 4.
 
-\href{http://github.com/fletcher/MultiMarkdown-4}{MultiMarkdown 4}\footnote{\href{http://github.com/fletcher/MultiMarkdown-4}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-4}} was a complete rewrite, keeping only the PEG and a few utility routines from \gls{MMD} v3. This release fixed memory leaks and other problems from earlier \gls{MMD} releases; it is safe to use in multithreaded applications and adds many new features.
+\href{http://github.com/fletcher/MultiMarkdown-4}{MultiMarkdown 4}\footnote{\href{http://github.com/fletcher/MultiMarkdown-4}{http:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-4}} was a complete rewrite, keeping only the PEG and a few utility routines from \gls{MMD} v3. This release fixed memory leaks and other problems from earlier \gls{MMD} releases; it is safe to use in multithreaded applications and adds many new features.
 
-\href{http://github.com/fletcher/MultiMarkdown-5}{MultiMarkdown 5}\footnote{\href{http://github.com/fletcher/MultiMarkdown-5}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-5}} was mostly a restructuring of version 4, followed by further incremental improvements.
+\href{http://github.com/fletcher/MultiMarkdown-5}{MultiMarkdown 5}\footnote{\href{http://github.com/fletcher/MultiMarkdown-5}{http:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-5}} was mostly a restructuring of version 4, followed by further incremental improvements.
 
-\href{http://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown 6}\footnote{\href{http://github.com/fletcher/MultiMarkdown-6}{http:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6}} was a complete rewrite from the ground up. The primary goals were:
+\href{http://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown 6}\footnote{\href{http://github.com/fletcher/MultiMarkdown-6}{http:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6}} was a complete rewrite from the ground up. The primary goals were:
 
 \begin{itemize}
-\item Improved performance -- v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by \href{http://www.hwaci.com/sw/lemon/}{lemon}\footnote{\href{http://www.hwaci.com/sw/lemon/}{http:\slash \slash www.hwaci.com\slash sw\slash lemon\slash }}. This is vastly faster than the PEG parser of versions 3--5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, \emph{and} provides more features.
+\item Improved performance -- v6 uses a parser that was largely written by hand, combined with a few pieces that are generated by \href{http://www.hwaci.com/sw/lemon/}{lemon}\footnote{\href{http://www.hwaci.com/sw/lemon/}{http:\slash{}\slash{}www.hwaci.com\slash{}sw\slash{}lemon\slash{}}}. This is vastly faster than the PEG parser of versions 3--5. There is probably still room to improve the code, but v6 is now almost as fast as the fastest Markdown parsers out there, \emph{and} provides more features.
 
 \item Improved accuracy and consistency -- v6 uses an entirely new test suite in order to ensure more consistent parsing across various edge cases.
 
 \item New features -- several features were added to v6, and several were completely restructured to provide various improvements.
 
-\item The v6 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{QuickStart guide}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash QuickStart}} documents some of the changes in this latest iteration.
+\item The v6 \href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{QuickStart guide}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/QuickStart}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6\slash{}tree\slash{}master\slash{}QuickStart}} documents some of the changes in this latest iteration.
 
 \end{itemize}
 
@@ -156,9 +155,9 @@ The first real version of MultiMarkdown was version 2. It was a modification of 
 This guide has been rewritten with the following changes:
 
 \begin{itemize}
-\item The source is now in the \texttt{gh\_pages} branch of the \href{https://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown project}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6}}. You can submit changes as a pull request, or by writing me.
+\item The source is now in the \texttt{gh\_pages} branch of the \href{https://github.com/fletcher/MultiMarkdown-6}{MultiMarkdown project}\footnote{\href{https://github.com/fletcher/MultiMarkdown-6}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6}}. You can submit changes as a pull request, or by writing me.
 
-\item You can access this information on the web at \href{http://fletcher.github.io/MultiMarkdown-5}{http:\slash \slash fletcher.github.io\slash MultiMarkdown-5}
+\item You can access this information on the web at \href{http://fletcher.github.io/MultiMarkdown-5}{http:\slash{}\slash{}fletcher.github.io\slash{}MultiMarkdown-5}
 
 \item The source itself is a collection of MultiMarkdown text documents that use the transclusion features to create a master document from the individual source files. These documents can be viewed in the browser as HTML, or downloaded as PDF or OpenDocument files.
 
@@ -245,7 +244,7 @@ multimarkdown -f, multimarkdown --full
 multimarkdown -s, multimarkdown --snippet
 \end{verbatim}
 
-Control whether MultiMarkdown outputs a complete document or just a ``snippet''. A snippet includes just the section of text included in the document. A full\slash complete document includes header information and other structure to form a complete HTML or LaTeX document, for example. Additionally, if metadata is included (with a few exceptions), MultiMarkdown will automatically produce a complete document.
+Control whether MultiMarkdown outputs a complete document or just a ``snippet''. A snippet includes just the section of text included in the document. A full\slash{}complete document includes header information and other structure to form a complete HTML or LaTeX document, for example. Additionally, if metadata is included (with a few exceptions), MultiMarkdown will automatically produce a complete document.
 
 \begin{verbatim}
 multimarkdown -c, multimarkdown --compatibility
@@ -253,9 +252,9 @@ multimarkdown -c, multimarkdown --compatibility
 
 Compatibility mode forces MultiMarkdown to create HTML that matches the output of basic Markdown. In other words, it disables all the new features added in MultiMarkdown.
 
-There are a few exceptions, however. The original \texttt{Markdown.pl} script used recursive regular expressions to perform parsing. This is very flexible (though error-prone), but is extremely slow. MultiMarkdown v6 has a \emph{much} faster parser, but there is one key limitation -- it parses in order and can't look ahead indefinitely to see what might be coming up. The main situations where this occurs is in handling fenced code blocks (not a problem in compatibility mode, since they don't exist in Markdown) and in handling raw HTML. For more information on this, see \href{https://github.com/fletcher/MultiMarkdown-6/issues/135}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash issues\slash 135}.
+There are a few exceptions, however. The original \texttt{Markdown.pl} script used recursive regular expressions to perform parsing. This is very flexible (though error-prone), but is extremely slow. MultiMarkdown v6 has a \emph{much} faster parser, but there is one key limitation -- it parses in order and can't look ahead indefinitely to see what might be coming up. The main situations where this occurs is in handling fenced code blocks (not a problem in compatibility mode, since they don't exist in Markdown) and in handling raw HTML. For more information on this, see \href{https://github.com/fletcher/MultiMarkdown-6/issues/135}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6\slash{}issues\slash{}135}.
 
-The other potential difference is that MultiMarkdown v6 has a smarter strong\slash emphasis parser than \texttt{Markdown.pl} -- it better handles edge cases.
+The other potential difference is that MultiMarkdown v6 has a smarter strong\slash{}emphasis parser than \texttt{Markdown.pl} -- it better handles edge cases.
 
 Because of these exceptions, there may be a few rare situations where the output generated by MultiMarkdown v6 does not match that by \texttt{Markdown.pl}. If you find what you believe to be a bug that doesn't fit one of these situations, please let me know and I'll take a look. The goal is to match the original Markdown output as much as possible, but not to match the many bugs that are contained in \texttt{Markdown.pl}.
 
@@ -281,7 +280,7 @@ Disable smart quotes (e.g. \texttt{"foo"} does not become \texttt{“foo”}).
 multimarkdown --nolabels
 \end{verbatim}
 
-Disables automatic generation of labels\slash anchors for headers.
+Disables automatic generation of labels\slash{}anchors for headers.
 
 \begin{verbatim}
 multimarkdown --notransclude
@@ -293,18 +292,18 @@ Disables file transclusion that allows inserting the contents of a file inside a
 multimarkdown --opml
 \end{verbatim}
 
-Allows MultiMarkdown to read an \href{https://en.wikipedia.org/wiki/OPML}{OPML}\footnote{\href{https://en.wikipedia.org/wiki/OPML}{https:\slash \slash en.wikipedia.org\slash wiki\slash OPML}} source file. Outline Processor Markup Language is an XML file format commonly used for outliners and mind mapping programs. MultiMarkdown can read\slash write to this format in addition to using regular plain text files.
+Allows MultiMarkdown to read an \href{https://en.wikipedia.org/wiki/OPML}{OPML}\footnote{\href{https://en.wikipedia.org/wiki/OPML}{https:\slash{}\slash{}en.wikipedia.org\slash{}wiki\slash{}OPML}} source file. Outline Processor Markup Language is an XML file format commonly used for outliners and mind mapping programs. MultiMarkdown can read\slash{}write to this format in addition to using regular plain text files.
 
 \begin{verbatim}
 multimarkdown --itmz
 \end{verbatim}
 
-Similar to OPML, ITMZ is an outlining format specific to the \href{https://www.toketaware.com/}{iThoughts}\footnote{\href{https://www.toketaware.com/}{https:\slash \slash www.toketaware.com\slash }} mind-mapping program. I added this format because:
+Similar to OPML, ITMZ is an outlining format specific to the \href{https://www.toketaware.com/}{iThoughts}\footnote{\href{https://www.toketaware.com/}{https:\slash{}\slash{}www.toketaware.com\slash{}}} mind-mapping program. I added this format because:
 
 \begin{enumerate}
 \item iThoughts is my preferred mind-mapping tool
 
-\item iThoughts supports OPML, but the support is (unfortunately) limited. I was unable to convince the author of the benefits of better read\slash write support for OPML.
+\item iThoughts supports OPML, but the support is (unfortunately) limited. I was unable to convince the author of the benefits of better read\slash{}write support for OPML.
 
 \item Adding ITMZ support after adding OPML support wasn't that hard.
 
@@ -314,7 +313,7 @@ Similar to OPML, ITMZ is an outlining format specific to the \href{https://www.t
 
 Though I reluctantly added support for this format to MultiMarkdown, I will not be adding support for a laundry list of other formats. Plain text and OPML should be enough. If the use of these outline file formats for MultiMarkdown (or regular Markdown) continues to gain traction, then hopefully other developers will include proper OPML support in their programs.
 
-As an aside, the first use of this functionality came when I created an export plug-in for \href{https://www.omnigroup.com/omnioutliner/}{OmniOutliner}\footnote{\href{https://www.omnigroup.com/omnioutliner/}{https:\slash \slash www.omnigroup.com\slash omnioutliner\slash }} that created a plain Markdown\slash MultiMarkdown text file when exporting from an Omnioutliner OPML file.
+As an aside, the first use of this functionality came when I created an export plug-in for \href{https://www.omnigroup.com/omnioutliner/}{OmniOutliner}\footnote{\href{https://www.omnigroup.com/omnioutliner/}{https:\slash{}\slash{}www.omnigroup.com\slash{}omnioutliner\slash{}}} that created a plain Markdown\slash{}MultiMarkdown text file when exporting from an Omnioutliner OPML file.
 
 \begin{verbatim}
 multimarkdown -t, multimarkdown --to=FORMAT
@@ -333,13 +332,13 @@ multimarkdown -a, multimarkdown --accept
 multimarkdown -r, multimarkdown --reject
 \end{verbatim}
 
-Either accept or reject all proposed \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} changes contained within the document before processing. It basically allows you to output a ``before'' and an ``after'' version of a document containing edits. If neither option is used, MultiMarkdown attempts to show the edits in-line, but this is not always possible for poorly structured edits. See the section on \href{http://criticmarkup.com/}{Criticmarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} for more information.
+Either accept or reject all proposed \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash{}\slash{}criticmarkup.com\slash{}}} changes contained within the document before processing. It basically allows you to output a ``before'' and an ``after'' version of a document containing edits. If neither option is used, MultiMarkdown attempts to show the edits in-line, but this is not always possible for poorly structured edits. See the section on \href{http://criticmarkup.com/}{Criticmarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash{}\slash{}criticmarkup.com\slash{}}} for more information.
 
 \begin{verbatim}
 multimarkdown -l, multimarkdown --lang=LANG
 \end{verbatim}
 
-Localize language\slash smart quotes for \texttt{en, es, de, fr, he, nl, sv}. This can also be controlled via metadata.
+Localize language\slash{}smart quotes for \texttt{en, es, de, fr, he, nl, sv}. This can also be controlled via metadata.
 
 \begin{verbatim}
 multimarkdown -m, multimarkdown --metadata-keys
@@ -445,7 +444,7 @@ As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]
 \subsection{BibTeX Citations}
 \label{bibtexcitations}
 
-If you are creating a LaTeX document, and need a bibliography, then you should definitely look into \href{http://www.bibtex.org/}{BibTeX}\footnote{\href{http://www.bibtex.org/}{http:\slash \slash www.bibtex.org\slash }} and \href{http://merkel.zoneo.net/Latex/natbib.php}{natbib}\footnote{\href{http://merkel.zoneo.net/Latex/natbib.php}{http:\slash \slash merkel.zoneo.net\slash Latex\slash natbib.php}}. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.
+If you are creating a LaTeX document, and need a bibliography, then you should definitely look into \href{http://www.bibtex.org/}{BibTeX}\footnote{\href{http://www.bibtex.org/}{http:\slash{}\slash{}www.bibtex.org\slash{}}} and \href{http://merkel.zoneo.net/Latex/natbib.php}{natbib}\footnote{\href{http://merkel.zoneo.net/Latex/natbib.php}{http:\slash{}\slash{}merkel.zoneo.net\slash{}Latex\slash{}natbib.php}}. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.
 
 To use BibTeX in a MultiMarkdown document, you \emph{must} use the \texttt{BibTeX} metadata (\autoref{bibtex}) to specify where your citations are stored. You may \emph{optionally} use the \texttt{biblio style} metadata key.
 
@@ -475,10 +474,10 @@ Since \texttt{natbib} is enabled by default, you have a choice between using the
 \label{whatiscriticmarkup}
 
 \begin{quote}
-CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. \href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }
+CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. \href{http://criticmarkup.com/}{http:\slash{}\slash{}criticmarkup.com\slash{}}
 \end{quote}
 
-CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
+CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash{}\slash{}multimarkdown.com\slash{}}}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash{}\slash{}criticmarkup.com\slash{}}} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
 
 \subsection{Using CriticMarkup With MultiMarkdown}
 \label{usingcriticmarkupwithmultimarkdown}
@@ -568,17 +567,17 @@ I view CriticMarkup as two things (in addition to the actual tools that implemen
 \begin{enumerate}
 \item A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
 
-\item A means to display those notes\slash changes in the HTML output.
+\item A means to display those notes\slash{}changes in the HTML output.
 
 \end{enumerate}
 
 I believe that \#1 is a really great idea, and well implemented. \#2 is not so well implemented, largely due to the ``orthogonal'' nature of CriticMarkup and the underlying Markdown syntax.
 
-CM is designed as a separate layer on top of Markdown\slash MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM\slash Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I've tried a few (fairly creative, in my opinion) approaches, but they didn't work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.
+CM is designed as a separate layer on top of Markdown\slash{}MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM\slash{}Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I've tried a few (fairly creative, in my opinion) approaches, but they didn't work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.
 
 Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a ``finished'' document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that's ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)
 
-There are other CriticMarkup tools besides MultiMarkdown and \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}, and you are more than welcome to use them.
+There are other CriticMarkup tools besides MultiMarkdown and \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash{}\slash{}multimarkdown.com\slash{}}}, and you are more than welcome to use them.
 
 For now, the \emph{official} MultiMarkdown support for CriticMarkup consists of:
 
@@ -623,7 +622,7 @@ and tables which can then be used for cross-references as well.
 \label{definitionlists}
 
 MultiMarkdown has support for definition lists using the same syntax used in
-\href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Specifically:
+\href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}}. Specifically:
 
 \begin{verbatim}
 Apple
@@ -641,14 +640,14 @@ becomes:
 \begin{description}
 \item[Apple]
 
- Pomaceous fruit of plants of the genus Malus in
+Pomaceous fruit of plants of the genus Malus in
 the family Rosaceae.
 
- An american computer company.
+An american computer company.
 
 \item[Orange]
 
- The fruit of an evergreen tree of the genus Citrus.
+The fruit of an evergreen tree of the genus Citrus.
 \end{description}
 \end{quote}
 
@@ -665,12 +664,12 @@ was unable to get Markdown \emph{not} to create paragraphs. Second, I didn't see
 where it mattered - the only difference seems to be aesthetic, and I actually
 prefer the \texttt{<p>} tags in place. Let me know if this is a problem.
 
-See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }} page for more information.
+See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}} page for more information.
 
 \section{Escaped newlines}
 \label{escapednewlines}
 
-Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash \slash github.com\slash njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
+Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash{}\slash{}github.com\slash{}njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
 
 \begin{itemize}
 \item the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them
@@ -777,9 +776,9 @@ path for included files. For example:
  Directory	& Transcluded Filename	& Resolved Path 	\\
 \midrule
 
- \texttt{\slash foo\slash bar\slash }	& \texttt{bat}	& \texttt{\slash foo\slash bar\slash bat}	\\
- \texttt{\slash foo\slash bar\slash }	& \texttt{baz\slash bat}	& \texttt{\slash foo\slash bar\slash baz\slash bat}	\\
- \texttt{\slash foo\slash bar\slash }	& \texttt{..\slash bat} 	& \texttt{\slash foo\slash bat}	\\
+ \texttt{\slash{}foo\slash{}bar\slash{}}	& \texttt{bat}	& \texttt{\slash{}foo\slash{}bar\slash{}bat}	\\
+ \texttt{\slash{}foo\slash{}bar\slash{}}	& \texttt{baz\slash{}bat}	& \texttt{\slash{}foo\slash{}bar\slash{}baz\slash{}bat}	\\
+ \texttt{\slash{}foo\slash{}bar\slash{}}	& \texttt{..\slash{}bat} 	& \texttt{\slash{}foo\slash{}bat}	\\
 \bottomrule
 
 \end{tabulary}
@@ -908,7 +907,7 @@ memoir class.
 
 \end{enumerate}
 
-Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in \texttt{\ensuremath{\sim}\slash Library\slash TeXShop\slash Engines}). You can name it something like \texttt{MemoirGlossary.engine}. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use \href{http://www.uoregon.edu/~koch/texshop/}{TeXShop}\footnote{\href{http://www.uoregon.edu/~koch/texshop/}{http:\slash \slash www.uoregon.edu\slash \ensuremath{\sim}koch\slash texshop\slash }}, this is the way to go.
+Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in \texttt{\ensuremath{\sim}\slash{}Library\slash{}TeXShop\slash{}Engines}). You can name it something like \texttt{MemoirGlossary.engine}. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use \href{http://www.uoregon.edu/~koch/texshop/}{TeXShop}\footnote{\href{http://www.uoregon.edu/~koch/texshop/}{http:\slash{}\slash{}www.uoregon.edu\slash{}\ensuremath{\sim}koch\slash{}texshop\slash{}}}, this is the way to go.
 
 \begin{verbatim}
 #!/bin/	
@@ -980,7 +979,7 @@ syntax is the format of plain text email.
 
 Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.
 
-Then, Choan C. Gálvez \href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{proposed}\footnote{\href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{http:\slash \slash six.pairlist.net\slash pipermail\slash markdown-discuss\slash 2005-October\slash 001578.html}} a brilliantly simple syntax that
+Then, Choan C. Gálvez \href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{proposed}\footnote{\href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{http:\slash{}\slash{}six.pairlist.net\slash{}pipermail\slash{}markdown-discuss\slash{}2005-October\slash{}001578.html}} a brilliantly simple syntax that
 stayed out of the way. By simply appending the attributes to the link
 reference information, which is already removed from the text itself, it
 doesn't disturb the readability.
@@ -1003,7 +1002,7 @@ form of markup, and the the additional tags are hardly that intrusive, and
 they offer a great deal of functionality. They might even be useful in further
 functions (citations?).
 
-The attributes must continue after the other link\slash image data, and may contain
+The attributes must continue after the other link\slash{}image data, and may contain
 newlines, but must start at the beginning of the line. The format is
 \texttt{attribute=value} or \texttt{attribute="multi word value"}. Currently, MultiMarkdown
 does not attempt to interpret or make any use of any of these attributes.
@@ -1018,12 +1017,12 @@ Colored [link](http://example.net "Title" style="color:red")
 \section{Math}
 \label{math}
 
-MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash \slash www1.chapman.edu\slash \ensuremath{\sim}jipsen\slash mathml\slash asciimath.html}} to typeset mathematical equations. There
+MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash{}\slash{}www1.chapman.edu\slash{}\ensuremath{\sim}jipsen\slash{}mathml\slash{}asciimath.html}} to typeset mathematical equations. There
 were benefits to using ASCIIMathML, but also some disadvantages.
 
 When rewriting for MultiMarkdown 3.0, there was no straightforward way to
 implement ASCIIMathML which lead me to look for alternatives. I settled on
-using \href{http://www.mathjax.org/}{MathJax}\footnote{\href{http://www.mathjax.org/}{http:\slash \slash www.mathjax.org\slash }}. The advantage here is that the same syntax is supported by
+using \href{http://www.mathjax.org/}{MathJax}\footnote{\href{http://www.mathjax.org/}{http:\slash{}\slash{}www.mathjax.org\slash{}}}. The advantage here is that the same syntax is supported by
 MathJax in browsers, and in native LaTeX syntax when creating LaTeX documents.
 
 To enable MathJax support in web pages, you have to include a link to an
@@ -1132,7 +1131,7 @@ CSS:      http://example.com/standard.css
 The syntax for including metadata is simple.
 
 \begin{itemize}
-\item The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a \texttt{-{}-{}-} on the line before and after the metadata. The line after the metadata can also be \texttt{...}. This is to provide better compatibility with \href{http://www.yaml.org/}{YAML}\footnote{\href{http://www.yaml.org/}{http:\slash \slash www.yaml.org\slash }}, though MultiMarkdown doesn't support all YAML metadata.
+\item The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a \texttt{-{}-{}-} on the line before and after the metadata. The line after the metadata can also be \texttt{...}. This is to provide better compatibility with \href{http://www.yaml.org/}{YAML}\footnote{\href{http://www.yaml.org/}{http:\slash{}\slash{}www.yaml.org\slash{}}}, though MultiMarkdown doesn't support all YAML metadata.
 
 \item Metadata consists of two parts - the \texttt{key} and the \texttt{value}
 
@@ -1287,7 +1286,7 @@ latex footer:	mmd6-article-footer
 
 The standard LaTeX support files have been updated to support this naming configuration:
 
-\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash texmf\slash tex\slash latex\slash mmd6}
+\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6\slash{}tree\slash{}master\slash{}texmf\slash{}tex\slash{}latex\slash{}mmd6}
 
 \subsection{LaTeX Footer}
 \label{latexfooter}
@@ -1391,7 +1390,7 @@ foo `*bar*`{=html}
 ```
 \end{verbatim}
 
-The contents of the span\slash block will be passed through unchanged.
+The contents of the span\slash{}block will be passed through unchanged.
 
 You can specify which output format is compatible with the specified source:
 
@@ -1411,7 +1410,7 @@ You can specify which output format is compatible with the specified source:
 \section{Smart Typography}
 \label{smarttypography}
 
-MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash \slash daringfireball.net\slash projects\slash smartypants\slash }} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
+MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}smartypants\slash{}}} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
 
 Just like the original, MultiMarkdown converts:
 
@@ -1467,7 +1466,7 @@ As of version 6.5, MultiMarkdown also supports two additional versions:
 \subsection{Table Basics}
 \label{tablebasics}
 
-MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}
+MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}}
 
 Basically, it allows you to turn:
 
@@ -1525,7 +1524,7 @@ The requirements are:
 
 \item Columns are separated by \texttt{|}
 
-\item The first line of the table, and the alignment\slash divider line, must start at
+\item The first line of the table, and the alignment\slash{}divider line, must start at
 the beginning of the line
 
 \end{itemize}
@@ -1559,7 +1558,7 @@ Other notes:
 \begin{itemize}
 \item MultiMarkdown table support is designed to handle \emph{most} tables for \emph{most} people; it doesn't cover \emph{all} tables for \emph{all} people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.
 
-\item Native RTF support for tables is \emph{very} limited. If you need more complex tables, I recommend using the OpenDocument format, and then using \href{http://www.libreoffice.org/}{LibreOffice}\footnote{\href{http://www.libreoffice.org/}{http:\slash \slash www.libreoffice.org\slash }} to convert your document to RTF.
+\item Native RTF support for tables is \emph{very} limited. If you need more complex tables, I recommend using the OpenDocument format, and then using \href{http://www.libreoffice.org/}{LibreOffice}\footnote{\href{http://www.libreoffice.org/}{http:\slash{}\slash{}www.libreoffice.org\slash{}}} to convert your document to RTF.
 
 \end{itemize}
 
@@ -1569,7 +1568,7 @@ Other notes:
 \section{Plain Text}
 \label{plaintext}
 
-The most common file format for containing Markdown\slash MultiMarkdown text is a plain text file. There is nothing special about these files, though things do tend to work best using:
+The most common file format for containing Markdown\slash{}MultiMarkdown text is a plain text file. There is nothing special about these files, though things do tend to work best using:
 
 \begin{itemize}
 \item UTF-8 encoding
@@ -1583,7 +1582,7 @@ I've tried to make MultiMarkdown as forgiving as possible when alternatives are 
 \section{OPML}
 \label{opml}
 
-\href{https://en.wikipedia.org/wiki/OPML}{OPML}\footnote{\href{https://en.wikipedia.org/wiki/OPML}{https:\slash \slash en.wikipedia.org\slash wiki\slash OPML}}, or Outline Processor Markup Language, is an XML file format used for storing outlines. This fits well with the idea of a Markdown document containing multiple levels of headers that provide structure to the document, such as:
+\href{https://en.wikipedia.org/wiki/OPML}{OPML}\footnote{\href{https://en.wikipedia.org/wiki/OPML}{https:\slash{}\slash{}en.wikipedia.org\slash{}wiki\slash{}OPML}}, or Outline Processor Markup Language, is an XML file format used for storing outlines. This fits well with the idea of a Markdown document containing multiple levels of headers that provide structure to the document, such as:
 
 \begin{verbatim}
 # Introduction #
@@ -1601,21 +1600,21 @@ MultiMarkdown has had support for OPML for many years (almost as long as MultiMa
 multimarkdown --opml file.opml > file.html
 \end{verbatim}
 
-This means that you can work on your document using an editor that supports OPML (e.g. \href{https://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{https://multimarkdown.com/}{https:\slash \slash multimarkdown.com\slash }}), or you can use an outliner or mind-mapping program that supports OPML (most of them do, to varying degrees). When you're ready to publish your work, you can simply process it like normal to create HTML, LaTeX, etc.
+This means that you can work on your document using an editor that supports OPML (e.g. \href{https://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{https://multimarkdown.com/}{https:\slash{}\slash{}multimarkdown.com\slash{}}}), or you can use an outliner or mind-mapping program that supports OPML (most of them do, to varying degrees). When you're ready to publish your work, you can simply process it like normal to create HTML, LaTeX, etc.
 
 An advantage of this approach is that you can easily rearrange the structure of your document by dragging and dropping sections of the outline. (While not a full features outlining program, MultiMarkdown Composer allows you to do this as well.)
 
 \section{ITMZ}
 \label{itmz}
 
-ITMZ is the file format used by the \href{https://www.toketaware.com/}{iThoughts}\footnote{\href{https://www.toketaware.com/}{https:\slash \slash www.toketaware.com\slash }} line of mind-mapping programs. It is similar to the OPML format, but is a compressed bundle format rather than a plain text XML file.
+ITMZ is the file format used by the \href{https://www.toketaware.com/}{iThoughts}\footnote{\href{https://www.toketaware.com/}{https:\slash{}\slash{}www.toketaware.com\slash{}}} line of mind-mapping programs. It is similar to the OPML format, but is a compressed bundle format rather than a plain text XML file.
 
 \section{Advanced Use}
 \label{advanceduse}
 
-A key reason for the inclusion of the ITMZ format is to demonstrate the functionality provided by tightly coupling the idea of a text editor and an outliner\slash mind-mapping program.
+A key reason for the inclusion of the ITMZ format is to demonstrate the functionality provided by tightly coupling the idea of a text editor and an outliner\slash{}mind-mapping program.
 
-For example, version 4.5 of MultiMarkdown Composer will include read\slash write support for both OPML and ITMZ as native document formats. Which means that you can work on a Markdown\slash MultiMarkdown document in Composer, while simultaneously opening the same ITMZ in iThoughts as a mind-map (or OPML as an outline in OmniOutliner.) Which means that you quickly switch applications to view (or rearrange) the overall structure of your document in a visual program (outliner, mind-mapping) while using a text-based editor for writing the content.
+For example, version 4.5 of MultiMarkdown Composer will include read\slash{}write support for both OPML and ITMZ as native document formats. Which means that you can work on a Markdown\slash{}MultiMarkdown document in Composer, while simultaneously opening the same ITMZ in iThoughts as a mind-map (or OPML as an outline in OmniOutliner.) Which means that you quickly switch applications to view (or rearrange) the overall structure of your document in a visual program (outliner, mind-mapping) while using a text-based editor for writing the content.
 
 \begin{figure}[htbp]
 \centering

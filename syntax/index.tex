@@ -102,7 +102,7 @@ As per Doe.[#John Doe. *A Totally Fake Book 1*.  Vanity Press, 2006.]
 \subsection{BibTeX Citations}
 \label{bibtexcitations}
 
-If you are creating a LaTeX document, and need a bibliography, then you should definitely look into \href{http://www.bibtex.org/}{BibTeX}\footnote{\href{http://www.bibtex.org/}{http:\slash \slash www.bibtex.org\slash }} and \href{http://merkel.zoneo.net/Latex/natbib.php}{natbib}\footnote{\href{http://merkel.zoneo.net/Latex/natbib.php}{http:\slash \slash merkel.zoneo.net\slash Latex\slash natbib.php}}. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.
+If you are creating a LaTeX document, and need a bibliography, then you should definitely look into \href{http://www.bibtex.org/}{BibTeX}\footnote{\href{http://www.bibtex.org/}{http:\slash{}\slash{}www.bibtex.org\slash{}}} and \href{http://merkel.zoneo.net/Latex/natbib.php}{natbib}\footnote{\href{http://merkel.zoneo.net/Latex/natbib.php}{http:\slash{}\slash{}merkel.zoneo.net\slash{}Latex\slash{}natbib.php}}. It is beyond the scope of this document to describe how these two packages work, but it is possible to combine them with MultiMarkdown.
 
 To use BibTeX in a MultiMarkdown document, you \emph{must} use the \texttt{BibTeX} metadata (\autoref{bibtex}) to specify where your citations are stored. You may \emph{optionally} use the \texttt{biblio style} metadata key.
 
@@ -132,10 +132,10 @@ Since \texttt{natbib} is enabled by default, you have a choice between using the
 \label{whatiscriticmarkup}
 
 \begin{quote}
-CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. \href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }
+CriticMarkup is a way for authors and editors to track changes to documents in plain text. As with Markdown, small groups of distinctive characters allow you to highlight insertions, deletions, substitutions and comments, all without the overhead of heavy, proprietary office suites. \href{http://criticmarkup.com/}{http:\slash{}\slash{}criticmarkup.com\slash{}}
 \end{quote}
 
-CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash \slash criticmarkup.com\slash }} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
+CriticMarkup is integrated with MultiMarkdown itself, as well as \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash{}\slash{}multimarkdown.com\slash{}}}. I encourage you to check out the \href{http://criticmarkup.com/}{CriticMarkup}\footnote{\href{http://criticmarkup.com/}{http:\slash{}\slash{}criticmarkup.com\slash{}}} web site to learn more as it can be a very useful tool. There is also a great video showing CriticMarkup in use while editing a document in MultiMarkdown Composer.
 
 \subsection{Using CriticMarkup With MultiMarkdown}
 \label{usingcriticmarkupwithmultimarkdown}
@@ -225,17 +225,17 @@ I view CriticMarkup as two things (in addition to the actual tools that implemen
 \begin{enumerate}
 \item A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
 
-\item A means to display those notes\slash changes in the HTML output.
+\item A means to display those notes\slash{}changes in the HTML output.
 
 \end{enumerate}
 
 I believe that \#1 is a really great idea, and well implemented. \#2 is not so well implemented, largely due to the ``orthogonal'' nature of CriticMarkup and the underlying Markdown syntax.
 
-CM is designed as a separate layer on top of Markdown\slash MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM\slash Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I've tried a few (fairly creative, in my opinion) approaches, but they didn't work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.
+CM is designed as a separate layer on top of Markdown\slash{}MultiMarkdown. This means that a Markdown span could, for example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to properly convert a CM\slash{}Markdown document to HTML would be quite complex, with a huge number of edge cases to consider. I've tried a few (fairly creative, in my opinion) approaches, but they didn't work. Perhaps someone else will come up with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no current plans to do so.
 
 Additionally, there is a philosophical distinction between documenting editing notes, and using those notes to produce a ``finished'' document (e.g. HTML or PDF) that keeps those editing notes intact (e.g. strikethroughs, highlighting, etc.) I believe that CM is incredibly useful for the editing process, but am less convinced for the output process (I know many others disagree with me, and that's ok. And to be clear, I think that what Gabe and Erik have done with CriticMarkup is fantastic!)
 
-There are other CriticMarkup tools besides MultiMarkdown and \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash \slash multimarkdown.com\slash }}, and you are more than welcome to use them.
+There are other CriticMarkup tools besides MultiMarkdown and \href{http://multimarkdown.com/}{MultiMarkdown Composer}\footnote{\href{http://multimarkdown.com/}{http:\slash{}\slash{}multimarkdown.com\slash{}}}, and you are more than welcome to use them.
 
 For now, the \emph{official} MultiMarkdown support for CriticMarkup consists of:
 
@@ -280,7 +280,7 @@ and tables which can then be used for cross-references as well.
 \label{definitionlists}
 
 MultiMarkdown has support for definition lists using the same syntax used in
-\href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}. Specifically:
+\href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}}. Specifically:
 
 \begin{verbatim}
 Apple
@@ -298,14 +298,14 @@ becomes:
 \begin{description}
 \item[Apple]
 
- Pomaceous fruit of plants of the genus Malus in
+Pomaceous fruit of plants of the genus Malus in
 the family Rosaceae.
 
- An american computer company.
+An american computer company.
 
 \item[Orange]
 
- The fruit of an evergreen tree of the genus Citrus.
+The fruit of an evergreen tree of the genus Citrus.
 \end{description}
 \end{quote}
 
@@ -322,12 +322,12 @@ was unable to get Markdown \emph{not} to create paragraphs. Second, I didn't see
 where it mattered - the only difference seems to be aesthetic, and I actually
 prefer the \texttt{<p>} tags in place. Let me know if this is a problem.
 
-See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }} page for more information.
+See the \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}} page for more information.
 
 \section{Escaped newlines}
 \label{escapednewlines}
 
-Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash \slash github.com\slash njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
+Thanks to a contribution from \href{https://github.com/njmsdk}{Nicolas}\footnote{\href{https://github.com/njmsdk}{https:\slash{}\slash{}github.com\slash{}njmsdk}}, MultiMarkdown has an additional syntax to indicate a line break. The usual approach for Markdown is ``space-space-newline'' --- two spaces at the end of the line. For some users, this causes problems:
 
 \begin{itemize}
 \item the trailing spaces are typically invisible when glancing at the source, making it easy to overlook them
@@ -434,9 +434,9 @@ path for included files. For example:
  Directory	& Transcluded Filename	& Resolved Path 	\\
 \midrule
 
- \texttt{\slash foo\slash bar\slash }	& \texttt{bat}	& \texttt{\slash foo\slash bar\slash bat}	\\
- \texttt{\slash foo\slash bar\slash }	& \texttt{baz\slash bat}	& \texttt{\slash foo\slash bar\slash baz\slash bat}	\\
- \texttt{\slash foo\slash bar\slash }	& \texttt{..\slash bat} 	& \texttt{\slash foo\slash bat}	\\
+ \texttt{\slash{}foo\slash{}bar\slash{}}	& \texttt{bat}	& \texttt{\slash{}foo\slash{}bar\slash{}bat}	\\
+ \texttt{\slash{}foo\slash{}bar\slash{}}	& \texttt{baz\slash{}bat}	& \texttt{\slash{}foo\slash{}bar\slash{}baz\slash{}bat}	\\
+ \texttt{\slash{}foo\slash{}bar\slash{}}	& \texttt{..\slash{}bat} 	& \texttt{\slash{}foo\slash{}bat}	\\
 \bottomrule
 
 \end{tabulary}
@@ -565,7 +565,7 @@ memoir class.
 
 \end{enumerate}
 
-Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in \texttt{\ensuremath{\sim}\slash Library\slash TeXShop\slash Engines}). You can name it something like \texttt{MemoirGlossary.engine}. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use \href{http://www.uoregon.edu/~koch/texshop/}{TeXShop}\footnote{\href{http://www.uoregon.edu/~koch/texshop/}{http:\slash \slash www.uoregon.edu\slash \ensuremath{\sim}koch\slash texshop\slash }}, this is the way to go.
+Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in \texttt{\ensuremath{\sim}\slash{}Library\slash{}TeXShop\slash{}Engines}). You can name it something like \texttt{MemoirGlossary.engine}. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use \href{http://www.uoregon.edu/~koch/texshop/}{TeXShop}\footnote{\href{http://www.uoregon.edu/~koch/texshop/}{http:\slash{}\slash{}www.uoregon.edu\slash{}\ensuremath{\sim}koch\slash{}texshop\slash{}}}, this is the way to go.
 
 \begin{verbatim}
 #!/bin/	
@@ -637,7 +637,7 @@ syntax is the format of plain text email.
 
 Because there was not a syntax proposal that I felt fit this goal, I was generally opposed to the idea.
 
-Then, Choan C. Gálvez \href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{proposed}\footnote{\href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{http:\slash \slash six.pairlist.net\slash pipermail\slash markdown-discuss\slash 2005-October\slash 001578.html}} a brilliantly simple syntax that
+Then, Choan C. Gálvez \href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{proposed}\footnote{\href{http://six.pairlist.net/pipermail/markdown-discuss/2005-October/001578.html}{http:\slash{}\slash{}six.pairlist.net\slash{}pipermail\slash{}markdown-discuss\slash{}2005-October\slash{}001578.html}} a brilliantly simple syntax that
 stayed out of the way. By simply appending the attributes to the link
 reference information, which is already removed from the text itself, it
 doesn't disturb the readability.
@@ -660,7 +660,7 @@ form of markup, and the the additional tags are hardly that intrusive, and
 they offer a great deal of functionality. They might even be useful in further
 functions (citations?).
 
-The attributes must continue after the other link\slash image data, and may contain
+The attributes must continue after the other link\slash{}image data, and may contain
 newlines, but must start at the beginning of the line. The format is
 \texttt{attribute=value} or \texttt{attribute="multi word value"}. Currently, MultiMarkdown
 does not attempt to interpret or make any use of any of these attributes.
@@ -675,12 +675,12 @@ Colored [link](http://example.net "Title" style="color:red")
 \section{Math}
 \label{math}
 
-MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash \slash www1.chapman.edu\slash \ensuremath{\sim}jipsen\slash mathml\slash asciimath.html}} to typeset mathematical equations. There
+MultiMarkdown 2.0 used \href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{ASCIIMathML}\footnote{\href{http://www1.chapman.edu/~jipsen/mathml/asciimath.html}{http:\slash{}\slash{}www1.chapman.edu\slash{}\ensuremath{\sim}jipsen\slash{}mathml\slash{}asciimath.html}} to typeset mathematical equations. There
 were benefits to using ASCIIMathML, but also some disadvantages.
 
 When rewriting for MultiMarkdown 3.0, there was no straightforward way to
 implement ASCIIMathML which lead me to look for alternatives. I settled on
-using \href{http://www.mathjax.org/}{MathJax}\footnote{\href{http://www.mathjax.org/}{http:\slash \slash www.mathjax.org\slash }}. The advantage here is that the same syntax is supported by
+using \href{http://www.mathjax.org/}{MathJax}\footnote{\href{http://www.mathjax.org/}{http:\slash{}\slash{}www.mathjax.org\slash{}}}. The advantage here is that the same syntax is supported by
 MathJax in browsers, and in native LaTeX syntax when creating LaTeX documents.
 
 To enable MathJax support in web pages, you have to include a link to an
@@ -789,7 +789,7 @@ CSS:      http://example.com/standard.css
 The syntax for including metadata is simple.
 
 \begin{itemize}
-\item The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a \texttt{-{}-{}-} on the line before and after the metadata. The line after the metadata can also be \texttt{...}. This is to provide better compatibility with \href{http://www.yaml.org/}{YAML}\footnote{\href{http://www.yaml.org/}{http:\slash \slash www.yaml.org\slash }}, though MultiMarkdown doesn't support all YAML metadata.
+\item The metadata must begin at the very top of the document - no blank lines can precede it. There can optionally be a \texttt{-{}-{}-} on the line before and after the metadata. The line after the metadata can also be \texttt{...}. This is to provide better compatibility with \href{http://www.yaml.org/}{YAML}\footnote{\href{http://www.yaml.org/}{http:\slash{}\slash{}www.yaml.org\slash{}}}, though MultiMarkdown doesn't support all YAML metadata.
 
 \item Metadata consists of two parts - the \texttt{key} and the \texttt{value}
 
@@ -944,7 +944,7 @@ latex footer:	mmd6-article-footer
 
 The standard LaTeX support files have been updated to support this naming configuration:
 
-\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash \slash github.com\slash fletcher\slash MultiMarkdown-6\slash tree\slash master\slash texmf\slash tex\slash latex\slash mmd6}
+\href{https://github.com/fletcher/MultiMarkdown-6/tree/master/texmf/tex/latex/mmd6}{https:\slash{}\slash{}github.com\slash{}fletcher\slash{}MultiMarkdown-6\slash{}tree\slash{}master\slash{}texmf\slash{}tex\slash{}latex\slash{}mmd6}
 
 \subsection{LaTeX Footer}
 \label{latexfooter}
@@ -1048,7 +1048,7 @@ foo `*bar*`{=html}
 ```
 \end{verbatim}
 
-The contents of the span\slash block will be passed through unchanged.
+The contents of the span\slash{}block will be passed through unchanged.
 
 You can specify which output format is compatible with the specified source:
 
@@ -1068,7 +1068,7 @@ You can specify which output format is compatible with the specified source:
 \section{Smart Typography}
 \label{smarttypography}
 
-MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash \slash daringfireball.net\slash projects\slash smartypants\slash }} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
+MultiMarkdown incorporates John Gruber's \href{http://daringfireball.net/projects/smartypants/}{SmartyPants}\footnote{\href{http://daringfireball.net/projects/smartypants/}{http:\slash{}\slash{}daringfireball.net\slash{}projects\slash{}smartypants\slash{}}} tool in addition to the core Markdown functionality. This program converts ``plain'' punctuation into ``smarter'' typographic punctuation.
 
 Just like the original, MultiMarkdown converts:
 
@@ -1124,7 +1124,7 @@ As of version 6.5, MultiMarkdown also supports two additional versions:
 \subsection{Table Basics}
 \label{tablebasics}
 
-MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash \slash www.michelf.com\slash projects\slash php-markdown\slash extra\slash }}
+MultiMarkdown has a special syntax for creating tables. It is generally compatible with the syntax used by Michael Fortin for \href{http://www.michelf.com/projects/php-markdown/extra/}{PHP Markdown Extra}\footnote{\href{http://www.michelf.com/projects/php-markdown/extra/}{http:\slash{}\slash{}www.michelf.com\slash{}projects\slash{}php-markdown\slash{}extra\slash{}}}
 
 Basically, it allows you to turn:
 
@@ -1182,7 +1182,7 @@ The requirements are:
 
 \item Columns are separated by \texttt{|}
 
-\item The first line of the table, and the alignment\slash divider line, must start at
+\item The first line of the table, and the alignment\slash{}divider line, must start at
 the beginning of the line
 
 \end{itemize}
@@ -1216,7 +1216,7 @@ Other notes:
 \begin{itemize}
 \item MultiMarkdown table support is designed to handle \emph{most} tables for \emph{most} people; it doesn't cover \emph{all} tables for \emph{all} people. If you need complex tables you will need to create them by hand or with a tool specifically designed for your output format. At some point, however, you should consider whether a table is really the best approach if you find MultiMarkdown tables too limiting.
 
-\item Native RTF support for tables is \emph{very} limited. If you need more complex tables, I recommend using the OpenDocument format, and then using \href{http://www.libreoffice.org/}{LibreOffice}\footnote{\href{http://www.libreoffice.org/}{http:\slash \slash www.libreoffice.org\slash }} to convert your document to RTF.
+\item Native RTF support for tables is \emph{very} limited. If you need more complex tables, I recommend using the OpenDocument format, and then using \href{http://www.libreoffice.org/}{LibreOffice}\footnote{\href{http://www.libreoffice.org/}{http:\slash{}\slash{}www.libreoffice.org\slash{}}} to convert your document to RTF.
 
 \end{itemize}
 

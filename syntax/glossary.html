@@ -12,9 +12,9 @@
 <div class="TOC">
 
 <ul>
-<li><a href="#glossaries">Glossaries </a>
+<li><a href="#glossaries">Glossaries</a>
 <ul>
-<li><a href="#latexglossaries">LaTeX Glossaries </a></li>
+<li><a href="#latexglossaries">LaTeX Glossaries</a></li>
 </ul>
 </li>
 </ul>
@@ -57,7 +57,7 @@ memoir class.</p></li>
 <li><p>Then you run the usual pdflatex command again a few times.</p></li>
 </ol>
 
-<p>Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like <code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/">TeXShop</a>, this is the way to go.</p>
+<p>Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <code>~/Library/TeXShop/Engines</code>). You can name it something like <code>MemoirGlossary.engine</code>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <a href="http://www.uoregon.edu/~koch/texshop/" title="TeXShop Homepage">TeXShop</a>, this is the way to go.</p>
 
 <pre><code>#!/bin/	
 
@@ -74,7 +74,7 @@ makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefi
 <ol>
 
 <li id="gn:1">
-glossary: <p>The glossary collects information about important terms used in your document <a href="#gnref:1" title="return to body" class="reverseglossary">&#160;&#8617;</a></p>
+glossary: <p>The glossary collects information about important terms used in your document <a href="#gnref:1" title="return to body" class="reverseglossary">&#160;&#8617;&#xfe0e;</a></p>
 </li>
 
 </ol>

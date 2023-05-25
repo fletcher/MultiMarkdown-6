@@ -296,85 +296,85 @@ Revised 2018-11-29</text:p>
 <text:index-title text:style-name="Sect1" text:name="Table of Contents1_Head">
 <text:p text:style-name="Contents_20_Heading">Table of Contents</text:p>
 </text:index-title>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#title" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">MultiMarkdown User's Guide  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#introduction" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Introduction  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatismarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What is Markdown?  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatismultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What is MultiMarkdown?  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whyshouldiusemultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Why should I use MultiMarkdown?  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatarethedifferentversionsofmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Are the Different Versions of MultiMarkdown?  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whereisthisguidekept" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Where is this Guide Kept?  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Usage  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#basiccommandlineusage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Basic Command Line Usage  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#batchmode" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Batch Mode  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusiononly" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion Only  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#conveniencescripts" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Convenience Scripts  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#advancedoptions" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Advanced Options  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#syntax" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Syntax  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#title" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">MultiMarkdown User's Guide <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#introduction" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Introduction <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatismarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What is Markdown? <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatismultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What is MultiMarkdown? <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whyshouldiusemultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Why should I use MultiMarkdown? <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatarethedifferentversionsofmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Are the Different Versions of MultiMarkdown? <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whereisthisguidekept" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Where is this Guide Kept? <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Usage <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#basiccommandlineusage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Basic Command Line Usage <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#batchmode" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Batch Mode <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusiononly" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion Only <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#conveniencescripts" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Convenience Scripts <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#advancedoptions" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Advanced Options <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#syntax" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Syntax <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (or Acronyms) <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#inlinecitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Inline Citations  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtexcitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX Citations  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatiscriticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Is CriticMarkup?  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usingcriticmarkupwithmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Using CriticMarkup With MultiMarkdown  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#thecriticmarkupsyntax" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">The CriticMarkup Syntax  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkuplimitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup Limitations  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#inlinecitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Inline Citations <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtexcitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX Citations <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#whatiscriticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">What Is CriticMarkup? <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#usingcriticmarkupwithmultimarkdown" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Using CriticMarkup With MultiMarkdown <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#thecriticmarkupsyntax" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">The CriticMarkup Syntax <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkuplimitations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup Limitations <text:tab/>1</text:a></text:p>
 <text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#myphilosophyoncriticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">My philosophy on CriticMarkup <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#cross-references" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Cross-References  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#definitionlists" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Definition Lists  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#escapednewlines" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Escaped newlines  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#filetransclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">File Transclusion  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#searchpaths" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Search Paths  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#wildcardextensions" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Wildcard Extensions  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusionpreprocessing" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion Preprocessing  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#footnotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Footnotes  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaries" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossaries  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexglossaries" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Glossaries  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#images" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Images  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#linkandimageattributes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Link and Image Attributes  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#math" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Math  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#superscriptsandsubscripts" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Superscripts and Subscripts  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadatavariables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata &#8220;Variables&#8221;  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#standardmetadatakeys" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">&#8220;Standard&#8221; Metadata keys  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#author" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Author  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#affiliation" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Affiliation  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#baseheaderlevel" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Base Header Level  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibliostyle" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Biblio Style  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtex" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#copyright" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Copyright  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#css" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CSS  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#date" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Date  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Header  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlfooter" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Footer  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#language" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Language  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexauthor" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Author  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexbegin" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Begin  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexconfig" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Config  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexfooter" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Footer  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Header  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexleader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Leader  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexmode" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Mode  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latextitle" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Title  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#mmdheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">MMD Header  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#mmdfooter" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">MMD Footer  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#odfheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">ODF Header  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#quoteslanguage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Quotes Language  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#title" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Title  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transcludebase" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclude Base  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#rawsource" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Raw Source  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#smarttypography" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Smart Typography  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablebasics" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Basics  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablerules" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Rules  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#limitationsoftables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Limitations of Tables  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fileformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">File Formats  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#plaintext" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Plain Text  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#opml" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">OPML  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#itmz" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">ITMZ  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#advanceduse" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Advanced Use  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#cross-references" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Cross-References <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#definitionlists" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Definition Lists <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#escapednewlines" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Escaped newlines <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#filetransclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">File Transclusion <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#searchpaths" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Search Paths <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#wildcardextensions" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Wildcard Extensions <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusionpreprocessing" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion Preprocessing <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#footnotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Footnotes <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaries" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossaries <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexglossaries" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Glossaries <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#images" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Images <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#linkandimageattributes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Link and Image Attributes <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#math" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Math <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#superscriptsandsubscripts" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Superscripts and Subscripts <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadatavariables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata &#8220;Variables&#8221; <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#standardmetadatakeys" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">&#8220;Standard&#8221; Metadata keys <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#author" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Author <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#affiliation" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Affiliation <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#baseheaderlevel" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Base Header Level <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibliostyle" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Biblio Style <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#bibtex" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">BibTeX <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#copyright" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Copyright <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#css" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CSS <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#date" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Date <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Header <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlfooter" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Footer <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#language" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Language <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexauthor" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Author <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexbegin" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Begin <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexconfig" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Config <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexfooter" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Footer <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Header <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexleader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Leader <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexmode" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Mode <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latextitle" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Title <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#mmdheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">MMD Header <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#mmdfooter" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">MMD Footer <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#odfheader" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">ODF Header <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#quoteslanguage" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Quotes Language <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#title" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Title <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transcludebase" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclude Base <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#rawsource" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Raw Source <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#smarttypography" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Smart Typography <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablebasics" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Basics <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tablerules" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table Rules <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#limitationsoftables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Limitations of Tables <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fileformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">File Formats <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#plaintext" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Plain Text <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#opml" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">OPML <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#itmz" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">ITMZ <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#advanceduse" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Advanced Use <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
 
@@ -859,13 +859,13 @@ and tables which can then be used for cross-references as well.</text:p>
 <text:p text:style-name="Standard">becomes:</text:p>
 
 <text:p><text:span text:style-name="MMD-Bold">Apple</text:span></text:p>
-<text:p text:style-name="Quotations"> Pomaceous fruit of plants of the genus Malus in
+<text:p text:style-name="Quotations">Pomaceous fruit of plants of the genus Malus in
 the family Rosaceae.</text:p>
 
-<text:p text:style-name="Quotations"> An american computer company.</text:p>
+<text:p text:style-name="Quotations">An american computer company.</text:p>
 
 <text:p><text:span text:style-name="MMD-Bold">Orange</text:span></text:p>
-<text:p text:style-name="Quotations"> The fruit of an evergreen tree of the genus Citrus.</text:p>
+<text:p text:style-name="Quotations">The fruit of an evergreen tree of the genus Citrus.</text:p>
 
 
 <text:p text:style-name="Standard">You can have more than one term per definition by placing each term on a
@@ -1086,7 +1086,7 @@ memoir class.</text:p></text:list-item>
 
 </text:list>
 
-<text:p text:style-name="Standard">Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <text:span text:style-name="Source_20_Text">~/Library/TeXShop/Engines</text:span>). You can name it something like <text:span text:style-name="Source_20_Text">MemoirGlossary.engine</text:span>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <text:a xlink:type="simple" xlink:href="http://www.uoregon.edu/~koch/texshop/">TeXShop</text:a>, this is the way to go.</text:p>
+<text:p text:style-name="Standard">Alternatively, you can use the code below to create an engine file for TeXShop (it belongs in <text:span text:style-name="Source_20_Text">~/Library/TeXShop/Engines</text:span>). You can name it something like <text:span text:style-name="Source_20_Text">MemoirGlossary.engine</text:span>. Then, when processing a file that needs a glossary, you typeset your document once with this engine, and then continue to process it normally with the usual LaTeX engine. Your glossary should be compiled appropriately. If you use <text:a xlink:type="simple" xlink:href="http://www.uoregon.edu/~koch/texshop/" office:name="TeXShop Homepage">TeXShop</text:a>, this is the way to go.</text:p>
 
 <text:p text:style-name="Preformatted Text">#!/bin/<text:tab/><text:line-break/><text:line-break/>set path = ($path /usr/local/teTeX/bin/powerpc-apple-darwin-current<text:line-break/><text:tab/>/usr/local/bin) # This is actually a continuation of the line above<text:line-break/><text:line-break/>set basefile = `basename &quot;$1&quot; .tex`<text:line-break/><text:line-break/>makeindex -s `kpsewhich basic.gst` -o &quot;${basefile}.gls&quot; &quot;${basefile}.glo&quot;<text:line-break/></text:p>
 
