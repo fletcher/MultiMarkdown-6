@@ -838,7 +838,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#cnref:%d\" title=\"%s\" class=\"reversecitation\">&#160;&#8617;&#xfe0e;</a>", scratch->citation_being_printed, LC("return to body"));
+					printf(" <a href=\"#cnref_%d\" title=\"%s\" class=\"reversecitation\">&#160;&#8617;&#xfe0e;</a>", scratch->citation_being_printed, LC("return to body"));
 				}
 			}
 
@@ -853,7 +853,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 						temp_short = rand() % 32000 + 1;
 					}
 
-					printf(" <a href=\"#fnref:%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;&#xfe0e;</a>", temp_short, LC("return to body"));
+					printf(" <a href=\"#fnref_%d\" title=\"%s\" class=\"reversefootnote\">&#160;&#8617;&#xfe0e;</a>", temp_short, LC("return to body"));
 				}
 			}
 
@@ -861,7 +861,7 @@ void mmd_export_token_html(DString * out, const char * source, token * t, scratc
 				scratch->footnote_para_counter--;
 
 				if (scratch->footnote_para_counter == 0) {
-					printf(" <a href=\"#gnref:%d\" title=\"%s\" class=\"reverseglossary\">&#160;&#8617;&#xfe0e;</a>", scratch->glossary_being_printed, LC("return to body"));
+					printf(" <a href=\"#gnref_%d\" title=\"%s\" class=\"reverseglossary\">&#160;&#8617;&#xfe0e;</a>", scratch->glossary_being_printed, LC("return to body"));
 				}
 			}
 
@@ -1575,11 +1575,11 @@ parse_citation:
 
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
-							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
+							printf("<a href=\"#cn_%d\" title=\"%s\" class=\"citation\">(%d)</a>",
 								   temp_short, LC("see citation"), temp_short);
 						} else {
 							// This is the first time this note was used
-							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%d)</a>",
+							printf("<a href=\"#cn_%d\" id=\"cnref_%d\" title=\"%s\" class=\"citation\">(%d)</a>",
 								   temp_short, temp_short, LC("see citation"), temp_short);
 						}
 					} else {
@@ -1587,11 +1587,11 @@ parse_citation:
 
 						if (temp_short2 == scratch->used_citations->size) {
 							// This is a re-use of a previously used note
-							printf("<a href=\"#cn:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
+							printf("<a href=\"#cn_%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
 								   temp_short, LC("see citation"), temp_char, temp_short);
 						} else {
 							// This is the first time this note was used
-							printf("<a href=\"#cn:%d\" id=\"cnref:%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
+							printf("<a href=\"#cn_%d\" id=\"cnref_%d\" title=\"%s\" class=\"citation\">(%s, %d)</a>",
 								   temp_short, temp_short, LC("see citation"), temp_char, temp_short);
 						}
 					}
@@ -1638,7 +1638,7 @@ parse_citation:
 						temp_short3 = temp_short;
 					}
 
-					printf("<a href=\"#fn:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
+					printf("<a href=\"#fn_%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
 						   temp_short3, LC("see footnote"), temp_short);
 				} else {
 					// This is the first time this note was used
@@ -1650,7 +1650,7 @@ parse_citation:
 						temp_short3 = temp_short;
 					}
 
-					printf("<a href=\"#fn:%d\" id=\"fnref:%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
+					printf("<a href=\"#fn_%d\" id=\"fnref_%d\" title=\"%s\" class=\"footnote\"><sup>%d</sup></a>",
 						   temp_short3, temp_short3, LC("see footnote"), temp_short);
 				}
 			} else {
@@ -1690,7 +1690,7 @@ parse_citation:
 				if (temp_short2 == scratch->used_glossaries->size) {
 					// This is a re-use of a previously used note
 
-					printf("<a href=\"#gn:%d\" title=\"%s\" class=\"glossary\">",
+					printf("<a href=\"#gn_%d\" title=\"%s\" class=\"glossary\">",
 						   temp_short, LC("see glossary"));
 					mmd_print_string_html(out, temp_note->clean_text, false, true);
 					print_const("</a>");
@@ -1698,7 +1698,7 @@ parse_citation:
 					// This is the first time this note was used
 
 
-					printf("<a href=\"#gn:%d\" id=\"gnref:%d\" title=\"%s\" class=\"glossary\">",
+					printf("<a href=\"#gn_%d\" id=\"gnref_%d\" title=\"%s\" class=\"glossary\">",
 						   temp_short, temp_short, LC("see glossary"));
 					mmd_print_string_html(out, temp_note->clean_text, false, true);
 					print_const("</a>");
@@ -2479,7 +2479,7 @@ void mmd_export_footnote_list_html(DString * out, const char * source, scratch_p
 			// Export footnote
 			pad(out, 2, scratch);
 
-			printf("<li id=\"fn:%d\">\n", i + 1);
+			printf("<li id=\"fn_%d\">\n", i + 1);
 			scratch->padded = 6;
 
 			note = stack_peek_index(scratch->used_footnotes, i);
@@ -2527,7 +2527,7 @@ void mmd_export_glossary_list_html(DString * out, const char * source, scratch_p
 			// Export glossary
 			pad(out, 2, scratch);
 
-			printf("<li id=\"gn:%d\">\n", i + 1);
+			printf("<li id=\"gn_%d\">\n", i + 1);
 			scratch->padded = 6;
 
 			note = stack_peek_index(scratch->used_glossaries, i);
@@ -2580,7 +2580,7 @@ void mmd_export_citation_list_html(DString * out, const char * source, scratch_p
 			// Export footnote
 			pad(out, 2, scratch);
 
-			printf("<li id=\"cn:%d\">\n", i + 1);
+			printf("<li id=\"cn_%d\">\n", i + 1);
 			scratch->padded = 6;
 
 			note = stack_peek_index(scratch->used_citations, i);
