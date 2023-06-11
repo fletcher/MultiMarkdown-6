@@ -58,7 +58,12 @@
 #define TOKEN_PARSER_TEMPLATE_H
 
 
-#define kUseObjectPool_disabled 1		//!< Use an object pool to allocate tokens to improve
+#ifdef DISABLE_OBJECT_POOL
+	#undef kUseObjectPool
+#else
+	#define kUseObjectPool 1
+#endif
+//!< Use an object pool to allocate tokens to improve
 //!< performance in memory allocation. Frees all
 //!< tokens at once, however, at end of parsing.
 
@@ -226,11 +231,11 @@ void token_trim_whitespace(token * t, const char * string);
 
 
 ///
-token * token_chain_accept(token ** t, short type);
+token * token_chain_accept(token ** t, unsigned short type);
 
 token * token_chain_accept_multiple(token ** t, int n, ...);
 
-void token_skip_until_type(token ** t, short type);
+void token_skip_until_type(token ** t, unsigned short type);
 
 void token_skip_until_type_multiple(token ** t, int n, ...);
 

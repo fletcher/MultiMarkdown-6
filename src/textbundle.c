@@ -239,7 +239,7 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 			if (res != CURLE_OK) {
 				// Attempt to add asset from local file
 				if (!add_asset_from_file(pZip, a, destination, directory)) {
-					fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
+					fprintf(stderr, "Unable to store '%s' in TextBundle\n", a->url);
 				}
 			} else {
 				// Store downloaded file in zip
@@ -269,7 +269,7 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 
 			// Attempt to add asset from local file
 			if (!add_asset_from_file(pZip, a, destination, directory)) {
-				fprintf(stderr, "Unable to store '%s' in EPUB\n", a->url);
+				fprintf(stderr, "Unable to store '%s' in TextBundle\n", a->url);
 			}
 		}
 	}
@@ -290,7 +290,7 @@ void traverse_for_images(token * t, DString * text, mmd_engine * e, long * offse
 
 					memcpy(url, &text->str[t->start + *offset + 1], t->len - 2);
 					url[t->len - 2] = '\0';
-					clean = clean_string(url, false);
+					clean = clean_string(url, false, true);
 
 					HASH_FIND_STR(e->asset_hash, clean, a);
 

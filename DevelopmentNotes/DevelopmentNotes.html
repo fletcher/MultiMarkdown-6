@@ -4,7 +4,7 @@
 	<meta charset="utf-8"/>
 	<title>MultiMarkdown v6 Development Notes</title>
 	<meta name="author" content="Fletcher T. Penney"/>
-	<meta name="date" content="2020-10-28"/>
+	<meta name="date" content="2023-06-10"/>
 	<meta name="uuid" content="dd2d8e76-dc2d-416d-9acd-5395d20871c2"/>
 </head>
 <body>
@@ -433,6 +433,64 @@ TextBundle/TextPack, OpenDocument, etc.</p></li>
 <h3 id="changelog">Changelog</h3>
 
 <ul>
+<li><p>2023&#8211;06&#8211;10 - v 6.7.0:</p>
+
+<ul>
+<li>ADDED: Add OBJECT_REPLACEMENT_CHARACTER token (fixes #216)</li>
+<li>ADDED: Add compiler flag (DISABLE_OBJECT_POOL) to disable token pools</li>
+<li>ADDED: Add more token types</li>
+<li>Add Swift support</li>
+<li>Avoid space to be eaten aways after a slash in latex export</li>
+<li>CHANGED: Add additional TOC tests</li>
+<li>CHANGED: Astyle</li>
+<li>CHANGED: Reformat comment</li>
+<li>FIXED: Centralize html fix</li>
+<li>FIXED: Don&#8217;t output empty figure captions</li>
+<li>FIXED: Fix Glossaries test</li>
+<li>FIXED: Fix ambidextrous tokens inside of footnotes and other definitions</li>
+<li>FIXED: Fix architecture issue when running multimarkdown from Xcode</li>
+<li>FIXED: Fix edge case where table separator without leading pipe is treated as a list item</li>
+<li>FIXED: Fix error detecting tables when indented in list items &#8211; Thanks, @wnm3!</li>
+<li>FIXED: Fix flow control error</li>
+<li>FIXED: Fix issue with certain nested lists</li>
+<li>FIXED: Fix issue with escaping in URLs</li>
+<li>FIXED: Fix issue with reference links with leading space instead of tab</li>
+<li>FIXED: Fix regression from pull request that breaks build</li>
+<li>FIXED: Fix style issue with ODT output format</li>
+<li>FIXED: Fix trailing whitespace issues in headers/TOC</li>
+<li>FIXED: Fix typo in xml.c</li>
+<li>FIXED: Fix typos in error messages</li>
+<li>FIXED: Improve README install path</li>
+<li>FIXED: Improve edge cases around fenced code blocks and setext headers</li>
+<li>FIXED: Improve markup handling around definition lists and colons</li>
+<li>FIXED: Improve token mapping in header blocks</li>
+<li>FIXED: Left out file</li>
+<li>FIXED: Re-enable token object pools in default configuration</li>
+<li>FIXED: Reset stack sizes before freeing temporary engine</li>
+<li>FIXED: Restore prior label_counter after {{TOC}}</li>
+<li>FIXED: Updated argtable3 now needs to link to math</li>
+<li>FIXED: Use MultiMarkdown instead of libMultiMarkdown as title in version.h</li>
+<li>FIXED: Use UTC for timestamp</li>
+<li>FIXED: bibtex metadata should be raw</li>
+<li>Merge branch &#8216;develop&#8217; of github.com:fletcher/MultiMarkdown-6 into develop</li>
+<li>Merge branch &#8216;release/6.6.0&#8217; into develop</li>
+<li>Merge pull request #210 from DivineDominion/swift-framework</li>
+<li>Merge pull request #233 from DivineDominion/patch-4</li>
+<li>Merge pull request #243 from alexban011/githubCi</li>
+<li>Merge pull request #245 from hvellyr/develop</li>
+<li>UPDATED: Apply astyle to all files</li>
+<li>UPDATED: Include definition list colons as markup token</li>
+<li>UPDATED: Project clean up</li>
+<li>UPDATED: Update CMakeLists.txt for Universal Binary</li>
+<li>UPDATED: Update astyle config</li>
+<li>UPDATED: Update github CI for multiple platforms</li>
+<li>UPDATED: Update lexers with newer version of re2c</li>
+<li>UPDATED: Update to latest argtable3 code</li>
+<li>UPDATED: standardize common source files</li>
+<li>ci: added github CI</li>
+<li>specify unsigned short for functions in token.h</li>
+<li>use unsigned short in implementation, too</li>
+</ul></li>
 <li><p>2020&#8211;10&#8211;28 - v 6.6.0:</p>
 
 <ul>

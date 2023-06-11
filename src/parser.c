@@ -25,15 +25,15 @@
 #include <stdio.h>
 /************ Begin %include sections from the grammar ************************/
 
-	#include <assert.h>
-	#include <stdio.h>
-	#include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-	#include "libMultiMarkdown.h"
-	#include "mmd.h"
-	#include "parser.h"
-	#include "stack.h"
-	#include "token.h"
+#include "libMultiMarkdown.h"
+#include "mmd.h"
+#include "parser.h"
+#include "stack.h"
+#include "token.h"
 /**************** End of %include directives **********************************/
 /* These constants specify the various numeric values for terminal symbols
 ** in a format understandable to "makeheaders".  This section is blank unless
@@ -64,7 +64,7 @@
 **                       the minor type might be the name of the identifier.
 **                       Each non-terminal can have a different minor type.
 **                       Terminal symbols all have the same minor type, though.
-**                       This macros defines the minor type for terminal 
+**                       This macros defines the minor type for terminal
 **                       symbols.
 **    YYMINORTYPE        is the data type used for all minor types.
 **                       This is typically a union of many types, one of
@@ -89,24 +89,24 @@
 **    YY_NO_ACTION       The yy_action[] code for no-op
 */
 #ifndef INTERFACE
-# define INTERFACE 1
+	#define INTERFACE 1
 #endif
 /************* Begin control #defines *****************************************/
 #define YYCODETYPE unsigned char
 #define YYNOCODE 91
 #define YYACTIONTYPE unsigned short int
-#define ParseTOKENTYPE  token * 
+#define ParseTOKENTYPE  token *
 typedef union {
-  int yyinit;
-  ParseTOKENTYPE yy0;
+	int yyinit;
+	ParseTOKENTYPE yy0;
 } YYMINORTYPE;
 #ifndef YYSTACKDEPTH
-#define YYSTACKDEPTH 100
+	#define YYSTACKDEPTH 100
 #endif
 #define ParseARG_SDECL  mmd_engine * engine ;
-#define ParseARG_PDECL , mmd_engine * engine 
-#define ParseARG_FETCH  mmd_engine * engine  = yypParser->engine 
-#define ParseARG_STORE yypParser->engine  = engine 
+#define ParseARG_PDECL , mmd_engine * engine
+#define ParseARG_FETCH  mmd_engine * engine  = yypParser->engine
+#define ParseARG_STORE yypParser->engine  = engine
 #define YYFALLBACK 1
 #define YYNSTATE             47
 #define YYNRULE              157
@@ -129,14 +129,14 @@ typedef union {
 ** for testing.
 */
 #ifndef yytestcase
-# define yytestcase(X)
+	#define yytestcase(X)
 #endif
 
 
 /* Next are the tables used to determine what action to take based on the
 ** current state and lookahead token.  These tables are used to implement
 ** functions that take a state number and lookahead value and return an
-** action integer.  
+** action integer.
 **
 ** Suppose the action integer is N.  Then the action is determined as
 ** follows
@@ -191,109 +191,109 @@ typedef union {
 *********** Begin parsing tables **********************************************/
 #define YY_ACTTAB_COUNT (322)
 static const YYACTIONTYPE yy_action[] = {
- /*     0 */   474,    1,  161,   37,  172,  173,  174,  175,  176,  177,
- /*    10 */    45,  179,   30,  181,   32,   41,   40,   29,   14,  188,
- /*    20 */   189,  190,   44,  247,   13,   13,   32,   44,  241,  242,
- /*    30 */   250,   38,   38,   27,  271,   26,   25,  218,   28,  214,
- /*    40 */    41,   40,  211,    8,  238,   43,  264,   15,   15,  316,
- /*    50 */   168,  310,  314,   46,    5,   16,  257,  258,  310,   42,
- /*    60 */   263,  288,  162,  163,  164,  165,  166,  167,  262,    7,
- /*    70 */     6,   17,    4,    3,    2,   18,  170,    5,  303,  225,
- /*    80 */   273,  276,  279,  274,  277,  280,  308,  271,  294,  168,
- /*    90 */    39,   39,   46,  223,   16,  257,  258,  310,   42,   19,
- /*   100 */   288,  162,  163,  164,  165,  166,  167,  262,    7,    6,
- /*   110 */    17,    4,    3,    2,   18,  170,    5,  303,  253,  273,
- /*   120 */   276,  279,  274,  277,  280,  308,  271,  294,  160,   37,
- /*   130 */   172,  173,  174,  175,  176,  177,   45,  179,   30,  181,
- /*   140 */    32,   41,   40,   29,   14,  188,  189,  190,  310,  314,
- /*   150 */   254,  271,   32,  226,  257,  258,  253,   38,   38,   27,
- /*   160 */   191,   26,   25,  197,   28,    5,   41,   40,  284,    8,
- /*   170 */   204,   43,  281,   15,   15,   33,   33,  248,  283,  285,
- /*   180 */   284,   34,   34,    6,  281,  207,   35,   35,  254,  228,
- /*   190 */   283,  285,   12,   44,   12,   13,   13,  233,  219,  221,
- /*   200 */   217,  220,  222,    7,  287,  282,  286,   36,   36,   31,
- /*   210 */   215,  212,  213,  216,   31,  284,  287,  282,  286,  281,
- /*   220 */    31,    9,    9,   20,   20,  283,  285,  200,  200,  192,
- /*   230 */   471,  471,    9,    9,   20,   20,  246,  244,  199,  199,
- /*   240 */   246,  207,   31,  257,  258,  208,  209,  210,  239,  318,
- /*   250 */    31,  287,  282,  286,    9,    9,   20,   20,   31,  318,
- /*   260 */   198,  198,    9,    9,   20,   20,  318,   31,  205,  205,
- /*   270 */    10,   10,   22,   22,  227,  234,   31,  318,  318,   11,
- /*   280 */    11,   23,   23,  298,  229,   31,  318,  295,  318,  191,
- /*   290 */    21,   21,  318,  297,  299,  186,  318,  305,  191,   24,
- /*   300 */    24,  291,  318,  306,  318,  289,  318,  318,  318,  318,
- /*   310 */   318,  290,  292,  318,  318,  318,  318,  318,  318,  224,
- /*   320 */   296,  304,
+	/*     0 */   474,    1,  161,   37,  172,  173,  174,  175,  176,  177,
+	/*    10 */    45,  179,   30,  181,   32,   41,   40,   29,   14,  188,
+	/*    20 */   189,  190,   44,  247,   13,   13,   32,   44,  241,  242,
+	/*    30 */   250,   38,   38,   27,  271,   26,   25,  218,   28,  214,
+	/*    40 */    41,   40,  211,    8,  238,   43,  264,   15,   15,  316,
+	/*    50 */   168,  310,  314,   46,    5,   16,  257,  258,  310,   42,
+	/*    60 */   263,  288,  162,  163,  164,  165,  166,  167,  262,    7,
+	/*    70 */     6,   17,    4,    3,    2,   18,  170,    5,  303,  225,
+	/*    80 */   273,  276,  279,  274,  277,  280,  308,  271,  294,  168,
+	/*    90 */    39,   39,   46,  223,   16,  257,  258,  310,   42,   19,
+	/*   100 */   288,  162,  163,  164,  165,  166,  167,  262,    7,    6,
+	/*   110 */    17,    4,    3,    2,   18,  170,    5,  303,  253,  273,
+	/*   120 */   276,  279,  274,  277,  280,  308,  271,  294,  160,   37,
+	/*   130 */   172,  173,  174,  175,  176,  177,   45,  179,   30,  181,
+	/*   140 */    32,   41,   40,   29,   14,  188,  189,  190,  310,  314,
+	/*   150 */   254,  271,   32,  226,  257,  258,  253,   38,   38,   27,
+	/*   160 */   191,   26,   25,  197,   28,    5,   41,   40,  284,    8,
+	/*   170 */   204,   43,  281,   15,   15,   33,   33,  248,  283,  285,
+	/*   180 */   284,   34,   34,    6,  281,  207,   35,   35,  254,  228,
+	/*   190 */   283,  285,   12,   44,   12,   13,   13,  233,  219,  221,
+	/*   200 */   217,  220,  222,    7,  287,  282,  286,   36,   36,   31,
+	/*   210 */   215,  212,  213,  216,   31,  284,  287,  282,  286,  281,
+	/*   220 */    31,    9,    9,   20,   20,  283,  285,  200,  200,  192,
+	/*   230 */   471,  471,    9,    9,   20,   20,  246,  244,  199,  199,
+	/*   240 */   246,  207,   31,  257,  258,  208,  209,  210,  239,  318,
+	/*   250 */    31,  287,  282,  286,    9,    9,   20,   20,   31,  318,
+	/*   260 */   198,  198,    9,    9,   20,   20,  318,   31,  205,  205,
+	/*   270 */    10,   10,   22,   22,  227,  234,   31,  318,  318,   11,
+	/*   280 */    11,   23,   23,  298,  229,   31,  318,  295,  318,  191,
+	/*   290 */    21,   21,  318,  297,  299,  186,  318,  305,  191,   24,
+	/*   300 */    24,  291,  318,  306,  318,  289,  318,  318,  318,  318,
+	/*   310 */   318,  290,  292,  318,  318,  318,  318,  318,  318,  224,
+	/*   320 */   296,  304,
 };
 static const YYCODETYPE yy_lookahead[] = {
- /*     0 */    41,   42,   43,   44,   45,   46,   47,   48,   49,   50,
- /*    10 */    51,   52,   53,   54,   55,   56,   57,   58,   59,   60,
- /*    20 */    61,   62,   86,   87,   88,   89,   67,   86,    2,    3,
- /*    30 */    89,   72,   73,   74,   38,   76,   77,   75,   79,   75,
- /*    40 */    81,   82,   75,   84,   83,   86,    5,   88,   89,    0,
- /*    50 */     1,    9,   10,    4,   28,    6,    7,    8,    9,   10,
- /*    60 */    19,   12,   13,   14,   15,   16,   17,   18,   19,   20,
- /*    70 */    21,   22,   23,   24,   25,   26,   27,   28,   29,   80,
- /*    80 */    31,   32,   33,   34,   35,   36,   37,   38,   39,    1,
- /*    90 */    72,   73,    4,   78,    6,    7,    8,    9,   10,   67,
- /*   100 */    12,   13,   14,   15,   16,   17,   18,   19,   20,   21,
- /*   110 */    22,   23,   24,   25,   26,   27,   28,   29,    5,   31,
- /*   120 */    32,   33,   34,   35,   36,   37,   38,   39,   43,   44,
- /*   130 */    45,   46,   47,   48,   49,   50,   51,   52,   53,   54,
- /*   140 */    55,   56,   57,   58,   59,   60,   61,   62,    9,   10,
- /*   150 */    37,   38,   67,   67,    7,    8,    5,   72,   73,   74,
- /*   160 */    64,   76,   77,   71,   79,   28,   81,   82,    1,   84,
- /*   170 */    73,   86,    5,   88,   89,   63,   64,   38,   11,   12,
- /*   180 */     1,   63,   64,   21,    5,   38,   63,   64,   37,   81,
- /*   190 */    11,   12,   85,   86,   87,   88,   89,   82,   31,   32,
- /*   200 */    33,   34,   35,   20,   37,   38,   39,   63,   64,   51,
- /*   210 */    31,   32,   33,   34,   51,    1,   37,   38,   39,    5,
- /*   220 */    51,   63,   64,   65,   66,   11,   12,   69,   70,   66,
- /*   230 */     2,    3,   63,   64,   65,   66,    9,   10,   69,   70,
- /*   240 */     9,   38,   51,    7,    8,   31,   32,   33,   29,   90,
- /*   250 */    51,   37,   38,   39,   63,   64,   65,   66,   51,   90,
- /*   260 */    69,   70,   63,   64,   65,   66,   90,   51,   69,   70,
- /*   270 */    63,   64,   65,   66,   38,   68,   51,   90,   90,   63,
- /*   280 */    64,   65,   66,    1,   68,   51,   90,    5,   90,   64,
- /*   290 */    65,   66,   90,   11,   12,    3,   90,    5,   64,   65,
- /*   300 */    66,    1,   90,   11,   90,    5,   90,   90,   90,   90,
- /*   310 */    90,   11,   12,   90,   90,   90,   90,   90,   90,   37,
- /*   320 */    38,   29,
+	/*     0 */    41,   42,   43,   44,   45,   46,   47,   48,   49,   50,
+	/*    10 */    51,   52,   53,   54,   55,   56,   57,   58,   59,   60,
+	/*    20 */    61,   62,   86,   87,   88,   89,   67,   86,    2,    3,
+	/*    30 */    89,   72,   73,   74,   38,   76,   77,   75,   79,   75,
+	/*    40 */    81,   82,   75,   84,   83,   86,    5,   88,   89,    0,
+	/*    50 */     1,    9,   10,    4,   28,    6,    7,    8,    9,   10,
+	/*    60 */    19,   12,   13,   14,   15,   16,   17,   18,   19,   20,
+	/*    70 */    21,   22,   23,   24,   25,   26,   27,   28,   29,   80,
+	/*    80 */    31,   32,   33,   34,   35,   36,   37,   38,   39,    1,
+	/*    90 */    72,   73,    4,   78,    6,    7,    8,    9,   10,   67,
+	/*   100 */    12,   13,   14,   15,   16,   17,   18,   19,   20,   21,
+	/*   110 */    22,   23,   24,   25,   26,   27,   28,   29,    5,   31,
+	/*   120 */    32,   33,   34,   35,   36,   37,   38,   39,   43,   44,
+	/*   130 */    45,   46,   47,   48,   49,   50,   51,   52,   53,   54,
+	/*   140 */    55,   56,   57,   58,   59,   60,   61,   62,    9,   10,
+	/*   150 */    37,   38,   67,   67,    7,    8,    5,   72,   73,   74,
+	/*   160 */    64,   76,   77,   71,   79,   28,   81,   82,    1,   84,
+	/*   170 */    73,   86,    5,   88,   89,   63,   64,   38,   11,   12,
+	/*   180 */     1,   63,   64,   21,    5,   38,   63,   64,   37,   81,
+	/*   190 */    11,   12,   85,   86,   87,   88,   89,   82,   31,   32,
+	/*   200 */    33,   34,   35,   20,   37,   38,   39,   63,   64,   51,
+	/*   210 */    31,   32,   33,   34,   51,    1,   37,   38,   39,    5,
+	/*   220 */    51,   63,   64,   65,   66,   11,   12,   69,   70,   66,
+	/*   230 */     2,    3,   63,   64,   65,   66,    9,   10,   69,   70,
+	/*   240 */     9,   38,   51,    7,    8,   31,   32,   33,   29,   90,
+	/*   250 */    51,   37,   38,   39,   63,   64,   65,   66,   51,   90,
+	/*   260 */    69,   70,   63,   64,   65,   66,   90,   51,   69,   70,
+	/*   270 */    63,   64,   65,   66,   38,   68,   51,   90,   90,   63,
+	/*   280 */    64,   65,   66,    1,   68,   51,   90,    5,   90,   64,
+	/*   290 */    65,   66,   90,   11,   12,    3,   90,    5,   64,   65,
+	/*   300 */    66,    1,   90,   11,   90,    5,   90,   90,   90,   90,
+	/*   310 */    90,   11,   12,   90,   90,   90,   90,   90,   90,   37,
+	/*   320 */    38,   29,
 };
 #define YY_SHIFT_USE_DFLT (322)
 #define YY_SHIFT_COUNT    (46)
 #define YY_SHIFT_MIN      (-4)
 #define YY_SHIFT_MAX      (300)
 static const short yy_shift_ofst[] = {
- /*     0 */    88,   49,  113,  113,  113,  113,  113,  113,   42,  113,
- /*    10 */   113,  113,   42,  139,   26,   42,  151,  151,  151,  151,
- /*    20 */    -4,   -4,   -4,   -4,   -4,  167,  179,  214,  282,  292,
- /*    30 */   300,  147,  236,  151,  151,  151,  151,   41,  137,  137,
- /*    40 */   162,  183,  228,  227,  231,  203,  219,
+	/*     0 */    88,   49,  113,  113,  113,  113,  113,  113,   42,  113,
+	/*    10 */   113,  113,   42,  139,   26,   42,  151,  151,  151,  151,
+	/*    20 */    -4,   -4,   -4,   -4,   -4,  167,  179,  214,  282,  292,
+	/*    30 */   300,  147,  236,  151,  151,  151,  151,   41,  137,  137,
+	/*    40 */   162,  183,  228,  227,  231,  203,  219,
 };
 #define YY_REDUCE_USE_DFLT (-65)
 #define YY_REDUCE_COUNT (41)
 #define YY_REDUCE_MIN   (-64)
 #define YY_REDUCE_MAX   (234)
 static const short yy_reduce_ofst[] = {
- /*     0 */   -41,   85,  158,  169,  191,  199,  207,  216,  107,  225,
- /*    10 */   234,  234,  -64,  -59,   18,  -59,  112,  118,  123,  144,
- /*    20 */   163,  163,  163,  163,  163,  -38,  -36,  -33,   -1,  -39,
- /*    30 */    15,   32,   86,   96,   96,   96,   96,   92,   97,   97,
- /*    40 */   115,  108,
+	/*     0 */   -41,   85,  158,  169,  191,  199,  207,  216,  107,  225,
+	/*    10 */   234,  234,  -64,  -59,   18,  -59,  112,  118,  123,  144,
+	/*    20 */   163,  163,  163,  163,  163,  -38,  -36,  -33,   -1,  -39,
+	/*    30 */    15,   32,   86,   96,   96,   96,   96,   92,   97,   97,
+	/*    40 */   115,  108,
 };
 static const YYACTIONTYPE yy_default[] = {
- /*     0 */   473,  473,  424,  423,  422,  363,  394,  389,  466,  416,
- /*    10 */   392,  387,  400,  406,  344,  408,  464,  426,  425,  351,
- /*    20 */   418,  353,  393,  388,  352,  435,  432,  429,  450,  342,
- /*    30 */   337,  413,  339,  397,  359,  358,  350,  328,  472,  360,
- /*    40 */   341,  340,  402,  470,  470,  335,  326,
+	/*     0 */   473,  473,  424,  423,  422,  363,  394,  389,  466,  416,
+	/*    10 */   392,  387,  400,  406,  344,  408,  464,  426,  425,  351,
+	/*    20 */   418,  353,  393,  388,  352,  435,  432,  429,  450,  342,
+	/*    30 */   337,  413,  339,  397,  359,  358,  350,  328,  472,  360,
+	/*    40 */   341,  340,  402,  470,  470,  335,  326,
 };
 /********** End of lemon-generated parsing tables *****************************/
 
-/* The next table maps tokens (terminal symbols) into fallback tokens.  
+/* The next table maps tokens (terminal symbols) into fallback tokens.
 ** If a construct like the following:
-** 
+**
 **      %fallback ID X Y Z.
 **
 ** appears in the grammar, then ID becomes a fallback token for X, Y,
@@ -307,43 +307,43 @@ static const YYACTIONTYPE yy_default[] = {
 */
 #ifdef YYFALLBACK
 static const YYCODETYPE yyFallback[] = {
-    0,  /*          $ => nothing */
-    0,  /*    LINE_HR => nothing */
-    1,  /* LINE_SETEXT_1 => LINE_HR */
-    1,  /* LINE_SETEXT_2 => LINE_HR */
-    1,  /*  LINE_YAML => LINE_HR */
-    0,  /* LINE_CONTINUATION => nothing */
-    5,  /* LINE_PLAIN => LINE_CONTINUATION */
-    5,  /* LINE_INDENTED_TAB => LINE_CONTINUATION */
-    5,  /* LINE_INDENTED_SPACE => LINE_CONTINUATION */
-    5,  /* LINE_TABLE => LINE_CONTINUATION */
-    5,  /* LINE_TABLE_SEPARATOR => LINE_CONTINUATION */
-    0,  /* LINE_FALLBACK => nothing */
-   11,  /*  LINE_HTML => LINE_FALLBACK */
-   11,  /* LINE_ATX_1 => LINE_FALLBACK */
-   11,  /* LINE_ATX_2 => LINE_FALLBACK */
-   11,  /* LINE_ATX_3 => LINE_FALLBACK */
-   11,  /* LINE_ATX_4 => LINE_FALLBACK */
-   11,  /* LINE_ATX_5 => LINE_FALLBACK */
-   11,  /* LINE_ATX_6 => LINE_FALLBACK */
-   11,  /* LINE_BLOCKQUOTE => LINE_FALLBACK */
-   11,  /* LINE_LIST_BULLETED => LINE_FALLBACK */
-   11,  /* LINE_LIST_ENUMERATED => LINE_FALLBACK */
-   11,  /* LINE_DEF_ABBREVIATION => LINE_FALLBACK */
-   11,  /* LINE_DEF_CITATION => LINE_FALLBACK */
-   11,  /* LINE_DEF_FOOTNOTE => LINE_FALLBACK */
-   11,  /* LINE_DEF_GLOSSARY => LINE_FALLBACK */
-   11,  /* LINE_DEF_LINK => LINE_FALLBACK */
-   11,  /*   LINE_TOC => LINE_FALLBACK */
-   11,  /* LINE_DEFINITION => LINE_FALLBACK */
-   11,  /*  LINE_META => LINE_FALLBACK */
-    0,  /* LINE_BACKTICK => nothing */
-   30,  /* LINE_FENCE_BACKTICK_3 => LINE_BACKTICK */
-   30,  /* LINE_FENCE_BACKTICK_4 => LINE_BACKTICK */
-   30,  /* LINE_FENCE_BACKTICK_5 => LINE_BACKTICK */
-   30,  /* LINE_FENCE_BACKTICK_START_3 => LINE_BACKTICK */
-   30,  /* LINE_FENCE_BACKTICK_START_4 => LINE_BACKTICK */
-   30,  /* LINE_FENCE_BACKTICK_START_5 => LINE_BACKTICK */
+	0,  /*          $ => nothing */
+	0,  /*    LINE_HR => nothing */
+	1,  /* LINE_SETEXT_1 => LINE_HR */
+	1,  /* LINE_SETEXT_2 => LINE_HR */
+	1,  /*  LINE_YAML => LINE_HR */
+	0,  /* LINE_CONTINUATION => nothing */
+	5,  /* LINE_PLAIN => LINE_CONTINUATION */
+	5,  /* LINE_INDENTED_TAB => LINE_CONTINUATION */
+	5,  /* LINE_INDENTED_SPACE => LINE_CONTINUATION */
+	5,  /* LINE_TABLE => LINE_CONTINUATION */
+	5,  /* LINE_TABLE_SEPARATOR => LINE_CONTINUATION */
+	0,  /* LINE_FALLBACK => nothing */
+	11,  /*  LINE_HTML => LINE_FALLBACK */
+	11,  /* LINE_ATX_1 => LINE_FALLBACK */
+	11,  /* LINE_ATX_2 => LINE_FALLBACK */
+	11,  /* LINE_ATX_3 => LINE_FALLBACK */
+	11,  /* LINE_ATX_4 => LINE_FALLBACK */
+	11,  /* LINE_ATX_5 => LINE_FALLBACK */
+	11,  /* LINE_ATX_6 => LINE_FALLBACK */
+	11,  /* LINE_BLOCKQUOTE => LINE_FALLBACK */
+	11,  /* LINE_LIST_BULLETED => LINE_FALLBACK */
+	11,  /* LINE_LIST_ENUMERATED => LINE_FALLBACK */
+	11,  /* LINE_DEF_ABBREVIATION => LINE_FALLBACK */
+	11,  /* LINE_DEF_CITATION => LINE_FALLBACK */
+	11,  /* LINE_DEF_FOOTNOTE => LINE_FALLBACK */
+	11,  /* LINE_DEF_GLOSSARY => LINE_FALLBACK */
+	11,  /* LINE_DEF_LINK => LINE_FALLBACK */
+	11,  /*   LINE_TOC => LINE_FALLBACK */
+	11,  /* LINE_DEFINITION => LINE_FALLBACK */
+	11,  /*  LINE_META => LINE_FALLBACK */
+	0,  /* LINE_BACKTICK => nothing */
+	30,  /* LINE_FENCE_BACKTICK_3 => LINE_BACKTICK */
+	30,  /* LINE_FENCE_BACKTICK_4 => LINE_BACKTICK */
+	30,  /* LINE_FENCE_BACKTICK_5 => LINE_BACKTICK */
+	30,  /* LINE_FENCE_BACKTICK_START_3 => LINE_BACKTICK */
+	30,  /* LINE_FENCE_BACKTICK_START_4 => LINE_BACKTICK */
+	30,  /* LINE_FENCE_BACKTICK_START_5 => LINE_BACKTICK */
 };
 #endif /* YYFALLBACK */
 
@@ -364,10 +364,10 @@ static const YYCODETYPE yyFallback[] = {
 ** SHIFTREDUCE.
 */
 struct yyStackEntry {
-  YYACTIONTYPE stateno;  /* The state-number, or reduce action in SHIFTREDUCE */
-  YYCODETYPE major;      /* The major token value.  This is the code
+	YYACTIONTYPE stateno;  /* The state-number, or reduce action in SHIFTREDUCE */
+	YYCODETYPE major;      /* The major token value.  This is the code
                          ** number for the token at this stack level */
-  YYMINORTYPE minor;     /* The user-supplied minor token value.  This
+	YYMINORTYPE minor;     /* The user-supplied minor token value.  This
                          ** is the value of the token  */
 };
 typedef struct yyStackEntry yyStackEntry;
@@ -375,35 +375,35 @@ typedef struct yyStackEntry yyStackEntry;
 /* The state of the parser is completely contained in an instance of
 ** the following structure */
 struct yyParser {
-  yyStackEntry *yytos;          /* Pointer to top element of the stack */
+	yyStackEntry * yytos;         /* Pointer to top element of the stack */
 #ifdef YYTRACKMAXSTACKDEPTH
-  int yyhwm;                    /* High-water mark of the stack */
+	int yyhwm;                    /* High-water mark of the stack */
 #endif
 #ifndef YYNOERRORRECOVERY
-  int yyerrcnt;                 /* Shifts left before out of the error */
+	int yyerrcnt;                 /* Shifts left before out of the error */
 #endif
-  ParseARG_SDECL                /* A place to hold %extra_argument */
+	ParseARG_SDECL                /* A place to hold %extra_argument */
 #if YYSTACKDEPTH<=0
-  int yystksz;                  /* Current side of the stack */
-  yyStackEntry *yystack;        /* The parser's stack */
-  yyStackEntry yystk0;          /* First stack entry */
+	int yystksz;                  /* Current side of the stack */
+	yyStackEntry * yystack;       /* The parser's stack */
+	yyStackEntry yystk0;          /* First stack entry */
 #else
-  yyStackEntry yystack[YYSTACKDEPTH];  /* The parser's stack */
+	yyStackEntry yystack[YYSTACKDEPTH];  /* The parser's stack */
 #endif
 };
 typedef struct yyParser yyParser;
 
 #ifndef NDEBUG
-#include <stdio.h>
-static FILE *yyTraceFILE = 0;
-static char *yyTracePrompt = 0;
+	#include <stdio.h>
+	static FILE * yyTraceFILE = 0;
+	static char * yyTracePrompt = 0;
 #endif /* NDEBUG */
 
 #ifndef NDEBUG
-/* 
+/*
 ** Turn parser tracing on by giving a stream to which to write the trace
 ** and a prompt to preface each trace message.  Tracing is turned off
-** by making either argument NULL 
+** by making either argument NULL
 **
 ** Inputs:
 ** <ul>
@@ -417,205 +417,209 @@ static char *yyTracePrompt = 0;
 ** Outputs:
 ** None.
 */
-void ParseTrace(FILE *TraceFILE, char *zTracePrompt){
-  yyTraceFILE = TraceFILE;
-  yyTracePrompt = zTracePrompt;
-  if( yyTraceFILE==0 ) yyTracePrompt = 0;
-  else if( yyTracePrompt==0 ) yyTraceFILE = 0;
+void ParseTrace(FILE * TraceFILE, char * zTracePrompt) {
+	yyTraceFILE = TraceFILE;
+	yyTracePrompt = zTracePrompt;
+
+	if ( yyTraceFILE == 0 ) {
+		yyTracePrompt = 0;
+	} else if ( yyTracePrompt == 0 ) {
+		yyTraceFILE = 0;
+	}
 }
 #endif /* NDEBUG */
 
 #ifndef NDEBUG
 /* For tracing shifts, the names of all terminals and nonterminals
 ** are required.  The following table supplies these names */
-static const char *const yyTokenName[] = { 
-  "$",             "LINE_HR",       "LINE_SETEXT_1",  "LINE_SETEXT_2",
-  "LINE_YAML",     "LINE_CONTINUATION",  "LINE_PLAIN",    "LINE_INDENTED_TAB",
-  "LINE_INDENTED_SPACE",  "LINE_TABLE",    "LINE_TABLE_SEPARATOR",  "LINE_FALLBACK",
-  "LINE_HTML",     "LINE_ATX_1",    "LINE_ATX_2",    "LINE_ATX_3",  
-  "LINE_ATX_4",    "LINE_ATX_5",    "LINE_ATX_6",    "LINE_BLOCKQUOTE",
-  "LINE_LIST_BULLETED",  "LINE_LIST_ENUMERATED",  "LINE_DEF_ABBREVIATION",  "LINE_DEF_CITATION",
-  "LINE_DEF_FOOTNOTE",  "LINE_DEF_GLOSSARY",  "LINE_DEF_LINK",  "LINE_TOC",    
-  "LINE_DEFINITION",  "LINE_META",     "LINE_BACKTICK",  "LINE_FENCE_BACKTICK_3",
-  "LINE_FENCE_BACKTICK_4",  "LINE_FENCE_BACKTICK_5",  "LINE_FENCE_BACKTICK_START_3",  "LINE_FENCE_BACKTICK_START_4",
-  "LINE_FENCE_BACKTICK_START_5",  "LINE_STOP_COMMENT",  "LINE_EMPTY",    "LINE_START_COMMENT",
-  "error",         "doc",           "blocks",        "block",       
-  "blockquote",    "def_abbreviation",  "def_citation",  "def_footnote",
-  "def_glossary",  "def_link",      "definition_block",  "empty",       
-  "fenced_block",  "html_block",    "html_com_block",  "indented_code",
-  "list_bullet",   "list_enum",     "meta_block",    "para",        
-  "setext_1",      "setext_2",      "table",         "chunk",       
-  "chunk_line",    "nested_chunks",  "nested_chunk",  "indented_line",
-  "ext_chunk",     "opt_ext_chunk",  "tail",          "quote_line",  
-  "defs",          "def",           "fenced_3",      "fenced_line", 
-  "fenced_4",      "fenced_5",      "html_line",     "html_comment",
-  "comment_line",  "item_bullet",   "item_enum",     "meta_line",   
-  "table_header",  "table_body",    "header_rows",   "table_section",
-  "all_rows",      "row",         
+static const char * const yyTokenName[] = {
+	"$",             "LINE_HR",       "LINE_SETEXT_1",  "LINE_SETEXT_2",
+	"LINE_YAML",     "LINE_CONTINUATION",  "LINE_PLAIN",    "LINE_INDENTED_TAB",
+	"LINE_INDENTED_SPACE",  "LINE_TABLE",    "LINE_TABLE_SEPARATOR",  "LINE_FALLBACK",
+	"LINE_HTML",     "LINE_ATX_1",    "LINE_ATX_2",    "LINE_ATX_3",
+	"LINE_ATX_4",    "LINE_ATX_5",    "LINE_ATX_6",    "LINE_BLOCKQUOTE",
+	"LINE_LIST_BULLETED",  "LINE_LIST_ENUMERATED",  "LINE_DEF_ABBREVIATION",  "LINE_DEF_CITATION",
+	"LINE_DEF_FOOTNOTE",  "LINE_DEF_GLOSSARY",  "LINE_DEF_LINK",  "LINE_TOC",
+	"LINE_DEFINITION",  "LINE_META",     "LINE_BACKTICK",  "LINE_FENCE_BACKTICK_3",
+	"LINE_FENCE_BACKTICK_4",  "LINE_FENCE_BACKTICK_5",  "LINE_FENCE_BACKTICK_START_3",  "LINE_FENCE_BACKTICK_START_4",
+	"LINE_FENCE_BACKTICK_START_5",  "LINE_STOP_COMMENT",  "LINE_EMPTY",    "LINE_START_COMMENT",
+	"error",         "doc",           "blocks",        "block",
+	"blockquote",    "def_abbreviation",  "def_citation",  "def_footnote",
+	"def_glossary",  "def_link",      "definition_block",  "empty",
+	"fenced_block",  "html_block",    "html_com_block",  "indented_code",
+	"list_bullet",   "list_enum",     "meta_block",    "para",
+	"setext_1",      "setext_2",      "table",         "chunk",
+	"chunk_line",    "nested_chunks",  "nested_chunk",  "indented_line",
+	"ext_chunk",     "opt_ext_chunk",  "tail",          "quote_line",
+	"defs",          "def",           "fenced_3",      "fenced_line",
+	"fenced_4",      "fenced_5",      "html_line",     "html_comment",
+	"comment_line",  "item_bullet",   "item_enum",     "meta_line",
+	"table_header",  "table_body",    "header_rows",   "table_section",
+	"all_rows",      "row",
 };
 #endif /* NDEBUG */
 
 #ifndef NDEBUG
 /* For tracing reduce actions, the names of all rules are required.
 */
-static const char *const yyRuleName[] = {
- /*   0 */ "doc ::= blocks",
- /*   1 */ "blocks ::= blocks block",
- /*   2 */ "blocks ::= block",
- /*   3 */ "block ::= LINE_ATX_1",
- /*   4 */ "block ::= LINE_ATX_2",
- /*   5 */ "block ::= LINE_ATX_3",
- /*   6 */ "block ::= LINE_ATX_4",
- /*   7 */ "block ::= LINE_ATX_5",
- /*   8 */ "block ::= LINE_ATX_6",
- /*   9 */ "block ::= LINE_HR",
- /*  10 */ "block ::= LINE_YAML",
- /*  11 */ "block ::= LINE_TOC",
- /*  12 */ "block ::= blockquote",
- /*  13 */ "block ::= def_abbreviation",
- /*  14 */ "block ::= def_citation",
- /*  15 */ "block ::= def_footnote",
- /*  16 */ "block ::= def_glossary",
- /*  17 */ "block ::= def_link",
- /*  18 */ "block ::= definition_block",
- /*  19 */ "block ::= empty",
- /*  20 */ "block ::= fenced_block",
- /*  21 */ "block ::= html_block",
- /*  22 */ "block ::= html_com_block",
- /*  23 */ "block ::= indented_code",
- /*  24 */ "block ::= list_bullet",
- /*  25 */ "block ::= list_enum",
- /*  26 */ "block ::= meta_block",
- /*  27 */ "block ::= meta_block LINE_SETEXT_2",
- /*  28 */ "block ::= para",
- /*  29 */ "block ::= setext_1",
- /*  30 */ "block ::= setext_2",
- /*  31 */ "block ::= table",
- /*  32 */ "chunk ::= chunk chunk_line",
- /*  33 */ "nested_chunks ::= nested_chunks nested_chunk",
- /*  34 */ "nested_chunk ::= empty indented_line chunk",
- /*  35 */ "nested_chunk ::= empty indented_line",
- /*  36 */ "ext_chunk ::= chunk nested_chunks",
- /*  37 */ "opt_ext_chunk ::= chunk nested_chunks",
- /*  38 */ "blockquote ::= blockquote quote_line",
- /*  39 */ "def_citation ::= LINE_DEF_CITATION tail",
- /*  40 */ "def_footnote ::= LINE_DEF_FOOTNOTE tail",
- /*  41 */ "def_glossary ::= LINE_DEF_GLOSSARY tail",
- /*  42 */ "def_link ::= LINE_DEF_LINK chunk",
- /*  43 */ "def_abbreviation ::= LINE_DEF_ABBREVIATION chunk",
- /*  44 */ "definition_block ::= para defs",
- /*  45 */ "defs ::= defs def",
- /*  46 */ "def ::= LINE_DEFINITION tail",
- /*  47 */ "def ::= LINE_DEFINITION",
- /*  48 */ "empty ::= empty LINE_EMPTY",
- /*  49 */ "fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_3",
- /*  50 */ "fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_4",
- /*  51 */ "fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_5",
- /*  52 */ "fenced_3 ::= fenced_3 fenced_line",
- /*  53 */ "fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_4",
- /*  54 */ "fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_5",
- /*  55 */ "fenced_4 ::= fenced_4 fenced_line",
- /*  56 */ "fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3",
- /*  57 */ "fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3",
- /*  58 */ "fenced_block ::= fenced_5 LINE_FENCE_BACKTICK_5",
- /*  59 */ "fenced_5 ::= fenced_5 fenced_line",
- /*  60 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3",
- /*  61 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3",
- /*  62 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4",
- /*  63 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4",
- /*  64 */ "html_block ::= html_block html_line",
- /*  65 */ "html_com_block ::= html_comment LINE_STOP_COMMENT",
- /*  66 */ "html_comment ::= html_comment comment_line",
- /*  67 */ "indented_code ::= indented_code indented_line",
- /*  68 */ "indented_code ::= indented_code LINE_EMPTY",
- /*  69 */ "list_bullet ::= list_bullet item_bullet",
- /*  70 */ "item_bullet ::= LINE_LIST_BULLETED ext_chunk",
- /*  71 */ "item_bullet ::= LINE_LIST_BULLETED chunk",
- /*  72 */ "item_bullet ::= LINE_LIST_BULLETED nested_chunks",
- /*  73 */ "item_bullet ::= LINE_LIST_BULLETED",
- /*  74 */ "list_enum ::= list_enum item_enum",
- /*  75 */ "item_enum ::= LINE_LIST_ENUMERATED ext_chunk",
- /*  76 */ "item_enum ::= LINE_LIST_ENUMERATED chunk",
- /*  77 */ "item_enum ::= LINE_LIST_ENUMERATED nested_chunks",
- /*  78 */ "item_enum ::= LINE_LIST_ENUMERATED",
- /*  79 */ "meta_block ::= meta_block meta_line",
- /*  80 */ "meta_block ::= LINE_YAML LINE_META",
- /*  81 */ "para ::= LINE_PLAIN chunk",
- /*  82 */ "setext_1 ::= para LINE_SETEXT_1",
- /*  83 */ "setext_2 ::= para LINE_SETEXT_2",
- /*  84 */ "table ::= table_header table_body",
- /*  85 */ "table_header ::= header_rows LINE_TABLE_SEPARATOR",
- /*  86 */ "table_header ::= LINE_TABLE_SEPARATOR",
- /*  87 */ "header_rows ::= header_rows LINE_TABLE",
- /*  88 */ "table_body ::= table_body table_section",
- /*  89 */ "table_section ::= all_rows LINE_EMPTY",
- /*  90 */ "table_section ::= all_rows",
- /*  91 */ "all_rows ::= all_rows row",
- /*  92 */ "para ::= all_rows",
- /*  93 */ "chunk ::= chunk_line",
- /*  94 */ "chunk_line ::= LINE_CONTINUATION",
- /*  95 */ "chunk_line ::= LINE_STOP_COMMENT",
- /*  96 */ "nested_chunks ::= nested_chunk",
- /*  97 */ "nested_chunk ::= empty",
- /*  98 */ "indented_line ::= LINE_INDENTED_TAB",
- /*  99 */ "indented_line ::= LINE_INDENTED_SPACE",
- /* 100 */ "opt_ext_chunk ::= chunk",
- /* 101 */ "tail ::= opt_ext_chunk",
- /* 102 */ "tail ::= nested_chunks",
- /* 103 */ "blockquote ::= LINE_BLOCKQUOTE",
- /* 104 */ "quote_line ::= LINE_BLOCKQUOTE",
- /* 105 */ "quote_line ::= LINE_CONTINUATION",
- /* 106 */ "def_citation ::= LINE_DEF_CITATION",
- /* 107 */ "def_footnote ::= LINE_DEF_FOOTNOTE",
- /* 108 */ "def_glossary ::= LINE_DEF_GLOSSARY",
- /* 109 */ "def_link ::= LINE_DEF_LINK",
- /* 110 */ "def_abbreviation ::= LINE_DEF_ABBREVIATION",
- /* 111 */ "defs ::= def",
- /* 112 */ "empty ::= LINE_EMPTY",
- /* 113 */ "fenced_block ::= fenced_3",
- /* 114 */ "fenced_3 ::= LINE_FENCE_BACKTICK_3",
- /* 115 */ "fenced_3 ::= LINE_FENCE_BACKTICK_START_3",
- /* 116 */ "fenced_block ::= fenced_4",
- /* 117 */ "fenced_4 ::= LINE_FENCE_BACKTICK_4",
- /* 118 */ "fenced_4 ::= LINE_FENCE_BACKTICK_START_4",
- /* 119 */ "fenced_block ::= fenced_5",
- /* 120 */ "fenced_5 ::= LINE_FENCE_BACKTICK_5",
- /* 121 */ "fenced_5 ::= LINE_FENCE_BACKTICK_START_5",
- /* 122 */ "fenced_line ::= LINE_CONTINUATION",
- /* 123 */ "fenced_line ::= LINE_EMPTY",
- /* 124 */ "fenced_line ::= LINE_FALLBACK",
- /* 125 */ "fenced_line ::= LINE_HR",
- /* 126 */ "fenced_line ::= LINE_HTML",
- /* 127 */ "fenced_line ::= LINE_START_COMMENT",
- /* 128 */ "fenced_line ::= LINE_STOP_COMMENT",
- /* 129 */ "html_block ::= LINE_HTML",
- /* 130 */ "html_line ::= LINE_CONTINUATION",
- /* 131 */ "html_line ::= LINE_FALLBACK",
- /* 132 */ "html_line ::= LINE_HR",
- /* 133 */ "html_line ::= LINE_HTML",
- /* 134 */ "html_com_block ::= html_comment",
- /* 135 */ "html_comment ::= LINE_START_COMMENT",
- /* 136 */ "comment_line ::= LINE_CONTINUATION",
- /* 137 */ "comment_line ::= LINE_EMPTY",
- /* 138 */ "comment_line ::= LINE_FALLBACK",
- /* 139 */ "comment_line ::= LINE_HR",
- /* 140 */ "comment_line ::= LINE_HTML",
- /* 141 */ "indented_code ::= indented_line",
- /* 142 */ "list_bullet ::= item_bullet",
- /* 143 */ "list_enum ::= item_enum",
- /* 144 */ "meta_block ::= LINE_META",
- /* 145 */ "meta_line ::= LINE_META",
- /* 146 */ "meta_line ::= LINE_CONTINUATION",
- /* 147 */ "meta_line ::= LINE_FALLBACK",
- /* 148 */ "para ::= LINE_PLAIN",
- /* 149 */ "para ::= LINE_STOP_COMMENT",
- /* 150 */ "table ::= table_header",
- /* 151 */ "header_rows ::= LINE_TABLE",
- /* 152 */ "table_body ::= table_section",
- /* 153 */ "all_rows ::= row",
- /* 154 */ "row ::= header_rows",
- /* 155 */ "row ::= LINE_TABLE_SEPARATOR",
- /* 156 */ "para ::= defs",
+static const char * const yyRuleName[] = {
+	/*   0 */ "doc ::= blocks",
+	/*   1 */ "blocks ::= blocks block",
+	/*   2 */ "blocks ::= block",
+	/*   3 */ "block ::= LINE_ATX_1",
+	/*   4 */ "block ::= LINE_ATX_2",
+	/*   5 */ "block ::= LINE_ATX_3",
+	/*   6 */ "block ::= LINE_ATX_4",
+	/*   7 */ "block ::= LINE_ATX_5",
+	/*   8 */ "block ::= LINE_ATX_6",
+	/*   9 */ "block ::= LINE_HR",
+	/*  10 */ "block ::= LINE_YAML",
+	/*  11 */ "block ::= LINE_TOC",
+	/*  12 */ "block ::= blockquote",
+	/*  13 */ "block ::= def_abbreviation",
+	/*  14 */ "block ::= def_citation",
+	/*  15 */ "block ::= def_footnote",
+	/*  16 */ "block ::= def_glossary",
+	/*  17 */ "block ::= def_link",
+	/*  18 */ "block ::= definition_block",
+	/*  19 */ "block ::= empty",
+	/*  20 */ "block ::= fenced_block",
+	/*  21 */ "block ::= html_block",
+	/*  22 */ "block ::= html_com_block",
+	/*  23 */ "block ::= indented_code",
+	/*  24 */ "block ::= list_bullet",
+	/*  25 */ "block ::= list_enum",
+	/*  26 */ "block ::= meta_block",
+	/*  27 */ "block ::= meta_block LINE_SETEXT_2",
+	/*  28 */ "block ::= para",
+	/*  29 */ "block ::= setext_1",
+	/*  30 */ "block ::= setext_2",
+	/*  31 */ "block ::= table",
+	/*  32 */ "chunk ::= chunk chunk_line",
+	/*  33 */ "nested_chunks ::= nested_chunks nested_chunk",
+	/*  34 */ "nested_chunk ::= empty indented_line chunk",
+	/*  35 */ "nested_chunk ::= empty indented_line",
+	/*  36 */ "ext_chunk ::= chunk nested_chunks",
+	/*  37 */ "opt_ext_chunk ::= chunk nested_chunks",
+	/*  38 */ "blockquote ::= blockquote quote_line",
+	/*  39 */ "def_citation ::= LINE_DEF_CITATION tail",
+	/*  40 */ "def_footnote ::= LINE_DEF_FOOTNOTE tail",
+	/*  41 */ "def_glossary ::= LINE_DEF_GLOSSARY tail",
+	/*  42 */ "def_link ::= LINE_DEF_LINK chunk",
+	/*  43 */ "def_abbreviation ::= LINE_DEF_ABBREVIATION chunk",
+	/*  44 */ "definition_block ::= para defs",
+	/*  45 */ "defs ::= defs def",
+	/*  46 */ "def ::= LINE_DEFINITION tail",
+	/*  47 */ "def ::= LINE_DEFINITION",
+	/*  48 */ "empty ::= empty LINE_EMPTY",
+	/*  49 */ "fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_3",
+	/*  50 */ "fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_4",
+	/*  51 */ "fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_5",
+	/*  52 */ "fenced_3 ::= fenced_3 fenced_line",
+	/*  53 */ "fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_4",
+	/*  54 */ "fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_5",
+	/*  55 */ "fenced_4 ::= fenced_4 fenced_line",
+	/*  56 */ "fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3",
+	/*  57 */ "fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3",
+	/*  58 */ "fenced_block ::= fenced_5 LINE_FENCE_BACKTICK_5",
+	/*  59 */ "fenced_5 ::= fenced_5 fenced_line",
+	/*  60 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3",
+	/*  61 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3",
+	/*  62 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4",
+	/*  63 */ "fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4",
+	/*  64 */ "html_block ::= html_block html_line",
+	/*  65 */ "html_com_block ::= html_comment LINE_STOP_COMMENT",
+	/*  66 */ "html_comment ::= html_comment comment_line",
+	/*  67 */ "indented_code ::= indented_code indented_line",
+	/*  68 */ "indented_code ::= indented_code LINE_EMPTY",
+	/*  69 */ "list_bullet ::= list_bullet item_bullet",
+	/*  70 */ "item_bullet ::= LINE_LIST_BULLETED ext_chunk",
+	/*  71 */ "item_bullet ::= LINE_LIST_BULLETED chunk",
+	/*  72 */ "item_bullet ::= LINE_LIST_BULLETED nested_chunks",
+	/*  73 */ "item_bullet ::= LINE_LIST_BULLETED",
+	/*  74 */ "list_enum ::= list_enum item_enum",
+	/*  75 */ "item_enum ::= LINE_LIST_ENUMERATED ext_chunk",
+	/*  76 */ "item_enum ::= LINE_LIST_ENUMERATED chunk",
+	/*  77 */ "item_enum ::= LINE_LIST_ENUMERATED nested_chunks",
+	/*  78 */ "item_enum ::= LINE_LIST_ENUMERATED",
+	/*  79 */ "meta_block ::= meta_block meta_line",
+	/*  80 */ "meta_block ::= LINE_YAML LINE_META",
+	/*  81 */ "para ::= LINE_PLAIN chunk",
+	/*  82 */ "setext_1 ::= para LINE_SETEXT_1",
+	/*  83 */ "setext_2 ::= para LINE_SETEXT_2",
+	/*  84 */ "table ::= table_header table_body",
+	/*  85 */ "table_header ::= header_rows LINE_TABLE_SEPARATOR",
+	/*  86 */ "table_header ::= LINE_TABLE_SEPARATOR",
+	/*  87 */ "header_rows ::= header_rows LINE_TABLE",
+	/*  88 */ "table_body ::= table_body table_section",
+	/*  89 */ "table_section ::= all_rows LINE_EMPTY",
+	/*  90 */ "table_section ::= all_rows",
+	/*  91 */ "all_rows ::= all_rows row",
+	/*  92 */ "para ::= all_rows",
+	/*  93 */ "chunk ::= chunk_line",
+	/*  94 */ "chunk_line ::= LINE_CONTINUATION",
+	/*  95 */ "chunk_line ::= LINE_STOP_COMMENT",
+	/*  96 */ "nested_chunks ::= nested_chunk",
+	/*  97 */ "nested_chunk ::= empty",
+	/*  98 */ "indented_line ::= LINE_INDENTED_TAB",
+	/*  99 */ "indented_line ::= LINE_INDENTED_SPACE",
+	/* 100 */ "opt_ext_chunk ::= chunk",
+	/* 101 */ "tail ::= opt_ext_chunk",
+	/* 102 */ "tail ::= nested_chunks",
+	/* 103 */ "blockquote ::= LINE_BLOCKQUOTE",
+	/* 104 */ "quote_line ::= LINE_BLOCKQUOTE",
+	/* 105 */ "quote_line ::= LINE_CONTINUATION",
+	/* 106 */ "def_citation ::= LINE_DEF_CITATION",
+	/* 107 */ "def_footnote ::= LINE_DEF_FOOTNOTE",
+	/* 108 */ "def_glossary ::= LINE_DEF_GLOSSARY",
+	/* 109 */ "def_link ::= LINE_DEF_LINK",
+	/* 110 */ "def_abbreviation ::= LINE_DEF_ABBREVIATION",
+	/* 111 */ "defs ::= def",
+	/* 112 */ "empty ::= LINE_EMPTY",
+	/* 113 */ "fenced_block ::= fenced_3",
+	/* 114 */ "fenced_3 ::= LINE_FENCE_BACKTICK_3",
+	/* 115 */ "fenced_3 ::= LINE_FENCE_BACKTICK_START_3",
+	/* 116 */ "fenced_block ::= fenced_4",
+	/* 117 */ "fenced_4 ::= LINE_FENCE_BACKTICK_4",
+	/* 118 */ "fenced_4 ::= LINE_FENCE_BACKTICK_START_4",
+	/* 119 */ "fenced_block ::= fenced_5",
+	/* 120 */ "fenced_5 ::= LINE_FENCE_BACKTICK_5",
+	/* 121 */ "fenced_5 ::= LINE_FENCE_BACKTICK_START_5",
+	/* 122 */ "fenced_line ::= LINE_CONTINUATION",
+	/* 123 */ "fenced_line ::= LINE_EMPTY",
+	/* 124 */ "fenced_line ::= LINE_FALLBACK",
+	/* 125 */ "fenced_line ::= LINE_HR",
+	/* 126 */ "fenced_line ::= LINE_HTML",
+	/* 127 */ "fenced_line ::= LINE_START_COMMENT",
+	/* 128 */ "fenced_line ::= LINE_STOP_COMMENT",
+	/* 129 */ "html_block ::= LINE_HTML",
+	/* 130 */ "html_line ::= LINE_CONTINUATION",
+	/* 131 */ "html_line ::= LINE_FALLBACK",
+	/* 132 */ "html_line ::= LINE_HR",
+	/* 133 */ "html_line ::= LINE_HTML",
+	/* 134 */ "html_com_block ::= html_comment",
+	/* 135 */ "html_comment ::= LINE_START_COMMENT",
+	/* 136 */ "comment_line ::= LINE_CONTINUATION",
+	/* 137 */ "comment_line ::= LINE_EMPTY",
+	/* 138 */ "comment_line ::= LINE_FALLBACK",
+	/* 139 */ "comment_line ::= LINE_HR",
+	/* 140 */ "comment_line ::= LINE_HTML",
+	/* 141 */ "indented_code ::= indented_line",
+	/* 142 */ "list_bullet ::= item_bullet",
+	/* 143 */ "list_enum ::= item_enum",
+	/* 144 */ "meta_block ::= LINE_META",
+	/* 145 */ "meta_line ::= LINE_META",
+	/* 146 */ "meta_line ::= LINE_CONTINUATION",
+	/* 147 */ "meta_line ::= LINE_FALLBACK",
+	/* 148 */ "para ::= LINE_PLAIN",
+	/* 149 */ "para ::= LINE_STOP_COMMENT",
+	/* 150 */ "table ::= table_header",
+	/* 151 */ "header_rows ::= LINE_TABLE",
+	/* 152 */ "table_body ::= table_section",
+	/* 153 */ "all_rows ::= row",
+	/* 154 */ "row ::= header_rows",
+	/* 155 */ "row ::= LINE_TABLE_SEPARATOR",
+	/* 156 */ "para ::= defs",
 };
 #endif /* NDEBUG */
 
@@ -625,31 +629,39 @@ static const char *const yyRuleName[] = {
 ** Try to increase the size of the parser stack.  Return the number
 ** of errors.  Return 0 on success.
 */
-static int yyGrowStack(yyParser *p){
-  int newSize;
-  int idx;
-  yyStackEntry *pNew;
+static int yyGrowStack(yyParser * p) {
+	int newSize;
+	int idx;
+	yyStackEntry * pNew;
 
-  newSize = p->yystksz*2 + 100;
-  idx = p->yytos ? (int)(p->yytos - p->yystack) : 0;
-  if( p->yystack==&p->yystk0 ){
-    pNew = malloc(newSize*sizeof(pNew[0]));
-    if( pNew ) pNew[0] = p->yystk0;
-  }else{
-    pNew = realloc(p->yystack, newSize*sizeof(pNew[0]));
-  }
-  if( pNew ){
-    p->yystack = pNew;
-    p->yytos = &p->yystack[idx];
+	newSize = p->yystksz * 2 + 100;
+	idx = p->yytos ? (int)(p->yytos - p->yystack) : 0;
+
+	if ( p->yystack == &p->yystk0 ) {
+		pNew = malloc(newSize * sizeof(pNew[0]));
+
+		if ( pNew ) {
+			pNew[0] = p->yystk0;
+		}
+	} else {
+		pNew = realloc(p->yystack, newSize * sizeof(pNew[0]));
+	}
+
+	if ( pNew ) {
+		p->yystack = pNew;
+		p->yytos = &p->yystack[idx];
 #ifndef NDEBUG
-    if( yyTraceFILE ){
-      fprintf(yyTraceFILE,"%sStack grows from %d to %d entries.\n",
-              yyTracePrompt, p->yystksz, newSize);
-    }
+
+		if ( yyTraceFILE ) {
+			fprintf(yyTraceFILE, "%sStack grows from %d to %d entries.\n",
+					yyTracePrompt, p->yystksz, newSize);
+		}
+
 #endif
-    p->yystksz = newSize;
-  }
-  return pNew==0; 
+		p->yystksz = newSize;
+	}
+
+	return pNew == 0;
 }
 #endif
 
@@ -659,10 +671,10 @@ static int yyGrowStack(yyParser *p){
 ** grammar.
 */
 #ifndef YYMALLOCARGTYPE
-# define YYMALLOCARGTYPE size_t
+	#define YYMALLOCARGTYPE size_t
 #endif
 
-/* 
+/*
 ** This function allocates a new parser.
 ** The only argument is a pointer to a function which works like
 ** malloc.
@@ -674,60 +686,66 @@ static int yyGrowStack(yyParser *p){
 ** A pointer to a parser.  This pointer is used in subsequent calls
 ** to Parse and ParseFree.
 */
-void *ParseAlloc(void *(*mallocProc)(YYMALLOCARGTYPE)){
-  yyParser *pParser;
-  pParser = (yyParser*)(*mallocProc)( (YYMALLOCARGTYPE)sizeof(yyParser) );
-  if( pParser ){
+void * ParseAlloc(void * (*mallocProc)(YYMALLOCARGTYPE)) {
+	yyParser * pParser;
+	pParser = (yyParser *)(*mallocProc)( (YYMALLOCARGTYPE)sizeof(yyParser) );
+
+	if ( pParser ) {
 #ifdef YYTRACKMAXSTACKDEPTH
-    pParser->yyhwm = 0;
+		pParser->yyhwm = 0;
 #endif
 #if YYSTACKDEPTH<=0
-    pParser->yytos = NULL;
-    pParser->yystack = NULL;
-    pParser->yystksz = 0;
-    if( yyGrowStack(pParser) ){
-      pParser->yystack = &pParser->yystk0;
-      pParser->yystksz = 1;
-    }
+		pParser->yytos = NULL;
+		pParser->yystack = NULL;
+		pParser->yystksz = 0;
+
+		if ( yyGrowStack(pParser) ) {
+			pParser->yystack = &pParser->yystk0;
+			pParser->yystksz = 1;
+		}
+
 #endif
 #ifndef YYNOERRORRECOVERY
-    pParser->yyerrcnt = -1;
+		pParser->yyerrcnt = -1;
 #endif
-    pParser->yytos = pParser->yystack;
-    pParser->yystack[0].stateno = 0;
-    pParser->yystack[0].major = 0;
-  }
-  return pParser;
+		pParser->yytos = pParser->yystack;
+		pParser->yystack[0].stateno = 0;
+		pParser->yystack[0].major = 0;
+	}
+
+	return pParser;
 }
 
 /* The following function deletes the "minor type" or semantic value
 ** associated with a symbol.  The symbol can be either a terminal
 ** or nonterminal. "yymajor" is the symbol code, and "yypminor" is
-** a pointer to the value to be deleted.  The code used to do the 
+** a pointer to the value to be deleted.  The code used to do the
 ** deletions is derived from the %destructor and/or %token_destructor
 ** directives of the input grammar.
 */
 static void yy_destructor(
-  yyParser *yypParser,    /* The parser */
-  YYCODETYPE yymajor,     /* Type code for object to destroy */
-  YYMINORTYPE *yypminor   /* The object to be destroyed */
-){
-  ParseARG_FETCH;
-  switch( yymajor ){
-    /* Here is inserted the actions which take place when a
-    ** terminal or non-terminal is destroyed.  This can happen
-    ** when the symbol is popped from the stack during a
-    ** reduce or during error processing or when a parser is 
-    ** being destroyed before it is finished parsing.
-    **
-    ** Note: during a reduce, the only symbols destroyed are those
-    ** which appear on the RHS of the rule, but which are *not* used
-    ** inside the C code.
-    */
-/********* Begin destructor definitions ***************************************/
-/********* End destructor definitions *****************************************/
-    default:  break;   /* If no destructor action specified: do nothing */
-  }
+	yyParser * yypParser,   /* The parser */
+	YYCODETYPE yymajor,     /* Type code for object to destroy */
+	YYMINORTYPE * yypminor  /* The object to be destroyed */
+) {
+	ParseARG_FETCH;
+
+	switch ( yymajor ) {
+		/* Here is inserted the actions which take place when a
+		** terminal or non-terminal is destroyed.  This can happen
+		** when the symbol is popped from the stack during a
+		** reduce or during error processing or when a parser is
+		** being destroyed before it is finished parsing.
+		**
+		** Note: during a reduce, the only symbols destroyed are those
+		** which appear on the RHS of the rule, but which are *not* used
+		** inside the C code.
+		*/
+		/********* Begin destructor definitions ***************************************/
+		/********* End destructor definitions *****************************************/
+		default:
+			break;   /* If no destructor action specified: do nothing */
+	}
 }
 
 /*
@@ -736,22 +754,24 @@ static void yy_destructor(
 ** If there is a destructor routine associated with the token which
 ** is popped from the stack, then call it.
 */
-static void yy_pop_parser_stack(yyParser *pParser){
-  yyStackEntry *yytos;
-  assert( pParser->yytos!=0 );
-  assert( pParser->yytos > pParser->yystack );
-  yytos = pParser->yytos--;
+static void yy_pop_parser_stack(yyParser * pParser) {
+	yyStackEntry * yytos;
+	assert( pParser->yytos != 0 );
+	assert( pParser->yytos > pParser->yystack );
+	yytos = pParser->yytos--;
 #ifndef NDEBUG
-  if( yyTraceFILE ){
-    fprintf(yyTraceFILE,"%sPopping %s\n",
-      yyTracePrompt,
-      yyTokenName[yytos->major]);
-  }
+
+	if ( yyTraceFILE ) {
+		fprintf(yyTraceFILE, "%sPopping %s\n",
+				yyTracePrompt,
+				yyTokenName[yytos->major]);
+	}
+
 #endif
-  yy_destructor(pParser, yytos->major, &yytos->minor);
+	yy_destructor(pParser, yytos->major, &yytos->minor);
 }
 
-/* 
+/*
 ** Deallocate and destroy a parser.  Destructors are called for
 ** all stack elements before shutting the parser down.
 **
@@ -760,27 +780,39 @@ static void yy_pop_parser_stack(yyParser *pParser){
 ** assumed that the input pointer is never NULL.
 */
 void ParseFree(
-  void *p,                    /* The parser to be deleted */
-  void (*freeProc)(void*)     /* Function used to reclaim memory */
-){
-  yyParser *pParser = (yyParser*)p;
+	void * p,                   /* The parser to be deleted */
+	void (*freeProc)(void *)    /* Function used to reclaim memory */
+) {
+	yyParser * pParser = (yyParser *)p;
 #ifndef YYPARSEFREENEVERNULL
-  if( pParser==0 ) return;
+
+	if ( pParser == 0 ) {
+		return;
+	}
+
 #endif
-  while( pParser->yytos>pParser->yystack ) yy_pop_parser_stack(pParser);
+
+	while ( pParser->yytos > pParser->yystack ) {
+		yy_pop_parser_stack(pParser);
+	}
+
 #if YYSTACKDEPTH<=0
-  if( pParser->yystack!=&pParser->yystk0 ) free(pParser->yystack);
+
+	if ( pParser->yystack != &pParser->yystk0 ) {
+		free(pParser->yystack);
+	}
+
 #endif
-  (*freeProc)((void*)pParser);
+	(*freeProc)((void *)pParser);
 }
 
 /*
 ** Return the peak depth of the stack for a parser.
 */
 #ifdef YYTRACKMAXSTACKDEPTH
-int ParseStackPeak(void *p){
-  yyParser *pParser = (yyParser*)p;
-  return pParser->yyhwm;
+int ParseStackPeak(void * p) {
+	yyParser * pParser = (yyParser *)p;
+	return pParser->yyhwm;
 }
 #endif
 
@@ -789,62 +821,74 @@ int ParseStackPeak(void *p){
 ** look-ahead token iLookAhead.
 */
 static unsigned int yy_find_shift_action(
-  yyParser *pParser,        /* The parser */
-  YYCODETYPE iLookAhead     /* The look-ahead token */
-){
-  int i;
-  int stateno = pParser->yytos->stateno;
- 
-  if( stateno>=YY_MIN_REDUCE ) return stateno;
-  assert( stateno <= YY_SHIFT_COUNT );
-  do{
-    i = yy_shift_ofst[stateno];
-    assert( iLookAhead!=YYNOCODE );
-    i += iLookAhead;
-    if( i<0 || i>=YY_ACTTAB_COUNT || yy_lookahead[i]!=iLookAhead ){
+	yyParser * pParser,       /* The parser */
+	YYCODETYPE iLookAhead     /* The look-ahead token */
+) {
+	int i;
+	int stateno = pParser->yytos->stateno;
+
+	if ( stateno >= YY_MIN_REDUCE ) {
+		return stateno;
+	}
+
+	assert( stateno <= YY_SHIFT_COUNT );
+
+	do {
+		i = yy_shift_ofst[stateno];
+		assert( iLookAhead != YYNOCODE );
+		i += iLookAhead;
+
+		if ( i < 0 || i >= YY_ACTTAB_COUNT || yy_lookahead[i] != iLookAhead ) {
 #ifdef YYFALLBACK
-      YYCODETYPE iFallback;            /* Fallback token */
-      if( iLookAhead<sizeof(yyFallback)/sizeof(yyFallback[0])
-             && (iFallback = yyFallback[iLookAhead])!=0 ){
+			YYCODETYPE iFallback;            /* Fallback token */
+
+			if ( iLookAhead < sizeof(yyFallback) / sizeof(yyFallback[0])
+					&& (iFallback = yyFallback[iLookAhead]) != 0 ) {
 #ifndef NDEBUG
-        if( yyTraceFILE ){
-          fprintf(yyTraceFILE, "%sFALLBACK %s => %s\n",
-             yyTracePrompt, yyTokenName[iLookAhead], yyTokenName[iFallback]);
-        }
+
+				if ( yyTraceFILE ) {
+					fprintf(yyTraceFILE, "%sFALLBACK %s => %s\n",
+							yyTracePrompt, yyTokenName[iLookAhead], yyTokenName[iFallback]);
+				}
+
 #endif
-        assert( yyFallback[iFallback]==0 ); /* Fallback loop must terminate */
-        iLookAhead = iFallback;
-        continue;
-      }
+				assert( yyFallback[iFallback] == 0 ); /* Fallback loop must terminate */
+				iLookAhead = iFallback;
+				continue;
+			}
+
 #endif
 #ifdef YYWILDCARD
-      {
-        int j = i - iLookAhead + YYWILDCARD;
-        if( 
+			{
+				int j = i - iLookAhead + YYWILDCARD;
+
+				if (
 #if YY_SHIFT_MIN+YYWILDCARD<0
-          j>=0 &&
+					j >= 0 &&
 #endif
 #if YY_SHIFT_MAX+YYWILDCARD>=YY_ACTTAB_COUNT
-          j<YY_ACTTAB_COUNT &&
+					j < YY_ACTTAB_COUNT &&
 #endif
-          yy_lookahead[j]==YYWILDCARD && iLookAhead>0
-        ){
+					yy_lookahead[j] == YYWILDCARD && iLookAhead > 0
+				) {
 #ifndef NDEBUG
-          if( yyTraceFILE ){
-            fprintf(yyTraceFILE, "%sWILDCARD %s => %s\n",
-               yyTracePrompt, yyTokenName[iLookAhead],
-               yyTokenName[YYWILDCARD]);
-          }
+
+					if ( yyTraceFILE ) {
+						fprintf(yyTraceFILE, "%sWILDCARD %s => %s\n",
+								yyTracePrompt, yyTokenName[iLookAhead],
+								yyTokenName[YYWILDCARD]);
+					}
+
 #endif /* NDEBUG */
-          return yy_action[j];
-        }
-      }
+					return yy_action[j];
+				}
+			}
 #endif /* YYWILDCARD */
-      return yy_default[stateno];
-    }else{
-      return yy_action[i];
-    }
-  }while(1);
+			return yy_default[stateno];
+		} else {
+			return yy_action[i];
+		}
+	} while (1);
 }
 
 /*
@@ -852,66 +896,76 @@ static unsigned int yy_find_shift_action(
 ** look-ahead token iLookAhead.
 */
 static int yy_find_reduce_action(
-  int stateno,              /* Current state number */
-  YYCODETYPE iLookAhead     /* The look-ahead token */
-){
-  int i;
+	int stateno,              /* Current state number */
+	YYCODETYPE iLookAhead     /* The look-ahead token */
+) {
+	int i;
 #ifdef YYERRORSYMBOL
-  if( stateno>YY_REDUCE_COUNT ){
-    return yy_default[stateno];
-  }
+
+	if ( stateno > YY_REDUCE_COUNT ) {
+		return yy_default[stateno];
+	}
+
 #else
-  assert( stateno<=YY_REDUCE_COUNT );
+	assert( stateno <= YY_REDUCE_COUNT );
 #endif
-  i = yy_reduce_ofst[stateno];
-  assert( i!=YY_REDUCE_USE_DFLT );
-  assert( iLookAhead!=YYNOCODE );
-  i += iLookAhead;
+	i = yy_reduce_ofst[stateno];
+	assert( i != YY_REDUCE_USE_DFLT );
+	assert( iLookAhead != YYNOCODE );
+	i += iLookAhead;
 #ifdef YYERRORSYMBOL
-  if( i<0 || i>=YY_ACTTAB_COUNT || yy_lookahead[i]!=iLookAhead ){
-    return yy_default[stateno];
-  }
+
+	if ( i < 0 || i >= YY_ACTTAB_COUNT || yy_lookahead[i] != iLookAhead ) {
+		return yy_default[stateno];
+	}
+
 #else
-  assert( i>=0 && i<YY_ACTTAB_COUNT );
-  assert( yy_lookahead[i]==iLookAhead );
+	assert( i >= 0 && i < YY_ACTTAB_COUNT );
+	assert( yy_lookahead[i] == iLookAhead );
 #endif
-  return yy_action[i];
+	return yy_action[i];
 }
 
 /*
 ** The following routine is called if the stack overflows.
 */
-static void yyStackOverflow(yyParser *yypParser){
-   ParseARG_FETCH;
-   yypParser->yytos--;
+static void yyStackOverflow(yyParser * yypParser) {
+	ParseARG_FETCH;
+	yypParser->yytos--;
 #ifndef NDEBUG
-   if( yyTraceFILE ){
-     fprintf(yyTraceFILE,"%sStack Overflow!\n",yyTracePrompt);
-   }
+
+	if ( yyTraceFILE ) {
+		fprintf(yyTraceFILE, "%sStack Overflow!\n", yyTracePrompt);
+	}
+
 #endif
-   while( yypParser->yytos>yypParser->yystack ) yy_pop_parser_stack(yypParser);
-   /* Here code is inserted which will execute if the parser
-   ** stack every overflows */
-/******** Begin %stack_overflow code ******************************************/
-/******** End %stack_overflow code ********************************************/
-   ParseARG_STORE; /* Suppress warning about unused %extra_argument var */
+
+	while ( yypParser->yytos > yypParser->yystack ) {
+		yy_pop_parser_stack(yypParser);
+	}
+
+	/* Here code is inserted which will execute if the parser
+	** stack every overflows */
+	/******** Begin %stack_overflow code ******************************************/
+	/******** End %stack_overflow code ********************************************/
+	ParseARG_STORE; /* Suppress warning about unused %extra_argument var */
 }
 
 /*
 ** Print tracing information for a SHIFT action
 */
 #ifndef NDEBUG
-static void yyTraceShift(yyParser *yypParser, int yyNewState){
-  if( yyTraceFILE ){
-    if( yyNewState<YYNSTATE ){
-      fprintf(yyTraceFILE,"%sShift '%s', go to state %d\n",
-         yyTracePrompt,yyTokenName[yypParser->yytos->major],
-         yyNewState);
-    }else{
-      fprintf(yyTraceFILE,"%sShift '%s'\n",
-         yyTracePrompt,yyTokenName[yypParser->yytos->major]);
-    }
-  }
+static void yyTraceShift(yyParser * yypParser, int yyNewState) {
+	if ( yyTraceFILE ) {
+		if ( yyNewState < YYNSTATE ) {
+			fprintf(yyTraceFILE, "%sShift '%s', go to state %d\n",
+					yyTracePrompt, yyTokenName[yypParser->yytos->major],
+					yyNewState);
+		} else {
+			fprintf(yyTraceFILE, "%sShift '%s'\n",
+					yyTracePrompt, yyTokenName[yypParser->yytos->major]);
+		}
+	}
 }
 #else
 # define yyTraceShift(X,Y)
@@ -921,591 +975,886 @@ static void yyTraceShift(yyParser *yypParser, int yyNewState){
 ** Perform a shift action.
 */
 static void yy_shift(
-  yyParser *yypParser,          /* The parser to be shifted */
-  int yyNewState,               /* The new state to shift in */
-  int yyMajor,                  /* The major token to shift in */
-  ParseTOKENTYPE yyMinor        /* The minor token to shift in */
-){
-  yyStackEntry *yytos;
-  yypParser->yytos++;
+	yyParser * yypParser,         /* The parser to be shifted */
+	int yyNewState,               /* The new state to shift in */
+	int yyMajor,                  /* The major token to shift in */
+	ParseTOKENTYPE yyMinor        /* The minor token to shift in */
+) {
+	yyStackEntry * yytos;
+	yypParser->yytos++;
 #ifdef YYTRACKMAXSTACKDEPTH
-  if( (int)(yypParser->yytos - yypParser->yystack)>yypParser->yyhwm ){
-    yypParser->yyhwm++;
-    assert( yypParser->yyhwm == (int)(yypParser->yytos - yypParser->yystack) );
-  }
+
+	if ( (int)(yypParser->yytos - yypParser->yystack) > yypParser->yyhwm ) {
+		yypParser->yyhwm++;
+		assert( yypParser->yyhwm == (int)(yypParser->yytos - yypParser->yystack) );
+	}
+
 #endif
-#if YYSTACKDEPTH>0 
-  if( yypParser->yytos>=&yypParser->yystack[YYSTACKDEPTH] ){
-    yyStackOverflow(yypParser);
-    return;
-  }
+#if YYSTACKDEPTH>0
+
+	if ( yypParser->yytos >= &yypParser->yystack[YYSTACKDEPTH] ) {
+		yyStackOverflow(yypParser);
+		return;
+	}
+
 #else
-  if( yypParser->yytos>=&yypParser->yystack[yypParser->yystksz] ){
-    if( yyGrowStack(yypParser) ){
-      yyStackOverflow(yypParser);
-      return;
-    }
-  }
+
+	if ( yypParser->yytos >= &yypParser->yystack[yypParser->yystksz] ) {
+		if ( yyGrowStack(yypParser) ) {
+			yyStackOverflow(yypParser);
+			return;
+		}
+	}
+
 #endif
-  if( yyNewState > YY_MAX_SHIFT ){
-    yyNewState += YY_MIN_REDUCE - YY_MIN_SHIFTREDUCE;
-  }
-  yytos = yypParser->yytos;
-  yytos->stateno = (YYACTIONTYPE)yyNewState;
-  yytos->major = (YYCODETYPE)yyMajor;
-  yytos->minor.yy0 = yyMinor;
-  yyTraceShift(yypParser, yyNewState);
+
+	if ( yyNewState > YY_MAX_SHIFT ) {
+		yyNewState += YY_MIN_REDUCE - YY_MIN_SHIFTREDUCE;
+	}
+
+	yytos = yypParser->yytos;
+	yytos->stateno = (YYACTIONTYPE)yyNewState;
+	yytos->major = (YYCODETYPE)yyMajor;
+	yytos->minor.yy0 = yyMinor;
+	yyTraceShift(yypParser, yyNewState);
 }
 
 /* The following table contains information about every rule that
 ** is used during the reduce.
 */
 static const struct {
-  YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
-  unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
+	YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
+	unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
 } yyRuleInfo[] = {
-  { 41, 1 },
-  { 42, 2 },
-  { 42, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 2 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 43, 1 },
-  { 63, 2 },
-  { 65, 2 },
-  { 66, 3 },
-  { 66, 2 },
-  { 68, 2 },
-  { 69, 2 },
-  { 44, 2 },
-  { 46, 2 },
-  { 47, 2 },
-  { 48, 2 },
-  { 49, 2 },
-  { 45, 2 },
-  { 50, 2 },
-  { 72, 2 },
-  { 73, 2 },
-  { 73, 1 },
-  { 51, 2 },
-  { 52, 2 },
-  { 52, 2 },
-  { 52, 2 },
-  { 74, 2 },
-  { 52, 2 },
-  { 52, 2 },
-  { 76, 2 },
-  { 76, 2 },
-  { 76, 2 },
-  { 52, 2 },
-  { 77, 2 },
-  { 77, 2 },
-  { 77, 2 },
-  { 77, 2 },
-  { 77, 2 },
-  { 53, 2 },
-  { 54, 2 },
-  { 79, 2 },
-  { 55, 2 },
-  { 55, 2 },
-  { 56, 2 },
-  { 81, 2 },
-  { 81, 2 },
-  { 81, 2 },
-  { 81, 1 },
-  { 57, 2 },
-  { 82, 2 },
-  { 82, 2 },
-  { 82, 2 },
-  { 82, 1 },
-  { 58, 2 },
-  { 58, 2 },
-  { 59, 2 },
-  { 60, 2 },
-  { 61, 2 },
-  { 62, 2 },
-  { 84, 2 },
-  { 84, 1 },
-  { 86, 2 },
-  { 85, 2 },
-  { 87, 2 },
-  { 87, 1 },
-  { 88, 2 },
-  { 59, 1 },
-  { 63, 1 },
-  { 64, 1 },
-  { 64, 1 },
-  { 65, 1 },
-  { 66, 1 },
-  { 67, 1 },
-  { 67, 1 },
-  { 69, 1 },
-  { 70, 1 },
-  { 70, 1 },
-  { 44, 1 },
-  { 71, 1 },
-  { 71, 1 },
-  { 46, 1 },
-  { 47, 1 },
-  { 48, 1 },
-  { 49, 1 },
-  { 45, 1 },
-  { 72, 1 },
-  { 51, 1 },
-  { 52, 1 },
-  { 74, 1 },
-  { 74, 1 },
-  { 52, 1 },
-  { 76, 1 },
-  { 76, 1 },
-  { 52, 1 },
-  { 77, 1 },
-  { 77, 1 },
-  { 75, 1 },
-  { 75, 1 },
-  { 75, 1 },
-  { 75, 1 },
-  { 75, 1 },
-  { 75, 1 },
-  { 75, 1 },
-  { 53, 1 },
-  { 78, 1 },
-  { 78, 1 },
-  { 78, 1 },
-  { 78, 1 },
-  { 54, 1 },
-  { 79, 1 },
-  { 80, 1 },
-  { 80, 1 },
-  { 80, 1 },
-  { 80, 1 },
-  { 80, 1 },
-  { 55, 1 },
-  { 56, 1 },
-  { 57, 1 },
-  { 58, 1 },
-  { 83, 1 },
-  { 83, 1 },
-  { 83, 1 },
-  { 59, 1 },
-  { 59, 1 },
-  { 62, 1 },
-  { 86, 1 },
-  { 85, 1 },
-  { 88, 1 },
-  { 89, 1 },
-  { 89, 1 },
-  { 59, 1 },
+	{ 41, 1 },
+	{ 42, 2 },
+	{ 42, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 2 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 43, 1 },
+	{ 63, 2 },
+	{ 65, 2 },
+	{ 66, 3 },
+	{ 66, 2 },
+	{ 68, 2 },
+	{ 69, 2 },
+	{ 44, 2 },
+	{ 46, 2 },
+	{ 47, 2 },
+	{ 48, 2 },
+	{ 49, 2 },
+	{ 45, 2 },
+	{ 50, 2 },
+	{ 72, 2 },
+	{ 73, 2 },
+	{ 73, 1 },
+	{ 51, 2 },
+	{ 52, 2 },
+	{ 52, 2 },
+	{ 52, 2 },
+	{ 74, 2 },
+	{ 52, 2 },
+	{ 52, 2 },
+	{ 76, 2 },
+	{ 76, 2 },
+	{ 76, 2 },
+	{ 52, 2 },
+	{ 77, 2 },
+	{ 77, 2 },
+	{ 77, 2 },
+	{ 77, 2 },
+	{ 77, 2 },
+	{ 53, 2 },
+	{ 54, 2 },
+	{ 79, 2 },
+	{ 55, 2 },
+	{ 55, 2 },
+	{ 56, 2 },
+	{ 81, 2 },
+	{ 81, 2 },
+	{ 81, 2 },
+	{ 81, 1 },
+	{ 57, 2 },
+	{ 82, 2 },
+	{ 82, 2 },
+	{ 82, 2 },
+	{ 82, 1 },
+	{ 58, 2 },
+	{ 58, 2 },
+	{ 59, 2 },
+	{ 60, 2 },
+	{ 61, 2 },
+	{ 62, 2 },
+	{ 84, 2 },
+	{ 84, 1 },
+	{ 86, 2 },
+	{ 85, 2 },
+	{ 87, 2 },
+	{ 87, 1 },
+	{ 88, 2 },
+	{ 59, 1 },
+	{ 63, 1 },
+	{ 64, 1 },
+	{ 64, 1 },
+	{ 65, 1 },
+	{ 66, 1 },
+	{ 67, 1 },
+	{ 67, 1 },
+	{ 69, 1 },
+	{ 70, 1 },
+	{ 70, 1 },
+	{ 44, 1 },
+	{ 71, 1 },
+	{ 71, 1 },
+	{ 46, 1 },
+	{ 47, 1 },
+	{ 48, 1 },
+	{ 49, 1 },
+	{ 45, 1 },
+	{ 72, 1 },
+	{ 51, 1 },
+	{ 52, 1 },
+	{ 74, 1 },
+	{ 74, 1 },
+	{ 52, 1 },
+	{ 76, 1 },
+	{ 76, 1 },
+	{ 52, 1 },
+	{ 77, 1 },
+	{ 77, 1 },
+	{ 75, 1 },
+	{ 75, 1 },
+	{ 75, 1 },
+	{ 75, 1 },
+	{ 75, 1 },
+	{ 75, 1 },
+	{ 75, 1 },
+	{ 53, 1 },
+	{ 78, 1 },
+	{ 78, 1 },
+	{ 78, 1 },
+	{ 78, 1 },
+	{ 54, 1 },
+	{ 79, 1 },
+	{ 80, 1 },
+	{ 80, 1 },
+	{ 80, 1 },
+	{ 80, 1 },
+	{ 80, 1 },
+	{ 55, 1 },
+	{ 56, 1 },
+	{ 57, 1 },
+	{ 58, 1 },
+	{ 83, 1 },
+	{ 83, 1 },
+	{ 83, 1 },
+	{ 59, 1 },
+	{ 59, 1 },
+	{ 62, 1 },
+	{ 86, 1 },
+	{ 85, 1 },
+	{ 88, 1 },
+	{ 89, 1 },
+	{ 89, 1 },
+	{ 59, 1 },
 };
 
-static void yy_accept(yyParser*);  /* Forward Declaration */
+static void yy_accept(yyParser *); /* Forward Declaration */
 
 /*
 ** Perform a reduce action and the shift that must immediately
 ** follow the reduce.
 */
 static void yy_reduce(
-  yyParser *yypParser,         /* The parser */
-  unsigned int yyruleno        /* Number of the rule by which to reduce */
-){
-  int yygoto;                     /* The next state */
-  int yyact;                      /* The next action */
-  yyStackEntry *yymsp;            /* The top of the parser's stack */
-  int yysize;                     /* Amount to pop the stack */
-  ParseARG_FETCH;
-  yymsp = yypParser->yytos;
+	yyParser * yypParser,        /* The parser */
+	unsigned int yyruleno        /* Number of the rule by which to reduce */
+) {
+	int yygoto;                     /* The next state */
+	int yyact;                      /* The next action */
+	yyStackEntry * yymsp;           /* The top of the parser's stack */
+	int yysize;                     /* Amount to pop the stack */
+	ParseARG_FETCH;
+	yymsp = yypParser->yytos;
 #ifndef NDEBUG
-  if( yyTraceFILE && yyruleno<(int)(sizeof(yyRuleName)/sizeof(yyRuleName[0])) ){
-    yysize = yyRuleInfo[yyruleno].nrhs;
-    fprintf(yyTraceFILE, "%sReduce [%s], go to state %d.\n", yyTracePrompt,
-      yyRuleName[yyruleno], yymsp[-yysize].stateno);
-  }
+
+	if ( yyTraceFILE && yyruleno < (int)(sizeof(yyRuleName) / sizeof(yyRuleName[0])) ) {
+		yysize = yyRuleInfo[yyruleno].nrhs;
+		fprintf(yyTraceFILE, "%sReduce [%s], go to state %d.\n", yyTracePrompt,
+				yyRuleName[yyruleno], yymsp[-yysize].stateno);
+	}
+
 #endif /* NDEBUG */
 
-  /* Check that the stack is large enough to grow by a single entry
-  ** if the RHS of the rule is empty.  This ensures that there is room
-  ** enough on the stack to push the LHS value */
-  if( yyRuleInfo[yyruleno].nrhs==0 ){
+	/* Check that the stack is large enough to grow by a single entry
+	** if the RHS of the rule is empty.  This ensures that there is room
+	** enough on the stack to push the LHS value */
+	if ( yyRuleInfo[yyruleno].nrhs == 0 ) {
 #ifdef YYTRACKMAXSTACKDEPTH
-    if( (int)(yypParser->yytos - yypParser->yystack)>yypParser->yyhwm ){
-      yypParser->yyhwm++;
-      assert( yypParser->yyhwm == (int)(yypParser->yytos - yypParser->yystack));
-    }
-#endif
-#if YYSTACKDEPTH>0 
-    if( yypParser->yytos>=&yypParser->yystack[YYSTACKDEPTH-1] ){
-      yyStackOverflow(yypParser);
-      return;
-    }
-#else
-    if( yypParser->yytos>=&yypParser->yystack[yypParser->yystksz-1] ){
-      if( yyGrowStack(yypParser) ){
-        yyStackOverflow(yypParser);
-        return;
-      }
-      yymsp = yypParser->yytos;
-    }
-#endif
-  }
 
-  switch( yyruleno ){
-  /* Beginning here are the reduction cases.  A typical example
-  ** follows:
-  **   case 0:
-  **  #line <lineno> <grammarfile>
-  **     { ... }           // User supplied code
-  **  #line <lineno> <thisfile>
-  **     break;
-  */
-/********** Begin reduce actions **********************************************/
-        YYMINORTYPE yylhsminor;
-      case 0: /* doc ::= blocks */
-{ engine->root = yymsp[0].minor.yy0; }
-        break;
-      case 1: /* blocks ::= blocks block */
-{
-		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
-		if (yymsp[-1].minor.yy0 == NULL) { yymsp[-1].minor.yy0 = yymsp[0].minor.yy0; yymsp[0].minor.yy0 = NULL;}
-		yylhsminor.yy0 = yymsp[-1].minor.yy0;
-		token_chain_append(yylhsminor.yy0, yymsp[0].minor.yy0);
+		if ( (int)(yypParser->yytos - yypParser->yystack) > yypParser->yyhwm ) {
+			yypParser->yyhwm++;
+			assert( yypParser->yyhwm == (int)(yypParser->yytos - yypParser->yystack));
+		}
+
+#endif
+#if YYSTACKDEPTH>0
+
+		if ( yypParser->yytos >= &yypParser->yystack[YYSTACKDEPTH - 1] ) {
+			yyStackOverflow(yypParser);
+			return;
+		}
+
+#else
+
+		if ( yypParser->yytos >= &yypParser->yystack[yypParser->yystksz - 1] ) {
+			if ( yyGrowStack(yypParser) ) {
+				yyStackOverflow(yypParser);
+				return;
+			}
+
+			yymsp = yypParser->yytos;
+		}
+
+#endif
 	}
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 2: /* blocks ::= block */
-{
-		engine->root = yymsp[0].minor.yy0;	// In case the first block is metadata and we just want to know if it exists
-		strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
-		yylhsminor.yy0 = yymsp[0].minor.yy0;
+
+	switch ( yyruleno ) {
+			/* Beginning here are the reduction cases.  A typical example
+			** follows:
+			**   case 0:
+			**  #line <lineno> <grammarfile>
+			**     { ... }           // User supplied code
+			**  #line <lineno> <thisfile>
+			**     break;
+			*/
+			/********** Begin reduce actions **********************************************/
+			YYMINORTYPE yylhsminor;
+
+		case 0: { /* doc ::= blocks */
+			engine->root = yymsp[0].minor.yy0;
+		}
+		break;
+
+		case 1: { /* blocks ::= blocks block */
+			strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
+
+			if (yymsp[-1].minor.yy0 == NULL) {
+				yymsp[-1].minor.yy0 = yymsp[0].minor.yy0;
+				yymsp[0].minor.yy0 = NULL;
+			}
+
+			yylhsminor.yy0 = yymsp[-1].minor.yy0;
+			token_chain_append(yylhsminor.yy0, yymsp[0].minor.yy0);
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 2: { /* blocks ::= block */
+			engine->root = yymsp[0].minor.yy0;	// In case the first block is metadata and we just want to know if it exists
+			strip_line_tokens_from_block(engine, yymsp[0].minor.yy0);
+			yylhsminor.yy0 = yymsp[0].minor.yy0;
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 3: { /* block ::= LINE_ATX_1 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H1);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 4: { /* block ::= LINE_ATX_2 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H2);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 5: { /* block ::= LINE_ATX_3 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H3);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 6: { /* block ::= LINE_ATX_4 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H4);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 7: { /* block ::= LINE_ATX_5 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H5);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 8: { /* block ::= LINE_ATX_6 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H6);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 9: /* block ::= LINE_HR */
+		case 10: /* block ::= LINE_YAML */
+			yytestcase(yyruleno == 10);
+			{
+				yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_HR);
+			}
+			yymsp[0].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 11: { /* block ::= LINE_TOC */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TOC);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 12: { /* block ::= blockquote */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_BLOCKQUOTE);
+			recursive_parse_blockquote(engine, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 13: { /* block ::= def_abbreviation */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_ABBREVIATION);
+			stack_push(engine->definition_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 14: { /* block ::= def_citation */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_CITATION);
+			stack_push(engine->definition_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 15: { /* block ::= def_footnote */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_FOOTNOTE);
+			stack_push(engine->definition_stack, yylhsminor.yy0);
+			recursive_parse_indent(engine, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 16: { /* block ::= def_glossary */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_GLOSSARY);
+			stack_push(engine->definition_stack, yylhsminor.yy0);
+			recursive_parse_indent(engine, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 17: { /* block ::= def_link */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_LINK);
+			stack_push(engine->definition_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 18: { /* block ::= definition_block */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFLIST);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 19: { /* block ::= empty */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_EMPTY);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 20: { /* block ::= fenced_block */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_CODE_FENCED);
+			yymsp[0].minor.yy0->child->type = CODE_FENCE;
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 21: /* block ::= html_block */
+		case 22: /* block ::= html_com_block */
+			yytestcase(yyruleno == 22);
+			{
+				yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_HTML);
+			}
+			yymsp[0].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 23: { /* block ::= indented_code */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_CODE_INDENTED);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 24: { /* block ::= list_bullet */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_BULLETED);
+			is_list_loose(yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 25: { /* block ::= list_enum */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_ENUMERATED);
+			is_list_loose(yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 26: { /* block ::= meta_block */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_META);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 27: { /* block ::= meta_block LINE_SETEXT_2 */
+			yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_META);
+			token_append_child(yylhsminor.yy0, yymsp[0].minor.yy0);
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 28: { /* block ::= para */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_PARA);
+			is_para_html(engine, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 29: { /* block ::= setext_1 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_1);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 30: { /* block ::= setext_2 */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_2);
+			stack_push(engine->header_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 31: { /* block ::= table */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TABLE);
+			stack_push(engine->table_stack, yylhsminor.yy0);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 32: /* chunk ::= chunk chunk_line */
+		case 33: /* nested_chunks ::= nested_chunks nested_chunk */
+			yytestcase(yyruleno == 33);
+
+		case 36: /* ext_chunk ::= chunk nested_chunks */
+			yytestcase(yyruleno == 36);
+
+		case 37: /* opt_ext_chunk ::= chunk nested_chunks */
+			yytestcase(yyruleno == 37);
+
+		case 38: /* blockquote ::= blockquote quote_line */
+			yytestcase(yyruleno == 38);
+
+		case 39: /* def_citation ::= LINE_DEF_CITATION tail */
+			yytestcase(yyruleno == 39);
+
+		case 40: /* def_footnote ::= LINE_DEF_FOOTNOTE tail */
+			yytestcase(yyruleno == 40);
+
+		case 41: /* def_glossary ::= LINE_DEF_GLOSSARY tail */
+			yytestcase(yyruleno == 41);
+
+		case 42: /* def_link ::= LINE_DEF_LINK chunk */
+			yytestcase(yyruleno == 42);
+
+		case 43: /* def_abbreviation ::= LINE_DEF_ABBREVIATION chunk */
+			yytestcase(yyruleno == 43);
+
+		case 45: /* defs ::= defs def */
+			yytestcase(yyruleno == 45);
+
+		case 48: /* empty ::= empty LINE_EMPTY */
+			yytestcase(yyruleno == 48);
+
+		case 64: /* html_block ::= html_block html_line */
+			yytestcase(yyruleno == 64);
+
+		case 65: /* html_com_block ::= html_comment LINE_STOP_COMMENT */
+			yytestcase(yyruleno == 65);
+
+		case 66: /* html_comment ::= html_comment comment_line */
+			yytestcase(yyruleno == 66);
+
+		case 67: /* indented_code ::= indented_code indented_line */
+			yytestcase(yyruleno == 67);
+
+		case 68: /* indented_code ::= indented_code LINE_EMPTY */
+			yytestcase(yyruleno == 68);
+
+		case 69: /* list_bullet ::= list_bullet item_bullet */
+			yytestcase(yyruleno == 69);
+
+		case 74: /* list_enum ::= list_enum item_enum */
+			yytestcase(yyruleno == 74);
+
+		case 79: /* meta_block ::= meta_block meta_line */
+			yytestcase(yyruleno == 79);
+
+		case 80: /* meta_block ::= LINE_YAML LINE_META */
+			yytestcase(yyruleno == 80);
+
+		case 81: /* para ::= LINE_PLAIN chunk */
+			yytestcase(yyruleno == 81);
+
+		case 82: /* setext_1 ::= para LINE_SETEXT_1 */
+			yytestcase(yyruleno == 82);
+
+		case 83: /* setext_2 ::= para LINE_SETEXT_2 */
+			yytestcase(yyruleno == 83);
+
+		case 84: /* table ::= table_header table_body */
+			yytestcase(yyruleno == 84);
+
+		case 87: /* header_rows ::= header_rows LINE_TABLE */
+			yytestcase(yyruleno == 87);
+
+		case 88: /* table_body ::= table_body table_section */
+			yytestcase(yyruleno == 88);
+
+		case 91: /* all_rows ::= all_rows row */
+			yytestcase(yyruleno == 91);
+			{
+				yylhsminor.yy0 = yymsp[-1].minor.yy0;
+				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+			}
+			yymsp[-1].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 34: { /* nested_chunk ::= empty indented_line chunk */
+			yylhsminor.yy0 = yymsp[-2].minor.yy0;
+			token_chain_append(yymsp[-2].minor.yy0, yymsp[-1].minor.yy0);
+			token_chain_append(yymsp[-2].minor.yy0, yymsp[0].minor.yy0);
+			yymsp[-1].minor.yy0->type = LINE_CONTINUATION;
+		}
+
+		yymsp[-2].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 35: { /* nested_chunk ::= empty indented_line */
+			yylhsminor.yy0 = yymsp[-1].minor.yy0;
+			token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+			yymsp[0].minor.yy0->type = LINE_CONTINUATION;
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 44: { /* definition_block ::= para defs */
+			yylhsminor.yy0 = yymsp[-1].minor.yy0;
+			token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+			yymsp[-1].minor.yy0->type = BLOCK_TERM;
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 46: { /* def ::= LINE_DEFINITION tail */
+			yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_DEFINITION);
+			token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+			recursive_parse_indent(engine, yylhsminor.yy0);
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 47: { /* def ::= LINE_DEFINITION */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFINITION);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 49: /* fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_3 */
+		case 50: /* fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_4 */
+			yytestcase(yyruleno == 50);
+
+		case 51: /* fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_5 */
+			yytestcase(yyruleno == 51);
+
+		case 53: /* fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_4 */
+			yytestcase(yyruleno == 53);
+
+		case 54: /* fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_5 */
+			yytestcase(yyruleno == 54);
+
+		case 58: /* fenced_block ::= fenced_5 LINE_FENCE_BACKTICK_5 */
+			yytestcase(yyruleno == 58);
+			{
+				yylhsminor.yy0 = yymsp[-1].minor.yy0;
+				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+				yymsp[0].minor.yy0->type = CODE_FENCE_LINE;
+				yymsp[0].minor.yy0->child->type = CODE_FENCE;
+			}
+			yymsp[-1].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 52: /* fenced_3 ::= fenced_3 fenced_line */
+		case 55: /* fenced_4 ::= fenced_4 fenced_line */
+			yytestcase(yyruleno == 55);
+
+		case 56: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3 */
+			yytestcase(yyruleno == 56);
+
+		case 57: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3 */
+			yytestcase(yyruleno == 57);
+
+		case 59: /* fenced_5 ::= fenced_5 fenced_line */
+			yytestcase(yyruleno == 59);
+
+		case 60: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3 */
+			yytestcase(yyruleno == 60);
+
+		case 61: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3 */
+			yytestcase(yyruleno == 61);
+
+		case 62: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4 */
+			yytestcase(yyruleno == 62);
+
+		case 63: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4 */
+			yytestcase(yyruleno == 63);
+			{
+				yylhsminor.yy0 = yymsp[-1].minor.yy0;
+				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+				yymsp[-1].minor.yy0->type = CODE_FENCE_LINE;
+			}
+			yymsp[-1].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 70: /* item_bullet ::= LINE_LIST_BULLETED ext_chunk */
+		case 72: /* item_bullet ::= LINE_LIST_BULLETED nested_chunks */
+			yytestcase(yyruleno == 72);
+
+		case 75: /* item_enum ::= LINE_LIST_ENUMERATED ext_chunk */
+			yytestcase(yyruleno == 75);
+
+		case 77: /* item_enum ::= LINE_LIST_ENUMERATED nested_chunks */
+			yytestcase(yyruleno == 77);
+			{
+				yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_LIST_ITEM);
+				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+				recursive_parse_list_item(engine, yylhsminor.yy0);
+			}
+			yymsp[-1].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 71: /* item_bullet ::= LINE_LIST_BULLETED chunk */
+		case 76: /* item_enum ::= LINE_LIST_ENUMERATED chunk */
+			yytestcase(yyruleno == 76);
+			{
+				yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_LIST_ITEM_TIGHT);
+				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+				recursive_parse_list_item(engine, yylhsminor.yy0);
+			}
+			yymsp[-1].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 73: /* item_bullet ::= LINE_LIST_BULLETED */
+		case 78: /* item_enum ::= LINE_LIST_ENUMERATED */
+			yytestcase(yyruleno == 78);
+			{
+				yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_ITEM_TIGHT);
+			}
+			yymsp[0].minor.yy0 = yylhsminor.yy0;
+			break;
+
+		case 85: { /* table_header ::= header_rows LINE_TABLE_SEPARATOR */
+			yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_TABLE_HEADER);
+			token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 86: { /* table_header ::= LINE_TABLE_SEPARATOR */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TABLE_HEADER);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 89: { /* table_section ::= all_rows LINE_EMPTY */
+			yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_TABLE_SECTION);
+			token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
+		}
+
+		yymsp[-1].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 90: { /* table_section ::= all_rows */
+			yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TABLE_SECTION);
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		case 92: { /* para ::= all_rows */
+			yylhsminor.yy0 = yymsp[0].minor.yy0;
+		}
+
+		yymsp[0].minor.yy0 = yylhsminor.yy0;
+		break;
+
+		default:
+			/* (93) chunk ::= chunk_line (OPTIMIZED OUT) */
+			assert(yyruleno != 93);
+			/* (94) chunk_line ::= LINE_CONTINUATION */ yytestcase(yyruleno == 94);
+			/* (95) chunk_line ::= LINE_STOP_COMMENT */ yytestcase(yyruleno == 95);
+			/* (96) nested_chunks ::= nested_chunk (OPTIMIZED OUT) */ assert(yyruleno != 96);
+			/* (97) nested_chunk ::= empty */ yytestcase(yyruleno == 97);
+			/* (98) indented_line ::= LINE_INDENTED_TAB */ yytestcase(yyruleno == 98);
+			/* (99) indented_line ::= LINE_INDENTED_SPACE */ yytestcase(yyruleno == 99);
+			/* (100) opt_ext_chunk ::= chunk */ yytestcase(yyruleno == 100);
+			/* (101) tail ::= opt_ext_chunk (OPTIMIZED OUT) */ assert(yyruleno != 101);
+			/* (102) tail ::= nested_chunks */ yytestcase(yyruleno == 102);
+			/* (103) blockquote ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno == 103);
+			/* (104) quote_line ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno == 104);
+			/* (105) quote_line ::= LINE_CONTINUATION */ yytestcase(yyruleno == 105);
+			/* (106) def_citation ::= LINE_DEF_CITATION */ yytestcase(yyruleno == 106);
+			/* (107) def_footnote ::= LINE_DEF_FOOTNOTE */ yytestcase(yyruleno == 107);
+			/* (108) def_glossary ::= LINE_DEF_GLOSSARY */ yytestcase(yyruleno == 108);
+			/* (109) def_link ::= LINE_DEF_LINK */ yytestcase(yyruleno == 109);
+			/* (110) def_abbreviation ::= LINE_DEF_ABBREVIATION */ yytestcase(yyruleno == 110);
+			/* (111) defs ::= def (OPTIMIZED OUT) */ assert(yyruleno != 111);
+			/* (112) empty ::= LINE_EMPTY */ yytestcase(yyruleno == 112);
+			/* (113) fenced_block ::= fenced_3 */ yytestcase(yyruleno == 113);
+			/* (114) fenced_3 ::= LINE_FENCE_BACKTICK_3 */ yytestcase(yyruleno == 114);
+			/* (115) fenced_3 ::= LINE_FENCE_BACKTICK_START_3 */ yytestcase(yyruleno == 115);
+			/* (116) fenced_block ::= fenced_4 */ yytestcase(yyruleno == 116);
+			/* (117) fenced_4 ::= LINE_FENCE_BACKTICK_4 */ yytestcase(yyruleno == 117);
+			/* (118) fenced_4 ::= LINE_FENCE_BACKTICK_START_4 */ yytestcase(yyruleno == 118);
+			/* (119) fenced_block ::= fenced_5 */ yytestcase(yyruleno == 119);
+			/* (120) fenced_5 ::= LINE_FENCE_BACKTICK_5 */ yytestcase(yyruleno == 120);
+			/* (121) fenced_5 ::= LINE_FENCE_BACKTICK_START_5 */ yytestcase(yyruleno == 121);
+			/* (122) fenced_line ::= LINE_CONTINUATION */ yytestcase(yyruleno == 122);
+			/* (123) fenced_line ::= LINE_EMPTY */ yytestcase(yyruleno == 123);
+			/* (124) fenced_line ::= LINE_FALLBACK */ yytestcase(yyruleno == 124);
+			/* (125) fenced_line ::= LINE_HR */ yytestcase(yyruleno == 125);
+			/* (126) fenced_line ::= LINE_HTML */ yytestcase(yyruleno == 126);
+			/* (127) fenced_line ::= LINE_START_COMMENT */ yytestcase(yyruleno == 127);
+			/* (128) fenced_line ::= LINE_STOP_COMMENT */ yytestcase(yyruleno == 128);
+			/* (129) html_block ::= LINE_HTML */ yytestcase(yyruleno == 129);
+			/* (130) html_line ::= LINE_CONTINUATION */ yytestcase(yyruleno == 130);
+			/* (131) html_line ::= LINE_FALLBACK */ yytestcase(yyruleno == 131);
+			/* (132) html_line ::= LINE_HR */ yytestcase(yyruleno == 132);
+			/* (133) html_line ::= LINE_HTML */ yytestcase(yyruleno == 133);
+			/* (134) html_com_block ::= html_comment */ yytestcase(yyruleno == 134);
+			/* (135) html_comment ::= LINE_START_COMMENT */ yytestcase(yyruleno == 135);
+			/* (136) comment_line ::= LINE_CONTINUATION */ yytestcase(yyruleno == 136);
+			/* (137) comment_line ::= LINE_EMPTY */ yytestcase(yyruleno == 137);
+			/* (138) comment_line ::= LINE_FALLBACK */ yytestcase(yyruleno == 138);
+			/* (139) comment_line ::= LINE_HR */ yytestcase(yyruleno == 139);
+			/* (140) comment_line ::= LINE_HTML */ yytestcase(yyruleno == 140);
+			/* (141) indented_code ::= indented_line (OPTIMIZED OUT) */ assert(yyruleno != 141);
+			/* (142) list_bullet ::= item_bullet (OPTIMIZED OUT) */ assert(yyruleno != 142);
+			/* (143) list_enum ::= item_enum (OPTIMIZED OUT) */ assert(yyruleno != 143);
+			/* (144) meta_block ::= LINE_META */ yytestcase(yyruleno == 144);
+			/* (145) meta_line ::= LINE_META */ yytestcase(yyruleno == 145);
+			/* (146) meta_line ::= LINE_CONTINUATION */ yytestcase(yyruleno == 146);
+			/* (147) meta_line ::= LINE_FALLBACK */ yytestcase(yyruleno == 147);
+			/* (148) para ::= LINE_PLAIN */ yytestcase(yyruleno == 148);
+			/* (149) para ::= LINE_STOP_COMMENT */ yytestcase(yyruleno == 149);
+			/* (150) table ::= table_header */ yytestcase(yyruleno == 150);
+			/* (151) header_rows ::= LINE_TABLE */ yytestcase(yyruleno == 151);
+			/* (152) table_body ::= table_section (OPTIMIZED OUT) */ assert(yyruleno != 152);
+			/* (153) all_rows ::= row (OPTIMIZED OUT) */ assert(yyruleno != 153);
+			/* (154) row ::= header_rows */ yytestcase(yyruleno == 154);
+			/* (155) row ::= LINE_TABLE_SEPARATOR */ yytestcase(yyruleno == 155);
+			/* (156) para ::= defs */ yytestcase(yyruleno == 156);
+			break;
+			/********** End reduce actions ************************************************/
+	};
+
+	assert( yyruleno < sizeof(yyRuleInfo) / sizeof(yyRuleInfo[0]) );
+
+	yygoto = yyRuleInfo[yyruleno].lhs;
+
+	yysize = yyRuleInfo[yyruleno].nrhs;
+
+	yyact = yy_find_reduce_action(yymsp[-yysize].stateno, (YYCODETYPE)yygoto);
+
+	if ( yyact <= YY_MAX_SHIFTREDUCE ) {
+		if ( yyact > YY_MAX_SHIFT ) {
+			yyact += YY_MIN_REDUCE - YY_MIN_SHIFTREDUCE;
+		}
+
+		yymsp -= yysize - 1;
+		yypParser->yytos = yymsp;
+		yymsp->stateno = (YYACTIONTYPE)yyact;
+		yymsp->major = (YYCODETYPE)yygoto;
+		yyTraceShift(yypParser, yyact);
+	} else {
+		assert( yyact == YY_ACCEPT_ACTION );
+		yypParser->yytos -= yysize;
+		yy_accept(yypParser);
 	}
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 3: /* block ::= LINE_ATX_1 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H1); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 4: /* block ::= LINE_ATX_2 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H2); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 5: /* block ::= LINE_ATX_3 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H3); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 6: /* block ::= LINE_ATX_4 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H4); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 7: /* block ::= LINE_ATX_5 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H5); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 8: /* block ::= LINE_ATX_6 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_H6); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 9: /* block ::= LINE_HR */
-      case 10: /* block ::= LINE_YAML */ yytestcase(yyruleno==10);
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_HR); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 11: /* block ::= LINE_TOC */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TOC); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 12: /* block ::= blockquote */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_BLOCKQUOTE); recursive_parse_blockquote(engine, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 13: /* block ::= def_abbreviation */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_ABBREVIATION); stack_push(engine->definition_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 14: /* block ::= def_citation */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_CITATION); stack_push(engine->definition_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 15: /* block ::= def_footnote */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_FOOTNOTE); stack_push(engine->definition_stack, yylhsminor.yy0); recursive_parse_indent(engine, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 16: /* block ::= def_glossary */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_GLOSSARY); stack_push(engine->definition_stack, yylhsminor.yy0); recursive_parse_indent(engine, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 17: /* block ::= def_link */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEF_LINK); stack_push(engine->definition_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 18: /* block ::= definition_block */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFLIST); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 19: /* block ::= empty */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_EMPTY); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 20: /* block ::= fenced_block */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_CODE_FENCED); yymsp[0].minor.yy0->child->type = CODE_FENCE; }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 21: /* block ::= html_block */
-      case 22: /* block ::= html_com_block */ yytestcase(yyruleno==22);
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_HTML); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 23: /* block ::= indented_code */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_CODE_INDENTED); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 24: /* block ::= list_bullet */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_BULLETED); is_list_loose(yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 25: /* block ::= list_enum */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_ENUMERATED); is_list_loose(yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 26: /* block ::= meta_block */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_META); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 27: /* block ::= meta_block LINE_SETEXT_2 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_META); token_append_child(yylhsminor.yy0, yymsp[0].minor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 28: /* block ::= para */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_PARA); is_para_html(engine, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 29: /* block ::= setext_1 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_1); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 30: /* block ::= setext_2 */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_SETEXT_2); stack_push(engine->header_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 31: /* block ::= table */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TABLE); stack_push(engine->table_stack, yylhsminor.yy0); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 32: /* chunk ::= chunk chunk_line */
-      case 33: /* nested_chunks ::= nested_chunks nested_chunk */ yytestcase(yyruleno==33);
-      case 36: /* ext_chunk ::= chunk nested_chunks */ yytestcase(yyruleno==36);
-      case 37: /* opt_ext_chunk ::= chunk nested_chunks */ yytestcase(yyruleno==37);
-      case 38: /* blockquote ::= blockquote quote_line */ yytestcase(yyruleno==38);
-      case 39: /* def_citation ::= LINE_DEF_CITATION tail */ yytestcase(yyruleno==39);
-      case 40: /* def_footnote ::= LINE_DEF_FOOTNOTE tail */ yytestcase(yyruleno==40);
-      case 41: /* def_glossary ::= LINE_DEF_GLOSSARY tail */ yytestcase(yyruleno==41);
-      case 42: /* def_link ::= LINE_DEF_LINK chunk */ yytestcase(yyruleno==42);
-      case 43: /* def_abbreviation ::= LINE_DEF_ABBREVIATION chunk */ yytestcase(yyruleno==43);
-      case 45: /* defs ::= defs def */ yytestcase(yyruleno==45);
-      case 48: /* empty ::= empty LINE_EMPTY */ yytestcase(yyruleno==48);
-      case 52: /* fenced_3 ::= fenced_3 fenced_line */ yytestcase(yyruleno==52);
-      case 55: /* fenced_4 ::= fenced_4 fenced_line */ yytestcase(yyruleno==55);
-      case 56: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_3 */ yytestcase(yyruleno==56);
-      case 57: /* fenced_4 ::= fenced_4 LINE_FENCE_BACKTICK_START_3 */ yytestcase(yyruleno==57);
-      case 59: /* fenced_5 ::= fenced_5 fenced_line */ yytestcase(yyruleno==59);
-      case 60: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_3 */ yytestcase(yyruleno==60);
-      case 61: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_3 */ yytestcase(yyruleno==61);
-      case 62: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_4 */ yytestcase(yyruleno==62);
-      case 63: /* fenced_5 ::= fenced_5 LINE_FENCE_BACKTICK_START_4 */ yytestcase(yyruleno==63);
-      case 64: /* html_block ::= html_block html_line */ yytestcase(yyruleno==64);
-      case 65: /* html_com_block ::= html_comment LINE_STOP_COMMENT */ yytestcase(yyruleno==65);
-      case 66: /* html_comment ::= html_comment comment_line */ yytestcase(yyruleno==66);
-      case 67: /* indented_code ::= indented_code indented_line */ yytestcase(yyruleno==67);
-      case 68: /* indented_code ::= indented_code LINE_EMPTY */ yytestcase(yyruleno==68);
-      case 69: /* list_bullet ::= list_bullet item_bullet */ yytestcase(yyruleno==69);
-      case 74: /* list_enum ::= list_enum item_enum */ yytestcase(yyruleno==74);
-      case 79: /* meta_block ::= meta_block meta_line */ yytestcase(yyruleno==79);
-      case 80: /* meta_block ::= LINE_YAML LINE_META */ yytestcase(yyruleno==80);
-      case 81: /* para ::= LINE_PLAIN chunk */ yytestcase(yyruleno==81);
-      case 82: /* setext_1 ::= para LINE_SETEXT_1 */ yytestcase(yyruleno==82);
-      case 83: /* setext_2 ::= para LINE_SETEXT_2 */ yytestcase(yyruleno==83);
-      case 84: /* table ::= table_header table_body */ yytestcase(yyruleno==84);
-      case 87: /* header_rows ::= header_rows LINE_TABLE */ yytestcase(yyruleno==87);
-      case 88: /* table_body ::= table_body table_section */ yytestcase(yyruleno==88);
-      case 91: /* all_rows ::= all_rows row */ yytestcase(yyruleno==91);
-{ yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 34: /* nested_chunk ::= empty indented_line chunk */
-{ yylhsminor.yy0 = yymsp[-2].minor.yy0; token_chain_append(yymsp[-2].minor.yy0, yymsp[-1].minor.yy0); token_chain_append(yymsp[-2].minor.yy0, yymsp[0].minor.yy0); yymsp[-1].minor.yy0->type = LINE_CONTINUATION; }
-  yymsp[-2].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 35: /* nested_chunk ::= empty indented_line */
-{ yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); yymsp[0].minor.yy0->type = LINE_CONTINUATION; }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 44: /* definition_block ::= para defs */
-{ yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); yymsp[-1].minor.yy0->type = BLOCK_TERM; }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 46: /* def ::= LINE_DEFINITION tail */
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_DEFINITION); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); recursive_parse_indent(engine, yylhsminor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 47: /* def ::= LINE_DEFINITION */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_DEFINITION);  }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 49: /* fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_3 */
-      case 50: /* fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_4 */ yytestcase(yyruleno==50);
-      case 51: /* fenced_block ::= fenced_3 LINE_FENCE_BACKTICK_5 */ yytestcase(yyruleno==51);
-      case 53: /* fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_4 */ yytestcase(yyruleno==53);
-      case 54: /* fenced_block ::= fenced_4 LINE_FENCE_BACKTICK_5 */ yytestcase(yyruleno==54);
-      case 58: /* fenced_block ::= fenced_5 LINE_FENCE_BACKTICK_5 */ yytestcase(yyruleno==58);
-{ yylhsminor.yy0 = yymsp[-1].minor.yy0; token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); yymsp[0].minor.yy0->child->type = CODE_FENCE; }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 70: /* item_bullet ::= LINE_LIST_BULLETED ext_chunk */
-      case 72: /* item_bullet ::= LINE_LIST_BULLETED nested_chunks */ yytestcase(yyruleno==72);
-      case 75: /* item_enum ::= LINE_LIST_ENUMERATED ext_chunk */ yytestcase(yyruleno==75);
-      case 77: /* item_enum ::= LINE_LIST_ENUMERATED nested_chunks */ yytestcase(yyruleno==77);
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_LIST_ITEM); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); recursive_parse_list_item(engine, yylhsminor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 71: /* item_bullet ::= LINE_LIST_BULLETED chunk */
-      case 76: /* item_enum ::= LINE_LIST_ENUMERATED chunk */ yytestcase(yyruleno==76);
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_LIST_ITEM_TIGHT); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); recursive_parse_list_item(engine, yylhsminor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 73: /* item_bullet ::= LINE_LIST_BULLETED */
-      case 78: /* item_enum ::= LINE_LIST_ENUMERATED */ yytestcase(yyruleno==78);
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_ITEM_TIGHT); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 85: /* table_header ::= header_rows LINE_TABLE_SEPARATOR */
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_TABLE_HEADER); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 86: /* table_header ::= LINE_TABLE_SEPARATOR */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TABLE_HEADER); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 89: /* table_section ::= all_rows LINE_EMPTY */
-{ yylhsminor.yy0 = token_new_parent(yymsp[-1].minor.yy0, BLOCK_TABLE_SECTION); token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0); }
-  yymsp[-1].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 90: /* table_section ::= all_rows */
-{ yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_TABLE_SECTION); }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      case 92: /* para ::= all_rows */
-{ yylhsminor.yy0 = yymsp[0].minor.yy0; }
-  yymsp[0].minor.yy0 = yylhsminor.yy0;
-        break;
-      default:
-      /* (93) chunk ::= chunk_line (OPTIMIZED OUT) */ assert(yyruleno!=93);
-      /* (94) chunk_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==94);
-      /* (95) chunk_line ::= LINE_STOP_COMMENT */ yytestcase(yyruleno==95);
-      /* (96) nested_chunks ::= nested_chunk (OPTIMIZED OUT) */ assert(yyruleno!=96);
-      /* (97) nested_chunk ::= empty */ yytestcase(yyruleno==97);
-      /* (98) indented_line ::= LINE_INDENTED_TAB */ yytestcase(yyruleno==98);
-      /* (99) indented_line ::= LINE_INDENTED_SPACE */ yytestcase(yyruleno==99);
-      /* (100) opt_ext_chunk ::= chunk */ yytestcase(yyruleno==100);
-      /* (101) tail ::= opt_ext_chunk (OPTIMIZED OUT) */ assert(yyruleno!=101);
-      /* (102) tail ::= nested_chunks */ yytestcase(yyruleno==102);
-      /* (103) blockquote ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno==103);
-      /* (104) quote_line ::= LINE_BLOCKQUOTE */ yytestcase(yyruleno==104);
-      /* (105) quote_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==105);
-      /* (106) def_citation ::= LINE_DEF_CITATION */ yytestcase(yyruleno==106);
-      /* (107) def_footnote ::= LINE_DEF_FOOTNOTE */ yytestcase(yyruleno==107);
-      /* (108) def_glossary ::= LINE_DEF_GLOSSARY */ yytestcase(yyruleno==108);
-      /* (109) def_link ::= LINE_DEF_LINK */ yytestcase(yyruleno==109);
-      /* (110) def_abbreviation ::= LINE_DEF_ABBREVIATION */ yytestcase(yyruleno==110);
-      /* (111) defs ::= def (OPTIMIZED OUT) */ assert(yyruleno!=111);
-      /* (112) empty ::= LINE_EMPTY */ yytestcase(yyruleno==112);
-      /* (113) fenced_block ::= fenced_3 */ yytestcase(yyruleno==113);
-      /* (114) fenced_3 ::= LINE_FENCE_BACKTICK_3 */ yytestcase(yyruleno==114);
-      /* (115) fenced_3 ::= LINE_FENCE_BACKTICK_START_3 */ yytestcase(yyruleno==115);
-      /* (116) fenced_block ::= fenced_4 */ yytestcase(yyruleno==116);
-      /* (117) fenced_4 ::= LINE_FENCE_BACKTICK_4 */ yytestcase(yyruleno==117);
-      /* (118) fenced_4 ::= LINE_FENCE_BACKTICK_START_4 */ yytestcase(yyruleno==118);
-      /* (119) fenced_block ::= fenced_5 */ yytestcase(yyruleno==119);
-      /* (120) fenced_5 ::= LINE_FENCE_BACKTICK_5 */ yytestcase(yyruleno==120);
-      /* (121) fenced_5 ::= LINE_FENCE_BACKTICK_START_5 */ yytestcase(yyruleno==121);
-      /* (122) fenced_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==122);
-      /* (123) fenced_line ::= LINE_EMPTY */ yytestcase(yyruleno==123);
-      /* (124) fenced_line ::= LINE_FALLBACK */ yytestcase(yyruleno==124);
-      /* (125) fenced_line ::= LINE_HR */ yytestcase(yyruleno==125);
-      /* (126) fenced_line ::= LINE_HTML */ yytestcase(yyruleno==126);
-      /* (127) fenced_line ::= LINE_START_COMMENT */ yytestcase(yyruleno==127);
-      /* (128) fenced_line ::= LINE_STOP_COMMENT */ yytestcase(yyruleno==128);
-      /* (129) html_block ::= LINE_HTML */ yytestcase(yyruleno==129);
-      /* (130) html_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==130);
-      /* (131) html_line ::= LINE_FALLBACK */ yytestcase(yyruleno==131);
-      /* (132) html_line ::= LINE_HR */ yytestcase(yyruleno==132);
-      /* (133) html_line ::= LINE_HTML */ yytestcase(yyruleno==133);
-      /* (134) html_com_block ::= html_comment */ yytestcase(yyruleno==134);
-      /* (135) html_comment ::= LINE_START_COMMENT */ yytestcase(yyruleno==135);
-      /* (136) comment_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==136);
-      /* (137) comment_line ::= LINE_EMPTY */ yytestcase(yyruleno==137);
-      /* (138) comment_line ::= LINE_FALLBACK */ yytestcase(yyruleno==138);
-      /* (139) comment_line ::= LINE_HR */ yytestcase(yyruleno==139);
-      /* (140) comment_line ::= LINE_HTML */ yytestcase(yyruleno==140);
-      /* (141) indented_code ::= indented_line (OPTIMIZED OUT) */ assert(yyruleno!=141);
-      /* (142) list_bullet ::= item_bullet (OPTIMIZED OUT) */ assert(yyruleno!=142);
-      /* (143) list_enum ::= item_enum (OPTIMIZED OUT) */ assert(yyruleno!=143);
-      /* (144) meta_block ::= LINE_META */ yytestcase(yyruleno==144);
-      /* (145) meta_line ::= LINE_META */ yytestcase(yyruleno==145);
-      /* (146) meta_line ::= LINE_CONTINUATION */ yytestcase(yyruleno==146);
-      /* (147) meta_line ::= LINE_FALLBACK */ yytestcase(yyruleno==147);
-      /* (148) para ::= LINE_PLAIN */ yytestcase(yyruleno==148);
-      /* (149) para ::= LINE_STOP_COMMENT */ yytestcase(yyruleno==149);
-      /* (150) table ::= table_header */ yytestcase(yyruleno==150);
-      /* (151) header_rows ::= LINE_TABLE */ yytestcase(yyruleno==151);
-      /* (152) table_body ::= table_section (OPTIMIZED OUT) */ assert(yyruleno!=152);
-      /* (153) all_rows ::= row (OPTIMIZED OUT) */ assert(yyruleno!=153);
-      /* (154) row ::= header_rows */ yytestcase(yyruleno==154);
-      /* (155) row ::= LINE_TABLE_SEPARATOR */ yytestcase(yyruleno==155);
-      /* (156) para ::= defs */ yytestcase(yyruleno==156);
-        break;
-/********** End reduce actions ************************************************/
-  };
-  assert( yyruleno<sizeof(yyRuleInfo)/sizeof(yyRuleInfo[0]) );
-  yygoto = yyRuleInfo[yyruleno].lhs;
-  yysize = yyRuleInfo[yyruleno].nrhs;
-  yyact = yy_find_reduce_action(yymsp[-yysize].stateno,(YYCODETYPE)yygoto);
-  if( yyact <= YY_MAX_SHIFTREDUCE ){
-    if( yyact>YY_MAX_SHIFT ){
-      yyact += YY_MIN_REDUCE - YY_MIN_SHIFTREDUCE;
-    }
-    yymsp -= yysize-1;
-    yypParser->yytos = yymsp;
-    yymsp->stateno = (YYACTIONTYPE)yyact;
-    yymsp->major = (YYCODETYPE)yygoto;
-    yyTraceShift(yypParser, yyact);
-  }else{
-    assert( yyact == YY_ACCEPT_ACTION );
-    yypParser->yytos -= yysize;
-    yy_accept(yypParser);
-  }
 }
 
 /*
@@ -1513,22 +1862,28 @@ static void yy_reduce(
 */
 #ifndef YYNOERRORRECOVERY
 static void yy_parse_failed(
-  yyParser *yypParser           /* The parser */
-){
-  ParseARG_FETCH;
+	yyParser * yypParser          /* The parser */
+) {
+	ParseARG_FETCH;
 #ifndef NDEBUG
-  if( yyTraceFILE ){
-    fprintf(yyTraceFILE,"%sFail!\n",yyTracePrompt);
-  }
+
+	if ( yyTraceFILE ) {
+		fprintf(yyTraceFILE, "%sFail!\n", yyTracePrompt);
+	}
+
 #endif
-  while( yypParser->yytos>yypParser->yystack ) yy_pop_parser_stack(yypParser);
-  /* Here code is inserted which will be executed whenever the
-  ** parser fails */
-/************ Begin %parse_failure code ***************************************/
+
+	while ( yypParser->yytos > yypParser->yystack ) {
+		yy_pop_parser_stack(yypParser);
+	}
+
+	/* Here code is inserted which will be executed whenever the
+	** parser fails */
+	/************ Begin %parse_failure code ***************************************/
 
 	fprintf(stderr, "Parser failed to successfully parse.\n");
-/************ End %parse_failure code *****************************************/
-  ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
+	/************ End %parse_failure code *****************************************/
+	ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 #endif /* YYNOERRORRECOVERY */
 
@@ -1536,51 +1891,56 @@ static void yy_parse_failed(
 ** The following code executes when a syntax error first occurs.
 */
 static void yy_syntax_error(
-  yyParser *yypParser,           /* The parser */
-  int yymajor,                   /* The major type of the error token */
-  ParseTOKENTYPE yyminor         /* The minor type of the error token */
-){
-  ParseARG_FETCH;
+	yyParser * yypParser,          /* The parser */
+	int yymajor,                   /* The major type of the error token */
+	ParseTOKENTYPE yyminor         /* The minor type of the error token */
+) {
+	ParseARG_FETCH;
 #define TOKEN yyminor
-/************ Begin %syntax_error code ****************************************/
+	/************ Begin %syntax_error code ****************************************/
 
 #ifndef NDEBUG
-	fprintf(stderr,"Parser syntax error.\n");
+	fprintf(stderr, "Parser syntax error.\n");
 	int n = sizeof(yyTokenName) / sizeof(yyTokenName[0]);
+
 	for (int i = 0; i < n; ++i) {
 		int a = yy_find_shift_action(yypParser, (YYCODETYPE)i);
+
 		if (a < YYNSTATE + YYNRULE) {
-			fprintf(stderr,"expected token: %s\n", yyTokenName[i]);
+			fprintf(stderr, "expected token: %s\n", yyTokenName[i]);
 		}
 	}
+
 #endif
-/************ End %syntax_error code ******************************************/
-  ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
+	/************ End %syntax_error code ******************************************/
+	ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 
 /*
 ** The following is executed when the parser accepts
 */
 static void yy_accept(
-  yyParser *yypParser           /* The parser */
-){
-  ParseARG_FETCH;
+	yyParser * yypParser          /* The parser */
+) {
+	ParseARG_FETCH;
 #ifndef NDEBUG
-  if( yyTraceFILE ){
-    fprintf(yyTraceFILE,"%sAccept!\n",yyTracePrompt);
-  }
+
+	if ( yyTraceFILE ) {
+		fprintf(yyTraceFILE, "%sAccept!\n", yyTracePrompt);
+	}
+
 #endif
 #ifndef YYNOERRORRECOVERY
-  yypParser->yyerrcnt = -1;
+	yypParser->yyerrcnt = -1;
 #endif
-  assert( yypParser->yytos==yypParser->yystack );
-  /* Here code is inserted which will be executed whenever the
-  ** parser accepts */
-/*********** Begin %parse_accept code *****************************************/
+	assert( yypParser->yytos == yypParser->yystack );
+	/* Here code is inserted which will be executed whenever the
+	** parser accepts */
+	/*********** Begin %parse_accept code *****************************************/
 
 //	printf("parsing completed successfully!\n");
-/*********** End %parse_accept code *******************************************/
-  ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
+	/*********** End %parse_accept code *******************************************/
+	ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
 
 /* The main parser program.
@@ -1603,158 +1963,179 @@ static void yy_accept(
 ** None.
 */
 void Parse(
-  void *yyp,                   /* The parser */
-  int yymajor,                 /* The major token code number */
-  ParseTOKENTYPE yyminor       /* The value for the token */
-  ParseARG_PDECL               /* Optional %extra_argument parameter */
-){
-  YYMINORTYPE yyminorunion;
-  unsigned int yyact;   /* The parser action. */
+	void * yyp,                  /* The parser */
+	int yymajor,                 /* The major token code number */
+	ParseTOKENTYPE yyminor       /* The value for the token */
+	ParseARG_PDECL               /* Optional %extra_argument parameter */
+) {
+	YYMINORTYPE yyminorunion;
+	unsigned int yyact;   /* The parser action. */
 #if !defined(YYERRORSYMBOL) && !defined(YYNOERRORRECOVERY)
-  int yyendofinput;     /* True if we are at the end of input */
+	int yyendofinput;     /* True if we are at the end of input */
 #endif
 #ifdef YYERRORSYMBOL
-  int yyerrorhit = 0;   /* True if yymajor has invoked an error */
+	int yyerrorhit = 0;   /* True if yymajor has invoked an error */
 #endif
-  yyParser *yypParser;  /* The parser */
+	yyParser * yypParser; /* The parser */
 
-  yypParser = (yyParser*)yyp;
-  assert( yypParser->yytos!=0 );
+	yypParser = (yyParser *)yyp;
+	assert( yypParser->yytos != 0 );
 #if !defined(YYERRORSYMBOL) && !defined(YYNOERRORRECOVERY)
-  yyendofinput = (yymajor==0);
+	yyendofinput = (yymajor == 0);
 #endif
-  ParseARG_STORE;
+	ParseARG_STORE;
 
 #ifndef NDEBUG
-  if( yyTraceFILE ){
-    fprintf(yyTraceFILE,"%sInput '%s'\n",yyTracePrompt,yyTokenName[yymajor]);
-  }
+
+	if ( yyTraceFILE ) {
+		fprintf(yyTraceFILE, "%sInput '%s'\n", yyTracePrompt, yyTokenName[yymajor]);
+	}
+
 #endif
 
-  do{
-    yyact = yy_find_shift_action(yypParser,(YYCODETYPE)yymajor);
-    if( yyact <= YY_MAX_SHIFTREDUCE ){
-      yy_shift(yypParser,yyact,yymajor,yyminor);
+	do {
+		yyact = yy_find_shift_action(yypParser, (YYCODETYPE)yymajor);
+
+		if ( yyact <= YY_MAX_SHIFTREDUCE ) {
+			yy_shift(yypParser, yyact, yymajor, yyminor);
 #ifndef YYNOERRORRECOVERY
-      yypParser->yyerrcnt--;
+			yypParser->yyerrcnt--;
 #endif
-      yymajor = YYNOCODE;
-    }else if( yyact <= YY_MAX_REDUCE ){
-      yy_reduce(yypParser,yyact-YY_MIN_REDUCE);
-    }else{
-      assert( yyact == YY_ERROR_ACTION );
-      yyminorunion.yy0 = yyminor;
+			yymajor = YYNOCODE;
+		} else if ( yyact <= YY_MAX_REDUCE ) {
+			yy_reduce(yypParser, yyact - YY_MIN_REDUCE);
+		} else {
+			assert( yyact == YY_ERROR_ACTION );
+			yyminorunion.yy0 = yyminor;
 #ifdef YYERRORSYMBOL
-      int yymx;
+			int yymx;
 #endif
 #ifndef NDEBUG
-      if( yyTraceFILE ){
-        fprintf(yyTraceFILE,"%sSyntax Error!\n",yyTracePrompt);
-      }
+
+			if ( yyTraceFILE ) {
+				fprintf(yyTraceFILE, "%sSyntax Error!\n", yyTracePrompt);
+			}
+
 #endif
 #ifdef YYERRORSYMBOL
-      /* A syntax error has occurred.
-      ** The response to an error depends upon whether or not the
-      ** grammar defines an error token "ERROR".  
-      **
-      ** This is what we do if the grammar does define ERROR:
-      **
-      **  * Call the %syntax_error function.
-      **
-      **  * Begin popping the stack until we enter a state where
-      **    it is legal to shift the error symbol, then shift
-      **    the error symbol.
-      **
-      **  * Set the error count to three.
-      **
-      **  * Begin accepting and shifting new tokens.  No new error
-      **    processing will occur until three tokens have been
-      **    shifted successfully.
-      **
-      */
-      if( yypParser->yyerrcnt<0 ){
-        yy_syntax_error(yypParser,yymajor,yyminor);
-      }
-      yymx = yypParser->yytos->major;
-      if( yymx==YYERRORSYMBOL || yyerrorhit ){
+
+			/* A syntax error has occurred.
+			** The response to an error depends upon whether or not the
+			** grammar defines an error token "ERROR".
+			**
+			** This is what we do if the grammar does define ERROR:
+			**
+			**  * Call the %syntax_error function.
+			**
+			**  * Begin popping the stack until we enter a state where
+			**    it is legal to shift the error symbol, then shift
+			**    the error symbol.
+			**
+			**  * Set the error count to three.
+			**
+			**  * Begin accepting and shifting new tokens.  No new error
+			**    processing will occur until three tokens have been
+			**    shifted successfully.
+			**
+			*/
+			if ( yypParser->yyerrcnt < 0 ) {
+				yy_syntax_error(yypParser, yymajor, yyminor);
+			}
+
+			yymx = yypParser->yytos->major;
+
+			if ( yymx == YYERRORSYMBOL || yyerrorhit ) {
 #ifndef NDEBUG
-        if( yyTraceFILE ){
-          fprintf(yyTraceFILE,"%sDiscard input token %s\n",
-             yyTracePrompt,yyTokenName[yymajor]);
-        }
+
+				if ( yyTraceFILE ) {
+					fprintf(yyTraceFILE, "%sDiscard input token %s\n",
+							yyTracePrompt, yyTokenName[yymajor]);
+				}
+
 #endif
-        yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
-        yymajor = YYNOCODE;
-      }else{
-        while( yypParser->yytos >= yypParser->yystack
-            && yymx != YYERRORSYMBOL
-            && (yyact = yy_find_reduce_action(
-                        yypParser->yytos->stateno,
-                        YYERRORSYMBOL)) >= YY_MIN_REDUCE
-        ){
-          yy_pop_parser_stack(yypParser);
-        }
-        if( yypParser->yytos < yypParser->yystack || yymajor==0 ){
-          yy_destructor(yypParser,(YYCODETYPE)yymajor,&yyminorunion);
-          yy_parse_failed(yypParser);
+				yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
+				yymajor = YYNOCODE;
+			} else {
+				while ( yypParser->yytos >= yypParser->yystack
+						&& yymx != YYERRORSYMBOL
+						&& (yyact = yy_find_reduce_action(
+										yypParser->yytos->stateno,
+										YYERRORSYMBOL)) >= YY_MIN_REDUCE
+					  ) {
+					yy_pop_parser_stack(yypParser);
+				}
+
+				if ( yypParser->yytos < yypParser->yystack || yymajor == 0 ) {
+					yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
+					yy_parse_failed(yypParser);
 #ifndef YYNOERRORRECOVERY
-          yypParser->yyerrcnt = -1;
+					yypParser->yyerrcnt = -1;
 #endif
-          yymajor = YYNOCODE;
-        }else if( yymx!=YYERRORSYMBOL ){
-          yy_shift(yypParser,yyact,YYERRORSYMBOL,yyminor);
-        }
-      }
-      yypParser->yyerrcnt = 3;
-      yyerrorhit = 1;
+					yymajor = YYNOCODE;
+				} else if ( yymx != YYERRORSYMBOL ) {
+					yy_shift(yypParser, yyact, YYERRORSYMBOL, yyminor);
+				}
+			}
+
+			yypParser->yyerrcnt = 3;
+			yyerrorhit = 1;
 #elif defined(YYNOERRORRECOVERY)
-      /* If the YYNOERRORRECOVERY macro is defined, then do not attempt to
-      ** do any kind of error recovery.  Instead, simply invoke the syntax
-      ** error routine and continue going as if nothing had happened.
-      **
-      ** Applications can set this macro (for example inside %include) if
-      ** they intend to abandon the parse upon the first syntax error seen.
-      */
-      yy_syntax_error(yypParser,yymajor, yyminor);
-      yy_destructor(yypParser,(YYCODETYPE)yymajor,&yyminorunion);
-      yymajor = YYNOCODE;
-      
+			/* If the YYNOERRORRECOVERY macro is defined, then do not attempt to
+			** do any kind of error recovery.  Instead, simply invoke the syntax
+			** error routine and continue going as if nothing had happened.
+			**
+			** Applications can set this macro (for example inside %include) if
+			** they intend to abandon the parse upon the first syntax error seen.
+			*/
+			yy_syntax_error(yypParser, yymajor, yyminor);
+			yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
+			yymajor = YYNOCODE;
+
 #else  /* YYERRORSYMBOL is not defined */
-      /* This is what we do if the grammar does not define ERROR:
-      **
-      **  * Report an error message, and throw away the input token.
-      **
-      **  * If the input token is $, then fail the parse.
-      **
-      ** As before, subsequent error messages are suppressed until
-      ** three input tokens have been successfully shifted.
-      */
-      if( yypParser->yyerrcnt<=0 ){
-        yy_syntax_error(yypParser,yymajor, yyminor);
-      }
-      yypParser->yyerrcnt = 3;
-      yy_destructor(yypParser,(YYCODETYPE)yymajor,&yyminorunion);
-      if( yyendofinput ){
-        yy_parse_failed(yypParser);
+
+			/* This is what we do if the grammar does not define ERROR:
+			**
+			**  * Report an error message, and throw away the input token.
+			**
+			**  * If the input token is $, then fail the parse.
+			**
+			** As before, subsequent error messages are suppressed until
+			** three input tokens have been successfully shifted.
+			*/
+			if ( yypParser->yyerrcnt <= 0 ) {
+				yy_syntax_error(yypParser, yymajor, yyminor);
+			}
+
+			yypParser->yyerrcnt = 3;
+			yy_destructor(yypParser, (YYCODETYPE)yymajor, &yyminorunion);
+
+			if ( yyendofinput ) {
+				yy_parse_failed(yypParser);
 #ifndef YYNOERRORRECOVERY
-        yypParser->yyerrcnt = -1;
+				yypParser->yyerrcnt = -1;
 #endif
-      }
-      yymajor = YYNOCODE;
+			}
+
+			yymajor = YYNOCODE;
 #endif
-    }
-  }while( yymajor!=YYNOCODE && yypParser->yytos>yypParser->yystack );
+		}
+	} while ( yymajor != YYNOCODE && yypParser->yytos > yypParser->yystack );
+
 #ifndef NDEBUG
-  if( yyTraceFILE ){
-    yyStackEntry *i;
-    char cDiv = '[';
-    fprintf(yyTraceFILE,"%sReturn. Stack=",yyTracePrompt);
-    for(i=&yypParser->yystack[1]; i<=yypParser->yytos; i++){
-      fprintf(yyTraceFILE,"%c%s", cDiv, yyTokenName[i->major]);
-      cDiv = ' ';
-    }
-    fprintf(yyTraceFILE,"]\n");
-  }
+
+	if ( yyTraceFILE ) {
+		yyStackEntry * i;
+		char cDiv = '[';
+		fprintf(yyTraceFILE, "%sReturn. Stack=", yyTracePrompt);
+
+		for (i = &yypParser->yystack[1]; i <= yypParser->yytos; i++) {
+			fprintf(yyTraceFILE, "%c%s", cDiv, yyTokenName[i->major]);
+			cDiv = ' ';
+		}
+
+		fprintf(yyTraceFILE, "]\n");
+	}
+
 #endif
-  return;
+	return;
 }

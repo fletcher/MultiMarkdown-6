@@ -6,7 +6,7 @@
 #	See the LICENSE file for copyright and licensing information.
 #
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.9)
 
 
 # ===================
@@ -18,16 +18,16 @@ cmake_minimum_required(VERSION 2.6)
 set (My_Project_Title "libMultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2020-10-28")
+set (My_Project_Revised_Date "2023-06-10")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 6)
+set (My_Project_Version_Minor 7)
 set (My_Project_Version_Patch 0)
 
-set (My_Project_Copyright_Date "2016 - 2020")
+set (My_Project_Copyright_Date "2016 - 2023")
 
 set (My_Project_Identifier "net.fletcherpenney.multimarkdown")
 
-string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M")
+string(TIMESTAMP My_Build_Version "%Y.%m.%d.%H.%M" UTC)
 
 
 # Search for included files here
@@ -165,6 +165,19 @@ endif (POLICY CMP0048)
 
 project (${My_Project_Title} VERSION "${My_Project_Version}")
 
+# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
+get_directory_property(hasParent PARENT_DIRECTORY)
+
+if (hasParent)
+else()
+	# If building the framework independently, we canset a deployment target
+	# set (CMAKE_OSX_DEPLOYMENT_TARGET "10.12")
+
+	if (CMAKE_GENERATOR MATCHES "Xcode")
+		set (CMAKE_OSX_ARCHITECTURES "$(ARCHS_STANDARD)")
+	endif()
+endif()
+
 
 # Search source directory
 include_directories(${PROJECT_SOURCE_DIR}/src)
@@ -198,11 +211,27 @@ set_target_properties("${My_Project_Title}"
 	XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS "${XCODE_ATTRIBUTE_FRAMEWORK_SEARCH_PATHS} ${framework_search_paths_string}"
 	PUBLIC_HEADER "${public_headers}"
 	ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
+	XCODE_ATTRIBUTE_DEFINES_MODULE YES
+	XCODE_ATTRIBUTE_MODULEMAP_FILE "src/module.modulemap"
+#	XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "$SYMROOT/$CONFIGURATION"
 )
+
+if (hasParent)
+else()
+	set_target_properties("${My_Project_Title}"
+		PROPERTIES
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+		XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+		XCODE_LINK_BUILD_PHASE_MODE "KNOWN_LOCATION"
+	)
+endif()
 
 # Link to other libraries
 target_link_libraries("${My_Project_Title}"
 	${libraries_to_link}
+	m
 )
 
 # Link to Apple Cocoa Framework?
@@ -272,10 +301,6 @@ configure_file (
 # Build Test Suite with CuTest (unit testing)
 # ===========================================
 
-# from http://stackoverflow.com/questions/25199677/how-to-detect-if-current-scope-has-a-parent-in-cmake
-get_directory_property(hasParent PARENT_DIRECTORY)
-
-
 set(test_files
 	test/CuTest.c
 	test/CuTest.h
@@ -343,17 +368,30 @@ endif()
 # Build MultiMarkdown app
 if (hasParent)
 else()
-	add_executable(multimarkdown
-		src/d_string.c
+	if (DEFINED TEST)
+	else ()
+		add_executable(multimarkdown
+			src/d_string.c
 
-		src/main.c
-		src/argtable3.c
+			src/main.c
+			src/argtable3.c
 
-		${private_headers}
-		${public_headers}
-	)
+			${private_headers}
+			${public_headers}
+		)
 
-	target_link_libraries(multimarkdown "${My_Project_Title}")
+		target_link_libraries(multimarkdown "${My_Project_Title}")
+
+		set_target_properties(multimarkdown
+			PROPERTIES
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] YES
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=MinSizeRel] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=RelWithDebInfo] NO
+			XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Release] NO
+			XCODE_LINK_BUILD_PHASE_MODE "KNOWN_LOCATION"
+		)
+
+	endif()
 endif()
 
 
@@ -532,7 +570,7 @@ else (hasParent)
 			"${PROJECT_BINARY_DIR}/LICENSE.txt"
 			"${PROJECT_BINARY_DIR}/README.txt"
 			COMPONENT Docs
-			DESTINATION .
+			DESTINATION share/doc/MultiMarkdown
 		)
 		set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "Documentation")
 		set (CPACK_COMPONENT_DOCS_DESCRIPTION "Install README and LICENSE.")

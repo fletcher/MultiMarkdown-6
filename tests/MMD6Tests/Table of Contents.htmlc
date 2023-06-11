@@ -22,6 +22,8 @@ latexconfig:	article</p>
 
 <h2>Second Level</h2>
 
+<p>{{TOC}}</p>
+
 <h1>First Level</h1>
 
 <h2>Second Level b</h2>
@@ -39,6 +41,8 @@ latexconfig:	article</p>
 <h3>Third level d</h3>
 
 <h4>Fourth level d</h4>
+
+<p>{{TOC}}</p>
 
 <h1>First level [First Level e]</h1>
 

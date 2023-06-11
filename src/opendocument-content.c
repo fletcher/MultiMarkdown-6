@@ -185,6 +185,7 @@ void mmd_print_string_opendocument(DString * out, const char * str, bool line_br
 
 	while (*str != '\0') {
 		mmd_print_char_opendocument(out, *str, line_breaks);
+
 		str++;
 	}
 }
@@ -622,7 +623,7 @@ void mmd_export_image_opendocument(DString * out, const char * source, token * t
 	print_const(" xlink:type=\"simple\" xlink:show=\"embed\" xlink:actuate=\"onLoad\" draw:filter-name=\"&lt;All formats&gt;\"/>\n</draw:frame></text:p>");
 
 	if (is_figure) {
-		if (text) {
+		if (text && text->len > 3) {
 			print_const("\n<text:p>Figure <text:sequence text:name=\"Figure\" text:formula=\"ooow:Figure+1\" style:num-format=\"1\"> Update Fields to calculate numbers</text:sequence>: ");
 			mmd_export_token_tree_opendocument(out, source, text->child, scratch);
 			print_const("</text:p>");
@@ -655,6 +656,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 				temp_char = label_from_header(source, entry, scratch);
 				printf("<text:p text:style-name=\"TOC_Item\"><text:a xlink:type=\"simple\" xlink:href=\"#%s\" text:style-name=\"Index_20_Link\" text:visited-style-name=\"Index_20_Link\">", temp_char);
 				mmd_export_token_tree_opendocument(out, source, entry->child, scratch);
+				trim_trailing_whitespace_d_string(out);
 				print_const(" <text:tab/>1</text:a></text:p>\n");
 
 				if (*counter < scratch->header_stack->size - 1) {
@@ -665,6 +667,7 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 						// This entry has children
 						(*counter)++;
 						mmd_export_toc_entry_opendocument(out, source, scratch, counter, entry_level + 1, min, max);
+						trim_trailing_whitespace_d_string(out);
 					}
 				}
 
@@ -686,6 +689,8 @@ void mmd_export_toc_entry_opendocument(DString * out, const char * source, scrat
 void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad * scratch, short min, short max) {
 	size_t counter = 0;
 
+	int old_label_counter = scratch->label_counter;
+
 	// TODO: Could use LC to internationalize this
 	print_const("<text:table-of-content text:style-name=\"Sect1\" text:protected=\"true\" text:name=\"Table of Contents1\">\n");
 	print_const("<text:table-of-content-source text:outline-level=\"10\">\n");
@@ -699,7 +704,7 @@ void mmd_export_toc_opendocument(DString * out, const char * source, scratch_pad
 
 	print_const("</text:index-body>\n</text:table-of-content>\n\n");
 
-	scratch->label_counter = 0;
+	scratch->label_counter = old_label_counter;
 }
 
 
@@ -785,6 +790,7 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 					// Raw source
 					if (raw_filter_text_matches(temp_char, FORMAT_ODT)) {
 						switch (t->child->tail->type) {
+							case CODE_FENCE_LINE:
 							case LINE_FENCE_BACKTICK_3:
 							case LINE_FENCE_BACKTICK_4:
 							case LINE_FENCE_BACKTICK_5:
@@ -873,6 +879,9 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			scratch->padded = 1;
 			break;
 
+		case MARKER_DEFLIST_COLON:
+			break;
+
 		case BLOCK_EMPTY:
 			break;
 
@@ -900,6 +909,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 			}
 
 			printf("<text:h text:outline-level=\"%d\">", temp_short + scratch->base_header_level - 1);
+
+			header_clean_trailing_whitespace(t->child, source);
 
 			if (scratch->extensions & EXT_NO_LABELS) {
 				mmd_export_token_tree_opendocument(out, source, t->child, scratch);
@@ -1339,6 +1350,8 @@ void mmd_export_token_opendocument(DString * out, const char * source, token * t
 		case MARKER_H4:
 		case MARKER_H5:
 		case MARKER_H6:
+		case MARKER_SETEXT_1:
+		case MARKER_SETEXT_2:
 		case MARKER_LIST_BULLET:
 		case MARKER_LIST_ENUMERATOR:
 			break;
@@ -2171,6 +2184,9 @@ parse_citation:
 		case TOC_RANGE:
 		case UL:
 			print_token(t);
+			break;
+
+		case OBJECT_REPLACEMENT_CHARACTER:
 			break;
 
 		default:

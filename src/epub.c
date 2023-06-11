@@ -308,9 +308,11 @@ void epub_export_nav_entry(DString * out, const char * source, scratch_pad * scr
 void epub_export_nav(DString * out, mmd_engine * e, scratch_pad * scratch) {
 	size_t counter = 0;
 
+	int old_label_counter = scratch->label_counter;
+
 	epub_export_nav_entry(out, e->dstr->str, scratch, &counter, 0);
 
-	scratch->label_counter = 0;
+	scratch->label_counter = old_label_counter;
 }
 
 

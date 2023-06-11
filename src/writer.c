@@ -482,7 +482,22 @@ char * label_from_header(const char * source, token * t, scratch_pad * scratch) 
 
 			scratch->label_counter++;
 		} else {
-			result = label_from_token(source, t);
+			temp_token = token_new(t->type, t->start, t->len);
+
+			if (t->child && t->child->tail) {
+				switch (t->child->tail->type) {
+					case MARKER_SETEXT_1:
+					case MARKER_SETEXT_2:
+						temp_token->len = t->child->tail->start - t->start;
+						break;
+
+					default:
+						break;
+				}
+			}
+
+			result = label_from_token(source, temp_token);
+			token_free(temp_token);
 		}
 	}
 
@@ -491,7 +506,7 @@ char * label_from_header(const char * source, token * t, scratch_pad * scratch) 
 
 
 /// Clean up whitespace in string for standardization
-char * clean_string(const char * str, bool lowercase) {
+char * clean_string(const char * str, bool lowercase, bool url_clean) {
 	if (str == NULL) {
 		return NULL;
 	}
@@ -503,17 +518,19 @@ char * clean_string(const char * str, bool lowercase) {
 	while (*str != '\0') {
 		switch (*str) {
 			case '\\':
-				switch (*(str + 1)) {
-					case '\n':
-					case '\r':
-						d_string_append_c(out, '\n');
-						block_whitespace = true;
-						break;
+				if (!url_clean) {
+					switch (*(str + 1)) {
+						case '\n':
+						case '\r':
+							d_string_append_c(out, '\n');
+							block_whitespace = true;
+							break;
 
-					default:
-						d_string_append_c(out, '\\');
-						block_whitespace = false;
-						break;
+						default:
+							d_string_append_c(out, '\\');
+							block_whitespace = false;
+							break;
+					}
 				}
 
 				break;
@@ -527,6 +544,16 @@ char * clean_string(const char * str, bool lowercase) {
 					block_whitespace = true;
 				}
 
+				break;
+
+			case '&':
+				if (url_clean) {
+					if (strncmp(str, "&amp;", 5) == 0) {
+						str += 4;
+					}
+				}
+
+				d_string_append_c(out, '&');
 				break;
 
 			default:
@@ -565,7 +592,7 @@ char * clean_string_from_range(const char * source, size_t start, size_t len, bo
 
 	d_string_append_c_array(raw, &source[start], len);
 
-	clean = clean_string(raw->str, lowercase);
+	clean = clean_string(raw->str, lowercase, false);
 
 	d_string_free(raw, true);
 
@@ -581,7 +608,7 @@ char * clean_string_from_token(const char * source, token * t, bool lowercase) {
 char * clean_inside_pair(const char * source, token * t, bool lowercase) {
 	char * text = text_inside_pair(source, t);
 
-	char * clean = clean_string(text, lowercase);
+	char * clean = clean_string(text, lowercase, false);
 
 	free(text);
 
@@ -668,7 +695,7 @@ link * link_new(const char * source, token * label, char * url, char * title, ch
 			l->label_text = NULL;
 		}
 
-		l->url = clean_string(url, false);
+		l->url = clean_string(url, false, true);
 		l->title = (title == NULL) ? NULL : my_strdup(title);
 		l->attributes = (attributes == NULL) ? NULL : parse_attributes(attributes);
 
@@ -738,7 +765,7 @@ link * retrieve_link(scratch_pad * scratch, const char * key) {
 		return l;
 	}
 
-	char * clean = clean_string(key, true);
+	char * clean = clean_string(key, true, false);
 
 	HASH_FIND_STR(scratch->link_hash, clean, l);
 
@@ -887,6 +914,24 @@ void link_free(link * l) {
 }
 
 
+/// Fix single whitespace characters
+void whitespace_fix(token * t, const char * source) {
+	while (t) {
+		if ((t->type == TEXT_PLAIN) && (t->len == 1)) {
+			if (source[t->start] == ' ') {
+				t->type = NON_INDENT_SPACE;
+			}
+		}
+
+		if (t->child) {
+			whitespace_fix(t->child, source);
+		}
+
+		t = t->next;
+	}
+}
+
+
 void whitespace_accept(token ** remainder) {
 	while (token_chain_accept_multiple(remainder, 3, NON_INDENT_SPACE, INDENT_SPACE, INDENT_TAB));
 }
@@ -894,7 +939,7 @@ void whitespace_accept(token ** remainder) {
 
 /// Find link based on label
 link * extract_link_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, true, false);
 
 	link * temp = NULL;
 
@@ -981,7 +1026,7 @@ char * destination_accept(const char * source, token ** remainder, bool validate
 	}
 
 	// Is this a valid URL?
-	clean = clean_string(url, false);
+	clean = clean_string(url, false, true);
 
 	if (validate && !validate_url(clean)) {
 		free(clean);
@@ -1019,7 +1064,7 @@ char * url_accept(const char * source, size_t start, size_t max_len, size_t * en
 
 		url = my_strndup(&source[start], scan_len);
 
-		clean = clean_string(url, false);
+		clean = clean_string(url, false, true);
 
 		if (validate && !validate_url(clean)) {
 			free(clean);
@@ -1194,7 +1239,7 @@ void meta_set_value(meta * m, const char * value) {
 			free(m->value);
 		}
 
-		m->value = clean_string(value, false);
+		m->value = clean_string(value, false, false);
 	}
 }
 
@@ -1211,7 +1256,7 @@ void meta_free(meta * m) {
 
 /// Find metadata based on key
 meta * extract_meta_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, true, false);
 
 	meta * temp = NULL;
 
@@ -1322,6 +1367,7 @@ bool definition_extract(mmd_engine * e, token ** remainder) {
 			}
 
 			// Skip space
+			whitespace_fix(*remainder, e->dstr->str);
 			whitespace_accept(remainder);
 
 			// Grab destination
@@ -1532,10 +1578,17 @@ token * manual_label_from_header(token * h, const char * source) {
 			case MARKER_H4:
 			case MARKER_H5:
 			case MARKER_H6:
+			case MARKER_SETEXT_1:
+			case MARKER_SETEXT_2:
 				walker = walker->prev;
 				break;
 
 			case TEXT_PLAIN:
+				if (walker->len == 0) {
+					walker = walker->prev;
+					break;
+				}
+
 				if (walker->len == 1) {
 					if (source[walker->start] == ' ') {
 						walker = walker->prev;
@@ -2156,7 +2209,7 @@ void mark_abbreviation_as_used(scratch_pad * scratch, footnote * c) {
 
 
 size_t extract_citation_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, true, false);
 
 	fn_holder * h;
 
@@ -2186,7 +2239,7 @@ size_t extract_citation_from_stack(scratch_pad * scratch, const char * target) {
 
 
 size_t extract_footnote_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, true);
+	char * key = clean_string(target, true, false);
 
 	fn_holder * h;
 
@@ -2216,7 +2269,7 @@ size_t extract_footnote_from_stack(scratch_pad * scratch, const char * target) {
 
 
 size_t extract_abbreviation_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, false);
+	char * key = clean_string(target, false, false);
 
 	fn_holder * h;
 
@@ -2246,7 +2299,7 @@ size_t extract_abbreviation_from_stack(scratch_pad * scratch, const char * targe
 
 
 size_t extract_glossary_from_stack(scratch_pad * scratch, const char * target) {
-	char * key = clean_string(target, false);
+	char * key = clean_string(target, false, false);
 
 	fn_holder * h;
 
@@ -2538,7 +2591,6 @@ void strip_leading_whitespace(token * chain, const char * source) {
 				chain->type = TEXT_EMPTY;
 
 			case TEXT_EMPTY:
-				chain = chain->next;
 				break;
 
 			case TEXT_PLAIN:
@@ -2654,6 +2706,67 @@ short raw_level_for_header(token * header) {
 	}
 
 	return 0;
+}
+
+
+void header_clean_trailing_whitespace(token * header, const char * source) {
+	token * walker = header->tail;
+	bool done = false;
+
+	while (!done && walker) {
+		switch (walker->type) {
+			case TEXT_PLAIN:
+				token_trim_trailing_whitespace(walker, source);
+
+				if (walker->len) {
+					done = true;
+				}
+
+				break;
+
+			case NON_INDENT_SPACE:
+			case INDENT_SPACE:
+			case INDENT_TAB:
+				walker->type = TEXT_PLAIN;
+
+			case TEXT_NL:
+			case TEXT_NL_SP:
+			case TEXT_LINEBREAK:
+			case TEXT_LINEBREAK_SP:
+				token_trim_trailing_whitespace(walker, source);
+				break;
+
+			case MARKER_H1:
+			case MARKER_H2:
+			case MARKER_H3:
+			case MARKER_H4:
+			case MARKER_H5:
+			case MARKER_H6:
+			case MANUAL_LABEL:
+				break;
+
+			case MARKER_SETEXT_1:
+			case MARKER_SETEXT_2:
+				if (walker->prev) {
+					switch (walker->prev->type) {
+						case TEXT_NL:
+						case TEXT_NL_SP:
+						case TEXT_LINEBREAK:
+						case TEXT_LINEBREAK_SP:
+							walker->prev->type = NON_INDENT_SPACE;
+							break;
+					}
+				}
+
+				break;
+
+			default:
+				done = true;
+				break;
+		}
+
+		walker = walker->prev;
+	}
 }
 
 

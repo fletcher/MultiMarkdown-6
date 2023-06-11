@@ -642,6 +642,15 @@ void mmd_assign_line_type(mmd_engine * e, token * line) {
 
 		case DASH_N:
 		case DASH_M:
+
+			// This could be a table separator instead of a list
+			if (!(e->extensions & EXT_COMPATIBILITY)) {
+				if (scan_table_separator(&source[first_child->start])) {
+					line->type = LINE_TABLE_SEPARATOR;
+					break;
+				}
+			}
+
 			if (scan_setext(&source[first_child->start])) {
 				line->type = LINE_SETEXT_2;
 				break;
@@ -905,6 +914,7 @@ void deindent_line(token  * line) {
 			if (line->child) {
 				line->child->prev = NULL;
 				line->child->tail = t->tail;
+				line->start = line->child->start;
 			}
 
 			token_free(t);
@@ -1321,6 +1331,10 @@ void mmd_assign_ambidextrous_tokens_in_block(mmd_engine * e, token * block, size
 			case DOC_START_TOKEN:
 			case BLOCK_BLOCKQUOTE:
 			case BLOCK_DEF_ABBREVIATION:
+			case BLOCK_DEF_CITATION:
+			case BLOCK_DEF_FOOTNOTE:
+			case BLOCK_DEF_GLOSSARY:
+			case BLOCK_DEF_LINK:
 			case BLOCK_DEFLIST:
 			case BLOCK_DEFINITION:
 			case BLOCK_H1:
@@ -1809,8 +1823,11 @@ void recursive_parse_indent(mmd_engine * e, token * block) {
 	// Strip tokens?
 	switch (block->type) {
 		case BLOCK_DEFINITION:
-			// Strip leading ':' from definition
-			token_remove_first_child(block->child);
+			// Flag leading ':' as markup
+			block->child->child->type = MARKER_DEFLIST_COLON;
+
+			// Strip whitespace between colon and remainder of line
+			strip_leading_whitespace(block->child->child->next, e->dstr->str);
 			break;
 	}
 
@@ -2133,18 +2150,33 @@ void strip_line_tokens_from_block(mmd_engine * e, token * block) {
 		switch (l->type) {
 			case LINE_SETEXT_1:
 			case LINE_SETEXT_2:
-				if ((block->type == BLOCK_SETEXT_1) ||
-						(block->type == BLOCK_SETEXT_2)) {
-					temp = l->next;
-					tokens_prune(l, l);
-					l = temp;
-					break;
+				temp = token_new_parent(l->child, MARKER_SETEXT_1 + l->type - LINE_SETEXT_1);
+
+				// Add contents of line to parent block
+				token_append_child(block, temp);
+
+				// Disconnect line from it's contents
+				l->child = NULL;
+
+				// Need to remember first line we strip
+				if (children == NULL) {
+					children = l;
 				}
+
+				// Advance to next line
+				l = l->next;
+				break;
 
 			case LINE_DEFINITION:
 				if (block->type == BLOCK_DEFINITION) {
-					// Remove leading colon
-					token_remove_first_child(l);
+					// Flag leading colon as markup
+					if (l->child) {
+						l->child->type = MARKER_DEFLIST_COLON;
+
+						temp = l->child->next;
+
+						strip_leading_whitespace(temp, e->dstr->str);
+					}
 				}
 
 			case LINE_ATX_1:
@@ -2220,10 +2252,9 @@ handle_line:
 				strip_line_tokens_from_block(e, l);
 
 				// Move children to parent
-				// Add ':' back
-				if (l->child && l->child->start > 0 && e->dstr->str[l->child->start - 1] == ':') {
-					temp = token_new(COLON, l->child->start - 1, 1);
-					token_append_child(block, temp);
+				// Add ':' back?
+				if (l->child && l->child->type == MARKER_DEFLIST_COLON) {
+					l->child->type = COLON;
 				}
 
 				token_append_child(block, l->child);
@@ -2454,6 +2485,17 @@ bool mmd_engine_has_metadata(mmd_engine * e, size_t * end) {
 			e->link_stack->size = 			temp->link_stack->size;
 //			e->metadata_stack->size = 		temp->metadata_stack->size;
 			e->table_stack->size = 			temp->table_stack->size;
+
+			// And reset temp stack sizes
+			temp->abbreviation_stack->size =	0;
+			temp->citation_stack->size = 		0;
+			temp->definition_stack->size = 		0;
+			temp->footnote_stack->size = 		0;
+			temp->glossary_stack->size = 		0;
+			temp->header_stack->size = 			0;
+			temp->link_stack->size = 			0;
+			temp->metadata_stack->size = 		0;
+			temp->table_stack->size = 			0;
 
 			mmd_engine_free(temp, true);
 		}

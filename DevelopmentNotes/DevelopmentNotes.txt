@@ -1,6 +1,6 @@
 Title:	MultiMarkdown v6 Development Notes
 Author:	Fletcher T. Penney
-Date: 2020-10-28  
+Date: 2023-06-10  
 LaTeX Config:	tufte-handout
 Base Header Level:	3
 uuid: dd2d8e76-dc2d-416d-9acd-5395d20871c2
@@ -471,6 +471,64 @@ TextBundle/TextPack, OpenDocument, etc.
 
 
 # Changelog #
+
+* 2023-06-10 - v 6.7.0:
+
+	*    ADDED: Add OBJECT_REPLACEMENT_CHARACTER token (fixes #216)
+	*    ADDED: Add compiler flag (DISABLE_OBJECT_POOL) to disable token pools
+	*    ADDED: Add more token types
+	*    Add Swift support
+	*    Avoid space to be eaten aways after a slash in latex export
+	*    CHANGED: Add additional TOC tests
+	*    CHANGED: Astyle
+	*    CHANGED: Reformat comment
+	*    FIXED: Centralize html fix
+	*    FIXED: Don't output empty figure captions
+	*    FIXED: Fix Glossaries test
+	*    FIXED: Fix ambidextrous tokens inside of footnotes and other definitions
+	*    FIXED: Fix architecture issue when running multimarkdown from Xcode
+	*    FIXED: Fix edge case where table separator without leading pipe is treated as a list item
+	*    FIXED: Fix error detecting tables when indented in list items -- Thanks, @wnm3!
+	*    FIXED: Fix flow control error
+	*    FIXED: Fix issue with certain nested lists
+	*    FIXED: Fix issue with escaping in URLs
+	*    FIXED: Fix issue with reference links with leading space instead of tab
+	*    FIXED: Fix regression from pull request that breaks build
+	*    FIXED: Fix style issue with ODT output format
+	*    FIXED: Fix trailing whitespace issues in headers/TOC
+	*    FIXED: Fix typo in xml.c
+	*    FIXED: Fix typos in error messages
+	*    FIXED: Improve README install path
+	*    FIXED: Improve edge cases around fenced code blocks and setext headers
+	*    FIXED: Improve markup handling around definition lists and colons
+	*    FIXED: Improve token mapping in header blocks
+	*    FIXED: Left out file
+	*    FIXED: Re-enable token object pools in default configuration
+	*    FIXED: Reset stack sizes before freeing temporary engine
+	*    FIXED: Restore prior label_counter after {{TOC}}
+	*    FIXED: Updated argtable3 now needs to link to math
+	*    FIXED: Use MultiMarkdown instead of libMultiMarkdown as title in version.h
+	*    FIXED: Use UTC for timestamp
+	*    FIXED: bibtex metadata should be raw
+	*    Merge branch 'develop' of github.com:fletcher/MultiMarkdown-6 into develop
+	*    Merge branch 'release/6.6.0' into develop
+	*    Merge pull request #210 from DivineDominion/swift-framework
+	*    Merge pull request #233 from DivineDominion/patch-4
+	*    Merge pull request #243 from alexban011/githubCi
+	*    Merge pull request #245 from hvellyr/develop
+	*    UPDATED: Apply astyle to all files
+	*    UPDATED: Include definition list colons as markup token
+	*    UPDATED: Project clean up
+	*    UPDATED: Update CMakeLists.txt for Universal Binary
+	*    UPDATED: Update astyle config
+	*    UPDATED: Update github CI for multiple platforms
+	*    UPDATED: Update lexers with newer version of re2c
+	*    UPDATED: Update to latest argtable3 code
+	*    UPDATED: standardize common source files
+	*    ci: added github CI
+	*    specify unsigned short for functions in token.h
+	*    use unsigned short in implementation, too
+
 
 * 2020-10-28 - v 6.6.0:
 

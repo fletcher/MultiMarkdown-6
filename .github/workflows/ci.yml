@@ -1,0 +1,51 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure make
+      run: make release
+
+    - name: Test build
+      run: cd build && make all
+
+    - name: Test install
+      run: cd build && sudo make install
+      
+    - name: Run tests
+      run: cd build && ctest
+
+  build-windows:
+
+    strategy:
+      matrix:
+        platform: [windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure make
+      run: mkdir build && cd build && cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+
+    - name: Test build
+      run: cd build && make
+
+    - name: Run tests
+      run: cd build && ctest

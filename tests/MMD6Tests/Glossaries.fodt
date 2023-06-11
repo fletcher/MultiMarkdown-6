@@ -294,11 +294,11 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 
 <text:p text:style-name="Standard">b.a.r.<text:note text:id="gn5" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B.A.R.</text:p></text:note-body></text:note> b.a.r.</text:p>
 
-<text:p text:style-name="Standard">b-a-r<text:note text:id="gn6" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B&#8211;A&#8211;R</text:p></text:note-body></text:note> b-a-r</text:p>
+<text:p text:style-name="Standard">b-a-r<text:note text:id="gn6" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B-A-R</text:p></text:note-body></text:note> b-a-r</text:p>
 
 <text:p text:style-name="Standard">b a r<text:note text:id="gn7" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">B A R</text:p></text:note-body></text:note> b a r</text:p>
 
-<text:p text:style-name="Standard">ba'r<text:note text:id="gn8" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">BA'R</text:p></text:note-body></text:note> ba'r</text:p>
+<text:p text:style-name="Standard">ba'r<text:note text:id="gn8" text:note-class="glossary"><text:note-body><text:p text:style-name="Footnote">BA&#8217;R</text:p></text:note-body></text:note> ba'r</text:p>
 
 <text:p text:style-name="Standard">10</text:p>
 
