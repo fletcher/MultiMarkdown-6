@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Quick Start Guide</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="version">6.5.2</meta:user-defined>
+	<meta:user-defined meta:name="version">6.7.0</meta:user-defined>
 	<meta:user-defined meta:name="uuid">0d6313fa-9135-477e-9c14-7d62c1977833</meta:user-defined>
 </office:meta>
 <office:body>
@@ -289,39 +289,39 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:index-title text:style-name="Sect1" text:name="Table of Contents1_Head">
 <text:p text:style-name="Contents_20_Heading">Table of Contents</text:p>
 </text:index-title>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#introduction" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Introduction  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#performance" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Performance  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#parsetree" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Parse Tree  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#features" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Features  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (Or Acronyms)  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#embeddedimages" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Embedded Images  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#emphandstrong" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Emph and Strong  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#epub3support" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">EPUB 3 Support  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#footnotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Footnotes  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaryterms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossary Terms  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlcomments" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Comments  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#outputformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Output Formats  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#rawsource" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Raw Source  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#developernotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Developer Notes  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#objectpools" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Object Pools  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlbooleanattributes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Boolean Attributes  <text:tab/>1</text:a></text:p>
-<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps  <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#introduction" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Introduction <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#performance" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Performance <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#parsetree" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Parse Tree <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#features" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Features <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#abbreviationsoracronyms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Abbreviations (Or Acronyms) <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#citations" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Citations <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#criticmarkup" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">CriticMarkup <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#embeddedimages" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Embedded Images <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#emphandstrong" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Emph and Strong <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#epub3support" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">EPUB 3 Support <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#fencedcodeblocks" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Fenced Code Blocks <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#footnotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Footnotes <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#glossaryterms" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Glossary Terms <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlcomments" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Comments <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#internationalization" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Internationalization <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#latexchanges" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">LaTeX Changes <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#metadata" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Metadata <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#outputformats" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Output Formats <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#rawsource" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Raw Source <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tableofcontents" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Table of Contents <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#tables" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Tables <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#transclusion" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Transclusion <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#developernotes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Developer Notes <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#objectpools" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Object Pools <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#htmlbooleanattributes" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">HTML Boolean Attributes <text:tab/>1</text:a></text:p>
+<text:p text:style-name="TOC_Item"><text:a xlink:type="simple" xlink:href="#futuresteps" text:style-name="Index_20_Link" text:visited-style-name="Index_20_Link">Future Steps <text:tab/>1</text:a></text:p>
 </text:index-body>
 </text:table-of-content>
 
 
 <text:h text:outline-level="3"><text:bookmark text:name="introduction"/>Introduction</text:h>
 
-<text:p text:style-name="Standard">Version: 6.5.2</text:p>
+<text:p text:style-name="Standard">Version: 6.7.0</text:p>
 
 <text:p text:style-name="Standard">This document serves as a description of MultiMarkdown (MMD) v6, as well as a sample document to demonstrate the various features. Specifically, differences from MMD v5 will be pointed out.</text:p>
 
