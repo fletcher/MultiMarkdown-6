@@ -18,12 +18,12 @@ cmake_minimum_required(VERSION 2.9)
 set (My_Project_Title "libMultiMarkdown")
 set (My_Project_Description "Lightweight markup processor to produce HTML, LaTeX, and more.")
 set (My_Project_Author "Fletcher T. Penney")
-set (My_Project_Revised_Date "2020-10-28")
+set (My_Project_Revised_Date "2023-06-10")
 set (My_Project_Version_Major 6)
-set (My_Project_Version_Minor 6)
+set (My_Project_Version_Minor 7)
 set (My_Project_Version_Patch 0)
 
-set (My_Project_Copyright_Date "2016 - 2020")
+set (My_Project_Copyright_Date "2016 - 2023")
 
 set (My_Project_Identifier "net.fletcherpenney.multimarkdown")
 
