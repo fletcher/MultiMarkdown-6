@@ -22,3 +22,7 @@ latexconfig:	article</p>
 <h1>Test 的 Multibyte</h1>
 
 <p>10</p>
+
+<h1>Test_Underscore</h1>
+
+<p>Link to [Test_Underscore].</p>

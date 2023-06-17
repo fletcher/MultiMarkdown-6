@@ -8,7 +8,8 @@
 <outline text="Strip out &amp;%^ characters &amp;*^" _note="&#10;[A Section].&#10;&#10;"><outline text="1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^" _note="&#10;5&#10;&#10;And now, link to [1 Cross-References: Special Characters!@#$%&amp;*()&lt;&gt;^][]&#10;&#10;"></outline>
 </outline>
 <outline text="Заголовок по-русски" _note="&#10;И ссылка на [Заголовок по-русски].&#10;&#10;"></outline>
-<outline text="Test 的 Multibyte" _note="&#10;10&#10;"></outline>
+<outline text="Test 的 Multibyte" _note="&#10;10&#10;&#10;"></outline>
+<outline text="Test_Underscore" _note="&#10;Link to [Test_Underscore].&#10;"></outline>
 <outline text="&gt;&gt;Metadata&lt;&lt;">
 <outline text="title" _note="Cross-References"/>
 <outline text="latexconfig" _note="article"/>
