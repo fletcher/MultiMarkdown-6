@@ -116,7 +116,7 @@
 	#elif TARGET_OS_MAC
 		// Other kinds of Mac OS
 	#else
-		#   error "Unknown Apple platform"
+		#error "Unknown Apple platform"
 	#endif
 #endif
 

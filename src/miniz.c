@@ -730,7 +730,7 @@ typedef struct {
 } tdefl_sym_freq;
 static tdefl_sym_freq * tdefl_radix_sort_syms(mz_uint num_syms, tdefl_sym_freq * pSyms0, tdefl_sym_freq * pSyms1) {
 	mz_uint32 total_passes = 2, pass_shift, pass, i, hist[256 * 2];
-	tdefl_sym_freq * pCur_syms = pSyms0, *pNew_syms = pSyms1;
+	tdefl_sym_freq * pCur_syms = pSyms0, * pNew_syms = pSyms1;
 	MZ_CLEAR_OBJ(hist);
 
 	for (i = 0; i < num_syms; i++) {
@@ -869,7 +869,7 @@ static void tdefl_optimize_huffman_table(tdefl_compressor * d, int table_num, in
 			num_codes[d->m_huff_code_sizes[table_num][i]]++;
 		}
 	} else {
-		tdefl_sym_freq syms0[TDEFL_MAX_HUFF_SYMBOLS], syms1[TDEFL_MAX_HUFF_SYMBOLS], *pSyms;
+		tdefl_sym_freq syms0[TDEFL_MAX_HUFF_SYMBOLS], syms1[TDEFL_MAX_HUFF_SYMBOLS], * pSyms;
 		int num_used_syms = 0;
 		const mz_uint16 * pSym_count = &d->m_huff_count[table_num][0];
 
@@ -1391,7 +1391,7 @@ static inline mz_uint16 TDEFL_READ_UNALIGNED_WORD2(const mz_uint16 * p) {
 static MZ_FORCEINLINE void tdefl_find_match(tdefl_compressor * d, mz_uint lookahead_pos, mz_uint max_dist, mz_uint max_match_len, mz_uint * pMatch_dist, mz_uint * pMatch_len) {
 	mz_uint dist, pos = lookahead_pos & TDEFL_LZ_DICT_SIZE_MASK, match_len = *pMatch_len, probe_pos = pos, next_probe_pos, probe_len;
 	mz_uint num_probes_left = d->m_max_probes[match_len >= 32];
-	const mz_uint16 * s = (const mz_uint16 *)(d->m_dict + pos), *p, *q;
+	const mz_uint16 * s = (const mz_uint16 *)(d->m_dict + pos), * p, * q;
 	mz_uint16 c01 = TDEFL_READ_UNALIGNED_WORD(&d->m_dict[pos + match_len - 1]), s01 = TDEFL_READ_UNALIGNED_WORD2(s);
 	MZ_ASSERT(max_match_len <= TDEFL_MAX_MATCH_LEN);
 
@@ -1453,7 +1453,7 @@ static MZ_FORCEINLINE void tdefl_find_match(tdefl_compressor * d, mz_uint lookah
 static MZ_FORCEINLINE void tdefl_find_match(tdefl_compressor * d, mz_uint lookahead_pos, mz_uint max_dist, mz_uint max_match_len, mz_uint * pMatch_dist, mz_uint * pMatch_len) {
 	mz_uint dist, pos = lookahead_pos & TDEFL_LZ_DICT_SIZE_MASK, match_len = *pMatch_len, probe_pos = pos, next_probe_pos, probe_len;
 	mz_uint num_probes_left = d->m_max_probes[match_len >= 32];
-	const mz_uint8 * s = d->m_dict + pos, *p, *q;
+	const mz_uint8 * s = d->m_dict + pos, * p, * q;
 	mz_uint8 c0 = d->m_dict[pos + match_len], c1 = d->m_dict[pos + match_len - 1];
 	MZ_ASSERT(max_match_len <= TDEFL_MAX_MATCH_LEN);
 
@@ -1509,7 +1509,7 @@ static MZ_FORCEINLINE void tdefl_find_match(tdefl_compressor * d, mz_uint lookah
 static mz_bool tdefl_compress_fast(tdefl_compressor * d) {
 	/* Faster, minimally featured LZRW1-style match+parse loop with better register utilization. Intended for applications where raw throughput is valued more highly than ratio. */
 	mz_uint lookahead_pos = d->m_lookahead_pos, lookahead_size = d->m_lookahead_size, dict_size = d->m_dict_size, total_lz_bytes = d->m_total_lz_bytes, num_flags_left = d->m_num_flags_left;
-	mz_uint8 * pLZ_code_buf = d->m_pLZ_code_buf, *pLZ_flags = d->m_pLZ_flags;
+	mz_uint8 * pLZ_code_buf = d->m_pLZ_code_buf, * pLZ_flags = d->m_pLZ_flags;
 	mz_uint cur_pos = lookahead_pos & TDEFL_LZ_DICT_SIZE_MASK;
 
 	while ((d->m_src_buf_left) || ((d->m_flush) && (lookahead_size))) {
@@ -2433,8 +2433,8 @@ tinfl_status tinfl_decompress(tinfl_decompressor * r, const mz_uint8 * pIn_buf_n
 	tinfl_status status = TINFL_STATUS_FAILED;
 	mz_uint32 num_bits, dist, counter, num_extra;
 	tinfl_bit_buf_t bit_buf;
-	const mz_uint8 * pIn_buf_cur = pIn_buf_next, *const pIn_buf_end = pIn_buf_next + *pIn_buf_size;
-	mz_uint8 * pOut_buf_cur = pOut_buf_next, *const pOut_buf_end = pOut_buf_next + *pOut_buf_size;
+	const mz_uint8 * pIn_buf_cur = pIn_buf_next, * const pIn_buf_end = pIn_buf_next + *pIn_buf_size;
+	mz_uint8 * pOut_buf_cur = pOut_buf_next, * const pOut_buf_end = pOut_buf_next + *pOut_buf_size;
 	size_t out_buf_size_mask = (decomp_flags & TINFL_FLAG_USING_NON_WRAPPING_OUTPUT_BUF) ? (size_t) -1 : ((pOut_buf_next - pOut_buf_start) + *pOut_buf_size) - 1, dist_from_out_buf_start;
 
 	/* Ensure the output buffer's size is a power of 2, unless the output buffer is large enough to hold the entire output file (in which case it doesn't matter). */
@@ -2933,7 +2933,7 @@ common_exit:
 /* Higher level helper functions. */
 void * tinfl_decompress_mem_to_heap(const void * pSrc_buf, size_t src_buf_len, size_t * pOut_len, int flags) {
 	tinfl_decompressor decomp;
-	void * pBuf = NULL, *pNew_buf;
+	void * pBuf = NULL, * pNew_buf;
 	size_t src_buf_ofs = 0, out_buf_capacity = 0;
 	*pOut_len = 0;
 	tinfl_init(&decomp);
@@ -3510,7 +3510,7 @@ static mz_bool mz_zip_reader_init_internal(mz_zip_archive * pZip, mz_uint flags)
 }
 
 static MZ_FORCEINLINE mz_bool mz_zip_reader_filename_less(const mz_zip_array * pCentral_dir_array, const mz_zip_array * pCentral_dir_offsets, mz_uint l_index, mz_uint r_index) {
-	const mz_uint8 * pL = &MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_array, mz_uint8, MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_offsets, mz_uint32, l_index)), *pE;
+	const mz_uint8 * pL = &MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_array, mz_uint8, MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_offsets, mz_uint32, l_index)), * pE;
 	const mz_uint8 * pR = &MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_array, mz_uint8, MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_offsets, mz_uint32, r_index));
 	mz_uint l_len = MZ_READ_LE16(pL + MZ_ZIP_CDH_FILENAME_LEN_OFS), r_len = MZ_READ_LE16(pR + MZ_ZIP_CDH_FILENAME_LEN_OFS);
 	mz_uint8 l = 0, r = 0;
@@ -4346,7 +4346,7 @@ static MZ_FORCEINLINE mz_bool mz_zip_string_equal(const char * pA, const char * 
 }
 
 static MZ_FORCEINLINE int mz_zip_filename_compare(const mz_zip_array * pCentral_dir_array, const mz_zip_array * pCentral_dir_offsets, mz_uint l_index, const char * pR, mz_uint r_len) {
-	const mz_uint8 * pL = &MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_array, mz_uint8, MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_offsets, mz_uint32, l_index)), *pE;
+	const mz_uint8 * pL = &MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_array, mz_uint8, MZ_ZIP_ARRAY_ELEMENT(pCentral_dir_offsets, mz_uint32, l_index)), * pE;
 	mz_uint l_len = MZ_READ_LE16(pL + MZ_ZIP_CDH_FILENAME_LEN_OFS);
 	mz_uint8 l = 0, r = 0;
 	pL += MZ_ZIP_CENTRAL_DIR_HEADER_SIZE;

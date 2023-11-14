@@ -118,7 +118,7 @@ extern void * xrealloc(void * ptr, size_t size);
 extern void xfree(void * ptr);
 
 struct arg_hashtable_entry {
-	void * k, *v;
+	void * k, * v;
 	unsigned int h;
 	struct arg_hashtable_entry * next;
 };
@@ -708,7 +708,7 @@ void arg_hashtable_remove(arg_hashtable_t * h, const void * k) {
 
 void arg_hashtable_destroy(arg_hashtable_t * h, int free_values) {
 	unsigned int i;
-	struct arg_hashtable_entry * e, *f;
+	struct arg_hashtable_entry * e, * f;
 	struct arg_hashtable_entry ** table = h->table;
 
 	if (free_values) {
@@ -1577,7 +1577,7 @@ permute_args(int panonopt_start, int panonopt_end, int opt_end,
 static int
 parse_long_options(char * const * nargv, const char * options,
 				   const struct option * long_options, int * idx, int short_too, int flags) {
-	char * current_argv, *has_equal;
+	char * current_argv, * has_equal;
 #ifdef GNU_COMPATIBLE
 	char * current_dash;
 #endif
@@ -3102,7 +3102,7 @@ static void arg_file_resetfn(struct arg_file * parent) {
 
 /* Returns ptr to the base filename within *filename */
 static const char * arg_basename(const char * filename) {
-	const char * result = NULL, *result1, *result2;
+	const char * result = NULL, * result1, * result2;
 
 	/* Find the last occurrence of eother file separator character. */
 	/* Two alternative file separator chars are supported as legal  */
@@ -4616,7 +4616,7 @@ static const TRexChar * trex_matchnode(TRex * exp, TRexNode * node, const TRexCh
 			/* TRexNode *greedystop = (node->next != -1) ? &exp->_nodes[node->next] : NULL; */
 			TRexNode * greedystop = NULL;
 			int p0 = (node->right >> 16) & 0x0000FFFF, p1 = node->right & 0x0000FFFF, nmaches = 0;
-			const TRexChar * s = str, *good = str;
+			const TRexChar * s = str, * good = str;
 
 			if (node->next != -1) {
 				greedystop = &exp->_nodes[node->next];
@@ -6163,7 +6163,7 @@ void arg_print_syntax_ds(arg_dstr_t ds, void ** argtable, const char * suffix) {
 	/* print remaining options in abbreviated style */
 	for (tabindex = 0; table[tabindex] && !(table[tabindex]->flag & ARG_TERMINATOR); tabindex++) {
 		char syntax[200] = "";
-		const char * shortopts, *longopts, *datatype;
+		const char * shortopts, * longopts, * datatype;
 
 		/* skip short options without arg values (they were printed by arg_print_gnu_switch) */
 		if (table[tabindex]->shortopts && !(table[tabindex]->flag & ARG_HASVALUE)) {
@@ -6230,7 +6230,7 @@ void arg_print_syntaxv_ds(arg_dstr_t ds, void ** argtable, const char * suffix) 
 	/* print remaining options in abbreviated style */
 	for (tabindex = 0; table[tabindex] && !(table[tabindex]->flag & ARG_TERMINATOR); tabindex++) {
 		char syntax[200] = "";
-		const char * shortopts, *longopts, *datatype;
+		const char * shortopts, * longopts, * datatype;
 
 		shortopts = table[tabindex]->shortopts;
 		longopts = table[tabindex]->longopts;
