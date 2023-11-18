@@ -1830,15 +1830,23 @@ void automatic_search_text(mmd_engine * e, token * t, trie * ac) {
 
 	token * tok = t;
 
+	char * source = e->dstr->str;
+
 	if (m) {
 		walker = m->next;
 
 		while (walker) {
-			token_split(tok, walker->start, walker->len, walker->match_type);
+			// Only if we match a full word
+			if (
+				(walker->start + walker->len == tok->start + tok->len) ||
+				(char_is_whitespace_or_line_ending_or_punctuation(source[walker->start + walker->len]))
+			) {
+				token_split(tok, walker->start, walker->len, walker->match_type);
 
-			// Advance token to next token
-			while (tok && (tok->start < walker->start + walker->len)) {
-				tok = tok->next;
+				// Advance token to next token
+				while (tok && (tok->start < walker->start + walker->len)) {
+					tok = tok->next;
+				}
 			}
 
 			// Advance to next match (if present)
@@ -1912,13 +1920,19 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 	// Add abbreviations to search trie
 	for (int i = 0; i < e->abbreviation_stack->size; ++i) {
 		f = stack_peek_index(e->abbreviation_stack, i);
-		trie_insert(ac, f->label_text, PAIR_BRACKET_ABBREVIATION);
+
+		if (f->label_text && strlen(f->label_text) > 1) {
+			trie_insert(ac, f->label_text, PAIR_BRACKET_ABBREVIATION);
+		}
 	}
 
 	// Add glossary to search trie (without leading '?')
 	for (int i = 0; i < e->glossary_stack->size; ++i) {
 		f = stack_peek_index(e->glossary_stack, i);
-		trie_insert(ac, f->clean_text, PAIR_BRACKET_GLOSSARY);
+
+		if (f->clean_text && strlen(f->clean_text) > 1) {
+			trie_insert(ac, f->clean_text, PAIR_BRACKET_GLOSSARY);
+		}
 	}
 
 	ac_trie_prepare(ac);
