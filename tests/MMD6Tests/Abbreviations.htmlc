@@ -65,6 +65,10 @@ bar</p>
 <li>foo</li>
 </ul>
 
+<p>Ab <a href="Abbr">>A</a> <a href="Abbr">>a</a>.</p>
+
+<p>Abc abc Ab.</p>
+
 <p>[>foo bar]: FOO BAR</p>
 
 <p>[^note]: foo and bar</p>

@@ -276,7 +276,7 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <office:meta>
 	<dc:title>MultiMarkdown v6 Development Notes</dc:title>
 	<dc:creator>Fletcher T. Penney</dc:creator>
-	<meta:user-defined meta:name="date">2020-10-28</meta:user-defined>
+	<meta:user-defined meta:name="date">2023-06-10</meta:user-defined>
 	<meta:user-defined meta:name="uuid">dd2d8e76-dc2d-416d-9acd-5395d20871c2</meta:user-defined>
 </office:meta>
 <office:body>
@@ -763,6 +763,227 @@ TextBundle/TextPack, OpenDocument, etc.</text:p></text:list-item>
 <text:h text:outline-level="3"><text:bookmark text:name="changelog"/>Changelog</text:h>
 
 <text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="Standard">2023&#8211;06&#8211;10 - v 6.7.0:</text:p>
+
+<text:list text:style-name="L1">
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add OBJECT_REPLACEMENT_CHARACTER token (fixes #216)</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add compiler flag (DISABLE_OBJECT_POOL) to disable token pools</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ADDED: Add more token types</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Add Swift support</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Avoid space to be eaten aways after a slash in latex export</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Add additional TOC tests</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Astyle</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+CHANGED: Reformat comment</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Centralize html fix</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Don&#8217;t output empty figure captions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix Glossaries test</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix ambidextrous tokens inside of footnotes and other definitions</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix architecture issue when running multimarkdown from Xcode</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix edge case where table separator without leading pipe is treated as a list item</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix error detecting tables when indented in list items &#8211; Thanks, @wnm3!</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix flow control error</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with certain nested lists</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with escaping in URLs</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix issue with reference links with leading space instead of tab</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix regression from pull request that breaks build</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix style issue with ODT output format</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix trailing whitespace issues in headers/TOC</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix typo in xml.c</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Fix typos in error messages</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve README install path</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve edge cases around fenced code blocks and setext headers</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve markup handling around definition lists and colons</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Improve token mapping in header blocks</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Left out file</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Re-enable token object pools in default configuration</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Reset stack sizes before freeing temporary engine</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Restore prior label_counter after {{TOC}}</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Updated argtable3 now needs to link to math</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use MultiMarkdown instead of libMultiMarkdown as title in version.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: Use UTC for timestamp</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+FIXED: bibtex metadata should be raw</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge branch &#8216;develop&#8217; of github.com:fletcher/MultiMarkdown-6 into develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge branch &#8216;release/6.6.0&#8217; into develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #210 from DivineDominion/swift-framework</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #233 from DivineDominion/patch-4</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #243 from alexban011/githubCi</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+Merge pull request #245 from hvellyr/develop</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Apply astyle to all files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Include definition list colons as markup token</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Project clean up</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update CMakeLists.txt for Universal Binary</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update astyle config</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update github CI for multiple platforms</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update lexers with newer version of re2c</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: Update to latest argtable3 code</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+UPDATED: standardize common source files</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+ci: added github CI</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="P1">
+specify unsigned short for functions in token.h</text:p></text:list-item>
+
+<text:list-item>
+<text:p text:style-name="Standard">use unsigned short in implementation, too</text:p></text:list-item>
+
+</text:list></text:list-item>
+
 <text:list-item>
 <text:p text:style-name="Standard">2020&#8211;10&#8211;28 - v 6.6.0:</text:p>
 

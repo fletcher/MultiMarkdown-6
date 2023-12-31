@@ -299,6 +299,10 @@ office:mimetype="application/vnd.oasis.opendocument.text">
 <text:h text:outline-level="1"><text:bookmark text:name="test的multibyte"/>Test 的 Multibyte</text:h>
 
 <text:p text:style-name="Standard">10</text:p>
+
+<text:h text:outline-level="1"><text:bookmark text:name="test_underscore"/>Test_Underscore</text:h>
+
+<text:p text:style-name="Standard">Link to <text:a xlink:type="simple" xlink:href="#test_underscore">Test_Underscore</text:a>.</text:p>
 </office:text>
 </office:body>
 </office:document>

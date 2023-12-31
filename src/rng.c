@@ -79,18 +79,15 @@ long * ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 		ss <<= 1;
 
 		if (ss >= MM) {
-			ss -= MM - 2; /* cyclic shift 29 bits */
+			ss -= MM - 2;    /* cyclic shift 29 bits */
 		}
 	}
 
 	x[1]++;              /* make x[1] (and only x[1]) odd */
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wcomma"
-
 	for (ss = seed & (MM - 1), t = TT - 1; t; ) {
 		for (j = KK - 1; j > 0; j--) {
-			x[j + j] = x[j], x[j + j - 1] = 0; /* "square" */
+			x[j + j] = x[j], x[j + j - 1] = 0;    /* "square" */
 		}
 
 		for (j = KK + KK - 2; j >= KK; j--)
@@ -113,8 +110,6 @@ long * ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 		}
 	}
 
-#pragma clang diagnostic pop
-
 	for (j = 0; j < LL; j++) {
 		ran_x[j + KK - LL] = x[j];
 	}
@@ -124,7 +119,7 @@ long * ran_arr_ptr = &ran_arr_dummy; /* the next random number, or -1 */
 	}
 
 	for (j = 0; j < 10; j++) {
-		ran_array(x, KK + KK - 1); /* warm things up */
+		ran_array(x, KK + KK - 1);    /* warm things up */
 	}
 
 	ran_arr_ptr = &ran_arr_started;
@@ -142,22 +137,37 @@ long ran_arr_cycle() {
 	return ran_arr_buf[0];
 }
 
-/* Tweaked to include as a library - Fletcher T. Penney */
-/*#include <stdio.h>
-int main()
-{
-  register int m; long a[2009];
-  ran_start(310952L);
-  for (m=0;m<=2009;m++) ran_array(a,1009);
-  printf("%ld\n", a[0]);             *//* 995235265 */
-/*  ran_start(310952L);
-  for (m=0;m<=1009;m++) ran_array(a,2009);
-  printf("%ld\n", a[0]);             *//* 995235265 */
-/*  printf("%ld\n",ran_arr_next());
-  return 0;
-} */
+/* this main program corrected on 14 September 2019 to agree with TAOCP */
+/*
+	Modified by Fletcher T. Penney to allow this code to be used as a library within other programs.
+	* made main() static
+	* added wrapper function ran_num_next() for external use
+
+	I did not make any changes that affect the algorithm.
+*/
+
+#include <stdio.h>
+static int main() {
+	register int m;
+	long a[2009];
+	ran_start(310952L);
+
+	for (m = 0; m < 2009; m++) {
+		ran_array(a, 1009);
+	}
+
+	printf("%ld\n", ran_x[0]);             /* 995235265 */
+	ran_start(310952L);
+
+	for (m = 0; m < 1009; m++) {
+		ran_array(a, 2009);
+	}
+
+	printf("%ld\n", ran_x[0]);             /* 995235265 */
+	return 0;
+}
+
 
 long ran_num_next(void) {
 	return ran_arr_next();
 }
-

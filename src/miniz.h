@@ -682,13 +682,13 @@ typedef struct {
 	mz_uint m_flags, m_max_probes[2];
 	int m_greedy_parsing;
 	mz_uint m_adler32, m_lookahead_pos, m_lookahead_size, m_dict_size;
-	mz_uint8 * m_pLZ_code_buf, *m_pLZ_flags, *m_pOutput_buf, *m_pOutput_buf_end;
+	mz_uint8 * m_pLZ_code_buf, * m_pLZ_flags, * m_pOutput_buf, * m_pOutput_buf_end;
 	mz_uint m_num_flags_left, m_total_lz_bytes, m_lz_code_buf_dict_pos, m_bits_in, m_bit_buffer;
 	mz_uint m_saved_match_dist, m_saved_match_len, m_saved_lit, m_output_flush_ofs, m_output_flush_remaining, m_finished, m_block_index, m_wants_to_finish;
 	tdefl_status m_prev_return_status;
 	const void * m_pIn_buf;
 	void * m_pOut_buf;
-	size_t * m_pIn_buf_size, *m_pOut_buf_size;
+	size_t * m_pIn_buf_size, * m_pOut_buf_size;
 	tdefl_flush m_flush;
 	const mz_uint8 * m_pSrc;
 	size_t m_src_buf_left, m_out_buf_ofs;
