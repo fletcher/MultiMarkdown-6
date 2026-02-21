@@ -2919,8 +2919,8 @@ void mmd_engine_convert_to_file(mmd_engine * e, short format, const char * direc
 	DString * output = d_string_new("");
 
 	mmd_engine_parse_string(e);
-
-	mmd_engine_export_token_tree(output, e, format);
+	
+	mmd_engine_export_token_tree_dir(output, e, format, directory);
 
 	// Now we have the input source string, the output string, the (modified) parse tree, and engine stacks
 
@@ -3003,7 +3003,7 @@ DString * mmd_engine_convert_to_data(mmd_engine * e, short format, const char * 
 
 	mmd_engine_parse_string(e);
 
-	mmd_engine_export_token_tree(output, e, format);
+	mmd_engine_export_token_tree_dir(output, e, format, directory);
 
 	switch (format) {
 		case FORMAT_EPUB:

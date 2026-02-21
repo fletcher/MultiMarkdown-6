@@ -262,6 +262,9 @@ void mmd_engine_parse_string(mmd_engine * e);
 /// Export parsed token tree to output format
 void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format);
 
+/// Export parsed token tree to output format, with passing directory of the md file
+void mmd_engine_export_token_tree_dir(DString * out, mmd_engine * e, short format, const char * directory);
+
 
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
@@ -608,6 +611,7 @@ enum parser_extensions {
 	EXT_PARSE_OPML          = 1 << 14,   //!< Convert from OPML before processing source text
 	EXT_PARSE_ITMZ			= 1 << 15,   //!< Convert from ITMZ (iThoughts) before processing source text
 	EXT_RANDOM_LABELS		= 1 << 16,   //!< Use random numbers for header labels (unless manually defined)
+	EXT_EMBED_HTML_IMGS		= 1 << 17,   //!< Embed images in html as base64 data
 	EXT_FAKE                = 1 << 31,   //!< 31 is highest number allowed
 };
 

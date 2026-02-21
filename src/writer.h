@@ -137,6 +137,10 @@ typedef struct {
 	struct asset 	*	asset_hash;
 	short				store_assets;
 	short				remember_assets;
+	
+	// support for embedding images into the html output
+	bool				embed_assets;
+	const char		*	directory;
 
 	stack 		*		critic_stack;
 } scratch_pad;

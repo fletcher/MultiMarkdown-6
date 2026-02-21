@@ -448,3 +448,43 @@ char * absolute_path_for_argument(const char * arg) {
 	return result;
 }
 
+// Load a binary file into a malloc'd buffer. Caller must call free() on it!
+char *load_binary_file (const char *path, size_t *length_out) {
+	FILE * file;
+	char * buffer = NULL;
+	if ((file = fopen(path, "r")) == NULL) {
+		return NULL;
+	}
+	if (fseek(file, 0, SEEK_END) < 0) {
+		goto bail;
+	}
+	size_t flen = ftell(file);
+	buffer = malloc(flen);
+	if (!buffer) {
+		goto bail;
+	}
+	fseek(file, 0, SEEK_SET);
+	size_t bytes = fread (buffer, 1, flen, file);
+	if (bytes != flen) {
+		goto bail;
+	}
+	fclose(file);
+	*length_out = flen;
+	return buffer;
+
+bail:
+	perror("fread");
+	fclose(file);
+	if (buffer) {
+		free(buffer);
+	}
+	return NULL;
+}
+
+char * file_extension(const char * path) {
+	char *ext = strrchr (path, '.');
+	if (!ext) {
+		return "";
+	}
+	return ext+1;
+}

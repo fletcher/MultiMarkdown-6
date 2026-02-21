@@ -106,6 +106,7 @@
 #define FILE_UTILITIES_MULTIMARKDOWN_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 
 #ifdef TEST
 	#include "CuTest.h"
@@ -124,6 +125,10 @@ DString * scan_file(const char * fname);
 DString * stdin_buffer(void);
 
 
+/// Load a binary file into a malloc'd buffer. Caller must call free() on it!
+char *load_binary_file (const char *path, size_t *length_out);	// length_out must not be NULL!
+
+
 /// Windows can use either `\` or `/` as a separator -- thanks to t-beckmann on github
 ///	for suggesting a fix for this.
 bool is_separator(char c);
@@ -139,6 +144,10 @@ char * path_from_dir_base(const char * dir, const char * base);
 
 /// Separate filename and directory from a full path
 void split_path_file(char ** dir, char ** file, const char * path);
+
+
+/// Get pointer to file extension inside path, past the last "."
+char * file_extension(const char * path);
 
 
 // Convert argument to absolute path

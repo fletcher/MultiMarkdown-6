@@ -1944,8 +1944,11 @@ void identify_global_search_terms(mmd_engine * e, scratch_pad * scratch) {
 	trie_free(ac);
 }
 
-
 void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
+	mmd_engine_export_token_tree_dir (out, e, format, NULL);
+}
+
+void mmd_engine_export_token_tree_dir(DString * out, mmd_engine * e, short format, const char * directory) {
 
 	// Process potential reference definitions
 	process_definition_stack(e);
@@ -2008,6 +2011,9 @@ void mmd_engine_export_token_tree(DString * out, mmd_engine * e, short format) {
 			scratch->output_format = FORMAT_HTML;
 
 		case FORMAT_HTML:
+			scratch->embed_assets = (scratch->extensions & EXT_EMBED_HTML_IMGS) != 0;
+			scratch->directory = directory;
+
 			if (scratch->extensions & EXT_COMPLETE) {
 				mmd_start_complete_html(out, e->dstr->str, scratch);
 			}

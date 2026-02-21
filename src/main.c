@@ -76,9 +76,9 @@
 // argtable structs
 struct arg_lit * a_help, * a_version, * a_compatibility, * a_nolabels, * a_batch,
 		   * a_accept, * a_reject, * a_full, * a_snippet, * a_random, * a_unique, * a_meta,
-		   * a_notransclude, * a_nosmart, * a_opml, * a_itmz;
+		   * a_notransclude, * a_nosmart, * a_opml, * a_itmz, * a_embedimgs;
 struct arg_str * a_format, * a_lang, * a_extract;
-struct arg_file * a_file, * a_o;
+struct arg_file * a_file, * a_o, * a_directory;
 struct arg_end * a_end;
 struct arg_rem * a_rem1, * a_rem2, * a_rem3, * a_rem4, * a_rem5, * a_rem6;
 
@@ -153,6 +153,9 @@ int main(int argc, char ** argv) {
 		a_notransclude	= arg_lit0(NULL, "notransclude", "Disable file transclusion"),
 		a_opml			= arg_lit0(NULL, "opml", "Convert OPML source to plain text before processing"),
 		a_itmz			= arg_lit0(NULL, "itmz", "Convert ITMZ (iThoughts) source to plain text before processing"),
+		
+		a_embedimgs		= arg_lit0(NULL, "embedimg", "Embed images in html"),
+		a_directory		= arg_file0(NULL, "directory", "DIR", "The base directory for assets if reading from stdin"),
 
 		a_rem2			= arg_rem("", ""),
 
@@ -243,7 +246,11 @@ int main(int argc, char ** argv) {
 		extensions |= EXT_PARSE_OPML;
 	} else if (a_itmz->count > 0) {
 		// Attempt to convert from ITMZ
-		extensions |=  EXT_PARSE_ITMZ;
+		extensions |= EXT_PARSE_ITMZ;
+	}
+	
+	if (a_embedimgs->count > 0) {
+		extensions |= EXT_EMBED_HTML_IMGS;
 	}
 
 	if (a_accept->count > 0) {
@@ -323,6 +330,11 @@ int main(int argc, char ** argv) {
 		// Read from stdin
 	} else {
 		// Read from files
+	}
+
+	const char * directory = NULL;
+	if (a_directory->count) {
+		directory = a_directory->filename[0];
 	}
 
 	DString * buffer = NULL;
@@ -499,7 +511,7 @@ int main(int argc, char ** argv) {
 			buffer = stdin_buffer();
 		}
 
-		char * folder = NULL;
+		const char * folder = directory;
 
 		if (!(extensions & EXT_COMPATIBILITY)) {
 			mmd_prepend_mmd_header(buffer);

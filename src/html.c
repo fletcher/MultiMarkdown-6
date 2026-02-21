@@ -68,6 +68,7 @@
 #include "scanners.h"
 #include "stack.h"
 #include "writer.h"
+#include "file.h"
 
 
 #define print(x) d_string_append(out, x)
@@ -325,7 +326,6 @@ void mmd_export_link_html(DString * out, const char * source, token * text, link
 	print_const("</a>");
 }
 
-
 void mmd_export_image_html(DString * out, const char * source, token * text, link * link, scratch_pad * scratch, bool is_figure) {
 	attr * a = link->attributes;
 	char * width = NULL;
@@ -344,17 +344,37 @@ void mmd_export_image_html(DString * out, const char * source, token * text, lin
 	}
 
 	if (link->url) {
-		if (scratch->store_assets) {
-			store_asset(scratch, link->url);
-			asset * a = extract_asset(scratch, link->url);
-
-			printf("<img src=\"assets/%s\"", a->asset_path);
-		} else {
-			if (scratch->remember_assets) {
-				store_asset(scratch, link->url);
+		bool didEmbed = false;
+		if (scratch->embed_assets && scratch->directory != NULL) {
+			// embed the image instead of referencing it on the file system
+			size_t dataLen;
+			char *path = path_from_dir_base (scratch->directory, link->url);
+			void *data = load_binary_file (path, &dataLen);
+			if (data) {
+				size_t base64Len;
+				char *base64data = base64_encode(data, dataLen, &base64Len);
+				if (base64data) {
+					char *fileType = file_extension (link->url);
+					printf("<img src=\"data:image/%s;base64,%s\"", fileType, base64data);
+					didEmbed = true;
+					free(base64data);
+				}
+				free(data);
 			}
+		}
+		if (!didEmbed) {
+			if (scratch->store_assets) {
+				store_asset(scratch, link->url);
+				asset * a = extract_asset(scratch, link->url);
 
-			printf("<img src=\"%s\"", link->url);
+				printf("<img src=\"assets/%s\"", a->asset_path);
+			} else {
+				if (scratch->remember_assets) {
+					store_asset(scratch, link->url);
+				}
+
+				printf("<img src=\"%s\"", link->url);
+			}
 		}
 	} else {
 		print_const("<img src=\"\"");

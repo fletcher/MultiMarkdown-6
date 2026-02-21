@@ -472,6 +472,10 @@ TextBundle/TextPack, OpenDocument, etc.
 
 # Changelog #
 
+* 2026-02-21 - v 6.8.0:
+
+	*    ADDED: Options "--embedimg" and "--directory" for embedding images into html output (by tempelorg)
+
 * 2023-06-10 - v 6.7.0:
 
 	*    ADDED: Add OBJECT_REPLACEMENT_CHARACTER token (fixes #216)

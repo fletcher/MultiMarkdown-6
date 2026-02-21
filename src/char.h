@@ -107,5 +107,8 @@ int char_is_whitespace_or_line_ending_or_punctuation(char c);
 // Is the string valid UTF-8? (Returns pointer to first sequence)
 unsigned char * utf8_check(unsigned char * s);
 
-#endif
+// caller must call free() on returned pointer from these functions:
+unsigned char* base64_decode(const unsigned char *data, size_t input_length, size_t *output_length);
+char* base64_encode(const unsigned char *data, size_t input_length, size_t *output_length);
 
+#endif
