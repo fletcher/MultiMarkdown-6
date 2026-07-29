@@ -269,5 +269,6 @@ ARG_EXTERN void arg_free(void ** argtable);
 
 #ifdef __cplusplus
 }
+
 #endif
 #endif

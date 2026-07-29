@@ -118,7 +118,7 @@ extern void * xrealloc(void * ptr, size_t size);
 extern void xfree(void * ptr);
 
 struct arg_hashtable_entry {
-	void * k, *v;
+	void * k, * v;
 	unsigned int h;
 	struct arg_hashtable_entry * next;
 };
@@ -259,6 +259,7 @@ int arg_hashtable_itr_search(arg_hashtable_itr_t * itr, arg_hashtable_t * h, voi
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif
@@ -446,6 +447,7 @@ void arg_mgsort(void * data, int size, int esize, int i, int k, arg_comparefn * 
 		merge(data, esize, i, j, k, comparefn);
 	}
 }
+
 /*******************************************************************************
  * arg_hashtable: Implements the hash table utilities
  *
@@ -708,7 +710,7 @@ void arg_hashtable_remove(arg_hashtable_t * h, const void * k) {
 
 void arg_hashtable_destroy(arg_hashtable_t * h, int free_values) {
 	unsigned int i;
-	struct arg_hashtable_entry * e, *f;
+	struct arg_hashtable_entry * e, * f;
 	struct arg_hashtable_entry ** table = h->table;
 
 	if (free_values) {
@@ -902,6 +904,7 @@ int arg_hashtable_change(arg_hashtable_t * h, void * k, void * v) {
 
 	return 0;
 }
+
 /*******************************************************************************
  * arg_dstr: Implements the dynamic string utilities
  *
@@ -1338,6 +1341,7 @@ extern int optreset;			/* getopt(3) external variable */
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* !_GETOPT_H_ */
@@ -1577,7 +1581,7 @@ permute_args(int panonopt_start, int panonopt_end, int opt_end,
 static int
 parse_long_options(char * const * nargv, const char * options,
 				   const struct option * long_options, int * idx, int short_too, int flags) {
-	char * current_argv, *has_equal;
+	char * current_argv, * has_equal;
 #ifdef GNU_COMPATIBLE
 	char * current_dash;
 #endif
@@ -2746,6 +2750,7 @@ static int conv_num(const char ** buf, int * dest, int llim, int ulim) {
 	*dest = result;
 	return (1);
 }
+
 /*******************************************************************************
  * arg_dbl: Implements the double command-line option
  *
@@ -2907,6 +2912,7 @@ struct arg_dbl * arg_dbln(const char * shortopts, const char * longopts, const c
 	ARG_TRACE(("arg_dbln() returns %p\n", result));
 	return result;
 }
+
 /*******************************************************************************
  * arg_end: Implements the error handling utilities
  *
@@ -3046,6 +3052,7 @@ void arg_print_errors(FILE * fp, struct arg_end * end, const char * progname) {
 	fputs(arg_dstr_cstr(ds), fp);
 	arg_dstr_destroy(ds);
 }
+
 /*******************************************************************************
  * arg_file: Implements the file command-line option
  *
@@ -3102,7 +3109,7 @@ static void arg_file_resetfn(struct arg_file * parent) {
 
 /* Returns ptr to the base filename within *filename */
 static const char * arg_basename(const char * filename) {
-	const char * result = NULL, *result1, *result2;
+	const char * result = NULL, * result1, * result2;
 
 	/* Find the last occurrence of eother file separator character. */
 	/* Two alternative file separator chars are supported as legal  */
@@ -3262,6 +3269,7 @@ struct arg_file * arg_filen(const char * shortopts, const char * longopts, const
 	ARG_TRACE(("arg_filen() returns %p\n", result));
 	return result;
 }
+
 /*******************************************************************************
  * arg_int: Implements the int command-line option
  *
@@ -3571,6 +3579,7 @@ struct arg_int * arg_intn(const char * shortopts, const char * longopts, const c
 	ARG_TRACE(("arg_intn() returns %p\n", result));
 	return result;
 }
+
 /*******************************************************************************
  * arg_lit: Implements the literature command-line option
  *
@@ -3692,6 +3701,7 @@ struct arg_lit * arg_litn(const char * shortopts, const char * longopts, int min
 	ARG_TRACE(("arg_litn() returns %p\n", result));
 	return result;
 }
+
 /*******************************************************************************
  * arg_rem: Implements the rem command-line option
  *
@@ -3751,6 +3761,7 @@ struct arg_rem * arg_rem(const char * datatype, const char * glossary) {
 	ARG_TRACE(("arg_rem() returns %p\n", result));
 	return result;
 }
+
 /*******************************************************************************
  * arg_rex: Implements the regex command-line option
  *
@@ -3864,6 +3875,7 @@ TREX_API TRexBool trex_getsubexp(TRex * exp, int n, TRexMatch * subexp);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif
@@ -4275,6 +4287,7 @@ static int trex_charnode(TRex * exp, TRexBool isclass) {
 	exp->_p++;
 	return trex_newnode(exp, t);
 }
+
 static int trex_class(TRex * exp) {
 	int ret = -1;
 	int first = -1, chain;
@@ -4616,7 +4629,7 @@ static const TRexChar * trex_matchnode(TRex * exp, TRexNode * node, const TRexCh
 			/* TRexNode *greedystop = (node->next != -1) ? &exp->_nodes[node->next] : NULL; */
 			TRexNode * greedystop = NULL;
 			int p0 = (node->right >> 16) & 0x0000FFFF, p1 = node->right & 0x0000FFFF, nmaches = 0;
-			const TRexChar * s = str, *good = str;
+			const TRexChar * s = str, * good = str;
 
 			if (node->next != -1) {
 				greedystop = &exp->_nodes[node->next];
@@ -4845,6 +4858,7 @@ TRex * trex_compile(const TRexChar * pattern, const TRexChar ** error, int flags
 
 			scprintf(_SC("\n"));
 		}
+
 #endif
 		exp->_matches = (TRexMatch *)xmalloc(exp->_nsubexpr * sizeof(TRexMatch));
 		memset(exp->_matches, 0, exp->_nsubexpr * sizeof(TRexMatch));
@@ -4940,6 +4954,7 @@ TRexBool trex_getsubexp(TRex * exp, int n, TRexMatch * subexp) {
 	*subexp = exp->_matches[n];
 	return TRex_True;
 }
+
 /*******************************************************************************
  * arg_str: Implements the str command-line option
  *
@@ -5090,6 +5105,7 @@ struct arg_str * arg_strn(const char * shortopts, const char * longopts, const c
 	ARG_TRACE(("arg_strn() returns %p\n", result));
 	return result;
 }
+
 /*******************************************************************************
  * arg_cmd: Provides the sub-command mechanism
  *
@@ -5375,6 +5391,7 @@ int arg_make_syntax_err_help_msg(arg_dstr_t ds, char * name, int help, int nerro
 
 	return 0;
 }
+
 /*******************************************************************************
  * argtable3: Implements the main interfaces of the library
  *
@@ -5486,6 +5503,7 @@ void dump_longoptions(struct longoptions * longoptions) {
 		printf("options[%d].val     = %d\n", i, longoptions->options[i].val);
 	}
 }
+
 #endif
 
 static struct longoptions * alloc_longoptions(struct arg_hdr ** table) {
@@ -6163,7 +6181,7 @@ void arg_print_syntax_ds(arg_dstr_t ds, void ** argtable, const char * suffix) {
 	/* print remaining options in abbreviated style */
 	for (tabindex = 0; table[tabindex] && !(table[tabindex]->flag & ARG_TERMINATOR); tabindex++) {
 		char syntax[200] = "";
-		const char * shortopts, *longopts, *datatype;
+		const char * shortopts, * longopts, * datatype;
 
 		/* skip short options without arg values (they were printed by arg_print_gnu_switch) */
 		if (table[tabindex]->shortopts && !(table[tabindex]->flag & ARG_HASVALUE)) {
@@ -6230,7 +6248,7 @@ void arg_print_syntaxv_ds(arg_dstr_t ds, void ** argtable, const char * suffix) 
 	/* print remaining options in abbreviated style */
 	for (tabindex = 0; table[tabindex] && !(table[tabindex]->flag & ARG_TERMINATOR); tabindex++) {
 		char syntax[200] = "";
-		const char * shortopts, *longopts, *datatype;
+		const char * shortopts, * longopts, * datatype;
 
 		shortopts = table[tabindex]->shortopts;
 		longopts = table[tabindex]->longopts;
@@ -6534,4 +6552,5 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
 	UNREFERENCED_PARAMETER(fdwReason);
 	UNREFERENCED_PARAMETER(lpvReserved);
 }
+
 #endif

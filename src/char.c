@@ -114,6 +114,7 @@ void Test_char_is_windows_line_ending(CuTest * tc) {
 	CuAssertIntEquals(tc, 1, char_is_windows_line_ending(&test[1]));
 	CuAssertIntEquals(tc, 0, char_is_windows_line_ending(&test[2]));
 }
+
 #endif
 
 // Is character punctuation?
@@ -246,4 +247,5 @@ void Test_utf8_check(CuTest * tc) {
 
 	CuAssertPtrNotNull(tc, utf8_check((unsigned char *) "\xe2\x28\xa1"));
 }
+
 #endif

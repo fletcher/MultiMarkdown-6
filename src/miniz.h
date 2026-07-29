@@ -461,6 +461,7 @@ typedef void * const voidpc;
 
 #ifdef __cplusplus
 }
+
 #endif
 #pragma once
 #include <assert.h>
@@ -499,6 +500,7 @@ typedef int mz_bool;
 typedef struct mz_dummy_time_t_tag {
 	int m_dummy;
 } mz_dummy_time_t;
+
 #define MZ_TIME_T mz_dummy_time_t
 #else
 #define MZ_TIME_T time_t
@@ -551,6 +553,7 @@ extern void * miniz_def_realloc_func(void * opaque, void * address, size_t items
 
 #ifdef __cplusplus
 }
+
 #endif
 #pragma once
 
@@ -682,13 +685,13 @@ typedef struct {
 	mz_uint m_flags, m_max_probes[2];
 	int m_greedy_parsing;
 	mz_uint m_adler32, m_lookahead_pos, m_lookahead_size, m_dict_size;
-	mz_uint8 * m_pLZ_code_buf, *m_pLZ_flags, *m_pOutput_buf, *m_pOutput_buf_end;
+	mz_uint8 * m_pLZ_code_buf, * m_pLZ_flags, * m_pOutput_buf, * m_pOutput_buf_end;
 	mz_uint m_num_flags_left, m_total_lz_bytes, m_lz_code_buf_dict_pos, m_bits_in, m_bit_buffer;
 	mz_uint m_saved_match_dist, m_saved_match_len, m_saved_lit, m_output_flush_ofs, m_output_flush_remaining, m_finished, m_block_index, m_wants_to_finish;
 	tdefl_status m_prev_return_status;
 	const void * m_pIn_buf;
 	void * m_pOut_buf;
-	size_t * m_pIn_buf_size, *m_pOut_buf_size;
+	size_t * m_pIn_buf_size, * m_pOut_buf_size;
 	tdefl_flush m_flush;
 	const mz_uint8 * m_pSrc;
 	size_t m_src_buf_left, m_out_buf_ofs;
@@ -733,6 +736,7 @@ void tdefl_compressor_free(tdefl_compressor * pComp);
 
 #ifdef __cplusplus
 }
+
 #endif
 #pragma once
 
@@ -872,6 +876,7 @@ struct tinfl_decompressor_tag {
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #pragma once
@@ -1303,6 +1308,7 @@ void * mz_zip_extract_archive_file_to_heap_v2(const char * pZip_filename, const 
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* MINIZ_NO_ARCHIVE_APIS */

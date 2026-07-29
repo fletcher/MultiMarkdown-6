@@ -150,6 +150,7 @@ yy2:
 yy3: {
 			goto scan;
 		}
+
 yy4:
 		yych = *++YYCURSOR;
 
@@ -167,6 +168,7 @@ yy4:
 yy6: {
 			return ITMZ_WSNL;
 		}
+
 yy7:
 		yyaccept = 0;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -891,6 +893,7 @@ yy50:
 yy51: {
 			return ITMZ_TOPIC_OPEN;
 		}
+
 yy52:
 		yych = *++YYCURSOR;
 
@@ -1099,6 +1102,7 @@ yy56:
 		{
 			return ITMZ_TOPIC_CLOSE;
 		}
+
 yy58:
 		yych = *++YYCURSOR;
 
@@ -1139,6 +1143,7 @@ yy61:
 yy62: {
 			return ITMZ_TOPIC_SELF_CLOSE;
 		}
+
 yy63:
 		yych = *++YYCURSOR;
 
@@ -1355,6 +1360,7 @@ yy69:
 		{
 			return ITMZ_TOPICS_OPEN;
 		}
+
 yy71:
 		yych = *++YYCURSOR;
 
@@ -1473,6 +1479,7 @@ yy74:
 		{
 			return ITMZ_TOPICS_CLOSE;
 		}
+
 yy76:
 		yych = *++YYCURSOR;
 
@@ -2556,6 +2563,7 @@ yy111:
 		{
 			return ITMZ_ITHOUGHTS_OPEN;
 		}
+
 yy113:
 		yych = *++YYCURSOR;
 
@@ -3142,6 +3150,7 @@ yy134:
 		{
 			return ITMZ_ITHOUGHTS_CLOSE;
 		}
+
 yy136:
 		yych = *++YYCURSOR;
 
@@ -4570,6 +4579,7 @@ yy197:
 		{
 			return ITMZ_RELATIONSHIPS_OPEN;
 		}
+
 yy199:
 		yych = *++YYCURSOR;
 
@@ -4826,6 +4836,7 @@ yy208:
 		{
 			return ITMZ_RELATIONSHIPS_CLOSE;
 		}
+
 yy210:
 		yych = *++YYCURSOR;
 
@@ -8917,6 +8928,7 @@ yy520:
 		{
 			return ITMZ_TOPIC_METADATA;
 		}
+
 yy522:
 		yych = *++YYCURSOR;
 
@@ -9095,6 +9107,7 @@ yy526:
 		{
 			return ITMZ_TOPIC_PREAMBLE;
 		}
+
 yy528:
 		yych = *++YYCURSOR;
 
@@ -9462,6 +9475,7 @@ yy543:
 		{
 			return ITMZ_TOPIC_METADATA;
 		}
+
 yy545:
 		yych = *++YYCURSOR;
 
@@ -9730,6 +9744,7 @@ yy550:
 		{
 			return ITMZ_TOPIC_PREAMBLE;
 		}
+
 yy552:
 		yych = *++YYCURSOR;
 
@@ -10940,6 +10955,7 @@ yy596:
 		{
 			return ITMZ_TOPIC_METADATA;
 		}
+
 yy598:
 		yych = *++YYCURSOR;
 
@@ -11208,6 +11224,7 @@ yy603:
 		{
 			return ITMZ_TOPIC_PREAMBLE;
 		}
+
 yy605:
 		yych = *++YYCURSOR;
 

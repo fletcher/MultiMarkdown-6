@@ -214,6 +214,7 @@ void Test_is_separator(CuTest * tc) {
 	CuAssertIntEquals(tc, false, is_separator(test[2]));
 #endif
 }
+
 #endif
 
 
@@ -335,6 +336,7 @@ void Test_path_from_dir_base(CuTest * tc) {
 	path = path_from_dir_base(NULL, NULL);
 	CuAssertStrEquals(tc, NULL, path);
 }
+
 #endif
 
 
@@ -389,6 +391,7 @@ void Test_split_path_file(CuTest * tc) {
 	CuAssertStrEquals(tc, "\\foo\\bar.txt", file);
 #endif
 }
+
 #endif
 
 
@@ -425,6 +428,7 @@ char * realpath(const char * path, char * resolved_path) {
 
 	return buffer;
 }
+
 #endif
 
 

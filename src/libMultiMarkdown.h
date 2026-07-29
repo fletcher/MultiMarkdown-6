@@ -109,6 +109,11 @@ DString * mmd_string_convert_opml_to_text(const char * source);
 DString * mmd_string_convert_itmz_to_text(const char * source);
 
 
+/// Convert MMD text to AST, with specified extensions, and language
+/// Returned token tree must be freed
+token * mmd_string_parse(const char * source, unsigned long extensions);
+
+
 /// Convert MMD text to specified format, with specified extensions, and language
 /// Returned char * must be freed
 char * mmd_string_convert(const char * source, unsigned long extensions, short format, short language);

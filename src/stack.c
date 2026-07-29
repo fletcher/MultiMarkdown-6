@@ -104,6 +104,7 @@ void Test_stack_new(CuTest * tc) {
 	CuAssertIntEquals(tc, 0, s->size);
 	stack_free(s);
 }
+
 #endif
 
 
@@ -176,6 +177,7 @@ void Test_stack_push_pop(CuTest * tc) {
 
 	stack_free(s);
 }
+
 #endif
 
 

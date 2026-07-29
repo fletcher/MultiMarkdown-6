@@ -74,13 +74,13 @@
 #define kBUFFERSIZE 4096	// How many bytes to read at a time
 
 // argtable structs
-struct arg_lit * a_help, *a_version, *a_compatibility, *a_nolabels, *a_batch,
-		   *a_accept, *a_reject, *a_full, *a_snippet, *a_random, *a_unique, *a_meta,
-		   *a_notransclude, *a_nosmart, *a_opml, *a_itmz;
-struct arg_str * a_format, *a_lang, *a_extract;
-struct arg_file * a_file, *a_o;
+struct arg_lit * a_help, * a_version, * a_compatibility, * a_nolabels, * a_batch,
+		   * a_accept, * a_reject, * a_full, * a_snippet, * a_random, * a_unique, * a_meta,
+		   * a_notransclude, * a_nosmart, * a_opml, * a_itmz;
+struct arg_str * a_format, * a_lang, * a_extract;
+struct arg_file * a_file, * a_o;
 struct arg_end * a_end;
-struct arg_rem * a_rem1, *a_rem2, *a_rem3, *a_rem4, *a_rem5, *a_rem6;
+struct arg_rem * a_rem1, * a_rem2, * a_rem3, * a_rem4, * a_rem5, * a_rem6;
 
 
 /// strdup() not available on all platforms

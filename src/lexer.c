@@ -206,11 +206,13 @@ yy2:
 yy3: {
 			goto scan;
 		}
+
 yy4:
 		++YYCURSOR;
 		{
 			return INDENT_TAB;
 		}
+
 yy6:
 		yyaccept = 0;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -226,6 +228,7 @@ yy6:
 yy7: {
 			return TEXT_NL;
 		}
+
 yy8:
 		yyaccept = 0;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -281,6 +284,7 @@ yy11:
 		{
 			return QUOTE_DOUBLE;
 		}
+
 yy13:
 		yyaccept = 2;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -314,6 +318,7 @@ yy13:
 yy14: {
 			return TEXT_HASH;
 		}
+
 yy15:
 		yych = *++YYCURSOR;
 
@@ -328,11 +333,13 @@ yy15:
 yy16: {
 			return MATH_DOLLAR_SINGLE;
 		}
+
 yy17:
 		++YYCURSOR;
 		{
 			return TEXT_PERCENT;
 		}
+
 yy19:
 		yyaccept = 3;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -414,6 +421,7 @@ yy19:
 yy20: {
 			return AMPERSAND;
 		}
+
 yy21:
 		yych = *++YYCURSOR;
 
@@ -428,21 +436,25 @@ yy21:
 yy22: {
 			return QUOTE_SINGLE;
 		}
+
 yy23:
 		++YYCURSOR;
 		{
 			return PAREN_LEFT;
 		}
+
 yy25:
 		++YYCURSOR;
 		{
 			return PAREN_RIGHT;
 		}
+
 yy27:
 		++YYCURSOR;
 		{
 			return STAR;
 		}
+
 yy29:
 		yyaccept = 4;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -458,6 +470,7 @@ yy29:
 yy30: {
 			return PLUS;
 		}
+
 yy31:
 		yych = *++YYCURSOR;
 
@@ -472,6 +485,7 @@ yy31:
 yy32: {
 			return DASH_N;
 		}
+
 yy33:
 		yyaccept = 1;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -492,6 +506,7 @@ yy34:
 		{
 			return SLASH;
 		}
+
 yy36:
 		yyaccept = 1;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -521,6 +536,7 @@ yy37:
 		{
 			return COLON;
 		}
+
 yy39:
 		yyaccept = 5;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -539,6 +555,7 @@ yy39:
 yy40: {
 			return ANGLE_LEFT;
 		}
+
 yy41:
 		yyaccept = 6;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -554,11 +571,13 @@ yy41:
 yy42: {
 			return EQUAL;
 		}
+
 yy43:
 		++YYCURSOR;
 		{
 			return ANGLE_RIGHT;
 		}
+
 yy45:
 		yych = *++YYCURSOR;
 
@@ -585,6 +604,7 @@ yy45:
 yy46: {
 			return BRACKET_LEFT;
 		}
+
 yy47:
 		yych = *++YYCURSOR;
 
@@ -701,21 +721,25 @@ yy47:
 yy48: {
 			return TEXT_BACKSLASH;
 		}
+
 yy49:
 		++YYCURSOR;
 		{
 			return BRACKET_RIGHT;
 		}
+
 yy51:
 		++YYCURSOR;
 		{
 			return SUPERSCRIPT;
 		}
+
 yy53:
 		++YYCURSOR;
 		{
 			return UL;
 		}
+
 yy55:
 		yych = *++YYCURSOR;
 
@@ -730,6 +754,7 @@ yy55:
 yy57: {
 			return BACKTICK;
 		}
+
 yy58:
 		yyaccept = 7;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -760,6 +785,7 @@ yy58:
 yy59: {
 			return TEXT_BRACE_LEFT;
 		}
+
 yy60:
 		yych = *++YYCURSOR;
 
@@ -774,6 +800,7 @@ yy60:
 yy62: {
 			return PIPE;
 		}
+
 yy63:
 		yych = *++YYCURSOR;
 
@@ -788,6 +815,7 @@ yy63:
 yy64: {
 			return TEXT_BRACE_RIGHT;
 		}
+
 yy65:
 		yyaccept = 8;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -806,6 +834,7 @@ yy65:
 yy66: {
 			return SUBSCRIPT;
 		}
+
 yy67:
 		yyaccept = 1;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -1105,6 +1134,7 @@ yy71:
 		{
 			return NON_INDENT_SPACE;
 		}
+
 yy73:
 		++YYCURSOR;
 		goto yy7;
@@ -1143,6 +1173,7 @@ yy75:
 yy76: {
 			return NON_INDENT_SPACE;
 		}
+
 yy77:
 		yych = *++YYCURSOR;
 
@@ -1159,6 +1190,7 @@ yy78:
 		{
 			return BRACKET_IMAGE_LEFT;
 		}
+
 yy80:
 		++YYCURSOR;
 yy81:
@@ -1166,6 +1198,7 @@ yy81:
 		{
 			return HASH1;
 		}
+
 yy82:
 		yyaccept = 10;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -1192,6 +1225,7 @@ yy82:
 yy84: {
 			return HASH1;
 		}
+
 yy85:
 		yych = *++YYCURSOR;
 
@@ -1248,6 +1282,7 @@ yy88:
 		{
 			return MATH_DOLLAR_DOUBLE;
 		}
+
 yy90:
 		yych = *++YYCURSOR;
 
@@ -1365,6 +1400,7 @@ yy94:
 		{
 			return QUOTE_RIGHT_ALT;
 		}
+
 yy96:
 		yych = *++YYCURSOR;
 
@@ -1396,6 +1432,7 @@ yy97:
 yy98: {
 			return DASH_N;
 		}
+
 yy99:
 		yych = *++YYCURSOR;
 
@@ -1504,31 +1541,37 @@ yy107:
 		{
 			return BRACKET_CITATION_LEFT;
 		}
+
 yy109:
 		++YYCURSOR;
 		{
 			return BRACKET_VARIABLE_LEFT;
 		}
+
 yy111:
 		++YYCURSOR;
 		{
 			return BRACKET_ABBREVIATION_LEFT;
 		}
+
 yy113:
 		++YYCURSOR;
 		{
 			return BRACKET_GLOSSARY_LEFT;
 		}
+
 yy115:
 		++YYCURSOR;
 		{
 			return BRACKET_FOOTNOTE_LEFT;
 		}
+
 yy117:
 		++YYCURSOR;
 yy118: {
 			return TEXT_LINEBREAK;
 		}
+
 yy119:
 		yych = *++YYCURSOR;
 
@@ -1545,121 +1588,145 @@ yy120:
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy122:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy124:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy126:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy128:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy130:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy132:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy134:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy136:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy138:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy140:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy142:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy144:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy146:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy148:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy150:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy152:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy154:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy156:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy158:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy160:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy162:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy164:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy166:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy168:
 		yych = *++YYCURSOR;
 
@@ -1683,46 +1750,55 @@ yy168:
 yy169: {
 			return ESCAPED_CHARACTER;
 		}
+
 yy170:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy172:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy174:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy176:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy178:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy180:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy182:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy184:
 		++YYCURSOR;
 		{
 			return ESCAPED_CHARACTER;
 		}
+
 yy186:
 		yych = *++YYCURSOR;
 
@@ -1759,6 +1835,7 @@ yy188:
 yy189: {
 			return RAW_FILTER_LEFT;
 		}
+
 yy190:
 		yych = *++YYCURSOR;
 
@@ -1785,6 +1862,7 @@ yy191:
 yy192: {
 			return BRACE_DOUBLE_LEFT;
 		}
+
 yy193:
 		yych = *++YYCURSOR;
 
@@ -1801,11 +1879,13 @@ yy194:
 		{
 			return BRACE_DOUBLE_RIGHT;
 		}
+
 yy196:
 		++YYCURSOR;
 		{
 			return CRITIC_SUB_DIV;
 		}
+
 yy198:
 		yych = *++YYCURSOR;
 
@@ -1851,6 +1931,7 @@ yy201:
 		{
 			return TEXT_NL_SP;
 		}
+
 yy203:
 		yych = *++YYCURSOR;
 
@@ -2214,6 +2295,7 @@ yy209:
 yy210: {
 			return TEXT_LINEBREAK;
 		}
+
 yy211:
 		yyaccept = 12;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -2268,6 +2350,7 @@ yy215:
 		{
 			return HASH2;
 		}
+
 yy216:
 		yyaccept = 13;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -2294,6 +2377,7 @@ yy216:
 yy218: {
 			return HASH2;
 		}
+
 yy219:
 		yych = *++YYCURSOR;
 
@@ -2384,6 +2468,7 @@ yy225:
 		{
 			return HTML_ENTITY;
 		}
+
 yy227:
 		yych = *++YYCURSOR;
 
@@ -2401,21 +2486,25 @@ yy228:
 		{
 			return CRITIC_ADD_CLOSE;
 		}
+
 yy230:
 		++YYCURSOR;
 		{
 			return DASH_M;
 		}
+
 yy232:
 		++YYCURSOR;
 		{
 			return HTML_COMMENT_STOP;
 		}
+
 yy234:
 		++YYCURSOR;
 		{
 			return CRITIC_DEL_CLOSE;
 		}
+
 yy236:
 		yych = *++YYCURSOR;
 
@@ -2432,6 +2521,7 @@ yy237:
 		{
 			return ELLIPSIS;
 		}
+
 yy239:
 		yyaccept = 14;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -2453,6 +2543,7 @@ yy241:
 		{
 			return TEXT_NUMBER_POSS_LIST;
 		}
+
 yy242:
 		++YYCURSOR;
 		goto yy241;
@@ -2494,51 +2585,61 @@ yy246:
 		{
 			return CRITIC_COM_CLOSE;
 		}
+
 yy248:
 		++YYCURSOR;
 		{
 			return CRITIC_HI_CLOSE;
 		}
+
 yy250:
 		++YYCURSOR;
 		{
 			return MATH_PAREN_OPEN;
 		}
+
 yy252:
 		++YYCURSOR;
 		{
 			return MATH_PAREN_CLOSE;
 		}
+
 yy254:
 		++YYCURSOR;
 		{
 			return MATH_BRACKET_OPEN;
 		}
+
 yy256:
 		++YYCURSOR;
 		{
 			return MATH_BRACKET_CLOSE;
 		}
+
 yy258:
 		++YYCURSOR;
 		{
 			return CRITIC_ADD_OPEN;
 		}
+
 yy260:
 		++YYCURSOR;
 		{
 			return CRITIC_DEL_OPEN;
 		}
+
 yy262:
 		++YYCURSOR;
 		{
 			return CRITIC_HI_OPEN;
 		}
+
 yy264:
 		++YYCURSOR;
 		{
 			return CRITIC_COM_OPEN;
 		}
+
 yy266:
 		yych = *++YYCURSOR;
 
@@ -2555,16 +2656,19 @@ yy267:
 		{
 			return CRITIC_SUB_OPEN;
 		}
+
 yy269:
 		++YYCURSOR;
 		{
 			return CRITIC_SUB_CLOSE;
 		}
+
 yy271:
 		++YYCURSOR;
 		{
 			return OBJECT_REPLACEMENT_CHARACTER;
 		}
+
 yy273:
 		yych = *++YYCURSOR;
 
@@ -2793,6 +2897,7 @@ yy274:
 yy275: {
 			return INDENT_SPACE;
 		}
+
 yy276:
 		yych = *++YYCURSOR;
 
@@ -2811,6 +2916,7 @@ yy278:
 		{
 			return HASH3;
 		}
+
 yy279:
 		yyaccept = 16;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -2837,6 +2943,7 @@ yy279:
 yy281: {
 			return HASH3;
 		}
+
 yy282:
 		yych = *++YYCURSOR;
 
@@ -2893,6 +3000,7 @@ yy285:
 		{
 			return HTML_ENTITY;
 		}
+
 yy287:
 		yych = *++YYCURSOR;
 yy288:
@@ -2982,6 +3090,7 @@ yy291:
 		{
 			return HTML_COMMENT_START;
 		}
+
 yy293:
 		yych = *++YYCURSOR;
 
@@ -2999,6 +3108,7 @@ yy294:
 		{
 			return TEXT_LINEBREAK_SP;
 		}
+
 yy296:
 		yych = *++YYCURSOR;
 
@@ -3385,6 +3495,7 @@ yy306:
 		{
 			return HASH4;
 		}
+
 yy307:
 		yyaccept = 17;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -3411,6 +3522,7 @@ yy307:
 yy309: {
 			return HASH4;
 		}
+
 yy310:
 		yych = *++YYCURSOR;
 
@@ -3467,16 +3579,19 @@ yy313:
 		{
 			return HTML_ENTITY;
 		}
+
 yy315:
 		++YYCURSOR;
 		{
 			return AMPERSAND_LONG;
 		}
+
 yy317:
 		++YYCURSOR;
 		{
 			return ELLIPSIS;
 		}
+
 yy319:
 		yych = *++YYCURSOR;
 
@@ -3498,6 +3613,7 @@ yy321:
 		{
 			return HASH5;
 		}
+
 yy322:
 		yyaccept = 18;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -3524,6 +3640,7 @@ yy322:
 yy324: {
 			return HASH5;
 		}
+
 yy325:
 		yych = *++YYCURSOR;
 
@@ -3610,6 +3727,7 @@ yy331:
 		{
 			return HASH6;
 		}
+
 yy332:
 		yyaccept = 19;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -3636,6 +3754,7 @@ yy332:
 yy334: {
 			return HASH6;
 		}
+
 yy335:
 		yych = *++YYCURSOR;
 
@@ -3677,6 +3796,7 @@ yy338:
 		{
 			return TOC;
 		}
+
 yy340:
 		yych = *++YYCURSOR;
 
@@ -3724,6 +3844,7 @@ yy343:
 		{
 			return TOC_SINGLE;
 		}
+
 yy345:
 		yych = *++YYCURSOR;
 

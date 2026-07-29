@@ -375,6 +375,10 @@ foo</text:p></text:list-item>
 <text:p text:style-name="Standard">foo</text:p></text:list-item>
 
 </text:list>
+
+<text:p text:style-name="Standard">Abbr (Ab) Abbr (A) [>a].</text:p>
+
+<text:p text:style-name="Standard">Abc abc Ab.</text:p>
 </office:text>
 </office:body>
 </office:document>

@@ -116,7 +116,7 @@
 	#elif TARGET_OS_MAC
 		// Other kinds of Mac OS
 	#else
-		#   error "Unknown Apple platform"
+		#error "Unknown Apple platform"
 	#endif
 #endif
 
@@ -274,6 +274,7 @@ static void add_assets(mz_zip_archive * pZip, mmd_engine * e, const char * direc
 		}
 	}
 }
+
 #endif
 
 

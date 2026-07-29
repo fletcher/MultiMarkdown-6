@@ -424,4 +424,5 @@ void Test_critic(CuTest * tc) {
 	token_pool_free();
 #endif
 }
+
 #endif

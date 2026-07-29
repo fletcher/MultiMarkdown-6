@@ -100,6 +100,7 @@ typedef union {
 	int yyinit;
 	ParseTOKENTYPE yy0;
 } YYMINORTYPE;
+
 #ifndef YYSTACKDEPTH
 	#define YYSTACKDEPTH 100
 #endif
@@ -370,6 +371,7 @@ struct yyStackEntry {
 	YYMINORTYPE minor;     /* The user-supplied minor token value.  This
                          ** is the value of the token  */
 };
+
 typedef struct yyStackEntry yyStackEntry;
 
 /* The state of the parser is completely contained in an instance of
@@ -391,6 +393,7 @@ struct yyParser {
 	yyStackEntry yystack[YYSTACKDEPTH];  /* The parser's stack */
 #endif
 };
+
 typedef struct yyParser yyParser;
 
 #ifndef NDEBUG
@@ -427,6 +430,7 @@ void ParseTrace(FILE * TraceFILE, char * zTracePrompt) {
 		yyTraceFILE = 0;
 	}
 }
+
 #endif /* NDEBUG */
 
 #ifndef NDEBUG
@@ -663,6 +667,7 @@ static int yyGrowStack(yyParser * p) {
 
 	return pNew == 0;
 }
+
 #endif
 
 /* Datatype of the argument to the memory allocated passed as the
@@ -814,6 +819,7 @@ int ParseStackPeak(void * p) {
 	yyParser * pParser = (yyParser *)p;
 	return pParser->yyhwm;
 }
+
 #endif
 
 /*
@@ -883,6 +889,7 @@ static unsigned int yy_find_shift_action(
 					return yy_action[j];
 				}
 			}
+
 #endif /* YYWILDCARD */
 			return yy_default[stateno];
 		} else {
@@ -967,6 +974,7 @@ static void yyTraceShift(yyParser * yypParser, int yyNewState) {
 		}
 	}
 }
+
 #else
 # define yyTraceShift(X,Y)
 #endif
@@ -1026,6 +1034,7 @@ static const struct {
 	YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
 	unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
 } yyRuleInfo[] = {
+
 	{ 41, 1 },
 	{ 42, 2 },
 	{ 42, 1 },
@@ -1339,6 +1348,7 @@ static void yy_reduce(
 			{
 				yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_HR);
 			}
+
 			yymsp[0].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1427,6 +1437,7 @@ static void yy_reduce(
 			{
 				yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_HTML);
 			}
+
 			yymsp[0].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1585,6 +1596,7 @@ static void yy_reduce(
 				yylhsminor.yy0 = yymsp[-1].minor.yy0;
 				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
 			}
+
 			yymsp[-1].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1653,6 +1665,7 @@ static void yy_reduce(
 				yymsp[0].minor.yy0->type = CODE_FENCE_LINE;
 				yymsp[0].minor.yy0->child->type = CODE_FENCE;
 			}
+
 			yymsp[-1].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1685,6 +1698,7 @@ static void yy_reduce(
 				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
 				yymsp[-1].minor.yy0->type = CODE_FENCE_LINE;
 			}
+
 			yymsp[-1].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1702,6 +1716,7 @@ static void yy_reduce(
 				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
 				recursive_parse_list_item(engine, yylhsminor.yy0);
 			}
+
 			yymsp[-1].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1713,6 +1728,7 @@ static void yy_reduce(
 				token_chain_append(yymsp[-1].minor.yy0, yymsp[0].minor.yy0);
 				recursive_parse_list_item(engine, yylhsminor.yy0);
 			}
+
 			yymsp[-1].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1722,6 +1738,7 @@ static void yy_reduce(
 			{
 				yylhsminor.yy0 = token_new_parent(yymsp[0].minor.yy0, BLOCK_LIST_ITEM_TIGHT);
 			}
+
 			yymsp[0].minor.yy0 = yylhsminor.yy0;
 			break;
 
@@ -1885,6 +1902,7 @@ static void yy_parse_failed(
 	/************ End %parse_failure code *****************************************/
 	ParseARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
+
 #endif /* YYNOERRORRECOVERY */
 
 /*

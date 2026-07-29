@@ -93,6 +93,7 @@ yy2:
 yy3: {
 			return 0;
 		}
+
 yy4:
 		yych = *(marker = ++c);
 
@@ -117,6 +118,7 @@ yy4:
 yy6: {
 			return (size_t)( c - start );
 		}
+
 yy7:
 		yych = *(marker = ++c);
 yy8:
@@ -258,6 +260,7 @@ yy16:
 		{
 			return 0;
 		}
+
 yy18:
 		yych = *++c;
 
@@ -433,6 +436,7 @@ yy23:
 yy24: {
 			return 0;
 		}
+
 yy25:
 		yych = *(marker = ++c);
 
@@ -882,6 +886,7 @@ yy27:
 yy29: {
 			return (size_t)( c - start );
 		}
+
 yy30:
 		yych = *++c;
 yy31:
@@ -2078,6 +2083,7 @@ yy50:
 yy51: {
 			return 0;
 		}
+
 yy52:
 		yych = *(marker = ++c);
 
@@ -3209,6 +3215,7 @@ yy73:
 yy75: {
 			return (size_t)( c - start );
 		}
+
 yy76:
 		yych = *++c;
 
@@ -4020,6 +4027,7 @@ yy92:
 yy93: {
 			return 0;
 		}
+
 yy94:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -6322,6 +6330,7 @@ yy128:
 yy130: {
 			return (size_t)( c - start );
 		}
+
 yy131:
 		yych = *++c;
 
@@ -9435,6 +9444,7 @@ yy175:
 yy176: {
 			return 0;
 		}
+
 yy177:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -10096,6 +10106,7 @@ yy185:
 yy186: {
 			return (size_t)( c - start );
 		}
+
 yy187:
 		yych = *++c;
 
@@ -10676,6 +10687,7 @@ yy201:
 yy202: {
 			return 0;
 		}
+
 yy203:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -11582,6 +11594,7 @@ yy215:
 yy216: {
 			return (size_t)( c - start );
 		}
+
 yy217:
 		yych = *++c;
 
@@ -12535,6 +12548,7 @@ yy229:
 yy230: {
 			return (size_t)( c - start );
 		}
+
 yy231:
 		yych = *++c;
 
@@ -13721,6 +13735,7 @@ yy248:
 yy249: {
 			return 0;
 		}
+
 yy250:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -14999,6 +15014,7 @@ yy273:
 yy274: {
 			return (size_t)( c - start );
 		}
+
 yy275:
 		yych = *++c;
 
@@ -15380,6 +15396,7 @@ yy283:
 yy284: {
 			return 0;
 		}
+
 yy285:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -16658,6 +16675,7 @@ yy308:
 yy309: {
 			return (size_t)( c - start );
 		}
+
 yy310:
 		yych = *++c;
 
@@ -17039,6 +17057,7 @@ yy318:
 yy319: {
 			return 0;
 		}
+
 yy320:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -18317,6 +18336,7 @@ yy343:
 yy344: {
 			return (size_t)( c - start );
 		}
+
 yy345:
 		yych = *++c;
 
@@ -18698,6 +18718,7 @@ yy353:
 yy354: {
 			return 0;
 		}
+
 yy355:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -19976,6 +19997,7 @@ yy378:
 yy379: {
 			return (size_t)( c - start );
 		}
+
 yy380:
 		yych = *++c;
 
@@ -20357,6 +20379,7 @@ yy388:
 yy389: {
 			return 0;
 		}
+
 yy390:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -22492,6 +22515,7 @@ yy424:
 yy425: {
 			return (size_t)( c - start );
 		}
+
 yy426:
 		yych = *++c;
 
@@ -35187,6 +35211,7 @@ yy600:
 yy601: {
 			return 0;
 		}
+
 yy602:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -36629,6 +36654,7 @@ yy624:
 yy625: {
 			return (size_t)( c - start );
 		}
+
 yy626:
 		yych = *++c;
 
@@ -37003,6 +37029,7 @@ yy634:
 yy635: {
 			return 0;
 		}
+
 yy636:
 		yych = *(marker = ++c);
 
@@ -37684,6 +37711,7 @@ yy653:
 		{
 			return (size_t)( c - start );
 		}
+
 yy655:
 		yych = *++c;
 
@@ -43493,6 +43521,7 @@ yy736:
 yy737: {
 			return 0;
 		}
+
 yy738:
 		yych = *(marker = ++c);
 
@@ -44938,6 +44967,7 @@ yy760:
 yy761: {
 			return 0;
 		}
+
 yy762:
 		yych = *(marker = ++c);
 
@@ -46020,6 +46050,7 @@ yy808:
 		{
 			return (size_t)( c - start );
 		}
+
 yy810:
 		yych = *++c;
 
@@ -51149,6 +51180,7 @@ yy940:
 yy941: {
 			return 0;
 		}
+
 yy942:
 		yych = *(marker = ++c);
 
@@ -52428,6 +52460,7 @@ yy975:
 yy976: {
 			return (size_t)( c - start );
 		}
+
 yy977:
 		yych = *++c;
 
@@ -57691,6 +57724,7 @@ yy1046:
 yy1047: {
 			return 0;
 		}
+
 yy1048:
 		yych = *(marker = ++c);
 
@@ -58636,6 +58670,7 @@ yy1073:
 yy1074: {
 			return (size_t)( c - start );
 		}
+
 yy1075:
 		yych = *++c;
 
@@ -58682,6 +58717,7 @@ yy1078:
 yy1079: {
 			return 0;
 		}
+
 yy1080:
 		yych = *(marker = ++c);
 
@@ -58913,6 +58949,7 @@ yy1098:
 yy1099: {
 			return (size_t)( c - start );
 		}
+
 yy1100:
 		yych = *++c;
 
@@ -59053,6 +59090,7 @@ yy1106:
 yy1107: {
 			return 0;
 		}
+
 yy1108:
 		yych = *(marker = ++c);
 
@@ -59585,6 +59623,7 @@ yy1127:
 yy1128: {
 			return (size_t)( c - start );
 		}
+
 yy1129:
 		yych = *++c;
 
@@ -60395,6 +60434,7 @@ yy1143:
 yy1144: {
 			return (size_t) ( c - start );
 		}
+
 yy1145:
 		yych = *++c;
 
@@ -60841,6 +60881,7 @@ yy1154:
 yy1155: {
 			return 0;
 		}
+
 yy1156:
 		yych = *(marker = ++c);
 
@@ -61045,6 +61086,7 @@ yy1163:
 yy1164: {
 			return (size_t)( c - start );
 		}
+
 yy1165:
 		yych = *++c;
 
@@ -61154,6 +61196,7 @@ yy1169:
 		{
 			return 0;
 		}
+
 yy1171:
 		yych = *(marker = ++c);
 
@@ -61237,6 +61280,7 @@ yy1171:
 yy1173: {
 			return (size_t)( c - start );
 		}
+
 yy1174:
 		yych = *++c;
 
@@ -61285,6 +61329,7 @@ yy1178:
 yy1179: {
 			return 0;
 		}
+
 yy1180:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -61730,6 +61775,7 @@ yy1187:
 yy1188: {
 			return (size_t)( c - start );
 		}
+
 yy1189:
 		yyaccept = 1;
 		yych = *(marker = ++c);
@@ -62434,6 +62480,7 @@ yy1203:
 yy1204: {
 			return 0;
 		}
+
 yy1205:
 		yych = *(marker = ++c);
 
@@ -62611,6 +62658,7 @@ yy1219:
 yy1220: {
 			return (size_t)( c - start );
 		}
+
 yy1221:
 		yych = *++c;
 
@@ -62736,6 +62784,7 @@ yy1230:
 yy1231: {
 			return 0;
 		}
+
 yy1232:
 		yych = *(marker = ++c);
 
@@ -62937,6 +62986,7 @@ yy1248:
 yy1249: {
 			return ALIGN_WRAP;
 		}
+
 yy1250:
 		yych = *++c;
 
@@ -62964,6 +63014,7 @@ yy1252:
 yy1253: {
 			return ALIGN_RIGHT;
 		}
+
 yy1254:
 		yych = *++c;
 yy1255:
@@ -63038,6 +63089,7 @@ yy1260:
 yy1261: {
 			return ALIGN_LEFT;
 		}
+
 yy1262:
 		yych = *++c;
 
@@ -63122,6 +63174,7 @@ yy1269:
 yy1270: {
 			return ALIGN_WRAP | ALIGN_RIGHT;
 		}
+
 yy1271:
 		yych = *++c;
 
@@ -63149,6 +63202,7 @@ yy1273:
 yy1274: {
 			return ALIGN_WRAP | ALIGN_LEFT;
 		}
+
 yy1275:
 		yych = *++c;
 
@@ -63176,6 +63230,7 @@ yy1277:
 yy1278: {
 			return ALIGN_CENTER;
 		}
+
 yy1279:
 		yych = *++c;
 yy1280:
@@ -63250,6 +63305,7 @@ yy1285:
 yy1286: {
 			return ALIGN_WRAP | ALIGN_CENTER;
 		}
+
 yy1287:
 		yych = *++c;
 
@@ -63486,6 +63542,7 @@ yy1291:
 yy1292: {
 			return 0;
 		}
+
 yy1293:
 		yyaccept = 0;
 		yych = *(marker = ++c);
@@ -63688,6 +63745,7 @@ yy1293:
 yy1295: {
 			return (size_t)( c - start );
 		}
+
 yy1296:
 		yych = *++c;
 
@@ -64576,6 +64634,7 @@ yy1313:
 yy1314: {
 			return 0;
 		}
+
 yy1315:
 		yych = *(marker = ++c);
 
@@ -65343,6 +65402,7 @@ yy1321:
 		{
 			return (size_t)( c - start );
 		}
+
 yy1323:
 		yych = *++c;
 
@@ -66823,6 +66883,7 @@ yy1347:
 yy1348: {
 			return 0;
 		}
+
 yy1349:
 		yych = *(marker = ++c);
 
@@ -67018,6 +67079,7 @@ yy1365:
 yy1366: {
 			return (size_t)( c - start );
 		}
+
 yy1367:
 		yych = *++c;
 
@@ -67034,6 +67096,7 @@ yy1368:
 yy1369: {
 			return (size_t)( c - start );
 		}
+
 yy1370:
 		yych = *++c;
 
@@ -67070,6 +67133,7 @@ yy1373:
 yy1374: {
 			return 0;
 		}
+
 yy1375:
 		yych = *(marker = ++c);
 
@@ -67327,6 +67391,7 @@ yy1382:
 		{
 			return (size_t)( c - start );
 		}
+
 yy1384:
 		yych = *++c;
 
@@ -67774,5 +67839,6 @@ void Test_scan_url(CuTest * tc) {
 	url_len = (int) scan_email("mailto:foo@bar.com");
 	CuAssertIntEquals(tc, 18, url_len);
 }
+
 #endif
 

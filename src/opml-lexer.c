@@ -150,6 +150,7 @@ yy2:
 yy3: {
 			goto scan;
 		}
+
 yy4:
 		yych = *++YYCURSOR;
 
@@ -167,6 +168,7 @@ yy4:
 yy6: {
 			return OPML_WSNL;
 		}
+
 yy7:
 		yyaccept = 0;
 		yych = *(YYMARKER = ++YYCURSOR);
@@ -758,21 +760,25 @@ yy56:
 		{
 			return OPML_XML;
 		}
+
 yy58:
 		++YYCURSOR;
 		{
 			return OPML_BODY_OPEN;
 		}
+
 yy60:
 		++YYCURSOR;
 		{
 			return OPML_HEAD_OPEN;
 		}
+
 yy62:
 		++YYCURSOR;
 		{
 			return OPML_OPML_OPEN;
 		}
+
 yy64:
 		yych = *++YYCURSOR;
 
@@ -804,16 +810,19 @@ yy67:
 		{
 			return OPML_BODY_CLOSE;
 		}
+
 yy69:
 		++YYCURSOR;
 		{
 			return OPML_HEAD_CLOSE;
 		}
+
 yy71:
 		++YYCURSOR;
 		{
 			return OPML_OPML_CLOSE;
 		}
+
 yy73:
 		yych = *++YYCURSOR;
 
@@ -854,6 +863,7 @@ yy76:
 		{
 			return OPML_TITLE_OPEN;
 		}
+
 yy78:
 		yych = *++YYCURSOR;
 
@@ -871,6 +881,7 @@ yy79:
 		{
 			return OPML_TITLE_CLOSE;
 		}
+
 yy81:
 		yych = *++YYCURSOR;
 
@@ -949,6 +960,7 @@ yy88:
 yy89: {
 			return OPML_OUTLINE_OPEN;
 		}
+
 yy90:
 		yych = *++YYCURSOR;
 
@@ -966,11 +978,13 @@ yy91:
 		{
 			return OPML_OUTLINE_CLOSE;
 		}
+
 yy93:
 		++YYCURSOR;
 yy94: {
 			return OPML_OUTLINE_SELF_CLOSE;
 		}
+
 yy95:
 		yych = *++YYCURSOR;
 
@@ -1583,6 +1597,7 @@ yy146:
 		{
 			return OPML_OUTLINE_METADATA;
 		}
+
 yy148:
 		yych = *++YYCURSOR;
 
@@ -1760,6 +1775,7 @@ yy163:
 		{
 			return OPML_OUTLINE_PREAMBLE;
 		}
+
 yy165:
 		yyaccept = 2;
 		yych = *(YYMARKER = ++YYCURSOR);

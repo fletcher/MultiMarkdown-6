@@ -174,6 +174,7 @@ yy2:
 		{
 			return 0;
 		}
+
 yy4:
 		yych = *++c;
 
@@ -272,6 +273,7 @@ yy9:
 		{
 			return 0;
 		}
+
 yy11:
 		yych = *++c;
 
@@ -385,6 +387,7 @@ yy16:
 yy17: {
 			return 0;
 		}
+
 yy18:
 		yych = *(marker = ++c);
 
@@ -531,6 +534,7 @@ yy33:
 yy34: {
 			return 0;
 		}
+
 yy35:
 		yych = *(marker = ++c);
 
@@ -570,6 +574,7 @@ yy40:
 		{
 			return (size_t)( c - start );
 		}
+
 yy42:
 		yych = *++c;
 yy43:
@@ -619,6 +624,7 @@ yy46:
 yy47: {
 			goto scan;
 		}
+
 yy48:
 		yych = *(marker = ++c);
 

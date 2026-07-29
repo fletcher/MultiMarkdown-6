@@ -99,6 +99,7 @@ typedef union {
 	int yyinit;
 	ITMZTOKENTYPE yy0;
 } YYMINORTYPE;
+
 #ifndef YYSTACKDEPTH
 	#define YYSTACKDEPTH 100
 #endif
@@ -269,6 +270,7 @@ struct yyStackEntry {
 	YYMINORTYPE minor;     /* The user-supplied minor token value.  This
                          ** is the value of the token  */
 };
+
 typedef struct yyStackEntry yyStackEntry;
 
 /* The state of the parser is completely contained in an instance of
@@ -290,6 +292,7 @@ struct yyParser {
 	yyStackEntry yystack[YYSTACKDEPTH];  /* The parser's stack */
 #endif
 };
+
 typedef struct yyParser yyParser;
 
 #ifndef NDEBUG
@@ -326,6 +329,7 @@ void ITMZTrace(FILE * TraceFILE, char * zTracePrompt) {
 		yyTraceFILE = 0;
 	}
 }
+
 #endif /* NDEBUG */
 
 #ifndef NDEBUG
@@ -403,6 +407,7 @@ static int yyGrowStack(yyParser * p) {
 
 	return pNew == 0;
 }
+
 #endif
 
 /* Datatype of the argument to the memory allocated passed as the
@@ -554,6 +559,7 @@ int ITMZStackPeak(void * p) {
 	yyParser * pParser = (yyParser *)p;
 	return pParser->yyhwm;
 }
+
 #endif
 
 /*
@@ -623,6 +629,7 @@ static unsigned int yy_find_shift_action(
 					return yy_action[j];
 				}
 			}
+
 #endif /* YYWILDCARD */
 			return yy_default[stateno];
 		} else {
@@ -707,6 +714,7 @@ static void yyTraceShift(yyParser * yypParser, int yyNewState) {
 		}
 	}
 }
+
 #else
 # define yyTraceShift(X,Y)
 #endif
@@ -766,6 +774,7 @@ static const struct {
 	YYCODETYPE lhs;         /* Symbol on the left-hand side of the rule */
 	unsigned char nrhs;     /* Number of right-hand side symbols in the rule */
 } yyRuleInfo[] = {
+
 	{ 13, 1 },
 	{ 14, 4 },
 	{ 14, 3 },
@@ -932,6 +941,7 @@ static void yy_parse_failed(
 	/************ End %parse_failure code *****************************************/
 	ITMZARG_STORE; /* Suppress warning about unused %extra_argument variable */
 }
+
 #endif /* YYNOERRORRECOVERY */
 
 /*

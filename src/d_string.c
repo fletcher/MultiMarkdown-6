@@ -172,6 +172,7 @@ void Test_d_string_new(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -256,6 +257,7 @@ void Test_ensureStringBufferCanHold(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -295,6 +297,7 @@ void Test_d_string_append(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -329,6 +332,7 @@ void Test_d_string_append_c(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -379,6 +383,7 @@ void Test_d_string_append_c_array(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -423,6 +428,7 @@ void Test_d_string_append_printf(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -462,6 +468,7 @@ void Test_d_string_prepend(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -510,6 +517,7 @@ void Test_d_string_insert(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -555,6 +563,7 @@ void Test_d_string_insert_c(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -604,6 +613,7 @@ void Test_d_string_insert_c_array(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -644,6 +654,7 @@ void Test_d_string_insert_printf(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -692,6 +703,7 @@ void Test_d_string_erase(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -753,6 +765,7 @@ void Test_d_string_copy_substring(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 
 
@@ -837,5 +850,6 @@ void Test_d_string_replace_text_in_range(CuTest * tc) {
 
 	d_string_free(result, true);
 }
+
 #endif
 

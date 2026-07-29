@@ -150,6 +150,23 @@ void mmd_print_string_latex(DString * out, const char * str) {
 }
 
 
+void mmd_print_label_latex(DString * out, const char * str) {
+	if (str == NULL) {
+		return;
+	}
+
+	while (*str != '\0') {
+		if (*str == '_') {
+			print_char(*str);
+		} else {
+			mmd_print_char_latex(out, *str);
+		}
+
+		str++;
+	}
+}
+
+
 void mmd_print_localized_char_latex(DString * out, unsigned short type, scratch_pad * scratch) {
 	switch (type) {
 		case DASH_N:
@@ -272,18 +289,18 @@ void mmd_export_link_latex(DString * out, const char * source, token * text, lin
 				if (temp_char && temp_char[0] != '\0') {
 					mmd_export_token_tree_latex(out, source, text->child, scratch);
 					print_const(" (\\autoref{");
-					mmd_print_string_latex(out, &(link->url)[1]);
+					mmd_print_label_latex(out, &(link->url)[1]);
 					print_const("})");
 				} else {
 					print_const("\\autoref{");
-					mmd_print_string_latex(out, &(link->url)[1]);
+					mmd_print_label_latex(out, &(link->url)[1]);
 					print_const("}");
 				}
 
 				free(temp_char);
 			} else {
 				print_const("\\autoref{");
-				mmd_print_string_latex(out, &(link->url)[1]);
+				mmd_print_label_latex(out, &(link->url)[1]);
 				print_const("}");
 			}
 

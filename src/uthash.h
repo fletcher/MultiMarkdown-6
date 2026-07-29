@@ -172,7 +172,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define HASH_MAKE_TABLE(hh,head)                                                 \
 	do {                                                                             \
 		(head)->hh.tbl = (UT_hash_table*)uthash_malloc(                                \
-						 sizeof(UT_hash_table));                                        \
+			sizeof(UT_hash_table));                                        \
 		if (!((head)->hh.tbl))  { uthash_fatal( "out of memory"); }                    \
 		memset((head)->hh.tbl, 0, sizeof(UT_hash_table));                              \
 		(head)->hh.tbl->tail = &((head)->hh);                                          \
@@ -180,7 +180,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		(head)->hh.tbl->log2_num_buckets = HASH_INITIAL_NUM_BUCKETS_LOG2;              \
 		(head)->hh.tbl->hho = (char*)(&(head)->hh) - (char*)(head);                    \
 		(head)->hh.tbl->buckets = (UT_hash_bucket*)uthash_malloc(                      \
-								  HASH_INITIAL_NUM_BUCKETS*sizeof(struct UT_hash_bucket));               \
+			HASH_INITIAL_NUM_BUCKETS*sizeof(struct UT_hash_bucket));               \
 		if (! (head)->hh.tbl->buckets) { uthash_fatal( "out of memory"); }             \
 		memset((head)->hh.tbl->buckets, 0,                                             \
 			   HASH_INITIAL_NUM_BUCKETS*sizeof(struct UT_hash_bucket));               \
@@ -348,8 +348,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			_hd_hh_del = &((delptr)->hh);                                            \
 			if ((delptr) == ELMT_FROM_HH((head)->hh.tbl,(head)->hh.tbl->tail)) {     \
 				(head)->hh.tbl->tail =                                               \
-						(UT_hash_handle*)((ptrdiff_t)((delptr)->hh.prev) +               \
-										  (head)->hh.tbl->hho);                                            \
+				(UT_hash_handle*)((ptrdiff_t)((delptr)->hh.prev) +               \
+								  (head)->hh.tbl->hho);                                            \
 			}                                                                        \
 			if ((delptr)->hh.prev != NULL) {                                         \
 				((UT_hash_handle*)((ptrdiff_t)((delptr)->hh.prev) +                  \
@@ -360,7 +360,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (_hd_hh_del->next != NULL) {                                          \
 				((UT_hash_handle*)((ptrdiff_t)_hd_hh_del->next +                     \
 								   (head)->hh.tbl->hho))->prev =                                \
-										   _hd_hh_del->prev;                                            \
+				_hd_hh_del->prev;                                            \
 			}                                                                        \
 			HASH_TO_BKT( _hd_hh_del->hashv, (head)->hh.tbl->num_buckets, _hd_bkt);   \
 			HASH_DEL_IN_BKT(hh,(head)->hh.tbl->buckets[_hd_bkt], _hd_hh_del);        \
@@ -795,13 +795,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		struct UT_hash_handle *_he_thh, *_he_hh_nxt;                                 \
 		UT_hash_bucket *_he_new_buckets, *_he_newbkt;                                \
 		_he_new_buckets = (UT_hash_bucket*)uthash_malloc(                            \
-						  2UL * tbl->num_buckets * sizeof(struct UT_hash_bucket));            \
+			2UL * tbl->num_buckets * sizeof(struct UT_hash_bucket));            \
 		if (!_he_new_buckets) { uthash_fatal( "out of memory"); }                    \
 		memset(_he_new_buckets, 0,                                                   \
 			   2UL * tbl->num_buckets * sizeof(struct UT_hash_bucket));             \
 		tbl->ideal_chain_maxlen =                                                    \
-				(tbl->num_items >> (tbl->log2_num_buckets+1U)) +                          \
-				(((tbl->num_items & ((tbl->num_buckets*2U)-1U)) != 0U) ? 1U : 0U);        \
+		(tbl->num_items >> (tbl->log2_num_buckets+1U)) +                          \
+		(((tbl->num_items & ((tbl->num_buckets*2U)-1U)) != 0U) ? 1U : 0U);        \
 		tbl->nonideal_items = 0;                                                     \
 		for(_he_bkt_i = 0; _he_bkt_i < tbl->num_buckets; _he_bkt_i++)                \
 		{                                                                            \
@@ -813,12 +813,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (++(_he_newbkt->count) > tbl->ideal_chain_maxlen) {                \
 					tbl->nonideal_items++;                                              \
 					_he_newbkt->expand_mult = _he_newbkt->count /                       \
-											  tbl->ideal_chain_maxlen;                 \
+					tbl->ideal_chain_maxlen;                 \
 				}                                                                     \
 				_he_thh->hh_prev = NULL;                                              \
 				_he_thh->hh_next = _he_newbkt->hh_head;                               \
 				if (_he_newbkt->hh_head != NULL) { _he_newbkt->hh_head->hh_prev =     \
-							_he_thh; }                                                       \
+					_he_thh; }                                                       \
 				_he_newbkt->hh_head = _he_thh;                                        \
 				_he_thh = _he_hh_nxt;                                                 \
 			}                                                                        \
@@ -828,7 +828,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		tbl->log2_num_buckets++;                                                     \
 		tbl->buckets = _he_new_buckets;                                              \
 		tbl->ineff_expands = (tbl->nonideal_items > (tbl->num_items >> 1)) ?         \
-							 (tbl->ineff_expands+1U) : 0U;                                            \
+		(tbl->ineff_expands+1U) : 0U;                                            \
 		if (tbl->ineff_expands > 1U) {                                               \
 			tbl->noexpand=1;                                                         \
 			uthash_noexpand_fyi(tbl);                                                \

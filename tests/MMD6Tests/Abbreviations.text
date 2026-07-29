@@ -62,6 +62,9 @@ foo bar
 * foo
 * foo
 
+Ab [>A] [>a].
+
+Abc abc Ab.
 
 [>foo]: FOO
 [>f.o.o.]: F.O.O.
@@ -78,3 +81,6 @@ foo bar
 [>foo bar]: FOO BAR
 
 [^note]: foo and bar
+
+[>A]: Abbr
+[>Ab]: Abbr

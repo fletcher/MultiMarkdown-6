@@ -187,6 +187,7 @@ void Test_trie_insert(CuTest * tc) {
 
 	trie_free(a);
 }
+
 #endif
 
 
@@ -248,6 +249,7 @@ void Test_trie_search(CuTest * tc) {
 
 	trie_free(a);
 }
+
 #endif
 
 
@@ -321,6 +323,7 @@ void Test_trie_prepare(CuTest * tc) {
 
 	trie_free(a);
 }
+
 #endif
 
 
@@ -563,6 +566,7 @@ void Test_aho_trie_search(CuTest * tc) {
 
 	trie_free(a);
 }
+
 #endif
 
 
